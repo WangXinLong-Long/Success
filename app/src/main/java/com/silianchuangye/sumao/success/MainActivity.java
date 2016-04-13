@@ -2,9 +2,11 @@ package com.silianchuangye.sumao.success;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
 
+    ImageView impor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,6 +21,6 @@ public class MainActivity extends AppCompatActivity {
 
         //管俊又写了一句话33333333333
         //管俊  写了123
-
+impor = (ImageView) findViewById(R.id.image);
     }
 }
