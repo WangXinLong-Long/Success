@@ -22,5 +22,6 @@ public class MainActivity extends AppCompatActivity {
         //管俊又写了一句话33333333333
         //管俊  写了123
 impor = (ImageView) findViewById(R.id.image);
+        //2016/4/14
     }
 }
