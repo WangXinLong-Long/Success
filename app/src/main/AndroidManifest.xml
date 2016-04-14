@@ -33,17 +33,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<<<<<<< HEAD
+
         <activity android:name=".Activityguanjun" />
         <activity android:name=".LoactionActivity"></activity>
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="RBuN9HdDa8wBNS27rxMvguKR" />
-=======
 
-        <activity android:name=".Activityguanjun"></activity>
-
->>>>>>> refs/remotes/WangXinLong-Long/master
     </application>
 
 </manifest>
