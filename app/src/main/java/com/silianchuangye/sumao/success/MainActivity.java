@@ -11,16 +11,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //王鑫隆写了一句话
-        //贺琳健写了一句话
-        //王鑫隆又写了一句话
-
-        //管俊写了一句话
-
-        //贺琳健又写了一句话hlj
-
-        //管俊又写了一句话33333333333
-        //管俊  写了123
         impor = (ImageView) findViewById(R.id.image);
     }
 }
