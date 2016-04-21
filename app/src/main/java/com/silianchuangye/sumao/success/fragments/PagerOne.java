@@ -1,7 +1,6 @@
 package com.silianchuangye.sumao.success.fragments;
 
 import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.GridView;
 import android.widget.LinearLayout;
@@ -23,6 +22,11 @@ public class PagerOne extends BasePager {
     private ViewPager vpFragmentone;
     private GridView gvFragmentone;
     private List<Map<String,Object>> list;
+    @Override
+    public void myClickSearch() {
+
+    }
+
     @Override
     public void initDate() {
         LinearLayout view= (LinearLayout) View.inflate(mActivity,R.layout.fragmentone,null);
@@ -68,7 +72,6 @@ public class PagerOne extends BasePager {
 
 
     }
-
 
     @Override
     public void myClickLeft() {

@@ -9,6 +9,11 @@ import com.silianchuangye.sumao.success.R;
  */
 public class PagerFour extends BasePager {
     @Override
+    public void myClickSearch() {
+
+    }
+
+    @Override
     public void initDate() {
         fl_content.setBackgroundColor(getResources().getColor(R.color.blue));
     }
