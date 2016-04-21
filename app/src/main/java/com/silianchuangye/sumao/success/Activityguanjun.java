@@ -2,6 +2,7 @@ package com.silianchuangye.sumao.success;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Toast;
 
 public class Activityguanjun extends AppCompatActivity {
 
@@ -10,5 +11,6 @@ public class Activityguanjun extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_activityguanjun);
         //guanjun17
+
     }
 }

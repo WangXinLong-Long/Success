@@ -24,15 +24,15 @@ public class MainActivity extends FragmentActivity {
 
     public Activity instance;
     private FragmentTabHost mTabHost;
-    //    布局填充器
+    //布局填充器
     private LayoutInflater mLayoutInflater;
-    //    Fragment界面数组
+    //Fragment界面数组
     private List<Class> mFragmentArray;
-    //    存放图片数组
+    //存放图片数组
     private List<Integer> mImageArray;
-    //    存放文字数组
+    //存放文字数组
     private List<String> mTextArray;
-    //    退出时间
+    // 退出时间
     private long exitTime = 0;
 
     @Override
