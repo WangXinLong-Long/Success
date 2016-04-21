@@ -2,6 +2,7 @@ package com.silianchuangye.sumao.success.fragments;
 
 import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -73,11 +74,16 @@ public abstract class BasePager extends Fragment implements View.OnClickListener
             case R.id.iv_title_bar_service:
                 myClickRight();
                 break;
+            case R.id.sv_title_bar_serachView:
+                myClickSearch();
+                break;
             default:
                 break;
 
         }
     }
+
+    public abstract void myClickSearch();
 
     public abstract void initDate();
     public abstract void myClickLeft();

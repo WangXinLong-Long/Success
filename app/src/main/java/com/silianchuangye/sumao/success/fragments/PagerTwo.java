@@ -11,6 +11,12 @@ import com.silianchuangye.sumao.success.R;
  */
 public class PagerTwo extends BasePager {
     LinearLayout linearLayout;
+
+    @Override
+    public void myClickSearch() {
+
+    }
+
     @Override
     public void initDate() {
 
