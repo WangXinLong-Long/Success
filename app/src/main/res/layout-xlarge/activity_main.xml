@@ -9,14 +9,14 @@
 <FrameLayout
     android:id="@+id/fl_activity_main_content"
     android:layout_width="match_parent"
-    android:layout_height="0dip"
+    android:layout_height="0dp"
     android:layout_weight="1"
     />
     <android.support.v4.app.FragmentTabHost
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:id="@android:id/tabhost"
-        android:background="@color/bottom_background"
+        android:background="#0f0"
         >
         <FrameLayout
             android:id="@android:id/tabcontent"
