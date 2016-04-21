@@ -12,6 +12,11 @@ import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.silianchuangye.sumao.success.fragments.PagerFour;
+import com.silianchuangye.sumao.success.fragments.PagerOne;
+import com.silianchuangye.sumao.success.fragments.PagerThree;
+import com.silianchuangye.sumao.success.fragments.PagerTwo;
+
 import java.util.ArrayList;
 import java.util.List;
 
