@@ -13,9 +13,7 @@ public class PagerTwo extends BasePager {
     LinearLayout linearLayout;
     @Override
     public void initDate() {
-//        fl_content.setBackgroundColor(getResources().getColor(R.color.red));
-        linearLayout = (LinearLayout) View.inflate(mActivity,R.layout.test_fragment,null);
-        fl_content.addView(linearLayout);
+
 
 
     }
