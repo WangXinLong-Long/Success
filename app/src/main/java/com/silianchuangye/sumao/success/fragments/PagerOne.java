@@ -1,5 +1,6 @@
 package com.silianchuangye.sumao.success.fragments;
 
+import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.TextView;
 
@@ -9,12 +10,14 @@ import android.widget.TextView;
 public class PagerOne extends BasePager {
     @Override
     public void initDate() {
-        TextView textView = new TextView(mActivity);
-        textView.setText("消息");
-        fl_content.addView(textView);
-        title.setText("消息");
-        System.out.println("显示消息界面");
-        logo.setVisibility(View.INVISIBLE);
+//        TextView textView = new TextView(mActivity);
+//        textView.setText("消息");
+//        fl_content.addView(textView);
+//        title.setText("消息");
+//        System.out.println("显示消息界面");
+//        logo.setVisibility(View.INVISIBLE);
+        ViewPager pager=new ViewPager(mActivity);
+
 
     }
 
