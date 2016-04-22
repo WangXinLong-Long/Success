@@ -5,6 +5,7 @@
     android:layout_height="match_parent">
 <ScrollView
     android:layout_width="match_parent"
+    android:scrollbars="none"
     android:layout_height="match_parent">
 
     <RelativeLayout
@@ -12,38 +13,60 @@
         android:layout_height="match_parent">
     <android.support.v4.view.ViewPager
         android:layout_width="wrap_content"
-        android:layout_height="180dp"
+        android:layout_height="150dp"
         android:id="@+id/vpfragmentone"
-        android:background="#1111aa"
+        android:background="#1111bb"
         ></android.support.v4.view.ViewPager>
     <GridView
         android:layout_width="match_parent"
-        android:layout_height="180dp"
+        android:layout_height="165dp"
         android:id="@+id/gvfragmentone"
         android:numColumns="5"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="95dp"></GridView>
+        android:layout_marginLeft="10dp"
+        android:horizontalSpacing="2dp"
+        android:verticalSpacing="2dp"
+
+        android:layout_below="@id/vpfragmentone"
+        ></GridView>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_below="@+id/gvfragmentone"
-        android:background="#ffffff"
+        android:background="#E6E6E6"
         android:id="@+id/rlFragmentGridView"
         >
-        <EditText
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="35dp"
-            android:background="#E6E6E6"
-            android:layout_marginTop="10dp"
-            android:hint="2016最新采购优惠上9.5折"
+            android:background="#fff"
+            android:layout_marginTop="8dp"
             android:layout_marginLeft="10dp"
-            />
+            android:layout_marginRight="10dp"
+            >
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/ivFragmentoneHord"
+                android:src="@mipmap/hord"
+                android:layout_marginTop="3dp"
+                android:layout_marginLeft="5dp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvFragmentHord"
+                android:textSize="18sp"
+                android:text="2016年最新采购优惠上9.5折"
+                android:layout_toRightOf="@+id/ivFragmentoneHord"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="5dp"
+                />
+            </RelativeLayout>
     </RelativeLayout>
     <RelativeLayout
+        android:background="#123fff"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="150dp"
         android:id="@+id/rlFragmentAdwords"
         android:layout_below="@+id/rlFragmentGridView"
         >
@@ -53,10 +76,23 @@
             android:id="@+id/one"
             >
         <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             android:id="@+id/ivFragmentAdwords"
+            android:src="@mipmap/adeordsinfo"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="35dp"
             />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvFragmentAdwords"
+                android:layout_below="@+id/ivFragmentAdwords"
+                android:text="竞价信息"
+                android:layout_marginLeft="25dp"
+                android:textSize="25sp"
+                android:textColor="#39BCB3"
+                />
 
         </RelativeLayout>
         <ListView
@@ -64,17 +100,20 @@
             android:layout_height="match_parent"
             android:layout_toRightOf="@+id/one"
             android:id="@+id/lvFragmentAdwords"
+
             ></ListView>
     </RelativeLayout>
     <ImageView
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="180dp"
         android:id="@+id/ivFragmentoneAds"
         android:layout_below="@id/rlFragmentAdwords"
         />
     <RelativeLayout
+        android:background="#fff123"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="150dp"
         android:id="@+id/rlFragmentGroupon"
         android:layout_below="@id/ivFragmentoneAds"
         android:layout_marginTop="5dp"
@@ -84,10 +123,24 @@
             android:id="@+id/two"
             android:layout_height="match_parent">
             <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="35dp"
                 android:id="@+id/ivFragmentGroup"
+                android:src="@mipmap/grouponicon"
                 />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvFragmentGroupon"
+                android:layout_below="@+id/ivFragmentGroup"
+                android:text="团购信息"
+                android:layout_marginLeft="25dp"
+                android:textSize="25sp"
+                android:textColor="#F7931E"
+                />
+
         </RelativeLayout>
         <ListView
             android:layout_width="match_parent"
@@ -97,6 +150,7 @@
             ></ListView>
     </RelativeLayout>
     <GridView
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:id="@+id/gvFragmentoneAd"
@@ -104,8 +158,9 @@
         android:numColumns="3"
         ></GridView>
     <RelativeLayout
+        android:background="#eaabd2"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="150dp"
         android:id="@+id/rlFragmentPresell"
         android:layout_below="@id/gvFragmentoneAd"
         android:layout_marginTop="5dp"
@@ -115,9 +170,22 @@
             android:id="@+id/three"
             android:layout_height="match_parent">
             <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginLeft="35dp"
+                android:layout_marginTop="20dp"
                 android:id="@+id/ivFragmentoneAd"
+                android:src="@mipmap/presellicon"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvFragmentPresell"
+                android:layout_below="@+id/ivFragmentoneAd"
+                android:text="预售信息"
+                android:layout_marginLeft="25dp"
+                android:textSize="25sp"
+                android:textColor="#4AB6E4"
                 />
         </RelativeLayout>
         <ListView
