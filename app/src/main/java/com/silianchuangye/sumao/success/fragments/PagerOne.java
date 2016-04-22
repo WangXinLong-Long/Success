@@ -1,11 +1,13 @@
 package com.silianchuangye.sumao.success.fragments;
 
 import android.content.Intent;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
@@ -25,13 +27,25 @@ public class PagerOne extends BasePager {
     private ViewPager vpFragmentone;
     private GridView gvFragmentone;
     private List<Map<String,Object>> list;
+    private  LinearLayout view;
+    private List<Fragment> listfrag;
+
     @Override
     public void myClickSearch() {
     }
 
     @Override
     public void initDate() {
-        LinearLayout view= (LinearLayout) View.inflate(mActivity,R.layout.fragmentone,null);
+        view= (LinearLayout) View.inflate(mActivity,R.layout.fragmentone,null);
+        gridview();
+        vpad();
+    }
+
+    /**
+     * gridview实例化icon，并添加点击事件
+     */
+    public void gridview(){
+
         fl_content.addView(view);
         vpFragmentone= (ViewPager) view.findViewById(R.id.vpfragmentone);
         gvFragmentone= (GridView) view.findViewById(R.id.gvfragmentone);
@@ -70,20 +84,20 @@ public class PagerOne extends BasePager {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if(list.get(position).get("icon").equals(R.mipmap.more)){
                     if(list.size()==8){
-                    list.remove(position);
-                   // Toast.makeText(mActivity, "点击了更多按钮", Toast.LENGTH_SHORT).show();
-                    Map<String,Object> map7=new HashMap<String,Object>();
-                    map7.put("icon",R.mipmap.togther);
-                    list.add(map7);
-                    Map<String,Object> map8=new HashMap<String,Object>();
-                    map8.put("icon",R.mipmap.groupon);
-                    list.add(map8);
-                    Map<String,Object> map9=new HashMap<String,Object>();
-                    map9.put("icon",R.mipmap.more);
-                    list.add(map9);
-                    SimpleAdapter adapter=new SimpleAdapter(mActivity,list,R.layout.fragmentoneitem,new String[]{"icon"},new int[]{R.id.ivIcon});
-                    gvFragmentone.setAdapter(adapter);
-                }
+                        list.remove(position);
+                        // Toast.makeText(mActivity, "点击了更多按钮", Toast.LENGTH_SHORT).show();
+                        Map<String,Object> map7=new HashMap<String,Object>();
+                        map7.put("icon",R.mipmap.togther);
+                        list.add(map7);
+                        Map<String,Object> map8=new HashMap<String,Object>();
+                        map8.put("icon",R.mipmap.groupon);
+                        list.add(map8);
+                        Map<String,Object> map9=new HashMap<String,Object>();
+                        map9.put("icon",R.mipmap.more);
+                        list.add(map9);
+                        SimpleAdapter adapter=new SimpleAdapter(mActivity,list,R.layout.fragmentoneitem,new String[]{"icon"},new int[]{R.id.ivIcon});
+                        gvFragmentone.setAdapter(adapter);
+                    }
                 }else if(list.get(position).get("icon").equals(R.mipmap.togther)){
                     Toast.makeText(mActivity, "点击了撮合按钮", Toast.LENGTH_SHORT).show();
                 }else if(list.get(position).get("icon").equals(R.mipmap.groupon)){
@@ -108,8 +122,20 @@ public class PagerOne extends BasePager {
 
 
 
+
     }
 
+    /**
+     * 广告的Viewpager
+     */
+    public void vpad(){
+        vpFragmentone= (ViewPager) view.findViewById(R.id.vpfragmentone);
+        ImageView[] image=new ImageView[5];
+
+
+
+
+    }
     @Override
     public void myClickLeft() {
 
