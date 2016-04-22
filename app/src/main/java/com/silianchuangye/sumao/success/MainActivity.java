@@ -79,10 +79,10 @@ public class MainActivity extends FragmentActivity {
         mFragmentArray.add(PagerThree.class);
         mFragmentArray.add(PagerFour.class);
 
-        mImageArray.add(R.mipmap.home_page);
-        mImageArray.add(R.mipmap.classification);
-        mImageArray.add(R.mipmap.shopping_car);
-        mImageArray.add(R.mipmap.mine_sumao);
+        mImageArray.add(R.drawable.home_page);
+        mImageArray.add(R.drawable.classification);
+        mImageArray.add(R.drawable.shopping_car);
+        mImageArray.add(R.drawable.mine_sumao);
 
         mTextArray.add("首页");
         mTextArray.add("分类");
