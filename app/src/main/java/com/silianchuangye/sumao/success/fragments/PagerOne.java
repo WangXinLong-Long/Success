@@ -1,18 +1,18 @@
 package com.silianchuangye.sumao.success.fragments;
 
 import android.content.Intent;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 
-import com.silianchuangye.sumao.success.HX.Constant;
-import com.silianchuangye.sumao.success.HX.ui.LoginActivity;
 import com.silianchuangye.sumao.success.R;
 
 import java.util.ArrayList;
@@ -33,7 +33,16 @@ public class PagerOne extends BasePager {
 
     @Override
     public void initDate() {
-        LinearLayout view= (LinearLayout) View.inflate(mActivity, R.layout.fragmentone,null);
+        view= (LinearLayout) View.inflate(mActivity,R.layout.fragmentone,null);
+        gridview();
+        vpad();
+    }
+
+    /**
+     * gridview实例化icon，并添加点击事件
+     */
+    public void gridview(){
+
         fl_content.addView(view);
         vpFragmentone= (ViewPager) view.findViewById(R.id.vpfragmentone);
         gvFragmentone= (GridView) view.findViewById(R.id.gvfragmentone);
@@ -110,8 +119,20 @@ public class PagerOne extends BasePager {
 
 
 
+
     }
 
+    /**
+     * 广告的Viewpager
+     */
+    public void vpad(){
+        vpFragmentone= (ViewPager) view.findViewById(R.id.vpfragmentone);
+        ImageView[] image=new ImageView[5];
+
+
+
+
+    }
     @Override
     public void myClickLeft() {
 
