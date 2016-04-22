@@ -61,6 +61,9 @@ public abstract class BasePager extends Fragment implements View.OnClickListener
         {
             parent.removeView(view);
         }
+        logo.setOnClickListener(this);
+        title.setOnClickListener(this);
+        service.setOnClickListener(this);
         return view;
     }
 
@@ -84,7 +87,6 @@ public abstract class BasePager extends Fragment implements View.OnClickListener
     }
 
     public abstract void myClickSearch();
-
     public abstract void initDate();
     public abstract void myClickLeft();
     public abstract void myClickRight();

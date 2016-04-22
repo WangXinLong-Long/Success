@@ -11,6 +11,8 @@ import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 
+import com.silianchuangye.sumao.success.HX.Constant;
+import com.silianchuangye.sumao.success.HX.ui.LoginActivity;
 import com.silianchuangye.sumao.success.R;
 
 import java.util.ArrayList;
@@ -31,7 +33,7 @@ public class PagerOne extends BasePager {
 
     @Override
     public void initDate() {
-        LinearLayout view= (LinearLayout) View.inflate(mActivity,R.layout.fragmentone,null);
+        LinearLayout view= (LinearLayout) View.inflate(mActivity, R.layout.fragmentone,null);
         fl_content.addView(view);
         vpFragmentone= (ViewPager) view.findViewById(R.id.vpfragmentone);
         gvFragmentone= (GridView) view.findViewById(R.id.gvfragmentone);
@@ -117,6 +119,9 @@ public class PagerOne extends BasePager {
 
     @Override
     public void myClickRight() {
-
+        Intent intent = new Intent();
+        intent.setClass(mActivity, LoginActivity.class);
+        intent.putExtra(Constant.MESSAGE_TO_INTENT_EXTRA, Constant.MESSAGE_TO_DEFAULT);
+        startActivity(intent);
     }
 }

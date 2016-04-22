@@ -3,6 +3,7 @@ package com.silianchuangye.sumao.success.fragments;
 import android.graphics.Color;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
 
@@ -31,6 +32,6 @@ public class PagerTwo extends BasePager {
 
     @Override
     public void myClickRight() {
-
+        Toast.makeText(mActivity,"haha",Toast.LENGTH_SHORT).show();
     }
 }

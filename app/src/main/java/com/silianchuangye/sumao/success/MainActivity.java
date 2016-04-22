@@ -1,6 +1,11 @@
 package com.silianchuangye.sumao.success;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
 import android.os.Bundle;
@@ -12,6 +17,14 @@ import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.easemob.EMConnectionListener;
+import com.easemob.EMError;
+import com.easemob.EMEventListener;
+import com.easemob.EMNotifierEvent;
+import com.easemob.chat.EMChatManager;
+import com.easemob.chat.EMMessage;
+import com.silianchuangye.sumao.success.HX.DemoHelper;
+import com.silianchuangye.sumao.success.HX.ui.ChatActivity;
 import com.silianchuangye.sumao.success.fragments.PagerFour;
 import com.silianchuangye.sumao.success.fragments.PagerOne;
 import com.silianchuangye.sumao.success.fragments.PagerThree;
@@ -20,7 +33,7 @@ import com.silianchuangye.sumao.success.fragments.PagerTwo;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends FragmentActivity implements EMEventListener {
 
     public Activity instance;
     private FragmentTabHost mTabHost;
@@ -35,6 +48,8 @@ public class MainActivity extends FragmentActivity {
     // 退出时间
     private long exitTime = 0;
 
+    private MyConnectionListener connectionListener = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +58,7 @@ public class MainActivity extends FragmentActivity {
         initData();
 //         初始化组件
         initView();
+        init();
 
     }
 
@@ -104,6 +120,121 @@ public class MainActivity extends FragmentActivity {
             return  true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    @SuppressLint("NewApi")
+    private void init() {
+        //注册一个监听连接状态的listener
+        connectionListener = new MyConnectionListener();
+        EMChatManager.getInstance().addConnectionListener(connectionListener);
+
+
+    }
+
+    public class MyConnectionListener implements EMConnectionListener {
+
+        @Override
+        public void onConnected() {
+
+        }
+
+        @Override
+        public void onDisconnected(final int error) {
+            runOnUiThread(new Runnable() {
+
+                @Override
+                public void run() {
+                    if(error == EMError.USER_REMOVED){
+                        //账号被移除
+                        DemoHelper.getInstance().logout(true, null);
+                        if(ChatActivity.activityInstance != null){
+                            ChatActivity.activityInstance.finish();
+                        }
+                    }else if(error == EMError.CONNECTION_CONFLICT){
+                        //账号在其他地方登录
+                        DemoHelper.getInstance().logout(true, null);
+                        if(ChatActivity.activityInstance != null){
+                            ChatActivity.activityInstance.finish();
+                        }
+                    }else{
+                        //连接不到服务器
+
+
+                    }
+
+                }
+            });
+        }
+
+    }
+    private BroadcastReceiver internalDebugReceiver;
+    /**
+     * 内部测试代码，开发者请忽略
+     */
+    private void registerInternalDebugReceiver() {
+        internalDebugReceiver = new BroadcastReceiver() {
+
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                DemoHelper.getInstance().logout(true, null);
+                if(ChatActivity.activityInstance != null){
+                    ChatActivity.activityInstance.finish();
+                }
+            }
+        };
+        IntentFilter filter = new IntentFilter(getPackageName() + ".em_internal_debug");
+        registerReceiver(internalDebugReceiver, filter);
+    }
+
+
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        // 把此activity 从foreground activity 列表里移除
+        DemoHelper.getInstance().popActivity(this);
+        EMChatManager.getInstance().unregisterEventListener(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(connectionListener != null){
+            EMChatManager.getInstance().removeConnectionListener(connectionListener);
+        }
+        try {
+            unregisterReceiver(internalDebugReceiver);
+        } catch (Exception e) {
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        DemoHelper.getInstance().pushActivity(this);
+        //register the event listener when enter the foreground
+        EMChatManager.getInstance().registerEventListener(this,
+                new EMNotifierEvent.Event[] { EMNotifierEvent.Event.EventNewMessage,
+                        EMNotifierEvent.Event.EventOfflineMessage });
+    }
+    @Override
+    public void onEvent(EMNotifierEvent event) {
+        switch (event.getEvent()) {
+            case EventNewMessage:
+                EMMessage message = (EMMessage) event.getData();
+                //提示新消息
+                DemoHelper.getInstance().getNotifier().onNewMsg(message);
+                break;
+            case EventOfflineMessage:
+                //处理离线消息
+                List<EMMessage> messages = (List<EMMessage>) event.getData();
+                //消息提醒或只刷新UI
+                DemoHelper.getInstance().getNotifier().onNewMesg(messages);
+                break;
+            default:
+                break;
+        }
+
     }
 }
 
