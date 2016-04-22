@@ -13,6 +13,8 @@ import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 
+import com.silianchuangye.sumao.success.HX.Constant;
+import com.silianchuangye.sumao.success.HX.ui.LoginActivity;
 import com.silianchuangye.sumao.success.R;
 
 import java.util.ArrayList;
@@ -27,6 +29,7 @@ public class PagerOne extends BasePager {
     private ViewPager vpFragmentone;
     private GridView gvFragmentone;
     private List<Map<String,Object>> list;
+    private LinearLayout view;
     @Override
     public void myClickSearch() {
     }
