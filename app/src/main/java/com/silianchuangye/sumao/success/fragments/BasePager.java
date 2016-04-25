@@ -46,7 +46,7 @@ public abstract class BasePager extends Fragment implements View.OnClickListener
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (view==null)
         {
-            view = View.inflate(mActivity,R.layout.base_pager,null);
+            view = View.inflate(mActivity, R.layout.base_pager,null);
             logo = ((ImageView) view.findViewById(R.id.iv_title_bar_logo));
             searchView = ((EditText) view.findViewById(R.id.sv_title_bar_serachView));
             title = ((TextView) view.findViewById(R.id.tv_title_bar_title));
