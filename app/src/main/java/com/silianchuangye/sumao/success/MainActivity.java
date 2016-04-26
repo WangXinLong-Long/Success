@@ -33,6 +33,8 @@ import com.silianchuangye.sumao.success.fragments.PagerTwo;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.jpush.android.api.JPushInterface;
+
 public class MainActivity extends FragmentActivity implements EMEventListener {
 
     public Activity instance;
@@ -216,7 +218,17 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
         EMChatManager.getInstance().registerEventListener(this,
                 new EMNotifierEvent.Event[] { EMNotifierEvent.Event.EventNewMessage,
                         EMNotifierEvent.Event.EventOfflineMessage });
+        //Jpush推送
+        JPushInterface.onResume(this);
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        //Jpush推送
+        JPushInterface.onPause(this);
+    }
+
     @Override
     public void onEvent(EMNotifierEvent event) {
         switch (event.getEvent()) {
