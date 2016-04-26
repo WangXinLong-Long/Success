@@ -7,6 +7,8 @@ import com.easemob.chat.EMChat;
 import com.silianchuangye.sumao.success.HX.DemoHelper;
 import com.silianchuangye.sumao.success.utils.HXUtils.HelpDeskPreferenceUtils;
 
+import cn.jpush.android.api.JPushInterface;
+
 /**
  * Created by Administrator on 2016/4/14 0014.
  */
@@ -24,8 +26,9 @@ public class MyApp extends Application {
         EMChat.getInstance().setAppkey(appkey);
         DemoHelper.getInstance().init(applicationContext);
         //初始化
-
-
+        //初始化Jpush
+        JPushInterface.setDebugMode(true);
+        JPushInterface.init(applicationContext);
     }
     public static  MyApp getInstance(){return  instance;};
 }
