@@ -64,24 +64,24 @@
             </RelativeLayout>
     </RelativeLayout>
     <RelativeLayout
-        android:background="#123fff"
+
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="200dp"
         android:id="@+id/rlFragmentAdwords"
         android:layout_below="@+id/rlFragmentGridView"
         >
         <RelativeLayout
-            android:layout_width="150dp"
+            android:layout_width="120dp"
             android:layout_height="match_parent"
             android:id="@+id/one"
             >
         <ImageView
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:id="@+id/ivFragmentAdwords"
             android:src="@mipmap/adeordsinfo"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="35dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginLeft="30dp"
             />
             <TextView
                 android:layout_width="wrap_content"
@@ -89,9 +89,10 @@
                 android:id="@+id/tvFragmentAdwords"
                 android:layout_below="@+id/ivFragmentAdwords"
                 android:text="竞价信息"
-                android:layout_marginLeft="25dp"
+                android:layout_marginLeft="10dp"
                 android:textSize="25sp"
                 android:textColor="#39BCB3"
+                android:layout_marginTop="5dp"
                 />
 
         </RelativeLayout>
@@ -100,6 +101,7 @@
             android:layout_height="match_parent"
             android:layout_toRightOf="@+id/one"
             android:id="@+id/lvFragmentAdwords"
+            android:scrollbars="none"
 
             ></ListView>
     </RelativeLayout>

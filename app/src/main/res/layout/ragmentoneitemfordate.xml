@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="270dp"
+    android:layout_height="50dp">
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:id="@+id/ivfragmenticon"
+        android:src="@mipmap/underwey"
+
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvfragmentfordate"
+        android:text="8900"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:layout_toRightOf="@+id/ivfragmenticon"
+
+        android:layout_marginTop="15dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="13dp"
+        android:text="元/吨"
+        android:layout_marginTop="15dp"
+        android:layout_toRightOf="@+id/tvfragmentfordate"
+        android:id="@+id/a"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="北京"
+        android:textSize="16sp"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="10dp"
+        android:textColor="#F68B0E"
+        android:id="@+id/tvfragmentforcity"
+        android:layout_toRightOf="@id/a"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvFragmentforcom"
+        android:textSize="16sp"
+        android:layout_marginLeft="10dp"
+        android:text="福建联合"
+        android:layout_marginTop="15dp"
+        android:textStyle="bold"
+        android:layout_toRightOf="@id/tvfragmentforcity"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="13dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="5dp"
+        android:text="8900"
+        android:textStyle="bold"
+        android:id="@+id/tvfragmentfornumber"
+        android:layout_toRightOf="@id/tvFragmentforcom"
+        />
+</RelativeLayout>

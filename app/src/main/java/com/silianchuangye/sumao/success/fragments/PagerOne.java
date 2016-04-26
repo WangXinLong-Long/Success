@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
@@ -19,6 +20,7 @@ import com.silianchuangye.sumao.success.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
@@ -30,6 +32,8 @@ public class PagerOne extends BasePager {
     private GridView gvFragmentone;
     private List<Map<String,Object>> list;
     private LinearLayout view;
+    private ListView lvFragmentAdwords;
+    private List<Map<String,Object>> listString;
     @Override
     public void myClickSearch() {
     }
@@ -39,6 +43,43 @@ public class PagerOne extends BasePager {
         view= (LinearLayout) View.inflate(mActivity,R.layout.fragmentone,null);
         gridview();
         vpad();
+        listString=new ArrayList<Map<String,Object>>();
+        listAdwords();
+    }
+    public void listAdwords(){
+        lvFragmentAdwords= (ListView) view.findViewById(R.id.lvFragmentAdwords);
+        Map<String,Object> map=new Hashtable<String,Object>();
+        map.put("icon",R.mipmap.underwey);
+        map.put("price","8200");
+        map.put("city","北京");
+        map.put("com","福建联合");
+        map.put("number","8000");
+        listString.add(map);
+        Map<String,Object> map1=new Hashtable<String,Object>();
+        map1.put("icon",R.mipmap.underwey);
+        map1.put("price","8200");
+        map1.put("city","北京");
+        map1.put("com","福建联合");
+        map1.put("number","8000");
+        listString.add(map1);
+        Map<String,Object> map2=new Hashtable<String,Object>();
+        map2.put("icon",R.mipmap.underwey);
+        map2.put("price","8200");
+        map2.put("city","北京");
+        map2.put("com","福建联合");
+        map2.put("number","8000");
+        listString.add(map2);
+        Map<String,Object> map3=new Hashtable<String,Object>();
+        map3.put("icon",R.mipmap.underwey);
+        map3.put("price","8200");
+        map3.put("city","北京");
+        map3.put("com","福建联合");
+        map3.put("number","8000");
+        listString.add(map3);
+        SimpleAdapter adapter=new SimpleAdapter(mActivity,listString,R.layout.ragmentoneitemfordate,new String[]{"icon","price","city","com","number"},new int[]{R.id.ivfragmenticon,R.id.tvfragmentfordate,R.id.tvfragmentforcity,R.id.tvFragmentforcom,R.id.tvfragmentfornumber});
+        lvFragmentAdwords.setAdapter(adapter);
+
+
     }
 
     /**
@@ -130,7 +171,7 @@ public class PagerOne extends BasePager {
      */
     public void vpad(){
         vpFragmentone= (ViewPager) view.findViewById(R.id.vpfragmentone);
-        ImageView[] image=new ImageView[5];
+        //ImageView[] image=new ImageView[5];
 
 
 
