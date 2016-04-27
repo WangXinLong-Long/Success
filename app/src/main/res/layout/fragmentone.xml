@@ -42,7 +42,7 @@
         android:horizontalSpacing="2dp"
         android:verticalSpacing="2dp"
 
-        android:layout_below="@id/layout_icon"
+        android:layout_below="@id/fragemnet_a"
         ></GridView>
     <RelativeLayout
         android:layout_width="match_parent"
