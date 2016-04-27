@@ -11,12 +11,28 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    <android.support.v4.view.ViewPager
-        android:layout_width="wrap_content"
-        android:layout_height="150dp"
-        android:id="@+id/vpfragmentone"
-        android:background="#1111bb"
-        ></android.support.v4.view.ViewPager>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:id="@+id/fragemnet_a"
+            android:background="#1111bb"
+            >
+            <com.silianchuangye.sumao.success.MyGallery
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/fragment_gallery"
+                ></com.silianchuangye.sumao.success.MyGallery>
+        </FrameLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/layout_icon"
+            android:layout_marginTop="130dp"
+            android:gravity="right"
+            android:orientation="horizontal"
+            android:layout_marginRight="20dp"
+            ></LinearLayout>
     <GridView
         android:layout_width="match_parent"
         android:layout_height="165dp"
@@ -26,7 +42,7 @@
         android:horizontalSpacing="2dp"
         android:verticalSpacing="2dp"
 
-        android:layout_below="@id/vpfragmentone"
+        android:layout_below="@id/layout_icon"
         ></GridView>
     <RelativeLayout
         android:layout_width="match_parent"

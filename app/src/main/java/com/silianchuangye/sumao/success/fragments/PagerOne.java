@@ -1,9 +1,14 @@
 package com.silianchuangye.sumao.success.fragments;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
@@ -16,7 +21,9 @@ import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.HX.Constant;
 import com.silianchuangye.sumao.success.HX.ui.LoginActivity;
+import com.silianchuangye.sumao.success.MyGallery;
 import com.silianchuangye.sumao.success.R;
+import com.silianchuangye.sumao.success.adapter.ImageAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,7 +35,9 @@ import java.util.Map;
  * Created by Administrator on 2016/4/20 0020.
  */
 public class PagerOne extends BasePager {
-    private ViewPager vpFragmentone;
+    private LinearLayout layouticon;
+    private List<Drawable> listDrawable=new ArrayList<Drawable>();
+    private MyGallery gallery;
     private GridView gvFragmentone;
     private List<Map<String,Object>> list;
     private LinearLayout view;
@@ -88,7 +97,7 @@ public class PagerOne extends BasePager {
     public void gridview(){
 
         fl_content.addView(view);
-        vpFragmentone= (ViewPager) view.findViewById(R.id.vpfragmentone);
+
         gvFragmentone= (GridView) view.findViewById(R.id.gvfragmentone);
         list=new ArrayList<Map<String,Object>>();
         Map<String,Object> map=new HashMap<String,Object>();
@@ -169,14 +178,73 @@ public class PagerOne extends BasePager {
     /**
      * 广告的Viewpager
      */
+    private int preSelImgIndex = 0;
     public void vpad(){
-        vpFragmentone= (ViewPager) view.findViewById(R.id.vpfragmentone);
-        //ImageView[] image=new ImageView[5];
+        layouticon= (LinearLayout)view.findViewById(R.id.layout_icon);
 
+        //给Listview填充数据
+        InitImgList();
+        //哪些点点的初始化
+        InitFocusIndicatorContainer();
+        gallery = (MyGallery) view.findViewById(R.id.fragment_gallery);
+        gallery.setAdapter(new ImageAdapter(mActivity,listDrawable));
+        gallery.setFocusable(true);
+        gallery.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
+            public void onItemSelected(AdapterView<?> arg0, View arg1,
+                                       int selIndex, long arg3) {
+                //修改上一次选中项的背景
+                selIndex = selIndex % list.size();
 
+                ImageView preSelImg = (ImageView) layouticon
+                        .findViewById(preSelImgIndex);
+                preSelImg.setImageDrawable(mActivity
+                        .getResources().getDrawable(R.drawable.ic_focus));
+                //修改当前选中项的背景
+                ImageView curSelImg = (ImageView) layouticon
+                        .findViewById(selIndex);
+                curSelImg
+                        .setImageDrawable(mActivity
+                                .getResources().getDrawable(
+                                        R.drawable.ic_focus_select));
+                preSelImgIndex = selIndex;
+            }
+
+            public void onNothingSelected(AdapterView<?> arg0) {
+            }
+        });
 
     }
+    private void InitFocusIndicatorContainer() {
+        for (int i = 0; i < list.size(); i++) {
+            ImageView localImageView = new ImageView(mActivity);
+            localImageView.setId(i);
+            ImageView.ScaleType localScaleType = ImageView.ScaleType.FIT_XY;
+            localImageView.setScaleType(localScaleType);
+            LinearLayout.LayoutParams localLayoutParams = new LinearLayout.LayoutParams(
+                    30, 30);
+            localImageView.setLayoutParams(localLayoutParams);
+            localImageView.setPadding(8, 8, 8, 8);
+            localImageView.setImageResource(R.drawable.ic_focus);
+            this.layouticon.addView(localImageView);
+        }
+    }
+    private void InitImgList() {
+        // 加载图片数据（本demo仅获取本地资源，实际应用中，可异步加载网络数据）
+        listDrawable.add(mActivity.getResources().getDrawable(R.drawable.img1));
+        listDrawable.add(this.getResources().getDrawable(R.drawable.img2));
+        listDrawable.add(this.getResources().getDrawable(R.drawable.img3));
+        listDrawable.add(this.getResources().getDrawable(R.drawable.img4));
+        listDrawable.add(this.getResources().getDrawable(R.drawable.img5));
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        gallery.destroy();
+    }
+
     @Override
     public void myClickLeft() {
 
