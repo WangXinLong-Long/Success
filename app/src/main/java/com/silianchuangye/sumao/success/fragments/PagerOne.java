@@ -169,10 +169,6 @@ public class PagerOne extends BasePager {
                 }
             }
         });
-
-
-
-
     }
 
     /**
@@ -194,7 +190,7 @@ public class PagerOne extends BasePager {
             public void onItemSelected(AdapterView<?> arg0, View arg1,
                                        int selIndex, long arg3) {
                 //修改上一次选中项的背景
-                selIndex = selIndex % list.size();
+                selIndex = selIndex % listDrawable.size();
 
                 ImageView preSelImg = (ImageView) layouticon
                         .findViewById(preSelImgIndex);
@@ -215,8 +211,9 @@ public class PagerOne extends BasePager {
         });
 
     }
+    //实例化哪些点点
     private void InitFocusIndicatorContainer() {
-        for (int i = 0; i < list.size(); i++) {
+        for (int i = 0; i < listDrawable.size(); i++) {
             ImageView localImageView = new ImageView(mActivity);
             localImageView.setId(i);
             ImageView.ScaleType localScaleType = ImageView.ScaleType.FIT_XY;
@@ -230,12 +227,12 @@ public class PagerOne extends BasePager {
         }
     }
     private void InitImgList() {
-        // 加载图片数据（本demo仅获取本地资源，实际应用中，可异步加载网络数据）
-        listDrawable.add(mActivity.getResources().getDrawable(R.drawable.img1));
+        // 加载图片数据
+        listDrawable.add(this.getResources().getDrawable(R.drawable.img1));
         listDrawable.add(this.getResources().getDrawable(R.drawable.img2));
         listDrawable.add(this.getResources().getDrawable(R.drawable.img3));
         listDrawable.add(this.getResources().getDrawable(R.drawable.img4));
-        listDrawable.add(this.getResources().getDrawable(R.drawable.img5));
+       // listDrawable.add(this.getResources().getDrawable(R.drawable.img5));
 
     }
 
@@ -249,7 +246,7 @@ public class PagerOne extends BasePager {
     public void myClickLeft() {
 
     }
-// 客服界面
+    // 客服界面
     @Override
     public void myClickRight() {
         Intent intent = new Intent();
