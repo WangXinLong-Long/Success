@@ -9,7 +9,9 @@
     >
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        >
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -28,9 +30,9 @@
                     android:layout_width="100sp"
                     android:layout_height="100sp"
                     android:src="@mipmap/my_sumao_icon"
-                    android:layout_marginLeft="@dimen/my_sumao_title_image_margin"
-                    android:layout_marginTop="@dimen/my_sumao_title_image_margin"
-                    android:layout_marginBottom="@dimen/my_sumao_title_image_margin"
+                    android:layout_marginLeft="@dimen/x15"
+                    android:layout_marginTop="@dimen/x15"
+                    android:layout_marginBottom="@dimen/x15"
 
                     />
                 <TextView
@@ -98,6 +100,8 @@
                 android:layout_marginTop="@dimen/x2"
                 android:background="@color/white"
                 android:weightSum="6"
+                android:paddingLeft="@dimen/x15"
+                android:paddingRight="@dimen/x15"
                 >
                 <ImageView
                     android:layout_width="wrap_content"
