@@ -2,15 +2,8 @@ package com.silianchuangye.sumao.success.fragments;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -21,7 +14,7 @@ import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.HX.Constant;
 import com.silianchuangye.sumao.success.HX.ui.LoginActivity;
-import com.silianchuangye.sumao.success.MyGallery;
+import com.silianchuangye.sumao.success.utils.scrollviewAD.MyGallery;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.ImageAdapter;
 
