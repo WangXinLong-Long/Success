@@ -43,6 +43,12 @@
     <color name="voip_interface_text_color">#bababa</color>
     <color name="black_deep">#FF000000</color>
     <color name="text_selected_color">#ED5485</color>
-
+    <color name="my_sumao_title_background">#0071BC</color>
+    <color name="my_sumao_background">#E6E6E6</color>
+    <color name="my_sumao_text_color_gray">#B3B3B3</color>
+    <color name="my_sumao_text_color_black">#4D4D4D</color>
+    <color name="textColor_expandable_listview_hide">#666666</color>
+    <color name="textColor_expandable_listview_show">#29ABE2</color>
+    <color name="expandable_listview_gray">#F4F4F4</color>
 
 </resources>

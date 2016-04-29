@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    >
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="10"
+            android:background="@color/my_sumao_background">
+
+            <RelativeLayout
+                android:layout_weight="3"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/x80"
+                android:background="@color/my_sumao_title_background"
+                >
+                <ImageView
+                    android:id="@+id/my_sumao_iv_icon"
+                    android:layout_width="100sp"
+                    android:layout_height="100sp"
+                    android:src="@mipmap/my_sumao_icon"
+                    android:layout_marginLeft="@dimen/my_sumao_title_image_margin"
+                    android:layout_marginTop="@dimen/my_sumao_title_image_margin"
+                    android:layout_marginBottom="@dimen/my_sumao_title_image_margin"
+
+                    />
+                <TextView
+                    android:id="@+id/my_sumao_tv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/app_name"
+                    android:layout_toRightOf="@id/my_sumao_iv_icon"
+                    android:layout_centerInParent="true"
+                    android:textSize="@dimen/my_sumao_name_text_size"
+                    android:textColor="@color/white"
+
+                    />
+                <ImageView
+                    android:id="@+id/my_sumao_ib_setting"
+                    android:layout_width="@dimen/x20"
+                    android:layout_height="@dimen/x20"
+                    android:layout_margin="@dimen/x10"
+                    android:src="@mipmap/my_sumao_setting"
+                    android:layout_alignParentRight="true"
+
+                    />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:background="@color/white"
+                android:padding="5dp"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/my_sumao_my_order"
+                    android:textSize="@dimen/x15"
+                    android:textColor="@color/my_sumao_text_color_black"
+                    android:layout_centerVertical="true"
+                    />
+                <ImageView
+                    android:id="@+id/my_sumao_iv_order"
+                    android:layout_width="@dimen/x15"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/my_sumao_iv_order"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:paddingRight="@dimen/x10"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/my_sumao_all_orders"
+                    android:textSize="@dimen/x15"
+                    android:layout_toLeftOf="@id/my_sumao_iv_order"
+                    android:textColor="@color/my_sumao_text_color_gray"
+                    android:layout_centerVertical="true"
+                    android:paddingRight="@dimen/x20"
+
+                    />
+
+            </RelativeLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/x75"
+                android:layout_marginTop="@dimen/x2"
+                android:background="@color/white"
+                android:weightSum="6"
+                >
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/my_sumao_to_be_paid"
+                    android:layout_weight="1"
+
+                    />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/my_sumao_to_send_the_goods"
+                    android:layout_weight="1"
+                    android:background="@color/white"
+                    />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/my_sumao_has_been_shipped"
+                    android:layout_weight="1"
+                    />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/my_sumao_has_been_completed"
+                    android:layout_weight="1"
+                    />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/my_sumao_has_been_cancelled"
+                    android:layout_weight="1"
+
+                    />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/my_sumao_have_to_return"
+                    android:layout_weight="1"
+                    />
+
+            </LinearLayout>
+
+
+
+
+            <com.silianchuangye.sumao.success.custom.CustomExpandableListView
+                android:id="@+id/expandable_listView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/x3"
+                >
+
+            </com.silianchuangye.sumao.success.custom.CustomExpandableListView>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
+<!-- <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:padding="5dp"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="我的订单"
+                    android:textSize="20sp"
+                    android:textColor="@color/my_sumao_text_color_black"
+                    />
+
+
+            </RelativeLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:background="@color/white"
+                android:weightSum="4"
+                >
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/my_sumao_generation_of_the_purchasing_requisition"
+                    android:layout_weight="1"
+                    />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/my_sumao_supply_resources"
+                    android:layout_weight="1"
+                    />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/my_sumao_has_set_the_order"
+                    android:layout_weight="1"
+                    />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/my_sumao_has_set_the_order"
+                    android:visibility="invisible"
+                    android:layout_weight="1"
+                    />
+            </LinearLayout>-->

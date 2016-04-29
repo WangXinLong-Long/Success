@@ -5,6 +5,7 @@
     <dimen name="bottoom_text_size">12sp</dimen>
     <dimen name="padding_right">5dp</dimen>
     <dimen name="padding_top">10dp</dimen>
-
+    <dimen name="my_sumao_title_image_margin">15dp</dimen>
+    <dimen name="my_sumao_name_text_size">15sp</dimen>
 
 </resources>

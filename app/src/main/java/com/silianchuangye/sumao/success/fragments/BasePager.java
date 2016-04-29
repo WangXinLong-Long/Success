@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
 
@@ -35,6 +36,8 @@ public abstract class BasePager extends Fragment implements View.OnClickListener
     protected TextView title;
 //    标题栏右边图标
     protected ImageView service;
+    //    整个标题栏
+    protected RelativeLayout rl_title;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +50,8 @@ public abstract class BasePager extends Fragment implements View.OnClickListener
         if (view==null)
         {
             view = View.inflate(mActivity, R.layout.base_pager,null);
+            rl_title = (RelativeLayout) view.findViewById(R.id.fl_title);
+
             logo = ((ImageView) view.findViewById(R.id.iv_title_bar_logo));
             searchView = ((EditText) view.findViewById(R.id.sv_title_bar_serachView));
             title = ((TextView) view.findViewById(R.id.tv_title_bar_title));

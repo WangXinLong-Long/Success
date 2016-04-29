@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="title">
+        <item>The order management</item>
+        <item>Match management</item>
+        <item>Personal information</item>
+        <item>Enterprise information</item>
+        <item>Enterprise capital account management</item>
+        <item>Enterprise application information</item>
+    </string-array>
+    <string-array name="child">
+        <item>,,</item>
+        <item>,,</item>
+        <item>,,</item>
+        <item>,,,,</item>
+        <item>,,,</item>
+        <item>,</item>
+    </string-array>
+    <string-array name="child1">
+        <item>The spot orders</item>
+        <item>booking orders</item>
+        <item>price point wish list</item>
+    </string-array>
+    <string-array name="child2">
+        <item>Purchase demand</item>
+        <item>supply resources</item>
+        <item>set single information</item>
+    </string-array>
+    <string-array name="child3">
+        <item>The user information</item>
+        <item>password modification</item>
+        <item>subscription information</item>
+    </string-array>
+    <string-array name="child4">
+        <item>Enterprise information</item>
+        <item>user management</item>
+        <item>shipping address</item>
+        <item>billing information</item>
+        <item>enterprise level and integral</item>
+    </string-array>
+    <string-array name="child5">
+        <item>Capital account information</item>
+        <item>account details</item>
+        <item>golden operation</item>
+        <item>the operation of gold</item>
+    </string-array>
+    <string-array name="child6">
+        <item>Application for the seller</item>
+        <item>the application for the upstream resources of clients</item>
+    </string-array>
+</resources>

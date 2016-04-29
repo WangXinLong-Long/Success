@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="title">
+        <item>订单管理</item>
+        <item>撮合管理</item>
+        <item>个人信息</item>
+        <item>企业信息</item>
+        <item>企业资金账户管理</item>
+        <item>企业申请信息</item>
+    </string-array>
+    <string-array name="child1">
+        <item>现货订单</item>
+        <item>预售订单</item>
+        <item>点价意向单</item>
+    </string-array>
+     <string-array name="child2">
+        <item>采购需求</item>
+        <item>供应资源</item>
+        <item>撮合单信息</item>
+    </string-array>
+     <string-array name="child3">
+        <item>用户信息</item>
+        <item>密码修改</item>
+        <item>资讯订阅</item>
+    </string-array>
+     <string-array name="child4">
+        <item>企业信息</item>
+        <item>企业用户管理</item>
+        <item>收货地址</item>
+        <item>开票信息</item>
+        <item>企业等级和积分</item>
+    </string-array>
+     <string-array name="child5">
+        <item>资金账户信息</item>
+        <item>账户金额明细</item>
+        <item>入金操作</item>
+        <item>出金操作</item>
+    </string-array>
+     <string-array name="child6">
+        <item>申请为卖方</item>
+        <item>申请为上游资源方客户</item>
+    </string-array>
+
+</resources>
