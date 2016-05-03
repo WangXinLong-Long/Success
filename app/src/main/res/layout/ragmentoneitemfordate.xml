@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="50dp">
+    android:layout_height="@dimen/y35">
     <ImageView
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="@dimen/x30"
+        android:layout_height="@dimen/y20"
         android:id="@+id/ivfragmenticon"
         android:src="@mipmap/underwey"
 
@@ -15,17 +15,17 @@
         android:id="@+id/tvfragmentfordate"
         android:text="8900"
         android:textStyle="bold"
-        android:textSize="16dp"
-        android:layout_toRightOf="@+id/ivfragmenticon"
+        android:textSize="15dp"
+        android:layout_marginLeft="@dimen/x3"
 
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="@dimen/x20"
         />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="13dp"
         android:text="元/吨"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="@dimen/x20"
         android:layout_toRightOf="@+id/tvfragmentfordate"
         android:id="@+id/a"
         />
@@ -34,9 +34,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="北京"
-        android:textSize="16sp"
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="10dp"
+        android:textSize="15sp"
+        android:layout_marginTop="@dimen/x20"
+        android:layout_marginLeft="@dimen/x3"
         android:textColor="#F68B0E"
         android:id="@+id/tvfragmentforcity"
         android:layout_toRightOf="@id/a"
@@ -45,10 +45,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tvFragmentforcom"
-        android:textSize="16sp"
-        android:layout_marginLeft="10dp"
+        android:textSize="15sp"
+        android:layout_marginLeft="@dimen/x3"
         android:text="福建联合"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="@dimen/x20"
         android:textStyle="bold"
         android:layout_toRightOf="@id/tvfragmentforcity"
         />
@@ -56,8 +56,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="13dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="5dp"
+        android:layout_marginTop="@dimen/x22"
+        android:layout_marginLeft="@dimen/x3"
         android:text="8900"
         android:textStyle="bold"
         android:id="@+id/tvfragmentfornumber"
