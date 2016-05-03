@@ -255,6 +255,7 @@
         <meta-data android:name="JPUSH_APPKEY" android:value="08028a44209e288bcdbbe182" /> <!-- </>值来自开发者平台取得的AppKey-->
 
         <!--Jpush推送结束配置-->
+        <activity android:name=".OrderGoodsActivity"></activity>
     </application>
 
 </manifest>
