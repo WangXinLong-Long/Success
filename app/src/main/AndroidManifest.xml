@@ -2,12 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.silianchuangye.sumao.success">
 
-    <!--Jpush推送以下权限-->
+    <!-- Jpush推送以下权限 -->
     <!-- Required 自定义用来收发消息的相关权限 -->
     <permission
         android:name="com.silianchuangye.sumao.success.permission.JPUSH_MESSAGE"
         android:protectionLevel="signature" />
-    <!-- Required 一些系统要求的权限，如访问网络等-->
+    <!-- Required 一些系统要求的权限，如访问网络等 -->
     <uses-permission android:name="com.silianchuangye.sumao.success.permission.JPUSH_MESSAGE" />
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -21,7 +21,6 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
-
     <!-- Optional for location -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
@@ -29,7 +28,7 @@
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
 
-    <!--Jpush推送以上权限-->
+    <!-- Jpush推送以上权限 -->
 
 
     <!-- Required -->
@@ -59,7 +58,8 @@
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <!-- 需要修改的地方，请注意，需要修改为你自己的包名 -->
     <!-- 这里需要修改 android:name="包名+.permission.C2D_MESSAGE" -->
-    <permission android:name="com.silianchuangye.sumao.chart.permission.C2D_MESSAGE"
+    <permission
+        android:name="com.silianchuangye.sumao.chart.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
     <!-- 这里需要修改 android:name="包名+.permission.C2D_MESSAGE" -->
     <uses-permission android:name="com.silianchuangye.sumao.chart.permission.C2D_MESSAGE" />
@@ -79,16 +79,18 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden"
             >
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".Activityguanjun"></activity>
-        <activity android:name=".HeLinJian"></activity>
-
+        <activity android:name=".Activityguanjun" />
+        <activity android:name=".HeLinJian" />
 
         <!-- 登陆 -->
         <activity
@@ -109,25 +111,24 @@
         <!-- 设置appkey界面 -->
         <activity android:name="com.silianchuangye.sumao.success.HX.ui.ModifyActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide"
-            ></activity>
-
-        <activity android:name="com.silianchuangye.sumao.success.HX.ui.SatisfactionActivity"
-            android:screenOrientation="portrait"></activity>
+            android:theme="@style/horizontal_slide" />
+        <activity
+            android:name=".HX.ui.SatisfactionActivity"
+            android:screenOrientation="portrait" />
 
         <!-- 自定义的contextmenu -->
-        <activity android:name="com.silianchuangye.sumao.success.HX.ui.ContextMenuActivity"
+        <activity
+            android:name=".HX.ui.ContextMenuActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/MyDialogStyle"
-            />
-
-        <activity android:name="com.silianchuangye.sumao.success.HX.ui.ShortCutMsgActivity"
+            android:theme="@style/MyDialogStyle" />
+        <activity
+            android:name=".HX.ui.ShortCutMsgActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AnimBottomIn"/>
+            android:theme="@style/AnimBottomIn" />
 
         <!-- 开机自启动服务 -->
-        <receiver android:name="com.easemob.chat.StartServiceReceiver" >
-            <intent-filter android:priority="1000" >
+        <receiver android:name="com.easemob.chat.StartServiceReceiver">
+            <intent-filter android:priority="1000">
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.QUICKBOOT_POWERON" />
 
@@ -135,39 +136,44 @@
             </intent-filter>
         </receiver>
 
-        <service android:name="com.easemob.chat.EMGCMListenerService"
-            android:exported="false" >
-        </service>
+        <service
+            android:name="com.easemob.chat.EMGCMListenerService"
+            android:exported="false"></service>
 
-        <!-- 设置环信应用的appkey 可以在Manifest设置也可以在代码中设置-->
+        <!-- 设置环信应用的appkey 可以在Manifest设置也可以在代码中设置 -->
         <meta-data
             android:name="EASEMOB_APPKEY"
             android:value="xiongmaowang1#ziguang" />
         <!-- 设置环信应用的appkey -->
 
-        <!-- 声明sdk所需的service SDK核心功能-->
-        <service android:name="com.hyphenate.chat.EMChatService" android:exported="true"/>
+
+        <!-- 声明sdk所需的service SDK核心功能 -->
+        <service
+            android:name="com.hyphenate.chat.EMChatService"
+            android:exported="true" />
         <!-- 声明sdk所需的receiver -->
         <receiver android:name="com.easemob.chat.EMMonitorReceiver">
             <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_REMOVED"/>
-                <data android:scheme="package"/>
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+
+                <data android:scheme="package" />
             </intent-filter>
             <!-- 可选filter -->
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.USER_PRESENT" />
             </intent-filter>
         </receiver>
 
-    <!--jpush推送配置-->
+        <!-- jpush推送配置 -->
 
-        <!-- Required SDK核心功能-->
+
+        <!-- Required SDK核心功能 -->
         <activity
             android:name="cn.jpush.android.ui.PushActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:theme="@android:style/Theme.NoTitleBar"
-            android:exported="false">
+            android:exported="false"
+            android:theme="@android:style/Theme.NoTitleBar">
             <intent-filter>
                 <action android:name="cn.jpush.android.ui.PushActivity" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -175,14 +181,13 @@
             </intent-filter>
         </activity>
 
-        <!-- Required SDK核心功能-->
+        <!-- Required SDK核心功能 -->
         <service
             android:name="cn.jpush.android.service.DownloadService"
             android:enabled="true"
-            android:exported="false" >
-        </service>
+            android:exported="false"></service>
 
-        <!-- Required SDK 核心功能-->
+        <!-- Required SDK 核心功能 -->
         <!-- option since 2.0.5 可配置PushService，DaemonService,PushReceiver,AlarmReceiver的android:process参数 将JPush相关组件设置为一个独立进程 -->
         <!-- 如：android:process=":remote" -->
         <service
@@ -194,7 +199,6 @@
                 <action android:name="cn.jpush.android.intent.REPORT" />
                 <action android:name="cn.jpush.android.intent.PushService" />
                 <action android:name="cn.jpush.android.intent.PUSH_TIME" />
-
             </intent-filter>
         </service>
 
@@ -203,19 +207,20 @@
             android:name="cn.jpush.android.service.DaemonService"
             android:enabled="true"
             android:exported="true">
-            <intent-filter >
+            <intent-filter>
                 <action android:name="cn.jpush.android.intent.DaemonService" />
                 <category android:name="com.silianchuangye.sumao.success"/>
             </intent-filter>
         </service>
 
-        <!-- Required SDK核心功能-->
+        <!-- Required SDK核心功能 -->
         <receiver
             android:name="cn.jpush.android.service.PushReceiver"
             android:enabled="true"
             android:exported="false">
             <intent-filter android:priority="1000">
-                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" /> <!--Required 显示通知栏 -->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" />
+                <!-- Required 显示通知栏 -->
                 <category android:name="com.silianchuangye.sumao.success" />
             </intent-filter>
             <intent-filter>
@@ -230,29 +235,42 @@
             </intent-filter>
         </receiver>
 
-        <!-- Required SDK核心功能-->
+        <!-- Required SDK核心功能 -->
         <receiver android:name="cn.jpush.android.service.AlarmReceiver" />
 
-        <!-- User defined. 用户自定义的广播接收器-->
+        <!-- User defined. 用户自定义的广播接收器 -->
         <receiver
             android:name=".reciver.JpushMyReciver"
             android:enabled="true">
             <intent-filter>
-                <action android:name="cn.jpush.android.intent.REGISTRATION" /> <!--Required 用户注册SDK的intent-->
-                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" /> <!--Required 用户接收SDK消息的intent-->
-                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" /> <!--Required 用户接收SDK通知栏信息的intent-->
-                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" /> <!--Required 用户打开自定义通知栏的intent-->
-                <action android:name="cn.jpush.android.intent.ACTION_RICHPUSH_CALLBACK" /> <!--Optional 用户接受Rich Push Javascript 回调函数的intent-->
-                <action android:name="cn.jpush.android.intent.CONNECTION" /><!-- 接收网络变化 连接/断开 since 1.6.3 -->
+                <action android:name="cn.jpush.android.intent.REGISTRATION" />
+                <!-- Required 用户注册SDK的intent -->
+                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" />
+                <!-- Required 用户接收SDK消息的intent -->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" />
+                <!-- Required 用户接收SDK通知栏信息的intent -->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" />
+                <!-- Required 用户打开自定义通知栏的intent -->
+                <action android:name="cn.jpush.android.intent.ACTION_RICHPUSH_CALLBACK" />
+                <!-- Optional 用户接受Rich Push Javascript 回调函数的intent -->
+                <action android:name="cn.jpush.android.intent.CONNECTION" />
+                <!-- 接收网络变化 连接/断开 since 1.6.3 -->
                 <category android:name="com.silianchuangye.sumao.success" />
             </intent-filter>
         </receiver>
 
         <!-- Required . Enable it you can get statistics data with channel -->
-        <meta-data android:name="JPUSH_CHANNEL" android:value="developer-default"/>
-        <meta-data android:name="JPUSH_APPKEY" android:value="08028a44209e288bcdbbe182" /> <!-- </>值来自开发者平台取得的AppKey-->
+        <meta-data
+            android:name="JPUSH_CHANNEL"
+            android:value="developer-default" />
+        <meta-data
+            android:name="JPUSH_APPKEY"
+            android:value="08028a44209e288bcdbbe182" />
+        <!-- </>值来自开发者平台取得的AppKey -->
 
-        <!--Jpush推送结束配置-->
+
+        <!-- Jpush推送结束配置 -->
+        <activity android:name=".OrderGoodsActivity"></activity>
     </application>
 
 </manifest>

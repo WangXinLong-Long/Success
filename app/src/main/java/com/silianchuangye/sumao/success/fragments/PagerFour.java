@@ -57,7 +57,15 @@ public class PagerFour extends BasePager {
         //为ExpandableListView的子列表单击事件设置监听器
         expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
-            public boolean onChildClick(ExpandableListView parent, View v,int groupPosition, int childPosition, long id) {
+            public boolean onChildClick(ExpandableListView parent, View v,
+                                        int groupPosition, int childPosition, long id) {
+                // TODO Auto-generated method stub
+                if (sela.getChild(groupPosition, childPosition).toString().equals("现货订单"))
+                {
+                    Intent intent = new Intent();
+                    intent.setClass(context,OrderGoodsActivity.class);
+                    startActivity(intent);
+                }
 
                 return true;
             }
