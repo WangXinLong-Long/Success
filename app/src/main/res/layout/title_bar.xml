@@ -26,7 +26,7 @@
         android:paddingTop="@dimen/padding_right"
         android:clickable="true"
         />
-    <EditText
+    <Button
         android:id="@+id/sv_title_bar_serachView"
         android:layout_toRightOf="@+id/iv_title_bar_logo"
         android:layout_toLeftOf="@+id/iv_title_bar_service"
@@ -38,7 +38,7 @@
         android:paddingBottom="@dimen/padding_top"
         android:layout_centerInParent="true"
         android:clickable="true"
-        ></EditText>
+        ></Button>
     <TextView
         android:id="@+id/tv_title_bar_title"
         android:layout_toRightOf="@id/iv_title_bar_logo"

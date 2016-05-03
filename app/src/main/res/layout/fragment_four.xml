@@ -21,7 +21,7 @@
 
             <RelativeLayout
                 android:layout_weight="3"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="@dimen/x80"
                 android:background="@color/my_sumao_title_background"
                 >
@@ -104,43 +104,55 @@
                 android:paddingRight="@dimen/x15"
                 >
                 <ImageView
+                    android:id="@+id/my_sumao_to_be_paid"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@mipmap/my_sumao_to_be_paid"
                     android:layout_weight="1"
+                    android:clickable="true"
 
                     />
                 <ImageView
+                    android:id="@+id/my_sumao_to_send_the_goods"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@mipmap/my_sumao_to_send_the_goods"
                     android:layout_weight="1"
                     android:background="@color/white"
+                    android:clickable="true"
+
                     />
                 <ImageView
+                    android:id="@+id/my_sumao_has_been_shipped"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@mipmap/my_sumao_has_been_shipped"
                     android:layout_weight="1"
+                    android:clickable="true"
                     />
                 <ImageView
+                    android:id="@+id/my_sumao_has_been_completed"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@mipmap/my_sumao_has_been_completed"
                     android:layout_weight="1"
+                    android:clickable="true"
                     />
                 <ImageView
+                    android:id="@+id/my_sumao_has_been_cancelled"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@mipmap/my_sumao_has_been_cancelled"
                     android:layout_weight="1"
-
+                    android:clickable="true"
                     />
                 <ImageView
+                    android:id="@+id/my_sumao_have_to_return"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@mipmap/my_sumao_have_to_return"
                     android:layout_weight="1"
+                    android:clickable="true"
                     />
 
             </LinearLayout>

@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -31,7 +32,7 @@ public abstract class BasePager extends Fragment implements View.OnClickListener
 //    标题栏最左边的logo
     protected ImageView logo;
 //    标题栏搜索框
-    protected EditText searchView;
+    protected Button searchView;
 //    标题栏标题
     protected TextView title;
 //    标题栏右边图标
@@ -53,7 +54,7 @@ public abstract class BasePager extends Fragment implements View.OnClickListener
             rl_title = (RelativeLayout) view.findViewById(R.id.fl_title);
 
             logo = ((ImageView) view.findViewById(R.id.iv_title_bar_logo));
-            searchView = ((EditText) view.findViewById(R.id.sv_title_bar_serachView));
+            searchView = ((Button) view.findViewById(R.id.sv_title_bar_serachView));
             title = ((TextView) view.findViewById(R.id.tv_title_bar_title));
             service = ((ImageView) view.findViewById(R.id.iv_title_bar_service));
             fl_content = ((FrameLayout) view.findViewById(R.id.fl_basepager_content));

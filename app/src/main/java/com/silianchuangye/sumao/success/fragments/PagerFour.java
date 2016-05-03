@@ -1,9 +1,11 @@
 package com.silianchuangye.sumao.success.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +22,14 @@ public class PagerFour extends BasePager {
     private CustomExpandableListView expandableListView;
     private ExpandableListAdapter sela;
     private Context context;
+    private ImageView
+            my_sumao_to_be_paid,
+            my_sumao_to_send_the_goods,
+            my_sumao_has_been_shipped,
+            my_sumao_has_been_completed,
+            my_sumao_has_been_cancelled,
+            my_sumao_have_to_return;
+    private ImageView my_sumao_ib_setting;
     View view;
     @Override
     public void myClickSearch() {
@@ -47,14 +57,67 @@ public class PagerFour extends BasePager {
         //为ExpandableListView的子列表单击事件设置监听器
         expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
-            public boolean onChildClick(ExpandableListView parent, View v,
-                                        int groupPosition, int childPosition, long id) {
-                // TODO Auto-generated method stub
-                Toast.makeText(mActivity, "你单击了："
-                        +sela.getChild(groupPosition, childPosition), Toast.LENGTH_LONG).show();
+            public boolean onChildClick(ExpandableListView parent, View v,int groupPosition, int childPosition, long id) {
+
                 return true;
             }
         });
+
+        my_sumao_to_be_paid = ((ImageView) view.findViewById(R.id.my_sumao_to_be_paid));
+        my_sumao_to_send_the_goods = ((ImageView) view.findViewById(R.id.my_sumao_to_send_the_goods));
+        my_sumao_has_been_shipped = ((ImageView) view.findViewById(R.id.my_sumao_has_been_shipped));
+        my_sumao_has_been_completed = ((ImageView) view.findViewById(R.id.my_sumao_has_been_completed));
+        my_sumao_has_been_cancelled = ((ImageView) view.findViewById(R.id.my_sumao_has_been_cancelled));
+        my_sumao_have_to_return = ((ImageView) view.findViewById(R.id.my_sumao_have_to_return));
+        my_sumao_ib_setting = ((ImageView) view.findViewById(R.id.my_sumao_ib_setting));
+
+        my_sumao_to_be_paid.setOnClickListener(this);
+        my_sumao_to_send_the_goods.setOnClickListener(this);
+        my_sumao_has_been_shipped.setOnClickListener(this);
+        my_sumao_has_been_completed.setOnClickListener(this);
+        my_sumao_has_been_cancelled.setOnClickListener(this);
+        my_sumao_have_to_return.setOnClickListener(this);
+        my_sumao_ib_setting.setOnClickListener(this);
+
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId())
+        {
+            /**
+             * 以下6个我的订单的子项
+             */
+            case R.id.my_sumao_to_be_paid:
+               /* Intent intent = new Intent();
+                intent.setClass(context,TestActivity.class);
+                startActivity(intent);*/
+                break;
+            case R.id.my_sumao_to_send_the_goods:
+
+                break;
+            case R.id.my_sumao_has_been_shipped:
+
+                break;
+            case R.id.my_sumao_has_been_completed:
+
+                break;
+            case R.id.my_sumao_has_been_cancelled:
+
+                break;
+            case R.id.my_sumao_have_to_return:
+
+                break;
+
+            /**
+             * 点击设置按钮，右上角的齿轮图标
+             */
+
+            case R.id.my_sumao_ib_setting:
+
+                break;
+        }
     }
 
     @Override
