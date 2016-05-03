@@ -8,6 +8,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
@@ -37,6 +38,7 @@ public class PagerOne extends BasePager {
     private LinearLayout view;
     private ListView lvFragmentAdwords;
     private List<Map<String,Object>> listString;
+    private RelativeLayout rlHorn;
     @Override
     public void myClickSearch() {
     }
@@ -48,7 +50,19 @@ public class PagerOne extends BasePager {
         vpad();
         listString=new ArrayList<Map<String,Object>>();
         listAdwords();
+        initHorn();
     }
+    private void initHorn(){
+        rlHorn= (RelativeLayout) view.findViewById(R.id.rlFragmentGridView);
+        rlHorn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //小喇叭的点击事件，调到详情展示
+                Toast.makeText(mActivity, "这是详情展示", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     public void listAdwords(){
         lvFragmentAdwords= (ListView) view.findViewById(R.id.lvFragmentAdwords);
         Map<String,Object> map=new Hashtable<String,Object>();
@@ -206,6 +220,13 @@ public class PagerOne extends BasePager {
             public void onNothingSelected(AdapterView<?> arg0) {
             }
         });
+       gallery.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+           @Override
+           public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+              //广告条的点击事件
+               Toast.makeText(mActivity, "点击了广告条", Toast.LENGTH_SHORT).show();
+           }
+       });
 
     }
     //实例化哪些点点

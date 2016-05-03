@@ -5,6 +5,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.silianchuangye.sumao.success.adapter.MyPageAdapter;
 import com.silianchuangye.sumao.success.fragments.OrderAlreadyFinishFragment;
@@ -20,15 +22,17 @@ import java.util.ArrayList;
 public class OrderGoodsActivity extends AppCompatActivity {
 
     private ArrayList<Fragment> listFragment;
-
     private TabLayout tlDemo;
     private ViewPager vpDemo;
     private MyPageAdapter adapter;
-
+    private ImageView back;
+    private ImageView search;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_goods);
+        back= (ImageView) findViewById(R.id.ivBack_order_layout_top);
+        search= (ImageView) findViewById(R.id.ivSearch_order_layout_top);
         listFragment=new ArrayList<Fragment>();
         OrderallFragment all=new OrderallFragment();
         listFragment.add(all);
@@ -63,6 +67,21 @@ public class OrderGoodsActivity extends AppCompatActivity {
         vpDemo.setAdapter(adapter);
         tlDemo.setupWithViewPager(vpDemo);
         tlDemo.setTabMode(tlDemo.MODE_SCROLLABLE);
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OrderGoodsActivity.this.finish();
+            }
+        });
+
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //PopupWindow
+            }
+        });
+
 
     }
 }
