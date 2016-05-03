@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.HX.Constant;
 import com.silianchuangye.sumao.success.HX.ui.LoginActivity;
+import com.silianchuangye.sumao.success.OrderGoodsActivity;
 import com.silianchuangye.sumao.success.utils.scrollviewAD.MyGallery;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.ImageAdapter;
@@ -143,6 +144,7 @@ public class PagerOne extends BasePager {
                 }
                 }else if(list.get(position).get("icon").equals(R.mipmap.togther)){
                     Toast.makeText(mActivity, "点击了撮合按钮", Toast.LENGTH_SHORT).show();
+
                 }else if(list.get(position).get("icon").equals(R.mipmap.groupon)){
                     Toast.makeText(mActivity, "点击了团购按钮", Toast.LENGTH_SHORT).show();
                 }else if(list.get(position).get("icon").equals(R.mipmap.goods)){
@@ -157,6 +159,8 @@ public class PagerOne extends BasePager {
                     Toast.makeText(mActivity, "点击了上游直销按钮", Toast.LENGTH_SHORT).show();
                 }else if(list.get(position).get("icon").equals(R.mipmap.aa)){
                     Toast.makeText(mActivity, "点击了物流按钮", Toast.LENGTH_SHORT).show();
+                    Intent intent=new Intent(mActivity, OrderGoodsActivity.class);
+                    startActivity(intent);
                 }else if(list.get(position).get("icon").equals(R.mipmap.consult)){
                     Toast.makeText(mActivity, "点击了塑贸咨询按钮", Toast.LENGTH_SHORT).show();
                 }

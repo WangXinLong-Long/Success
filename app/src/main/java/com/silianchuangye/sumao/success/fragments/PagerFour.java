@@ -1,12 +1,14 @@
 package com.silianchuangye.sumao.success.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.silianchuangye.sumao.success.OrderGoodsActivity;
 import com.silianchuangye.sumao.success.R;
 
 import com.silianchuangye.sumao.success.R;
@@ -50,8 +52,13 @@ public class PagerFour extends BasePager {
             public boolean onChildClick(ExpandableListView parent, View v,
                                         int groupPosition, int childPosition, long id) {
                 // TODO Auto-generated method stub
-                Toast.makeText(mActivity, "你单击了："
-                        +sela.getChild(groupPosition, childPosition), Toast.LENGTH_LONG).show();
+                if (sela.getChild(groupPosition, childPosition).toString().equals("现货订单"))
+                {
+                    Intent intent = new Intent();
+                    intent.setClass(context,OrderGoodsActivity.class);
+                    startActivity(intent);
+                }
+
                 return true;
             }
         });

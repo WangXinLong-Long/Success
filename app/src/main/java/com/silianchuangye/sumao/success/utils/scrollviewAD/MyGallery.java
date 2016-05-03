@@ -29,8 +29,10 @@ public class MyGallery extends Gallery {
                     if (position >= (getCount() - 1))
                     {
                         onKeyDown(KeyEvent.KEYCODE_DPAD_LEFT, null);
+//                        onKeyDown(KeyEvent.KEYCODE_DPAD_RIGHT, null);
                     } else
                     {
+//                        onKeyDown(KeyEvent.KEYCODE_DPAD_LEFT, null);
                         onKeyDown(KeyEvent.KEYCODE_DPAD_RIGHT, null);
                     }
                     break;
@@ -76,9 +78,10 @@ public class MyGallery extends Gallery {
     {
         float f2 = paramMotionEvent2.getX();
         float f1 = paramMotionEvent1.getX();
-        if (f2 > f1)
+        if (f2 > f1){
             return true;
-        return false;
+        }
+       return false;
     }
 
     public boolean onFling(MotionEvent paramMotionEvent1,
@@ -88,8 +91,8 @@ public class MyGallery extends Gallery {
         if (isScrollingLeft(paramMotionEvent1, paramMotionEvent2))
         {
             keyCode = KeyEvent.KEYCODE_DPAD_LEFT;
-        } else
-        {
+        }
+        else{
             keyCode = KeyEvent.KEYCODE_DPAD_RIGHT;
         }
         onKeyDown(keyCode, null);
