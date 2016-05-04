@@ -1,24 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:paddingBottom="0dp"
     android:paddingLeft="0dp"
     android:paddingRight="0dp"
     android:paddingTop="0dp"
-    tools:context=".OrderGoodsActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.silianchuangye.sumao.success.MidpointsListctivity">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/y35"
-        android:id="@+id/order_layout_top"
+        android:id="@+id/orderPrice_layout_top"
         android:background="#28ABE3"
         >
         <ImageView
             android:layout_width="@dimen/x15"
             android:layout_height="@dimen/y13"
-            android:id="@+id/ivBack_order_layout_top"
+            android:id="@+id/ivBack_orderPrice_layout_top"
             android:layout_marginTop="@dimen/y10"
             android:src="@drawable/back"
             android:layout_marginLeft="10dp"
@@ -26,7 +28,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="现货订单"
+            android:text="点价"
             android:textColor="#fff"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/y8"
@@ -35,7 +37,7 @@
         <ImageView
             android:layout_width="@dimen/x15"
             android:layout_height="@dimen/y14"
-            android:id="@+id/ivSearch_order_layout_top"
+            android:id="@+id/ivSearch_orderPrice_layout_top"
             android:layout_marginTop="@dimen/y10"
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
@@ -45,15 +47,38 @@
     <android.support.design.widget.TabLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/y30"
-        android:id="@+id/tlDemo"
+        android:id="@+id/tlDemo_OrderPrice_activity"
         app:tabSelectedTextColor="#28ABE3"
         app:tabIndicatorColor="#28ABE3"
-        android:layout_below="@+id/order_layout_top"
+        android:layout_below="@+id/orderPrice_layout_top"
         ></android.support.design.widget.TabLayout>
     <android.support.v4.view.ViewPager
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/tlDemo"
-        android:id="@+id/vpDemo"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tlDemo_OrderPrice_activity"
+        android:id="@+id/vpDemo_OrderPrice_activity"
         ></android.support.v4.view.ViewPager>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y30"
+        android:id="@+id/layout_midpoints_list"
+        android:orientation="horizontal"
+        android:background="#fff"
+        android:layout_below="@id/vpDemo_OrderPrice_activity"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvRule_midpoints_list"
+            android:text="点价流程、点价规则"
+            android:textSize="16sp"
+            />
+        <ImageView
+            android:layout_width="@dimen/x20"
+            android:layout_height="@dimen/y15"
+            android:id="@+id/ivMore_Midpoints_List"
+
+            android:src="@mipmap/my_sumao_has_set_the_order"
+            />
+    </LinearLayout>
 </RelativeLayout>

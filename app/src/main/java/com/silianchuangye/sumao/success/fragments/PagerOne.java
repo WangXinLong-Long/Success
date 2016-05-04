@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.HX.Constant;
 import com.silianchuangye.sumao.success.HX.ui.LoginActivity;
+import com.silianchuangye.sumao.success.MidpointsListctivity;
 import com.silianchuangye.sumao.success.OrderGoodsActivity;
 import com.silianchuangye.sumao.success.utils.scrollviewAD.MyGallery;
 import com.silianchuangye.sumao.success.R;
@@ -173,7 +174,7 @@ public class PagerOne extends BasePager {
                     Toast.makeText(mActivity, "点击了上游直销按钮", Toast.LENGTH_SHORT).show();
                 }else if(list.get(position).get("icon").equals(R.mipmap.aa)){
                     Toast.makeText(mActivity, "点击了物流按钮", Toast.LENGTH_SHORT).show();
-                    Intent intent=new Intent(mActivity, OrderGoodsActivity.class);
+                    Intent intent=new Intent(mActivity, MidpointsListctivity.class);
                     startActivity(intent);
                 }else if(list.get(position).get("icon").equals(R.mipmap.consult)){
                     Toast.makeText(mActivity, "点击了塑贸咨询按钮", Toast.LENGTH_SHORT).show();
