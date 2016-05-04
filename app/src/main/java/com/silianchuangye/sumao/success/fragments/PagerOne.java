@@ -1,6 +1,7 @@
 package com.silianchuangye.sumao.success.fragments;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.AdapterView;
@@ -13,6 +14,7 @@ import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 
+import com.silianchuangye.sumao.success.AuctionActivity;
 import com.silianchuangye.sumao.success.HX.Constant;
 import com.silianchuangye.sumao.success.HX.ui.LoginActivity;
 import com.silianchuangye.sumao.success.MidpointsListctivity;
@@ -167,7 +169,9 @@ public class PagerOne extends BasePager {
                 }else if(list.get(position).get("icon").equals(R.mipmap.presell)){
                     Toast.makeText(mActivity, "点击了预售按钮", Toast.LENGTH_SHORT).show();
                 }else if(list.get(position).get("icon").equals(R.mipmap.adwords)){
-                    Toast.makeText(mActivity, "点击了竞拍按钮", Toast.LENGTH_SHORT).show();
+                   //Toast.makeText(mActivity, "点击了竞拍按钮", Toast.LENGTH_SHORT).show();
+                    Intent intent=new Intent(mActivity, AuctionActivity.class);
+                    startActivity(intent);
                 }else if(list.get(position).get("icon").equals(R.mipmap.order)){
                     Toast.makeText(mActivity, "点击了点价按钮", Toast.LENGTH_SHORT).show();
                 }else if(list.get(position).get("icon").equals(R.mipmap.direct)){
