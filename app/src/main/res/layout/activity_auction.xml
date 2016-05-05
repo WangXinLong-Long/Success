@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="0dp"
+    android:paddingLeft="0dp"
+    android:paddingRight="0dp"
+    android:paddingTop="0dp"
+    tools:context="com.silianchuangye.sumao.success.AuctionActivity">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y35"
+        android:id="@+id/auction_layout_top"
+        android:background="#28ABE3"
+        >
+        <ImageView
+            android:layout_width="@dimen/x15"
+            android:layout_height="@dimen/y13"
+            android:id="@+id/ivBack_auction_layout_top"
+            android:layout_marginTop="@dimen/y10"
+            android:src="@drawable/back"
+            android:layout_marginLeft="10dp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="竞拍"
+            android:textColor="#fff"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/y8"
+            android:textSize="20sp"
+            />
+        <ImageView
+            android:layout_width="@dimen/x15"
+            android:layout_height="@dimen/y14"
+            android:id="@+id/ivSearch_auction_layout_top"
+            android:layout_marginTop="@dimen/y10"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/search"
+            />
+    </RelativeLayout>
+    <ListView
+        android:layout_below="@id/auction_layout_top"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:background="#EEEEF3"
+        android:id="@+id/lvAuction_Auction_Layout"
+        ></ListView>
+
+</RelativeLayout>

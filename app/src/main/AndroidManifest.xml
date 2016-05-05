@@ -88,14 +88,14 @@
             android:name=".HX.ui.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
-            android:windowSoftInputMode="adjustResize"></activity>
+            android:windowSoftInputMode="adjustResize" />
         <!-- 聊天页面 -->
         <activity
             android:name=".HX.ui.ChatActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
-            android:windowSoftInputMode="adjustResize|stateHidden"></activity>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <!-- 设置appkey界面 -->
         <activity
@@ -264,7 +264,8 @@
 
         <!-- Jpush推送结束配置 -->
         <activity android:name=".OrderGoodsActivity" />
-        <activity android:name=".MidpointsListctivity"></activity>
+        <activity android:name=".MidpointsListctivity" />
+        <activity android:name=".AuctionActivity"></activity>
     </application>
 
 </manifest>
