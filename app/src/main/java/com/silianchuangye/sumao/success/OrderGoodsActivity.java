@@ -110,7 +110,7 @@ public class OrderGoodsActivity extends AppCompatActivity implements View.OnClic
             @Override
             public void onClick(View v) {
                 //PopupWindow
-                Toast.makeText(OrderGoodsActivity.this, "弹出对话框", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(OrderGoodsActivity.this, "弹出对话框", Toast.LENGTH_SHORT).show();
                 initData();
                 initView();
                 showPopView();
