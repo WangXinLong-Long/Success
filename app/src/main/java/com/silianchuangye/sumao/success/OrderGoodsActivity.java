@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -123,6 +124,7 @@ public class OrderGoodsActivity extends AppCompatActivity implements View.OnClic
     private void initView() {
         //加载popwindow以及popWindow不局下的控件
         popView=View.inflate(this,R.layout.popwindow,null);
+       // popView=getLayoutInflater().inflate(R.layout.popwindow,null);
         Tv_jiaoyi= (TextView) popView.findViewById(R.id.tv_dingdan_jiaoyi);
         Tv_kaipiao= (TextView) popView.findViewById(R.id.tv_dingdan_kaioiao);
         Tv_dingdan= (TextView) popView.findViewById(R.id.tv_dingdan_zhuangtai);
@@ -198,6 +200,7 @@ public class OrderGoodsActivity extends AppCompatActivity implements View.OnClic
     private void showPopView(){
       //  popView=View.inflate(this,R.layout.popwindow,null);
         popView.measure(0,0);
+      //  Log.d("aa",""+popView);
 
         int w=getWindowManager().getDefaultDisplay().getWidth();
         popupWindow=new PopupWindow(popView,w,popView.getMeasuredHeight());
