@@ -50,5 +50,8 @@
     <color name="textColor_expandable_listview_hide">#666666</color>
     <color name="textColor_expandable_listview_show">#29ABE2</color>
     <color name="expandable_listview_gray">#F4F4F4</color>
+    <color name="colordingdanLine">#EBEBEB</color>
+    <color name="dingdanpopwindow_Topbg">#ffffff</color>
+    <color name="dingdanpopwindow_Bottombg">#000000</color>
 
 </resources>
