@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -195,7 +196,9 @@ public class OrderGoodsActivity extends AppCompatActivity implements View.OnClic
     }
     //弹出的popWindow
     private void showPopView(){
+      //  popView=View.inflate(this,R.layout.popwindow,null);
         popView.measure(0,0);
+
         int w=getWindowManager().getDefaultDisplay().getWidth();
         popupWindow=new PopupWindow(popView,w,popView.getMeasuredHeight());
         popupWindow.setFocusable(true);
