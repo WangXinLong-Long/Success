@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/x35"
+    android:orientation="horizontal"
+    >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="兰州石化7042"
+        android:layout_marginLeft="@dimen/x20"
+        android:layout_marginTop="@dimen/x10"
+        android:id="@+id/tv_order_goods"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="生产企业:"
+        android:layout_marginTop="@dimen/x10"
+        android:layout_marginLeft="@dimen/x30"
+        android:id="@+id/tv_order_production"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="中石油"
+        android:layout_marginTop="@dimen/x10"
+        android:layout_marginLeft="@dimen/x5"
+        android:id="@+id/tv_order_productionName"
+        />
+
+</LinearLayout>

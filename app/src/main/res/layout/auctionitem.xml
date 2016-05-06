@@ -31,7 +31,7 @@
             android:layout_marginTop="@dimen/x13"
             android:textSize="14sp"
             android:text="2016-12-12 12:00"
-            android:textColor="#95D5F1"
+            android:textColor="#29ABE2"
             android:layout_marginRight="@dimen/x20"
             android:layout_alignParentRight="true"
             />
@@ -42,7 +42,7 @@
            android:layout_toLeftOf="@+id/tv_auction_time"
             android:layout_marginRight="@dimen/x5"
             android:layout_marginTop="@dimen/x13"
-            android:textColor="#95D5F1"
+            android:textColor="#29ABE2"
             android:textSize="14sp"
             android:id="@+id/tv_auction_start"
             />
@@ -119,7 +119,7 @@
             android:layout_marginLeft="@dimen/x60"
             android:text="起拍价"
             android:layout_below="@+id/tv_auction_price"
-            android:layout_marginTop="@dimen/x5"
+            android:layout_marginTop="@dimen/x1"
             android:id="@+id/tv_auction_startPrice"
 
             />
@@ -129,7 +129,7 @@
             android:layout_toRightOf="@+id/tv_auction_startPrice"
             android:layout_below="@+id/tv_auction_number"
             android:text="总量"
-            android:layout_marginTop="@dimen/x5"
+            android:layout_marginTop="@dimen/x1"
             android:layout_marginLeft="@dimen/x60"
             />
         <Button
