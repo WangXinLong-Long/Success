@@ -1,6 +1,7 @@
 package com.silianchuangye.sumao.success.fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
+import com.silianchuangye.sumao.success.fragments.SpotOrder.SpotOrder;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -33,7 +35,7 @@ public class OrderallFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View view=inflater.inflate(R.layout.fragment_orderall, container, false);
@@ -85,14 +87,18 @@ public class OrderallFragment extends Fragment {
         elvDemo.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-                Toast.makeText(getContext(), "点击title", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), "点击title", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), SpotOrder.class);
+                startActivity(intent);
                 return true;
+
             }
         });
         elvDemo.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-                Toast.makeText(getContext(), "点击内容", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), "点击内容", Toast.LENGTH_SHORT).show();
                 return false;
             }
         });

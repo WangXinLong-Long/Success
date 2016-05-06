@@ -53,5 +53,8 @@
     <color name="colordingdanLine">#EBEBEB</color>
     <color name="dingdanpopwindow_Topbg">#ffffff</color>
     <color name="dingdanpopwindow_Bottombg">#000000</color>
+    <color name="countdown_textview_yellow">#F7931E</color>
+    <color name="the_order_number_textview_blue">#0071BC</color>
+    <color name="the_amount_of_textview_red">#ED1C24</color>
 
 </resources>
