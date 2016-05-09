@@ -6,13 +6,15 @@ import android.view.View;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.OrderGoodsActivity;
 import com.silianchuangye.sumao.success.R;
 
+import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.ExpandableListViewAdapter;
 import com.silianchuangye.sumao.success.custom.CustomExpandableListView;
-import com.silianchuangye.sumao.success.fragments.personalInformation.PasswordUpdate;
 
 /**
  * Created by Administrator on 2016/4/20 0020.
@@ -58,7 +60,6 @@ public class PagerFour extends BasePager {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v,
                                         int groupPosition, int childPosition, long id) {
-                // TODO Auto-generated method stub
                 if (sela.getChild(groupPosition, childPosition).toString().equals("现货订单"))
                 {
                     Intent intent = new Intent();
@@ -68,6 +69,11 @@ public class PagerFour extends BasePager {
                 {
                     Intent intent = new Intent();
                     intent.setClass(context,OrderGoodsActivity.class);
+                    startActivity(intent);
+                }else if (sela.getChild(groupPosition, childPosition).toString().equals("资讯订阅"))
+                {
+                    Intent intent = new Intent();
+                    intent.setClass(context,InformationSubscription.class);
                     startActivity(intent);
                 }else if (sela.getChild(groupPosition, childPosition).toString().equals("密码修改")){
                     Intent intent=new Intent(context, PasswordUpdate.class);
