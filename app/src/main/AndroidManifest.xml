@@ -267,6 +267,7 @@
         <activity android:name=".MidpointsListctivity" />
         <activity android:name=".AuctionActivity"></activity>
         <activity android:name=".fragments.SpotOrder.SpotOrder"/>
+        <activity android:name=".fragments.personalInformation.InformationSubscription"/>
     </application>
 
 </manifest>

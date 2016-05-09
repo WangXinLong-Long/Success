@@ -56,5 +56,8 @@
     <color name="countdown_textview_yellow">#F7931E</color>
     <color name="the_order_number_textview_blue">#0071BC</color>
     <color name="the_amount_of_textview_red">#ED1C24</color>
-
+    <color name="zixun_topbg">#29ABE2</color>
+    <color name="zixun_centerbg">#EEEEF3</color>
+    <color name="zixun_bodybg">#ffffff</color>
+    <color name="zixun_line">#EEEEF3</color>
 </resources>
