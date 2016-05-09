@@ -6,15 +6,13 @@ import android.view.View;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.OrderGoodsActivity;
 import com.silianchuangye.sumao.success.R;
 
-import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.ExpandableListViewAdapter;
 import com.silianchuangye.sumao.success.custom.CustomExpandableListView;
+import com.silianchuangye.sumao.success.fragments.personalInformation.PasswordUpdate;
 
 /**
  * Created by Administrator on 2016/4/20 0020.
@@ -70,6 +68,9 @@ public class PagerFour extends BasePager {
                 {
                     Intent intent = new Intent();
                     intent.setClass(context,OrderGoodsActivity.class);
+                    startActivity(intent);
+                }else if (sela.getChild(groupPosition, childPosition).toString().equals("密码修改")){
+                    Intent intent=new Intent(context, PasswordUpdate.class);
                     startActivity(intent);
                 }
 

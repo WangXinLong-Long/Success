@@ -265,8 +265,9 @@
         <!-- Jpush推送结束配置 -->
         <activity android:name=".OrderGoodsActivity" />
         <activity android:name=".MidpointsListctivity" />
-        <activity android:name=".AuctionActivity"></activity>
-        <activity android:name=".fragments.SpotOrder.SpotOrder"/>
+        <activity android:name=".AuctionActivity" />
+        <activity android:name=".fragments.SpotOrder.SpotOrder" />
+        <activity android:name=".fragments.personalInformation.PasswordUpdate"></activity>
     </application>
 
 </manifest>
