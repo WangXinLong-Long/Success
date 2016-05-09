@@ -66,8 +66,9 @@ public class PagerFour extends BasePager {
                     Intent intent = new Intent();
                     intent.setClass(context,OrderGoodsActivity.class);
                     startActivity(intent);
+                }else if (sela.getChild(groupPosition, childPosition).toString().equals("密码修改")){
+                    Toast.makeText(context, "密码修改", Toast.LENGTH_SHORT).show();
                 }
-
                 return true;
             }
         });
