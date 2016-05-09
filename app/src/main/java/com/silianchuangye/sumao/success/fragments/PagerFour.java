@@ -60,8 +60,12 @@ public class PagerFour extends BasePager {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v,
                                         int groupPosition, int childPosition, long id) {
-                // TODO Auto-generated method stub
                 if (sela.getChild(groupPosition, childPosition).toString().equals("现货订单"))
+                {
+                    Intent intent = new Intent();
+                    intent.setClass(context,OrderGoodsActivity.class);
+                    startActivity(intent);
+                } else if (sela.getChild(groupPosition, childPosition).toString().equals("用户信息"))
                 {
                     Intent intent = new Intent();
                     intent.setClass(context,OrderGoodsActivity.class);
