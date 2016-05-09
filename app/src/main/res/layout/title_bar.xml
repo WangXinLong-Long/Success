@@ -3,20 +3,28 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="36dp"
+    android:layout_height="@dimen/x36"
     android:background="@color/white"
     android:paddingTop="@dimen/padding_right"
     android:paddingBottom="@dimen/padding_right"
     >
     <ImageView
-        android:id="@+id/iv_title_bar_logo"
-        android:layout_width="90dp"
-        android:layout_height="wrap_content"
-        android:src="@mipmap/iv_title_bar_logo"
-        android:clickable="true"
+        android:id="@+id/iv_title_bar_back"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/x20"
+        android:src="@mipmap/back"
+        android:layout_marginRight="@dimen/x20"
+        android:paddingLeft="@dimen/x10"
+        android:paddingRight="@dimen/x15"
+        android:layout_centerVertical="true"
         />
     <ImageView
-
+        android:id="@+id/iv_title_bar_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/iv_title_bar_logo"
+        />
+    <ImageView
         android:id="@+id/iv_title_bar_service"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -24,8 +32,17 @@
         android:layout_alignParentRight="true"
         android:paddingRight="@dimen/padding_right"
         android:paddingTop="@dimen/padding_right"
-        android:clickable="true"
         />
+    <ImageView
+        android:id="@+id/iv_title_bar_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/search"
+        android:layout_alignParentRight="true"
+        android:paddingRight="@dimen/padding_right"
+        android:paddingTop="@dimen/padding_right"
+        />
+
     <Button
         android:id="@+id/sv_title_bar_serachView"
         android:layout_toRightOf="@+id/iv_title_bar_logo"
@@ -37,16 +54,13 @@
         android:paddingTop="@dimen/padding_top"
         android:paddingBottom="@dimen/padding_top"
         android:layout_centerInParent="true"
-        android:clickable="true"
         ></Button>
     <TextView
         android:id="@+id/tv_title_bar_title"
-        android:layout_toRightOf="@id/iv_title_bar_logo"
-        android:layout_toLeftOf="@id/iv_title_bar_service"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/title"
-        android:textSize="40sp"
-        android:visibility="invisible"
+        android:text=""
+        android:textSize="@dimen/x20"
+        android:layout_centerInParent="true"
         />
 </RelativeLayout>

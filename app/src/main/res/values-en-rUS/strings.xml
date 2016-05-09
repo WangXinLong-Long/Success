@@ -127,4 +127,17 @@
     <string name="tip_btn_evaluation">Evaluation</string>
     <string name="my_sumao_my_order">My Order</string>
     <string name="my_sumao_all_orders">All Orders</string>
+    <string name="my_sumao_the_order_management">Order management</string>
+    <string name="my_sumao_the_order_number">Order number:</string>
+    <string name="my_sumao_amount_of">money:</string>
+    <string name="type">type:</string>
+    <string name="buyer">buyer:</string>
+    <string name="state">state:</string>
+    <string name="company">company:</string>
+    <string name="contact_customer_service">service:</string>
+    <string name="univalent">univalent（CNY/t）：</string>
+    <string name="number">number（t）：</string>
+    <string name="enterprise">enterprise：</string>
+    <string name="totalMoney">totalMoney（CNY）：</string>
+    <string name="warehouse">warehouse：</string>
 </resources>
