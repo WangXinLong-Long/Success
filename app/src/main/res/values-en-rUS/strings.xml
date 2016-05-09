@@ -140,4 +140,20 @@
     <string name="enterprise">enterprise：</string>
     <string name="totalMoney">totalMoney（CNY）：</string>
     <string name="warehouse">warehouse：</string>
+    <string name="account_login">account login</string>
+    <string name="login_password">login password</string>
+    <string name="name_user_information">name</string>
+    <string name="mailbox_user_information">mailbox</string>
+    <string name="telephone_user_information">telephone</string>
+    <string name="modify_condition">2-20 characters, may be English, digital, "-", "_"</string>
+    <string name="modify_name_save">save</string>
+    <string name="Original_mobile_phone_number">Original mobile phone number</string>
+    <string name="Original_mobile_phone_verification_code">Original mobile phone verification code</string>
+    <string name="New_mobile_phone_number">New cell phone number</string>
+    <string name="New_mobile_phone_verification_code">New mobile phone verification code</string>
+
+    <string name="Distribution_plan">Distribution plan</string>
+    <string name="Contract_information">Contract information</string>
+    <string name="Cancel_order">Cancel order</string>
+
 </resources>

@@ -1,6 +1,7 @@
-package com.silianchuangye.sumao.success.fragments.SpotOrder;
+package com.silianchuangye.sumao.success.fragments.OrderManagement.SpotOrder;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
@@ -64,9 +65,14 @@ public class SpotOrder extends Activity implements View.OnClickListener{
         iv_title_bar_back.setOnClickListener(this);
         iv_title_bar_search.setOnClickListener(this);
         tv_title_bar_title.setText("现货订单");
+        tv_title_bar_title.setTextColor(Color.WHITE);
 
         tv = ((TextView) findViewById(R.id.tv));
-        mc = new MyCount(5*1000, 1000);
+        /**
+         *
+         * 根据系统下单时间，获取剩余结束时间
+         */
+        mc = new MyCount(50*1000, 1000);
         mc.start();
 
         list = new ArrayList<>();
@@ -92,7 +98,7 @@ public class SpotOrder extends Activity implements View.OnClickListener{
         switch (v.getId())
         {
             case R.id.iv_title_bar_back:
-                Toast.makeText(this,"返回",Toast.LENGTH_SHORT).show();
+                finish();
                 break;
             case R.id.iv_title_bar_search:
                 Toast.makeText(this,"搜索",Toast.LENGTH_SHORT).show();

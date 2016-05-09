@@ -60,4 +60,5 @@
     <color name="zixun_centerbg">#EEEEF3</color>
     <color name="zixun_bodybg">#ffffff</color>
     <color name="zixun_line">#EEEEF3</color>
+    <color name="user_infomation_textColor">#999999</color>
 </resources>

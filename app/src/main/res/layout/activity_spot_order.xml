@@ -238,13 +238,13 @@
                             android:paddingBottom="@dimen/x5"
                             android:paddingLeft="@dimen/x10"
                             android:paddingTop="@dimen/x5"
-                            android:text="取消订单"
+                            android:text="@string/Cancel_order"
                             android:textColor="@color/textColor_expandable_listview_show"
                             android:textSize="@dimen/x17" />
 
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="@dimen/x15"
+                            android:layout_height="@dimen/x15"
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
                             android:layout_marginRight="@dimen/x10"
@@ -265,13 +265,13 @@
                             android:paddingBottom="@dimen/x5"
                             android:paddingLeft="@dimen/x10"
                             android:paddingTop="@dimen/x5"
-                            android:text="取消订单"
+                            android:text="@string/Contract_information"
                             android:textColor="@color/textColor_expandable_listview_show"
                             android:textSize="@dimen/x17" />
 
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="@dimen/x15"
+                            android:layout_height="@dimen/x15"
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
                             android:layout_marginRight="@dimen/x10"
@@ -292,13 +292,13 @@
                             android:paddingBottom="@dimen/x5"
                             android:paddingLeft="@dimen/x10"
                             android:paddingTop="@dimen/x5"
-                            android:text="取消订单"
+                            android:text="@string/Distribution_plan"
                             android:textColor="@color/textColor_expandable_listview_show"
                             android:textSize="@dimen/x17" />
 
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="@dimen/x15"
+                            android:layout_height="@dimen/x15"
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
                             android:layout_marginRight="@dimen/x10"

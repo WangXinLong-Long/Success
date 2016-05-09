@@ -266,10 +266,13 @@
         <activity android:name=".OrderGoodsActivity" />
         <activity android:name=".MidpointsListctivity" />
         <activity android:name=".AuctionActivity" />
-        <activity android:name=".fragments.SpotOrder.SpotOrder" />
+        <activity android:name=".fragments.OrderManagement.SpotOrder.SpotOrder" />
         <activity android:name=".fragments.personalInformation.PasswordUpdate"></activity>
 
         <activity android:name=".fragments.personalInformation.InformationSubscription"/>
+        <activity android:name=".fragments.personalInformation.UserInformation"/>
+        <activity android:name=".fragments.personalInformation.ModifyName"/>
+        <activity android:name=".fragments.personalInformation.ModifyTelephone"/>
     </application>
 
 </manifest>

@@ -17,6 +17,7 @@ import com.silianchuangye.sumao.success.adapter.ExpandableListViewAdapter;
 import com.silianchuangye.sumao.success.custom.CustomExpandableListView;
 import com.silianchuangye.sumao.success.fragments.personalInformation.InformationSubscription;
 import com.silianchuangye.sumao.success.fragments.personalInformation.PasswordUpdate;
+import com.silianchuangye.sumao.success.fragments.personalInformation.UserInformation;
 
 /**
  * Created by Administrator on 2016/4/20 0020.
@@ -70,7 +71,7 @@ public class PagerFour extends BasePager {
                 } else if (sela.getChild(groupPosition, childPosition).toString().equals("用户信息"))
                 {
                     Intent intent = new Intent();
-                    intent.setClass(context,OrderGoodsActivity.class);
+                    intent.setClass(context,UserInformation.class);
                     startActivity(intent);
                 }else if (sela.getChild(groupPosition, childPosition).toString().equals("资讯订阅"))
                 {
