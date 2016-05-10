@@ -11,6 +11,6 @@ public class WangXinLong extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        变
+//        5月10整理项目结构
     }
 }
