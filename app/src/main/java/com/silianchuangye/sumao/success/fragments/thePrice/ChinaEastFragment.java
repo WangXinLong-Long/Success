@@ -1,4 +1,4 @@
-package com.silianchuangye.sumao.success.fragments;
+package com.silianchuangye.sumao.success.fragments.thePrice;
 
 
 import android.os.Bundle;

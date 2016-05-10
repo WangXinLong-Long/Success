@@ -9,7 +9,7 @@
     android:paddingRight="0dp"
     android:paddingTop="0dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.silianchuangye.sumao.success.MidpointsListctivity">
+    tools:context=".fragments.OrderManagement.SpotOrder.MidpointsListctivity">
 
     <RelativeLayout
         android:layout_width="match_parent"

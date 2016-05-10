@@ -1,4 +1,4 @@
-package com.silianchuangye.sumao.success.fragments;
+package com.silianchuangye.sumao.success.fragments.OrderManagement.SpotOrder;
 
 
 import android.os.Bundle;
@@ -9,13 +9,14 @@ import android.view.ViewGroup;
 
 import com.silianchuangye.sumao.success.R;
 
+
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ChinaWestFragment extends Fragment {
+public class OrderUpdateFragment extends Fragment {
 
 
-    public ChinaWestFragment() {
+    public OrderUpdateFragment() {
         // Required empty public constructor
     }
 
@@ -24,7 +25,7 @@ public class ChinaWestFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_china_west, container, false);
+        return inflater.inflate(R.layout.fragment_order_update, container, false);
     }
 
 }

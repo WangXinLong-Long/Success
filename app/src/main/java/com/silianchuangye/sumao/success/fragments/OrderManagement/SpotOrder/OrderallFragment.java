@@ -1,4 +1,4 @@
-package com.silianchuangye.sumao.success.fragments;
+package com.silianchuangye.sumao.success.fragments.OrderManagement.SpotOrder;
 
 
 import android.content.Intent;
