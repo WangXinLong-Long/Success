@@ -267,12 +267,24 @@
         <activity android:name=".MidpointsListctivity" />
         <activity android:name=".AuctionActivity" />
         <activity android:name=".fragments.OrderManagement.SpotOrder.SpotOrder" />
-        <activity android:name=".fragments.personalInformation.PasswordUpdate"></activity>
+        <activity android:name=".fragments.personalInformation.PasswordUpdate" />
+        <activity android:name=".fragments.personalInformation.InformationSubscription" />
+        <activity android:name=".fragments.personalInformation.UserInformation" />
+        <activity android:name=".fragments.personalInformation.ModifyName" />
+        <activity android:name=".fragments.personalInformation.ModifyTelephone" />
+        <activity android:name=".fragments.companyInfomation.CompanyUserActivity" />
+        <activity android:name=".fragments.companyInfomation.CompanyUserUpdateActivity" />
+        <activity android:name=".fragments.companyInfomation.CompanyUserAddActivity" />
+        <!--
+ ATTENTION: This was auto-generated to add Google Play services to your project for
+     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
+        -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".fragments.personalInformation.InformationSubscription"/>
-        <activity android:name=".fragments.personalInformation.UserInformation"/>
-        <activity android:name=".fragments.personalInformation.ModifyName"/>
-        <activity android:name=".fragments.personalInformation.ModifyTelephone"/>
+        <activity android:name=".fragments.companyInfomation.CompanyUserDutyActivity" />
+        <activity android:name=".fragments.companyInfomation.CompanyUserStateActivity"></activity>
     </application>
 
 </manifest>

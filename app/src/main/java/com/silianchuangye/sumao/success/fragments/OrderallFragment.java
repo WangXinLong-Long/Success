@@ -38,8 +38,11 @@ public class OrderallFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view=inflater.inflate(R.layout.fragment_orderall, container, false);
+
                 elvDemo= (ExpandableListView) view.findViewById(R.id.elvDemo);
+        //去掉expandListview的特别的下拉标志
         elvDemo.setGroupIndicator(null);
+        //去掉ListView之间的线
         elvDemo.setDivider(null);
         listparrent=new ArrayList<Map<String,Object>>();
         Map<String,Object> map1=new Hashtable<String,Object>();
