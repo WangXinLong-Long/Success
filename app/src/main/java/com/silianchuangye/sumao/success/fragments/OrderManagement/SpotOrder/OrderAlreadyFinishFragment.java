@@ -1,4 +1,4 @@
-package com.silianchuangye.sumao.success.fragments;
+package com.silianchuangye.sumao.success.fragments.OrderManagement.SpotOrder;
 
 
 import android.os.Bundle;
@@ -13,10 +13,10 @@ import com.silianchuangye.sumao.success.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class OrderStaypayFragment extends Fragment {
+public class OrderAlreadyFinishFragment extends Fragment {
 
 
-    public OrderStaypayFragment() {
+    public OrderAlreadyFinishFragment() {
         // Required empty public constructor
     }
 
@@ -25,7 +25,7 @@ public class OrderStaypayFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_order_staypay, container, false);
+        return inflater.inflate(R.layout.fragment_order_already_finish, container, false);
     }
 
 }

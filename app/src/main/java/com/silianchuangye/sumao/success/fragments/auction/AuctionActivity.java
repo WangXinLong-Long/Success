@@ -1,4 +1,4 @@
-package com.silianchuangye.sumao.success;
+package com.silianchuangye.sumao.success.fragments.auction;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -6,6 +6,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+
+import com.silianchuangye.sumao.success.R;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
