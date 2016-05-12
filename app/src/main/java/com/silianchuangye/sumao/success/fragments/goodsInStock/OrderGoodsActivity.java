@@ -1,4 +1,4 @@
-package com.silianchuangye.sumao.success;
+package com.silianchuangye.sumao.success.fragments.goodsInStock;
 
 import android.app.DatePickerDialog;
 import android.graphics.drawable.BitmapDrawable;
@@ -7,10 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -24,14 +21,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.MyPageAdapter;
-import com.silianchuangye.sumao.success.fragments.OrderAlreadyFinishFragment;
-import com.silianchuangye.sumao.success.fragments.OrderAlreadygoodsFragment;
-import com.silianchuangye.sumao.success.fragments.OrderCancelFragment;
-import com.silianchuangye.sumao.success.fragments.OrderStaypayFragment;
-import com.silianchuangye.sumao.success.fragments.OrderUpdateFragment;
-import com.silianchuangye.sumao.success.fragments.OrderallFragment;
-import com.silianchuangye.sumao.success.fragments.OrderstayshipmentsFragment;
+import com.silianchuangye.sumao.success.fragments.OrderManagement.SpotOrder.OrderAlreadyFinishFragment;
+import com.silianchuangye.sumao.success.fragments.OrderManagement.SpotOrder.OrderAlreadygoodsFragment;
+import com.silianchuangye.sumao.success.fragments.OrderManagement.SpotOrder.OrderCancelFragment;
+import com.silianchuangye.sumao.success.fragments.OrderManagement.SpotOrder.OrderStaypayFragment;
+import com.silianchuangye.sumao.success.fragments.OrderManagement.SpotOrder.OrderUpdateFragment;
+import com.silianchuangye.sumao.success.fragments.OrderManagement.SpotOrder.OrderallFragment;
+import com.silianchuangye.sumao.success.fragments.OrderManagement.SpotOrder.OrderstayshipmentsFragment;
 
 import java.util.ArrayList;
 import java.util.Calendar;

@@ -1,7 +1,6 @@
 package com.silianchuangye.sumao.success.fragments;
 
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.AdapterView;
@@ -14,11 +13,10 @@ import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 
-import com.silianchuangye.sumao.success.AuctionActivity;
+import com.silianchuangye.sumao.success.fragments.auction.AuctionActivity;
 import com.silianchuangye.sumao.success.HX.Constant;
 import com.silianchuangye.sumao.success.HX.ui.LoginActivity;
-import com.silianchuangye.sumao.success.MidpointsListctivity;
-import com.silianchuangye.sumao.success.OrderGoodsActivity;
+import com.silianchuangye.sumao.success.fragments.OrderManagement.SpotOrder.MidpointsListctivity;
 import com.silianchuangye.sumao.success.utils.scrollviewAD.MyGallery;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.ImageAdapter;

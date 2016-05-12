@@ -1,4 +1,4 @@
-package com.silianchuangye.sumao.success.fragments;
+package com.silianchuangye.sumao.success.fragments.OrderManagement.SpotOrder;
 
 
 import android.os.Bundle;
@@ -9,13 +9,14 @@ import android.view.ViewGroup;
 
 import com.silianchuangye.sumao.success.R;
 
+
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ChinaSouthFragment extends Fragment {
+public class OrderStaypayFragment extends Fragment {
 
 
-    public ChinaSouthFragment() {
+    public OrderStaypayFragment() {
         // Required empty public constructor
     }
 
@@ -24,7 +25,7 @@ public class ChinaSouthFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_china_south, container, false);
+        return inflater.inflate(R.layout.fragment_order_staypay, container, false);
     }
 
 }
