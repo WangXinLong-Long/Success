@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="#fff"
+    android:layout_height="@dimen/x40">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_firm_info"
+        android:text="企业名称"
+        android:layout_marginLeft="@dimen/x10"
+        android:layout_marginTop="@dimen/x5"
+        android:textSize="14sp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvTitle_firm_info"
+        android:text="恭喜你,企业以通过审核"
+        android:layout_marginTop="@dimen/x10"
+        android:textSize="16sp"
+        android:textColor="#95CA4E"
+        android:layout_centerHorizontal="true"
+        />
+    <ImageView
+        android:layout_width="@dimen/x15"
+        android:layout_height="@dimen/x15"
+        android:id="@+id/ivMore_firm_info"
+        android:layout_marginTop="@dimen/x13"
+        android:layout_marginRight="@dimen/x5"
+        android:layout_alignParentRight="true"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvValue_firm_info"
+        android:layout_toLeftOf="@+id/ivMore_firm_info"
+        android:layout_marginRight="@dimen/x5"
+        android:layout_marginTop="@dimen/x10"
+        android:textSize="14sp"
+        android:text="四联创业"
+        />
+
+</RelativeLayout>
