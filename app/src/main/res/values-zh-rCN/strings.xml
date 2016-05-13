@@ -155,4 +155,26 @@
     <string name="Contract_information">合同信息</string>
     <string name="Cancel_order">取消订单</string>
     <string name="Distribution_plan">配送计划</string>
+    <string name="consignee">收件人：</string>
+    <string name="Default_receiving_address">默认收货地址</string>
+    <string name="Zip_code">邮编：</string>
+    <string name="Zip_code_no_colon">邮编</string>
+    <string name="phone_number">手机号码：</string>
+    <string name="phone_number_no_colon">手机号码</string>
+    <string name="fixed_telephone">固定电话：</string>
+    <string name="fixed_telephone_no_colon">固定电话</string>
+    <string name="add_address">新增地址</string>
+    <string name="consignee1">收货人</string>
+    <string name="address">地址</string>
+    <string name="default_receiving_address">设为默认收货地址</string>
+    <string name="remove_receipt_address">删除收货地址</string>
+    <string name="prompt_information">*请输入</string>
+
+
+
+
+
+
+
+
 </resources>

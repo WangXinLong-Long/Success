@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -26,6 +28,11 @@ public class ModifyName extends Activity implements View.OnClickListener{
     TextView tv_title_bar_title;
     RelativeLayout modify_title;
     String classname;
+    String receivingInformation;
+    Boolean canBeAmpty;
+    EditText modify_information;
+    TextView prompt_information;
+    String message;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,17 +56,16 @@ public class ModifyName extends Activity implements View.OnClickListener{
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        classname = bundle.getString("classname");
-        if ("name".equals(classname))
-        {
-            tv_title_bar_title.setText("修改姓名");
-        }else
-        {
-            tv_title_bar_title.setText("修改邮箱");
-        }
+        receivingInformation = bundle.getString("receivingInformation");
+        canBeAmpty  = bundle.getBoolean("canBeAmpty");
+        message = bundle.getString("message");
+        tv_title_bar_title.setText(receivingInformation);
         tv_title_bar_title.setTextColor(Color.WHITE);
 
         modify_name_save = ((Button) findViewById(R.id.modify_name_save));
+        modify_information = ((EditText) findViewById(R.id.modify_information));
+        prompt_information  = ((TextView) findViewById(R.id.prompt_information));
+
     }
 
     @Override
@@ -73,15 +79,41 @@ public class ModifyName extends Activity implements View.OnClickListener{
                 /**
                  * 接口，修改信息
                  */
-                if ("name".equals(classname))
-                {
-                    Toast.makeText(this,"修改了名字",Toast.LENGTH_SHORT).show();
-                }else {
-                    Toast.makeText(this,"修改了邮箱",Toast.LENGTH_SHORT).show();
-                }
-                finish();
+                canCloseThisActivity();
+
+
                 break;
 
         }
+    }
+    public void canCloseThisActivity()
+    {
+        if (modify_information.getText().toString().equals(""))
+        {
+            if (canBeAmpty) {finish();}
+            else
+            {
+                prompt_information.setText("*请输入"+message);
+                prompt_information.setVisibility(View.VISIBLE);
+            }
+
+        }else {
+            prompt_information.setVisibility(View.INVISIBLE);
+            /**
+             * 在这里吧EditText的文本信息获取到，调用接口传到服务器上
+             */
+        Toast.makeText(ModifyName.this,"调用接口传到服务器上",Toast.LENGTH_SHORT).show();
+            finish();
+        }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode==KeyEvent.KEYCODE_BACK&&event.getAction()==KeyEvent.ACTION_DOWN)
+        {
+            finish();
+            return  true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

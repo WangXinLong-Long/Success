@@ -69,13 +69,15 @@ public class UserInformation extends Activity implements  View.OnClickListener{
 
                         case R.id.name_user_information:
                         intent.setClass(this,ModifyName.class);
-                        bundle.putString("classname","name");
+                        bundle.putString("receivingInformation","修改姓名");
+                        bundle.putBoolean("canBeAmpty",false);
                         intent.putExtras(bundle);
                         startActivity(intent);
                         break;
                         case R.id.mailbox_user_information:
                         intent.setClass(this,ModifyName.class);
-                        bundle.putString("classname","mailbox");
+                        bundle.putString("receivingInformation","修改邮箱");
+                        bundle.putBoolean("canBeAmpty",true);
                         intent.putExtras(bundle);
                         startActivity(intent);
                         break;

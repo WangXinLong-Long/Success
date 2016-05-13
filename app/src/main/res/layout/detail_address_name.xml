@@ -5,8 +5,8 @@
     android:background="@color/my_sumao_background"
     >
 <include
-    android:id="@+id/modify_title"
-    layout="@layout/title_bar"></include>
+    android:id="@+id/detail_address_title"
+    layout="@layout/child_title_bar"></include>
     <EditText
         android:id="@+id/modify_information"
         android:layout_width="match_parent"

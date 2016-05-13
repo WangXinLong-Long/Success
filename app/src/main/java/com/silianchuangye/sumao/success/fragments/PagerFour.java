@@ -9,7 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
+import com.silianchuangye.sumao.success.fragments.enterpriseInformation.ReceiptAddress;
+import com.silianchuangye.sumao.success.fragments.goodsInStock.OrderGoodsActivity;
 import com.silianchuangye.sumao.success.R;
 
 import com.silianchuangye.sumao.success.R;
@@ -71,7 +72,7 @@ public class PagerFour extends BasePager {
                 if (sela.getChild(groupPosition, childPosition).toString().equals("现货订单"))
                 {
                     Intent intent = new Intent();
-                    intent.setClass(context,OrderGoodsActivity.class);
+                    intent.setClass(context, OrderGoodsActivity.class);
                     startActivity(intent);
                 } else if (sela.getChild(groupPosition, childPosition).toString().equals("用户信息"))
                 {
@@ -87,10 +88,14 @@ public class PagerFour extends BasePager {
                     Intent intent=new Intent(context, PasswordUpdate.class);
                     startActivity(intent);
                 }else if (sela.getChild(groupPosition, childPosition).toString().equals("收货地址")){
-                    Intent intent=new Intent(context, PasswordUpdate.class);
+                    Intent intent=new Intent(context, ReceiptAddress.class);
                     startActivity(intent);
                 }else if (sela.getChild(groupPosition, childPosition).toString().equals("企业用户管理")){
                     Intent intent=new Intent(context, CompanyUserActivity.class);
+                    startActivity(intent);
+                }else if (sela.getChild(groupPosition, childPosition).toString().equals("企业信息")){
+                    Intent intent=new Intent(context, FirmInfoActivity.class);
+
                     startActivity(intent);
                 }
 

@@ -44,8 +44,5 @@
         <item>golden operation</item>
         <item>the operation of gold</item>
     </string-array>
-    <string-array name="child6">
-        <item>Application for the seller</item>
-        <item>the application for the upstream resources of clients</item>
-    </string-array>
+
 </resources>

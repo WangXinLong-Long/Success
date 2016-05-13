@@ -28,11 +28,11 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter {
         content   = new String[][]
                 {
                         context.getResources().getStringArray(R.array.child1),
-                        context.getResources().getStringArray(R.array.child2),
+
                         context.getResources().getStringArray(R.array.child3),
                         context.getResources().getStringArray(R.array.child4),
                         context.getResources().getStringArray(R.array.child5),
-                        context.getResources().getStringArray(R.array.child6),
+
                 };
 
         /*
