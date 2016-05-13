@@ -9,12 +9,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.silianchuangye.sumao.success.OrderGoodsActivity;
+
 import com.silianchuangye.sumao.success.R;
 
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.ExpandableListViewAdapter;
 import com.silianchuangye.sumao.success.custom.CustomExpandableListView;
+import com.silianchuangye.sumao.success.fragments.companyInfomation.CompanyUserActivity;
+import com.silianchuangye.sumao.success.fragments.firmInfomation.FirmInfoActivity;
+import com.silianchuangye.sumao.success.fragments.goodsInStock.OrderGoodsActivity;
 import com.silianchuangye.sumao.success.fragments.personalInformation.InformationSubscription;
 import com.silianchuangye.sumao.success.fragments.personalInformation.PasswordUpdate;
 import com.silianchuangye.sumao.success.fragments.personalInformation.UserInformation;
@@ -66,7 +69,7 @@ public class PagerFour extends BasePager {
                 if (sela.getChild(groupPosition, childPosition).toString().equals("现货订单"))
                 {
                     Intent intent = new Intent();
-                    intent.setClass(context,OrderGoodsActivity.class);
+                    intent.setClass(context, OrderGoodsActivity.class);
                     startActivity(intent);
                 } else if (sela.getChild(groupPosition, childPosition).toString().equals("用户信息"))
                 {
@@ -86,6 +89,9 @@ public class PagerFour extends BasePager {
                     startActivity(intent);
                 }else if (sela.getChild(groupPosition, childPosition).toString().equals("企业用户管理")){
                     Intent intent=new Intent(context, CompanyUserActivity.class);
+                    startActivity(intent);
+                }else if (sela.getChild(groupPosition, childPosition).toString().equals("企业信息")){
+                    Intent intent=new Intent(context, FirmInfoActivity.class);
                     startActivity(intent);
                 }
 

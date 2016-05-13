@@ -284,7 +284,16 @@
             android:value="@integer/google_play_services_version" />
 
         <activity android:name=".fragments.companyInfomation.CompanyUserDutyActivity" />
-        <activity android:name=".fragments.companyInfomation.CompanyUserStateActivity"></activity>
+        <activity android:name=".fragments.companyInfomation.CompanyUserStateActivity" />
+        <activity android:name=".fragments.firmInfomation.FirmInfoActivity" />
+        <activity android:name=".fragments.firmInfomation.FirmInfoUpdateActivity" />
+        <activity android:name=".fragments.firmInfomation.FirmInfoTypeActivity" />
+        <activity android:name=".fragments.firmInfomation.FirmInfoNameActivity" />
+        <activity android:name=".fragments.firmInfomation.FirmInfoOfficeActivity" />
+        <activity android:name=".fragments.firmInfomation.FirmInfoPictureActivity" />
+        <activity android:name=".fragments.firmInfomation.FirmInfoAddressActivity" />
+        <activity android:name=".fragments.firmInfomation.FrimInfoProvinceActivity" />
+        <activity android:name=".fragments.firmInfomation.FirmInfoParticularActivity"></activity>
     </application>
 
 </manifest>
