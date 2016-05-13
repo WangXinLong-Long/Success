@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -91,6 +92,12 @@ public class SpotOrder extends Activity implements View.OnClickListener{
         spot_order_listView = ((CustomListView) findViewById(R.id.spot_order_listView));
         adapter = new SpotOrderAdapter(this,list);
         spot_order_listView.setAdapter(adapter);
+       /* spot_order_listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(SpotOrder.this,"dianji"+position+"条",Toast.LENGTH_SHORT).show();
+            }
+        });*/
     }
 
     @Override

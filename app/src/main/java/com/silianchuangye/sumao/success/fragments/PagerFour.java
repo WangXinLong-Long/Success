@@ -7,6 +7,7 @@ import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 
+import com.silianchuangye.sumao.success.fragments.enterpriseInformation.ReceiptAddress;
 import com.silianchuangye.sumao.success.fragments.goodsInStock.OrderGoodsActivity;
 import com.silianchuangye.sumao.success.R;
 
@@ -79,7 +80,7 @@ public class PagerFour extends BasePager {
                     Intent intent=new Intent(context, PasswordUpdate.class);
                     startActivity(intent);
                 }else if (sela.getChild(groupPosition, childPosition).toString().equals("收货地址")){
-                    Intent intent=new Intent(context, PasswordUpdate.class);
+                    Intent intent=new Intent(context, ReceiptAddress.class);
                     startActivity(intent);
                 }
 

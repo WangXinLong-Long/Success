@@ -155,5 +155,15 @@
     <string name="Distribution_plan">Distribution plan</string>
     <string name="Contract_information">Contract information</string>
     <string name="Cancel_order">Cancel order</string>
-
+    <string name="consignee">consignee：</string>
+    <string name="Default_receiving_address">Default receiving address</string>
+    <string name="Zip_code">Zip code：</string>
+    <string name="phone_number">phone number：</string>
+    <string name="fixed_telephone">fixed telephone：</string>
+    <string name="add_address">add address</string>
+    <string name="consignee1">consignee</string>
+    <string name="address">address</string>
+    <string name="default_receiving_address">default_receiving_address</string>
+    <string name="remove_receipt_address">Remove receipt address</string>
+    <string name="prompt_information">Please input</string>
 </resources>
