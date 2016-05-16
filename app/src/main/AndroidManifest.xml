@@ -289,6 +289,7 @@
         <activity android:name=".fragments.companyInfomation.CompanyUserActivity" />
         <activity android:name=".fragments.companyInfomation.CompanyUserUpdateActivity" />
         <activity android:name=".fragments.companyInfomation.CompanyUserAddActivity" />
+        <activity android:name=".fragments.fund.SearchMoney"/>
         <!--
  ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.

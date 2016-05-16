@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.fragments.enterpriseInformation.ReceiptAddress;
 import com.silianchuangye.sumao.success.fragments.fund.FundInfoActivity;
+import com.silianchuangye.sumao.success.fragments.fund.SearchMoney;
 import com.silianchuangye.sumao.success.fragments.goodsInStock.OrderGoodsActivity;
 import com.silianchuangye.sumao.success.R;
 
@@ -102,7 +103,12 @@ public class PagerFour extends BasePager {
                     Intent intent=new Intent(context, FundInfoActivity.class);
 
                     startActivity(intent);
+                }    else if (sela.getChild(groupPosition, childPosition).toString().equals("账户金额明细")){
+                    Intent intent=new Intent(context, SearchMoney.class);
+
+                    startActivity(intent);
                 }
+
 
                 return true;
             }

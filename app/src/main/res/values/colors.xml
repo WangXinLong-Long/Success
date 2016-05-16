@@ -61,5 +61,8 @@
     <color name="zixun_bodybg">#ffffff</color>
     <color name="zixun_line">#EEEEF3</color>
     <color name="user_infomation_textColor">#999999</color>
-
+    <color name="selley_bg">#EEEEF3</color>
+    <color name="selley_lv">#ffffff</color>
+    <color name="search_tv">#ff0000</color>
+    <color name="searchback_tv">#000</color>
 </resources>
