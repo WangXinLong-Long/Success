@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:id="@+id/layouttop_add_item"
+    android:background="#fff"
     android:layout_height="@dimen/y35">
 
     <TextView
@@ -18,27 +19,40 @@
         android:layout_height= "@dimen/x15"
         android:layout_alignParentRight="true"
         android:layout_marginRight="@dimen/x5"
-        android:layout_marginTop="@dimen/x13"
+        android:layout_marginTop="@dimen/x10"
         android:id="@+id/ivMore_company_user_add"
         android:src="@mipmap/my_sumao_iv_order"
         />
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
         android:layout_toLeftOf="@+id/ivMore_company_user_add"
         android:layout_toRightOf="@+id/tvText_company_user_add"
         >
     <EditText
-        android:layout_width="@dimen/x150"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/x30"
         android:id="@+id/etContext_company_user"
         android:layout_alignParentRight="true"
         android:layout_marginTop="@dimen/x5"
         android:layout_marginRight="@dimen/x20"
         android:layout_marginBottom="@dimen/x10"
-        android:background="@drawable/edittext_backgroup"
-
+        android:background="@null"
 
         />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x30"
+            android:id="@+id/etContext_company_user_pass"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="@dimen/x5"
+            android:layout_marginRight="@dimen/x20"
+            android:layout_marginBottom="@dimen/x10"
+            android:background="@null"
+            android:visibility="gone"
+            android:password="true"
+
+            />
     </RelativeLayout>
 </RelativeLayout>

@@ -24,10 +24,11 @@ public class FirmInfoActivity extends AppCompatActivity {
     ImageView iv_title_bar_logo,
             iv_title_bar_back,
             iv_title_bar_service,
+            add_address,
             iv_title_bar_search;
     Button sv_title_bar_serachView;
-    TextView tv_title_bar_title,tv;
-    RelativeLayout layoutTop;
+    TextView tv_title_bar_title,tv,tvUpdate;
+    RelativeLayout layoutTop,add_address_rl;
     private ListView lv_firm_info;
     private List<Map<String,Object>> list;
     @Override
@@ -89,19 +90,20 @@ public class FirmInfoActivity extends AppCompatActivity {
         list.add(map11);
         SimpleAdapter adapter=new SimpleAdapter(FirmInfoActivity.this,list,R.layout.item_firm_info,new String[]{"left","center","right","icon"},new int[]{R.id.tv_firm_info,R.id.tvTitle_firm_info,R.id.tvValue_firm_info,R.id.ivMore_firm_info});
         lv_firm_info.setAdapter(adapter);
-        lv_firm_info.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (position==1){
-                    Intent intent=new Intent(FirmInfoActivity.this,FirmInfoUpdateActivity.class);
-                    startActivity(intent);
-                }
-            }
-        });
+//        lv_firm_info.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                if (position==1){
+//                    Intent intent=new Intent(FirmInfoActivity.this,FirmInfoUpdateActivity.class);
+//                    startActivity(intent);
+//                }
+//            }
+//        });
 
 
     }
     public void title_Bar(){
+
         iv_title_bar_back = ((ImageView) findViewById(R.id.iv_title_bar_back));
         iv_title_bar_logo = ((ImageView) findViewById(R.id.iv_title_bar_logo));
         iv_title_bar_service = ((ImageView) findViewById(R.id.iv_title_bar_service));
@@ -109,11 +111,16 @@ public class FirmInfoActivity extends AppCompatActivity {
         sv_title_bar_serachView = ((Button) findViewById(R.id.sv_title_bar_serachView));
         tv_title_bar_title  = ((TextView) findViewById(R.id.tv_title_bar_title));
 
+        tvUpdate= (TextView) findViewById(R.id.tvUpdate);
         iv_title_bar_logo.setVisibility(View.GONE);
         iv_title_bar_service.setVisibility(View.GONE);
         sv_title_bar_serachView.setVisibility(View.GONE);
         iv_title_bar_search.setVisibility(View.GONE);
+
+        tvUpdate.setText("修改");
         tv_title_bar_title.setText("企业信息");
+
+
         tv_title_bar_title.setTextColor(Color.WHITE);
         iv_title_bar_back.setVisibility(View.VISIBLE);
         layoutTop= (RelativeLayout) findViewById(R.id.layoutTop_firm_info);
@@ -123,6 +130,13 @@ public class FirmInfoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 FirmInfoActivity.this.finish();
+            }
+        });
+        tvUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(FirmInfoActivity.this,FirmInfoUpdateActivity.class);
+                  startActivity(intent);
             }
         });
     }
