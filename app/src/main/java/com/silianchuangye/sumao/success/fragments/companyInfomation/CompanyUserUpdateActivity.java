@@ -104,13 +104,7 @@ public class CompanyUserUpdateActivity extends AppCompatActivity {
         SimpleAdapter adapter=new SimpleAdapter(CompanyUserUpdateActivity.this,list,R.layout.item_company_user_update,new String[]{"text","value","ispass"},new int[]{R.id.tvText,R.id.tvValue_company_user_update,R.id.tvValue_company_user_update_passWord});
         lvupdate.setAdapter(adapter);
         //Listview的子组件的点击事件
-        lvupdate.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent=new Intent(CompanyUserUpdateActivity.this,CompanyUserAddActivity.class);
-                startActivity(intent);
-            }
-        });
+
 
 
 
