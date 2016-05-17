@@ -29,7 +29,7 @@ public class ChinaNorthFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        // Inflate the layout for this fragmentsfdjkh
         chinanorth =inflater.inflate(R.layout.fragment_china_north, container, false);
         initView();
         return chinanorth;
