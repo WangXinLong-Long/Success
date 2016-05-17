@@ -6,19 +6,16 @@ import android.view.View;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
+import com.silianchuangye.sumao.success.fragments.companyInfomation.InvoiceInformation;
 import com.silianchuangye.sumao.success.fragments.enterpriseInformation.ReceiptAddress;
 import com.silianchuangye.sumao.success.fragments.goodsInStock.OrderGoodsActivity;
 import com.silianchuangye.sumao.success.R;
 
-import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.ExpandableListViewAdapter;
 import com.silianchuangye.sumao.success.custom.CustomExpandableListView;
 import com.silianchuangye.sumao.success.fragments.companyInfomation.CompanyUserActivity;
 import com.silianchuangye.sumao.success.fragments.firmInfomation.FirmInfoActivity;
-import com.silianchuangye.sumao.success.fragments.goodsInStock.OrderGoodsActivity;
 import com.silianchuangye.sumao.success.fragments.personalInformation.InformationSubscription;
 import com.silianchuangye.sumao.success.fragments.personalInformation.PasswordUpdate;
 import com.silianchuangye.sumao.success.fragments.personalInformation.UserInformation;
@@ -95,7 +92,12 @@ public class PagerFour extends BasePager {
                     Intent intent=new Intent(context, FirmInfoActivity.class);
 
                     startActivity(intent);
+                }else if (sela.getChild(groupPosition, childPosition).toString().equals("开票信息")){
+                    Intent intent=new Intent(context, InvoiceInformation.class);
+
+                    startActivity(intent);
                 }
+
 
                 return true;
             }

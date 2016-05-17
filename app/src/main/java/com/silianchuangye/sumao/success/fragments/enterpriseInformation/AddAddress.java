@@ -50,6 +50,7 @@ public class AddAddress extends Activity implements View.OnClickListener {
                 break;
             case R.id.address_add_address:
                 Intent intent = new Intent();
+                intent.putExtra("className","AddAddress");
                 intent.setClass(AddAddress.this,SelectProvinceArea.class);
                 startActivity(intent);
                 break;

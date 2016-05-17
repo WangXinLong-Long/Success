@@ -11,7 +11,7 @@
     <string-array name="child1">
         <item>现货订单</item>
         <item>预售订单</item>
-        <item>点价意向单</item>
+        <item>客服订单</item>
     </string-array>
 
      <string-array name="child3">
@@ -29,8 +29,7 @@
      <string-array name="child5">
         <item>资金账户信息</item>
         <item>账户金额明细</item>
-        <item>入金操作</item>
-        <item>出金操作</item>
+
     </string-array>
 
 

@@ -30,7 +30,7 @@ public class SelectCityArea  extends Activity implements View.OnClickListener{
     String province;
     ImageView iv_child_title_bar_back;
     TextView tv_child_title_bar_title;
-    RelativeLayout address_add_address;
+    String className;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +49,7 @@ public class SelectCityArea  extends Activity implements View.OnClickListener{
             city.setCity("地区"+i+"市");
             lists.add(city);
         }
+        className = getIntent().getStringExtra("className");
         adapter = new SelectCityAreaAdapter(this,lists);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -57,6 +58,7 @@ public class SelectCityArea  extends Activity implements View.OnClickListener{
                 Intent intent = new Intent();
                 intent.setClass(SelectCityArea.this,SelectCountyArea.class);
                 intent.putExtra("city",province+lists.get(position).getCity());
+                intent.putExtra("className",className);
                 startActivity(intent);
             }
         });

@@ -166,4 +166,11 @@
     <string name="default_receiving_address">default_receiving_address</string>
     <string name="remove_receipt_address">Remove receipt address</string>
     <string name="prompt_information">Please input</string>
+    <string name="type_of_taxpayer" >Type of taxpayer</string>
+    <string name="value_added_tax_information">Value added tax information</string>
+    <string name="company_name">Company name</string>
+    <string name="duty_paragraph">duty paragraph</string>
+    <string name="invoice_information_bank_account">Bank account</string>
+    <string name="bill_mailing_address">Bill mailing address</string>
+    <string name="bill_mailing_address_mailing_address">Mailing address</string>
 </resources>

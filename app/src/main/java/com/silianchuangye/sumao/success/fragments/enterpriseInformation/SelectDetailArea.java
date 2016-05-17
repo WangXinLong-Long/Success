@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
+import com.silianchuangye.sumao.success.fragments.companyInfomation.InvoiceInformation;
 
 /**
  * Created by Administrator on 2016/5/13 0013.
@@ -24,6 +25,7 @@ public class SelectDetailArea extends Activity implements View.OnClickListener{
     EditText modify_information;
     TextView prompt_information;
     Button modify_name_save;
+    String className;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +36,7 @@ public class SelectDetailArea extends Activity implements View.OnClickListener{
         prompt_information = ((TextView) findViewById(R.id.prompt_information));
         intent = getIntent();
         county = intent.getStringExtra("county");
+        className = intent.getStringExtra("className");
         tv_child_title_bar_title.setText("填写详细地址");
         modify_name_save = ((Button) findViewById(R.id.modify_name_save));
         modify_name_save.setOnClickListener(this);
@@ -66,7 +69,12 @@ public class SelectDetailArea extends Activity implements View.OnClickListener{
              */
             Toast.makeText(SelectDetailArea.this, "调用接口传到服务器上", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent();
-            intent.setClass(SelectDetailArea.this,AddAddress.class);
+            if (className.equals("AddAddress")){
+                intent.setClass(SelectDetailArea.this,AddAddress.class);
+            }else if (className.equals("InvoiceInformation"))
+            {
+                intent.setClass(SelectDetailArea.this,InvoiceInformation.class);
+            }
 
             startActivity(intent);
         }

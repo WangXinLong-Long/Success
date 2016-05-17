@@ -169,12 +169,13 @@
     <string name="default_receiving_address">设为默认收货地址</string>
     <string name="remove_receipt_address">删除收货地址</string>
     <string name="prompt_information">*请输入</string>
-
-
-
-
-
-
+    <string name="type_of_taxpayer" >纳税人类型</string>
+    <string name="value_added_tax_information">增值税资料信息</string>
+    <string name="company_name">公司名称</string>
+    <string name="duty_paragraph">税号</string>
+    <string name="invoice_information_bank_account">开户行</string>
+    <string name="bill_mailing_address">票据邮寄地址</string>
+    <string name="bill_mailing_address_mailing_address">邮寄地址</string>
 
 
 </resources>
