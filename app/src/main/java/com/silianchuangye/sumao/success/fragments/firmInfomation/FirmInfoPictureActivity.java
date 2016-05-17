@@ -67,7 +67,7 @@ public class FirmInfoPictureActivity extends AppCompatActivity {
     }
     public void Popupwindow(){
         View view= LayoutInflater.from(getApplicationContext()).inflate(R.layout.item_firm_info_popupwindow,null);
-        final PopupWindow popupWindow=new PopupWindow(findViewById(R.id.LayoutPictrue), ActionBarOverlayLayout.LayoutParams.MATCH_PARENT,200);
+        final PopupWindow popupWindow=new PopupWindow(findViewById(R.id.LayoutPictrue), ActionBarOverlayLayout.LayoutParams.MATCH_PARENT, ActionBarOverlayLayout.LayoutParams.WRAP_CONTENT);
 
         popupWindow.setContentView(view);
         TextView texthotograph= (TextView) view.findViewById(R.id.tvphotograph);

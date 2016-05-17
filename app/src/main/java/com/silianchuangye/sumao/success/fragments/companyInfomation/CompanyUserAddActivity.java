@@ -148,16 +148,21 @@ public class CompanyUserAddActivity extends AppCompatActivity {
             if (convertView != null) {
                 convertView = getLayoutInflater().inflate(R.layout.item_company_user_add, null);
                 EditText et = (EditText) convertView.findViewById(R.id.etContext_company_user);
-
-                 RelativeLayout layout =(RelativeLayout)convertView.findViewById(R.id.layouttop_add_item);
-               TextView tv= (TextView) convertView.findViewById(R.id.tvText_company_user_add);
+                RelativeLayout layout =(RelativeLayout)convertView.findViewById(R.id.layouttop_add_item);
+                TextView tv= (TextView) convertView.findViewById(R.id.tvText_company_user_add);
+                EditText et_pass= (EditText) convertView.findViewById(R.id.etContext_company_user_pass);
                 tv.setText(list.get(position).get("text").toString());
                 ImageView iv= (ImageView) convertView.findViewById(R.id.ivMore_company_user_add);
                 if (position==5||position==6){
                     iv.setVisibility(View.VISIBLE);
-                    et.setVisibility(View.GONE);
+                    et.setVisibility(View.INVISIBLE);
                 }else{
                     iv.setVisibility(View.GONE);
+                }
+                if(position==1){
+                    et_pass.setVisibility(View.VISIBLE);
+                    et.setVisibility(View.GONE);
+
                 }
             }
 

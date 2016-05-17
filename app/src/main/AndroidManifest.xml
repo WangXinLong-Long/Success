@@ -267,25 +267,31 @@
         <activity android:name=".fragments.OrderManagement.SpotOrder.MidpointsListctivity" />
         <activity android:name=".fragments.auction.AuctionActivity" />
         <activity android:name=".fragments.OrderManagement.SpotOrder.SpotOrder" />
-        <activity android:name=".fragments.personalInformation.PasswordUpdate"></activity>
-
-        <activity android:name=".fragments.personalInformation.InformationSubscription"/>
-        <activity android:name=".fragments.personalInformation.UserInformation"/>
-        <activity android:name=".fragments.personalInformation.ModifyName"/>
-        <activity android:name=".fragments.personalInformation.ModifyTelephone"/>
-        <activity android:name=".fragments.enterpriseInformation.ReceiptAddress"/>
-        <activity android:name=".fragments.enterpriseInformation.ReceiptAddressDetail"/>
-        <activity android:name=".fragments.enterpriseInformation.AddAddress"
-            android:launchMode="singleTask"/>
-        <activity android:name=".fragments.enterpriseInformation.SelectCityArea"/>
-        <activity android:name=".fragments.enterpriseInformation.SelectCountyArea"/>
-        <activity android:name=".fragments.enterpriseInformation.SelectProvinceArea"/>
-        <activity android:name=".fragments.enterpriseInformation.SelectDetailArea"/>
+        <activity android:name=".fragments.personalInformation.PasswordUpdate" />
+        <activity android:name=".fragments.personalInformation.InformationSubscription" />
+        <activity android:name=".fragments.personalInformation.UserInformation" />
+        <activity android:name=".fragments.personalInformation.ModifyName" />
+        <activity android:name=".fragments.personalInformation.ModifyTelephone" />
+        <activity android:name=".fragments.enterpriseInformation.ReceiptAddress" />
+        <activity android:name=".fragments.enterpriseInformation.ReceiptAddressDetail" />
+        <activity
+            android:name=".fragments.enterpriseInformation.AddAddress"
+            android:launchMode="singleTask" />
+        <activity android:name=".fragments.enterpriseInformation.SelectCityArea" />
+        <activity android:name=".fragments.enterpriseInformation.SelectCountyArea" />
+        <activity android:name=".fragments.enterpriseInformation.SelectProvinceArea" />
+        <activity android:name=".fragments.enterpriseInformation.SelectDetailArea" />
+        <activity android:name=".fragments.personalInformation.PasswordUpdate" />
+        <activity android:name=".fragments.personalInformation.InformationSubscription" />
+        <activity android:name=".fragments.personalInformation.UserInformation" />
+        <activity android:name=".fragments.personalInformation.ModifyName" />
+        <activity android:name=".fragments.personalInformation.ModifyTelephone" />
         <activity android:name=".fragments.companyInfomation.CompanyUserActivity" />
         <activity android:name=".fragments.companyInfomation.CompanyUserUpdateActivity" />
         <activity android:name=".fragments.companyInfomation.CompanyUserAddActivity" />
         <activity android:name=".fragments.companyInfomation.InvoiceInformation"
             android:launchMode="singleTask"/>
+        <activity android:name=".fragments.fund.SearchMoney"/>
         <!--
  ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -304,7 +310,8 @@
         <activity android:name=".fragments.firmInfomation.FirmInfoPictureActivity" />
         <activity android:name=".fragments.firmInfomation.FirmInfoAddressActivity" />
         <activity android:name=".fragments.firmInfomation.FrimInfoProvinceActivity" />
-        <activity android:name=".fragments.firmInfomation.FirmInfoParticularActivity"></activity>
+        <activity android:name=".fragments.firmInfomation.FirmInfoParticularActivity" />
+        <activity android:name=".fragments.fund.FundInfoActivity"></activity>
     </application>
 
 </manifest>

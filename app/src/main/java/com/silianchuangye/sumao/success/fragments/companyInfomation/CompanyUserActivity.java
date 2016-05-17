@@ -30,7 +30,7 @@ public class CompanyUserActivity extends AppCompatActivity {
             iv_title_bar_search;
     Button sv_title_bar_serachView;
     TextView tv_title_bar_title,tv;
-    RelativeLayout layoutTop;
+    RelativeLayout layoutTop,add_address_rl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +56,10 @@ public class CompanyUserActivity extends AppCompatActivity {
         iv_title_bar_search = ((ImageView) findViewById(R.id.iv_title_bar_search));
         sv_title_bar_serachView = ((Button) findViewById(R.id.sv_title_bar_serachView));
         tv_title_bar_title  = ((TextView) findViewById(R.id.tv_title_bar_title));
-
+        add_address_rl= (RelativeLayout) findViewById(R.id.add_address_rl);
+        tv= (TextView) findViewById(R.id.tvupdate);
+        tv.setText("新增用户");
+        add_address_rl.setVisibility(View.VISIBLE);
         iv_title_bar_logo.setVisibility(View.GONE);
         iv_title_bar_service.setVisibility(View.GONE);
         sv_title_bar_serachView.setVisibility(View.GONE);
@@ -75,6 +78,13 @@ public class CompanyUserActivity extends AppCompatActivity {
        // iv_title_bar_search.setOnClickListener(this);
         tv_title_bar_title.setText("企业用户管理");
         tv_title_bar_title.setTextColor(Color.WHITE);
+        add_address_rl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(CompanyUserActivity.this,CompanyUserAddActivity.class);
+                startActivity(intent);
+            }
+        });
 
         elistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

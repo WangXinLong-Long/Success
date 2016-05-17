@@ -6,15 +6,21 @@ import android.view.View;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.fragments.companyInfomation.InvoiceInformation;
 import com.silianchuangye.sumao.success.fragments.enterpriseInformation.ReceiptAddress;
+import com.silianchuangye.sumao.success.fragments.fund.FundInfoActivity;
+import com.silianchuangye.sumao.success.fragments.fund.SearchMoney;
 import com.silianchuangye.sumao.success.fragments.goodsInStock.OrderGoodsActivity;
 import com.silianchuangye.sumao.success.R;
 
 import com.silianchuangye.sumao.success.adapter.ExpandableListViewAdapter;
 import com.silianchuangye.sumao.success.custom.CustomExpandableListView;
 import com.silianchuangye.sumao.success.fragments.companyInfomation.CompanyUserActivity;
+import com.silianchuangye.sumao.success.fragments.goodsInStock.OrderGoodsActivity;
+
 import com.silianchuangye.sumao.success.fragments.firmInfomation.FirmInfoActivity;
 import com.silianchuangye.sumao.success.fragments.personalInformation.InformationSubscription;
 import com.silianchuangye.sumao.success.fragments.personalInformation.PasswordUpdate;
@@ -67,7 +73,7 @@ public class PagerFour extends BasePager {
                 if (sela.getChild(groupPosition, childPosition).toString().equals("现货订单"))
                 {
                     Intent intent = new Intent();
-                    intent.setClass(context,OrderGoodsActivity.class);
+                    intent.setClass(context, OrderGoodsActivity.class);
                     startActivity(intent);
                 } else if (sela.getChild(groupPosition, childPosition).toString().equals("用户信息"))
                 {
@@ -96,8 +102,15 @@ public class PagerFour extends BasePager {
                     Intent intent=new Intent(context, InvoiceInformation.class);
 
                     startActivity(intent);
-                }
+                }else if (sela.getChild(groupPosition, childPosition).toString().equals("资金账户信息")){
+                    Intent intent=new Intent(context, FundInfoActivity.class);
 
+                    startActivity(intent);
+                }    else if (sela.getChild(groupPosition, childPosition).toString().equals("账户金额明细")){
+                    Intent intent=new Intent(context, SearchMoney.class);
+
+                    startActivity(intent);
+                }
 
                 return true;
             }
