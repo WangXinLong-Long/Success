@@ -1,13 +1,39 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.thePrice.ChinaNorthFragment">
+    tools:context=".fragments.thePrice.ChinaNorthFragment"
+    android:background="@color/selley_bg">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+   <ListView
+       android:layout_marginTop="10dp"
+       android:id="@+id/lv_chainanorth"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:background="@color/selley_lv">
 
-</FrameLayout>
+   </ListView>
+    <RelativeLayout
+        android:layout_below="@id/lv_chainanorth"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_chinanorth"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/selley_lv"
+            android:text="点价流程、点价规则"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="10dp"/>
+        <ImageView
+            android:id="@+id/img_chinanorth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:src="@mipmap/my_sumao_iv_order"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"/>
+    </RelativeLayout>
+
+</RelativeLayout>
