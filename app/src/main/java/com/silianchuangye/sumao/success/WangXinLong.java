@@ -13,5 +13,6 @@ public class WangXinLong extends Activity {
         setContentView(R.layout.activity_main);
 //        5月10整理项目结构 创建
 //        5月13收货地址
+//        5月17日开票信息
     }
 }
