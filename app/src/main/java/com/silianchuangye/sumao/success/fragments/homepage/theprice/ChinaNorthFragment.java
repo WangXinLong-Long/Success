@@ -1,4 +1,4 @@
-package com.silianchuangye.sumao.success.fragments.thePrice;
+package com.silianchuangye.sumao.success.fragments.homepage.theprice;
 
 
 import android.os.Bundle;
