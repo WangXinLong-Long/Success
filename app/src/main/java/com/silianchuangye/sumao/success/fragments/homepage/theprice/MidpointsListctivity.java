@@ -10,11 +10,6 @@ import android.widget.ImageView;
 
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.MyPageAdapter;
-import com.silianchuangye.sumao.success.fragments.thePrice.ChinaCenterFragment;
-import com.silianchuangye.sumao.success.fragments.thePrice.ChinaEastFragment;
-import com.silianchuangye.sumao.success.fragments.thePrice.ChinaNorthFragment;
-import com.silianchuangye.sumao.success.fragments.thePrice.ChinaSouthFragment;
-import com.silianchuangye.sumao.success.fragments.thePrice.ChinaWestFragment;
 
 
 import java.util.ArrayList;

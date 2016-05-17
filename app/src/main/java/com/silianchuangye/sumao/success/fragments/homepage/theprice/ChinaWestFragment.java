@@ -1,4 +1,4 @@
-package com.silianchuangye.sumao.success.fragments.thePrice;
+package com.silianchuangye.sumao.success.fragments.homepage.theprice;
 
 
 import android.os.Bundle;
@@ -12,10 +12,10 @@ import com.silianchuangye.sumao.success.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ChinaSouthFragment extends Fragment {
+public class ChinaWestFragment extends Fragment {
 
 
-    public ChinaSouthFragment() {
+    public ChinaWestFragment() {
         // Required empty public constructor
     }
 
@@ -24,7 +24,7 @@ public class ChinaSouthFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_china_south, container, false);
+        return inflater.inflate(R.layout.fragment_china_west, container, false);
     }
 
 }
