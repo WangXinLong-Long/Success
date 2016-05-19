@@ -13,9 +13,9 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/y35"
+        android:layout_height="@dimen/x50"
         android:id="@+id/orderPrice_layout_top"
-        android:background="#28ABE3"
+        android:background="@color/zixun_topbg"
         >
         <ImageView
             android:layout_width="@dimen/x15"
@@ -23,7 +23,7 @@
             android:id="@+id/ivBack_orderPrice_layout_top"
             android:layout_marginTop="@dimen/y10"
             android:src="@drawable/back"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="@dimen/x10"
             />
         <TextView
             android:layout_width="wrap_content"
@@ -35,14 +35,21 @@
             android:textSize="20sp"
             />
         <ImageView
-            android:layout_width="@dimen/x15"
-            android:layout_height="@dimen/y14"
             android:id="@+id/ivSearch_orderPrice_layout_top"
-            android:layout_marginTop="@dimen/y10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_launcher"
+            android:layout_marginBottom="@dimen/x15"
+            android:layout_alignParentRight="true"/>
+        <TextView
+            android:id="@+id/ivSearch_orderPrice_layout_top_dingwei"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="点位"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
-            android:src="@drawable/search"
-            />
+            android:textColor="@color/selley_lv"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="@dimen/x10"/>
     </RelativeLayout>
     <android.support.design.widget.TabLayout
         android:layout_width="match_parent"

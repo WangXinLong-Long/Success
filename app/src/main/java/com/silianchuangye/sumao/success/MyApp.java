@@ -30,5 +30,6 @@ public class MyApp extends Application {
         JPushInterface.setDebugMode(true);
         JPushInterface.init(applicationContext);
     }
+
     public static  MyApp getInstance(){return  instance;};
 }

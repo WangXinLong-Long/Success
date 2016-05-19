@@ -68,7 +68,7 @@ public class MidpointsListctivity extends AppCompatActivity {
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //PopupWindow
+                //定位
             }
         });
 
