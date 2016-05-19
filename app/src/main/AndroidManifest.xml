@@ -308,6 +308,7 @@
         <activity android:name=".fragments.firmInfomation.FirmInfoParticularActivity" />
         <activity android:name=".fragments.fund.FundInfoActivity"></activity>
         <activity android:name=".fragments.homepage.preSale.PreSale"/>
+        <activity android:name=".fragments.homepage.preSale.PreSaleDetailActivity"/>
     </application>
 
 </manifest>

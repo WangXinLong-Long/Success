@@ -7,5 +7,13 @@
     <dimen name="padding_top">10dp</dimen>
     <dimen name="my_sumao_title_image_margin">15dp</dimen>
     <dimen name="my_sumao_name_text_size">15sp</dimen>
+    <!-- 日历边框 -->
+    <dimen name="calendar_border_margin">0dp</dimen>
 
+    <!-- 日历周名 -->
+    <dimen name="weekname_size">14dp</dimen>
+    <dimen name="weekname_margin">8dp</dimen>
+    <dimen name="day_size">18dp</dimen>
+    <dimen name="action_size">12dp</dimen>
+    <dimen name="day_top_offset">16dp</dimen>
 </resources>
