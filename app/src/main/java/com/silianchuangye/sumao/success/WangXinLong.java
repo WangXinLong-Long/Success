@@ -14,5 +14,6 @@ public class WangXinLong extends Activity {
 //        5月10整理项目结构 创建
 //        5月13收货地址
 //        5月17日开票信息
+//        5月19 预售
     }
 }
