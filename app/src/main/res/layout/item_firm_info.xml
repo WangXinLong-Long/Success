@@ -9,7 +9,7 @@
         android:id="@+id/tv_firm_info"
         android:text="企业名称"
         android:layout_marginLeft="@dimen/x10"
-        android:layout_marginTop="@dimen/x5"
+        android:layout_marginTop="@dimen/x13"
         android:textSize="14sp"
         />
     <TextView
@@ -36,7 +36,7 @@
         android:id="@+id/tvValue_firm_info"
         android:layout_toLeftOf="@+id/ivMore_firm_info"
         android:layout_marginRight="@dimen/x5"
-        android:layout_marginTop="@dimen/x10"
+        android:layout_marginTop="@dimen/x13"
         android:textSize="14sp"
         android:text="四联创业"
         />

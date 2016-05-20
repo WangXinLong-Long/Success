@@ -1,0 +1,21 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    tools:context="com.silianchuangye.sumao.success.fragments.auction.MyOfferFragment">
+
+    <GridView
+
+        android:id="@+id/gv_market_vessel_two"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:numColumns="5"
+        android:scrollbars="none"
+        android:horizontalSpacing="@dimen/x1"
+        android:verticalSpacing="@dimen/x1"
+        android:background="#dcdcdc"
+        android:stretchMode="columnWidth"
+
+        ></GridView>
+</FrameLayout>

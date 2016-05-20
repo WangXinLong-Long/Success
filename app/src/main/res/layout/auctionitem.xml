@@ -136,11 +136,13 @@
             android:layout_width="@dimen/x80"
             android:layout_height="@dimen/x30"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="@dimen/x20"
+            android:layout_marginTop="@dimen/x10"
             android:layout_marginRight="@dimen/x20"
             android:text="参与竞拍"
             android:background="#29ABE2"
             android:textColor="#fff"
+            android:id="@+id/bt_auctionitem"
+
             />
     </RelativeLayout>
     <RelativeLayout

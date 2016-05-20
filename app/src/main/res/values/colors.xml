@@ -65,4 +65,5 @@
     <color name="selley_lv">#ffffff</color>
     <color name="search_tv">#ff0000</color>
     <color name="searchback_tv">#000</color>
+    <color name="colorGreen">#EEFFFC</color>
 </resources>

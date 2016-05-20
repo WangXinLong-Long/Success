@@ -289,9 +289,10 @@
         <activity android:name=".fragments.companyInfomation.CompanyUserActivity" />
         <activity android:name=".fragments.companyInfomation.CompanyUserUpdateActivity" />
         <activity android:name=".fragments.companyInfomation.CompanyUserAddActivity" />
-        <activity android:name=".fragments.companyInfomation.InvoiceInformation"
-            android:launchMode="singleTask"/>
-        <activity android:name=".fragments.fund.SearchMoney"/>
+        <activity
+            android:name=".fragments.companyInfomation.InvoiceInformation"
+            android:launchMode="singleTask" />
+        <activity android:name=".fragments.fund.SearchMoney" />
         <!--
  ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -311,7 +312,12 @@
         <activity android:name=".fragments.firmInfomation.FirmInfoAddressActivity" />
         <activity android:name=".fragments.firmInfomation.FrimInfoProvinceActivity" />
         <activity android:name=".fragments.firmInfomation.FirmInfoParticularActivity" />
-        <activity android:name=".fragments.fund.FundInfoActivity"></activity>
+        <activity android:name=".fragments.fund.FundInfoActivity" />
+        <activity android:name=".fragments.auction.OpenAuctionActivity" />
+        <activity android:name=".fragments.auction.VesselOneActivity" />
+        <activity android:name=".fragments.auction.VesselTwoActivity" />
+        <activity android:name=".fragments.auction.VesselThreeActivity" />
+        <activity android:name=".fragments.auction.VlaueActivity"></activity>
     </application>
 
 </manifest>
