@@ -16,7 +16,8 @@ import android.widget.Toast;
 import com.silianchuangye.sumao.success.fragments.auction.AuctionActivity;
 import com.silianchuangye.sumao.success.HX.Constant;
 import com.silianchuangye.sumao.success.HX.ui.LoginActivity;
-import com.silianchuangye.sumao.success.fragments.OrderManagement.SpotOrder.MidpointsListctivity;
+import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSale;
+import com.silianchuangye.sumao.success.fragments.homepage.theprice.MidpointsListctivity;
 import com.silianchuangye.sumao.success.utils.scrollviewAD.MyGallery;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.ImageAdapter;
@@ -165,19 +166,21 @@ public class PagerOne extends BasePager {
                 }else if(list.get(position).get("icon").equals(R.mipmap.goods)){
                     Toast.makeText(mActivity, "点击了现货按钮", Toast.LENGTH_SHORT).show();
                 }else if(list.get(position).get("icon").equals(R.mipmap.presell)){
-                    Toast.makeText(mActivity, "点击了预售按钮", Toast.LENGTH_SHORT).show();
+                   Intent intent = new Intent();
+                    intent.setClass(mActivity,PreSale.class);
+                    startActivity(intent);
                 }else if(list.get(position).get("icon").equals(R.mipmap.adwords)){
                    //Toast.makeText(mActivity, "点击了竞拍按钮", Toast.LENGTH_SHORT).show();
                     Intent intent=new Intent(mActivity, AuctionActivity.class);
                     startActivity(intent);
                 }else if(list.get(position).get("icon").equals(R.mipmap.order)){
                     Toast.makeText(mActivity, "点击了点价按钮", Toast.LENGTH_SHORT).show();
+                    Intent intent=new Intent(mActivity, MidpointsListctivity.class);
+                    startActivity(intent);
                 }else if(list.get(position).get("icon").equals(R.mipmap.direct)){
                     Toast.makeText(mActivity, "点击了上游直销按钮", Toast.LENGTH_SHORT).show();
                 }else if(list.get(position).get("icon").equals(R.mipmap.aa)){
                     Toast.makeText(mActivity, "点击了物流按钮", Toast.LENGTH_SHORT).show();
-                    Intent intent=new Intent(mActivity, MidpointsListctivity.class);
-                    startActivity(intent);
                 }else if(list.get(position).get("icon").equals(R.mipmap.consult)){
                     Toast.makeText(mActivity, "点击了塑贸咨询按钮", Toast.LENGTH_SHORT).show();
                 }

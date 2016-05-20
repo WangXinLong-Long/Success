@@ -264,7 +264,7 @@
 
         <!-- Jpush推送结束配置 -->
         <activity android:name=".fragments.goodsInStock.OrderGoodsActivity" />
-        <activity android:name=".fragments.OrderManagement.SpotOrder.MidpointsListctivity" />
+        <activity android:name=".fragments.homepage.theprice.MidpointsListctivity" />
         <activity android:name=".fragments.auction.AuctionActivity" />
         <activity android:name=".fragments.OrderManagement.SpotOrder.SpotOrder" />
         <activity android:name=".fragments.personalInformation.PasswordUpdate" />
@@ -281,11 +281,6 @@
         <activity android:name=".fragments.enterpriseInformation.SelectCountyArea" />
         <activity android:name=".fragments.enterpriseInformation.SelectProvinceArea" />
         <activity android:name=".fragments.enterpriseInformation.SelectDetailArea" />
-        <activity android:name=".fragments.personalInformation.PasswordUpdate" />
-        <activity android:name=".fragments.personalInformation.InformationSubscription" />
-        <activity android:name=".fragments.personalInformation.UserInformation" />
-        <activity android:name=".fragments.personalInformation.ModifyName" />
-        <activity android:name=".fragments.personalInformation.ModifyTelephone" />
         <activity android:name=".fragments.companyInfomation.CompanyUserActivity" />
         <activity android:name=".fragments.companyInfomation.CompanyUserUpdateActivity" />
         <activity android:name=".fragments.companyInfomation.CompanyUserAddActivity" />
@@ -312,6 +307,13 @@
         <activity android:name=".fragments.firmInfomation.FirmInfoAddressActivity" />
         <activity android:name=".fragments.firmInfomation.FrimInfoProvinceActivity" />
         <activity android:name=".fragments.firmInfomation.FirmInfoParticularActivity" />
+        <activity android:name=".fragments.homepage.preSale.PreSaleDetailActivity"/>
+        <activity android:name=".fragments.fund.FundInfoActivity" />
+        <activity android:name=".fragments.homepage.preSale.PreSale" />
+        <activity android:name=".fragments.homepage.theprice.ChinaNorth_MyPrice" />
+        <activity android:name=".fragments.homepage.theprice.ChainNorth_MyPriceLv" />
+        <activity android:name=".fragments.homepage.theprice.ChinaNorth_Margin" />
+        <activity android:name=".fragments.homepage.theprice.ChinaNorth_Price"></activity>
         <activity android:name=".fragments.fund.FundInfoActivity" />
         <activity android:name=".fragments.auction.OpenAuctionActivity" />
         <activity android:name=".fragments.auction.VesselOneActivity" />

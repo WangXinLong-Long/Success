@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/pre_sale_title"
+        layout="@layout/screen_title_bar" />
+
+    <RelativeLayout
+        android:id="@+id/selection_condition"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pre_sale_title"
+        android:layout_marginTop="@dimen/x5"
+        >
+
+        <TextView
+            android:id="@+id/classification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="分类未选择"
+            android:paddingLeft="@dimen/x20"
+            />
+
+        <TextView
+            android:id="@+id/application"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="应用未选择" />
+
+        <TextView
+            android:id="@+id/region"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="地区未选择"
+            android:paddingRight="@dimen/x20"/>
+
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/pre_sale_listView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/selection_condition"
+        >
+
+    </ListView>
+
+</RelativeLayout>

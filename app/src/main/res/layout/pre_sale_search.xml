@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white">
+<include
+    android:id="@+id/search_title"
+    layout="@layout/screen_title_bar"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/classification"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        >
+        <TextView
+        android:id="@+id/classification_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="分类："
+        />
+        <TextView
+            android:id="@+id/classification_et"
+            android:layout_width="@dimen/x70"
+            android:layout_height="@dimen/x30"
+            android:layout_toRightOf="@id/classification_tv"
+            android:background="@mipmap/xiala"/>
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/application"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/classification">
+    <TextView
+        android:id="@+id/application_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginLeft="@dimen/x5"
+        android:text="应用："/>
+    <TextView
+        android:id="@+id/application_et"
+        android:layout_width="@dimen/x70"
+        android:layout_height="@dimen/x30"
+        android:layout_toRightOf="@id/application_tv"
+        android:background="@mipmap/xiala"
+        />
+    </RelativeLayout>
+
+
+
+    <RelativeLayout
+        android:id="@+id/region"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/application"
+        >
+    <TextView
+        android:id="@+id/region_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginLeft="@dimen/x5"
+        android:text="地区"/>
+    <TextView
+        android:id="@+id/region_et"
+        android:layout_width="@dimen/x70"
+        android:layout_height="@dimen/x30"
+        android:layout_toRightOf="@id/region_tv"
+        android:background="@mipmap/xiala"/>
+    </RelativeLayout>
+        <ListView
+            android:id="@+id/application_lv"
+            android:layout_toRightOf="@id/classification"
+            android:layout_toLeftOf="@id/region"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/application"
+            android:background="@mipmap/a"
+            android:visibility="gone"
+            ></ListView>
+        <ListView
+        android:id="@+id/region_lv"
+        android:layout_toRightOf="@id/application"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/region"
+            android:background="@mipmap/a"
+        android:visibility="gone"></ListView>
+        <ListView
+            android:id="@+id/classification_lv"
+            android:layout_toLeftOf="@id/application"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/classification"
+            android:background="@mipmap/a"
+            android:visibility="gone"></ListView>
+    </RelativeLayout>>
+</LinearLayout>
