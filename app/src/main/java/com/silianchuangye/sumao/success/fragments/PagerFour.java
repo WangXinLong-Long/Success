@@ -25,6 +25,7 @@ import com.silianchuangye.sumao.success.fragments.firmInfomation.FirmInfoActivit
 import com.silianchuangye.sumao.success.fragments.personalInformation.InformationSubscription;
 import com.silianchuangye.sumao.success.fragments.personalInformation.PasswordUpdate;
 import com.silianchuangye.sumao.success.fragments.personalInformation.UserInformation;
+import com.silianchuangye.sumao.success.fragments.setting.SettingActivity;
 
 /**
  * Created by Administrator on 2016/4/20 0020.
@@ -96,7 +97,6 @@ public class PagerFour extends BasePager {
                     startActivity(intent);
                 }else if (sela.getChild(groupPosition, childPosition).toString().equals("企业信息")){
                     Intent intent=new Intent(context, FirmInfoActivity.class);
-
                     startActivity(intent);
                 }else if (sela.getChild(groupPosition, childPosition).toString().equals("开票信息")){
                     Intent intent=new Intent(context, InvoiceInformation.class);
@@ -168,7 +168,8 @@ public class PagerFour extends BasePager {
              */
 
             case R.id.my_sumao_ib_setting:
-
+                Intent intent=new Intent(getActivity(), SettingActivity.class);
+                startActivity(intent);
                 break;
         }
     }

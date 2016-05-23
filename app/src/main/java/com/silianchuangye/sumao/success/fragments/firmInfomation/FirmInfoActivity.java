@@ -35,14 +35,19 @@ public class FirmInfoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_firm_info);
-        title_Bar();
-        initList();
+
+            initList();
+            title_Bar();
+
+
+
     }
     public void initList(){
         lv_firm_info= (ListView) findViewById(R.id.lvShow_firm_info);
+         //这里判断是新增还是修改，如果新增则没有后面的值
         list=new ArrayList<Map<String,Object>>();
         Map<String,Object> map1=new Hashtable<String,Object>();
-        map1.put("center","恭喜您,企业信息以通过审核");
+        map1.put("center","恭喜你，企业已经注册成功");
         list.add(map1);
         Map<String,Object> map2=new Hashtable<String,Object>();
         map2.put("left","企业类型");
@@ -117,10 +122,8 @@ public class FirmInfoActivity extends AppCompatActivity {
         sv_title_bar_serachView.setVisibility(View.GONE);
         iv_title_bar_search.setVisibility(View.GONE);
 
+
         tvUpdate.setText("修改");
-        tv_title_bar_title.setText("企业信息");
-
-
         tv_title_bar_title.setTextColor(Color.WHITE);
         iv_title_bar_back.setVisibility(View.VISIBLE);
         layoutTop= (RelativeLayout) findViewById(R.id.layoutTop_firm_info);
@@ -136,6 +139,7 @@ public class FirmInfoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(FirmInfoActivity.this,FirmInfoUpdateActivity.class);
+                intent.putExtra("add","修改");
                   startActivity(intent);
             }
         });
