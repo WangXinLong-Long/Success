@@ -6,14 +6,14 @@
     android:orientation="vertical">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="@dimen/x40"
         android:background="@color/zixun_topbg">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="意向单生成"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="@dimen/x10"
             android:textSize="16sp"
             android:textColor="@color/selley_lv"/>
         <ImageView

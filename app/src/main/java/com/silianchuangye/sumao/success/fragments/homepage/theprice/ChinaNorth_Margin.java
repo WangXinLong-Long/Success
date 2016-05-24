@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
+import com.silianchuangye.sumao.success.adapter.ChinaNorth_Margin_Adapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,8 +34,8 @@ private ImageView img_margin_back;
                 tv_margin_price,tv_margin_all_price;
     private ListView lv_margin_bank;
     private Button btn_margin_zhifu;
-    List<Map<String,Object>> list1 =new ArrayList<Map<String,Object>>();
-    private SimpleAdapter adapter;
+    List<ChinaNorth_Margin_info> list =new ArrayList<ChinaNorth_Margin_info>();
+    private ChinaNorth_Margin_Adapter adapter;
     private boolean flag;
     private MyMargin_Dialog dialog;
     private MyReciver my;
@@ -47,15 +48,20 @@ private ImageView img_margin_back;
     }
 
     private void initDate() {
-
-        Map<String,Object> map=new HashMap<String,Object>();
-        map.put("bankname","中国建设银行");
-        map.put("bankmoney","111,111.00");
-        Map<String,Object> map1=new HashMap<String,Object>();
-        map1.put("bankname","中国工商银行");
-        map1.put("bankmoney","123,456.00");
-        list1.add(map);
-        list1.add(map1);
+//        Map<String,Object> map=new HashMap<String,Object>();
+//        map.put("bankname","中国建设银行");
+//        map.put("bankmoney","111,111.00");
+//        Map<String,Object> map1=new HashMap<String,Object>();
+//        map1.put("bankname","中国工商银行");
+//        map1.put("bankmoney","123,456.00");
+        ChinaNorth_Margin_info info1=new ChinaNorth_Margin_info();
+        info1.bank="中国建设银行";
+        info1.money="111,111,00";
+        list.add(info1);
+        ChinaNorth_Margin_info info2=new ChinaNorth_Margin_info();
+        info2.bank="中国工商银行";
+        info2.money="132,122,00";
+        list.add(info2);
     }
 
     @Override
@@ -78,15 +84,16 @@ private ImageView img_margin_back;
         tv_margin_all_price = (TextView) findViewById(R.id.tv_margin_all_price);
         btn_margin_zhifu = (Button) findViewById(R.id.btn_margin_zifu);
         lv_margin_bank = (ListView) findViewById(R.id.lv_margin_bank);
-        adapter = new SimpleAdapter(this,
-                list1,
-                R.layout.item_chinanorth_margin,
-                new String[]{"bankname",
-                        "bankmoney",
-                },
-                new int[]{R.id.tv_item_margin_bank,
-                        R.id.tv_item_margin_price,
-                });
+//        adapter = new SimpleAdapter(this,
+//                list1,
+//                R.layout.item_chinanorth_margin,
+//                new String[]{"bankname",
+//                        "bankmoney",
+//                },
+//                new int[]{R.id.tv_item_margin_bank,
+//                        R.id.tv_item_margin_price,
+//                });
+        adapter=new ChinaNorth_Margin_Adapter(list,ChinaNorth_Margin.this);
         lv_margin_bank.setAdapter(adapter);
         img_margin_back.setOnClickListener(this);
         btn_margin_zhifu.setOnClickListener(this);
@@ -111,8 +118,17 @@ private ImageView img_margin_back;
     }
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Toast.makeText(ChinaNorth_Margin.this,"onItemClick",Toast.LENGTH_SHORT).show();
-        flag=true;
+        Toast.makeText(ChinaNorth_Margin.this,"list.get(position).toString()===="+list.get(position).toString(),Toast.LENGTH_SHORT).show();
+        if(parent.getId()==lv_margin_bank.getId()){
+            for(int i=0;i<list.size();i++){
+                if(i!=position){
+                    list.get(i).Flag=false;
+                }
+            }
+            list.get(position).Flag=!list.get(position).Flag;
+            adapter.notifyDataSetChanged();
+    }
+//        flag=true;
     }
     private class MyReciver extends BroadcastReceiver{
         @Override

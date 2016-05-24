@@ -9,6 +9,7 @@ import android.content.IntentFilter;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,21 +50,19 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
     private List<String> mTextArray;
     // 退出时间
     private long exitTime = 0;
-
     private MyConnectionListener connectionListener = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 //        初始化数据
         initData();
 //         初始化组件
         initView();
         init();
-
     }
-
     private void initView() {
         mLayoutInflater = LayoutInflater.from(this);
         mTabHost  = ((FragmentTabHost) findViewById(android.R.id.tabhost));
@@ -220,6 +219,11 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
                         EMNotifierEvent.Event.EventOfflineMessage });
         //Jpush推送
         JPushInterface.onResume(this);
+        //注册广播
+        int id = getIntent().getIntExtra("cart", 0);
+        if (id == 1 ) {
+            mTabHost.setCurrentTab(2);
+        }
     }
 
     @Override
