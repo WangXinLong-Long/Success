@@ -85,9 +85,11 @@ public class CompanyUserAddActivity extends AppCompatActivity {
         Adapter adapter = new Adapter(CompanyUserAddActivity.this, list, R.layout.item_company_user_add, new String[]{"text", "icon"}, new int[]{R.id.tvText_company_user_add, R.id.ivMore_company_user_add});
         lVadd.setAdapter(adapter);
 
+
        lVadd.setOnItemClickListener(new AdapterView.OnItemClickListener() {
            @Override
            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
                if (position==5){
                    Intent intent=new Intent(CompanyUserAddActivity.this,CompanyUserDutyActivity.class);
                    startActivity(intent);
@@ -143,8 +145,9 @@ public class CompanyUserAddActivity extends AppCompatActivity {
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, View convertView, ViewGroup parent) {
             convertView = super.getView(position, convertView, parent);
+
             if (convertView != null) {
                 convertView = getLayoutInflater().inflate(R.layout.item_company_user_add, null);
                 EditText et = (EditText) convertView.findViewById(R.id.etContext_company_user);
@@ -165,6 +168,8 @@ public class CompanyUserAddActivity extends AppCompatActivity {
 
                 }
             }
+
+
 
 
             return convertView;
