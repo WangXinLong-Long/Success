@@ -30,19 +30,36 @@ public class FirmInfoUpdateActivity extends AppCompatActivity {
     RelativeLayout layoutTop;
     private ListView lvupdate_firm_info;
     private List<Map<String,Object>> list;
+    String title;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_firm_info_update);
-        title_Bar();
-        initList();
+        Bundle bundle=getIntent().getExtras();
+        String add=bundle.getString("add");
+
+        if (add.equals("新建")){
+            //注册界面
+            title="注册账户";
+        }else if(add.equals("修改")){
+            //修改界面
+            title="修改企业信息";
+        }
+        title_Bar(title);
+        initList(add);
     }
-    public void initList(){
+    public void initList(String add){
         lvupdate_firm_info= (ListView) findViewById(R.id.lvUpdate_firm_info);
         list=new ArrayList<Map<String,Object>>();
-//        Map<String,Object> map1=new Hashtable<String,Object>();
-//        map1.put("center","");
-//        list.add(map1);
+        if (add.equals("新建")){
+             Map<String,Object> map1=new Hashtable<String,Object>();
+             map1.put("center","填写企业信息");
+             list.add(map1);
+            //不从网络获取第二个参数
+        }else if(add.equals("修改")){
+          //从网络中获取第二个参数
+        }
+
         Map<String,Object> map2=new Hashtable<String,Object>();
         map2.put("left","企业类型");
         map2.put("right","贸易商");
@@ -122,7 +139,7 @@ public class FirmInfoUpdateActivity extends AppCompatActivity {
 
 
     }
-    public void title_Bar(){
+    public void title_Bar(String title){
         iv_title_bar_back = ((ImageView) findViewById(R.id.iv_title_bar_back));
         iv_title_bar_logo = ((ImageView) findViewById(R.id.iv_title_bar_logo));
         iv_title_bar_service = ((ImageView) findViewById(R.id.iv_title_bar_service));
@@ -134,7 +151,7 @@ public class FirmInfoUpdateActivity extends AppCompatActivity {
         iv_title_bar_service.setVisibility(View.GONE);
         sv_title_bar_serachView.setVisibility(View.GONE);
         iv_title_bar_search.setVisibility(View.GONE);
-        tv_title_bar_title.setText("修改企业信息");
+        tv_title_bar_title.setText(title);
         tv_title_bar_title.setTextColor(Color.WHITE);
         iv_title_bar_back.setVisibility(View.VISIBLE);
         layoutTop= (RelativeLayout) findViewById(R.id.layoutTop_firm_info_update);

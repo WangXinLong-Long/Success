@@ -307,19 +307,23 @@
         <activity android:name=".fragments.firmInfomation.FirmInfoAddressActivity" />
         <activity android:name=".fragments.firmInfomation.FrimInfoProvinceActivity" />
         <activity android:name=".fragments.firmInfomation.FirmInfoParticularActivity" />
-        <activity android:name=".fragments.homepage.preSale.PreSaleDetailActivity"/>
+        <activity android:name=".fragments.homepage.preSale.PreSaleDetailActivity" />
         <activity android:name=".fragments.fund.FundInfoActivity" />
         <activity android:name=".fragments.homepage.preSale.PreSale" />
         <activity android:name=".fragments.homepage.theprice.ChinaNorth_MyPrice" />
         <activity android:name=".fragments.homepage.theprice.ChainNorth_MyPriceLv" />
         <activity android:name=".fragments.homepage.theprice.ChinaNorth_Margin" />
-        <activity android:name=".fragments.homepage.theprice.ChinaNorth_Price"></activity>
+        <activity android:name=".fragments.homepage.theprice.ChinaNorth_Price" />
         <activity android:name=".fragments.fund.FundInfoActivity" />
         <activity android:name=".fragments.auction.OpenAuctionActivity" />
         <activity android:name=".fragments.auction.VesselOneActivity" />
         <activity android:name=".fragments.auction.VesselTwoActivity" />
         <activity android:name=".fragments.auction.VesselThreeActivity" />
-        <activity android:name=".fragments.auction.VlaueActivity"></activity>
+        <activity android:name=".fragments.auction.VlaueActivity" />
+        <activity android:name=".fragments.setting.SettingActivity" />
+        <activity android:name=".fragments.login.LoginUserActivity" />
+        <activity android:name=".fragments.register.RegisterActivity" />
+        <activity android:name=".fragments.register.RegisterValueActivity"></activity>
     </application>
 
 </manifest>
