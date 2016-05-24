@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,32 +23,18 @@ import java.util.List;
 
 /**
  * Created by Administrator on 2016/5/20.
+ * 购物车列表适配器
  */
 public class CartAdapter extends BaseAdapter{
 private List<CartInfo> list;
     private Context ctx;
     private Cart_MyDialog dialog;
     private SelectCallBack call;
-    private SelectCallBack MyReciverCall;
-    private MyReciver my;
-    public CartAdapter(Context ctx,List<CartInfo>list,SelectCallBack call,SelectCallBack MyReciverCall){
+    public CartAdapter(Context ctx,List<CartInfo>list,SelectCallBack call,Cart_MyDialog dialog){
         this.ctx=ctx;
         this.list=list;
         this.call=call;
-        this.MyReciverCall=MyReciverCall;
-        my=new MyReciver();
-        IntentFilter intent=new IntentFilter();
-        intent.addAction("close_cart_dialog");
-        ctx.registerReceiver(my,intent);
-        dialog=new Cart_MyDialog(ctx);
-    }
-
-    public class MyReciver extends BroadcastReceiver{
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            dialog.dismiss();
-            MyReciverCall.MyReciverCall(my);
-        }
+        this.dialog=dialog;
     }
     @Override
     public int getCount() {
@@ -122,7 +109,9 @@ private List<CartInfo> list;
                 String str=holder.Tv_buy_num.getText().toString();
                 int num=Integer.valueOf(str);
                 num--;
-                holder.Tv_buy_num.setText(""+num);
+                if(num>=0) {
+                    holder.Tv_buy_num.setText("" + num);
+                }
             }
         });
         holder.Img_Add.setOnClickListener(new View.OnClickListener() {
@@ -134,11 +123,12 @@ private List<CartInfo> list;
                 if(num>=15){
                     dialog.show();
                 }
-                if(num<15) {
+                if(num<15&&num>=0) {
                     holder.Tv_buy_num.setText("" + num);
                 }
             }
         });
+
         return convertView;
     }
     public class ViewHolder{
@@ -156,6 +146,5 @@ private List<CartInfo> list;
     }
     public interface SelectCallBack{
         public void Call(int index);
-        public void MyReciverCall(MyReciver myReciver);
     }
 }

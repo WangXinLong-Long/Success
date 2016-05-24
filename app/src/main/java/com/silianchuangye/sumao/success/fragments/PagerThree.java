@@ -1,6 +1,10 @@
 package com.silianchuangye.sumao.success.fragments;
 
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -13,6 +17,7 @@ import android.widget.Toast;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.CartAdapter;
 import com.silianchuangye.sumao.success.fragments.bean.CartInfo;
+import com.silianchuangye.sumao.success.fragments.dialog.Cart_MyDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,8 +25,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2016/4/20 0020.
  */
-public class PagerThree extends BasePager implements AdapterView.OnItemClickListener,
-        CartAdapter.SelectCallBack{
+public class PagerThree extends BasePager implements AdapterView.OnItemClickListener,CartAdapter.SelectCallBack{
     private ListView lv_Cart;
     private CartAdapter adapter;
     private List<CartInfo> list;
@@ -30,6 +34,23 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
     private Button btn_Cart_Ok;
     private boolean all_Flag;
     private float all_Price;
+    private Context ctx;
+    private MyReciver my;
+    private Cart_MyDialog dialog;
+    public class MyReciver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if(intent.getAction().equals("close_cart_dialog")){
+                dialog.dismiss();
+            }
+        }
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getActivity().unregisterReceiver(my);
+    }
+
     @Override
     public void myClickSearch() {
 
@@ -41,6 +62,12 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
     }
 
     private void initView() {
+        ctx=getActivity();
+        dialog=new Cart_MyDialog(ctx);
+        my=new MyReciver();
+        IntentFilter intent=new IntentFilter();
+        intent.addAction("close_cart_dialog");
+        getActivity().registerReceiver(my,intent);
         initList();
         rl_title.setVisibility(View.GONE);
         View v = View.inflate(getActivity(), R.layout.activity_cart, null);
@@ -49,7 +76,7 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
         btn_Cart_Ok = (Button) v.findViewById(R.id.btn_activity_cart_ok);
         img_Cart_All_Select = (ImageView) v.findViewById(R.id.img_activity_cart_allselect);
         tv_Cart_All_Price = (TextView) v.findViewById(R.id.tv_activity_cart_all_price);
-        adapter = new CartAdapter(getActivity(), list,this,this);
+        adapter = new CartAdapter(getActivity(),list,this,dialog);
         lv_Cart.setAdapter(adapter);
         lv_Cart.setOnItemClickListener(this);
         img_Cart_All_Select.setOnClickListener(this);
@@ -62,7 +89,6 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
         switch (v.getId()){
             case R.id.img_activity_cart_allselect:
                 if(!all_Flag) {
-                    Toast.makeText(getContext(),"全选",Toast.LENGTH_SHORT).show();
                     img_Cart_All_Select.setImageResource(R.mipmap.adwords);
                     for(CartInfo info3:list){
                         info3.Selsct_Flag=true;
@@ -70,7 +96,6 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
                     adapter.notifyDataSetChanged();
                     refrashPrice();
                 }else{
-                    Toast.makeText(getContext(),"全不选",Toast.LENGTH_SHORT).show();
                     img_Cart_All_Select.setImageResource(R.mipmap.ic_launcher);
                     for(CartInfo info4:list){
                         info4.Selsct_Flag=false;
@@ -133,12 +158,6 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
         adapter.notifyDataSetChanged();
         refrashPrice();
     }
-
-    @Override
-    public void MyReciverCall(CartAdapter.MyReciver myReciver) {
-        getActivity().unregisterReceiver(myReciver);
-    }
-
 
     //统计总价方法
     private void refrashPrice(){
