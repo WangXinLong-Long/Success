@@ -3,24 +3,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layout_margin="5dp"
+    android:layout_margin="@dimen/x5"
     android:background="@color/selley_bg"
     >
     <RelativeLayout
         android:background="@color/selley_lv"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="@dimen/x40"
         android:orientation="horizontal">
         <ImageView
             android:id="@+id/img_item_cart_select"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="@dimen/x30"
+            android:layout_height="@dimen/x30"
             android:scaleType="fitXY"
             android:src="@mipmap/ic_launcher"
             android:layout_centerVertical="true"/>
         <TextView
             android:id="@+id/tv_item_cart_name"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="@dimen/x10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -29,14 +29,15 @@
         <ImageView
             android:id="@+id/img_item_cart_del"
             android:layout_alignParentRight="true"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_centerVertical="true"
+            android:layout_width="@dimen/x30"
+            android:layout_height="@dimen/x30"
             android:src="@mipmap/ic_launcher"
-            android:layout_marginRight="10dp"/>
+            android:layout_marginRight="@dimen/x10"/>
     </RelativeLayout>
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="@dimen/x1"
         android:background="@color/selley_bg"
         />
     <LinearLayout
@@ -46,13 +47,13 @@
         android:orientation="horizontal">
         <RelativeLayout
             android:layout_width="0dp"
-            android:layout_height="30dp"
+            android:layout_height="@dimen/x30"
             android:layout_weight="1">
             <TextView
                 android:id="@+id/tv_item_cart_pinzhong"
                 style="@style/tv_dingdan"
                 android:text="品种 : "
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="@dimen/x10"
                 />
             <TextView
                 android:id="@+id/tv_item_cart_pinzhong_name"
@@ -63,7 +64,7 @@
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="0dp"
-            android:layout_height="30dp"
+            android:layout_height="@dimen/x30"
             android:layout_weight="1">
             <TextView
                 style="@style/tv_dingdan"
@@ -85,13 +86,13 @@
         android:orientation="horizontal">
         <RelativeLayout
             android:layout_width="0dp"
-            android:layout_height="30dp"
+            android:layout_height="@dimen/x30"
             android:layout_weight="1">
             <TextView
                 android:id="@+id/tv_item_cart_paihao"
                 style="@style/tv_dingdan"
                 android:text="产品牌号 : "
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="@dimen/x10"
                 />
             <TextView
                 android:id="@+id/tv_item_cart_paihao_num"
@@ -102,7 +103,7 @@
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="0dp"
-            android:layout_height="30dp"
+            android:layout_height="@dimen/x30"
             android:layout_weight="1">
             <TextView
                 style="@style/tv_dingdan"
@@ -125,13 +126,13 @@
         android:orientation="horizontal">
         <RelativeLayout
             android:layout_width="0dp"
-            android:layout_height="30dp"
+            android:layout_height="@dimen/x30"
             android:layout_weight="1">
             <TextView
                 android:id="@+id/tv_item_cart_shengchan"
                 style="@style/tv_dingdan"
                 android:text="生产企业 : "
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="@dimen/x10"
                 />
             <TextView
                 android:id="@+id/tv_item_cart_shengchan_name"
@@ -142,7 +143,7 @@
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="0dp"
-            android:layout_height="30dp"
+            android:layout_height="@dimen/x30"
             android:layout_weight="1">
             <TextView
                 style="@style/tv_dingdan"
@@ -159,33 +160,33 @@
     </LinearLayout>
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="@dimen/x1"
         android:background="@color/selley_bg"
         />
     <RelativeLayout
         android:background="@color/selley_lv"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="@dimen/x30"
         android:layout_marginBottom="10dp">
         <TextView
             android:id="@+id/tv_item_cart_buy"
             style="@style/tv_dingdan"
             android:text="购买数量"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="@dimen/x10"
             />
         <ImageView
             android:id="@+id/img_item_cart_buy_sub"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="@dimen/x25"
+            android:layout_height="@dimen/x25"
             android:src="@mipmap/ic_launcher"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/tv_item_cart_buy"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="@dimen/x10"
             />
         <TextView
             android:id="@+id/tv_item_cart_buy_num"
-            android:layout_width="50dp"
-            android:layout_height="25dp"
+            android:layout_width="@dimen/x50"
+            android:layout_height="@dimen/x25"
             android:text="1"
             android:layout_toRightOf="@id/img_item_cart_buy_sub"
             android:layout_centerVertical="true"
@@ -193,8 +194,8 @@
             android:gravity="center"/>
         <ImageView
             android:id="@+id/img_item_cart_buy_add"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="@dimen/x25"
+            android:layout_height="@dimen/x25"
             android:src="@mipmap/ic_launcher"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/tv_item_cart_buy_num"
@@ -203,7 +204,7 @@
             android:id="@+id/tv_item_cart_all_price"
             android:layout_alignParentRight="true"
             android:textColor="#ff0000"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="@dimen/x10"
                 style="@style/tv_dingdan"
             android:text="234,900元"
             />

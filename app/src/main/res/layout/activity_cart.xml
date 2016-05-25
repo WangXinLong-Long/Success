@@ -6,7 +6,7 @@
     <RelativeLayout
         android:id="@+id/reative_activity_cart_top"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="@dimen/x40"
         android:background="@color/selley_lv"
         >
         <TextView
@@ -19,26 +19,26 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="@dimen/x15"
         android:layout_width="wrap_content"
-        android:layout_height="45dp"
+        android:layout_height="@dimen/x45"
         android:background="@color/selley_lv"
         android:layout_alignParentBottom="true"
         android:id="@+id/relative_activity_cart_bottom"
         >
         <ImageView
             android:id="@+id/img_activity_cart_allselect"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="@dimen/x30"
+            android:layout_height="@dimen/x30"
             android:layout_centerVertical="true"
             android:scaleType="fitXY"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="@dimen/x10"
             android:src="@mipmap/ic_launcher"/>
         <TextView
             android:id="@+id/tv_activity_cart_all"
             style="@style/tv_dingdan"
             android:text="全选"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="@dimen/x5"
             android:layout_toRightOf="@id/img_activity_cart_allselect"
             />
         <TextView
@@ -46,7 +46,7 @@
             style="@style/tv_dingdan"
             android:text="合计金额 : "
             android:layout_toRightOf="@id/tv_activity_cart_all"
-            android:layout_marginLeft="30dp"
+            android:layout_marginLeft="@dimen/x20"
             />
         <TextView
             android:textColor="#ff0000"
@@ -57,7 +57,7 @@
             />
         <Button
             android:id="@+id/btn_activity_cart_ok"
-            android:layout_width="120dp"
+            android:layout_width="@dimen/x100"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:background="@drawable/cartblue"
@@ -71,5 +71,5 @@
     android:layout_height="match_parent"
     android:layout_below="@id/reative_activity_cart_top"
     android:layout_above="@id/relative_activity_cart_bottom"
-    android:layout_marginTop="10dp"></ListView>
+    android:layout_marginTop="@dimen/x10"></ListView>
 </RelativeLayout>

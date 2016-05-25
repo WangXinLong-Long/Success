@@ -6,14 +6,14 @@
     android:orientation="vertical">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="@dimen/x40"
         android:background="@color/zixun_topbg">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="库存不足"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="@dimen/x10"
             android:textSize="16sp"
             android:textColor="@color/selley_lv"/>
         <ImageView
@@ -21,7 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_margin="5dp"
+            android:layout_margin="@dimen/x5"
             android:src="@mipmap/ic_launcher"
             />
     </RelativeLayout>
@@ -33,14 +33,14 @@
         android:layout_gravity="center_horizontal"
         android:text="您购买的商品兰州石化7042库存不足！"
         android:textColor="#ff0000"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="@dimen/x25"
         android:textSize="16sp"/>
     <RelativeLayout
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="20dp">
+        android:layout_marginTop="@dimen/x20"
+        android:layout_marginBottom="@dimen/x20">
         <TextView
             android:id="@+id/tv_cart_dialog_num"
             android:layout_width="wrap_content"
@@ -54,20 +54,20 @@
         android:background="@color/selley_bg"
         />
     <RelativeLayout
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="@dimen/x2"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="@dimen/x40"
        >
         <Button
             android:id="@+id/btn_cart_dialog_close"
-            android:layout_width="120dp"
-            android:layout_height="35dp"
+            android:layout_width="@dimen/x120"
+            android:layout_height="@dimen/x35"
             android:layout_centerInParent="true"
             android:text="关闭"
             android:textColor="@color/selley_lv"
             android:gravity="center"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="@dimen/x5"
             android:background="@drawable/cart_read_yuanjiao"
-            android:layout_marginBottom="5dp"/>
+            android:layout_marginBottom="@dimen/x5"/>
     </RelativeLayout>
 </LinearLayout>
