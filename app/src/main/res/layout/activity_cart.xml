@@ -29,7 +29,7 @@
         <ImageView
             android:id="@+id/img_activity_cart_allselect"
             android:layout_width="@dimen/x30"
-            android:layout_height="@dimen/x30"
+            android:layout_height="@dimen/x28"
             android:layout_centerVertical="true"
             android:scaleType="fitXY"
             android:layout_marginLeft="@dimen/x10"
@@ -46,7 +46,7 @@
             style="@style/tv_dingdan"
             android:text="合计金额 : "
             android:layout_toRightOf="@id/tv_activity_cart_all"
-            android:layout_marginLeft="@dimen/x20"
+            android:layout_marginLeft="@dimen/x18"
             />
         <TextView
             android:textColor="#ff0000"
@@ -57,7 +57,7 @@
             />
         <Button
             android:id="@+id/btn_activity_cart_ok"
-            android:layout_width="@dimen/x100"
+            android:layout_width="@dimen/x90"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:background="@drawable/cartblue"
@@ -71,5 +71,5 @@
     android:layout_height="match_parent"
     android:layout_below="@id/reative_activity_cart_top"
     android:layout_above="@id/relative_activity_cart_bottom"
-    android:layout_marginTop="@dimen/x10"></ListView>
+    android:layout_marginTop="@dimen/x7"></ListView>
 </RelativeLayout>
