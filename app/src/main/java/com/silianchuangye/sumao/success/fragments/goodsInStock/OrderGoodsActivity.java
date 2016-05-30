@@ -47,6 +47,8 @@ public class OrderGoodsActivity extends AppCompatActivity implements View.OnClic
     private List<String> list=new ArrayList<String>();
     private ArrayAdapter<String> LvAdapter;
     private boolean flag=true;
+    String first = "first";
+    String second = "second";
 
     private ArrayList<Fragment> listFragment;
     private TabLayout tlDemo;
@@ -156,15 +158,27 @@ public class OrderGoodsActivity extends AppCompatActivity implements View.OnClic
         switch (v.getId()){
             case R.id.tv_dingdan_jiaoyi:
                 //点击显示listview
-                showLv(Lv_jiaoyi);
+//                showLv(Lv_jiaoyi);
+                first = "one";
+                logicdisplayshowListView(Lv_jiaoyi,first);
+                hideListView(Lv_kaipiao);
+                hideListView(Lv_dingdan);
                 break;
             case R.id.tv_dingdan_kaioiao:
                 //点击显示listview
-                showLv(Lv_kaipiao);
+                first = "two";
+//                showLv(Lv_kaipiao);
+                logicdisplayshowListView(Lv_kaipiao,first);
+                hideListView(Lv_jiaoyi);
+                hideListView(Lv_jiaoyi);
                 break;
             case R.id.tv_dingdan_zhuangtai:
                 //点击显示listview
-                showLv(Lv_dingdan);
+                first = "three";
+//                showLv(Lv_dingdan);
+                logicdisplayshowListView(Lv_dingdan,first);
+                hideListView(Lv_jiaoyi);
+                hideListView(Lv_kaipiao);
                 break;
             case R.id.tv_dingdan_start:
                 //点击弹出日期对话框
@@ -255,5 +269,26 @@ public class OrderGoodsActivity extends AppCompatActivity implements View.OnClic
             Tv_dingdan.setText(LvAdapter.getItem(position));
             Lv_dingdan.setVisibility(View.GONE);
         }
+    }
+    /**
+     * 如果已经打开一个listView，点击另一个，这个listView影藏
+     * @param listview
+     * @param first
+     */
+    private void logicdisplayshowListView(ListView listview,String first) {
+
+        if (second.equals(first))
+        {
+            showLv(listview);
+            second  = first;
+        }else {
+            flag  = true;
+            showLv(listview);
+        }
+
+    }
+    private void hideListView(ListView listview)
+    {
+        listview.setVisibility(View.GONE);
     }
 }

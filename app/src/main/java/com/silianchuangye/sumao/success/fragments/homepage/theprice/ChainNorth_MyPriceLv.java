@@ -15,8 +15,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.silianchuangye.sumao.success.MainActivity;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.custom.CustomListView;
+import com.silianchuangye.sumao.success.fragments.PagerThree;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -122,6 +124,9 @@ public class ChainNorth_MyPriceLv extends AppCompatActivity implements View.OnCl
                 break;
             case R.id.img_mypricelv_cart:
                 //跳转到购物车
+                Intent intent2 = new Intent(ChainNorth_MyPriceLv.this,MainActivity.class);
+                intent2.putExtra("cart", 1);
+                startActivity(intent2);
                 break;
             case R.id.tv_mypricelv_heyue_sort:
                 if(flag){
@@ -162,9 +167,6 @@ public class ChainNorth_MyPriceLv extends AppCompatActivity implements View.OnCl
                     public void onDateSet(DatePicker view,
                                           int year, int monthOfYear,
                                           int dayOfMonth) {
-                        Toast.makeText(ChainNorth_MyPriceLv.this,
-                                "" + year + "-" + (monthOfYear + 1)
-                                        + "-" + dayOfMonth, Toast.LENGTH_LONG).show();
                         Tv.setText(year + "-" + (monthOfYear + 1)
                                 + "-" + dayOfMonth);
                     }
@@ -176,4 +178,5 @@ public class ChainNorth_MyPriceLv extends AppCompatActivity implements View.OnCl
         tv_MyPriceLv_heyue.setText(sort_adapter.getItem(position));
         lv_MyPriceLv_heyue.setVisibility(View.GONE);
     }
+
 }
