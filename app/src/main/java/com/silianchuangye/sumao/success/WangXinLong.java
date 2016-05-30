@@ -2,11 +2,13 @@ package com.silianchuangye.sumao.success;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 
 /**
  * Created by Administrator on 2016/4/13 0013.
  */
 public class WangXinLong extends Activity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -15,5 +17,6 @@ public class WangXinLong extends Activity {
 //        5月13收货地址
 //        5月17日开票信息
 //        5月19 预售
+
     }
 }

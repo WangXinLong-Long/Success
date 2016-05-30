@@ -70,15 +70,18 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity
-            android:name=".MainActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden">
+        <activity android:name=".activity.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden">
+
         </activity>
         <activity android:name=".Activityguanjun" />
         <activity android:name=".HeLinJian" />
@@ -314,12 +317,14 @@
         <activity android:name=".fragments.homepage.theprice.ChainNorth_MyPriceLv" />
         <activity android:name=".fragments.homepage.theprice.ChinaNorth_Margin" />
         <activity android:name=".fragments.homepage.theprice.ChinaNorth_Price"></activity>
-        <activity android:name=".fragments.fund.FundInfoActivity" />
+
         <activity android:name=".fragments.auction.OpenAuctionActivity" />
         <activity android:name=".fragments.auction.VesselOneActivity" />
         <activity android:name=".fragments.auction.VesselTwoActivity" />
         <activity android:name=".fragments.auction.VesselThreeActivity" />
         <activity android:name=".fragments.auction.VlaueActivity"></activity>
+        <activity android:name=".fragments.GoodsInStockActivity"></activity>
+
     </application>
 
 </manifest>
