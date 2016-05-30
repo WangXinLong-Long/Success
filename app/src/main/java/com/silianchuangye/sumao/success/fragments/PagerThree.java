@@ -136,6 +136,17 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
         info2.buy_num="10";
         info2.all_price="1";
         list.add(info2);
+        CartInfo info3=new CartInfo();
+        info3.name="兰州石化1113";
+        info3.sort_name="LLDPE";
+        info3.cangku_name="北京讯帮1库";
+        info3.pai_num="7045";
+        info3.price="1,222";
+        info3.qiye="中海油";
+        info3.company="四联创业集团";
+        info3.buy_num="10";
+        info3.all_price="1";
+        list.add(info3);
     }
 
     @Override
