@@ -176,6 +176,8 @@
     <string name="invoice_information_bank_account">开户行</string>
     <string name="bill_mailing_address">票据邮寄地址</string>
     <string name="bill_mailing_address_mailing_address">邮寄地址</string>
+    <string name="order_payment">订单支付</string>
+    <string name="payment_success">恭喜您订单支付成功</string>
 
 
 </resources>

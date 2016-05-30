@@ -164,7 +164,8 @@ public class PagerOne extends BasePager {
                 }else if(list.get(position).get("icon").equals(R.mipmap.groupon)){
                     Toast.makeText(mActivity, "点击了团购按钮", Toast.LENGTH_SHORT).show();
                 }else if(list.get(position).get("icon").equals(R.mipmap.goods)){
-                    Toast.makeText(mActivity, "点击了现货按钮", Toast.LENGTH_SHORT).show();
+                    Intent intent=new Intent(mActivity, GoodsInStockActivity.class);
+                    startActivity(intent);
                 }else if(list.get(position).get("icon").equals(R.mipmap.presell)){
                    Intent intent = new Intent();
                     intent.setClass(mActivity,PreSale.class);

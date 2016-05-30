@@ -73,7 +73,10 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
             TabHost.TabSpec tabSpec = mTabHost.newTabSpec(mTextArray.get(i)).setIndicator(getTabItemView(i));
             mTabHost.addTab(tabSpec,mFragmentArray.get(i),null);
         }
-
+        /**
+         * 设置默认选中第几个
+         */
+//        mTabHost.setCurrentTab(1);
     }
 
     private View getTabItemView(int i) {

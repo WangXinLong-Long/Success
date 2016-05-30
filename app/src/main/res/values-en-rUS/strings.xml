@@ -173,4 +173,6 @@
     <string name="invoice_information_bank_account">Bank account</string>
     <string name="bill_mailing_address">Bill mailing address</string>
     <string name="bill_mailing_address_mailing_address">Mailing address</string>
+    <string name="order_payment">order payment</string>
+    <string name="payment_success">payment success</string>
 </resources>
