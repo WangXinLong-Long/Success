@@ -17,6 +17,7 @@ public class WangXinLong extends Activity {
 //        5月13收货地址
 //        5月17日开票信息
 //        5月19 预售
+//        5月30
 
     }
 }
