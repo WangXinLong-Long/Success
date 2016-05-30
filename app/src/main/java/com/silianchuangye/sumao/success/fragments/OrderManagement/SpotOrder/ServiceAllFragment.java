@@ -17,18 +17,17 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
-
 /**
  * A simple {@link Fragment} subclass.
  */
-public class OrderStaypayFragment extends Fragment {
+public class ServiceAllFragment extends Fragment {
     private ExpandableListView elvDemo;
     private List<Map<String,Object>> listparrent;
     private List<List<Map<String,Object>>> listitem;
 
 
 
-    public OrderStaypayFragment() {
+    public ServiceAllFragment() {
         // Required empty public constructor
     }
 
@@ -37,7 +36,7 @@ public class OrderStaypayFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view=inflater.inflate(R.layout.fragment_order_staypay, container, false);
+        View view=inflater.inflate(R.layout.fragment_service_all, container, false);
         //实例化
         elvDemo= (ExpandableListView) view.findViewById(R.id.elvDemo);
         //去掉expandListview的特别的下拉标志
