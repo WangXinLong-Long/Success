@@ -24,6 +24,7 @@ import java.util.List;
 
 /**
  * Created by Administrator on 2016/4/20 0020.
+ * 购物车界面
  */
 public class PagerThree extends BasePager implements AdapterView.OnItemClickListener,CartAdapter.SelectCallBack{
     private ListView lv_Cart;
