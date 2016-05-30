@@ -30,8 +30,7 @@ public class Cart_MyDialog extends AlertDialog{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cart_dialog);
-        Tv_name= (TextView) findViewById(R.id.tv_cart_dailog_name);
-        Tv_num= (TextView) findViewById(R.id.tv_cart_dialog_num);
+         Tv_num= (TextView) findViewById(R.id.tv_cart_dialog_num);
         btn= (Button) findViewById(R.id.btn_cart_dialog_close);
         img= (ImageView) findViewById(R.id.img_cart_dialog_errey);
         //点击关闭dialog
