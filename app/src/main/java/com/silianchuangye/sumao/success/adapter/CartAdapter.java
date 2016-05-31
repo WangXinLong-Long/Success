@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.silianchuangye.sumao.success.MainActivity;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.bean.CartInfo;
 import com.silianchuangye.sumao.success.fragments.dialog.Cart_MyDialog;
@@ -27,6 +28,7 @@ private List<CartInfo> list;
     private Context ctx;
     private Cart_MyDialog dialog;
     private SelectCallBack call;
+    private String temp;
     public CartAdapter(Context ctx,List<CartInfo>list,SelectCallBack call,Cart_MyDialog dialog){
         this.ctx=ctx;
         this.list=list;
@@ -103,7 +105,6 @@ private List<CartInfo> list;
         holder.Tv_buy_Sub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("TAG","Tv_buy_Sub");
                 String str=holder.Edt_buy_num.getText().toString();
                 int num=Integer.valueOf(str);
                 num--;
@@ -115,7 +116,6 @@ private List<CartInfo> list;
         holder.Tv_buy_Add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("TAG","Tv_buy_Add");
                 String str=holder.Edt_buy_num.getText().toString();
                 int num=Integer.valueOf(str);
                 num++;
@@ -130,29 +130,33 @@ private List<CartInfo> list;
         holder.Edt_buy_num.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
+                temp=holder.Edt_buy_num.getText().toString();
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                String str=holder.Edt_buy_num.getText().toString();
+                if(str.equals("")){
+                    Toast.makeText(ctx, "购买数量不能为空", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
             public void afterTextChanged(Editable s) {
                 String str=holder.Edt_buy_num.getText().toString();
                 if(str.equals("")){
-                    str="1";
-                    holder.Edt_buy_num.setText("1");
+                    str=temp;
+                    holder.Edt_buy_num.setText(str);
                 }
                 int i=Integer.valueOf(str);
                 if(i>=15){
-                   holder.Edt_buy_num.setText("14");
+                   holder.Edt_buy_num.setText(temp);
                     dialog.show();
                 }
                 if(i<1){
-                    holder.Edt_buy_num.setText("1");
+                    holder.Edt_buy_num.setText(temp);
                 }
+
             }
         });
         return convertView;
