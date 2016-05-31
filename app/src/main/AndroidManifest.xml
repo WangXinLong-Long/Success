@@ -80,9 +80,7 @@
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden">
-
-        </activity>
+            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
         <activity android:name=".Activityguanjun" />
         <activity android:name=".HeLinJian" />
 
@@ -322,14 +320,13 @@
         <activity android:name=".fragments.auction.VesselOneActivity" />
         <activity android:name=".fragments.auction.VesselTwoActivity" />
         <activity android:name=".fragments.auction.VesselThreeActivity" />
-
-        <activity android:name=".fragments.GoodsInStockActivity"></activity>
-
+        <activity android:name=".fragments.GoodsInStockActivity" />
         <activity android:name=".fragments.auction.VlaueActivity" />
         <activity android:name=".fragments.setting.SettingActivity" />
         <activity android:name=".fragments.login.LoginUserActivity" />
         <activity android:name=".fragments.register.RegisterActivity" />
-        <activity android:name=".fragments.register.RegisterValueActivity"></activity>
+        <activity android:name=".fragments.register.RegisterValueActivity" />
+        <activity android:name=".fragments.goods.GoodsActivity"></activity>
     </application>
 
 </manifest>

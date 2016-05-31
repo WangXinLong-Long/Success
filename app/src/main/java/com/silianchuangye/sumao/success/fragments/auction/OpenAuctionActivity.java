@@ -12,12 +12,15 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
+import com.silianchuangye.sumao.success.MainActivity;
 import com.silianchuangye.sumao.success.R;
+import com.silianchuangye.sumao.success.fragments.PagerThree;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -30,10 +33,29 @@ public class OpenAuctionActivity extends AppCompatActivity {
     private Button btZhifu_auction;
     private TextView tv;
     private EditText et;
+    private ImageView ivBack;
+    private ImageView gouwuche;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_open_auction);
+        ivBack= (ImageView) findViewById(R.id.ivBack);
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OpenAuctionActivity.this.finish();
+            }
+        });
+        gouwuche= (ImageView) findViewById(R.id.ivGouwuche);
+        gouwuche.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(OpenAuctionActivity.this, MainActivity.class);
+                intent.putExtra("cart",1);
+                startActivity(intent);
+                OpenAuctionActivity.this.finish();
+            }
+        });
         lv_auction= (ListView) findViewById(R.id.lv_auction);
         list=new ArrayList<Map<String,Object>>();
         Map<String,Object> map1=new Hashtable<String,Object>();

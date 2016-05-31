@@ -100,13 +100,14 @@ public class MyOfferFragment extends Fragment {
                 convertView=getActivity().getLayoutInflater().inflate(R.layout.item_gridview_vessel_one,null);
                 viewHolder.tv= (TextView) convertView.findViewById(R.id.tv_item_vessel_one);
                 viewHolder.layout= (RelativeLayout) convertView.findViewById(R.id.layout_item_vessel_one);
-//                AbsListView.LayoutParams params;
-//                if(gridView.getChildCount()/5==0){
-//                    params=new AbsListView.LayoutParams(95,85);
-//                }else{
-//                    params=new AbsListView.LayoutParams(95,60);
-//                }
-//                viewHolder.layout.setLayoutParams(params);
+                AbsListView.LayoutParams params;
+
+                if(gridView.getChildCount()/5==0){
+                    params=new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,180);
+                }else{
+                    params=new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,100);
+                }
+                viewHolder.layout.setLayoutParams(params);
                 convertView.setTag(viewHolder);
             }else{
                 viewHolder= (ViewHolder) convertView.getTag();

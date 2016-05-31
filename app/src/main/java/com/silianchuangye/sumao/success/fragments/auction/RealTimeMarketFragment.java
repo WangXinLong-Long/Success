@@ -103,12 +103,12 @@ public class RealTimeMarketFragment extends Fragment {
                 viewHolder.layout= (RelativeLayout) convertView.findViewById(R.id.layout_item_vessel_one);
                 AbsListView.LayoutParams params;
 
-//                if(gridView.getChildCount()/5==0){
-//                     params=new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT);
-//                }else{
-//                     params=new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT);
-//                }
-//                viewHolder.layout.setLayoutParams(params);
+                if(gridView.getChildCount()/5==0){
+                     params=new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,200);
+                }else{
+                     params=new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,100);
+                }
+                viewHolder.layout.setLayoutParams(params);
                 convertView.setTag(viewHolder);
             }else{
                 viewHolder= (ViewHolder) convertView.getTag();

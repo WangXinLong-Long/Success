@@ -26,6 +26,7 @@ public class AuctionActivity extends AppCompatActivity {
     private ListView lvAuction;
     private List<Map<String,Object>> list;
 
+
     private Button bu;
 
     @Override
@@ -37,6 +38,12 @@ public class AuctionActivity extends AppCompatActivity {
     }
     public void init(){
         imageback= (ImageView) findViewById(R.id.ivBack_auction_layout_top);
+        imageback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AuctionActivity.this.finish();
+            }
+        });
         lvAuction= (ListView) findViewById(R.id.lvAuction_Auction_Layout);
         list=new ArrayList<Map<String,Object>>();
         Map<String,Object> map=new Hashtable<String,Object>();

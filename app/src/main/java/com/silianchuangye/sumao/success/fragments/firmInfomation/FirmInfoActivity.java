@@ -71,39 +71,30 @@ public class FirmInfoActivity extends AppCompatActivity {
         list.add(map6);
         Map<String,Object> map7=new Hashtable<String,Object>();
         map7.put("left","企业注册证件");
-        map7.put("right","三证独立");
+        map7.put("right","三证合一");
         list.add(map7);
         Map<String,Object> map8=new Hashtable<String,Object>();
-        map8.put("left","企业执照号");
-        map8.put("right","12345678900");
+        map8.put("left","统一社会信用代码");
+        map8.put("right","1111111111");
         map8.put("icon",R.mipmap.my_sumao_iv_order);
         list.add(map8);
+
         Map<String,Object> map9=new Hashtable<String,Object>();
-        map9.put("left","组织机构代码");
-        map9.put("right","123456789");
+        map9.put("left","纳税人类型");
+        map9.put("right","一般纳税人");
         map9.put("icon",R.mipmap.my_sumao_iv_order);
         list.add(map9);
-        Map<String,Object> map10=new Hashtable<String,Object>();
-        map10.put("left","税务登记号");
-        map10.put("right","1111111111111");
-        map10.put("icon",R.mipmap.my_sumao_iv_order);
-        list.add(map10);
-        Map<String,Object> map11=new Hashtable<String,Object>();
-        map11.put("left","纳税人类型");
-        map11.put("right","一般纳税人");
-        map11.put("icon",R.mipmap.my_sumao_iv_order);
-        list.add(map11);
         SimpleAdapter adapter=new SimpleAdapter(FirmInfoActivity.this,list,R.layout.item_firm_info,new String[]{"left","center","right","icon"},new int[]{R.id.tv_firm_info,R.id.tvTitle_firm_info,R.id.tvValue_firm_info,R.id.ivMore_firm_info});
         lv_firm_info.setAdapter(adapter);
-//        lv_firm_info.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                if (position==1){
-//                    Intent intent=new Intent(FirmInfoActivity.this,FirmInfoUpdateActivity.class);
-//                    startActivity(intent);
-//                }
-//            }
-//        });
+        lv_firm_info.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (position==7||position==8){
+                    Intent intent=new Intent(FirmInfoActivity.this,FirmInfoPictureActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
 
 
     }
@@ -121,7 +112,7 @@ public class FirmInfoActivity extends AppCompatActivity {
         iv_title_bar_service.setVisibility(View.GONE);
         sv_title_bar_serachView.setVisibility(View.GONE);
         iv_title_bar_search.setVisibility(View.GONE);
-
+        tv_title_bar_title.setText("企业信息");
 
         tvUpdate.setText("修改");
         tv_title_bar_title.setTextColor(Color.WHITE);
@@ -140,7 +131,7 @@ public class FirmInfoActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent=new Intent(FirmInfoActivity.this,FirmInfoUpdateActivity.class);
                 intent.putExtra("add","修改");
-                  startActivity(intent);
+                startActivity(intent);
             }
         });
     }
