@@ -26,11 +26,12 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="现货订单"
+
             android:textColor="#fff"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/y8"
             android:textSize="20sp"
+            android:id="@+id/tv_title_name_order"
             />
         <ImageView
             android:layout_width="@dimen/x15"

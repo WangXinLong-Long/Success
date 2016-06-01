@@ -75,8 +75,23 @@ public class PagerFour extends BasePager {
                 {
                     Intent intent = new Intent();
                     intent.setClass(context, OrderGoodsActivity.class);
+                    intent.putExtra("title","现货订单");
                     startActivity(intent);
-                } else if (sela.getChild(groupPosition, childPosition).toString().equals("用户信息"))
+                }else if (sela.getChild(groupPosition, childPosition).toString().equals("预售订单"))
+                {
+                    Intent intent = new Intent();
+                    intent.setClass(context, OrderGoodsActivity.class);
+                    intent.putExtra("title","预售订单");
+                    startActivity(intent);
+                }
+                else if (sela.getChild(groupPosition, childPosition).toString().equals("客服订单"))
+                {
+                    Intent intent = new Intent();
+                    intent.setClass(context, OrderGoodsActivity.class);
+                    intent.putExtra("title","客服订单");
+                    startActivity(intent);
+                }
+                else if (sela.getChild(groupPosition, childPosition).toString().equals("用户信息"))
                 {
                     Intent intent = new Intent();
                     intent.setClass(context,UserInformation.class);

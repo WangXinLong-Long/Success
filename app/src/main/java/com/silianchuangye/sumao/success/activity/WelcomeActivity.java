@@ -6,6 +6,9 @@ import android.os.Bundle;
 
 import com.silianchuangye.sumao.success.MainActivity;
 import com.silianchuangye.sumao.success.R;
+import com.silianchuangye.sumao.success.reciver.JpushMyReciver;
+
+import cn.jpush.android.api.JPushInterface;
 
 
 /**
@@ -33,4 +36,15 @@ public class WelcomeActivity extends Activity {
         }).start();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        JPushInterface.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JPushInterface.onPause(this);
+    }
 }

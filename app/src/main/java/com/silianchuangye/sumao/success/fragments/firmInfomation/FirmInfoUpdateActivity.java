@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -11,7 +12,9 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
 
@@ -30,6 +33,9 @@ public class FirmInfoUpdateActivity extends AppCompatActivity {
     RelativeLayout layoutTop;
     private ListView lvupdate_firm_info;
     private List<Map<String,Object>> list;
+    private List<Map<String,Object>> list1;
+    private ListView lvupdate_firm_info_two;
+    private Spinner sp_firm_info;
     String title;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,31 +91,7 @@ public class FirmInfoUpdateActivity extends AppCompatActivity {
         map6.put("right","010-88888888");
         map6.put("icon",R.mipmap.my_sumao_iv_order);
         list.add(map6);
-        Map<String,Object> map7=new Hashtable<String,Object>();
-        map7.put("left","企业注册证件");
-        map7.put("right","三证独立");
-        map7.put("icon",R.mipmap.my_sumao_iv_order);
-        list.add(map7);
-        Map<String,Object> map8=new Hashtable<String,Object>();
-        map8.put("left","企业执照号");
-        map8.put("right","12345678900");
-        map8.put("icon",R.mipmap.my_sumao_iv_order);
-        list.add(map8);
-        Map<String,Object> map9=new Hashtable<String,Object>();
-        map9.put("left","组织机构代码");
-        map9.put("right","123456789");
-        map9.put("icon",R.mipmap.my_sumao_iv_order);
-        list.add(map9);
-        Map<String,Object> map10=new Hashtable<String,Object>();
-        map10.put("left","税务登记号");
-        map10.put("right","1111111111111");
-        map10.put("icon",R.mipmap.my_sumao_iv_order);
-        list.add(map10);
-        Map<String,Object> map11=new Hashtable<String,Object>();
-        map11.put("left","纳税人类型");
-        map11.put("right","一般纳税人");
-        map11.put("icon",R.mipmap.my_sumao_iv_order);
-        list.add(map11);
+
         SimpleAdapter adapter=new SimpleAdapter(FirmInfoUpdateActivity.this,list,R.layout.item_firm_info,new String[]{"left","center","right","icon"},new int[]{R.id.tv_firm_info,R.id.tvTitle_firm_info,R.id.tvValue_firm_info,R.id.ivMore_firm_info});
         lvupdate_firm_info.setAdapter(adapter);
 
@@ -129,13 +111,67 @@ public class FirmInfoUpdateActivity extends AppCompatActivity {
                     Intent intent=new Intent(FirmInfoUpdateActivity.this,FirmInfoAddressActivity.class);
                     startActivity(intent);
 
-                }else if(position==8){
-                    Intent intent=new Intent(FirmInfoUpdateActivity.this,FirmInfoPictureActivity.class);
-                    startActivity(intent);
-
                 }
             }
         });
+
+        lvupdate_firm_info_two= (ListView) findViewById(R.id.lvUpdate_firm_info_two);
+        list1=new ArrayList<Map<String,Object>>();
+        sp_firm_info= (Spinner) findViewById(R.id.sp_firm_info);
+        sp_firm_info.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(sp_firm_info.getItemAtPosition(position).toString().equals("三证独立")){
+                    if(list1.size()==1){
+                    Map<String,Object> map8=new Hashtable<String,Object>();
+                    map8.put("left","企业执照号");
+                    map8.put("right","12345678900");
+                    map8.put("icon",R.mipmap.my_sumao_iv_order);
+                    list1.add(map8);
+                    Map<String,Object> map9=new Hashtable<String,Object>();
+                    map9.put("left","组织机构代码");
+                    map9.put("right","123456789");
+                    map9.put("icon",R.mipmap.my_sumao_iv_order);
+                    list1.add(map9);
+                    Map<String,Object> map10=new Hashtable<String,Object>();
+                    map10.put("left","税务登记号");
+                    map10.put("right","1111111111111");
+                    map10.put("icon",R.mipmap.my_sumao_iv_order);
+                    list1.add(map10);
+
+                    SimpleAdapter adapter1=new SimpleAdapter(FirmInfoUpdateActivity.this,list1,R.layout.item_firm_info,new String[]{"left","center","right","icon"},new int[]{R.id.tv_firm_info,R.id.tvTitle_firm_info,R.id.tvValue_firm_info,R.id.ivMore_firm_info});
+                    lvupdate_firm_info_two.setAdapter(adapter1);}
+                    Toast.makeText(FirmInfoUpdateActivity.this, ""+list1.size(), Toast.LENGTH_SHORT).show();
+                }else if (sp_firm_info.getItemAtPosition(position).toString().equals("三证合一")){
+                    if(list1.size()>1){
+                        for (int i=0;i<4;i++){
+                            list1.remove(0);
+                        }
+                        Map<String,Object> map11=new Hashtable<String,Object>();
+                        map11.put("left","纳税人类型");
+                        map11.put("right","一般纳税人");
+                        map11.put("icon",R.mipmap.my_sumao_iv_order);
+                        list1.add(map11);
+                        SimpleAdapter adapter1=new SimpleAdapter(FirmInfoUpdateActivity.this,list1,R.layout.item_firm_info,new String[]{"left","center","right","icon"},new int[]{R.id.tv_firm_info,R.id.tvTitle_firm_info,R.id.tvValue_firm_info,R.id.ivMore_firm_info});
+                        lvupdate_firm_info_two.setAdapter(adapter1);
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                Toast.makeText(FirmInfoUpdateActivity.this, "请选择", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        Map<String,Object> map11=new Hashtable<String,Object>();
+        map11.put("left","纳税人类型");
+        map11.put("right","一般纳税人");
+        map11.put("icon",R.mipmap.my_sumao_iv_order);
+        list1.add(map11);
+        SimpleAdapter adapter1=new SimpleAdapter(FirmInfoUpdateActivity.this,list1,R.layout.item_firm_info,new String[]{"left","center","right","icon"},new int[]{R.id.tv_firm_info,R.id.tvTitle_firm_info,R.id.tvValue_firm_info,R.id.ivMore_firm_info});
+        lvupdate_firm_info_two.setAdapter(adapter1);
+
 
 
     }

@@ -30,6 +30,18 @@ import com.silianchuangye.sumao.success.fragments.OrderManagement.SpotOrder.Orde
 import com.silianchuangye.sumao.success.fragments.OrderManagement.SpotOrder.OrderUpdateFragment;
 import com.silianchuangye.sumao.success.fragments.OrderManagement.SpotOrder.OrderallFragment;
 import com.silianchuangye.sumao.success.fragments.OrderManagement.SpotOrder.OrderstayshipmentsFragment;
+import com.silianchuangye.sumao.success.fragments.OrderManagement.SpotOrder.PresellAreadyShipmentsFragment;
+import com.silianchuangye.sumao.success.fragments.OrderManagement.SpotOrder.PresellChangeFragment;
+import com.silianchuangye.sumao.success.fragments.OrderManagement.SpotOrder.PresellFinishFragment;
+import com.silianchuangye.sumao.success.fragments.OrderManagement.SpotOrder.PresellPayFragment;
+import com.silianchuangye.sumao.success.fragments.OrderManagement.SpotOrder.PresellShipmentsFragment;
+import com.silianchuangye.sumao.success.fragments.OrderManagement.SpotOrder.PresellUpdateFragment;
+import com.silianchuangye.sumao.success.fragments.OrderManagement.SpotOrder.PresellallFragment;
+import com.silianchuangye.sumao.success.fragments.OrderManagement.SpotOrder.ServiceAllFragment;
+import com.silianchuangye.sumao.success.fragments.OrderManagement.SpotOrder.ServiceBornFragment;
+import com.silianchuangye.sumao.success.fragments.OrderManagement.SpotOrder.ServiceChangeFragment;
+import com.silianchuangye.sumao.success.fragments.OrderManagement.SpotOrder.ServiceFinishFragment;
+import com.silianchuangye.sumao.success.fragments.OrderManagement.SpotOrder.ServiceShipmentsFragment;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -57,47 +69,108 @@ public class OrderGoodsActivity extends AppCompatActivity implements View.OnClic
     private ImageView back;
     private ImageView search;
     private RelativeLayout relative;
+    private TextView tv_title_name;
+    private String  title;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_goods);
+        tv_title_name= (TextView) findViewById(R.id.tv_title_name_order);
+        Bundle bundle=getIntent().getExtras();
+         title=bundle.getString("title");
+        listFragment=new ArrayList<Fragment>();
+        if (title.equals("现货订单")){
+            //现货订单访问数据库的内容
+            OrderallFragment all=new OrderallFragment();
+            listFragment.add(all);
+            OrderStaypayFragment pay=new OrderStaypayFragment();
+            listFragment.add(pay);
+            OrderstayshipmentsFragment staygoods=new OrderstayshipmentsFragment();
+            listFragment.add(staygoods);
+            OrderAlreadygoodsFragment goods=new OrderAlreadygoodsFragment();
+            listFragment.add(goods);
+            OrderAlreadyFinishFragment finish=new OrderAlreadyFinishFragment();
+            listFragment.add(finish);
+            OrderCancelFragment cancel=new OrderCancelFragment();
+            listFragment.add(cancel);
+            OrderUpdateFragment update=new OrderUpdateFragment();
+            listFragment.add(update);
+
+        }else if(title.equals("预售订单")){
+            //预售订单访问数据库的内容
+            PresellallFragment all=new PresellallFragment();
+            listFragment.add(all);
+            PresellPayFragment pay=new PresellPayFragment();
+            listFragment.add(pay);
+            PresellShipmentsFragment shipments=new PresellShipmentsFragment();
+            listFragment.add(shipments);
+            PresellAreadyShipmentsFragment areadyShipments=new PresellAreadyShipmentsFragment();
+            listFragment.add(areadyShipments);
+            PresellFinishFragment finish=new PresellFinishFragment();
+            listFragment.add(finish);
+            PresellChangeFragment change=new PresellChangeFragment();
+            listFragment.add(change);
+            PresellUpdateFragment updateFragment=new PresellUpdateFragment();
+            listFragment.add(updateFragment);
+        }else if(title.equals("客服订单")){
+            //客服订单访问数据库的内容
+            ServiceAllFragment all=new ServiceAllFragment();
+            listFragment.add(all);
+            ServiceBornFragment bornFragment=new ServiceBornFragment();
+            listFragment.add(bornFragment);
+            ServiceShipmentsFragment shipmentsFragment=new ServiceShipmentsFragment();
+            listFragment.add(shipmentsFragment);
+            ServiceFinishFragment finishFragment=new ServiceFinishFragment();
+            listFragment.add(finishFragment);
+            ServiceChangeFragment change=new ServiceChangeFragment();
+            listFragment.add(change);
+        }
+
+        tv_title_name.setText(title);
+
+
         relative= (RelativeLayout) findViewById(R.id.order_layout_top);
         back= (ImageView) findViewById(R.id.ivBack_order_layout_top);
         search= (ImageView) findViewById(R.id.ivSearch_order_layout_top);
-        listFragment=new ArrayList<Fragment>();
-        OrderallFragment all=new OrderallFragment();
-        listFragment.add(all);
-        OrderStaypayFragment pay=new OrderStaypayFragment();
-        listFragment.add(pay);
-        OrderstayshipmentsFragment staygoods=new OrderstayshipmentsFragment();
-        listFragment.add(staygoods);
-        OrderAlreadygoodsFragment goods=new OrderAlreadygoodsFragment();
-        listFragment.add(goods);
-        OrderAlreadyFinishFragment finish=new OrderAlreadyFinishFragment();
-        listFragment.add(finish);
-        OrderCancelFragment cancel=new OrderCancelFragment();
-        listFragment.add(cancel);
-        OrderUpdateFragment update=new OrderUpdateFragment();
-        listFragment.add(update);
+
         adapter=new MyPageAdapter(getSupportFragmentManager());
         adapter.setData(listFragment);
 
 
         ArrayList<String> listString=new ArrayList<String>();
-        listString.add("全部订单");
-        listString.add("待支付");
-        listString.add("待发货");
-        listString.add("已发货");
-        listString.add("已完成");
-        listString.add("已变更");
-        listString.add("已取消");
+
+        if (title.equals("客服订单")){
+            listString.add("全部订单");
+            listString.add("订单生成");
+            listString.add("已发货");
+            listString.add("已完成");
+            listString.add("已变更");
+        }
+        if (title.equals("预售订单")||title.equals("现货订单"))
+        {
+            listString.add("全部订单");
+            listString.add("待支付");
+            listString.add("待发货");
+            listString.add("已发货");
+            listString.add("已完成");
+            listString.add("已变更");
+            listString.add("已取消");
+        }
+
+
+
         adapter.setTitles(listString);
+
 
         tlDemo= (TabLayout) findViewById(R.id.tlDemo);
         vpDemo= (ViewPager) findViewById(R.id.vpDemo);
         vpDemo.setAdapter(adapter);
         tlDemo.setupWithViewPager(vpDemo);
-        tlDemo.setTabMode(tlDemo.MODE_SCROLLABLE);
+
+            tlDemo.setTabMode(tlDemo.MODE_SCROLLABLE);
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,6 +194,11 @@ public class OrderGoodsActivity extends AppCompatActivity implements View.OnClic
         });
 
 }
+
+
+
+
+
     private void initView() {
         //加载popwindow以及popWindow不局下的控件
         popView=View.inflate(this,R.layout.popwindow,null);

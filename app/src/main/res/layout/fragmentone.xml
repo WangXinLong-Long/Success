@@ -38,9 +38,10 @@
         android:layout_height="@dimen/y96"
         android:id="@+id/gvfragmentone"
         android:numColumns="5"
-        android:horizontalSpacing="2dp"
-        android:verticalSpacing="2dp"
+        android:horizontalSpacing="@dimen/x2"
+        android:verticalSpacing="@dimen/x2"
         android:layout_below="@id/fragemnet_a"
+
         ></GridView>
     <RelativeLayout
         android:layout_width="match_parent"

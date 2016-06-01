@@ -24,6 +24,7 @@
             android:layout_marginTop="@dimen/x10"
             android:layout_marginLeft="@dimen/x10"
             android:src="@mipmap/my_sumao_back"
+            android:id="@+id/ivBack"
             />
         <TextView
             android:layout_width="wrap_content"
@@ -42,6 +43,7 @@
             android:layout_marginTop="@dimen/x10"
             android:layout_marginRight="@dimen/x10"
             android:src="@mipmap/gouwuche"
+            android:id="@+id/ivGouwuche"
             />
     </RelativeLayout>
     <RelativeLayout

@@ -173,7 +173,8 @@
             android:text="购买数量"
             android:layout_marginLeft="@dimen/x10"
             />
-        <ImageView
+        <TextView
+            android:textSize="20sp"
             android:id="@+id/img_item_cart_buy_sub"
             android:layout_width="@dimen/x25"
             android:layout_height="@dimen/x25"
@@ -181,8 +182,11 @@
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/tv_item_cart_buy"
             android:layout_marginLeft="@dimen/x10"
+            android:text="-"
+            android:gravity="center"
+            android:background="@drawable/cart_num"
             />
-        <TextView
+        <EditText
             android:id="@+id/tv_item_cart_buy_num"
             android:layout_width="@dimen/x50"
             android:layout_height="@dimen/x25"
@@ -190,14 +194,20 @@
             android:layout_toRightOf="@id/img_item_cart_buy_sub"
             android:layout_centerVertical="true"
             android:background="@drawable/juxing"
-            android:gravity="center"/>
-        <ImageView
+            android:numeric="integer"
+            android:gravity="center"
+           />
+        <TextView
+            android:textSize="20sp"
             android:id="@+id/img_item_cart_buy_add"
             android:layout_width="@dimen/x25"
             android:layout_height="@dimen/x25"
             android:src="@mipmap/ic_launcher"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/tv_item_cart_buy_num"
+            android:text="+"
+            android:gravity="center"
+            android:background="@drawable/cart_num"
             />
         <TextView
             android:id="@+id/tv_item_cart_all_price"
