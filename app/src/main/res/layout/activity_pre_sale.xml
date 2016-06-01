@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/my_sumao_background">
 
     <include
         android:id="@+id/pre_sale_title"
@@ -14,6 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/pre_sale_title"
         android:layout_marginTop="@dimen/x5"
+        android:background="@color/white"
         >
 
         <TextView
@@ -40,12 +42,19 @@
             android:paddingRight="@dimen/x20"/>
 
     </RelativeLayout>
-
+<TextView
+    android:id="@+id/split_line"
+    android:layout_below="@id/selection_condition"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/x4"
+    android:background="@color/my_sumao_background"/>
     <ListView
         android:id="@+id/pre_sale_listView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/selection_condition"
+        android:layout_below="@id/split_line"
+
+        android:background="@color/white"
         >
 
     </ListView>

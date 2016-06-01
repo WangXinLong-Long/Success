@@ -3,6 +3,7 @@ package com.silianchuangye.sumao.success.fragments.homepage.preSale;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -12,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
@@ -19,6 +21,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
+import com.silianchuangye.sumao.success.adapter.PreSaleAdapter;
+import com.silianchuangye.sumao.success.model.PreSaleModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,21 +30,31 @@ import java.util.List;
 /**
  * Created by Administrator on 2016/5/17 0017.
  */
-public class PreSale extends Activity implements View.OnClickListener,AdapterView.OnItemClickListener{
+public class PreSale extends Activity implements View.OnClickListener, AdapterView.OnItemClickListener {
     TextView tv_screen_title_bar_title;
-    ImageView iv_screen_title_bar_search,iv_screen_title_bar_back;
-    View popwindowView ;
-    ListView application_lv,classification_lv,region_lv;
-    List<String> lists;
-    ArrayAdapter<String> adapter;
+    ImageView iv_screen_title_bar_search, iv_screen_title_bar_back;
+    View popwindowView;
+    View listPopupWindowView;
+    ListView popupWindowListView;
+    LinearLayout bottom_pre_sale_search,popup_window_back;
+
+    ListView application_lv, classification_lv, region_lv;
+    List<PreSaleModel> lists;
+    PreSaleAdapter adapter;
     PopupWindow popupWindow;
+    PopupWindow listPopupWindow;
     RelativeLayout pre_sale_title;
-    TextView application_et,classification_et,region_et;
-    boolean flag=true;
+    TextView application_et, classification_et, region_et;
+    boolean flag = true;
     String first = "first";
     String second = "second";
-    TextView classification,application,region;
+    TextView classification, application, region;
     ListView pre_sale_listView;
+    PreSaleModel preSaleModel;
+    ArrayList<String> mArrayList;
+    RelativeLayout selection_condition;
+    TextView split_line;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,173 +70,177 @@ public class PreSale extends Activity implements View.OnClickListener,AdapterVie
         application = ((TextView) findViewById(R.id.application));
         region = ((TextView) findViewById(R.id.region));
         pre_sale_listView = ((ListView) findViewById(R.id.pre_sale_listView));
+        selection_condition = ((RelativeLayout) findViewById(R.id.selection_condition));
+        split_line = ((TextView) findViewById(R.id.split_line));
         initdata();
         pre_sale_listView.setAdapter(adapter);
         pre_sale_listView.setOnItemClickListener(this);
+        application.setOnClickListener(this);
+        classification.setOnClickListener(this);
+        region.setOnClickListener(this);
 
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId())
-        {
+        switch (v.getId()) {
             case R.id.iv_screen_title_bar_search:
-                Toast.makeText(this,"弹出选择窗口",Toast.LENGTH_SHORT).show();
                 initView();
-                initdata();
                 showSearchDialog();
-                backgroundAlpha(0.5f);
                 break;
-            case R.id.application_et:
-                    first = "one";
-                logicdisplayshowListView(application_lv,first);
-                    hideListView(classification_lv);
-                    hideListView(region_lv);
+            case R.id.region:
 
+                initListPopupWindowView("地区");
+                showListPopupWindow();
                 break;
-            case R.id.classification_et:
-                first = "two";
-                logicdisplayshowListView(classification_lv,first);
-                hideListView(application_lv);
-                hideListView(region_lv);
-
+            case R.id.classification:
+                initListPopupWindowView("分类");
+                showListPopupWindow();
                 break;
-            case R.id.region_et:
-                     first = "three";
-                logicdisplayshowListView(region_lv,first);
-                    hideListView(classification_lv);
-                    hideListView(application_lv);
-
+            case R.id.application:
+                initListPopupWindowView("应用");
+                showListPopupWindow();
                 break;
 
-            case R.id.search_title:
+            case R.id.bottom_pre_sale_search:
                 popupWindow.dismiss();
+                break;
+            case R.id.popup_window_back:
+                listPopupWindow.dismiss();
                 break;
             case R.id.iv_screen_title_bar_back:
                 finish();
                 break;
+
             default:
                 break;
         }
 
     }
 
+    private void showListPopupWindow() {
+        listPopupWindowView.measure(0, 0);
+        int width = getWindowManager().getDefaultDisplay().getWidth();
+        listPopupWindow = new PopupWindow(listPopupWindowView, width,
+                listPopupWindowView.getMeasuredHeight());
+        listPopupWindow.setFocusable(true);
+        listPopupWindow.setBackgroundDrawable(new BitmapDrawable());
+        listPopupWindow.showAsDropDown(split_line, 0, 0);
+    }
+
+    private void initListPopupWindowView(final String s) {
+        listPopupWindowView = View.inflate(this, R.layout.list_popup_window_view, null);
+        popupWindowListView = (ListView) listPopupWindowView.findViewById(R.id.popup_window_list_view);
+        popup_window_back = ((LinearLayout) listPopupWindowView.findViewById(R.id.popup_window_back));
+        popup_window_back.setOnClickListener(this);
+        mArrayList = new ArrayList<String>();
+        final ArrayAdapter<String> popupWindowListViewAdpter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, getData(s));
+        popupWindowListView.setAdapter(popupWindowListViewAdpter);
+        popupWindowListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (s.equals("地区"))
+                {
+                    region.setText(popupWindowListViewAdpter.getItem(position));
+                }else if (s.equals("分类"))
+                {
+                    classification.setText(popupWindowListViewAdpter.getItem(position));
+                }else if (s.equals("应用"))
+                {
+                    application.setText(popupWindowListViewAdpter.getItem(position));
+                }
+                    listPopupWindow.dismiss();
+            }
+        });
+
+    }
+
+    private ArrayList<String> getData(String s) {
+        mArrayList.add(s+"测试数据1");
+        mArrayList.add(s+"测试数据2");
+        mArrayList.add(s+"测试数据3");
+        mArrayList.add(s+"测试数据4");
+        mArrayList.add(s+"测试数据5");
+        mArrayList.add(s+"测试数据6");
+        mArrayList.add(s+"测试数据1");
+        mArrayList.add(s+"测试数据2");
+        mArrayList.add(s+"测试数据3");
+        mArrayList.add("测试数据4");
+        mArrayList.add("测试数据5");
+        mArrayList.add("测试数据6");
+        mArrayList.add("测试数据1");
+        mArrayList.add("测试数据2");
+        mArrayList.add("测试数据3");
+        mArrayList.add("测试数据4");
+        mArrayList.add("测试数据5");
+        mArrayList.add("测试数据6");
+        mArrayList.add("测试数据1");
+        mArrayList.add("测试数据2");
+        mArrayList.add("测试数据3");
+        mArrayList.add("测试数据4");
+        mArrayList.add("测试数据5");
+        mArrayList.add("测试数据6");
+
+
+        return mArrayList;
+    }
+
     private void initdata() {
+
         lists = new ArrayList<>();
-        for (int i = 0; i < 15 ; i++) {
-            lists.add("列表"+i);
+        for (int i = 0; i < 15; i++) {
+            preSaleModel = new PreSaleModel();
+            preSaleModel.setCompany("北京公司" + i + "分公司");
+            preSaleModel.setWarehouse(i + "仓库");
+            preSaleModel.setName("产品" + i);
+            preSaleModel.setNumber(i + "");
+            preSaleModel.setPrice(i * 100 + "");
+            preSaleModel.setProductType("现货");
+
+            lists.add(preSaleModel);
         }
-        adapter = new ArrayAdapter<String>(this,
-                R.layout.item_view,
-                R.id.tv_item,lists);
+        adapter = new PreSaleAdapter(this, lists);
 
-    }
-
-    /**
-     * 如果已经打开一个listView，点击另一个，这个listView影藏
-     * @param listview
-     * @param first
-     */
-    private void logicdisplayshowListView(ListView listview,String first) {
-
-        if (second.equals(first))
-        {
-            showListView(listview);
-        }else {
-            flag  = true;
-            showListView(listview);
-        }
-
-    }
-    private void showListView(ListView listview)
-    {
-        if(flag){
-            listview.setVisibility(View.VISIBLE);
-            listview.setAdapter(adapter);
-            flag = false;
-            second  = first;
-        }else {
-            listview.setVisibility(View.GONE);
-            flag = true;
-        }
-    }
-
-    private void hideListView(ListView listview)
-    {
-            listview.setVisibility(View.GONE);
     }
 
     private void initView() {
-        popwindowView = View.inflate(this,R.layout.pre_sale_search,null);
-        TextView tv_screen_title_bar_title = ((TextView) popwindowView.findViewById(R.id.tv_screen_title_bar_title));
-        RelativeLayout search_title = ((RelativeLayout) popwindowView.findViewById(R.id.search_title));
-        tv_screen_title_bar_title.setText("预售");
-
-        application_et = ((TextView) popwindowView.findViewById(R.id.application_et));
-        classification_et = ((TextView) popwindowView.findViewById(R.id.classification_et));
-        region_et = ((TextView) popwindowView.findViewById(R.id.region_et));
-        application_lv = ((ListView) popwindowView.findViewById(R.id.application_lv));
-        classification_lv = ((ListView) popwindowView.findViewById(R.id.classification_lv));
-        region_lv = ((ListView) popwindowView.findViewById(R.id.region_lv));
-        application_et.setOnClickListener(this);
-        classification_et.setOnClickListener(this);
-        region_et.setOnClickListener(this);
-
-        search_title.setOnClickListener(this);
-        application_lv.setOnItemClickListener(this);
-        classification_lv.setOnItemClickListener(this);
-        region_lv.setOnItemClickListener(this);
-
+        popwindowView = View.inflate(this, R.layout.pre_sale_search, null);
+        bottom_pre_sale_search = ((LinearLayout) popwindowView.findViewById(R.id.bottom_pre_sale_search));
+        bottom_pre_sale_search.setOnClickListener(this);
     }
 
     private void showSearchDialog() {
-        popwindowView.measure(0,0);
+        popwindowView.measure(0, 0);
         int width = getWindowManager().getDefaultDisplay().getWidth();
-        popupWindow = new PopupWindow(popwindowView,width,getWindowManager().getDefaultDisplay().getWidth());
-        Log.e("TAG","width-------"+width);
-        Log.e("TAG","heigh----------"+popwindowView.getMeasuredHeight());
+        popupWindow = new PopupWindow(popwindowView, width, popwindowView.getMeasuredHeight());
         popupWindow.setFocusable(true);
         popupWindow.setBackgroundDrawable(new BitmapDrawable());
-//        popupWindow.showAsDropDown(pre_sale_title,0,0);
-        popupWindow.showAtLocation(pre_sale_title, Gravity.TOP,0,0);
-        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-            @Override
-            public void onDismiss() {
-                //popupWindow.dismiss();
-                backgroundAlpha(1f);
-            }
-        });
-    }
-    public void backgroundAlpha(float bgAlpha)
-    {
-        WindowManager.LayoutParams lp =this.getWindow().getAttributes();
-        lp.alpha = bgAlpha; //0.0-1.0
-        this.getWindow().setAttributes(lp);
+        popupWindow.showAsDropDown(pre_sale_title, 0, 0);
     }
 
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        if(application_lv==parent){
-            application_et.setText(adapter.getItem(position));
-            application.setText(adapter.getItem(position));
+        if (application_lv == parent) {
+            application_et.setText("选择了应用");
+            application.setText("选择了应用");
 
             application_lv.setVisibility(View.GONE);
         }
-        if(classification_lv==parent){
-            classification_et.setText(adapter.getItem(position));
-            classification.setText(adapter.getItem(position));
+        if (classification_lv == parent) {
+            classification_et.setText("选择了分类");
+            classification.setText("选择了分类");
             classification_lv.setVisibility(View.GONE);
         }
-        if(region_lv==parent){
-            region_et.setText(adapter.getItem(position));
-            region.setText(adapter.getItem(position));
+        if (region_lv == parent) {
+            region_et.setText("选择了地区");
+            region.setText("选择了地区");
             region_lv.setVisibility(View.GONE);
         }
-        if(pre_sale_listView==parent){
+        if (pre_sale_listView == parent) {
             Intent intent = new Intent();
-            intent.setClass(this,PreSaleDetailActivity.class);
+            intent.setClass(this, PreSaleDetailActivity.class);
             startActivity(intent);
         }
 
