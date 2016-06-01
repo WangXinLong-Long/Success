@@ -18,6 +18,7 @@ public class WangXinLong extends Activity {
 //        5月17日开票信息
 //        5月19 预售
 //        5月30
+//        6月1日 修改预售完毕
 
     }
 }
