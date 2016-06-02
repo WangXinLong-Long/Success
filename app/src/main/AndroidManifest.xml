@@ -70,7 +70,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".activity.WelcomeActivity">
+        <activity android:name=".activity.WelcomeActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -81,9 +82,14 @@
             android:name=".MainActivity"
 
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
-        <activity android:name=".Activityguanjun" />
-        <activity android:name=".HeLinJian" />
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            >
+
+        </activity>
+        <activity android:name=".Activityguanjun"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".HeLinJian"
+            android:screenOrientation="portrait"/>
 
         <!-- 登陆 -->
         <activity
@@ -265,31 +271,52 @@
 
 
         <!-- Jpush推送结束配置 -->
-        <activity android:name=".fragments.goodsInStock.OrderGoodsActivity" />
-        <activity android:name=".fragments.homepage.theprice.MidpointsListctivity" />
-        <activity android:name=".fragments.auction.AuctionActivity" />
-        <activity android:name=".fragments.OrderManagement.SpotOrder.SpotOrder" />
-        <activity android:name=".fragments.personalInformation.PasswordUpdate" />
-        <activity android:name=".fragments.personalInformation.InformationSubscription" />
-        <activity android:name=".fragments.personalInformation.UserInformation" />
-        <activity android:name=".fragments.personalInformation.ModifyName" />
-        <activity android:name=".fragments.personalInformation.ModifyTelephone" />
-        <activity android:name=".fragments.enterpriseInformation.ReceiptAddress" />
-        <activity android:name=".fragments.enterpriseInformation.ReceiptAddressDetail" />
+        <activity android:name=".fragments.goodsInStock.OrderGoodsActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".fragments.homepage.theprice.MidpointsListctivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".fragments.auction.AuctionActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".fragments.OrderManagement.SpotOrder.SpotOrder"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".fragments.personalInformation.PasswordUpdate"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".fragments.personalInformation.InformationSubscription"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".fragments.personalInformation.UserInformation"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".fragments.personalInformation.ModifyName"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".fragments.personalInformation.ModifyTelephone"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".fragments.enterpriseInformation.ReceiptAddress"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".fragments.enterpriseInformation.ReceiptAddressDetail"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".fragments.enterpriseInformation.AddAddress"
-            android:launchMode="singleTask" />
-        <activity android:name=".fragments.enterpriseInformation.SelectCityArea" />
-        <activity android:name=".fragments.enterpriseInformation.SelectCountyArea" />
-        <activity android:name=".fragments.enterpriseInformation.SelectProvinceArea" />
-        <activity android:name=".fragments.enterpriseInformation.SelectDetailArea" />
-        <activity android:name=".fragments.companyInfomation.CompanyUserActivity" />
-        <activity android:name=".fragments.companyInfomation.CompanyUserUpdateActivity" />
-        <activity android:name=".fragments.companyInfomation.CompanyUserAddActivity" />
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".fragments.enterpriseInformation.SelectCityArea"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".fragments.enterpriseInformation.SelectCountyArea"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".fragments.enterpriseInformation.SelectProvinceArea"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".fragments.enterpriseInformation.SelectDetailArea"
+            android:screenOrientation="portrait" />
+        <activity android:name=".fragments.companyInfomation.CompanyUserActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".fragments.companyInfomation.CompanyUserUpdateActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".fragments.companyInfomation.CompanyUserAddActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".fragments.companyInfomation.InvoiceInformation"
-            android:launchMode="singleTask" />
-        <activity android:name=".fragments.fund.SearchMoney" />
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".fragments.fund.SearchMoney"
+            android:screenOrientation="portrait"/>
         <!--
  ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -298,36 +325,64 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".fragments.companyInfomation.CompanyUserDutyActivity" />
-        <activity android:name=".fragments.companyInfomation.CompanyUserStateActivity" />
-        <activity android:name=".fragments.firmInfomation.FirmInfoActivity" />
-        <activity android:name=".fragments.firmInfomation.FirmInfoUpdateActivity" />
-        <activity android:name=".fragments.firmInfomation.FirmInfoTypeActivity" />
-        <activity android:name=".fragments.firmInfomation.FirmInfoNameActivity" />
-        <activity android:name=".fragments.firmInfomation.FirmInfoOfficeActivity" />
-        <activity android:name=".fragments.firmInfomation.FirmInfoPictureActivity" />
-        <activity android:name=".fragments.firmInfomation.FirmInfoAddressActivity" />
-        <activity android:name=".fragments.firmInfomation.FrimInfoProvinceActivity" />
-        <activity android:name=".fragments.firmInfomation.FirmInfoParticularActivity" />
-        <activity android:name=".fragments.homepage.preSale.PreSaleDetailActivity" />
-        <activity android:name=".fragments.fund.FundInfoActivity" />
-        <activity android:name=".fragments.homepage.preSale.PreSale" />
-        <activity android:name=".fragments.homepage.theprice.ChinaNorth_MyPrice" />
-        <activity android:name=".fragments.homepage.theprice.ChainNorth_MyPriceLv" />
-        <activity android:name=".fragments.homepage.theprice.ChinaNorth_Margin" />
-        <activity android:name=".fragments.homepage.theprice.ChinaNorth_Price" />
-        <activity android:name=".fragments.fund.FundInfoActivity" />
-        <activity android:name=".fragments.auction.OpenAuctionActivity" />
-        <activity android:name=".fragments.auction.VesselOneActivity" />
-        <activity android:name=".fragments.auction.VesselTwoActivity" />
-        <activity android:name=".fragments.auction.VesselThreeActivity" />
-        <activity android:name=".fragments.GoodsInStockActivity" />
-        <activity android:name=".fragments.auction.VlaueActivity" />
-        <activity android:name=".fragments.setting.SettingActivity" />
-        <activity android:name=".fragments.login.LoginUserActivity" />
-        <activity android:name=".fragments.register.RegisterActivity" />
-        <activity android:name=".fragments.register.RegisterValueActivity" />
-        <activity android:name=".fragments.goods.GoodsActivity"></activity>
+        <activity android:name=".fragments.companyInfomation.CompanyUserDutyActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".fragments.companyInfomation.CompanyUserStateActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".fragments.firmInfomation.FirmInfoActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".fragments.firmInfomation.FirmInfoUpdateActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".fragments.firmInfomation.FirmInfoTypeActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".fragments.firmInfomation.FirmInfoNameActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".fragments.firmInfomation.FirmInfoOfficeActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".fragments.firmInfomation.FirmInfoPictureActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".fragments.firmInfomation.FirmInfoAddressActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".fragments.firmInfomation.FrimInfoProvinceActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".fragments.firmInfomation.FirmInfoParticularActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".fragments.homepage.preSale.PreSaleDetailActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".fragments.fund.FundInfoActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".fragments.homepage.preSale.PreSale"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".fragments.homepage.theprice.ChinaNorth_MyPrice"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".fragments.homepage.theprice.ChainNorth_MyPriceLv"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".fragments.homepage.theprice.ChinaNorth_Margin"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".fragments.homepage.theprice.ChinaNorth_Price"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".fragments.auction.OpenAuctionActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".fragments.auction.VesselOneActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".fragments.auction.VesselTwoActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".fragments.auction.VesselThreeActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".fragments.GoodsInStockActivity"
+            android:screenOrientation="portrait"></activity>
+
+        <activity android:name=".fragments.auction.VlaueActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".fragments.setting.SettingActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".fragments.login.LoginUserActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".fragments.register.RegisterActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".fragments.register.RegisterValueActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

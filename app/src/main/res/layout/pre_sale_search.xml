@@ -3,101 +3,118 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/white">
-<include
-    android:id="@+id/search_title"
-    layout="@layout/screen_title_bar"/>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    <RelativeLayout
-        android:id="@+id/classification"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        >
-        <TextView
-        android:id="@+id/classification_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="分类："
-        />
-        <TextView
-            android:id="@+id/classification_et"
-            android:layout_width="@dimen/x70"
-            android:layout_height="@dimen/x30"
-            android:layout_toRightOf="@id/classification_tv"
-            android:background="@mipmap/xiala"/>
-    </RelativeLayout>
+    >
 
 
-    <RelativeLayout
-        android:id="@+id/application"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/classification">
-    <TextView
-        android:id="@+id/application_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:layout_marginLeft="@dimen/x5"
-        android:text="应用："/>
-    <TextView
-        android:id="@+id/application_et"
-        android:layout_width="@dimen/x70"
-        android:layout_height="@dimen/x30"
-        android:layout_toRightOf="@id/application_tv"
-        android:background="@mipmap/xiala"
-        />
-    </RelativeLayout>
-
-
-
-    <RelativeLayout
-        android:id="@+id/region"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/application"
-        >
-    <TextView
-        android:id="@+id/region_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:layout_marginLeft="@dimen/x5"
-        android:text="地区"/>
-    <TextView
-        android:id="@+id/region_et"
-        android:layout_width="@dimen/x70"
-        android:layout_height="@dimen/x30"
-        android:layout_toRightOf="@id/region_tv"
-        android:background="@mipmap/xiala"/>
-    </RelativeLayout>
-        <ListView
-            android:id="@+id/application_lv"
-            android:layout_toRightOf="@id/classification"
-            android:layout_toLeftOf="@id/region"
+        <RelativeLayout
+            android:id="@+id/top_pre_sale_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/application"
-            android:background="@mipmap/a"
-            android:visibility="gone"
-            ></ListView>
-        <ListView
-        android:id="@+id/region_lv"
-        android:layout_toRightOf="@id/application"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/region"
-            android:background="@mipmap/a"
-        android:visibility="gone"></ListView>
-        <ListView
-            android:id="@+id/classification_lv"
-            android:layout_toLeftOf="@id/application"
+            android:background="@color/white">
+        <TextView
+            android:id="@+id/classificatioin_tv_pre_sale_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="分        类："
+            android:textSize="@dimen/x15"
+            android:layout_marginTop="@dimen/x5"
+            android:layout_marginBottom="@dimen/x5"/>
+        <EditText
+            android:id="@+id/classificatioin_et_pre_sale_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/classification"
-            android:background="@mipmap/a"
-            android:visibility="gone"></ListView>
-    </RelativeLayout>>
+            android:background="@drawable/textview_background"
+            android:layout_toRightOf="@id/classificatioin_tv_pre_sale_search"
+            android:layout_marginLeft="@dimen/x5"
+            android:layout_marginRight="@dimen/x5"
+            android:layout_marginTop="@dimen/x5"
+            android:layout_marginBottom="@dimen/x5"/>
+        <TextView
+            android:id="@+id/grade_tv_pre_sale_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="牌        号："
+            android:layout_below="@id/classificatioin_tv_pre_sale_search"
+            android:textSize="@dimen/x15"
+            android:layout_marginTop="@dimen/x5"
+            android:layout_marginBottom="@dimen/x5"/>
+        <EditText
+            android:id="@+id/grade_et_pre_sale_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/textview_background"
+            android:layout_toRightOf="@id/grade_tv_pre_sale_search"
+            android:layout_below="@id/classificatioin_tv_pre_sale_search"
+            android:layout_marginLeft="@dimen/x5"
+            android:layout_marginRight="@dimen/x5"
+            android:layout_marginTop="@dimen/x5"
+            android:layout_marginBottom="@dimen/x5"/>
+        <TextView
+            android:id="@+id/manufacturing_enterprise_tv_pre_sale_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="生产企业："
+            android:layout_below="@id/grade_tv_pre_sale_search"
+            android:textSize="@dimen/x15"
+            android:layout_marginTop="@dimen/x5"
+            android:layout_marginBottom="@dimen/x5"/>
+        <EditText
+            android:id="@+id/manufacturing_enterprise_et_pre_sale_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/textview_background"
+            android:layout_toRightOf="@id/manufacturing_enterprise_tv_pre_sale_search"
+            android:layout_below="@id/grade_tv_pre_sale_search"
+            android:layout_marginLeft="@dimen/x5"
+            android:layout_marginRight="@dimen/x5"
+            android:layout_marginTop="@dimen/x5"
+            android:layout_marginBottom="@dimen/x5"
+            />
+        <TextView
+            android:id="@+id/company_tv_pre_sale_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="公        司："
+            android:layout_below="@id/manufacturing_enterprise_tv_pre_sale_search"
+            android:textSize="@dimen/x15"
+            android:layout_marginTop="@dimen/x5"
+            android:layout_marginBottom="@dimen/x5"/>
+        <EditText
+            android:id="@+id/company_et_pre_sale_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/textview_background"
+            android:layout_toRightOf="@id/company_tv_pre_sale_search"
+            android:layout_below="@id/manufacturing_enterprise_tv_pre_sale_search"
+            android:layout_marginLeft="@dimen/x5"
+            android:layout_marginRight="@dimen/x5"
+            android:layout_marginTop="@dimen/x5"
+            android:layout_marginBottom="@dimen/x5"/>
+            <Button
+                android:id="@+id/query_pre_sale_search"
+                android:layout_width="@dimen/x70"
+                android:layout_height="@dimen/x30"
+                android:background="@drawable/button_background_blue"
+                android:text="查询"
+                android:textColor="@color/white"
+                android:layout_below="@id/company_et_pre_sale_search"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/x5"
+                android:layout_marginBottom="@dimen/x5"
+                />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/bottom_pre_sale_search"
+            android:orientation="vertical"
+            android:background="#AF000000"
+            android:layout_width="match_parent"
+            android:clickable="true"
+            android:layout_height="@dimen/y400">
+
+        </LinearLayout>
+
+
 </LinearLayout>
