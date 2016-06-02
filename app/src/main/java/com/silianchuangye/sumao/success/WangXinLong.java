@@ -1,8 +1,11 @@
 package com.silianchuangye.sumao.success;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
+
+import com.silianchuangye.sumao.success.custom.CustomPayDialog;
 
 /**
  * Created by Administrator on 2016/4/13 0013.
@@ -19,6 +22,30 @@ public class WangXinLong extends Activity {
 //        5月19 预售
 //        5月30
 //        6月1日 修改预售完毕
+        showPayDialog();
 
+    }
+
+    public void showPayDialog()
+    {
+        CustomPayDialog.Builder builder = new CustomPayDialog.Builder(this);
+        builder.setMessage("这个就是自定义的提示框");
+        builder.setTitle("提示");
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+
+                //设置你的操作事项
+                dialog.dismiss();
+            }
+        });
+
+        builder.setNegativeButton("取消",
+                new android.content.DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+        builder.create().show();
     }
 }

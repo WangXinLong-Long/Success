@@ -7,7 +7,7 @@
     android:paddingLeft="0dp"
     android:paddingRight="0dp"
     android:paddingTop="0dp"
-    tools:context=".fragments.auction.AuctionActivity">
+    tools:context=".fragments.homepage.auction.AuctionActivity">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/y35"

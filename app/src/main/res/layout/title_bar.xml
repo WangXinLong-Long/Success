@@ -21,17 +21,19 @@
     <ImageView
         android:id="@+id/iv_title_bar_logo"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/x30"
         android:src="@mipmap/iv_title_bar_logo"
         />
     <ImageView
         android:id="@+id/iv_title_bar_service"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/x35"
         android:layout_height="wrap_content"
         android:src="@mipmap/iv_title_bar_service"
         android:layout_alignParentRight="true"
         android:paddingRight="@dimen/padding_right"
         android:paddingTop="@dimen/padding_right"
+        android:layout_marginLeft="@dimen/x15"
+        android:layout_marginRight="@dimen/x5"
         />
     <RelativeLayout
         android:id="@+id/add_address_rl"

@@ -8,7 +8,7 @@
     android:paddingRight="0dp"
     android:paddingTop="0dp"
     android:background="#EEEEF3"
-    tools:context="com.silianchuangye.sumao.success.fragments.companyInfomation.CompanyUserActivity">
+    tools:context=".fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.CompanyUserActivity">
     <include
         android:id="@+id/layoutTop"
         layout="@layout/title_bar"

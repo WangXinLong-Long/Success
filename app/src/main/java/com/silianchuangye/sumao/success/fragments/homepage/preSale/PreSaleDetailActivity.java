@@ -13,7 +13,7 @@ import com.silianchuangye.sumao.success.MainActivity;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.custom.customCalendar.CalendarView;
 import com.silianchuangye.sumao.success.custom.customCalendar.DayAndPrice;
-import com.silianchuangye.sumao.success.fragments.auction.VesselThreeActivity;
+import com.silianchuangye.sumao.success.fragments.homepage.auction.VesselThreeActivity;
 
 import java.util.ArrayList;
 import java.util.List;

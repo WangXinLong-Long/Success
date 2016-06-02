@@ -70,7 +70,7 @@
                 android:layout_marginTop="@dimen/x3"
                 android:divider="@color/my_sumao_background"
                 android:dividerHeight="@dimen/x1"
-                android:layout_marginBottom="@dimen/x3"
+                android:layout_marginBottom="@dimen/x1"
                 >
 
             </com.silianchuangye.sumao.success.custom.CustomExpandableListView>

@@ -9,39 +9,49 @@
         android:id="@+id/pre_sale_title"
         layout="@layout/screen_title_bar" />
 
-    <RelativeLayout
+    <LinearLayout
+        android:orientation="horizontal"
         android:id="@+id/selection_condition"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/pre_sale_title"
         android:layout_marginTop="@dimen/x5"
         android:background="@color/white"
+        android:weightSum="4"
         >
 
         <TextView
             android:id="@+id/classification"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="分类未选择"
-            android:paddingLeft="@dimen/x20"
+            android:text="分类"
+            android:paddingLeft="@dimen/x10"
             />
 
         <TextView
             android:id="@+id/application"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:text="应用未选择" />
+            android:text="应用" />
 
         <TextView
             android:id="@+id/region"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:text="地区未选择"
-            android:paddingRight="@dimen/x20"/>
+            android:text="地区"
+            />
+        <TextView
+            android:id="@+id/manufacturing_enterprise"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="生产企业"
+            android:paddingRight="@dimen/x10"/>
 
-    </RelativeLayout>
+    </LinearLayout>
 <TextView
     android:id="@+id/split_line"
     android:layout_below="@id/selection_condition"

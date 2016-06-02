@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="#EEEEF3"
     android:orientation="vertical"
-    tools:context="com.silianchuangye.sumao.success.fragments.firmInfomation.FirmInfoNameActivity">
+    tools:context=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoNameActivity">
     <include
         android:id="@+id/layoutTop_firm_info_office"
         layout="@layout/title_bar"></include>

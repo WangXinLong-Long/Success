@@ -5,7 +5,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -17,7 +16,7 @@ import android.widget.Toast;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.CartAdapter;
 import com.silianchuangye.sumao.success.fragments.bean.CartInfo;
-import com.silianchuangye.sumao.success.fragments.dialog.Cart_MyDialog;
+import com.silianchuangye.sumao.success.fragments.shoppingCart.dialog.Cart_MyDialog;
 
 import java.util.ArrayList;
 import java.util.List;

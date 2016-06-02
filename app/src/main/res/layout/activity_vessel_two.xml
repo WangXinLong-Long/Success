@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#EEEEF3"
-    tools:context="com.silianchuangye.sumao.success.fragments.auction.VesselTwoActivity">
+    tools:context=".fragments.homepage.auction.VesselTwoActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"

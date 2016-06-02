@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#EEEEF3"
-    tools:context="com.silianchuangye.sumao.success.fragments.OrderManagement.SpotOrder.ServiceBornFragment">
+    tools:context=".fragments.myPlasticTrade.OrderManagement.SpotOrder.ServiceBornFragment">
 
     <ExpandableListView
         android:layout_width="match_parent"

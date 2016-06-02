@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-    tools:context="com.silianchuangye.sumao.success.fragments.register.RegisterValueActivity">
+    tools:context=".fragments.myPlasticTrade.register.RegisterValueActivity">
 
     <include
         android:id="@+id/layoutTop_register_value"

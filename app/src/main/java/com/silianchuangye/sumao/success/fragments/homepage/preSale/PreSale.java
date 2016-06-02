@@ -38,21 +38,16 @@ public class PreSale extends Activity implements View.OnClickListener, AdapterVi
     ListView popupWindowListView;
     LinearLayout bottom_pre_sale_search,popup_window_back;
 
-    ListView application_lv, classification_lv, region_lv;
     List<PreSaleModel> lists;
     PreSaleAdapter adapter;
     PopupWindow popupWindow;
     PopupWindow listPopupWindow;
     RelativeLayout pre_sale_title;
-    TextView application_et, classification_et, region_et;
-    boolean flag = true;
-    String first = "first";
-    String second = "second";
-    TextView classification, application, region;
+    TextView classification, application, region,manufacturing_enterprise;
     ListView pre_sale_listView;
     PreSaleModel preSaleModel;
     ArrayList<String> mArrayList;
-    RelativeLayout selection_condition;
+    LinearLayout selection_condition;
     TextView split_line;
 
     @Override
@@ -69,14 +64,16 @@ public class PreSale extends Activity implements View.OnClickListener, AdapterVi
         classification = ((TextView) findViewById(R.id.classification));
         application = ((TextView) findViewById(R.id.application));
         region = ((TextView) findViewById(R.id.region));
+        manufacturing_enterprise = ((TextView) findViewById(R.id.manufacturing_enterprise));
         pre_sale_listView = ((ListView) findViewById(R.id.pre_sale_listView));
-        selection_condition = ((RelativeLayout) findViewById(R.id.selection_condition));
+        selection_condition = ((LinearLayout) findViewById(R.id.selection_condition));
         split_line = ((TextView) findViewById(R.id.split_line));
         initdata();
         pre_sale_listView.setAdapter(adapter);
         pre_sale_listView.setOnItemClickListener(this);
         application.setOnClickListener(this);
         classification.setOnClickListener(this);
+        manufacturing_enterprise.setOnClickListener(this);
         region.setOnClickListener(this);
 
     }
@@ -99,6 +96,10 @@ public class PreSale extends Activity implements View.OnClickListener, AdapterVi
                 break;
             case R.id.application:
                 initListPopupWindowView("应用");
+                showListPopupWindow();
+                break;
+            case R.id.manufacturing_enterprise:
+                initListPopupWindowView("生产企业");
                 showListPopupWindow();
                 break;
 
@@ -148,6 +149,9 @@ public class PreSale extends Activity implements View.OnClickListener, AdapterVi
                 }else if (s.equals("应用"))
                 {
                     application.setText(popupWindowListViewAdpter.getItem(position));
+                }else if (s.equals("生产企业"))
+                {
+                    manufacturing_enterprise.setText(popupWindowListViewAdpter.getItem(position));
                 }
                     listPopupWindow.dismiss();
             }
@@ -195,7 +199,7 @@ public class PreSale extends Activity implements View.OnClickListener, AdapterVi
             preSaleModel.setName("产品" + i);
             preSaleModel.setNumber(i + "");
             preSaleModel.setPrice(i * 100 + "");
-            preSaleModel.setProductType("现货");
+            preSaleModel.setProductType("预售");
 
             lists.add(preSaleModel);
         }
@@ -222,22 +226,7 @@ public class PreSale extends Activity implements View.OnClickListener, AdapterVi
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        if (application_lv == parent) {
-            application_et.setText("选择了应用");
-            application.setText("选择了应用");
 
-            application_lv.setVisibility(View.GONE);
-        }
-        if (classification_lv == parent) {
-            classification_et.setText("选择了分类");
-            classification.setText("选择了分类");
-            classification_lv.setVisibility(View.GONE);
-        }
-        if (region_lv == parent) {
-            region_et.setText("选择了地区");
-            region.setText("选择了地区");
-            region_lv.setVisibility(View.GONE);
-        }
         if (pre_sale_listView == parent) {
             Intent intent = new Intent();
             intent.setClass(this, PreSaleDetailActivity.class);

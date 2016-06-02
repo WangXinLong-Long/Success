@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="#EEEEF3"
     android:orientation="vertical"
-    tools:context="com.silianchuangye.sumao.success.fragments.companyInfomation.CompanyUserDutyActivity">
+    tools:context=".fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.CompanyUserDutyActivity">
 
     <include
         android:id="@+id/layoutTop_duty"

@@ -3,7 +3,6 @@ package com.silianchuangye.sumao.success.adapter;
 import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -12,10 +11,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.silianchuangye.sumao.success.MainActivity;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.bean.CartInfo;
-import com.silianchuangye.sumao.success.fragments.dialog.Cart_MyDialog;
+import com.silianchuangye.sumao.success.fragments.shoppingCart.dialog.Cart_MyDialog;
 
 import java.util.List;
 

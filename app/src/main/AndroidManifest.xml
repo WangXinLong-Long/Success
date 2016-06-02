@@ -270,51 +270,51 @@
 
 
         <!-- Jpush推送结束配置 -->
-        <activity android:name=".fragments.goodsInStock.OrderGoodsActivity"
+        <activity android:name=".fragments.myPlasticTrade.OrderManagement.goodsInStock.OrderGoodsActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".fragments.homepage.theprice.MidpointsListctivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".fragments.auction.AuctionActivity"
+        <activity android:name=".fragments.homepage.auction.AuctionActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".fragments.OrderManagement.SpotOrder.SpotOrder"
+        <activity android:name=".fragments.myPlasticTrade.OrderManagement.SpotOrder.SpotOrder"
             android:screenOrientation="portrait"/>
-        <activity android:name=".fragments.personalInformation.PasswordUpdate"
+        <activity android:name=".fragments.myPlasticTrade.personalInformation.PasswordUpdate"
             android:screenOrientation="portrait"/>
-        <activity android:name=".fragments.personalInformation.InformationSubscription"
+        <activity android:name=".fragments.myPlasticTrade.personalInformation.InformationSubscription"
             android:screenOrientation="portrait"/>
-        <activity android:name=".fragments.personalInformation.UserInformation"
+        <activity android:name=".fragments.myPlasticTrade.personalInformation.UserInformation"
             android:screenOrientation="portrait"/>
-        <activity android:name=".fragments.personalInformation.ModifyName"
+        <activity android:name=".fragments.myPlasticTrade.personalInformation.ModifyName"
             android:screenOrientation="portrait"/>
-        <activity android:name=".fragments.personalInformation.ModifyTelephone"
+        <activity android:name=".fragments.myPlasticTrade.personalInformation.ModifyTelephone"
             android:screenOrientation="portrait"/>
-        <activity android:name=".fragments.enterpriseInformation.ReceiptAddress"
+        <activity android:name=".fragments.myPlasticTrade.companyInformations.receiptAddress.ReceiptAddress"
             android:screenOrientation="portrait"/>
-        <activity android:name=".fragments.enterpriseInformation.ReceiptAddressDetail"
+        <activity android:name=".fragments.myPlasticTrade.companyInformations.receiptAddress.ReceiptAddressDetail"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".fragments.enterpriseInformation.AddAddress"
+            android:name=".fragments.myPlasticTrade.companyInformations.receiptAddress.AddAddress"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"/>
-        <activity android:name=".fragments.enterpriseInformation.SelectCityArea"
+        <activity android:name=".fragments.myPlasticTrade.companyInformations.receiptAddress.SelectCityArea"
             android:screenOrientation="portrait"/>
-        <activity android:name=".fragments.enterpriseInformation.SelectCountyArea"
+        <activity android:name=".fragments.myPlasticTrade.companyInformations.receiptAddress.SelectCountyArea"
             android:screenOrientation="portrait"/>
-        <activity android:name=".fragments.enterpriseInformation.SelectProvinceArea"
+        <activity android:name=".fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceArea"
             android:screenOrientation="portrait"/>
-        <activity android:name=".fragments.enterpriseInformation.SelectDetailArea"
+        <activity android:name=".fragments.myPlasticTrade.companyInformations.receiptAddress.SelectDetailArea"
             android:screenOrientation="portrait" />
-        <activity android:name=".fragments.companyInfomation.CompanyUserActivity"
+        <activity android:name=".fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.CompanyUserActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".fragments.companyInfomation.CompanyUserUpdateActivity"
+        <activity android:name=".fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.CompanyUserUpdateActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".fragments.companyInfomation.CompanyUserAddActivity"
+        <activity android:name=".fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.CompanyUserAddActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".fragments.companyInfomation.InvoiceInformation"
+            android:name=".fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.InvoiceInformation"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"/>
-        <activity android:name=".fragments.fund.SearchMoney"
+        <activity android:name=".fragments.myPlasticTrade.EnterpriseCapitalAccountManagement.SearchMoney"
             android:screenOrientation="portrait"/>
         <!--
  ATTENTION: This was auto-generated to add Google Play services to your project for
@@ -324,31 +324,31 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".fragments.companyInfomation.CompanyUserDutyActivity"
+        <activity android:name=".fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.CompanyUserDutyActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".fragments.companyInfomation.CompanyUserStateActivity"
+        <activity android:name=".fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.CompanyUserStateActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".fragments.firmInfomation.FirmInfoActivity"
+        <activity android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".fragments.firmInfomation.FirmInfoUpdateActivity"
+        <activity android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoUpdateActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".fragments.firmInfomation.FirmInfoTypeActivity"
+        <activity android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoTypeActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".fragments.firmInfomation.FirmInfoNameActivity"
+        <activity android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoNameActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".fragments.firmInfomation.FirmInfoOfficeActivity"
+        <activity android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoOfficeActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".fragments.firmInfomation.FirmInfoPictureActivity"
+        <activity android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoPictureActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".fragments.firmInfomation.FirmInfoAddressActivity"
+        <activity android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoAddressActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".fragments.firmInfomation.FrimInfoProvinceActivity"
+        <activity android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FrimInfoProvinceActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".fragments.firmInfomation.FirmInfoParticularActivity"
+        <activity android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoParticularActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".fragments.homepage.preSale.PreSaleDetailActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".fragments.fund.FundInfoActivity"
+        <activity android:name=".fragments.myPlasticTrade.EnterpriseCapitalAccountManagement.FundInfoActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".fragments.homepage.preSale.PreSale"
             android:screenOrientation="portrait"/>
@@ -360,27 +360,29 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".fragments.homepage.theprice.ChinaNorth_Price"
             android:screenOrientation="portrait"/>
-        <activity android:name=".fragments.auction.OpenAuctionActivity"
+        <activity android:name=".fragments.homepage.auction.OpenAuctionActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".fragments.auction.VesselOneActivity"
+        <activity android:name=".fragments.homepage.auction.VesselOneActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".fragments.auction.VesselTwoActivity"
+        <activity android:name=".fragments.homepage.auction.VesselTwoActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".fragments.auction.VesselThreeActivity"
+        <activity android:name=".fragments.homepage.auction.VesselThreeActivity"
             android:screenOrientation="portrait"/>
 
-        <activity android:name=".fragments.GoodsInStockActivity"
+        <activity android:name=".fragments.homepage.goodInStock.GoodsInStockActivity"
             android:screenOrientation="portrait"></activity>
 
-        <activity android:name=".fragments.auction.VlaueActivity"
+        <activity android:name=".fragments.homepage.auction.VlaueActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".fragments.setting.SettingActivity"
+        <activity android:name=".fragments.myPlasticTrade.setting.SettingActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".fragments.login.LoginUserActivity"
+        <activity android:name=".fragments.myPlasticTrade.login.LoginUserActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".fragments.register.RegisterActivity"
+        <activity android:name=".fragments.myPlasticTrade.register.RegisterActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".fragments.register.RegisterValueActivity"
+        <activity android:name=".fragments.myPlasticTrade.register.RegisterValueActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".fragments.homepage.goodInStock.GoodsInStockDetailActivity"
             android:screenOrientation="portrait"></activity>
     </application>
 

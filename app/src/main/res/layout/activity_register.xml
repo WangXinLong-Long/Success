@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#EEEEF3"
-    tools:context="com.silianchuangye.sumao.success.fragments.register.RegisterActivity">
+    tools:context=".fragments.myPlasticTrade.register.RegisterActivity">
     <include
         android:id="@+id/layoutTop_register"
         layout="@layout/title_bar"></include>

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-    tools:context="com.silianchuangye.sumao.success.fragments.fund.FundInfoActivity">
+    tools:context=".fragments.myPlasticTrade.EnterpriseCapitalAccountManagement.FundInfoActivity">
 
     <include
         android:id="@+id/layoutTop_fund_info"

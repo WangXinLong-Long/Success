@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-    tools:context="com.silianchuangye.sumao.success.fragments.companyInfomation.CompanyUserUpdateActivity">
+    tools:context=".fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.CompanyUserUpdateActivity">
 <include
     android:id="@+id/layouttop_update"
     layout="@layout/title_bar"></include>
