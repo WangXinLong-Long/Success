@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+
+    android:background="#fff"
+    android:layout_height="match_parent">
+
+
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="50dp"
+       android:id="@+id/layoutTop_title"
+       android:background="#fff"
+
+       >
+       <ImageView
+           android:layout_width="20dp"
+           android:layout_height="20dp"
+           android:layout_centerVertical="true"
+           android:layout_marginLeft="10dp"
+           android:id="@+id/ivBack_title"
+           android:src="@mipmap/my_sumao_back"
+           />
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:id="@+id/tv_title_name"
+           android:text="分类"
+           android:textSize="16sp"
+           android:textColor="#111"
+           android:layout_centerInParent="true"
+           />
+   </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#EEEEF3"
+        android:id="@+id/bb"
+        android:layout_below="@id/layoutTop_title"
+        ></RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:id="@+id/layout_fragment_two"
+        android:weightSum="3"
+        android:orientation="horizontal"
+        android:layout_below="@+id/bb"
+        >
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/one"
+                android:entries="@array/name1"
+                android:layout_weight="1"
+                android:requiresFadingEdge="none"
+                android:spinnerMode="dropdown"
+                ></Spinner>
+
+
+        <LinearLayout
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#EEEEF3"
+            ></LinearLayout>
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/two"
+            android:entries="@array/name2"
+            android:layout_weight="1"
+            ></Spinner>
+        <LinearLayout
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#EEEEF3"
+            ></LinearLayout>
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/three"
+            android:entries="@array/name3"
+            android:layout_weight="1"
+            ></Spinner>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#EEEEF3"
+        android:id="@+id/ccc"
+        android:orientation="horizontal"
+        android:layout_below="@+id/layout_fragment_two"
+        ></LinearLayout>
+  <ListView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_below="@+id/ccc"
+      android:id="@+id/lv_info_fragment_two"
+      ></ListView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_below="@+id/ccc"
+        android:weightSum="2"
+        android:orientation="horizontal"
+        >
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/lv_fragment2"
+            ></ListView>
+        <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/lv_fragment3"
+            ></ListView>
+    </LinearLayout>
+
+</RelativeLayout>
