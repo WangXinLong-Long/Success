@@ -81,9 +81,9 @@ private List<CartInfo> list;
         holder.Tv_all_price.setText(list.get(position).all_price+"元");
         //选中与不选中
         if(list.get(position).Selsct_Flag){
-            holder.Img_select.setImageResource(R.mipmap.adwords);
+            holder.Img_select.setImageResource(R.mipmap.cart_select);
         }else {
-            holder.Img_select.setImageResource(R.mipmap.ic_launcher);
+            holder.Img_select.setImageResource(R.mipmap.cart_select_null);
         }
         holder.Img_select.setOnClickListener(new View.OnClickListener() {
             @Override

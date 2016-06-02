@@ -19,7 +19,7 @@ import com.silianchuangye.sumao.success.fragments.PagerThree;
 import java.util.ArrayList;
 import java.util.List;
 
-//我的点价界面
+//我的点价规则界面
 public class ChinaNorth_MyPrice extends AppCompatActivity implements View.OnClickListener,AdapterView.OnItemClickListener{
     private ImageView img_myprice_back,img_myprice_cart;
     private TextView tv_myprice_diqu,tv_myprice_sort,

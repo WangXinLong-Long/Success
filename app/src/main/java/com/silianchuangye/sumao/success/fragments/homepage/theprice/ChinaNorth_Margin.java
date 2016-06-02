@@ -48,12 +48,6 @@ private ImageView img_margin_back;
     }
 
     private void initDate() {
-//        Map<String,Object> map=new HashMap<String,Object>();
-//        map.put("bankname","中国建设银行");
-//        map.put("bankmoney","111,111.00");
-//        Map<String,Object> map1=new HashMap<String,Object>();
-//        map1.put("bankname","中国工商银行");
-//        map1.put("bankmoney","123,456.00");
         ChinaNorth_Margin_info info1=new ChinaNorth_Margin_info();
         info1.bank="中国建设银行";
         info1.money="111,111,00";
@@ -84,15 +78,7 @@ private ImageView img_margin_back;
         tv_margin_all_price = (TextView) findViewById(R.id.tv_margin_all_price);
         btn_margin_zhifu = (Button) findViewById(R.id.btn_margin_zifu);
         lv_margin_bank = (ListView) findViewById(R.id.lv_margin_bank);
-//        adapter = new SimpleAdapter(this,
-//                list1,
-//                R.layout.item_chinanorth_margin,
-//                new String[]{"bankname",
-//                        "bankmoney",
-//                },
-//                new int[]{R.id.tv_item_margin_bank,
-//                        R.id.tv_item_margin_price,
-//                });
+
         adapter=new ChinaNorth_Margin_Adapter(list,ChinaNorth_Margin.this);
         lv_margin_bank.setAdapter(adapter);
         img_margin_back.setOnClickListener(this);
