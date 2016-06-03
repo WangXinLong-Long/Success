@@ -40,6 +40,9 @@
         android:layout_marginTop="@dimen/x10"
         android:layout_marginRight="@dimen/x10"
         android:entries="@array/name"
+        android:requiresFadingEdge="none"
+        android:spinnerMode="dropdown"
+        android:dropDownVerticalOffset="@dimen/x20"
         ></Spinner>
 
 

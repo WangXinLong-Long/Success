@@ -64,7 +64,9 @@
             android:id="@+id/iv_firm_info_pictrue"
             android:layout_marginTop="@dimen/x10"
             android:background="#123456"
-            />
+            >
+
+        </ImageView>
     </LinearLayout>
 
 </RelativeLayout>

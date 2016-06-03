@@ -3,11 +3,16 @@ package com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInforma
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
 
@@ -19,13 +24,42 @@ public class FirmInfoTypeActivity extends AppCompatActivity {
     Button sv_title_bar_serachView;
     TextView tv_title_bar_title, tv;
     RelativeLayout layoutTop;
+    RadioButton one,two,three;
+    RadioGroup rgDemo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_firm_info_type);
+        one= (RadioButton) findViewById(R.id.rbone_firm_info_type);
+        two= (RadioButton) findViewById(R.id.rbtwo_firm_info_type);
+        three= (RadioButton) findViewById(R.id.rbthree_firm_info_type);
+        rgDemo= (RadioGroup) findViewById(R.id.rgDemo);
+       // rgDemo.setOnCheckedChangeListener(radiogpchange);
+        int id=rgDemo.getCheckedRadioButtonId();
+        if (id==-1){
+            Toast.makeText(FirmInfoTypeActivity.this, "请选择一个", Toast.LENGTH_SHORT).show();
+        }
+        rgDemo.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                Toast.makeText(FirmInfoTypeActivity.this, "进来了",Toast.LENGTH_SHORT).show();
+                if (checkedId ==one.getId()) {
+                    Toast.makeText(FirmInfoTypeActivity.this, "one选中", Toast.LENGTH_SHORT).show();
+                } else if (checkedId == two.getId()) {
+                    Toast.makeText(FirmInfoTypeActivity.this, "two选中", Toast.LENGTH_SHORT).show();
+                }else if (checkedId==three.getId()){
+                    Toast.makeText(FirmInfoTypeActivity.this, "three选中", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+
+
         title_Bar();
     }
+
+
 
     public void title_Bar() {
         iv_title_bar_back = ((ImageView) findViewById(R.id.iv_title_bar_back));
