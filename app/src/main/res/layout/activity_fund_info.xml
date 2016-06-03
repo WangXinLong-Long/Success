@@ -32,18 +32,26 @@
         android:layout_below="@+id/layoutCenter"
         android:id="@+id/layoutLine"
         ></RelativeLayout>
-    <ImageView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/x160"
-        android:id="@+id/ivIcon_fund_info"
+      android:id="@+id/dd"
         android:layout_below="@+id/layoutLine"
-        android:background="#acdea2"
-        />
+
+        >
+        <ImageView
+            android:layout_centerInParent="true"
+            android:layout_width="@dimen/x200"
+            android:layout_height="@dimen/x120"
+            android:id="@+id/ivIcon_fund_info"
+            android:src="@mipmap/bank_pingan_icon_big"
+            />
+    </RelativeLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/layoutText"
-        android:layout_below="@+id/ivIcon_fund_info"
+        android:layout_below="@+id/dd"
         android:orientation="vertical"
         >
         <TextView

@@ -17,39 +17,37 @@
         android:layout_marginTop="@dimen/x10"
         android:orientation="horizontal"
         >
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/rg_duty_conpant_user"
+            android:orientation="horizontal"
+            android:checkedButton="@+id/rbRole_company_user_duty"
+            >
         <RadioButton
-            android:layout_width="@dimen/x30"
+            android:layout_width="wrap_content"
             android:layout_height="@dimen/x20"
             android:id="@+id/rbRole_company_user_duty"
             android:layout_marginTop="@dimen/x10"
             android:layout_marginLeft="@dimen/x10"
-
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/tvsalesman_company_user_duty"
             android:text="业务员"
             android:textSize="16sp"
-            android:layout_marginTop="@dimen/x10"
+
             />
+
         <RadioButton
-            android:layout_width="@dimen/x30"
+            android:layout_width="wrap_content"
             android:layout_height="@dimen/x20"
             android:id="@+id/rbRoletwo_company_user_duty"
             android:layout_marginTop="@dimen/x10"
             android:layout_marginLeft="@dimen/x20"
-
-
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/tvbusiness_company_user_duty"
             android:text="业务经理"
             android:textSize="16sp"
-            android:layout_marginTop="@dimen/x10"
+
+
             />
+        </RadioGroup>
+
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"

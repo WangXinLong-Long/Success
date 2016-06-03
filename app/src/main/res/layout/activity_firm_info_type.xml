@@ -16,26 +16,24 @@
         android:layout_marginTop="@dimen/x5"
         android:orientation="vertical"
         >
-        <LinearLayout
+        <RadioGroup
             android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:id="@+id/rgDemo"
+            android:orientation="vertical"
+            android:checkedButton="@+id/rbone_firm_info_type"
+            >
+
             <RadioButton
-                android:layout_width="@dimen/x30"
+                android:layout_width="wrap_content"
                 android:layout_height="@dimen/x20"
                 android:id="@+id/rbone_firm_info_type"
-                android:layout_marginTop="@dimen/x10"
-                android:layout_marginLeft="@dimen/x10"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/x10"
                 android:layout_marginLeft="@dimen/x10"
                 android:text="生产商"
                 android:textSize="16sp"
                 />
-        </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -44,25 +42,18 @@
             android:layout_marginLeft="@dimen/x10"
             android:layout_marginRight="@dimen/x10"
             ></LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+
             <RadioButton
-                android:layout_width="@dimen/x30"
+                android:layout_width="wrap_content"
                 android:layout_height="@dimen/x20"
                 android:id="@+id/rbtwo_firm_info_type"
                 android:layout_marginTop="@dimen/x10"
                 android:layout_marginLeft="@dimen/x10"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/x10"
-                android:layout_marginLeft="@dimen/x10"
                 android:text="贸易商"
                 android:textSize="16sp"
                 />
-        </LinearLayout>
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -71,25 +62,20 @@
             android:layout_marginLeft="@dimen/x10"
             android:layout_marginRight="@dimen/x10"
             ></LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+
             <RadioButton
-                android:layout_width="@dimen/x30"
+                android:layout_width="wrap_content"
                 android:layout_height="@dimen/x20"
                 android:id="@+id/rbthree_firm_info_type"
                 android:layout_marginTop="@dimen/x10"
                 android:layout_marginLeft="@dimen/x10"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/x10"
-                android:layout_marginLeft="@dimen/x10"
                 android:text="贸易商"
                 android:textSize="16sp"
+
                 />
-        </LinearLayout>
+
+
+        </RadioGroup>
     </LinearLayout>
     <Button
         android:layout_width="match_parent"
