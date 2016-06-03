@@ -27,7 +27,7 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
     TextView title_bar_white_title;
     ImageView title_bar_white_shopping_cart;
     RelativeLayout pre_sale_sale_detail_detail;
-    RelativeLayout pre_sale_sale_detail_similar_product;
+    RelativeLayout pre_sale_sale_detail_similar_product,pre_sale_sale_detail_similar_liulan;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,11 +38,12 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
         title_bar_white_shopping_cart = ((ImageView) findViewById(R.id.title_bar_white_shopping_cart));
         pre_sale_sale_detail_detail = ((RelativeLayout) findViewById(R.id.pre_sale_sale_detail_detail));
         pre_sale_sale_detail_similar_product = ((RelativeLayout) findViewById(R.id.pre_sale_sale_detail_similar_product));
+        pre_sale_sale_detail_similar_liulan= (RelativeLayout) findViewById(R.id.pre_sale_sale_detail_similar_liulan);
         title_bar_white_back.setOnClickListener(this);
         title_bar_white_shopping_cart.setOnClickListener(this);
         pre_sale_sale_detail_detail.setOnClickListener(this);
         pre_sale_sale_detail_similar_product.setOnClickListener(this);
-
+        pre_sale_sale_detail_similar_liulan.setOnClickListener(this);
     }
 
     @Override
@@ -65,8 +66,14 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
                 break;
             case R.id.pre_sale_sale_detail_similar_product:
                Toast.makeText(this,"相似产品",Toast.LENGTH_SHORT).show();
+                intent.setClass(GoodsInStockDetailActivity.this, LikeProduct.class);
+                startActivity(intent);
                 break;
-
+            case R.id.pre_sale_sale_detail_similar_liulan:
+                Toast.makeText(this,"相似产品",Toast.LENGTH_SHORT).show();
+                intent.setClass(GoodsInStockDetailActivity.this, SeeProduct.class);
+                startActivity(intent);
+                break;
         }
     }
 }

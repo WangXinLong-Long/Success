@@ -89,14 +89,14 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
         switch (v.getId()){
             case R.id.img_activity_cart_allselect:
                 if(!all_Flag) {
-                    img_Cart_All_Select.setImageResource(R.mipmap.adwords);
+                    img_Cart_All_Select.setImageResource(R.mipmap.cart_select_null);
                     for(CartInfo info3:list){
                         info3.Selsct_Flag=true;
                     }
                     adapter.notifyDataSetChanged();
                     refrashPrice();
                 }else{
-                    img_Cart_All_Select.setImageResource(R.mipmap.ic_launcher);
+                    img_Cart_All_Select.setImageResource(R.mipmap.cart_select);
                     for(CartInfo info4:list){
                         info4.Selsct_Flag=false;
                     }
@@ -183,9 +183,9 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
         }
         tv_Cart_All_Price.setText("￥:"+all_Price);
         if(index == list.size()){
-            img_Cart_All_Select.setImageResource(R.mipmap.adwords);
+            img_Cart_All_Select.setImageResource(R.mipmap.cart_select);
         }else{
-            img_Cart_All_Select.setImageResource(R.mipmap.ic_launcher);
+            img_Cart_All_Select.setImageResource(R.mipmap.cart_select_null);
         }
     }
 }
