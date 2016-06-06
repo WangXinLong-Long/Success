@@ -1,6 +1,11 @@
 package com.silianchuangye.sumao.success.fragments.myPlasticTrade.register;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.SQLException;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,6 +21,7 @@ import android.widget.TextView;
 
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoUpdateActivity;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.LoginUserActivity;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -36,6 +42,9 @@ public class RegisterActivity extends AppCompatActivity {
     private List<Map<String,Object>> list;
     private EditText et_phone_register,editText;
     private Button bt_get_register,tv_next_register;
+    SQLiteDatabase db;
+    String name;
+    String password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,9 +60,12 @@ public class RegisterActivity extends AppCompatActivity {
         tv_next_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                register();
+
                 Intent intent=new Intent(RegisterActivity.this, FirmInfoUpdateActivity.class);
                 intent.putExtra("add","新建");
                 startActivity(intent);
+
             }
         });
         title_Bar();
@@ -92,11 +104,13 @@ public class RegisterActivity extends AppCompatActivity {
                 Intent intent=new Intent(RegisterActivity.this,RegisterValueActivity.class);
                 intent.putExtra("title",list.get(position).get("text").toString());
                 intent.putExtra("content",list.get(position).get("minute").toString());
-                startActivity(intent);
+                startActivityForResult(intent,position);
             }
         });
 
     }
+
+
     public void title_Bar(){
 
         iv_title_bar_back = ((ImageView) findViewById(R.id.iv_title_bar_back));
@@ -128,5 +142,62 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode)
+        {
+            case 0:
+               name  = data.getStringExtra("name");
+                break;
+            case 1:
+                password = data.getStringExtra("name");
+                break;
+        }
+    }
+    private void register() {
+        if (!(name.equals("")||password.equals("")))
+        {
+            if (addUser(name,password)){
+                DialogInterface.OnClickListener ss = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent  = new Intent();
+                        intent.setClass(RegisterActivity.this, LoginUserActivity.class);
+                        startActivity(intent);
+                        RegisterActivity.this.onDestroy();
+                    }
+                };
+                new AlertDialog.Builder(RegisterActivity.this).setTitle("注册成功").setMessage("保存成功").setPositiveButton("确定",ss).show();
+            }else {
+                new AlertDialog.Builder(RegisterActivity.this).setTitle("注册失败").setMessage("保存失败").setPositiveButton("确定",null).show();
+
+            }
+        }else {
+            new AlertDialog.Builder(RegisterActivity.this).setTitle("失败").setMessage("用户名或密码为空").setPositiveButton("确定",null).show();
+
+        }
+    }
+
+    private Boolean addUser(String name,String password)
+    {
+        String str = "insert into tb_silian values(?,?)";
+        db = SQLiteDatabase.openOrCreateDatabase(RegisterActivity.this.getFilesDir().toString()+"/test.dbs",null);
+        LoginUserActivity loginuserActivity = new LoginUserActivity();
+        loginuserActivity.db = db;
+        try {
+            db.execSQL(str,new String[]{name,password});
+            return true;
+        } catch (SQLException e) {
+            loginuserActivity.createDb();
+        }
+        return false;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        db.close();
     }
 }

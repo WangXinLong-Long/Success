@@ -1,5 +1,6 @@
 package com.silianchuangye.sumao.success.fragments.myPlasticTrade.register;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -29,6 +30,7 @@ public class RegisterValueActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_value);
         tv_a= (TextView) findViewById(R.id.tv_a);
+
         ed_content_value= (EditText) findViewById(R.id.et_content_value);
         bt_save_register_value= (Button) findViewById(R.id.bt_save_register_value);
         Bundle bundle=getIntent().getExtras();
@@ -42,7 +44,10 @@ public class RegisterValueActivity extends AppCompatActivity {
         bt_save_register_value.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //保存按钮的点击事件
+                Intent intent = new Intent();
+                intent.putExtra("name",ed_content_value.getText().toString());
+                RegisterValueActivity.this.setResult(RESULT_OK,intent);
+                RegisterValueActivity.this.finish();
             }
         });
 

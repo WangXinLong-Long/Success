@@ -56,6 +56,12 @@ public class PagerFour extends BasePager {
         sela = new ExpandableListViewAdapter(context);
         expandableListView.setAdapter(sela);
         expandableListView.setGroupIndicator(null);
+//        默认列表展开
+        for(int i = 0; i < sela.getGroupCount(); i++){
+
+            expandableListView.expandGroup(i);
+
+        }
         expandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
