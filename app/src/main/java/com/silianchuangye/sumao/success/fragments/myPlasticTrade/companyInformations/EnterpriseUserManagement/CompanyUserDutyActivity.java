@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -24,6 +25,7 @@ public class CompanyUserDutyActivity extends AppCompatActivity {
     private RadioButton rbSelasMan;
     private RadioButton rbBusiness;
     private CheckBox cbFinance;
+    private RadioGroup rgDemo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,13 +33,7 @@ public class CompanyUserDutyActivity extends AppCompatActivity {
         title_Bar();
         rbSelasMan= (RadioButton) findViewById(R.id.rbRole_company_user_duty);
         rbBusiness= (RadioButton) findViewById(R.id.rbRoletwo_company_user_duty);
-        if (rbBusiness.isChecked()){
-            rbBusiness.setChecked(false);
-        }
-        if(rbBusiness.isChecked()){
-            rbSelasMan.setChecked(false);
-
-        }
+        rgDemo= (RadioGroup) findViewById(R.id.rg_duty_conpant_user);
 
 
     }

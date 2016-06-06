@@ -1,6 +1,7 @@
 package com.silianchuangye.sumao.success.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -10,6 +11,7 @@ import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.homepage.theprice.ChinaNorthInfo;
+import com.silianchuangye.sumao.success.fragments.homepage.theprice.ChinaNorth_MyPrice;
 
 import java.util.List;
 
@@ -40,7 +42,7 @@ public class ChinaNorthAdapter extends BaseAdapter{
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         if(convertView==null){
             convertView=View.inflate(ctx, R.layout.item_chiannorth,null);
@@ -56,6 +58,14 @@ public class ChinaNorthAdapter extends BaseAdapter{
         holder.tv_itemchinanorth_title.setText(list.get(position).title);
         holder.tv_itemchinanorth_name.setText(list.get(position).name);
         holder.tv_itemchinanorth_telnum.setText(list.get(position).telnum);
+        holder.btn_itemchinanorth_my.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(ctx, ChinaNorth_MyPrice.class);
+                intent.putExtra("name",list.get(position).title);
+                ctx.startActivity(intent);
+            }
+        });
         return convertView;
     }
     private class ViewHolder{

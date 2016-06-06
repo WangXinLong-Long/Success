@@ -27,12 +27,12 @@
         >
         <ImageView
             android:id="@+id/img_activity_cart_allselect"
-            android:layout_width="@dimen/x30"
-            android:layout_height="@dimen/x28"
+            android:layout_width="@dimen/x20"
+            android:layout_height="@dimen/x20"
             android:layout_centerVertical="true"
             android:scaleType="fitXY"
             android:layout_marginLeft="@dimen/x10"
-            android:src="@mipmap/ic_launcher"/>
+            android:src="@mipmap/cart_select_null"/>
         <TextView
             android:id="@+id/tv_activity_cart_all"
             style="@style/tv_dingdan"

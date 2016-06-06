@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/selley_bg"
+    tools:context="com.silianchuangye.sumao.success.fragments.homepage.goodInStock.LikeProduct">
+    <RelativeLayout
+        android:id="@+id/relative_myprice_top"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x50"
+        android:background="@color/selley_lv"
+        >
+        <ImageView
+            android:id="@+id/img_activity_like_product_back"
+            android:layout_width="@dimen/x20"
+            android:layout_height="@dimen/x20"
+            android:src="@mipmap/my_sumao_back"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/x10"/>
+        <TextView
+            style="@style/tv_dingdan"
+            android:text="相似产品"
+            android:textColor="#000"
+            android:layout_centerHorizontal="true"
+            android:textSize="16dp"
+            />
+    </RelativeLayout>
+    <ListView
+        android:layout_marginTop="@dimen/x5"
+        android:background="@color/selley_lv"
+        android:id="@+id/lv_activity_like_priduct"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></ListView>
+</LinearLayout>

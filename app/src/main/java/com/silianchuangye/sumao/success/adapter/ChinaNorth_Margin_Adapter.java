@@ -53,9 +53,9 @@ public class ChinaNorth_Margin_Adapter extends BaseAdapter {
         holder.BankName.setText(list.get(position).bank);
         holder.MarginMoney.setText(list.get(position).money);
         if(list.get(position).Flag){
-            holder.img.setVisibility(View.VISIBLE);
+            holder.img.setImageResource(R.mipmap.cart_select);
         }else{
-            holder.img.setVisibility(View.INVISIBLE);
+            holder.img.setImageResource(R.mipmap.cart_select_null);
         }
         return convertView;
     }
