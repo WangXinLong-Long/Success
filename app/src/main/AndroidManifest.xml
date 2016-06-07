@@ -390,7 +390,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".fragments.homepage.theprice.ChainNorth_MyPriceLv"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
         <activity
             android:name=".fragments.homepage.theprice.ChinaNorth_Margin"
             android:screenOrientation="portrait" />
