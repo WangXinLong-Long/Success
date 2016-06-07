@@ -55,6 +55,7 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
     private long exitTime = 0;
     private MyConnectionListener connectionListener = null;
     boolean flag = false;
+    int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +67,7 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
 //         初始化组件
         initView();
         init();
+
     }
     private void initView() {
         mLayoutInflater = LayoutInflater.from(this);
@@ -243,7 +245,9 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
         //Jpush推送
         JPushInterface.onResume(this);
         //注册广播
-        int id = getIntent().getIntExtra("cart", 0);
+Log.i("test","zou不走");
+
+        Log.i("test","zou不走"+"--->"+id);
         switch (id)
         {
             case 1:
@@ -258,8 +262,13 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
                 break;
 
         }
+        Log.i("test","zou不走?");
+    }
 
-
+    @Override
+    protected void onNewIntent(Intent intent) {
+         id = intent.getIntExtra("cart",0);
+        Log.i("test","zou不走"+"--->onNewIntent"+id);
     }
 
     @Override
