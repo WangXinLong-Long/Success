@@ -1,6 +1,9 @@
 package com.silianchuangye.sumao.success.fragments.myPlasticTrade.login;
 
+import android.app.AlertDialog;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,9 +13,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.silianchuangye.sumao.success.MainActivity;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.RegisterActivity;
+import com.silianchuangye.sumao.success.utils.GlobalVariable;
 
 public class LoginUserActivity extends AppCompatActivity {
     ImageView iv_title_bar_logo,
@@ -27,12 +33,14 @@ public class LoginUserActivity extends AppCompatActivity {
     private EditText et_pass_login;
     private Button bt_Login;
     private TextView tv_register,tv_findpass;
+    public static  SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_user);
         title_Bar();
+        db = SQLiteDatabase.openOrCreateDatabase(this.getFilesDir().toString()+"/test.dbs",null);
         et_account_login= (EditText) findViewById(R.id.et_account_login);
         et_pass_login= (EditText) findViewById(R.id.et_pass_login);
         bt_Login= (Button) findViewById(R.id.bt_login);
@@ -40,6 +48,7 @@ public class LoginUserActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //登录功能
+                login();
             }
         });
         tv_register= (TextView) findViewById(R.id.tv_register_login);
@@ -58,6 +67,9 @@ public class LoginUserActivity extends AppCompatActivity {
             }
         });
     }
+
+
+
     public void title_Bar(){
 
         iv_title_bar_back = ((ImageView) findViewById(R.id.iv_title_bar_back));
@@ -89,5 +101,48 @@ public class LoginUserActivity extends AppCompatActivity {
             }
         });
 
+    }
+    private void login() {
+        String name = et_account_login.getText().toString();
+        String password = et_pass_login.getText().toString();
+        if (name.equals("")||password.equals(""))
+        {
+            new AlertDialog.Builder(LoginUserActivity.this).setTitle("失败").setMessage("用户名或者密码为空").setPositiveButton("确定",null).show();
+        }else {
+            isUser(name,password);
+        }
+
+    }
+
+    private Boolean isUser(String name,String password) {
+        try {
+            String str = "select * from tb_silian where name=? and password=?";
+            Cursor cursor = db.rawQuery(str,new String[]{name,password});
+            if (cursor.getCount()<=0)
+            {
+                new AlertDialog.Builder(LoginUserActivity.this).setTitle("失败").setMessage("用户名或者密码错误").setPositiveButton("确定",null).show();
+            }else {
+                Toast.makeText(LoginUserActivity.this,"登陆成功",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent();
+                intent.setClass(LoginUserActivity.this, MainActivity.class);
+                intent.putExtra("cart",3);
+                startActivity(intent);
+                GlobalVariable.FLAG = true;
+                LoginUserActivity.this.finish();
+            }
+        } catch (Exception e) {
+            createDb();
+        }
+        return false;
+    }
+
+    public  void createDb() {
+        db.execSQL("create table tb_silian (name varchar(30) primary key,password varchar(30))");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        db.close();
     }
 }

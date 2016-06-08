@@ -53,11 +53,16 @@ public class ChainNorth_MyPriceLv extends AppCompatActivity implements View.OnCl
     }
 
     private void initDate() {
-        list.add("3月下旬交货=意向期货价+100元");
-        list.add("4月下旬交货=意向期货价+120元");
-        list.add("5月下旬交货=意向期货价+140元");
-        list.add("6月下旬交货=意向期货价+160元");
-        list.add("7月下旬交货=意向期货价+180元");
+        list.add("1月下旬交货=意向期货价+100元");
+        list.add("2月下旬交货=意向期货价+120元");
+        list.add("3月下旬交货=意向期货价+140元");
+        list.add("4月下旬交货=意向期货价+160元");
+        list.add("5月下旬交货=意向期货价+180元");
+        list.add("6月下旬交货=意向期货价+100元");
+        list.add("7月下旬交货=意向期货价+120元");
+        list.add("8月下旬交货=意向期货价+140元");
+        list.add("9月下旬交货=意向期货价+160元");
+        list.add("10月下旬交货=意向期货价+180元");
 
         for(int i=0;i<9;i++){
             list_sort.add("itemview"+i);
@@ -92,7 +97,6 @@ public class ChainNorth_MyPriceLv extends AppCompatActivity implements View.OnCl
         sort_adapter=new ArrayAdapter<String>(this,R.layout.item_chinanorth_mypricelv,R.id.tv_item_myprivatelv,list_sort);
         tv_MyPriceLv_heyue.setText(sort_adapter.getItem(0));
         lv_MyPriceLv_heyue.setAdapter(sort_adapter);
-
         tv_MyPriceLv_heyue.setOnClickListener(this);
         img_MyPriceLv_back.setOnClickListener(this);
         img_MyPriceLv_cart.setOnClickListener(this);

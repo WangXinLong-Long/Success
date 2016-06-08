@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
@@ -30,6 +31,8 @@ import com.silianchuangye.sumao.success.fragments.PagerFour;
 import com.silianchuangye.sumao.success.fragments.PagerOne;
 import com.silianchuangye.sumao.success.fragments.PagerThree;
 import com.silianchuangye.sumao.success.fragments.PagerTwo;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.LoginUserActivity;
+import com.silianchuangye.sumao.success.utils.GlobalVariable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +54,8 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
     // 退出时间
     private long exitTime = 0;
     private MyConnectionListener connectionListener = null;
+    boolean flag = false;
+    int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +67,7 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
 //         初始化组件
         initView();
         init();
+
     }
     private void initView() {
         mLayoutInflater = LayoutInflater.from(this);
@@ -77,7 +83,23 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
          * 设置默认选中第几个
          */
 //        mTabHost.setCurrentTab(1);
+        mTabHost.getTabWidget().getChildTabViewAt(3).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (GlobalVariable.FLAG){
+                    mTabHost.setCurrentTab(3);
+                }else {
+                    Intent intent = new Intent();
+                    intent.setClass(MainActivity.this, LoginUserActivity.class);
+                    startActivity(intent);
+
+                }
+
+            }
+        });
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
+
 
     private View getTabItemView(int i) {
         View view = mLayoutInflater.inflate(R.layout.tab_item_view,null);
@@ -223,10 +245,30 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
         //Jpush推送
         JPushInterface.onResume(this);
         //注册广播
-        int id = getIntent().getIntExtra("cart", 0);
-        if (id == 1 ) {
-            mTabHost.setCurrentTab(2);
+Log.i("test","zou不走");
+
+        Log.i("test","zou不走"+"--->"+id);
+        switch (id)
+        {
+            case 1:
+                mTabHost.setCurrentTab(2);
+                break;
+            case 3:
+                GlobalVariable.FLAG = true;
+                mTabHost.setCurrentTab(3);
+
+                break;
+            default:
+                break;
+
         }
+        Log.i("test","zou不走?");
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+         id = intent.getIntExtra("cart",0);
+        Log.i("test","zou不走"+"--->onNewIntent"+id);
     }
 
     @Override

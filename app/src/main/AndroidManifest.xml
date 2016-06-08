@@ -88,8 +88,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity
-            android:name=".activity.WelcomeActivity"
+        <activity android:name=".activity.WelcomeActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -99,14 +98,16 @@
         </activity>
         <activity
             android:name=".MainActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
-        <activity
-            android:name=".Activityguanjun"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".HeLinJian"
-            android:screenOrientation="portrait" />
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            >
+
+        </activity>
+        <activity android:name=".Activityguanjun"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".HeLinJian"
+            android:screenOrientation="portrait"/>
 
         <!-- 登陆 -->
         <activity
@@ -353,10 +354,9 @@
         <activity
             android:name=".fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.InvoiceInformation"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".fragments.myPlasticTrade.EnterpriseCapitalAccountManagement.SearchMoney"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
+        <activity android:name=".fragments.myPlasticTrade.EnterpriseCapitalAccountManagement.SearchMoney"
+            android:screenOrientation="portrait"/>
         <!--
  ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -412,7 +412,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".fragments.homepage.theprice.ChainNorth_MyPriceLv"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
         <activity
             android:name=".fragments.homepage.theprice.ChinaNorth_Margin"
             android:screenOrientation="portrait" />
