@@ -1,6 +1,4 @@
 package com.silianchuangye.sumao.success.fragments.homepage.theprice;
-
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -31,7 +29,6 @@ import com.silianchuangye.sumao.success.adapter.ChinaNorthAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
-
 /**
  * A simple {@link Fragment} subclass.
  */
