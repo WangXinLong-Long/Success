@@ -14,21 +14,14 @@
        android:background="#fff"
 
        >
-       <ImageView
-           android:layout_width="20dp"
-           android:layout_height="20dp"
-           android:layout_centerVertical="true"
-           android:layout_marginLeft="10dp"
-           android:id="@+id/ivBack_title"
-           android:src="@mipmap/my_sumao_back"
-           />
+
        <TextView
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:id="@+id/tv_title_name"
            android:text="分类"
            android:textSize="16sp"
-           android:textColor="#111"
+
            android:layout_centerInParent="true"
            />
    </RelativeLayout>

@@ -7,6 +7,24 @@
     <permission
         android:name="com.silianchuangye.sumao.success.permission.JPUSH_MESSAGE"
         android:protectionLevel="signature" />
+    <!-- 这个权限用于进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- 这个权限用于访问GPS定位 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!-- 获取运营商信息，用于支持提供运营商信息相关的接口 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <!-- 用于读取手机当前的状态 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!-- 写入扩展存储，向扩展卡写入数据，用于写入离线定位数据 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- 访问网络，网络定位需要上网 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- SD卡读取权限，用户写入离线定位数据 -->
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
     <!-- Required 一些系统要求的权限，如访问网络等 -->
     <uses-permission android:name="com.silianchuangye.sumao.success.permission.JPUSH_MESSAGE" />
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
@@ -70,8 +88,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity
-            android:name=".activity.WelcomeActivity"
+        <activity android:name=".activity.WelcomeActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -81,14 +98,16 @@
         </activity>
         <activity
             android:name=".MainActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
-        <activity
-            android:name=".Activityguanjun"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".HeLinJian"
-            android:screenOrientation="portrait" />
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            >
+
+        </activity>
+        <activity android:name=".Activityguanjun"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".HeLinJian"
+            android:screenOrientation="portrait"/>
 
         <!-- 登陆 -->
         <activity
@@ -141,6 +160,10 @@
         <meta-data
             android:name="EASEMOB_APPKEY"
             android:value="xiongmaowang1#ziguang" />
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="RBuN9HdDa8wBNS27rxMvguKR" />
+
         <!-- 设置环信应用的appkey -->
 
 
@@ -331,10 +354,9 @@
         <activity
             android:name=".fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.InvoiceInformation"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".fragments.myPlasticTrade.EnterpriseCapitalAccountManagement.SearchMoney"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
+        <activity android:name=".fragments.myPlasticTrade.EnterpriseCapitalAccountManagement.SearchMoney"
+            android:screenOrientation="portrait"/>
         <!--
  ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.

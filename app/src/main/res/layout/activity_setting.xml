@@ -105,7 +105,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/tv_version_setting"
             android:layout_centerVertical="true"
-            android:text="功能介绍"
+            android:text="当前版本"
             android:layout_marginLeft="@dimen/x10"
             android:textSize="16sp"
             />
