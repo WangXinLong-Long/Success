@@ -6,26 +6,20 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.RadioButton;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.ChinaNorth_Margin_Adapter;
+import com.silianchuangye.sumao.success.fragments.bean.ChinaNorth_Margin_info;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 
 //支付保证金界面
 public class ChinaNorth_Margin extends AppCompatActivity implements View.OnClickListener,AdapterView.OnItemClickListener{
@@ -98,7 +92,16 @@ private ImageView img_margin_back;
                 break;
             case R.id.btn_margin_zifu:
                 //弹出dialog
-                dialog.show();
+                boolean flag=false;
+                for(ChinaNorth_Margin_info info:list){
+                    if(info.Flag){
+                        flag=true;
+                    }
+                 }
+                if(flag)
+                    dialog.show();
+                else
+                    Toast.makeText(ChinaNorth_Margin.this,"请选择要支付的银行",Toast.LENGTH_SHORT).show();
                 break;
         }
     }
