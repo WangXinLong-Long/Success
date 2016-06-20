@@ -245,9 +245,9 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
         //Jpush推送
         JPushInterface.onResume(this);
         //注册广播
-Log.i("test","zou不走");
 
-        Log.i("test","zou不走"+"--->"+id);
+
+
         switch (id)
         {
             case 1:
@@ -262,13 +262,13 @@ Log.i("test","zou不走");
                 break;
 
         }
-        Log.i("test","zou不走?");
+
     }
 
     @Override
     protected void onNewIntent(Intent intent) {
          id = intent.getIntExtra("cart",0);
-        Log.i("test","zou不走"+"--->onNewIntent"+id);
+
     }
 
     @Override
