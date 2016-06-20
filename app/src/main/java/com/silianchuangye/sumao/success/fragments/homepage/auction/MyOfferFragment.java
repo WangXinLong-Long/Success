@@ -103,7 +103,7 @@ public class MyOfferFragment extends Fragment {
                 AbsListView.LayoutParams params;
 
                 if(gridView.getChildCount()/5==0){
-                    params=new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,180);
+                    params=new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,200);
                 }else{
                     params=new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,100);
                 }
