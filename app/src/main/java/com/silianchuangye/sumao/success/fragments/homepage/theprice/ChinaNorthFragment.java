@@ -60,12 +60,18 @@ public class ChinaNorthFragment extends Fragment implements View.OnClickListener
         chinanorth =inflater.inflate(R.layout.fragment_china_north, container, false);
         initDate();
         initView();
-        String str=share.getString("id","-1");
+        showPopView();
+        IsShowPop();
+        return chinanorth;
+    }
+    private void IsShowPop(){
+        String str=share.getString("id","1");
         if(str.equals("-1")) {
             backgroundAlpha(0.5f);
             showPopView();
+        }else{
+            popupWindow.dismiss();
         }
-        return chinanorth;
     }
 
     private void initDate() {
@@ -137,12 +143,15 @@ public class ChinaNorthFragment extends Fragment implements View.OnClickListener
 
                if(check2flag){
                    SharedPreferences.Editor editor=share.edit();
-                   editor.putString("id",""+i);
+                   editor.putString("id","0");
                    editor.commit();
-               } else{
+                   IsShowPop();
+               }
+               else{
                    SharedPreferences.Editor editor=share.edit();
                    editor.putString("id","-1");
                    editor.commit();
+                   IsShowPop();
                }
                 if(!check1flag){
                     Toast.makeText(getActivity(),"请选择是否已阅读",Toast.LENGTH_SHORT).show();

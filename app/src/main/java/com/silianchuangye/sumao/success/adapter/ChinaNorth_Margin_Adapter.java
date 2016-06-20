@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.silianchuangye.sumao.success.R;
-import com.silianchuangye.sumao.success.fragments.homepage.theprice.ChinaNorth_Margin_info;
+import com.silianchuangye.sumao.success.fragments.bean.ChinaNorth_Margin_info;
 
 import java.util.List;
 
