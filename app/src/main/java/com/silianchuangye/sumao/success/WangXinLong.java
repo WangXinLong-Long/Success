@@ -22,6 +22,7 @@ public class WangXinLong extends Activity {
 //        5月19 预售
 //        5月30
 //        6月1日 修改预售完毕
+//        准备hellochart
         showPayDialog();
 
     }
