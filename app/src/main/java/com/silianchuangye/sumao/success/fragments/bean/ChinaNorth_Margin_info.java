@@ -1,4 +1,4 @@
-package com.silianchuangye.sumao.success.fragments.homepage.theprice;
+package com.silianchuangye.sumao.success.fragments.bean;
 
 import android.widget.ImageView;
 

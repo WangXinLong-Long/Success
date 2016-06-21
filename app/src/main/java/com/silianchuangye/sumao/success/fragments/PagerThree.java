@@ -106,7 +106,15 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
                 all_Flag=!all_Flag;
                 break;
             case R.id.btn_activity_cart_ok:
-
+                boolean flag = false;
+                for(CartInfo info : list){
+                    if(info.Selsct_Flag)
+                        flag = true;
+                }
+                if(flag)
+                   Toast.makeText(getActivity(),"支付",Toast.LENGTH_SHORT).show();
+                else
+                    Toast.makeText(getActivity(),"请选择要购买的商品",Toast.LENGTH_SHORT).show();
                 break;
         }
     }
