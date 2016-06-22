@@ -256,10 +256,10 @@ public class PagerOne extends BasePager {
     }
     private void InitImgList() {
         // 加载图片数据
-        listDrawable.add(this.getResources().getDrawable(R.drawable.img1));
-        listDrawable.add(this.getResources().getDrawable(R.drawable.img2));
-        listDrawable.add(this.getResources().getDrawable(R.drawable.img3));
-        listDrawable.add(this.getResources().getDrawable(R.drawable.img4));
+        listDrawable.add(this.getResources().getDrawable(R.drawable.a));
+        listDrawable.add(this.getResources().getDrawable(R.drawable.b));
+        listDrawable.add(this.getResources().getDrawable(R.drawable.c));
+        listDrawable.add(this.getResources().getDrawable(R.drawable.zhaoyun));
        // listDrawable.add(this.getResources().getDrawable(R.drawable.img5));
 
     }
