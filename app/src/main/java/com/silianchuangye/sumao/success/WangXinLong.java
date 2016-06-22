@@ -25,6 +25,7 @@ public class WangXinLong extends Activity {
 //        准备hellochart
 //        改变图片11
 //        改变图片11
+//        改变图片11
 
         showPayDialog();
 
