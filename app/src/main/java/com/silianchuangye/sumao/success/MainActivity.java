@@ -88,6 +88,9 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
             public void onClick(View v) {
                 if (GlobalVariable.FLAG){
                     mTabHost.setCurrentTab(3);
+                    Bundle bundle=getIntent().getExtras();
+                    String name=bundle.getString("name");
+                    Log.d("name",""+name);
                 }else {
                     Intent intent = new Intent();
                     intent.setClass(MainActivity.this, LoginUserActivity.class);

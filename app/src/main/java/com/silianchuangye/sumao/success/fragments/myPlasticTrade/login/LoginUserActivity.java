@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,6 +20,11 @@ import com.silianchuangye.sumao.success.MainActivity;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.RegisterActivity;
 import com.silianchuangye.sumao.success.utils.GlobalVariable;
+
+import org.json.JSONObject;
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
 
 public class LoginUserActivity extends AppCompatActivity {
     ImageView iv_title_bar_logo,
@@ -34,6 +40,8 @@ public class LoginUserActivity extends AppCompatActivity {
     private Button bt_Login;
     private TextView tv_register,tv_findpass;
     public static  SQLiteDatabase db;
+    private String name;
+    private String password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,14 +111,59 @@ public class LoginUserActivity extends AppCompatActivity {
 
     }
     private void login() {
-        String name = et_account_login.getText().toString();
-        String password = et_pass_login.getText().toString();
-        if (name.equals("")||password.equals(""))
-        {
-            new AlertDialog.Builder(LoginUserActivity.this).setTitle("失败").setMessage("用户名或者密码为空").setPositiveButton("确定",null).show();
-        }else {
-            isUser(name,password);
-        }
+         name = et_account_login.getText().toString();
+         password = et_pass_login.getText().toString();
+//        if (name.equals("")||password.equals(""))
+//        {
+//            new AlertDialog.Builder(LoginUserActivity.this).setTitle("失败").setMessage("用户名或者密码为空").setPositiveButton("确定",null).show();
+//        }else {
+//            isUser(name,password);
+//        }
+        RequestParams rp=new RequestParams("http://192.168.32.126:7023/rest/model/atg/userprofiling/ProfileActor/login");
+        rp.addParameter("login",name);
+        rp.addParameter("password",password);
+        x.http().post(rp, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                if (result.contains("formError")){
+                    Toast.makeText(LoginUserActivity.this, "账号或密码错误请重新登录！", Toast.LENGTH_SHORT).show();
+                }else{
+//                    Log.d("object",result);
+                    try{
+                    JSONObject object=new JSONObject(result);
+                        String name=object.getString("U_name");
+//                        Log.d("name",""+name);
+                    }catch (Exception e){
+                        Log.d("exception","解析异常");
+                    }
+                    isUser(name,password);
+                    Intent intent = new Intent();
+                    intent.setClass(LoginUserActivity.this, MainActivity.class);
+                    intent.putExtra("cart",3);
+                    intent.putExtra("name",name);
+                    startActivity(intent);
+                    GlobalVariable.FLAG = true;
+                    LoginUserActivity.this.finish();
+
+                }
+
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
 
     }
 
@@ -123,12 +176,7 @@ public class LoginUserActivity extends AppCompatActivity {
                 new AlertDialog.Builder(LoginUserActivity.this).setTitle("失败").setMessage("用户名或者密码错误").setPositiveButton("确定",null).show();
             }else {
                 Toast.makeText(LoginUserActivity.this,"登陆成功",Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent();
-                intent.setClass(LoginUserActivity.this, MainActivity.class);
-                intent.putExtra("cart",3);
-                startActivity(intent);
-                GlobalVariable.FLAG = true;
-                LoginUserActivity.this.finish();
+
             }
         } catch (Exception e) {
             createDb();
