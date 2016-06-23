@@ -132,7 +132,8 @@ public class LoginUserActivity extends AppCompatActivity {
                     try{
                     JSONObject object=new JSONObject(result);
                         String name=object.getString("U_name");
-//                        Log.d("name",""+name);
+//                        Log.d("name",""+name);1233
+
                     }catch (Exception e){
                         Log.d("exception","解析异常");
                     }
