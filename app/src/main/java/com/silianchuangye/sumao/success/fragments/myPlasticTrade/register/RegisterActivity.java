@@ -166,7 +166,7 @@ public class RegisterActivity extends AppCompatActivity {
                         Intent intent  = new Intent();
                         intent.setClass(RegisterActivity.this, LoginUserActivity.class);
                         startActivity(intent);
-                        RegisterActivity.this.onDestroy();
+
                     }
                 };
                 new AlertDialog.Builder(RegisterActivity.this).setTitle("注册成功").setMessage("保存成功").setPositiveButton("确定",ss).show();

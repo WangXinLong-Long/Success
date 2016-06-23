@@ -23,6 +23,10 @@ public class WangXinLong extends Activity {
 //        5月30
 //        6月1日 修改预售完毕
 //        准备hellochart
+//        改变图片11
+//        改变图片11
+//        改变图片11
+
         showPayDialog();
 
     }
