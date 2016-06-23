@@ -443,6 +443,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".fragments.myPlasticTrade.login.LoginUserActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".fragments.myPlasticTrade.register.RegisterActivity"
