@@ -1,6 +1,5 @@
 package com.silianchuangye.sumao.success.fragments.homepage.theprice;
 
-import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,7 +13,6 @@ import android.widget.TextView;
 
 import com.silianchuangye.sumao.success.MainActivity;
 import com.silianchuangye.sumao.success.R;
-import com.silianchuangye.sumao.success.fragments.PagerThree;
 
 import java.util.ArrayList;
 import java.util.List;

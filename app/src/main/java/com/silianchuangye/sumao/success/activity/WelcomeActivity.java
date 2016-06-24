@@ -6,7 +6,6 @@ import android.os.Bundle;
 
 import com.silianchuangye.sumao.success.MainActivity;
 import com.silianchuangye.sumao.success.R;
-import com.silianchuangye.sumao.success.reciver.JpushMyReciver;
 
 import cn.jpush.android.api.JPushInterface;
 

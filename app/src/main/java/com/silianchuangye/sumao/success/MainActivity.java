@@ -56,6 +56,7 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
     private MyConnectionListener connectionListener = null;
     boolean flag = false;
     int id;
+    String name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,9 +89,10 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
             public void onClick(View v) {
                 if (GlobalVariable.FLAG){
                     mTabHost.setCurrentTab(3);
-                    Bundle bundle=getIntent().getExtras();
-                    String name=bundle.getString("name");
-                    Log.d("name",""+name);
+//                    Bundle bundle=getIntent().getExtras();
+//                    String name=bundle.getString("name");
+//                    Log.d("name",""+name);
+
                 }else {
                     Intent intent = new Intent();
                     intent.setClass(MainActivity.this, LoginUserActivity.class);
@@ -271,6 +273,9 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
     @Override
     protected void onNewIntent(Intent intent) {
          id = intent.getIntExtra("cart",0);
+        String ss = intent.getStringExtra("name");
+        Log.i("ss",""+ss);
+        name = ss;
 
     }
 
@@ -299,6 +304,12 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
                 break;
         }
 
+
     }
+    public String getName(){
+
+        return name;
+    }
+
 }
 
