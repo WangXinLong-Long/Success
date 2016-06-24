@@ -1,7 +1,9 @@
 package com.silianchuangye.sumao.success.fragments.myPlasticTrade.login;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
@@ -42,11 +44,16 @@ public class LoginUserActivity extends AppCompatActivity {
     public static  SQLiteDatabase db;
     private String name;
     private String password;
+    private String user_Name;
+    private SharedPreferences sp;
+    private SharedPreferences.Editor editor;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_user);
+
         title_Bar();
         db = SQLiteDatabase.openOrCreateDatabase(this.getFilesDir().toString()+"/test.dbs",null);
         et_account_login= (EditText) findViewById(R.id.et_account_login);
@@ -111,6 +118,8 @@ public class LoginUserActivity extends AppCompatActivity {
 
     }
     private void login() {
+        sp=getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+        editor=sp.edit();
          name = et_account_login.getText().toString();
          password = et_pass_login.getText().toString();
 //        if (name.equals("")||password.equals(""))
@@ -131,20 +140,59 @@ public class LoginUserActivity extends AppCompatActivity {
 //                    Log.d("object",result);
                     try{
                     JSONObject object=new JSONObject(result);
-                        String name=object.getString("U_name");
+                        user_Name=object.getString("U_name");
 //                        Log.d("name",""+name);1233
+                        editor.putString("name",user_Name);
+                        editor.commit();
+
+
 
                     }catch (Exception e){
                         Log.d("exception","解析异常");
                     }
-                    isUser(name,password);
+                    RequestParams unique_rp=new RequestParams("http://192.168.32.126:7023/rest/model/atg/rest/SessionConfirmationActor/getSessionConfirmationNumber");
+                    x.http().post(unique_rp, new CommonCallback<String>() {
+                        @Override
+                        public void onSuccess(String result) {
+                            try{
+                            JSONObject object=new JSONObject(result);
+                                String unique=object.getString("sessionConfirmationNumber");
+                                Log.d("unique","unique"+unique);
+                                /**
+                                 * 把唯一标识储存在SharedPreferences
+                                 */
+
+                                editor.putString("unique",unique);
+                                editor.commit();
+                            }catch (Exception e){
+                                Log.d("exception","解析唯一标识时错误！");
+                            }
+
+                        }
+
+                        @Override
+                        public void onError(Throwable ex, boolean isOnCallback) {
+
+                        }
+
+                        @Override
+                        public void onCancelled(CancelledException cex) {
+
+                        }
+
+                        @Override
+                        public void onFinished() {
+
+                        }
+                    });
+
                     Intent intent = new Intent();
                     intent.setClass(LoginUserActivity.this, MainActivity.class);
                     intent.putExtra("cart",3);
-                    intent.putExtra("name",name);
+//                    intent.putExtra("name",user_Name);
                     startActivity(intent);
                     GlobalVariable.FLAG = true;
-                    LoginUserActivity.this.finish();
+
 
                 }
 
