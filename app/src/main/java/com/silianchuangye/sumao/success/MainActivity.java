@@ -250,10 +250,9 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
         //Jpush推送
         JPushInterface.onResume(this);
         //注册广播
-
-
-
-        switch (id)
+        int num=getIntent().getIntExtra("cart",0);
+        Log.e("TAG","num-------"+num);
+        switch (num)
         {
             case 1:
                 mTabHost.setCurrentTab(2);
@@ -261,7 +260,6 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
             case 3:
                 GlobalVariable.FLAG = true;
                 mTabHost.setCurrentTab(3);
-
                 break;
             default:
                 break;
