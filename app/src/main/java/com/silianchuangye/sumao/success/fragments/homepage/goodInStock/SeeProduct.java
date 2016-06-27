@@ -26,7 +26,7 @@ public class SeeProduct extends Activity implements AdapterView.OnItemClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_like_product);
+        setContentView(R.layout.activity_see_product);
         initDate();
         initView();
     }

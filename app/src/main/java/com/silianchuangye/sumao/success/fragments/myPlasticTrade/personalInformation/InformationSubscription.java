@@ -55,21 +55,25 @@ public class InformationSubscription extends Activity implements View.OnClickLis
                 setImg(Img2);
                 break;
             case R.id.img_zixun_3:
+                setImg(Img3);
                 break;
             case R.id.img_zixun_4:
+                setImg(Img4);
                 break;
             case R.id.img_zixun_5:
+                setImg(Img5);
                 break;
             case R.id.img_zixun_6:
+                setImg(Img6);
                 break;
         }
     }
     private void setImg(ImageView img){
         if(flag){
-            img.setImageResource(R.mipmap.my_sumao_icon);
+            img.setImageResource(R.mipmap.zixun_select);
             flag=false;
         }else{
-            img.setImageResource(R.mipmap.ic_launcher);
+            img.setImageResource(R.mipmap.zixun_select_null);
             flag=true;
         }
     }

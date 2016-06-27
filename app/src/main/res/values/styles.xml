@@ -212,10 +212,11 @@
 
     <style name="Img_zixun">
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingTop">@dimen/x3</item>
+        <item name="android:paddingBottom">@dimen/x3</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_alignParentRight">true</item>
         <item name="android:layout_centerVertical">true</item>
-        <item name="android:layout_marginRight">@dimen/x10</item>
     </style>
     <style name="Dialog" parent="android:style/Theme.Dialog">
         <item name="android:background">#00000000</item>

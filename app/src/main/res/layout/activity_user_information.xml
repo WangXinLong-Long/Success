@@ -8,7 +8,7 @@
     <include
         android:id="@+id/title_user_information"
         layout="@layout/title_bar"
-        android:layout_height="@dimen/x36"
+        android:layout_height="@dimen/x43"
         android:layout_marginBottom="@dimen/x5"
         android:layout_width="match_parent"></include>
     <RelativeLayout
