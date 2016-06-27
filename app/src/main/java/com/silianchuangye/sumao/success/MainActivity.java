@@ -280,6 +280,8 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
                     intent.setClass(MainActivity.this, LoginUserActivity.class);
                     startActivity(intent);
                 }
+                GlobalVariable.FLAG = true;
+                mTabHost.setCurrentTab(2);
                 break;
             case 3:
                 GlobalVariable.FLAG = true;

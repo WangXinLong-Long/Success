@@ -152,19 +152,7 @@ public class LoginUserActivity extends AppCompatActivity {
                         Log.d("exception","解析异常");
                     }
                     isUser(name,password);
-                    //接收mainactivity传递过来的参数
-                    if(str==9){
-                        Intent intent = new Intent();
-                        intent.putExtra("cart",4);
-                        intent.setClass(LoginUserActivity.this, MainActivity.class);
-                        startActivity(intent);
-                    }else {
-                        Intent intent = new Intent();
-                        intent.setClass(LoginUserActivity.this, MainActivity.class);
-                        intent.putExtra("cart", 3);
-                        intent.putExtra("name", name);
-                        startActivity(intent);
-                    }
+
                     RequestParams unique_rp=new RequestParams("http://192.168.32.126:7023/rest/model/atg/rest/SessionConfirmationActor/getSessionConfirmationNumber");
                     x.http().post(unique_rp, new CommonCallback<String>() {
                         @Override
@@ -201,11 +189,19 @@ public class LoginUserActivity extends AppCompatActivity {
                         }
                     });
 
-                    Intent intent = new Intent();
-                    intent.setClass(LoginUserActivity.this, MainActivity.class);
-                    intent.putExtra("cart",3);
-//                    intent.putExtra("name",user_Name);
-                    startActivity(intent);
+                    //接收mainactivity传递过来的参数
+                    if(str==9){
+                        Intent intent = new Intent();
+                        intent.putExtra("cart",4);
+                        intent.setClass(LoginUserActivity.this, MainActivity.class);
+                        startActivity(intent);
+                    }else {
+                        Intent intent = new Intent();
+                        intent.setClass(LoginUserActivity.this, MainActivity.class);
+                        intent.putExtra("cart", 3);
+                        intent.putExtra("name", name);
+                        startActivity(intent);
+                    }
                     GlobalVariable.FLAG = true;
                     LoginUserActivity.this.finish();
 
