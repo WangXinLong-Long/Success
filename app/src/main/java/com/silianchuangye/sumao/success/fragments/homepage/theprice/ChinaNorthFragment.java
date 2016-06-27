@@ -68,7 +68,7 @@ public class ChinaNorthFragment extends Fragment implements View.OnClickListener
         String str=share.getString("id","1");
         if(str.equals("-1")) {
             backgroundAlpha(0.5f);
-            showPopView();
+//            showPopView();
         }else{
             popupWindow.dismiss();
         }

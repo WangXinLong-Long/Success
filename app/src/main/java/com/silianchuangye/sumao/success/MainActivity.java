@@ -103,9 +103,31 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
             }
         });
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        getChildLogin();
     }
+    //购物车按钮---判断是否登陆过，没登录跳的登陆界面
+    private void getChildLogin(){
+        mTabHost.getTabWidget().getChildTabViewAt(2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (GlobalVariable.FLAG){
+                    mTabHost.setCurrentTab(2);
+//                    Bundle bundle=getIntent().getExtras();
+//                    String name=bundle.getString("name");
+//                    Log.d("name",""+name);
 
+                }else {
+                    Intent intent = new Intent();
+                    intent.putExtra("cart1", 9);
+                    intent.setClass(MainActivity.this, LoginUserActivity.class);
+                    startActivity(intent);
 
+                }
+
+            }
+        });
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+    }
     private View getTabItemView(int i) {
         View view = mLayoutInflater.inflate(R.layout.tab_item_view,null);
         ImageView iv = ((ImageView) view.findViewById(R.id.iv_tab_itmem_view_picture));
@@ -251,16 +273,25 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
         JPushInterface.onResume(this);
         //注册广播
         int num=getIntent().getIntExtra("cart",0);
-        Log.e("TAG","num-------"+num);
         switch (num)
         {
             case 1:
-                mTabHost.setCurrentTab(2);
+                if (GlobalVariable.FLAG){
+                    mTabHost.setCurrentTab(2);
+                }else {
+                    Intent intent = new Intent();
+                    intent.putExtra("cart1", 9);
+                    intent.setClass(MainActivity.this, LoginUserActivity.class);
+                    startActivity(intent);
+                }
                 break;
             case 3:
                 GlobalVariable.FLAG = true;
                 mTabHost.setCurrentTab(3);
                 break;
+            case 4:
+                GlobalVariable.FLAG = true;
+                mTabHost.setCurrentTab(2);
             default:
                 break;
 
