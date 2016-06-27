@@ -151,7 +151,7 @@ public class LoginUserActivity extends AppCompatActivity {
                     }catch (Exception e){
                         Log.d("exception","解析异常");
                     }
-                    isUser(name,password);
+
 
                     RequestParams unique_rp=new RequestParams("http://192.168.32.126:7023/rest/model/atg/rest/SessionConfirmationActor/getSessionConfirmationNumber");
                     x.http().post(unique_rp, new CommonCallback<String>() {
@@ -227,30 +227,7 @@ public class LoginUserActivity extends AppCompatActivity {
 
     }
 
-    private Boolean isUser(String name,String password) {
-        try {
-            String str = "select * from tb_silian where name=? and password=?";
-            Cursor cursor = db.rawQuery(str,new String[]{name,password});
-            if (cursor.getCount()<=0)
-            {
-                new AlertDialog.Builder(LoginUserActivity.this).setTitle("失败").setMessage("用户名或者密码错误").setPositiveButton("确定",null).show();
-            }else {
-                Toast.makeText(LoginUserActivity.this,"登陆成功",Toast.LENGTH_SHORT).show();
 
-            }
-        } catch (Exception e) {
-            createDb();
-        }
-        return false;
-    }
 
-    public  void createDb() {
-        db.execSQL("create table tb_silian (name varchar(30) primary key,password varchar(30))");
-    }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        db.close();
-    }
 }
