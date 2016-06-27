@@ -56,7 +56,7 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
     private MyConnectionListener connectionListener = null;
     boolean flag = false;
     int id;
-    String name;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +80,7 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
             TabHost.TabSpec tabSpec = mTabHost.newTabSpec(mTextArray.get(i)).setIndicator(getTabItemView(i));
             mTabHost.addTab(tabSpec,mFragmentArray.get(i),null);
         }
+
         /**
          * 设置默认选中第几个
          */
@@ -89,15 +90,10 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
             public void onClick(View v) {
                 if (GlobalVariable.FLAG){
                     mTabHost.setCurrentTab(3);
-//                    Bundle bundle=getIntent().getExtras();
-//                    String name=bundle.getString("name");
-//                    Log.d("name",""+name);
-
                 }else {
                     Intent intent = new Intent();
                     intent.setClass(MainActivity.this, LoginUserActivity.class);
                     startActivity(intent);
-
                 }
 
             }
@@ -302,9 +298,8 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
     @Override
     protected void onNewIntent(Intent intent) {
          id = intent.getIntExtra("cart",0);
-        String ss = intent.getStringExtra("name");
-        Log.i("ss",""+ss);
-        name = ss;
+        Log.d("id",id+"------------>");
+
 
     }
 
@@ -335,10 +330,10 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
 
 
     }
-    public String getName(){
-
-        return name;
-    }
+//    public String getName(){
+//
+//        return name;
+//    }
 
 }
 

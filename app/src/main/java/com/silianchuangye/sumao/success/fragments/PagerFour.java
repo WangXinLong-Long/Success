@@ -2,6 +2,7 @@ package com.silianchuangye.sumao.success.fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.View;
 import android.widget.ExpandableListAdapter;
@@ -55,8 +56,12 @@ public class PagerFour extends BasePager {
         rl_title.setVisibility(View.GONE);
         view = View.inflate(mActivity,R.layout.fragment_four,null);
         fl_content.addView(view);
-        String name = ((MainActivity)getActivity()).getName();
-        Log.d("aaaaaaa",""+name);
+//        String name = ((MainActivity)getActivity()).getName();
+//        Log.d("aaaaaaa",""+name);
+//
+        SharedPreferences sp=getActivity().getSharedPreferences("sumao",0);
+        String name=sp.getString("name","默认值");
+        Log.d("用户名称",name);
         name_User= (TextView) view.findViewById(R.id.my_sumao_tv_name);
         name_User.setText(name);
         context =mActivity;

@@ -1,17 +1,27 @@
 package com.silianchuangye.sumao.success.fragments.myPlasticTrade.setting;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.silianchuangye.sumao.success.HX.ui.LoginActivity;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.LoginUserActivity;
+
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
 
 public class SettingActivity extends AppCompatActivity {
     ImageView iv_title_bar_logo,
@@ -61,9 +71,64 @@ public class SettingActivity extends AppCompatActivity {
         btEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                final AlertDialog.Builder alert=new AlertDialog.Builder(SettingActivity.this);
+                alert.setMessage("你确定退出当前登录吗？");
+                alert.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                alert.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        new Thread(){
+                            @Override
+                            public void run() {
+                                RequestParams  rp=new RequestParams("http://192.168.32.126:7023/rest/model/atg/userprofiling/ProfileActor/logout");
+                                SharedPreferences sp=getSharedPreferences("sumao",0);
+                                String unique=sp.getString("unique","默认值");
+                                rp.addParameter("_dynSessConf",unique);
+                                Log.d("退出时的唯一标识",unique);
+                                x.http().post(rp, new Callback.CommonCallback<String>() {
+                                    @Override
+                                    public void onSuccess(String result) {
+                                        if (result.contains("messageCode")){
+
+                                            Toast.makeText(SettingActivity.this, "用户必须登录才能访问资源", Toast.LENGTH_SHORT).show();
+                                        }else{
+                                            Intent intent=new Intent(SettingActivity.this,LoginUserActivity.class);
+                                            startActivity(intent);
+                                            SettingActivity.this.finish();
+
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onError(Throwable ex, boolean isOnCallback) {
+
+                                    }
+
+                                    @Override
+                                    public void onCancelled(CancelledException cex) {
+
+                                    }
+
+                                    @Override
+                                    public void onFinished() {
+
+                                    }
+                                });
+                            }
+                        }.start();
+
+                    }
+                });
+                alert.create().show();
 
             }
         });
+
     }
     public void title_Bar(){
 
