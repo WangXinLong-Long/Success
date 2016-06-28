@@ -55,6 +55,7 @@ public class FirmInfoPictureActivity extends AppCompatActivity {
                 Popupwindow();
             }
         });
+
     }
     //设置背景透明
     public void backgroundAlpha(float bgAlpha)
@@ -75,12 +76,14 @@ public class FirmInfoPictureActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 getImageFromCamera();
+                popupWindow.dismiss();
             }
         });
         textphoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getImageFromAlbum();
+                popupWindow.dismiss();
             }
         });
         textCancel.setOnClickListener(new View.OnClickListener() {
