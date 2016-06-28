@@ -142,8 +142,8 @@ public class LoginUserActivity extends AppCompatActivity {
                     try{
                     JSONObject object=new JSONObject(result);
                         String name=object.getString("U_name");
-//                        Log.d("name",""+name);1233
-                        editor.putString("name",user_Name);
+                        Log.d("name",""+name);
+                        editor.putString("name",name);
                         editor.commit();
 
 
