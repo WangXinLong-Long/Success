@@ -13,7 +13,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/x50"
+        android:layout_height="@dimen/title_height"
         android:id="@+id/orderPrice_layout_top"
         android:background="@color/zixun_topbg"
         >
@@ -32,7 +32,7 @@
             android:textColor="#fff"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/y8"
-            android:textSize="20sp"
+            android:textSize="18sp"
             />
         <ImageView
             android:id="@+id/ivSearch_orderPrice_layout_top"

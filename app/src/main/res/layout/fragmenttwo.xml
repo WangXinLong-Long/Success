@@ -9,7 +9,7 @@
 
    <RelativeLayout
        android:layout_width="match_parent"
-       android:layout_height="50dp"
+       android:layout_height="@dimen/title_height"
        android:id="@+id/layoutTop_title"
        android:background="#fff"
 
@@ -20,7 +20,7 @@
            android:layout_height="wrap_content"
            android:id="@+id/tv_title_name"
            android:text="分类"
-           android:textSize="16sp"
+           android:textSize="18sp"
 
            android:layout_centerInParent="true"
            />

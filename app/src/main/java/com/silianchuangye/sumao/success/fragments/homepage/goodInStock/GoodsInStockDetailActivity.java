@@ -66,7 +66,7 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
                 startActivity(intent);
                 break;
             case R.id.pre_sale_sale_detail_similar_liulan:
-                Toast.makeText(this,"相似产品",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this,"浏览记录",Toast.LENGTH_SHORT).show();
                 intent.setClass(GoodsInStockDetailActivity.this, SeeProduct.class);
                 startActivity(intent);
                 break;

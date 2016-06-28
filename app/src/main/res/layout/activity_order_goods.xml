@@ -11,7 +11,7 @@
     tools:context=".fragments.myPlasticTrade.OrderManagement.goodsInStock.OrderGoodsActivity">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/y35"
+        android:layout_height="@dimen/title_height"
         android:id="@+id/order_layout_top"
         android:background="#28ABE3"
         >
@@ -30,7 +30,7 @@
             android:textColor="#fff"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/y8"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:id="@+id/tv_title_name_order"
             />
         <ImageView

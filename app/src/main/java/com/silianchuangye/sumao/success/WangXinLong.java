@@ -26,6 +26,7 @@ public class WangXinLong extends Activity {
 //        改变图片11
 //        改变图片11
 //        改变图片11
+//        Android6.0权限问题
 
         showPayDialog();
 

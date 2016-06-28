@@ -9,29 +9,28 @@
     <RelativeLayout
         android:id="@+id/relative_chinanorth_price_top"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/x50"
+        android:layout_height="@dimen/title_height"
         android:background="@drawable/chinanorth">
         <ImageView
             android:id="@+id/img_chinanorth_price_back"
             android:layout_width="@dimen/x20"
-            android:layout_height="@dimen/x25"
+            android:layout_height="@dimen/x20"
             android:src="@mipmap/back"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/x10"/>
         <TextView
             style="@style/tv_dingdan"
-
             android:text="点价"
             android:textColor="@color/selley_lv"
             android:layout_centerHorizontal="true"
-            android:textSize="@dimen/x18"
+            android:textSize="18sp"
             />
         <ImageView
             android:id="@+id/img_chinanorch_price"
             android:layout_width="@dimen/x20"
             android:layout_height="@dimen/x20"
             android:src="@mipmap/dianjia_dingwei"
-            android:layout_marginTop= "@dimen/x10"
+            android:layout_marginTop= "@dimen/x7"
             android:layout_marginRight="@dimen/x10"
             android:layout_alignParentRight="true"/>
         <TextView
