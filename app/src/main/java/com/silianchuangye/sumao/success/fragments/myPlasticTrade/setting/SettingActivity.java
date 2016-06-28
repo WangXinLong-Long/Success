@@ -1,5 +1,6 @@
 package com.silianchuangye.sumao.success.fragments.myPlasticTrade.setting;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -23,6 +24,8 @@ import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
+import java.io.File;
+
 public class SettingActivity extends AppCompatActivity {
     ImageView iv_title_bar_logo,
             iv_title_bar_back,
@@ -37,6 +40,8 @@ public class SettingActivity extends AppCompatActivity {
     private RelativeLayout layoutintroduction;
     private TextView tvVersion;
     private Button btEdit;
+    public final static String DATA_URL = "/data/data/";
+    public final static String SHARED_MAIN_XML = "sumao.xml";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +102,19 @@ public class SettingActivity extends AppCompatActivity {
 
                                             Toast.makeText(SettingActivity.this, "用户必须登录才能访问资源", Toast.LENGTH_SHORT).show();
                                         }else{
+                                            SharedPreferences sp=getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+                                            SharedPreferences.Editor editor=sp.edit();
+                                            editor.remove("name");
+                                      //      editor.clear();
+                                            editor.commit();
+                                            Toast.makeText(SettingActivity.this, "用户名称已删除", Toast.LENGTH_SHORT).show();
+//                                            File file = new File(DATA_URL + getPackageName().toString()
+//                                                    + "/shared_prefs",SHARED_MAIN_XML);
+//                                            if (file.exists()) {
+//                                                file.delete();
+//                                            }
+//                                            Toast.makeText(SettingActivity.this, "删除文件成功", Toast.LENGTH_SHORT).show();
+
                                             Intent intent=new Intent(SettingActivity.this,LoginUserActivity.class);
                                             startActivity(intent);
                                             SettingActivity.this.finish();

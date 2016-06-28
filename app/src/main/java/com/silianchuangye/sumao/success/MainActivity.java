@@ -117,6 +117,7 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
                     intent.putExtra("cart1", 9);
                     intent.setClass(MainActivity.this, LoginUserActivity.class);
                     startActivity(intent);
+                    MainActivity.this.finish();
 
                 }
 
@@ -279,6 +280,7 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
                     intent.putExtra("cart1", 9);
                     intent.setClass(MainActivity.this, LoginUserActivity.class);
                     startActivity(intent);
+                    MainActivity.this.finish();
                 }
                 GlobalVariable.FLAG = true;
                 mTabHost.setCurrentTab(2);
