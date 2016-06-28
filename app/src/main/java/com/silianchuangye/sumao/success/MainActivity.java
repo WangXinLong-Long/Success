@@ -57,6 +57,7 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
     boolean flag = false;
     int id;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +80,7 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
             TabHost.TabSpec tabSpec = mTabHost.newTabSpec(mTextArray.get(i)).setIndicator(getTabItemView(i));
             mTabHost.addTab(tabSpec,mFragmentArray.get(i),null);
         }
+
         /**
          * 设置默认选中第几个
          */
@@ -92,6 +94,29 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
                     Intent intent = new Intent();
                     intent.setClass(MainActivity.this, LoginUserActivity.class);
                     startActivity(intent);
+                }
+
+            }
+        });
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        getChildLogin();
+    }
+    //购物车按钮---判断是否登陆过，没登录跳的登陆界面
+    private void getChildLogin(){
+        mTabHost.getTabWidget().getChildTabViewAt(2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (GlobalVariable.FLAG){
+                    mTabHost.setCurrentTab(2);
+//                    Bundle bundle=getIntent().getExtras();
+//                    String name=bundle.getString("name");
+//                    Log.d("name",""+name);
+
+                }else {
+                    Intent intent = new Intent();
+                    intent.putExtra("cart1", 9);
+                    intent.setClass(MainActivity.this, LoginUserActivity.class);
+                    startActivity(intent);
 
                 }
 
@@ -99,8 +124,6 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
         });
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
-
-
     private View getTabItemView(int i) {
         View view = mLayoutInflater.inflate(R.layout.tab_item_view,null);
         ImageView iv = ((ImageView) view.findViewById(R.id.iv_tab_itmem_view_picture));
@@ -245,19 +268,28 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
         //Jpush推送
         JPushInterface.onResume(this);
         //注册广播
-
-
-
-        switch (id)
+        int num=getIntent().getIntExtra("cart",0);
+        switch (num)
         {
             case 1:
+                if (GlobalVariable.FLAG){
+                    mTabHost.setCurrentTab(2);
+                }else {
+                    Intent intent = new Intent();
+                    intent.putExtra("cart1", 9);
+                    intent.setClass(MainActivity.this, LoginUserActivity.class);
+                    startActivity(intent);
+                }
+                GlobalVariable.FLAG = true;
                 mTabHost.setCurrentTab(2);
                 break;
             case 3:
                 GlobalVariable.FLAG = true;
                 mTabHost.setCurrentTab(3);
-
                 break;
+            case 4:
+                GlobalVariable.FLAG = true;
+                mTabHost.setCurrentTab(2);
             default:
                 break;
 
@@ -268,6 +300,8 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
     @Override
     protected void onNewIntent(Intent intent) {
          id = intent.getIntExtra("cart",0);
+        Log.d("id",id+"------------>");
+
 
     }
 
@@ -296,6 +330,12 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
                 break;
         }
 
+
     }
+//    public String getName(){
+//
+//        return name;
+//    }
+
 }
 

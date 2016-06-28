@@ -13,12 +13,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.MainActivity;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.custom.CustomListView;
-import com.silianchuangye.sumao.success.fragments.PagerThree;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -61,8 +59,8 @@ public class ChainNorth_MyPriceLv extends AppCompatActivity implements View.OnCl
         list.add("6月下旬交货=意向期货价+100元");
         list.add("7月下旬交货=意向期货价+120元");
         list.add("8月下旬交货=意向期货价+140元");
-        list.add("9月下旬交货=意向期货价+160元");
         list.add("10月下旬交货=意向期货价+180元");
+        list.add("9月下旬交货=意向期货价+160元");
 
         for(int i=0;i<9;i++){
             list_sort.add("itemview"+i);

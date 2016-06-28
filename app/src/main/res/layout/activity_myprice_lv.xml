@@ -56,7 +56,7 @@
                     <RelativeLayout
                         android:id="@+id/relative_mypricelv_top"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/x40"
+                        android:layout_height="@dimen/title_height"
                         android:background="@color/selley_lv"
                         >
                         <ImageView
@@ -71,7 +71,7 @@
                             android:text="我的点价"
                             android:textColor="#000"
                             android:layout_centerHorizontal="true"
-                            android:textSize="16dp"
+                            android:textSize="18sp"
                             />
                         <ImageView
                             android:id="@+id/img_mypricelv_cart"

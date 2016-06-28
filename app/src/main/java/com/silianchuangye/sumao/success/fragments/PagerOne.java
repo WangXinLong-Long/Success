@@ -259,7 +259,7 @@ public class PagerOne extends BasePager {
         listDrawable.add(this.getResources().getDrawable(R.drawable.a));
         listDrawable.add(this.getResources().getDrawable(R.drawable.b));
         listDrawable.add(this.getResources().getDrawable(R.drawable.c));
-        listDrawable.add(this.getResources().getDrawable(R.drawable.zhaoyun));
+        listDrawable.add(this.getResources().getDrawable(R.drawable.d));
        // listDrawable.add(this.getResources().getDrawable(R.drawable.img5));
 
     }

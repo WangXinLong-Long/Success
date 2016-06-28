@@ -1,7 +1,6 @@
 package com.silianchuangye.sumao.success.fragments.myPlasticTrade.register;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.SQLException;
@@ -190,7 +189,7 @@ public class RegisterActivity extends AppCompatActivity {
             db.execSQL(str,new String[]{name,password});
             return true;
         } catch (SQLException e) {
-            loginuserActivity.createDb();
+           // loginuserActivity.createDb();
         }
         return false;
     }

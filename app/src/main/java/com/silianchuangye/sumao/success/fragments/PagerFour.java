@@ -2,11 +2,15 @@ package com.silianchuangye.sumao.success.fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.View;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.silianchuangye.sumao.success.MainActivity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.InvoiceInformation;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.ReceiptAddress;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.EnterpriseCapitalAccountManagement.FundInfoActivity;
@@ -39,6 +43,7 @@ public class PagerFour extends BasePager {
             my_sumao_has_been_cancelled,
             my_sumao_have_to_return;
     private ImageView my_sumao_ib_setting;
+    private TextView name_User;
     View view;
     @Override
     public void myClickSearch() {
@@ -47,10 +52,18 @@ public class PagerFour extends BasePager {
 
     @Override
     public void initDate() {
+
         rl_title.setVisibility(View.GONE);
         view = View.inflate(mActivity,R.layout.fragment_four,null);
         fl_content.addView(view);
-
+//        String name = ((MainActivity)getActivity()).getName();
+//        Log.d("aaaaaaa",""+name);
+//
+        SharedPreferences sp=getActivity().getSharedPreferences("sumao",0);
+        String name=sp.getString("name","默认值");
+        Log.d("用户名称",name);
+        name_User= (TextView) view.findViewById(R.id.my_sumao_tv_name);
+        name_User.setText(name);
         context =mActivity;
         expandableListView = (CustomExpandableListView) view.findViewById(R.id.expandable_listView);
         sela = new ExpandableListViewAdapter(context);

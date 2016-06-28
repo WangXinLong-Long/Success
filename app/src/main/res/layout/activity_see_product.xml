@@ -21,7 +21,7 @@
             android:layout_marginLeft="@dimen/x10"/>
         <TextView
             style="@style/tv_dingdan"
-            android:text="相似产品"
+            android:text="浏览记录"
             android:textColor="#000"
             android:layout_centerHorizontal="true"
             android:textSize="18sp"

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="@dimen/title_height"
     android:background="@color/white">
     <ImageView
         android:id="@+id/title_bar_white_back"
@@ -19,7 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="预售"
-        android:textSize="@dimen/x20"
+        android:textSize="18sp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         />

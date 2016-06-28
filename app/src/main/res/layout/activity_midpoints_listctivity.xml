@@ -13,7 +13,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/x50"
+        android:layout_height="@dimen/title_height"
         android:id="@+id/orderPrice_layout_top"
         android:background="@color/zixun_topbg"
         >
@@ -32,16 +32,16 @@
             android:textColor="#fff"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/y8"
-            android:textSize="20sp"
+            android:textSize="18sp"
             />
         <ImageView
             android:id="@+id/ivSearch_orderPrice_layout_top"
-            android:layout_width="@dimen/x20"
-            android:layout_height="@dimen/x20"
+            android:layout_width="@dimen/x18"
+            android:layout_height="@dimen/x18"
             android:src="@mipmap/dianjia_dingwei"
             android:layout_marginBottom="@dimen/x3"
             android:layout_marginTop="@dimen/x7"
-            android:layout_marginRight="@dimen/x10"
+            android:layout_marginRight="@dimen/x18"
             android:layout_alignParentRight="true"/>
         <TextView
             android:id="@+id/ivSearch_orderPrice_layout_top_dingwei"
@@ -51,7 +51,9 @@
             android:layout_alignParentRight="true"
             android:textColor="@color/selley_lv"
             android:layout_alignParentBottom="true"
-            android:layout_marginRight="@dimen/x10"/>
+            android:layout_marginRight="@dimen/x10"
+            android:layout_marginBottom="@dimen/x2"
+            />
     </RelativeLayout>
     <android.support.design.widget.TabLayout
         android:layout_width="match_parent"

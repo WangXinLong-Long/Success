@@ -7,6 +7,8 @@ import com.easemob.chat.EMChat;
 import com.silianchuangye.sumao.success.HX.DemoHelper;
 import com.silianchuangye.sumao.success.utils.HXUtils.HelpDeskPreferenceUtils;
 
+import org.xutils.x;
+
 import cn.jpush.android.api.JPushInterface;
 
 /**
@@ -29,6 +31,8 @@ public class MyApp extends Application {
         //初始化Jpush
         JPushInterface.setDebugMode(true);
         JPushInterface.init(applicationContext);
+        x.Ext.init(this);
+        x.Ext.setDebug(true);
     }
 
     public static  MyApp getInstance(){return  instance;};

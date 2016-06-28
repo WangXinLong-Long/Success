@@ -15,7 +15,7 @@
     <RelativeLayout
         android:background="#fff"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/y30"
+        android:layout_height="@dimen/title_height"
         android:id="@+id/layoutTop_auction"
         >
         <ImageView
