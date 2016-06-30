@@ -61,7 +61,7 @@ public class FirmInfoPictureActivity extends AppCompatActivity {
     private static final int REQUEST_PERMISSION_CAMERA_CODE = 1;
     private static final int REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE_CODE = 3;
     private File file;
-    private Bitmap bitmap;
+    private Bitmap bitmapCamera;
     private Intent intent;
     private String path = "";
     private static final int TAKE_PICTURE = 0x000000;
@@ -163,12 +163,6 @@ public class FirmInfoPictureActivity extends AppCompatActivity {
         useCamera();
     }
 
-    /**
-     * 跳转返回
-     * @param requestCode
-     * @param resultCode
-     * @param data
-     */
     @PermissionDenied(REQUEST_PERMISSION_CAMERA_CODE)
     public void requestCameeraFailed(){
         Toast.makeText(this,"请授权允许使用相机",Toast.LENGTH_SHORT).show();
@@ -211,8 +205,8 @@ public class FirmInfoPictureActivity extends AppCompatActivity {
             MPermissions.requestPermissions(FirmInfoPictureActivity.this,REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE_CODE,Manifest.permission.WRITE_EXTERNAL_STORAGE);
             File newFile = insertFileToSd(file);
             LogUtils.log("test------------->"+newFile.toString());
-            bitmap = BitmapFactory.decodeFile(newFile.toString());
-            ivPictrue.setImageBitmap(bitmap);
+            bitmapCamera = BitmapFactory.decodeFile(newFile.toString());
+            ivPictrue.setImageBitmap(bitmapCamera);
         }
     }
     public void createData(Intent data)
@@ -238,10 +232,10 @@ public class FirmInfoPictureActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         Bundle bundle  = data.getExtras();
-        bitmap = (Bitmap)bundle.get("data");
+        bitmapCamera = (Bitmap)bundle.get("data");
         try {
             BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+            bitmapCamera.compress(Bitmap.CompressFormat.JPEG, 100, bos);
             bos.flush();
             bos.close();
         } catch (IOException e) {
