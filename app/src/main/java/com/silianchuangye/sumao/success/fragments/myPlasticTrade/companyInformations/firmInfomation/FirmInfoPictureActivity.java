@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.support.v7.widget.ActionBarOverlayLayout;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -46,8 +47,9 @@ import java.util.Date;
 public class FirmInfoPictureActivity extends AppCompatActivity {
     private ImageView ivPictrue;
     private RelativeLayout layout;
+    private Bitmap bitmap;
     private byte[] mcontent;
-    private boolean isLogin=false;
+    private boolean isLogin = false;
     ImageView iv_title_bar_logo,
             iv_title_bar_back,
             iv_title_bar_service,
@@ -69,8 +71,8 @@ public class FirmInfoPictureActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_firm_info_picture);
         title_Bar();
-        layout= (RelativeLayout) findViewById(R.id.layout_a);
-        ivPictrue= (ImageView) findViewById(R.id.iv_firm_info_pictrue);
+        layout = (RelativeLayout) findViewById(R.id.layout_a);
+        ivPictrue = (ImageView) findViewById(R.id.iv_firm_info_pictrue);
         ivPictrue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,20 +83,20 @@ public class FirmInfoPictureActivity extends AppCompatActivity {
 
     }
     //设置背景透明
-    public void backgroundAlpha(float bgAlpha)
-    {
+    public void backgroundAlpha(float bgAlpha) {
         WindowManager.LayoutParams lp = getWindow().getAttributes();
         lp.alpha = bgAlpha; //0.0-1.0
         getWindow().setAttributes(lp);
     }
-    public void Popupwindow(){
-        View view= LayoutInflater.from(getApplicationContext()).inflate(R.layout.item_firm_info_popupwindow,null);
-        final PopupWindow popupWindow=new PopupWindow(findViewById(R.id.LayoutPictrue), ActionBarOverlayLayout.LayoutParams.MATCH_PARENT, ActionBarOverlayLayout.LayoutParams.WRAP_CONTENT);
+
+    public void Popupwindow() {
+        View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.item_firm_info_popupwindow, null);
+        final PopupWindow popupWindow = new PopupWindow(findViewById(R.id.LayoutPictrue), ActionBarOverlayLayout.LayoutParams.MATCH_PARENT, ActionBarOverlayLayout.LayoutParams.WRAP_CONTENT);
 
         popupWindow.setContentView(view);
-        TextView texthotograph= (TextView) view.findViewById(R.id.tvphotograph);
-        TextView textphoto= (TextView) view.findViewById(R.id.tvPhoto);
-        TextView textCancel= (TextView) view.findViewById(R.id.tvCancel);
+        TextView texthotograph = (TextView) view.findViewById(R.id.tvphotograph);
+        TextView textphoto = (TextView) view.findViewById(R.id.tvPhoto);
+        TextView textCancel = (TextView) view.findViewById(R.id.tvCancel);
         texthotograph.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -120,7 +122,7 @@ public class FirmInfoPictureActivity extends AppCompatActivity {
         popupWindow.setOutsideTouchable(true);
         popupWindow.setFocusable(true);
 
-        popupWindow.showAtLocation(ivPictrue, Gravity.BOTTOM,0,0);
+        popupWindow.showAtLocation(ivPictrue, Gravity.BOTTOM, 0, 0);
 
         popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
@@ -133,6 +135,10 @@ public class FirmInfoPictureActivity extends AppCompatActivity {
 
 
     }
+
+    /**
+     * 调用系统相册
+     */
     protected void getImageFromAlbum() {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");//相片类型
@@ -157,6 +163,12 @@ public class FirmInfoPictureActivity extends AppCompatActivity {
         useCamera();
     }
 
+    /**
+     * 跳转返回
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @PermissionDenied(REQUEST_PERMISSION_CAMERA_CODE)
     public void requestCameeraFailed(){
         Toast.makeText(this,"请授权允许使用相机",Toast.LENGTH_SHORT).show();
@@ -174,18 +186,24 @@ public class FirmInfoPictureActivity extends AppCompatActivity {
     }
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        ContentResolver resolver =this.getContentResolver();
+        ContentResolver resolver = this.getContentResolver();
+
         if (requestCode == 0) {
             Uri uri = data.getData();
             try {
-                mcontent = readStream(resolver.openInputStream(Uri.parse(uri.toString())));
+                mcontent = readStream(resolver.openInputStream(Uri.parse(getUrl(data))));
             } catch (Exception e) {
                 e.printStackTrace();
             }
             //将字节数组转换为ImageView可调用的Bitmap对象
             bitmap = getPicFromBytes(mcontent, null);
-            ////把得到的图片绑定在控件上显示
-            ivPictrue.setImageBitmap(bitmap);
+            if (getUrl(data) != null && !getUrl(data).equals("")) {
+                ivPictrue.setImageBitmap(bitmap);
+                Log.d("正确的存储路径", getUrl(data));
+            } else {
+                ////把得到的图片绑定在控件上显示
+                Log.d("错误的存储路径", getUrl(data));
+            }
 
 
         } else if (requestCode == 1) {
@@ -285,7 +303,7 @@ public class FirmInfoPictureActivity extends AppCompatActivity {
     public static Bitmap getPicFromBytes(byte[] bytes, BitmapFactory.Options opts) {
         if (bytes != null)
             if (opts != null)
-                return BitmapFactory.decodeByteArray(bytes, 0, bytes.length,opts);
+                return BitmapFactory.decodeByteArray(bytes, 0, bytes.length, opts);
             else
                 return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
         return null;
@@ -324,9 +342,15 @@ public class FirmInfoPictureActivity extends AppCompatActivity {
         iv_title_bar_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               FirmInfoPictureActivity.this.finish();
+                FirmInfoPictureActivity.this.finish();
             }
         });
+    }
+
+    public String getUrl(Intent data) {
+        Uri uri = data.getData();
+        Log.d("路径",uri.toString());
+        return uri.toString();
     }
 
 

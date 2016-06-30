@@ -204,9 +204,7 @@ public class LoginUserActivity extends AppCompatActivity {
                     }
                     GlobalVariable.FLAG = true;
                     LoginUserActivity.this.finish();
-
                 }
-
             }
 
             @Override

@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_height"
         android:id="@+id/layoutTop_vessel_one"
+        android:background="#fff"
         >
         <ImageView
             android:layout_width="@dimen/x20"
@@ -39,18 +40,59 @@
             android:src="@mipmap/gouwuche"
             />
     </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x1"
+        android:background="#EEEEF3"
+        android:layout_below="@id/layoutTop_vessel_one"
+        android:id="@+id/Line_vessel_one"
+        android:orientation="horizontal"
+        ></LinearLayout>
     <android.support.design.widget.TabLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/x40"
         app:tabSelectedTextColor="#28ABE3"
         app:tabIndicatorColor="#28ABE3"
         android:id="@+id/tab_vessel_one"
-        android:layout_below="@id/layoutTop_vessel_one"
+        android:background="#fff"
+        android:layout_below="@+id/Line_vessel_one"
+
         ></android.support.design.widget.TabLayout>
+
+    <LinearLayout
+       android:id="@+id/Layout_Button"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x50"
+        android:weightSum="2"
+        android:layout_alignParentBottom="true"
+        >
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textColor="#fff"
+            android:background="#29ABE2"
+            android:textStyle="bold"
+            android:text="支付保证金"
+            android:textSize="16sp"
+            android:id="@+id/btZhifu_auction"
+            />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textColor="#fff"
+            android:background="#0071BC"
+            android:textStyle="bold"
+            android:text="立即竞拍"
+            android:textSize="16sp"
+            />
+    </LinearLayout>
     <android.support.v4.view.ViewPager
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/tab_vessel_one"
         android:id="@+id/vp_vessel_one"
+        android:layout_above="@+id/Layout_Button"
         ></android.support.v4.view.ViewPager>
 </RelativeLayout>
