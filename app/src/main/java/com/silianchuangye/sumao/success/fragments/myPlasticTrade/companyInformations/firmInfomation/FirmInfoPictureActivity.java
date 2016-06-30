@@ -236,10 +236,10 @@ public class FirmInfoPictureActivity extends AppCompatActivity {
         LogUtils.log("path的值是-----》"+path);
         StringBuffer sDir = new StringBuffer();
         if (hasSDcard()) {
-            sDir.append(Environment.getExternalStorageDirectory()+ "/SuMao/");
+            sDir.append(Environment.getExternalStorageDirectory()+ "/SuMao/picture/");
         } else {
             String dataPath = Environment.getRootDirectory().getPath();
-            sDir.append(dataPath + "/SuMao/");
+            sDir.append(dataPath + "/SuMao/picture/");
         }
 
         File file_packge = new File(sDir.toString());
