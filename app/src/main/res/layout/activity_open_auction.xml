@@ -8,7 +8,9 @@
 
     tools:context=".fragments.homepage.auction.OpenAuctionActivity">
 
+
     <LinearLayout
+        android:id="@+id/Layout_Top_Open"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -429,48 +431,55 @@
         android:layout_height="@dimen/x4"
         android:background="#EEEEF3"
         ></LinearLayout>
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/x120"
-        android:id="@+id/lv_auction"
-        android:scrollbars="none"
-        ></ListView>
+
+
         </LinearLayout>
 
 </LinearLayout>
 
  <RelativeLayout
+     android:id="@+id/Layout_Button_Open"
      android:layout_width="match_parent"
-     android:layout_height="50dp"
+     android:layout_height="@dimen/x50"
+     android:layout_alignParentBottom="true"
+     > <LinearLayout
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+     android:weightSum="2"
      android:layout_alignParentBottom="true"
      >
-     <LinearLayout
+     <Button
          android:layout_width="match_parent"
          android:layout_height="match_parent"
-         android:weightSum="2"
-         android:layout_alignParentBottom="true"
-         >
-         <Button
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:layout_weight="1"
-             android:textColor="#fff"
-             android:background="#29ABE2"
-             android:textStyle="bold"
-             android:text="支付保证金"
-             android:textSize="16sp"
-             android:id="@+id/btZhifu_auction"
-             />
-         <Button
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:layout_weight="1"
-             android:textColor="#fff"
-             android:background="#0071BC"
-             android:textStyle="bold"
-             android:text="立即竞拍"
-             android:textSize="16sp"
-             />
-     </LinearLayout>
+         android:layout_weight="1"
+         android:textColor="#fff"
+         android:background="#29ABE2"
+         android:textStyle="bold"
+         android:text="支付保证金"
+         android:textSize="16sp"
+         android:id="@+id/btZhifu_auction"
+         />
+     <Button
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         android:layout_weight="1"
+         android:textColor="#fff"
+         android:background="#0071BC"
+         android:textStyle="bold"
+         android:text="立即竞拍"
+         android:textSize="16sp"
+         />
+ </LinearLayout>
+
  </RelativeLayout>
+    <com.silianchuangye.sumao.success.custom.CustomListView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x120"
+        android:id="@+id/lv_auction"
+        android:scrollbars="none"
+        android:layout_below="@+id/Layout_Top_Open"
+        android:layout_above="@+id/Layout_Button_Open"
+        ></com.silianchuangye.sumao.success.custom.CustomListView>
+
+
 </RelativeLayout>

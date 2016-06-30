@@ -11,7 +11,9 @@ import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.ActionBarOverlayLayout;
+import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -32,7 +34,7 @@ public class FirmInfoPictureActivity extends AppCompatActivity {
     private RelativeLayout layout;
     private Bitmap bitmap;
     private byte[] mcontent;
-    private boolean isLogin=false;
+    private boolean isLogin = false;
     ImageView iv_title_bar_logo,
             iv_title_bar_back,
             iv_title_bar_service,
@@ -46,8 +48,8 @@ public class FirmInfoPictureActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_firm_info_picture);
         title_Bar();
-        layout= (RelativeLayout) findViewById(R.id.layout_a);
-        ivPictrue= (ImageView) findViewById(R.id.iv_firm_info_pictrue);
+        layout = (RelativeLayout) findViewById(R.id.layout_a);
+        ivPictrue = (ImageView) findViewById(R.id.iv_firm_info_pictrue);
         ivPictrue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,26 +59,29 @@ public class FirmInfoPictureActivity extends AppCompatActivity {
         });
 
     }
+
     //设置背景透明
-    public void backgroundAlpha(float bgAlpha)
-    {
+    public void backgroundAlpha(float bgAlpha) {
         WindowManager.LayoutParams lp = getWindow().getAttributes();
         lp.alpha = bgAlpha; //0.0-1.0
         getWindow().setAttributes(lp);
     }
-    public void Popupwindow(){
-        View view= LayoutInflater.from(getApplicationContext()).inflate(R.layout.item_firm_info_popupwindow,null);
-        final PopupWindow popupWindow=new PopupWindow(findViewById(R.id.LayoutPictrue), ActionBarOverlayLayout.LayoutParams.MATCH_PARENT, ActionBarOverlayLayout.LayoutParams.WRAP_CONTENT);
+
+    public void Popupwindow() {
+        View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.item_firm_info_popupwindow, null);
+        final PopupWindow popupWindow = new PopupWindow(findViewById(R.id.LayoutPictrue), ActionBarOverlayLayout.LayoutParams.MATCH_PARENT, ActionBarOverlayLayout.LayoutParams.WRAP_CONTENT);
 
         popupWindow.setContentView(view);
-        TextView texthotograph= (TextView) view.findViewById(R.id.tvphotograph);
-        TextView textphoto= (TextView) view.findViewById(R.id.tvPhoto);
-        TextView textCancel= (TextView) view.findViewById(R.id.tvCancel);
+        TextView texthotograph = (TextView) view.findViewById(R.id.tvphotograph);
+        TextView textphoto = (TextView) view.findViewById(R.id.tvPhoto);
+        TextView textCancel = (TextView) view.findViewById(R.id.tvCancel);
         texthotograph.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getImageFromCamera();
                 popupWindow.dismiss();
+
+
             }
         });
         textphoto.setOnClickListener(new View.OnClickListener() {
@@ -97,7 +102,7 @@ public class FirmInfoPictureActivity extends AppCompatActivity {
         popupWindow.setOutsideTouchable(true);
         popupWindow.setFocusable(true);
 
-        popupWindow.showAtLocation(ivPictrue, Gravity.BOTTOM,0,0);
+        popupWindow.showAtLocation(ivPictrue, Gravity.BOTTOM, 0, 0);
 
         popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
@@ -108,42 +113,60 @@ public class FirmInfoPictureActivity extends AppCompatActivity {
         });
 
 
-
     }
+
+    /**
+     * 调用系统相册
+     */
     protected void getImageFromAlbum() {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");//相片类型
-        startActivityForResult(intent,0);
+        startActivityForResult(intent, 0);
     }
+
+    /**
+     * 调用相机
+     */
     protected void getImageFromCamera() {
         String state = Environment.getExternalStorageState();
         if (state.equals(Environment.MEDIA_MOUNTED)) {
             Intent getImageByCamera = new Intent("android.media.action.IMAGE_CAPTURE");
             startActivityForResult(getImageByCamera, 1);
-        }
-        else {
+        } else {
             Toast.makeText(this, "请确认已经插入SD卡", Toast.LENGTH_LONG).show();
         }
     }
 
+    /**
+     * 跳转返回
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        ContentResolver resolver =this.getContentResolver();
+        ContentResolver resolver = this.getContentResolver();
+
         if (requestCode == 0) {
-            Uri uri = data.getData();
+
             try {
-                mcontent = readStream(resolver.openInputStream(Uri.parse(uri.toString())));
+                mcontent = readStream(resolver.openInputStream(Uri.parse(getUrl(data))));
             } catch (Exception e) {
                 e.printStackTrace();
             }
             //将字节数组转换为ImageView可调用的Bitmap对象
             bitmap = getPicFromBytes(mcontent, null);
-            ////把得到的图片绑定在控件上显示
-            ivPictrue.setImageBitmap(bitmap);
+            if (getUrl(data) != null && !getUrl(data).equals("")) {
+                ivPictrue.setImageBitmap(bitmap);
+                Log.d("正确的存储路径", getUrl(data));
+            } else {
+                ////把得到的图片绑定在控件上显示
+                Log.d("错误的存储路径", getUrl(data));
+            }
 
 
         } else if (requestCode == 1) {
-            Uri uri = data.getData();
+
             try {
                 super.onActivityResult(requestCode, resultCode, data);
                 Bundle extras = data.getExtras();
@@ -159,14 +182,16 @@ public class FirmInfoPictureActivity extends AppCompatActivity {
             ivPictrue.setImageBitmap(bitmap);
         }
     }
+
     public static Bitmap getPicFromBytes(byte[] bytes, BitmapFactory.Options opts) {
         if (bytes != null)
             if (opts != null)
-                return BitmapFactory.decodeByteArray(bytes, 0, bytes.length,opts);
+                return BitmapFactory.decodeByteArray(bytes, 0, bytes.length, opts);
             else
                 return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
         return null;
     }
+
     public static byte[] readStream(InputStream inStream) throws Exception {
         byte[] buffer = new byte[1024];
         int len = -1;
@@ -180,6 +205,7 @@ public class FirmInfoPictureActivity extends AppCompatActivity {
         return data;
 
     }
+
     public void title_Bar() {
         iv_title_bar_back = ((ImageView) findViewById(R.id.iv_title_bar_back));
         iv_title_bar_logo = ((ImageView) findViewById(R.id.iv_title_bar_logo));
@@ -201,9 +227,15 @@ public class FirmInfoPictureActivity extends AppCompatActivity {
         iv_title_bar_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               FirmInfoPictureActivity.this.finish();
+                FirmInfoPictureActivity.this.finish();
             }
         });
+    }
+
+    public String getUrl(Intent data) {
+        Uri uri = data.getData();
+        Log.d("路径",uri.toString());
+        return uri.toString();
     }
 
 
