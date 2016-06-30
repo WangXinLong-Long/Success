@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
 import android.os.Bundle;
@@ -56,20 +57,20 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
     private MyConnectionListener connectionListener = null;
     boolean flag = false;
     int id;
-
-
+    String username;
+    SharedPreferences sp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        初始化数据
+//      初始化数据
         initData();
-//         初始化组件
+//      初始化组件
         initView();
         init();
-
     }
+
     private void initView() {
         mLayoutInflater = LayoutInflater.from(this);
         mTabHost  = ((FragmentTabHost) findViewById(android.R.id.tabhost));
@@ -88,14 +89,16 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
         mTabHost.getTabWidget().getChildTabViewAt(3).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (GlobalVariable.FLAG){
+                sp=getSharedPreferences("sumao",Context.MODE_PRIVATE);
+                username=sp.getString("name","");
+                Log.e("TAG","username2222=========="+username);
+                if (username!=""){
                     mTabHost.setCurrentTab(3);
                 }else {
                     Intent intent = new Intent();
                     intent.setClass(MainActivity.this, LoginUserActivity.class);
                     startActivity(intent);
                 }
-
             }
         });
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
@@ -106,21 +109,17 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
         mTabHost.getTabWidget().getChildTabViewAt(2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (GlobalVariable.FLAG){
+                sp=getSharedPreferences("sumao",Context.MODE_PRIVATE);
+                username=sp.getString("name","");
+                Log.e("TAG","usernam===="+username);
+                if(username!=""){
                     mTabHost.setCurrentTab(2);
-//                    Bundle bundle=getIntent().getExtras();
-//                    String name=bundle.getString("name");
-//                    Log.d("name",""+name);
-
                 }else {
                     Intent intent = new Intent();
                     intent.putExtra("cart1", 9);
                     intent.setClass(MainActivity.this, LoginUserActivity.class);
                     startActivity(intent);
-                    MainActivity.this.finish();
-
                 }
-
             }
         });
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
@@ -177,21 +176,16 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
         //注册一个监听连接状态的listener
         connectionListener = new MyConnectionListener();
         EMChatManager.getInstance().addConnectionListener(connectionListener);
-
-
     }
 
     public class MyConnectionListener implements EMConnectionListener {
-
         @Override
         public void onConnected() {
-
         }
 
         @Override
         public void onDisconnected(final int error) {
             runOnUiThread(new Runnable() {
-
                 @Override
                 public void run() {
                     if(error == EMError.USER_REMOVED){
@@ -208,7 +202,6 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
                         }
                     }else{
                         //连接不到服务器
-
 
                     }
 
@@ -236,8 +229,6 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
         registerReceiver(internalDebugReceiver, filter);
     }
 
-
-
     @Override
     protected void onStop() {
         super.onStop();
@@ -257,7 +248,21 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
         } catch (Exception e) {
         }
     }
-
+//非点击购物车按钮，点击其他时跳转回来时；
+    private void showCart(){
+        SharedPreferences share=getSharedPreferences("sumao",Context.MODE_PRIVATE);
+        String str=share.getString("name","");
+        Log.e("TAG","str=="+str);
+        if (str!=""){
+            mTabHost.setCurrentTab(2);
+        }else {
+            Intent intent = new Intent();
+            intent.putExtra("cart1", 9);
+            intent.setClass(MainActivity.this, LoginUserActivity.class);
+            startActivity(intent);
+            MainActivity.this.finish();
+        }
+    }
     @Override
     protected void onResume() {
         super.onResume();
@@ -270,28 +275,29 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
         JPushInterface.onResume(this);
         //注册广播
         int num=getIntent().getIntExtra("cart",0);
+        Log.e("TAG","num====="+num);
         switch (num)
         {
             case 1:
-                if (GlobalVariable.FLAG){
-                    mTabHost.setCurrentTab(2);
+               showCart();
+                break;
+            case 3:
+//                GlobalVariable.FLAG = true;
+//                mTabHost.setCurrentTab(3);
+                sp=getSharedPreferences("sumao",Context.MODE_PRIVATE);
+                username=sp.getString("name","");
+                Log.e("TAG","username11111-----"+username);
+                if (username!=""){
+                    mTabHost.setCurrentTab(3);
                 }else {
                     Intent intent = new Intent();
-                    intent.putExtra("cart1", 9);
                     intent.setClass(MainActivity.this, LoginUserActivity.class);
                     startActivity(intent);
                     MainActivity.this.finish();
                 }
-                GlobalVariable.FLAG = true;
-                mTabHost.setCurrentTab(2);
-                break;
-            case 3:
-                GlobalVariable.FLAG = true;
-                mTabHost.setCurrentTab(3);
                 break;
             case 4:
-                GlobalVariable.FLAG = true;
-                mTabHost.setCurrentTab(2);
+               showCart();
             default:
                 break;
 
@@ -303,7 +309,6 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
     protected void onNewIntent(Intent intent) {
          id = intent.getIntExtra("cart",0);
         Log.d("id",id+"------------>");
-
 
     }
 
@@ -332,12 +337,7 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
                 break;
         }
 
-
     }
-//    public String getName(){
-//
-//        return name;
-//    }
 
 }
 
