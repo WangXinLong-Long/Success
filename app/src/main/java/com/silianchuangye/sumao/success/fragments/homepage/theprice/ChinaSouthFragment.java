@@ -44,27 +44,14 @@ public class ChinaSouthFragment extends Fragment implements AdapterView.OnItemCl
     private ChinaNorthAdapter adapter;
     private boolean flag=true;
     private boolean check1flag,check2flag;
-    private PopupWindow popupWindow;
-    private View popView;
-    private ImageView img_chinanorth_back;
-    private Button btn_chinanorth_ok;
-    private CheckBox checkBox1_chinanorth;
-    private CheckBox checkBox2_chinanorth;
-    private WebView web_chinanorth;
     private int i=1;
-    private SharedPreferences share;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        share=getActivity().getSharedPreferences("name", Context.MODE_PRIVATE);
         chinanorth =inflater.inflate(R.layout.fragment_china_north, container, false);
         initDate();
         initView();
-        String str=share.getString("id","-1");
-        if(str.equals("-1")) {
-            backgroundAlpha(0.5f);
-            showPopView();
-        }
+
         return chinanorth;
     }
 
@@ -87,30 +74,8 @@ public class ChinaSouthFragment extends Fragment implements AdapterView.OnItemCl
         lv_chinanorth.setOnItemClickListener(this);
         adapter=new ChinaNorthAdapter(list,getActivity());
         lv_chinanorth.setAdapter(adapter);
-        popView=View.inflate(getActivity(),R.layout.chinanorth_popwindow,null);
-        img_chinanorth_back= (ImageView) popView.findViewById(R.id.img_chinanorth_back);
-        btn_chinanorth_ok= (Button) popView.findViewById(R.id.btn_chinanarth_ok);
-        web_chinanorth= (WebView) popView.findViewById(R.id.web_chinanarth);
-        checkBox1_chinanorth= (CheckBox) popView.findViewById(R.id.check1_chinanorth_pop);
-        checkBox2_chinanorth= (CheckBox) popView.findViewById(R.id.check2_chinanorth_pop);
-        img_chinanorth_back.setOnClickListener(this);
-        btn_chinanorth_ok.setOnClickListener(this);
+    }
 
-        showWeb();
-    }
-    private void showWeb(){
-        web_chinanorth.getSettings().setJavaScriptEnabled(true);//支持js
-        web_chinanorth.loadUrl("http://www.baidu.com/");//载入网页地址
-        //监听webview打开地址
-        web_chinanorth.setWebViewClient(new WebViewClient(){
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                //url->webview要打开地址
-                web_chinanorth.loadUrl(url);
-                return true;
-            }
-        });
-    }
 
     @Override
     public void onClick(View v) {
@@ -120,36 +85,7 @@ public class ChinaSouthFragment extends Fragment implements AdapterView.OnItemCl
                 Intent intent=new Intent(getActivity(),ChinaNorth_Price.class);
                 startActivity(intent);
                 break;
-            case R.id.img_chinanorth_back:
-                popupWindow.dismiss();
-                break;
-            case R.id.btn_chinanarth_ok:
-                if(checkBox1_chinanorth.isChecked()){
-                    check1flag=true;
-                }else{
-                    check1flag=false;
-                }
-                if(checkBox2_chinanorth.isChecked()){
-                    check2flag=true;
-                }else{
-                    check2flag=false;
-                }
 
-                if(check2flag){
-                    SharedPreferences.Editor editor=share.edit();
-                    editor.putString("id",""+i);
-                    editor.commit();
-                } else{
-                    SharedPreferences.Editor editor=share.edit();
-                    editor.putString("id","-1");
-                    editor.commit();
-                }
-                if(!check1flag){
-                    Toast.makeText(getActivity(),"请选择是否已阅读",Toast.LENGTH_SHORT).show();
-                }else{
-                    popupWindow.dismiss();
-                }
-                break;
         }
     }
 
@@ -159,26 +95,5 @@ public class ChinaSouthFragment extends Fragment implements AdapterView.OnItemCl
         intent.putExtra("name",list.get(position).title);
         startActivity(intent);
     }
-    //弹出的popWindow
-    private void showPopView(){
-        popView.measure(0,0);
-        int w=getActivity().getWindowManager().getDefaultDisplay().getWidth();
-        popupWindow=new PopupWindow(popView,w,popView.getMeasuredHeight());
-        popupWindow.setFocusable(true);
-        popupWindow.setBackgroundDrawable(new BitmapDrawable());
-        popupWindow.showAtLocation(lv_chinanorth, Gravity.BOTTOM,0, 0);
-        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-            @Override
-            public void onDismiss() {
-                //popupWindow.dismiss();
-                backgroundAlpha(1f);
-            }
-        });
-    }
-    public void backgroundAlpha(float bgAlpha)
-    {
-        WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
-        lp.alpha = bgAlpha; //0.0-1.0
-        getActivity().getWindow().setAttributes(lp);
-    }
+
 }
