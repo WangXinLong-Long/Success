@@ -3,10 +3,14 @@ package com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInforma
 import android.Manifest;
 import android.app.Activity;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Environment;
@@ -65,7 +69,7 @@ public class FirmInfoPictureActivity extends AppCompatActivity {
     private Bitmap bitmapCamera;
     private Intent intent;
     private String path = "";
-    private static final int TAKE_PICTURE = 0x000000;
+    private static final int TAKE_PICTURE = 0x000001;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -168,7 +172,7 @@ public class FirmInfoPictureActivity extends AppCompatActivity {
         }
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
 
-        File file = new File(fileDir, "IMG_" + sdf.format(new Date()) + ".jpg");
+         file = new File(fileDir, "IMG_" + sdf.format(new Date()) + ".jpg");
 
         path = file.getPath();
         Uri imageUri = Uri.fromFile(file);
@@ -195,7 +199,7 @@ public class FirmInfoPictureActivity extends AppCompatActivity {
     @PermissionGrant(REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE_CODE)
     public void requestExternalStorageSuccess() {
         Intent data = intent;
-        createData(data);
+//        createData(data);
     }
 
     @PermissionDenied(REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE_CODE)
@@ -231,55 +235,57 @@ public class FirmInfoPictureActivity extends AppCompatActivity {
             intent = data;
             MPermissions.requestPermissions(FirmInfoPictureActivity.this, REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE_CODE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
             File newFile = insertFileToSd(file);
-            LogUtils.log("test------------->" + newFile.toString());
-            bitmapCamera = BitmapFactory.decodeFile(newFile.toString());
-            ivPictrue.setImageBitmap(bitmapCamera);
+            LogUtils.log("test------------->newFile:" + newFile.toString());
+            Bitmap copyBitmap = getBitmapByBytes(newFile);
+            LogUtils.log("得到copyBitmap:---->");
+//            bitmapCamera = BitmapFactory.decodeFile(newFile.toString());
+//            Bitmap copyBitmap = copyBitmap(bitmapCamera);
+
+            ivPictrue.setImageBitmap(copyBitmap);
         }
-        if (resultCode == Activity.RESULT_CANCELED)//加上这个判断就好了
-        {
-            Intent it = new Intent(getApplicationContext(), FirmInfoPictureActivity.class);
-//            it.putExtra("uno",uno);
-            startActivity(it);
-            finish();
-            return;
-        }
+//        if (resultCode == Activity.RESULT_CANCELED)//加上这个判断就好了
+//        {
+//            Intent it = new Intent(getApplicationContext(), FirmInfoPictureActivity.class);
+////            it.putExtra("uno",uno);
+//            startActivity(it);
+//            finish();
+//            return;
+//        }
     }
 
-    public void createData(Intent data) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
-        StringBuffer sDir = new StringBuffer();
-        if (hasSDcard()) {
-            sDir.append(Environment.getExternalStorageDirectory() + "/DCIM/Camera/");
-        } else {
-            String dataPath = Environment.getRootDirectory().getPath();
-            sDir.append(dataPath + "/DCIM/Camera/");
-        }
+    /**
+     * 根据图片字节数组，对图片可能进行二次采样，不致于加载过大图片出现内存溢出
+     * @param
+     * @return
+     */
+    public static Bitmap getBitmapByBytes(File file){
 
-        File file_packge = new File(sDir.toString());
-        if (!file_packge.exists()) {
-            file_packge.mkdirs();
-        }
-        file = new File(file_packge, "IMG_" + sdf.format(new Date()) + ".jpg");
-        if (!file.exists())
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        if (data.getExtras() != null) {
-            Bundle bundle = data.getExtras();
-            bitmapCamera = (Bitmap) bundle.get("data");
-            try {
-                BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
-                bitmapCamera.compress(Bitmap.CompressFormat.JPEG, 100, bos);
-                bos.flush();
-                bos.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else return;
+        //对于图片的二次采样,主要得到图片的宽与高
+        int width = 0;
+        int height = 0;
+        int sampleSize = 1; //默认缩放为1
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;  //仅仅解码边缘区域
+        //如果指定了inJustDecodeBounds，decodeByteArray将返回为空
+//        BitmapFactory.decodeByteArray(bytes, 0, bytes.length, options);
+        BitmapFactory.decodeFile(file.getAbsolutePath(), options);
+
+        //得到宽与高
+        height = options.outHeight;
+        width = options.outWidth;
+
+        //图片实际的宽与高，根据默认最大大小值，得到图片实际的缩放比例
+//        while ((height / sampleSize > Cache.IMAGE_MAX_HEIGHT)
+//                || (width / sampleSize > Cache.IMAGE_MAX_WIDTH)) {
+//            sampleSize *= 2;
+//        }
+        sampleSize *= 10;
+        //不再只加载图片实际边缘
+        options.inJustDecodeBounds = false;
+        //并且制定缩放比例
+        options.inSampleSize = sampleSize;
+        return  BitmapFactory.decodeFile(file.getAbsolutePath(), options);
     }
-
     public static File insertFileToSd(File file) {
         String path = Environment.getExternalStorageDirectory().getPath();
         LogUtils.log("path的值是-----》" + path);

@@ -1,6 +1,7 @@
 package com.silianchuangye.sumao.success.fragments;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.AdapterView;
@@ -13,6 +14,7 @@ import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 
+import com.silianchuangye.sumao.success.activity.WelcomeActivity;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.AuctionActivity;
 import com.silianchuangye.sumao.success.HX.Constant;
 import com.silianchuangye.sumao.success.HX.ui.LoginActivity;
@@ -34,7 +36,7 @@ import java.util.Map;
  */
 public class PagerOne extends BasePager {
     private LinearLayout layouticon;
-    private List<Drawable> listDrawable=new ArrayList<Drawable>();
+    private List<Bitmap> listDrawable=new ArrayList<Bitmap>();
     private MyGallery gallery;
     private GridView gvFragmentone;
     private List<Map<String,Object>> list;
@@ -253,14 +255,15 @@ public class PagerOne extends BasePager {
             localImageView.setImageResource(R.drawable.ic_focus);
             this.layouticon.addView(localImageView);
         }
+
     }
     private void InitImgList() {
         // 加载图片数据
-        listDrawable.add(this.getResources().getDrawable(R.drawable.a));
-        listDrawable.add(this.getResources().getDrawable(R.drawable.b));
-        listDrawable.add(this.getResources().getDrawable(R.drawable.c));
-//        listDrawable.add(this.getResources().getDrawable(R.drawable.d));
-//        listDrawable.add(this.getResources().getDrawable(R.drawable.e));
+        listDrawable.add(WelcomeActivity.readBitMap(getActivity(),R.drawable.a));
+        listDrawable.add(WelcomeActivity.readBitMap(getActivity(),R.drawable.b));
+        listDrawable.add(WelcomeActivity.readBitMap(getActivity(),R.drawable.c));
+        listDrawable.add(WelcomeActivity.readBitMap(getActivity(),R.drawable.d));
+        listDrawable.add(WelcomeActivity.readBitMap(getActivity(),R.drawable.e));
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.silianchuangye.sumao.success.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +16,8 @@ import java.util.List;
  */
 public class ImageAdapter extends BaseAdapter {
     private Context _context;
-    private List<Drawable> list1;
-    public ImageAdapter(Context context, List<Drawable> list) {
+    private List<Bitmap> list1;
+    public ImageAdapter(Context context, List<Bitmap> list) {
         _context = context;
         list1=list;
     }
@@ -53,7 +54,7 @@ public class ImageAdapter extends BaseAdapter {
         {
             viewHolder = (ViewHolder)convertView.getTag();
         }
-        viewHolder.imageView.setImageDrawable(list1.get(position%list1.size()));
+        viewHolder.imageView.setImageBitmap(list1.get(position%list1.size()));
 
         return convertView;
     }
