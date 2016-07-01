@@ -57,12 +57,12 @@ public class ChinaNorthFragment extends Fragment implements View.OnClickListener
         chinanorth =inflater.inflate(R.layout.fragment_china_north, container, false);
         initDate();
         initView();
-        SharedPreferences share = getActivity().getSharedPreferences("share", Context.MODE_PRIVATE);
-        String str = share.getString("s", "");
-        Log.e("TAG", "s" + str);
-        if (!str.equals("1")) {
-           showPopView();
-        }
+//        SharedPreferences share = getActivity().getSharedPreferences("share", Context.MODE_PRIVATE);
+//        String str = share.getString("s", "");
+//        Log.e("TAG", "s" + str);
+//        if (!str.equals("1")) {
+//            showPopWindow();
+//        }
         return chinanorth;
     }
 
@@ -85,7 +85,6 @@ public class ChinaNorthFragment extends Fragment implements View.OnClickListener
         lv_chinanorth.setOnItemClickListener(this);
         adapter=new ChinaNorthAdapter(list,getActivity());
         lv_chinanorth.setAdapter(adapter);
-
     }
 
     @Override
@@ -96,23 +95,6 @@ public class ChinaNorthFragment extends Fragment implements View.OnClickListener
                 Intent intent=new Intent(getActivity(),ChinaNorth_Price.class);
                 startActivity(intent);
                 break;
-            case R.id.img_chinanorth_back:
-                popupWindow.dismiss();
-                break;
-            case R.id.btn_chinanarth_ok:
-                if(checkBox1_chinanorth.isChecked()){
-                    Log.e("TAG","checkBox1_chinanorth.isChecked()==="+checkBox1_chinanorth.isChecked());
-                    popupWindow.dismiss();
-                }else{
-                    Toast.makeText(getActivity(),"请选择是否已阅读",Toast.LENGTH_SHORT).show();
-                }
-                if(checkBox2_chinanorth.isChecked()){
-                    SharedPreferences share=getActivity().getSharedPreferences("share",Context.MODE_PRIVATE);
-                    SharedPreferences.Editor edt=share.edit();
-                    edt.putString("s","1");
-                    edt.commit();
-                }
-                break;
         }
     }
 
@@ -122,41 +104,53 @@ public class ChinaNorthFragment extends Fragment implements View.OnClickListener
         intent.putExtra("name",list.get(position).title);
         startActivity(intent);
     }
-    //弹出的popWindow
-    private void showPopView(){
+    public void showPopWindow(){
         popView=View.inflate(getActivity(),R.layout.chinanorth_popwindow,null);
+        popView.measure(0,0);
         img_chinanorth_back= (ImageView) popView.findViewById(R.id.img_chinanorth_back);
+        checkBox1_chinanorth= (CheckBox) popView.findViewById(R.id.check1_chinanorth_pop);
+        checkBox2_chinanorth= (CheckBox) popView.findViewById(R.id.check2_chinanorth_pop);
         btn_chinanorth_ok= (Button) popView.findViewById(R.id.btn_chinanarth_ok);
         web_chinanorth= (WebView) popView.findViewById(R.id.web_chinanarth);
         web_chinanorth.getSettings().setJavaScriptEnabled(true);//支持js
         web_chinanorth.loadUrl("http://www.baidu.com/");//载入网页地址
-        //监听webview打开地址
         web_chinanorth.setWebViewClient(new WebViewClient(){
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                //url->webview要打开地址
                 web_chinanorth.loadUrl(url);
                 return true;
             }
         });
-        checkBox1_chinanorth= (CheckBox) popView.findViewById(R.id.check1_chinanorth_pop);
-        checkBox2_chinanorth= (CheckBox) popView.findViewById(R.id.check2_chinanorth_pop);
-        img_chinanorth_back.setOnClickListener(this);
-        btn_chinanorth_ok.setOnClickListener(this);
-
-        popView.measure(0,0);
         int w=getActivity().getWindowManager().getDefaultDisplay().getWidth();
         popupWindow=new PopupWindow(popView,w,popView.getMeasuredHeight());
-        popupWindow.setFocusable(false);
-        popupWindow.setBackgroundDrawable(new BitmapDrawable());
-        popupWindow.showAtLocation(lv_chinanorth, Gravity.BOTTOM,0, 0);
+//        pop.setFocusable(true);
+//        pop.setBackgroundDrawable(new BitmapDrawable());
+        popupWindow.showAtLocation(lv_chinanorth, Gravity.BOTTOM,0,0);
+        img_chinanorth_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
+            }
+        });
+        btn_chinanorth_ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(checkBox1_chinanorth.isChecked()){
+                    popupWindow.dismiss();
+                }
+                if(checkBox2_chinanorth.isChecked()){
+                    SharedPreferences share=getActivity().getSharedPreferences("share",Context.MODE_PRIVATE);
+                    SharedPreferences.Editor edt=share.edit();
+                    edt.putString("s","1");
+                    edt.commit();
+                }
+            }
+        });
 
         popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
                 backgroundAlpha(1f);
-                popupWindow.dismiss();
-                Log.e("TAG","s;ldkff");
             }
         });
     }
