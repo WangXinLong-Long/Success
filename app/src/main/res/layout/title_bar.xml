@@ -88,7 +88,7 @@
         android:layout_toRightOf="@+id/iv_title_bar_logo"
         android:layout_toLeftOf="@+id/iv_title_bar_service"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/x30"
+        android:layout_height="wrap_content"
         android:visibility="visible"
         android:background="@mipmap/search_view"
         android:paddingTop="@dimen/padding_top"

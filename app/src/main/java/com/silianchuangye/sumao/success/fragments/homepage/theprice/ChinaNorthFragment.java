@@ -43,7 +43,6 @@ public class ChinaNorthFragment extends Fragment implements View.OnClickListener
     private List<String> allList=new ArrayList<String>();
     private ChinaNorthAdapter adapter;
     private boolean flag=true;
-    private boolean check1flag,check2flag;
     private PopupWindow popupWindow;
     private View popView;
     private ImageView img_chinanorth_back;
@@ -54,24 +53,17 @@ public class ChinaNorthFragment extends Fragment implements View.OnClickListener
     private int i=1;
     private SharedPreferences share;
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        share=getActivity().getSharedPreferences("name",Context.MODE_PRIVATE);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         chinanorth =inflater.inflate(R.layout.fragment_china_north, container, false);
         initDate();
         initView();
-        showPopView();
-        IsShowPop();
-        return chinanorth;
-    }
-    private void IsShowPop(){
-        String str=share.getString("id","1");
-        if(str.equals("-1")) {
-            backgroundAlpha(0.5f);
-//            showPopView();
-        }else{
-            popupWindow.dismiss();
+        SharedPreferences share = getActivity().getSharedPreferences("share", Context.MODE_PRIVATE);
+        String str = share.getString("s", "");
+        Log.e("TAG", "s" + str);
+        if (!str.equals("1")) {
+           showPopView();
         }
+        return chinanorth;
     }
 
     private void initDate() {
@@ -93,29 +85,7 @@ public class ChinaNorthFragment extends Fragment implements View.OnClickListener
         lv_chinanorth.setOnItemClickListener(this);
         adapter=new ChinaNorthAdapter(list,getActivity());
         lv_chinanorth.setAdapter(adapter);
-        popView=View.inflate(getActivity(),R.layout.chinanorth_popwindow,null);
-        img_chinanorth_back= (ImageView) popView.findViewById(R.id.img_chinanorth_back);
-        btn_chinanorth_ok= (Button) popView.findViewById(R.id.btn_chinanarth_ok);
-        web_chinanorth= (WebView) popView.findViewById(R.id.web_chinanarth);
-        checkBox1_chinanorth= (CheckBox) popView.findViewById(R.id.check1_chinanorth_pop);
-        checkBox2_chinanorth= (CheckBox) popView.findViewById(R.id.check2_chinanorth_pop);
-        img_chinanorth_back.setOnClickListener(this);
-        btn_chinanorth_ok.setOnClickListener(this);
 
-        showWeb();
-    }
-    private void showWeb(){
-        web_chinanorth.getSettings().setJavaScriptEnabled(true);//支持js
-        web_chinanorth.loadUrl("http://www.baidu.com/");//载入网页地址
-        //监听webview打开地址
-        web_chinanorth.setWebViewClient(new WebViewClient(){
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                //url->webview要打开地址
-                web_chinanorth.loadUrl(url);
-                return true;
-            }
-        });
     }
 
     @Override
@@ -127,36 +97,20 @@ public class ChinaNorthFragment extends Fragment implements View.OnClickListener
                 startActivity(intent);
                 break;
             case R.id.img_chinanorth_back:
-               popupWindow.dismiss();
+                popupWindow.dismiss();
                 break;
             case R.id.btn_chinanarth_ok:
                 if(checkBox1_chinanorth.isChecked()){
-                    check1flag=true;
+                    Log.e("TAG","checkBox1_chinanorth.isChecked()==="+checkBox1_chinanorth.isChecked());
+                    popupWindow.dismiss();
                 }else{
-                    check1flag=false;
+                    Toast.makeText(getActivity(),"请选择是否已阅读",Toast.LENGTH_SHORT).show();
                 }
                 if(checkBox2_chinanorth.isChecked()){
-                    check2flag=true;
-                }else{
-                    check2flag=false;
-                }
-
-               if(check2flag){
-                   SharedPreferences.Editor editor=share.edit();
-                   editor.putString("id","0");
-                   editor.commit();
-                   IsShowPop();
-               }
-               else{
-                   SharedPreferences.Editor editor=share.edit();
-                   editor.putString("id","-1");
-                   editor.commit();
-                   IsShowPop();
-               }
-                if(!check1flag){
-                    Toast.makeText(getActivity(),"请选择是否已阅读",Toast.LENGTH_SHORT).show();
-                }else{
-                    popupWindow.dismiss();
+                    SharedPreferences share=getActivity().getSharedPreferences("share",Context.MODE_PRIVATE);
+                    SharedPreferences.Editor edt=share.edit();
+                    edt.putString("s","1");
+                    edt.commit();
                 }
                 break;
         }
@@ -170,17 +124,39 @@ public class ChinaNorthFragment extends Fragment implements View.OnClickListener
     }
     //弹出的popWindow
     private void showPopView(){
+        popView=View.inflate(getActivity(),R.layout.chinanorth_popwindow,null);
+        img_chinanorth_back= (ImageView) popView.findViewById(R.id.img_chinanorth_back);
+        btn_chinanorth_ok= (Button) popView.findViewById(R.id.btn_chinanarth_ok);
+        web_chinanorth= (WebView) popView.findViewById(R.id.web_chinanarth);
+        web_chinanorth.getSettings().setJavaScriptEnabled(true);//支持js
+        web_chinanorth.loadUrl("http://www.baidu.com/");//载入网页地址
+        //监听webview打开地址
+        web_chinanorth.setWebViewClient(new WebViewClient(){
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                //url->webview要打开地址
+                web_chinanorth.loadUrl(url);
+                return true;
+            }
+        });
+        checkBox1_chinanorth= (CheckBox) popView.findViewById(R.id.check1_chinanorth_pop);
+        checkBox2_chinanorth= (CheckBox) popView.findViewById(R.id.check2_chinanorth_pop);
+        img_chinanorth_back.setOnClickListener(this);
+        btn_chinanorth_ok.setOnClickListener(this);
+
         popView.measure(0,0);
         int w=getActivity().getWindowManager().getDefaultDisplay().getWidth();
         popupWindow=new PopupWindow(popView,w,popView.getMeasuredHeight());
-        popupWindow.setFocusable(true);
+        popupWindow.setFocusable(false);
         popupWindow.setBackgroundDrawable(new BitmapDrawable());
         popupWindow.showAtLocation(lv_chinanorth, Gravity.BOTTOM,0, 0);
+
         popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
-                //popupWindow.dismiss();
                 backgroundAlpha(1f);
+                popupWindow.dismiss();
+                Log.e("TAG","s;ldkff");
             }
         });
     }

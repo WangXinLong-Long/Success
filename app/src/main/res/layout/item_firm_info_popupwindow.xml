@@ -23,7 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/x40"
         android:background="#fff"
-        android:text="相机"
+        android:text="相册"
         android:gravity="center"
         android:textColor="#000"
         android:id="@+id/tvPhoto"

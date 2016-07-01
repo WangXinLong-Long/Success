@@ -1,5 +1,7 @@
 package com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -8,6 +10,8 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Environment;
+import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.ActionBarOverlayLayout;
@@ -25,9 +29,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
+import com.silianchuangye.sumao.success.utils.LogUtils;
+import com.zhy.m.permission.MPermissions;
+import com.zhy.m.permission.PermissionDenied;
+import com.zhy.m.permission.PermissionGrant;
 
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class FirmInfoPictureActivity extends AppCompatActivity {
     private ImageView ivPictrue;
@@ -42,6 +58,14 @@ public class FirmInfoPictureActivity extends AppCompatActivity {
     Button sv_title_bar_serachView;
     TextView tv_title_bar_title, tv;
     RelativeLayout layoutTop;
+
+    private static final int REQUEST_PERMISSION_CAMERA_CODE = 1;
+    private static final int REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE_CODE = 3;
+    private File file;
+    private Bitmap bitmapCamera;
+    private Intent intent;
+    private String path = "";
+    private static final int TAKE_PICTURE = 0x000000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,8 +104,6 @@ public class FirmInfoPictureActivity extends AppCompatActivity {
             public void onClick(View v) {
                 getImageFromCamera();
                 popupWindow.dismiss();
-
-
             }
         });
         textphoto.setOnClickListener(new View.OnClickListener() {
@@ -124,62 +146,192 @@ public class FirmInfoPictureActivity extends AppCompatActivity {
         startActivityForResult(intent, 0);
     }
 
-    /**
-     * 调用相机
-     */
     protected void getImageFromCamera() {
-        String state = Environment.getExternalStorageState();
-        if (state.equals(Environment.MEDIA_MOUNTED)) {
-            Intent getImageByCamera = new Intent("android.media.action.IMAGE_CAPTURE");
-            startActivityForResult(getImageByCamera, 1);
-        } else {
-            Toast.makeText(this, "请确认已经插入SD卡", Toast.LENGTH_LONG).show();
-        }
+        MPermissions.requestPermissions(FirmInfoPictureActivity.this, REQUEST_PERMISSION_CAMERA_CODE, Manifest.permission.CAMERA);
     }
 
-    /**
-     * 跳转返回
-     * @param requestCode
-     * @param resultCode
-     * @param data
-     */
+    public void useCamera() {
+        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+
+        StringBuffer sDir = new StringBuffer();
+        if (hasSDcard()) {
+            sDir.append(Environment.getExternalStorageDirectory()
+                    + "/DCIM/Camera/");
+        } else {
+            String dataPath = Environment.getRootDirectory().getPath();
+            sDir.append(dataPath + "/DCIM/Camera/");
+        }
+
+        File fileDir = new File(sDir.toString());
+        if (!fileDir.exists()) {
+            fileDir.mkdirs();
+        }
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
+
+        File file = new File(fileDir, "IMG_" + sdf.format(new Date()) + ".jpg");
+
+        path = file.getPath();
+        Uri imageUri = Uri.fromFile(file);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+        startActivityForResult(intent, TAKE_PICTURE);
+    }//低于6.0直接使用Camera
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        MPermissions.requestPermissions(FirmInfoPictureActivity.this, REQUEST_PERMISSION_CAMERA_CODE, Manifest.permission.CAMERA);
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    @PermissionGrant(REQUEST_PERMISSION_CAMERA_CODE)
+    public void requestCameraSuccess() {
+        useCamera();
+    }
+
+    @PermissionDenied(REQUEST_PERMISSION_CAMERA_CODE)
+    public void requestCameeraFailed() {
+        Toast.makeText(this, "请授权允许使用相机", Toast.LENGTH_SHORT).show();
+    }
+
+    @PermissionGrant(REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE_CODE)
+    public void requestExternalStorageSuccess() {
+        Intent data = intent;
+        createData(data);
+    }
+
+    @PermissionDenied(REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE_CODE)
+    public void requestExternalStorageFailed() {
+        Toast.makeText(this, "请授权允许读写内存", Toast.LENGTH_SHORT).show();
+    }
+
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         ContentResolver resolver = this.getContentResolver();
 
         if (requestCode == 0) {
-
-            try {
-                mcontent = readStream(resolver.openInputStream(Uri.parse(getUrl(data))));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            //将字节数组转换为ImageView可调用的Bitmap对象
-            bitmap = getPicFromBytes(mcontent, null);
-            if (getUrl(data) != null && !getUrl(data).equals("")) {
-                ivPictrue.setImageBitmap(bitmap);
-                Log.d("正确的存储路径", getUrl(data));
+            if (data == null) {
+                return;
             } else {
-                ////把得到的图片绑定在控件上显示
-                Log.d("错误的存储路径", getUrl(data));
+                try {
+                    mcontent = readStream(resolver.openInputStream(Uri.parse(getUrl(data))));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                //将字节数组转换为ImageView可调用的Bitmap对象
+                bitmap = getPicFromBytes(mcontent, null);
+                if (getUrl(data) != null && !getUrl(data).equals("")) {
+                    ivPictrue.setImageBitmap(bitmap);
+                    Log.d("正确的存储路径", getUrl(data));
+                } else {
+                    ////把得到的图片绑定在控件上显示
+                    Log.d("错误的存储路径", getUrl(data));
+                }
             }
 
+        } else if (requestCode == TAKE_PICTURE) {
+            intent = data;
+            MPermissions.requestPermissions(FirmInfoPictureActivity.this, REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE_CODE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            File newFile = insertFileToSd(file);
+            LogUtils.log("test------------->" + newFile.toString());
+            bitmapCamera = BitmapFactory.decodeFile(newFile.toString());
+            ivPictrue.setImageBitmap(bitmapCamera);
+        }
+        if (resultCode == Activity.RESULT_CANCELED)//加上这个判断就好了
+        {
+            Intent it = new Intent(getApplicationContext(), FirmInfoPictureActivity.class);
+//            it.putExtra("uno",uno);
+            startActivity(it);
+            finish();
+            return;
+        }
+    }
 
-        } else if (requestCode == 1) {
+    public void createData(Intent data) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
+        StringBuffer sDir = new StringBuffer();
+        if (hasSDcard()) {
+            sDir.append(Environment.getExternalStorageDirectory() + "/DCIM/Camera/");
+        } else {
+            String dataPath = Environment.getRootDirectory().getPath();
+            sDir.append(dataPath + "/DCIM/Camera/");
+        }
 
+        File file_packge = new File(sDir.toString());
+        if (!file_packge.exists()) {
+            file_packge.mkdirs();
+        }
+        file = new File(file_packge, "IMG_" + sdf.format(new Date()) + ".jpg");
+        if (!file.exists())
             try {
-                super.onActivityResult(requestCode, resultCode, data);
-                Bundle extras = data.getExtras();
-                bitmap = (Bitmap) extras.get("data");
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-                mcontent = baos.toByteArray();
-            } catch (Exception e) {
-                // TODO Auto-generated catch block
+                file.createNewFile();
+            } catch (IOException e) {
                 e.printStackTrace();
             }
-            //把得到的图片绑定在控件上显示
-            ivPictrue.setImageBitmap(bitmap);
+        if (data.getExtras() != null) {
+            Bundle bundle = data.getExtras();
+            bitmapCamera = (Bitmap) bundle.get("data");
+            try {
+                BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
+                bitmapCamera.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+                bos.flush();
+                bos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else return;
+    }
+
+    public static File insertFileToSd(File file) {
+        String path = Environment.getExternalStorageDirectory().getPath();
+        LogUtils.log("path的值是-----》" + path);
+        StringBuffer sDir = new StringBuffer();
+        if (hasSDcard()) {
+            sDir.append(Environment.getExternalStorageDirectory() + "/SuMao/picture/");
+        } else {
+            String dataPath = Environment.getRootDirectory().getPath();
+            sDir.append(dataPath + "/SuMao/picture/");
+        }
+
+        File file_packge = new File(sDir.toString());
+        if (!file_packge.exists()) {
+            file_packge.mkdirs();
+        }
+        File file2 = null;
+        try {
+            file2 = new File(file_packge, String.valueOf(System.currentTimeMillis()) + ".jpg");
+            LogUtils.log("file2的路径是：-------->" + file2.getPath());
+            if (!file2.exists()) {
+                file2.createNewFile();
+            }
+            FileOutputStream fOut = null;
+            fOut = new FileOutputStream(file2);
+            FileInputStream in = new FileInputStream(file);
+            byte[] bytes = new byte[1024];
+            int lenght = 0;
+            while ((lenght = in.read(bytes)) != -1) {
+                fOut.write(bytes, 0, lenght);
+                fOut.flush();
+            }
+            fOut.close();
+            in.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            Log.e("error", e.getMessage());
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.e("error", e.getMessage());
+        }
+        return file2;
+    }
+
+    public static boolean hasSDcard() {
+        String status = Environment.getExternalStorageState();
+        if (status.equals(Environment.MEDIA_MOUNTED)) {
+            LogUtils.log("SD卡的状态是：-----》" + "true");
+            return true;
+
+        } else {
+            LogUtils.log("SD卡的状态是：-----》" + "false");
+            return false;
         }
     }
 
@@ -233,8 +385,9 @@ public class FirmInfoPictureActivity extends AppCompatActivity {
     }
 
     public String getUrl(Intent data) {
+
         Uri uri = data.getData();
-        Log.d("路径",uri.toString());
+        Log.d("路径", uri.toString());
         return uri.toString();
     }
 

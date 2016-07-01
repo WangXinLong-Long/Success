@@ -27,6 +27,9 @@ public class WangXinLong extends Activity {
 //        改变图片11
 //        改变图片11
 //        Android6.0权限问题
+//        Android6.0权限问题
+//        6月30日查看照相机返回后崩溃的页面
+//        6月30日查看照相机返回后崩溃的页面
 
         showPayDialog();
 
