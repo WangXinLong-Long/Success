@@ -2,9 +2,13 @@ package com.silianchuangye.sumao.success.fragments.type;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 
+import com.easemob.easeui.domain.EaseEmojicon;
 import com.silianchuangye.sumao.success.R;
 
 import java.util.ArrayList;
@@ -16,11 +20,27 @@ public class TypeInfoActivity extends AppCompatActivity {
     private ListView lv_Type;
     private List<Map<String,Object>> list;
     private SimpleAdapter adapter;
+    private ImageView iv_Back;
+    private TextView tv_Search;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_type_info);
+        iv_Back= (ImageView) findViewById(R.id.iv_Back_Type);
+        iv_Back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TypeInfoActivity.this.finish();
+            }
+        });
+        tv_Search= (TextView) findViewById(R.id.tv_Info_Type);
+        tv_Search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //进行搜索功能
+            }
+        });
         init_listView();
     }
     public void init_listView(){
