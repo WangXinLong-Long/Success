@@ -21,8 +21,11 @@
     <ImageView
         android:id="@+id/iv_title_bar_logo"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/x30"
+        android:layout_height="@dimen/x25"
         android:src="@mipmap/iv_title_bar_logo"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:paddingLeft="@dimen/x1"
         />
     <ImageView
         android:id="@+id/iv_title_bar_service"
@@ -84,7 +87,7 @@
         android:id="@+id/sv_title_bar_serachView"
         android:layout_toRightOf="@+id/iv_title_bar_logo"
         android:layout_toLeftOf="@+id/iv_title_bar_service"
-        android:layout_width="match_parent"
+        android:layout_width="@dimen/x5"
         android:layout_height="wrap_content"
         android:visibility="visible"
         android:background="@mipmap/search_view"
