@@ -3,6 +3,7 @@ package com.silianchuangye.sumao.success.fragments;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 
 import com.silianchuangye.sumao.success.activity.WelcomeActivity;
+import com.silianchuangye.sumao.success.SearchActivity;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.AuctionActivity;
 import com.silianchuangye.sumao.success.HX.Constant;
 import com.silianchuangye.sumao.success.HX.ui.LoginActivity;
@@ -46,6 +48,10 @@ public class PagerOne extends BasePager {
     private RelativeLayout rlHorn;
     @Override
     public void myClickSearch() {
+        //调到搜索页
+        Log.d("点击搜索","点击搜素");
+        Intent intent=new Intent(mActivity,SearchActivity.class);
+        startActivity(intent);
     }
 
     @Override
@@ -283,5 +289,6 @@ public class PagerOne extends BasePager {
         intent.setClass(mActivity, LoginActivity.class);
         intent.putExtra(Constant.MESSAGE_TO_INTENT_EXTRA, Constant.MESSAGE_TO_DEFAULT);
         startActivity(intent);
+
     }
 }

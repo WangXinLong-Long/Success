@@ -1,13 +1,22 @@
 package com.silianchuangye.sumao.success.fragments.homepage.theprice;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,7 +44,15 @@ public class MidpointsListctivity extends AppCompatActivity {
     private BDLocationListener mylistenner=new MyLocationListener();
 
     private  String Location1;
-
+    private PopupWindow popupWindow;
+    private View popView;
+    private ImageView img_chinanorth_back;
+    private Button btn_chinanorth_ok;
+    private CheckBox checkBox1_chinanorth;
+    private CheckBox checkBox2_chinanorth;
+    private WebView web_chinanorth;
+    private int i=1;
+    private SharedPreferences share;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +87,6 @@ public class MidpointsListctivity extends AppCompatActivity {
         adapter=new MyPageAdapter(getSupportFragmentManager());
         adapter.setData(listFragment);
 
-
         ArrayList<String> listString=new ArrayList<String>();
         listString.add("华北");
         listString.add("华中");
@@ -95,10 +111,6 @@ public class MidpointsListctivity extends AppCompatActivity {
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-
-
 
             }
         });
@@ -182,5 +194,76 @@ public class MidpointsListctivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        SharedPreferences share = getSharedPreferences("share", Context.MODE_PRIVATE);
+        String str = share.getString("s", "");
+        Log.e("TAG", "s" + str);
+        if(hasFocus){
+            if (!str.equals("1")) {
+                showPopWindow();
+                backgroundAlpha(0.5f);
+            }
+        }
+
+    }
+
+    public void showPopWindow(){
+        popView=View.inflate(MidpointsListctivity.this,R.layout.chinanorth_popwindow,null);
+        popView.measure(0,0);
+        img_chinanorth_back= (ImageView) popView.findViewById(R.id.img_chinanorth_back);
+        checkBox1_chinanorth= (CheckBox) popView.findViewById(R.id.check1_chinanorth_pop);
+        checkBox2_chinanorth= (CheckBox) popView.findViewById(R.id.check2_chinanorth_pop);
+        btn_chinanorth_ok= (Button) popView.findViewById(R.id.btn_chinanarth_ok);
+        web_chinanorth= (WebView) popView.findViewById(R.id.web_chinanarth);
+        web_chinanorth.getSettings().setJavaScriptEnabled(true);//支持js
+        web_chinanorth.loadUrl("http://www.baidu.com/");//载入网页地址
+        web_chinanorth.setWebViewClient(new WebViewClient(){
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                web_chinanorth.loadUrl(url);
+                return true;
+            }
+        });
+        int w=MidpointsListctivity.this.getWindowManager().getDefaultDisplay().getWidth();
+        popupWindow=new PopupWindow(popView,w,popView.getMeasuredHeight());
+//        pop.setFocusable(true);
+//        pop.setBackgroundDrawable(new BitmapDrawable());
+        popupWindow.showAtLocation(tlDemo, Gravity.BOTTOM,0,0);
+        img_chinanorth_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
+            }
+        });
+        btn_chinanorth_ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(checkBox1_chinanorth.isChecked()){
+                    popupWindow.dismiss();
+                }
+                if(checkBox2_chinanorth.isChecked()){
+                    SharedPreferences share=MidpointsListctivity.this.getSharedPreferences("share", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor edt=share.edit();
+                    edt.putString("s","1");
+                    edt.commit();
+                }
+            }
+        });
+
+        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                backgroundAlpha(1f);
+            }
+        });
+    }
+    public void backgroundAlpha(float bgAlpha)
+    {
+        WindowManager.LayoutParams lp = MidpointsListctivity.this.getWindow().getAttributes();
+        lp.alpha = bgAlpha; //0.0-1.0
+        MidpointsListctivity.this.getWindow().setAttributes(lp);
+    }
 
 }

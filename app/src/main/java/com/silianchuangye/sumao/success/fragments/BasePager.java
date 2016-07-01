@@ -56,6 +56,7 @@ public abstract class BasePager extends Fragment implements View.OnClickListener
             logo = ((ImageView) view.findViewById(R.id.iv_title_bar_logo));
             searchView = ((Button) view.findViewById(R.id.sv_title_bar_serachView));
             title = ((TextView) view.findViewById(R.id.tv_title_bar_title));
+
             service = ((ImageView) view.findViewById(R.id.iv_title_bar_service));
             fl_content = ((FrameLayout) view.findViewById(R.id.fl_basepager_content));
             ImageView iv_title_bar_search = ((ImageView) view.findViewById(R.id.iv_title_bar_search));
@@ -69,6 +70,7 @@ public abstract class BasePager extends Fragment implements View.OnClickListener
         {
             parent.removeView(view);
         }
+        searchView.setOnClickListener(this);
         logo.setOnClickListener(this);
         title.setOnClickListener(this);
         service.setOnClickListener(this);
