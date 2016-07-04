@@ -1,18 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/my_sumao_background">
-<include layout="@layout/title_bar_white"></include>
+<include
+    android:id="@+id/title_activity_goods_in_stock_detail"
+    layout="@layout/title_bar_white"></include>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="@dimen/x4"
         android:background="@color/my_sumao_background"
+        android:layout_below="@id/title_activity_goods_in_stock_detail"
+        android:id="@+id/spacing_activity_goods_in_stock_detail"
         />
     <ScrollView
+        android:id="@+id/scroll_view_activity_goods_in_stock_detail"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@id/spacing_activity_goods_in_stock_detail"
+        >
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -20,7 +27,9 @@
     <RelativeLayout
         android:background="#fff"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/x40">
+        android:layout_height="@dimen/x40"
+
+        >
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -44,13 +53,13 @@
                 android:layout_height="@dimen/x20"
                 android:id="@+id/ivContent"
                 android:layout_marginTop="@dimen/x13"
-                android:src="@mipmap/direct"
+                android:src="@mipmap/service"
                 />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/tvContent"
-                android:text="联系卖家"
+                android:text="联系客服"
                 android:textSize="15sp"
                 android:layout_marginTop="@dimen/x13"
                 android:textColor="#5AA3D4"
@@ -68,7 +77,7 @@
                 android:layout_height="@dimen/x20"
                 android:id="@+id/ivService"
                 android:layout_marginTop="@dimen/x13"
-                android:src="@mipmap/direct"
+                android:src="@mipmap/phone"
                 />
             <TextView
                 android:layout_width="wrap_content"
@@ -464,4 +473,41 @@
             </RelativeLayout>
         </LinearLayout>
     </ScrollView>
-</LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/Layout_Button_Open"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x40"
+        android:layout_alignParentBottom="true"
+
+        > <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="2"
+        android:layout_alignParentBottom="true"
+        >
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textColor="#fff"
+            android:background="#29ABE2"
+            android:textStyle="bold"
+            android:text="加入购物车"
+            android:textSize="16sp"
+            android:id="@+id/btZhifu_auction"
+            />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textColor="#fff"
+            android:background="#0071BC"
+            android:textStyle="bold"
+            android:text="立即购买"
+            android:textSize="16sp"
+            />
+    </LinearLayout>
+
+    </RelativeLayout>
+</RelativeLayout>
