@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="40dp"
+    android:layout_height="@dimen/x40"
     >
     <ImageView
         android:id="@+id/radio_item_margin_bank"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="@dimen/x17"
+        android:layout_height="@dimen/x17"
         android:src="@mipmap/cart_select_null"
         android:layout_margin="@dimen/x10"
        android:layout_centerVertical="true"
