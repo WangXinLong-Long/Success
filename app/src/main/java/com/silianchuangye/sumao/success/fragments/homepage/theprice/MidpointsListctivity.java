@@ -244,6 +244,10 @@ public class MidpointsListctivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 popupWindow.dismiss();
+                SharedPreferences share=MidpointsListctivity.this.getSharedPreferences("share", Context.MODE_PRIVATE);
+                SharedPreferences.Editor edt=share.edit();
+                edt.putString("s1","0");
+                edt.commit();
             }
         });
         btn_chinanorth_ok.setOnClickListener(new View.OnClickListener() {
