@@ -24,6 +24,7 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
     ImageView title_bar_white_shopping_cart;
     RelativeLayout pre_sale_sale_detail_detail;
     RelativeLayout pre_sale_sale_detail_similar_product,pre_sale_sale_detail_similar_liulan;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +41,7 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
         pre_sale_sale_detail_detail.setOnClickListener(this);
         pre_sale_sale_detail_similar_product.setOnClickListener(this);
         pre_sale_sale_detail_similar_liulan.setOnClickListener(this);
+        title_bar_white_title.setText("现货");
     }
 
     @Override

@@ -43,13 +43,13 @@
                 android:layout_height="@dimen/x20"
                 android:id="@+id/ivContent"
                 android:layout_marginTop="@dimen/x13"
-                android:src="@mipmap/direct"
+                android:src="@mipmap/service"
                 />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/tvContent"
-                android:text="联系卖家"
+                android:text="联系客服"
                 android:textSize="15sp"
                 android:layout_marginTop="@dimen/x13"
                 android:textColor="#5AA3D4"
@@ -67,7 +67,7 @@
                 android:layout_height="@dimen/x20"
                 android:id="@+id/ivService"
                 android:layout_marginTop="@dimen/x13"
-                android:src="@mipmap/direct"
+                android:src="@mipmap/phone"
                 />
             <TextView
                 android:layout_width="wrap_content"

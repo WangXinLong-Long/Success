@@ -43,11 +43,12 @@ public class PreSale extends Activity implements View.OnClickListener, AdapterVi
     PopupWindow popupWindow;
     PopupWindow listPopupWindow;
     RelativeLayout pre_sale_title;
-    TextView classification, application, region,manufacturing_enterprise;
+    TextView classification, application, region;
+//    TextView manufacturing_enterprise;
     ListView pre_sale_listView;
     PreSaleModel preSaleModel;
     ArrayList<String> mArrayList;
-    LinearLayout selection_condition;
+    RelativeLayout selection_condition;
     TextView split_line;
 
     @Override
@@ -64,16 +65,16 @@ public class PreSale extends Activity implements View.OnClickListener, AdapterVi
         classification = ((TextView) findViewById(R.id.classification));
         application = ((TextView) findViewById(R.id.application));
         region = ((TextView) findViewById(R.id.region));
-        manufacturing_enterprise = ((TextView) findViewById(R.id.manufacturing_enterprise));
+//        manufacturing_enterprise = ((TextView) findViewById(R.id.manufacturing_enterprise));
         pre_sale_listView = ((ListView) findViewById(R.id.pre_sale_listView));
-        selection_condition = ((LinearLayout) findViewById(R.id.selection_condition));
+        selection_condition = ((RelativeLayout) findViewById(R.id.selection_condition));
         split_line = ((TextView) findViewById(R.id.split_line));
         initdata();
         pre_sale_listView.setAdapter(adapter);
         pre_sale_listView.setOnItemClickListener(this);
         application.setOnClickListener(this);
         classification.setOnClickListener(this);
-        manufacturing_enterprise.setOnClickListener(this);
+//        manufacturing_enterprise.setOnClickListener(this);
         region.setOnClickListener(this);
 
     }
@@ -98,10 +99,10 @@ public class PreSale extends Activity implements View.OnClickListener, AdapterVi
                 initListPopupWindowView("应用");
                 showListPopupWindow();
                 break;
-            case R.id.manufacturing_enterprise:
+         /*   case R.id.manufacturing_enterprise:
                 initListPopupWindowView("生产企业");
                 showListPopupWindow();
-                break;
+                break;*/
 
             case R.id.bottom_pre_sale_search:
                 popupWindow.dismiss();
@@ -149,10 +150,10 @@ public class PreSale extends Activity implements View.OnClickListener, AdapterVi
                 }else if (s.equals("应用"))
                 {
                     application.setText(popupWindowListViewAdpter.getItem(position));
-                }else if (s.equals("生产企业"))
+                }/*else if (s.equals("生产企业"))
                 {
                     manufacturing_enterprise.setText(popupWindowListViewAdpter.getItem(position));
-                }
+                }*/
                     listPopupWindow.dismiss();
             }
         });
@@ -160,10 +161,10 @@ public class PreSale extends Activity implements View.OnClickListener, AdapterVi
     }
 
     private ArrayList<String> getData(String s) {
-        mArrayList.add(s+"测试数据1");
-        mArrayList.add(s+"测试数据2");
-        mArrayList.add(s+"测试数据3");
-        mArrayList.add(s+"测试数据4");
+        mArrayList.add(s+"测哈哈和哈哈哈哈哈哈哈哈哈和1");
+        mArrayList.add(s+"测哈哈和哈哈哈哈哈哈哈哈哈和2");
+        mArrayList.add(s+"测哈哈和哈哈哈哈哈哈哈哈哈和3");
+        mArrayList.add(s+"测哈哈和哈哈哈哈哈哈哈哈哈和34");
         mArrayList.add(s+"测试数据5");
         mArrayList.add(s+"测试数据6");
         mArrayList.add(s+"测试数据1");

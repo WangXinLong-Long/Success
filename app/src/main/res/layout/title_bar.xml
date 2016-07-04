@@ -27,17 +27,34 @@
         android:layout_marginRight="@dimen/x10"
         android:layout_centerVertical="true"
         />
-    <ImageView
-        android:id="@+id/iv_title_bar_service"
-        android:layout_width="@dimen/x35"
+    <RelativeLayout
+        android:id="@+id/message_rl"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@mipmap/iv_title_bar_service"
         android:layout_alignParentRight="true"
-        android:paddingRight="@dimen/padding_right"
         android:paddingTop="@dimen/padding_right"
-        android:layout_marginLeft="@dimen/x15"
+        android:layout_marginLeft="@dimen/x3"
         android:layout_marginRight="@dimen/x5"
-        />
+
+        >
+        <ImageView
+            android:id="@+id/iv_title_bar_service"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/x18"
+            android:src="@mipmap/iv_title_bar_service"
+            />
+        <TextView
+            android:id="@+id/tv_title_bar_service"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/message_text"
+            android:textSize="10sp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/iv_title_bar_service"
+            android:visibility="invisible"
+            />
+    </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/add_address_rl"
         android:layout_width="wrap_content"
@@ -86,7 +103,7 @@
     <Button
         android:id="@+id/sv_title_bar_serachView"
         android:layout_toRightOf="@+id/iv_title_bar_logo"
-        android:layout_toLeftOf="@+id/iv_title_bar_service"
+        android:layout_toLeftOf="@+id/message_rl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="visible"

@@ -39,6 +39,8 @@ public abstract class BasePager extends Fragment implements View.OnClickListener
     protected ImageView service;
     //    整个标题栏
     protected RelativeLayout rl_title;
+    private TextView tv_title_bar_service;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +63,9 @@ public abstract class BasePager extends Fragment implements View.OnClickListener
             fl_content = ((FrameLayout) view.findViewById(R.id.fl_basepager_content));
             ImageView iv_title_bar_search = ((ImageView) view.findViewById(R.id.iv_title_bar_search));
             iv_title_bar_search.setVisibility(View.INVISIBLE);
+
+            tv_title_bar_service = ((TextView) view.findViewById(R.id.tv_title_bar_service));
+            tv_title_bar_service.setVisibility(View.VISIBLE);
 //            logo.setOnClickListener(this);
 //            searchView.setIconifiedByDefault(false);
             initDate();
