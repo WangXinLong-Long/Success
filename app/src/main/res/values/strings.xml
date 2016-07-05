@@ -131,6 +131,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="company_name">公司名称</string>
+    <string name="message_text" />
     <string-array name="week_name">
         <item>日</item>
         <item>一</item>

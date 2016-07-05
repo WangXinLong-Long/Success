@@ -115,7 +115,6 @@ public class MidpointsListctivity extends AppCompatActivity {
             }
         });
 
-
     }
     private void initLocation(){
         LocationClientOption option = new LocationClientOption();
@@ -195,13 +194,23 @@ public class MidpointsListctivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        SharedPreferences share=getSharedPreferences("share",Context.MODE_PRIVATE);
+        SharedPreferences.Editor edt=share.edit();
+        edt.putString("s1","");
+        edt.commit();
+    }
+
+    @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
         SharedPreferences share = getSharedPreferences("share", Context.MODE_PRIVATE);
         String str = share.getString("s", "");
+        String str1=share.getString("s1","");
         Log.e("TAG", "s" + str);
         if(hasFocus){
-            if (!str.equals("1")) {
+            if (!str.equals("1")&&!str1.equals("0")) {
                 showPopWindow();
                 backgroundAlpha(0.5f);
             }
@@ -235,6 +244,10 @@ public class MidpointsListctivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 popupWindow.dismiss();
+                SharedPreferences share=MidpointsListctivity.this.getSharedPreferences("share", Context.MODE_PRIVATE);
+                SharedPreferences.Editor edt=share.edit();
+                edt.putString("s1","0");
+                edt.commit();
             }
         });
         btn_chinanorth_ok.setOnClickListener(new View.OnClickListener() {
@@ -242,6 +255,10 @@ public class MidpointsListctivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(checkBox1_chinanorth.isChecked()){
                     popupWindow.dismiss();
+                    SharedPreferences share=MidpointsListctivity.this.getSharedPreferences("share", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor edt=share.edit();
+                    edt.putString("s1","0");
+                    edt.commit();
                 }
                 if(checkBox2_chinanorth.isChecked()){
                     SharedPreferences share=MidpointsListctivity.this.getSharedPreferences("share", Context.MODE_PRIVATE);

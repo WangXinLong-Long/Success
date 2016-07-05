@@ -28,8 +28,18 @@
         android:text="¥10000"
         android:layout_marginTop="@dimen/x5"
         android:layout_marginRight="@dimen/x5"
-        android:textSize="@dimen/x15"
         android:textColor="@color/red"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/x5"
+        android:layout_marginTop="@dimen/x5"
+        android:textColor="#EE262E"
+        android:textStyle="bold"
+        android:text="￥"
+        android:layout_toLeftOf="@+id/price_presale_item"
+
         />
     <TextView
         android:id="@+id/company_presale_item"

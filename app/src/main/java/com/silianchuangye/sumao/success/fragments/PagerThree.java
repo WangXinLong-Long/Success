@@ -5,17 +5,26 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.CartAdapter;
+import com.silianchuangye.sumao.success.adapter.CartItemAdapter;
 import com.silianchuangye.sumao.success.fragments.bean.CartInfo;
+import com.silianchuangye.sumao.success.fragments.bean.CartItemInfo;
+import com.silianchuangye.sumao.success.fragments.homepage.theprice.MidpointsListctivity;
 import com.silianchuangye.sumao.success.fragments.shoppingCart.dialog.Cart_MyDialog;
 
 import java.util.ArrayList;
@@ -37,6 +46,7 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
     private Context ctx;
     private MyReciver my;
     private Cart_MyDialog dialog;
+ private List<Integer>imgList=new ArrayList<Integer>();
     public class MyReciver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -81,6 +91,15 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
         lv_Cart.setOnItemClickListener(this);
         img_Cart_All_Select.setOnClickListener(this);
         btn_Cart_Ok.setOnClickListener(this);
+
+        pop_view=View.inflate(getActivity(),R.layout.popview_cart_price,null);
+        pop_btn= (Button) pop_view.findViewById(R.id.pop_cart_price_btn);
+        pop_tv= (TextView) pop_view.findViewById(R.id.pop_cart_price_money_tv);
+        pop_lv= (ListView) pop_view.findViewById(R.id.pop_cart_price_lv);
+
+        //popwindow的适配器
+        cartItemAdapter=new CartItemAdapter(item_list,getActivity(),imgList);
+        pop_lv.setAdapter(cartItemAdapter);
     }
 
     @Override
@@ -111,10 +130,27 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
                     if(info.Selsct_Flag)
                         flag = true;
                 }
-                if(flag)
-                   Toast.makeText(getActivity(),"支付",Toast.LENGTH_SHORT).show();
-                else
-                    Toast.makeText(getActivity(),"请选择要购买的商品",Toast.LENGTH_SHORT).show();
+                if(flag) {
+                    showPopWindow();
+                    backgroundAlpha(0.5f);
+                    Toast.makeText(getActivity(), "支付", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toast.makeText(getActivity(), "请选择要购买的商品", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case R.id.pop_cart_price_btn:
+                boolean itemflag=false;
+                for(CartItemInfo info:item_list){
+                    if(info.flag){
+                        itemflag=true;
+                    }
+                }
+                if(itemflag) {
+                    Toast.makeText(getActivity(), "生成订单", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(getActivity(), "请选择要支付的银行", Toast.LENGTH_SHORT).show();
+                }
                 break;
         }
     }
@@ -154,6 +190,19 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
         info3.buy_num="10";
         info3.all_price="1";
         list.add(info3);
+//popwindow的数据源
+        CartItemInfo iteminfo1=new CartItemInfo();
+        iteminfo1.bank_name="中国邮政银行";
+        CartItemInfo iteminfo2=new CartItemInfo();
+        iteminfo2.bank_name="中国建设银行";
+        CartItemInfo iteminfo3=new CartItemInfo();
+        iteminfo3.bank_name="中国工商银行";
+        item_list.add(iteminfo1);
+        item_list.add(iteminfo2);
+        item_list.add(iteminfo3);
+        imgList.add(R.mipmap.aa);
+        imgList.add(R.mipmap.ic_launcher);
+        imgList.add(R.mipmap.adwords);
     }
 
     @Override
@@ -168,7 +217,18 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Toast.makeText(getContext(),"onClick",Toast.LENGTH_SHORT).show();
+        if(parent.getId()==R.id.lv_activity_cart){
+            Toast.makeText(getContext(),"点击了一条item",Toast.LENGTH_SHORT).show();
+        }
+        if (parent.getId() == R.id.pop_cart_price_lv) {
+            for (int i = 0; i < item_list.size(); i++) {
+                if (i != position) {
+                    item_list.get(i).flag = false;
+                }
+            }
+            item_list.get(position).flag = !item_list.get(position).flag;
+            cartItemAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -190,10 +250,41 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
             }
         }
         tv_Cart_All_Price.setText("￥:"+all_Price);
+        pop_tv.setText(all_Price+"元");
         if(index == list.size()){
             img_Cart_All_Select.setImageResource(R.mipmap.cart_select);
         }else{
             img_Cart_All_Select.setImageResource(R.mipmap.cart_select_null);
         }
+    }
+    //popwindow
+    private PopupWindow popupWindow;
+    private View pop_view;
+    private Button pop_btn;
+    private TextView pop_tv;
+    private ListView pop_lv;
+    private CartItemAdapter cartItemAdapter;
+    private List<CartItemInfo>item_list=new ArrayList<CartItemInfo>();
+    private void showPopWindow(){
+        pop_view.measure(0,0);
+        int w=getActivity().getWindowManager().getDefaultDisplay().getWidth();
+        popupWindow=new PopupWindow(pop_view,w,pop_view.getMeasuredHeight());
+        popupWindow.setBackgroundDrawable(new BitmapDrawable());
+        popupWindow.setFocusable(true);
+        popupWindow.showAtLocation(lv_Cart, Gravity.BOTTOM,0,0);
+        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                backgroundAlpha(1f);
+            }
+        });
+        pop_btn.setOnClickListener(this);
+        pop_lv.setOnItemClickListener(this);
+    }
+    public void backgroundAlpha(float bgAlpha)
+    {
+        WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
+        lp.alpha = bgAlpha; //0.0-1.0
+        getActivity().getWindow().setAttributes(lp);
     }
 }
