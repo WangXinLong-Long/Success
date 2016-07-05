@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -20,6 +21,7 @@ import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformat
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoNameActivity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoOfficeActivity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoTypeActivity;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceArea;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -40,6 +42,7 @@ public class RegisterFirmActivity extends AppCompatActivity {
     private ListView lvupdate_firm_info_two;
     private Spinner sp_firm_info;
     String title;
+    private SimpleAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,7 +90,7 @@ public class RegisterFirmActivity extends AppCompatActivity {
         map6.put("icon",R.mipmap.my_sumao_iv_order);
         list.add(map6);
 
-        SimpleAdapter adapter=new SimpleAdapter(RegisterFirmActivity.this,list,R.layout.item_firm_info,new String[]{"left","center","right","icon"},new int[]{R.id.tv_firm_info,R.id.tvTitle_firm_info,R.id.tvValue_firm_info,R.id.ivMore_firm_info});
+         adapter=new SimpleAdapter(RegisterFirmActivity.this,list,R.layout.item_firm_info,new String[]{"left","center","right","icon"},new int[]{R.id.tv_firm_info,R.id.tvTitle_firm_info,R.id.tvValue_firm_info,R.id.ivMore_firm_info});
         lvupdate_firm_info.setAdapter(adapter);
 
         lvupdate_firm_info.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -95,16 +98,17 @@ public class RegisterFirmActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (position==1){
                     Intent intent=new Intent(RegisterFirmActivity.this,FirmInfoTypeActivity.class);
-                    startActivity(intent);
+                    //startActivity(intent);
+                    startActivityForResult(intent,position);
                 }else if(position==3){
                     Intent intent=new Intent(RegisterFirmActivity.this,FirmInfoNameActivity.class);
-                    startActivity(intent);
+                    startActivityForResult(intent,position);
                 }else if(position==2){
                     Intent intent=new Intent(RegisterFirmActivity.this,FirmInfoOfficeActivity.class);
-                    startActivity(intent);
+                    startActivityForResult(intent,position);
                 }else if(position==4){
-                    Intent intent=new Intent(RegisterFirmActivity.this,FirmInfoAddressActivity.class);
-                    startActivity(intent);
+                    Intent intent=new Intent(RegisterFirmActivity.this,SelectProvinceArea.class);
+                    startActivityForResult(intent,position);
 
                 }
             }
@@ -170,6 +174,30 @@ public class RegisterFirmActivity extends AppCompatActivity {
 
 
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode){
+            case 1:
+                String one=data.getStringExtra("name");
+                list.get(1).put("right",one);
+                adapter.notifyDataSetChanged();
+                break;
+            case 2:
+                String name=data.getStringExtra("name");
+                list.get(2).put("right",name);
+                adapter.notifyDataSetChanged();
+                break;
+            case 3:
+                String name1=data.getStringExtra("name");
+                list.get(3).put("right",name1);
+                adapter.notifyDataSetChanged();
+                break;
+            case 4:
+                break;
+        }
+    }
+
     public void title_Bar(String title){
         iv_title_bar_back = ((ImageView) findViewById(R.id.iv_title_bar_back));
         iv_title_bar_logo = ((ImageView) findViewById(R.id.iv_title_bar_logo));
