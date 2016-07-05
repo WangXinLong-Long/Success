@@ -1,4 +1,4 @@
-package com.silianchuangye.sumao.success;
+package com.silianchuangye.sumao.success.fragments.type;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,6 +7,8 @@ import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.silianchuangye.sumao.success.R;
 
 import java.util.ArrayList;
 import java.util.List;

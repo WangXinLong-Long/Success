@@ -1,12 +1,17 @@
 package com.silianchuangye.sumao.success.fragments.homepage.auction;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.ActionBarOverlayLayout;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -16,11 +21,15 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.MainActivity;
 import com.silianchuangye.sumao.success.R;
+import com.silianchuangye.sumao.success.adapter.PopupWindowAdaptrer;
+import com.silianchuangye.sumao.success.fragments.bean.ChinaNorth_Margin_info;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
@@ -31,8 +40,12 @@ public class OpenAuctionActivity extends AppCompatActivity {
     private Button btZhifu_auction;
     private TextView tv;
     private EditText et;
+    private ListView lv;
     private ImageView ivBack;
     private ImageView gouwuche;
+
+    private boolean flag;
+    private PopupWindowAdaptrer adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,7 +112,38 @@ public class OpenAuctionActivity extends AppCompatActivity {
         popupWindow.setContentView(view);
          tv= (TextView) view.findViewById(R.id.tvPrice_popupwindow_auction);
          et= (EditText) view.findViewById(R.id.etZhifu_auction);
-        ListView lv= (ListView) view.findViewById(R.id.lv_popupwindow_auction);
+         lv= (ListView) view.findViewById(R.id.lv_popupwindow_auction);
+        final List<OpenAuction> list1=new ArrayList<OpenAuction>();
+        OpenAuction openauction1=new OpenAuction();
+        openauction1.iv_icon=R.mipmap.direct;
+        openauction1.tv_Name="北京工商银行";
+        openauction1.tv_money="1234";
+        list1.add(openauction1);
+        OpenAuction openauction2=new OpenAuction();
+        openauction2.iv_icon=R.mipmap.vertet;
+        openauction2.tv_Name="北京建设银行";
+        openauction2.tv_money="1234";
+        list1.add(openauction2);
+
+    adapter=new PopupWindowAdaptrer(list1,this);
+        lv.setAdapter(adapter);
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if(parent.getId()==lv.getId()){
+                    for(int i=0;i<list1.size();i++){
+                       Log.d("Listview的item",position+"");
+                        if(i!=position){
+
+                                list1.get(i).Flag=false;
+
+                        }
+                    }
+                    list1.get(position).Flag=!list1.get(position).Flag;
+                    adapter.notifyDataSetChanged();
+                }
+           }
+        });
         Button bt= (Button) view.findViewById(R.id.btZhifu);
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,4 +175,8 @@ public class OpenAuctionActivity extends AppCompatActivity {
         lp.alpha = bgAlpha; //0.0-1.0
         getWindow().setAttributes(lp);
     }
+
+
+
+
 }

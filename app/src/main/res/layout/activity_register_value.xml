@@ -18,6 +18,7 @@
         android:background="@drawable/edittext_backgroup"
         android:id="@+id/et_content_value"
         android:layout_below="@+id/layoutTop_register_value"
+        android:focusable="true"
         />
     <TextView
         android:layout_width="match_parent"

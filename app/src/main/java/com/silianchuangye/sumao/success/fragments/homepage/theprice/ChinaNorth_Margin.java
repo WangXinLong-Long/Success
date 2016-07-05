@@ -43,6 +43,7 @@ private ImageView img_margin_back;
 
     private void initDate() {
         ChinaNorth_Margin_info info1=new ChinaNorth_Margin_info();
+
         info1.bank="中国建设银行";
         info1.money="111,111,00";
         list.add(info1);

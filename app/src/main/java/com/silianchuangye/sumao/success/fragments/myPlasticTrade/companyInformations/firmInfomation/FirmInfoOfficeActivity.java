@@ -37,8 +37,7 @@ public class FirmInfoOfficeActivity extends AppCompatActivity {
         iv_title_bar_service.setVisibility(View.GONE);
         sv_title_bar_serachView.setVisibility(View.GONE);
         iv_title_bar_search.setVisibility(View.GONE);
-        tv_title_bar_title.setText("企业类型");
-        tv_title_bar_title.setTextColor(Color.WHITE);
+         tv_title_bar_title.setTextColor(Color.WHITE);
         iv_title_bar_back.setVisibility(View.VISIBLE);
         layoutTop = (RelativeLayout) findViewById(R.id.layoutTop_firm_info_office);
         layoutTop.setBackgroundColor(getResources().getColor(R.color.textColor_expandable_listview_show));

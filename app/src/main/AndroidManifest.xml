@@ -458,8 +458,9 @@
         <activity
             android:name=".fragments.myPlasticTrade.login.LoginUserActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".SearchActivity" />
-        <activity android:name=".fragments.type.TypeInfoActivity"></activity>
+        <activity android:name=".fragments.type.SearchActivity" />
+        <activity android:name=".fragments.type.TypeInfoActivity" />
+        <activity android:name=".fragments.myPlasticTrade.register.RegisterFirmActivity"></activity>
     </application>
 
 </manifest>

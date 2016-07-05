@@ -1,12 +1,16 @@
 package com.silianchuangye.sumao.success.fragments.type;
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.easemob.easeui.domain.EaseEmojicon;
 import com.silianchuangye.sumao.success.R;
@@ -15,6 +19,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class TypeInfoActivity extends AppCompatActivity {
     private ListView lv_Type;
@@ -22,11 +28,13 @@ public class TypeInfoActivity extends AppCompatActivity {
     private SimpleAdapter adapter;
     private ImageView iv_Back;
     private TextView tv_Search;
+    private EditText Search;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_type_info);
+       // closeInputMethod();
         iv_Back= (ImageView) findViewById(R.id.iv_Back_Type);
         iv_Back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,8 +49,43 @@ public class TypeInfoActivity extends AppCompatActivity {
                 //进行搜索功能
             }
         });
+
+        Search= (EditText) findViewById(R.id.et_Search_Type);
+        Search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               // openInputMethod(Search);
+            }
+        });
         init_listView();
     }
+
+    /**
+     * 关闭软键盘
+     */
+//    public void closeInputMethod(){
+//        try {
+//            ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE))
+//                    .hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
+//                            InputMethodManager.HIDE_NOT_ALWAYS);
+//        } catch (Exception e) { }finally{ }
+//    }
+
+    /**
+     * 打开软键盘
+     * @param
+     */
+//    public void openInputMethod(final EditText editText){
+//        Timer timer = new Timer();
+//        timer.schedule(new TimerTask() {
+//            public void run() {
+//                InputMethodManager inputManager = (InputMethodManager) editText
+//                        .getContext().getSystemService(
+//                                Context.INPUT_METHOD_SERVICE);
+//                inputManager.showSoftInput(editText, 0);
+//            }
+//        }, 200);
+//    }
     public void init_listView(){
         lv_Type= (ListView) findViewById(R.id.lv_Type);
         list = new ArrayList<Map<String, Object>>();
