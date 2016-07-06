@@ -1,6 +1,7 @@
 package com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.SpotOrder;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.SpotOrderAdapter;
 import com.silianchuangye.sumao.success.custom.CustomListView;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.OrderDetails.OrderDetailsActivity;
 import com.silianchuangye.sumao.success.model.SpotOrderModel;
 
 import java.text.SimpleDateFormat;
@@ -32,7 +34,10 @@ public class SpotOrder extends Activity implements View.OnClickListener{
             iv_title_bar_search;
     Button sv_title_bar_serachView;
     TextView tv_title_bar_title,tv;
+    TextView cancellation_of_order;
     RelativeLayout spot_order_title;
+//    订单编号和金额 所在的条目可以点击
+    RelativeLayout order_amount;
     CustomListView spot_order_listView;
     /*定义一个倒计时的内部类*/
     private MyCount mc;
@@ -49,6 +54,10 @@ public class SpotOrder extends Activity implements View.OnClickListener{
         setContentView(R.layout.activity_spot_order);
 
         spot_order_title = ((RelativeLayout) findViewById(R.id.spot_order_title));
+//        金额所在的条目的点击事件，可以查看详情
+        order_amount = ((RelativeLayout) findViewById(R.id.order_amount));
+        order_amount.setOnClickListener(this);
+
         spot_order_title.setBackgroundColor(getResources().getColor(R.color.textColor_expandable_listview_show));
 
         iv_title_bar_back = ((ImageView) findViewById(R.id.iv_title_bar_back));
@@ -67,7 +76,12 @@ public class SpotOrder extends Activity implements View.OnClickListener{
         tv_title_bar_title.setText("现货订单");
         tv_title_bar_title.setTextColor(Color.WHITE);
 
+
         tv = ((TextView) findViewById(R.id.tv));
+//        取消订单的文字以及点击事件
+        cancellation_of_order = ((TextView) findViewById(R.id.cancellation_of_order));
+        cancellation_of_order.setVisibility(View.VISIBLE);
+        cancellation_of_order.setOnClickListener(this);
         /**
          *
          * 根据系统下单时间，获取剩余结束时间
@@ -91,6 +105,8 @@ public class SpotOrder extends Activity implements View.OnClickListener{
         spot_order_listView = ((CustomListView) findViewById(R.id.spot_order_listView));
         adapter = new SpotOrderAdapter(this,list);
         spot_order_listView.setAdapter(adapter);
+//        ScrollView 点击进去不能到达最顶部，只有设置了这个属性，可以让ScrollView到达最顶部
+        spot_order_listView.setFocusable(false);
        /* spot_order_listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -106,9 +122,14 @@ public class SpotOrder extends Activity implements View.OnClickListener{
             case R.id.iv_title_bar_back:
                 finish();
                 break;
-            case R.id.iv_title_bar_search:
-                Toast.makeText(this,"搜索",Toast.LENGTH_SHORT).show();
-
+            case R.id.cancellation_of_order:
+                Toast.makeText(this,"取消订单",Toast.LENGTH_SHORT).show();
+                finish();
+                break;
+            case R.id.order_amount:
+                Intent intent = new Intent();
+                intent.setClass(this,OrderDetailsActivity.class);
+                startActivity(intent);
                 break;
         }
     }

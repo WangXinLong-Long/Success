@@ -1,5 +1,6 @@
 package com.silianchuangye.sumao.success.fragments.homepage.goodInStock;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +11,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
+import com.silianchuangye.sumao.success.adapter.PreSaleAdapter;
+import com.silianchuangye.sumao.success.model.PreSaleModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,27 +24,38 @@ public class LikeProduct extends AppCompatActivity implements View.OnClickListen
 private ImageView img_like_product_back;
     private ListView lv_like_product;
     private List<String> list=new ArrayList<String>();
-    private ArrayAdapter<String>adapter;
+    PreSaleAdapter adapter;
+    List<PreSaleModel> lists;
+    PreSaleModel preSaleModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_like_product);
-        initDate();
+        initdata();
         initView();
     }
 
-    private void initDate() {
-        for(int i=0;i<20;i++){
-            list.add("相似产品"+i);
+    private void initdata() {
+
+        lists = new ArrayList<>();
+        for (int i = 0; i < 15; i++) {
+            preSaleModel = new PreSaleModel();
+            preSaleModel.setCompany("北京公司" + i + "分公司");
+            preSaleModel.setWarehouse(i + "仓库");
+            preSaleModel.setName("产品" + i);
+            preSaleModel.setNumber(i + "");
+            preSaleModel.setPrice(i * 100 + "");
+            preSaleModel.setProductType("现货");
+            lists.add(preSaleModel);
         }
+        adapter = new PreSaleAdapter(this, lists);
+
     }
 
     private void initView() {
         img_like_product_back= (ImageView) findViewById(R.id.img_activity_like_product_back);
         img_like_product_back.setOnClickListener(this);
         lv_like_product= (ListView) findViewById(R.id.lv_activity_like_priduct);
-
-        adapter=new ArrayAdapter<String>(this,R.layout.item_like_product_view,R.id.tv_item_like_product,list);
         lv_like_product.setAdapter(adapter);
 
         lv_like_product.setOnItemClickListener(this);
@@ -57,5 +71,8 @@ private ImageView img_like_product_back;
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Toast.makeText(LikeProduct.this,"点击了第"+position+"条数据",Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent();
+        intent.setClass(this, GoodsInStockDetailActivity.class);
+        startActivity(intent);
     }
 }
