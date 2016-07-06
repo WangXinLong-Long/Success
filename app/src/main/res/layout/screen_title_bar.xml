@@ -34,4 +34,16 @@
         android:layout_centerVertical="true"
         android:src="@mipmap/search"
         android:layout_alignParentRight="true"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/cancel_tv"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:paddingLeft="@dimen/x15"
+        android:paddingRight="@dimen/x10"
+        android:text="取消"
+        android:textColor="@color/white"
+        android:visibility="invisible"
+        />
 </RelativeLayout>

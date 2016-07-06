@@ -49,6 +49,11 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
     ArrayList<String> mArrayList;
     RelativeLayout selection_condition;
     TextView split_line;
+    private RelativeLayout application1;
+    private RelativeLayout classification1;
+    private RelativeLayout region1;
+    private TextView cancel_tv;
+    private boolean flag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,13 +73,20 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
         pre_sale_listView = ((ListView) findViewById(R.id.pre_sale_listView));
         selection_condition = ((RelativeLayout) findViewById(R.id.selection_condition));
         split_line = ((TextView) findViewById(R.id.split_line));
+        application1 = ((RelativeLayout) findViewById(R.id.application1));
+        classification1 = ((RelativeLayout) findViewById(R.id.classification1));
+        region1 = ((RelativeLayout) findViewById(R.id.region1));
+        cancel_tv = ((TextView) findViewById(R.id.cancel_tv));
+        cancel_tv.setOnClickListener(this);
         initdata();
         pre_sale_listView.setAdapter(adapter);
         pre_sale_listView.setOnItemClickListener(this);
-        application.setOnClickListener(this);
-        classification.setOnClickListener(this);
+        application1.setOnClickListener(this);
+        classification1.setOnClickListener(this);
+        region1.setOnClickListener(this);
+        pre_sale_title.setOnClickListener(this);
+
 //        manufacturing_enterprise.setOnClickListener(this);
-        region.setOnClickListener(this);
 
     }
 
@@ -82,19 +94,31 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_screen_title_bar_search:
+                flag = true;
+                cancel_tv.setVisibility(View.VISIBLE);
+                iv_screen_title_bar_search.setVisibility(View.INVISIBLE);
                 initView();
                 showSearchDialog();
                 break;
-            case R.id.region:
+            case R.id.cancel_tv:
+                cancel_tv.setVisibility(View.INVISIBLE);
+                iv_screen_title_bar_search.setVisibility(View.VISIBLE);
+                break;
+            case R.id.pre_sale_title:
+                cancel_tv.setVisibility(View.INVISIBLE);
+                iv_screen_title_bar_search.setVisibility(View.VISIBLE);
+                break;
+
+            case R.id.region1:
 
                 initListPopupWindowView("地区");
                 showListPopupWindow();
                 break;
-            case R.id.classification:
+            case R.id.classification1:
                 initListPopupWindowView("分类");
                 showListPopupWindow();
                 break;
-            case R.id.application:
+            case R.id.application1:
                 initListPopupWindowView("应用");
                 showListPopupWindow();
                 break;
@@ -102,8 +126,10 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
                 initListPopupWindowView("生产企业");
                 showListPopupWindow();
                 break;*/
-
+//              点击透明区域
             case R.id.bottom_pre_sale_search:
+                cancel_tv.setVisibility(View.INVISIBLE);
+                iv_screen_title_bar_search.setVisibility(View.VISIBLE);
                 popupWindow.dismiss();
                 break;
             case R.id.popup_window_back:
@@ -117,6 +143,17 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
                 break;
         }
 
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (!flag){
+        cancel_tv.setVisibility(View.INVISIBLE);
+        iv_screen_title_bar_search.setVisibility(View.VISIBLE);
+
+        }
+        flag = false;
     }
 
     private void showListPopupWindow() {

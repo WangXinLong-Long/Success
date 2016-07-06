@@ -460,6 +460,9 @@
             android:screenOrientation="portrait" />
         <activity android:name=".SearchActivity" />
         <activity android:name=".fragments.type.TypeInfoActivity"></activity>
+        <activity android:name=".fragments.homepage.goodInStock.PaymentsOrder"
+            android:screenOrientation="portrait"
+            />
     </application>
 
 </manifest>
