@@ -97,6 +97,13 @@
                         android:textSize="@dimen/x15"
 
                         />
+                    <ImageView
+                        android:layout_width="@dimen/x15"
+                        android:layout_height="@dimen/x15"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/x10"
+                        android:src="@mipmap/my_sumao_iv_order" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -226,7 +233,7 @@
                     android:layout_marginTop="@dimen/x5">
 
 
-                    <RelativeLayout
+                    <!--<RelativeLayout
                         android:id="@+id/bottom1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -249,15 +256,17 @@
                             android:layout_centerVertical="true"
                             android:layout_marginRight="@dimen/x10"
                             android:src="@mipmap/my_sumao_iv_order" />
-                    </RelativeLayout>
+                    </RelativeLayout>-->
 
                     <RelativeLayout
                         android:id="@+id/bottom2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/bottom1"
                         android:layout_marginTop="@dimen/x1"
-                        android:background="@color/white">
+                        android:background="@color/white"
+                        android:paddingTop="@dimen/x5"
+                        android:paddingBottom="@dimen/x5"
+                        >
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -267,7 +276,7 @@
                             android:paddingTop="@dimen/x5"
                             android:text="@string/Contract_information"
                             android:textColor="@color/textColor_expandable_listview_show"
-                            android:textSize="@dimen/x17" />
+                            android:textSize="@dimen/x15" />
 
                         <ImageView
                             android:layout_width="@dimen/x15"
@@ -284,7 +293,9 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/bottom2"
                         android:layout_marginTop="@dimen/x1"
-                        android:background="@color/white">
+                        android:background="@color/white"
+                        android:paddingTop="@dimen/x5"
+                        android:paddingBottom="@dimen/x5">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -294,7 +305,7 @@
                             android:paddingTop="@dimen/x5"
                             android:text="@string/Distribution_plan"
                             android:textColor="@color/textColor_expandable_listview_show"
-                            android:textSize="@dimen/x17" />
+                            android:textSize="@dimen/x15" />
 
                         <ImageView
                             android:layout_width="@dimen/x15"

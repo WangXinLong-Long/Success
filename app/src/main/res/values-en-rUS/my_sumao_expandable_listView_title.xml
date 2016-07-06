@@ -2,11 +2,10 @@
 <resources>
     <string-array name="title">
         <item>The order management</item>
-        <item>Match management</item>
+        <item>physical distribution management</item>
         <item>Personal information</item>
         <item>Enterprise information</item>
         <item>Enterprise capital account management</item>
-        <item>Enterprise application information</item>
     </string-array>
     <string-array name="child">
         <item>,,</item>
@@ -22,9 +21,8 @@
         <item>price point wish list</item>
     </string-array>
     <string-array name="child2">
-        <item>Purchase demand</item>
-        <item>supply resources</item>
-        <item>set single information</item>
+        <item>Create logistics demand</item>
+        <item>View logistics demand</item>
     </string-array>
     <string-array name="child3">
         <item>The user information</item>

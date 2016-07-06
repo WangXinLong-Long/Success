@@ -24,6 +24,7 @@ import com.silianchuangye.sumao.success.adapter.CartAdapter;
 import com.silianchuangye.sumao.success.adapter.CartItemAdapter;
 import com.silianchuangye.sumao.success.fragments.bean.CartInfo;
 import com.silianchuangye.sumao.success.fragments.bean.CartItemInfo;
+import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.PaymentsOrder;
 import com.silianchuangye.sumao.success.fragments.homepage.theprice.MidpointsListctivity;
 import com.silianchuangye.sumao.success.fragments.shoppingCart.dialog.Cart_MyDialog;
 
@@ -131,9 +132,12 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
                         flag = true;
                 }
                 if(flag) {
-                    showPopWindow();
-                    backgroundAlpha(0.5f);
-                    Toast.makeText(getActivity(), "支付", Toast.LENGTH_SHORT).show();
+//                    showPopWindow();
+//                    backgroundAlpha(0.5f);
+//                    Toast.makeText(getActivity(), "支付", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent();
+                    intent.setClass(getActivity(), PaymentsOrder.class);
+                    startActivity(intent);
                 }
                 else {
                     Toast.makeText(getActivity(), "请选择要购买的商品", Toast.LENGTH_SHORT).show();
