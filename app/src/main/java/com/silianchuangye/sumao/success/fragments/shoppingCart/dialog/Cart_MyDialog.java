@@ -37,6 +37,7 @@ public class Cart_MyDialog extends AlertDialog{
             @Override
             public void onClick(View v) {
                 sendBroad();
+                dismiss();
             }
         });
         //点击关闭dialog
@@ -44,6 +45,7 @@ public class Cart_MyDialog extends AlertDialog{
             @Override
             public void onClick(View v) {
                 sendBroad();
+                dismiss();
             }
         });
     }

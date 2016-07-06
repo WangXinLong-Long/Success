@@ -29,6 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:id="@+id/classification1"
                 >
                 <TextView
                     android:layout_width="wrap_content"
@@ -51,6 +52,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:id="@+id/application1"
                 >
                 <TextView
                     android:layout_width="wrap_content"
@@ -73,6 +75,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:id="@+id/region1"
                 >
                 <TextView
                     android:layout_width="wrap_content"

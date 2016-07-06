@@ -1,10 +1,12 @@
 package com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -19,10 +21,23 @@ public class FirmInfoNameActivity extends AppCompatActivity {
     Button sv_title_bar_serachView;
     TextView tv_title_bar_title, tv;
     RelativeLayout layoutTop;
+    private EditText et_name;
+    private Button bt_Save;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_firm_info_name);
+        et_name= (EditText) findViewById(R.id.et_firm_info_name);
+        bt_Save= (Button) findViewById(R.id.btSave_firm_info_name);
+        bt_Save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent();
+                intent.putExtra("name",et_name.getText().toString());
+                FirmInfoNameActivity.this.setResult(3,intent);
+                FirmInfoNameActivity.this.finish();
+            }
+        });
         title_Bar();
     }
     public void title_Bar() {

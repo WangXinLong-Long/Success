@@ -50,6 +50,9 @@ public class PreSale extends Activity implements View.OnClickListener, AdapterVi
     ArrayList<String> mArrayList;
     RelativeLayout selection_condition;
     TextView split_line;
+    private RelativeLayout application1;
+    private RelativeLayout classification1;
+    private RelativeLayout region1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +68,9 @@ public class PreSale extends Activity implements View.OnClickListener, AdapterVi
         classification = ((TextView) findViewById(R.id.classification));
         application = ((TextView) findViewById(R.id.application));
         region = ((TextView) findViewById(R.id.region));
+        application1 = ((RelativeLayout) findViewById(R.id.application1));
+        classification1 = ((RelativeLayout) findViewById(R.id.classification1));
+        region1 = ((RelativeLayout) findViewById(R.id.region1));
 //        manufacturing_enterprise = ((TextView) findViewById(R.id.manufacturing_enterprise));
         pre_sale_listView = ((ListView) findViewById(R.id.pre_sale_listView));
         selection_condition = ((RelativeLayout) findViewById(R.id.selection_condition));
@@ -72,10 +78,10 @@ public class PreSale extends Activity implements View.OnClickListener, AdapterVi
         initdata();
         pre_sale_listView.setAdapter(adapter);
         pre_sale_listView.setOnItemClickListener(this);
-        application.setOnClickListener(this);
-        classification.setOnClickListener(this);
+        application1.setOnClickListener(this);
+        classification1.setOnClickListener(this);
+        region1.setOnClickListener(this);
 //        manufacturing_enterprise.setOnClickListener(this);
-        region.setOnClickListener(this);
 
     }
 
@@ -86,16 +92,16 @@ public class PreSale extends Activity implements View.OnClickListener, AdapterVi
                 initView();
                 showSearchDialog();
                 break;
-            case R.id.region:
+            case R.id.region1:
 
                 initListPopupWindowView("地区");
                 showListPopupWindow();
                 break;
-            case R.id.classification:
+            case R.id.classification1:
                 initListPopupWindowView("分类");
                 showListPopupWindow();
                 break;
-            case R.id.application:
+            case R.id.application1:
                 initListPopupWindowView("应用");
                 showListPopupWindow();
                 break;

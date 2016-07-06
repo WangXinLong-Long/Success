@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     tools:context="com.silianchuangye.sumao.success.fragments.type.TypeInfoActivity">
 
     <RelativeLayout
@@ -27,7 +28,8 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/x10"
             android:layout_alignParentRight="true"
-
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             />
         <ImageView
             android:layout_width="@dimen/x15"
@@ -47,9 +49,10 @@
             android:layout_marginLeft="@dimen/x10"
             android:background="@drawable/edit_search"
             android:layout_marginRight="@dimen/x10"
-
             android:hint="输入你要搜索的内容"
             android:layout_toRightOf="@+id/iv_Back_Type"
+            android:id="@+id/et_Search_Type"
+
             >
 
         </EditText>
@@ -153,6 +156,7 @@
         android:layout_below="@+id/layout_center_Type"
         android:background="#fff"
         android:id="@+id/lv_Type"
+
         ></ListView>
 
 

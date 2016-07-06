@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -17,6 +18,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoUpdateActivity;
@@ -42,8 +44,13 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText et_phone_register,editText;
     private Button bt_get_register,tv_next_register;
     SQLiteDatabase db;
+    String account;
     String name;
     String password;
+    String rePassword;
+    String email;
+    private SimpleAdapter adapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,43 +66,50 @@ public class RegisterActivity extends AppCompatActivity {
         tv_next_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                register();
+              //  register();
 
-                Intent intent=new Intent(RegisterActivity.this, FirmInfoUpdateActivity.class);
-                intent.putExtra("add","新建");
+                Intent intent=new Intent(RegisterActivity.this, RegisterFirmActivity.class);
                 startActivity(intent);
 
             }
         });
         title_Bar();
         lv_register= (ListView) findViewById(R.id.lv_register);
+
         list=new ArrayList<Map<String,Object>>();
         Map<String,Object> map1=new Hashtable<String,Object>();
         map1.put("text","登录账号");
         map1.put("minute","6-16个字符");
         map1.put("icon",R.mipmap.my_sumao_iv_order);
+        map1.put("pass","");
         list.add(map1);
         Map<String,Object> map2=new Hashtable<String,Object>();
         map2.put("text","登录密码");
         map2.put("minute","6-16个字符");
         map2.put("icon",R.mipmap.my_sumao_iv_order);
+        map2.put("pass","");
         list.add(map2);
         Map<String,Object> map3=new Hashtable<String,Object>();
         map3.put("text","确认密码");
         map3.put("minute","6-16个字符");
         map3.put("icon",R.mipmap.my_sumao_iv_order);
+        map3.put("pass","");
         list.add(map3);
         Map<String,Object> map4=new Hashtable<String,Object>();
         map4.put("text","姓名");
         map4.put("minute","");
         map4.put("icon",R.mipmap.my_sumao_iv_order);
+        map4.put("pass","");
         list.add(map4);
         Map<String,Object> map5=new Hashtable<String,Object>();
         map5.put("text","邮箱");
         map5.put("minute","");
         map5.put("icon",R.mipmap.my_sumao_iv_order);
+        map5.put("pass","");
         list.add(map5);
-        SimpleAdapter adapter=new SimpleAdapter(this,list,R.layout.item_firm_info,new String[]{"text","minute","icon"},new int[]{R.id.tv_firm_info,R.id.tvValue_firm_info,R.id.ivMore_firm_info});
+        adapter=new SimpleAdapter(this,list,R.layout.item_firm_info,
+                new String[]{"text","minute","icon","pass"},
+                new int[]{R.id.tv_firm_info,R.id.tvValue_firm_info,R.id.ivMore_firm_info,R.id.tvPass_firm_info});
         lv_register.setAdapter(adapter);
         lv_register.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -103,9 +117,50 @@ public class RegisterActivity extends AppCompatActivity {
                 Intent intent=new Intent(RegisterActivity.this,RegisterValueActivity.class);
                 intent.putExtra("title",list.get(position).get("text").toString());
                 intent.putExtra("content",list.get(position).get("minute").toString());
+                intent.putExtra("pass",list.get(position).get("pass").toString());
                 startActivityForResult(intent,position);
             }
         });
+
+
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+       // Log.d("参数",requestCode+"");
+        switch (requestCode)
+        {
+
+            case 0:
+                account  = data.getStringExtra("name");
+              //  Log.d("账号",name);
+                list.get(0).put("minute",account);
+                adapter.notifyDataSetChanged();
+                break;
+            case 1:
+                password = data.getStringExtra("name");
+                list.get(1).put("pass",password);
+                list.get(1).put("minute","");
+                adapter.notifyDataSetChanged();
+                break;
+            case 2:
+                rePassword=data.getStringExtra("name");
+                list.get(2).put("pass",rePassword);
+                list.get(2).put("minute","");
+                adapter.notifyDataSetChanged();
+                break;
+            case 3:
+                name=data.getStringExtra("name");
+                list.get(3).put("minute",name);
+                adapter.notifyDataSetChanged();
+                break;
+            case 4:
+                email=data.getStringExtra("name");
+                list.get(4).put("minute",email);
+                adapter.notifyDataSetChanged();
+                break;
+
+        }
+
 
     }
 
@@ -143,18 +198,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode)
-        {
-            case 0:
-               name  = data.getStringExtra("name");
-                break;
-            case 1:
-                password = data.getStringExtra("name");
-                break;
-        }
-    }
+
     private void register() {
         if (!(name.equals("")||password.equals("")))
         {
@@ -197,6 +241,6 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        db.close();
+    //    db.close();
     }
 }

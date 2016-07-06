@@ -1,5 +1,6 @@
 package com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -26,10 +27,13 @@ public class FirmInfoTypeActivity extends AppCompatActivity {
     RelativeLayout layoutTop;
     RadioButton one,two,three;
     RadioGroup rgDemo;
+    private String name;
+    private Button btSave;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_firm_info_type);
         one= (RadioButton) findViewById(R.id.rbone_firm_info_type);
         two= (RadioButton) findViewById(R.id.rbtwo_firm_info_type);
@@ -45,16 +49,29 @@ public class FirmInfoTypeActivity extends AppCompatActivity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 Toast.makeText(FirmInfoTypeActivity.this, "进来了",Toast.LENGTH_SHORT).show();
                 if (checkedId ==one.getId()) {
-                    Toast.makeText(FirmInfoTypeActivity.this, "one选中", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(FirmInfoTypeActivity.this, "one选中", Toast.LENGTH_SHORT).show();
+                    name=one.getText().toString();
+                    //Log.d("企业类型",name);
                 } else if (checkedId == two.getId()) {
-                    Toast.makeText(FirmInfoTypeActivity.this, "two选中", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(FirmInfoTypeActivity.this, "two选中", Toast.LENGTH_SHORT).show();
+                    name=two.getText().toString();
                 }else if (checkedId==three.getId()){
-                    Toast.makeText(FirmInfoTypeActivity.this, "three选中", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(FirmInfoTypeActivity.this, "three选中", Toast.LENGTH_SHORT).show();
+                    name=three.getText().toString();
                 }
             }
         });
-
-
+        btSave= (Button) findViewById(R.id.btSave);
+        btSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("点击事件","真");
+                Intent intent=new Intent();
+                intent.putExtra("name",name);
+                FirmInfoTypeActivity.this.setResult(1,intent);
+                 FirmInfoTypeActivity.this.finish();
+            }
+        });
 
         title_Bar();
     }

@@ -2,8 +2,11 @@ package com.silianchuangye.sumao.success.fragments.myPlasticTrade.register;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -36,11 +39,25 @@ public class RegisterValueActivity extends AppCompatActivity {
         Bundle bundle=getIntent().getExtras();
         String title=bundle.getString("title");
         String content=bundle.getString("content");
+        String pass=bundle.getString("pass");
+
+        if (!content.equals("6-16个字符"))
+        {
+        ed_content_value.setText(content);
+        }
         title_Bar(title);
         if(!content.equals("")){
             tv_a.setVisibility(View.VISIBLE);
-            tv_a.setText(content+",可由中英文,数字,'-','_'组成");
+            tv_a.setText("6-16个字符,可由中英文,数字,'-','_'组成");
         }
+        if (title.equals("登录密码")||title.equals("确认密码")){
+             ed_content_value.setText(pass);
+             ed_content_value.setTransformationMethod(PasswordTransformationMethod.getInstance());
+        }
+        else if (title.equals("邮箱")){
+            ed_content_value.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+        }
+
         bt_save_register_value.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,22 +83,17 @@ public class RegisterValueActivity extends AppCompatActivity {
         iv_title_bar_service.setVisibility(View.GONE);
         sv_title_bar_serachView.setVisibility(View.GONE);
         iv_title_bar_search.setVisibility(View.GONE);
-
+        iv_title_bar_back.setVisibility(View.GONE);
         tvUpdate.setVisibility(View.GONE);
         tv_title_bar_title.setText(string);
 
 
         tv_title_bar_title.setTextColor(Color.WHITE);
-        iv_title_bar_back.setVisibility(View.VISIBLE);
+        iv_title_bar_back.setVisibility(View.GONE);
         layoutTop= (RelativeLayout) findViewById(R.id.layoutTop_register_value);
         layoutTop.setBackgroundColor(getResources().getColor(R.color.textColor_expandable_listview_show));
 
-        iv_title_bar_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                RegisterValueActivity.this.finish();
-            }
-        });
+
 
     }
 }
