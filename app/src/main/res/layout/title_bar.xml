@@ -98,6 +98,19 @@
         android:layout_alignParentRight="true"
         android:paddingRight="@dimen/padding_right"
         android:paddingTop="@dimen/padding_right"
+        android:visibility="invisible"
+        />
+    <TextView
+        android:id="@+id/cancellation_of_order"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="取消订单"
+        android:textColor="@color/white"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:paddingRight="@dimen/padding_right"
+        android:paddingTop="@dimen/padding_right"
+        android:visibility="invisible"
         />
 
     <Button

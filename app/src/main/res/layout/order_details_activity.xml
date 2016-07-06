@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/spot_order_title"
+        android:background="@color/my_sumao_background">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="@dimen/x5">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="现货订单"
+                    android:textColor="@color/btn_blue_normal" />
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/x1"
+                android:layout_marginLeft="@dimen/x5"
+                android:layout_marginRight="@dimen/x5"
+                android:background="@color/my_sumao_background" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/x5"
+                    android:text="产品订单号：DJ2016051300178"
+                    android:textColor="@color/btn_blue_normal" />
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/x1"
+                android:layout_marginLeft="@dimen/x5"
+                android:layout_marginRight="@dimen/x5"
+                android:background="@color/my_sumao_background" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/x1"
+                android:background="@color/white"
+                android:padding="@dimen/x5">
+
+                <TextView
+                    android:id="@+id/univalent1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/x5"
+                    android:text="订单类型:" />
+
+                <TextView
+                    android:id="@+id/univalent2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/univalent1"
+                    android:text="代售订单" />
+
+                <TextView
+                    android:id="@+id/number1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/x20"
+                    android:layout_toRightOf="@id/univalent2"
+                    android:text="订单状态:" />
+
+                <TextView
+                    android:id="@+id/number2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/number1"
+                    android:text="待支付" />
+
+                <TextView
+                    android:id="@+id/enterprise1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/univalent1"
+                    android:layout_marginLeft="@dimen/x5"
+                    android:paddingTop="@dimen/x5"
+                    android:text="订单时间:" />
+
+                <TextView
+                    android:id="@+id/enterprise2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/univalent1"
+                    android:layout_toRightOf="@id/enterprise1"
+                    android:paddingTop="@dimen/x5"
+                    android:text="2016-01-01 09:37" />
+
+                <TextView
+                    android:id="@+id/totalMoney1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/univalent1"
+                    android:layout_marginLeft="@dimen/x20"
+                    android:layout_toRightOf="@id/univalent2"
+                    android:paddingTop="@dimen/x5"
+                    android:text="订单金额:" />
+
+                <TextView
+                    android:id="@+id/totalMoney2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/univalent1"
+                    android:layout_toRightOf="@id/totalMoney1"
+                    android:paddingTop="@dimen/x5"
+                    android:text="88700元"
+                    android:textColor="@color/red"
+
+                    />
+
+                <TextView
+                    android:id="@+id/warehouse1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/enterprise1"
+                    android:layout_marginLeft="@dimen/x5"
+                    android:paddingTop="@dimen/x5"
+                    android:text="销售单位:" />
+
+                <TextView
+                    android:id="@+id/warehouse2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/enterprise1"
+                    android:layout_toRightOf="@id/warehouse1"
+                    android:paddingTop="@dimen/x5"
+                    android:text="中国石油化工集团有限公司华北分公司"
+
+                    />
+
+            </RelativeLayout>
+
+            <com.silianchuangye.sumao.success.custom.CustomListView
+                android:id="@+id/order_details_listView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/x5"
+                android:background="@color/my_sumao_background"
+                android:divider="@color/my_sumao_background"
+                android:dividerHeight="@dimen/x5"></com.silianchuangye.sumao.success.custom.CustomListView>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

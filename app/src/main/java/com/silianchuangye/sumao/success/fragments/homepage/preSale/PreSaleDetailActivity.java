@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -27,6 +28,7 @@ public class PreSaleDetailActivity  extends Activity implements View.OnClickList
     TextView title_bar_white_title;
     ImageView title_bar_white_shopping_cart;
     RelativeLayout pre_sale_sale_detail_detail;
+    Button payment_security;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +51,8 @@ public class PreSaleDetailActivity  extends Activity implements View.OnClickList
         title_bar_white_title = ((TextView) findViewById(R.id.title_bar_white_title));
         title_bar_white_shopping_cart = ((ImageView) findViewById(R.id.title_bar_white_shopping_cart));
         pre_sale_sale_detail_detail = ((RelativeLayout) findViewById(R.id.pre_sale_sale_detail_detail));
+        payment_security = ((Button) findViewById(R.id.payment_security));
+        payment_security.setOnClickListener(this);
         title_bar_white_back.setOnClickListener(this);
         title_bar_white_shopping_cart.setOnClickListener(this);
         pre_sale_sale_detail_detail.setOnClickListener(this);
@@ -71,6 +75,13 @@ public class PreSaleDetailActivity  extends Activity implements View.OnClickList
             case R.id.pre_sale_sale_detail_detail:
                 intent.setClass(PreSaleDetailActivity.this, VesselThreeActivity.class);
                 startActivity(intent);
+                break;
+
+//            点击的 支付保证金 按钮
+            case R.id.payment_security:
+                /**
+                 * 这里需要弹出popupWindow，即支付的弹出窗
+                 */
                 break;
 
         }
