@@ -2,7 +2,7 @@
 <resources>
     <string-array name="title">
         <item>订单管理</item>
-
+        <item>物流管理</item>
         <item>个人信息</item>
         <item>企业信息</item>
         <item>企业资金账户管理</item>
@@ -12,6 +12,11 @@
         <item>现货订单</item>
         <item>预售订单</item>
         <item>客服订单</item>
+    </string-array>
+<string-array name="child2">
+        <item>创建物流需求</item>
+        <item>查看物流需求</item>
+
     </string-array>
 
      <string-array name="child3">
