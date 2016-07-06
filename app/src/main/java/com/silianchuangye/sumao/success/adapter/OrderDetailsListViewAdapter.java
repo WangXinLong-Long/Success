@@ -46,6 +46,11 @@ private Context context;
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        PreSaleAdapter.ViewHolder holder;
+        if (convertView==null)
+        {
+
+        }
         return null;
     }
     class ViewHolder{

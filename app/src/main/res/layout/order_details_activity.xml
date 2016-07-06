@@ -39,7 +39,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@mipmap/" />
+                android:background="@mipmap/to_pay_the_picture" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
