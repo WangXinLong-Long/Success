@@ -27,18 +27,21 @@
         android:cacheColorHint="@android:color/transparent"
         ></ListView>
     </RelativeLayout>
-    <!--
+
     <ScrollView
-        android:background="#F2F2F2 "
+        android:background="#F2F2F2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_toRightOf="@+id/layout_Show_type"
-        ></ScrollView> !-->
+        android:scrollbars="none"
+        android:id="@+id/scrollDemo"
+        >
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#F2F2F2"
-        android:layout_toRightOf="@+id/layout_Show_type"
+
+
+
         >
         <RelativeLayout
           android:layout_width="match_parent"
@@ -55,7 +58,7 @@
               android:layout_marginTop="@dimen/x5"
               android:layout_marginLeft="@dimen/x10"
               />
-          <GridView
+          <com.silianchuangye.sumao.success.custom.customCalendar.CustomGridView
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:numColumns="3"
@@ -67,7 +70,7 @@
               android:layout_below="@+id/tv_Apple_Type"
               android:layout_marginTop="@dimen/x8"
               android:layout_marginLeft="@dimen/x10"
-              ></GridView>
+              ></com.silianchuangye.sumao.success.custom.customCalendar.CustomGridView>
       </RelativeLayout>
         <RelativeLayout
             android:layout_width="match_parent"
@@ -85,7 +88,7 @@
                 android:layout_marginTop="@dimen/x5"
                 android:layout_marginLeft="@dimen/x10"
                 />
-            <GridView
+            <com.silianchuangye.sumao.success.custom.customCalendar.CustomGridView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:numColumns="3"
@@ -95,7 +98,7 @@
                 android:layout_below="@+id/tv_Number_Type"
                 android:layout_marginTop="@dimen/x8"
                 android:layout_marginLeft="@dimen/x10"
-                ></GridView>
+                ></com.silianchuangye.sumao.success.custom.customCalendar.CustomGridView>
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="match_parent"
@@ -113,7 +116,7 @@
                 android:layout_marginTop="@dimen/x5"
                 android:layout_marginLeft="@dimen/x10"
                 />
-            <GridView
+            <com.silianchuangye.sumao.success.custom.customCalendar.CustomGridView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:numColumns="3"
@@ -123,7 +126,7 @@
                 android:layout_below="@+id/tv_Address_Type"
                 android:layout_marginTop="@dimen/x8"
                 android:layout_marginLeft="@dimen/x10"
-                ></GridView>
+                ></com.silianchuangye.sumao.success.custom.customCalendar.CustomGridView>
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="match_parent"
@@ -141,7 +144,7 @@
                 android:layout_marginTop="@dimen/x5"
                 android:layout_marginLeft="@dimen/x10"
                 />
-            <GridView
+            <com.silianchuangye.sumao.success.custom.customCalendar.CustomGridView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:numColumns="3"
@@ -151,10 +154,18 @@
                 android:layout_below="@+id/tv_Firm_Type"
                 android:layout_marginTop="@dimen/x8"
                 android:layout_marginLeft="@dimen/x10"
-                ></GridView>
+                ></com.silianchuangye.sumao.success.custom.customCalendar.CustomGridView>
 
         </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x15"
+            android:background="#F2F2F2"
+            android:layout_below="@id/layout_Firm_Type"
+            ></LinearLayout>
     </RelativeLayout>
+    </ScrollView>
+
 
 
 </RelativeLayout>

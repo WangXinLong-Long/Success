@@ -87,6 +87,7 @@
         android:textColor="#fff"
         android:textSize="16sp"
         android:text="保存"
+        android:id="@+id/btSave"
 
         />
 

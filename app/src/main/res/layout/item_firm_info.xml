@@ -16,7 +16,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tvTitle_firm_info"
-
         android:layout_marginTop="@dimen/x10"
         android:textSize="16sp"
         android:textColor="#95CA4E"
@@ -39,6 +38,17 @@
         android:layout_marginTop="@dimen/x13"
         android:textSize="14sp"
         android:text="四联创业"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvPass_firm_info"
+        android:layout_toLeftOf="@+id/ivMore_firm_info"
+        android:layout_marginRight="@dimen/x5"
+        android:layout_marginTop="@dimen/x13"
+        android:textSize="14sp"
+        android:password="true"
+
         />
 
 </RelativeLayout>
