@@ -56,6 +56,7 @@
         android:layout_marginTop="5dp"
         ></View>
     <LinearLayout
+        android:id="@+id/linear_item_create_logistics_message"
         android:visibility="gone"
         android:layout_below="@id/line_item_create_logistics_lv"
         android:layout_width="match_parent"
@@ -186,10 +187,11 @@
             ></View>
     </LinearLayout>
     <RelativeLayout
+        android:id="@+id/relative_item_create_logistics_bottom"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_below="@id/relative_item_create_logistics_lv_top"
+        android:layout_below="@id/linear_item_create_logistics_message"
        >
        <TextView
            android:id="@+id/tv_item_create_logistics_lv_add"
@@ -209,8 +211,10 @@
             android:background="@drawable/juxing"
             android:layout_centerVertical="true"
             android:gravity="center"
+            android:text="0"
             android:layout_toLeftOf="@id/tv_item_create_logistics_lv_add"/>
         <TextView
+            android:id="@+id/tv_item_create_logistics_lv_sub"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:text="-"
@@ -219,5 +223,18 @@
             android:layout_toLeftOf="@id/edt_item_create_logistics_num"
             android:background="@drawable/cart_num"
             android:gravity="center"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/tv_item_create_logistics_lv_sub"
+            android:text="本次发货数量"
+            android:layout_marginRight="10dp"/>
     </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/my_sumao_background"
+        android:layout_below="@id/relative_item_create_logistics_bottom"
+        />
 </RelativeLayout>

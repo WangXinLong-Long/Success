@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/selley_bg"
     tools:context=".fragments.logistics.CreateLogistics">
     <RelativeLayout
+        android:id="@+id/relative_create_logistics_top"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:background="@color/zixun_topbg">
         <ImageView
             android:id="@+id/img_create_logistics_back"
             android:layout_width="20dp"
-            android:layout_height="35dp"
+            android:layout_height="20dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:src="@mipmap/back"
@@ -28,14 +30,58 @@
         <ImageView
             android:id="@+id/img_create_logistics_search"
             android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_height="20dp"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
             android:src="@mipmap/search"/>
     </RelativeLayout>
+    <RelativeLayout
+        android:background="@color/selley_lv"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/relative_create_logistics_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
+        <LinearLayout
+            android:id="@+id/linear"
+            android:layout_centerVertical="true"
+            android:layout_width="40dp"
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/img_create_logistics_allselsect"
+                android:src="@mipmap/cart_select_null"
+                android:layout_gravity="center"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/linear"
+            android:text="全选"
+            android:layout_marginLeft="10dp"/>
+        <Button
+            android:id="@+id/btn_create_logistics_ok"
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/chinanorth"
+            android:text="创建物流需求"
+            android:textSize="17sp"
+            android:textColor="@color/selley_lv"
+            />
+    </RelativeLayout>
     <ExpandableListView
+        android:background="@color/selley_lv"
+        android:layout_below="@id/relative_create_logistics_top"
+        android:layout_above="@id/relative_create_logistics_bottom"
         android:id="@+id/create_logistics_expand_lv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></ExpandableListView>
-</LinearLayout>
+        android:layout_height="match_parent"
+        ></ExpandableListView>
+
+</RelativeLayout>
