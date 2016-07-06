@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.silianchuangye.sumao.success.MainActivity;
+import com.silianchuangye.sumao.success.fragments.logistics.CreateLogistics;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.InvoiceInformation;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.ReceiptAddress;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.EnterpriseCapitalAccountManagement.FundInfoActivity;
@@ -140,6 +141,10 @@ public class PagerFour extends BasePager {
                     startActivity(intent);
                 }    else if (sela.getChild(groupPosition, childPosition).toString().equals("账户金额明细")){
                     Intent intent=new Intent(context, SearchMoney.class);
+
+                    startActivity(intent);
+                }  else if (sela.getChild(groupPosition, childPosition).toString().equals("创建物流需求")){
+                    Intent intent=new Intent(context, CreateLogistics.class);
 
                     startActivity(intent);
                 }
