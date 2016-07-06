@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -29,7 +30,9 @@ public class FirmInfoTypeActivity extends AppCompatActivity {
     RadioGroup rgDemo;
     private String name;
     private Button btSave;
-
+    private LinearLayout three_layout;
+    String title;
+    int number;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +41,21 @@ public class FirmInfoTypeActivity extends AppCompatActivity {
         one= (RadioButton) findViewById(R.id.rbone_firm_info_type);
         two= (RadioButton) findViewById(R.id.rbtwo_firm_info_type);
         three= (RadioButton) findViewById(R.id.rbthree_firm_info_type);
+        three_layout= (LinearLayout) findViewById(R.id.three);
+        Bundle bundle=getIntent().getExtras();
+         title=bundle.getString("title");
+          number=bundle.getInt("number");
+        Log.d("number",number+"");
+        if (title.equals("企业类型")){
+            one.setText("贸易商");
+            two.setText("工贸一体");
+            three.setText("生产厂");
+        }else if (title.equals("纳税人类型")){
+            one.setText("一般纳税人");
+            two.setText("小规模纳税人");
+            three_layout.setVisibility(View.GONE);
+            three.setVisibility(View.GONE);
+        }
         rgDemo= (RadioGroup) findViewById(R.id.rgDemo);
        // rgDemo.setOnCheckedChangeListener(radiogpchange);
         int id=rgDemo.getCheckedRadioButtonId();
@@ -51,13 +69,15 @@ public class FirmInfoTypeActivity extends AppCompatActivity {
                 if (checkedId ==one.getId()) {
                     //Toast.makeText(FirmInfoTypeActivity.this, "one选中", Toast.LENGTH_SHORT).show();
                     name=one.getText().toString();
-                    //Log.d("企业类型",name);
+                    Log.d("企业类型",name);
                 } else if (checkedId == two.getId()) {
                     //Toast.makeText(FirmInfoTypeActivity.this, "two选中", Toast.LENGTH_SHORT).show();
                     name=two.getText().toString();
+                    Log.d("企业类型",name);
                 }else if (checkedId==three.getId()){
                     //Toast.makeText(FirmInfoTypeActivity.this, "three选中", Toast.LENGTH_SHORT).show();
                     name=three.getText().toString();
+                    Log.d("企业类型",name);
                 }
             }
         });
@@ -68,17 +88,17 @@ public class FirmInfoTypeActivity extends AppCompatActivity {
                 Log.d("点击事件","真");
                 Intent intent=new Intent();
                 intent.putExtra("name",name);
-                FirmInfoTypeActivity.this.setResult(1,intent);
-                 FirmInfoTypeActivity.this.finish();
+                FirmInfoTypeActivity.this.setResult(number,intent);
+                FirmInfoTypeActivity.this.finish();
             }
         });
 
-        title_Bar();
+        title_Bar(title);
     }
 
 
 
-    public void title_Bar() {
+    public void title_Bar(String name) {
         iv_title_bar_back = ((ImageView) findViewById(R.id.iv_title_bar_back));
         iv_title_bar_logo = ((ImageView) findViewById(R.id.iv_title_bar_logo));
         iv_title_bar_service = ((ImageView) findViewById(R.id.iv_title_bar_service));
@@ -90,9 +110,9 @@ public class FirmInfoTypeActivity extends AppCompatActivity {
         iv_title_bar_service.setVisibility(View.GONE);
         sv_title_bar_serachView.setVisibility(View.GONE);
         iv_title_bar_search.setVisibility(View.GONE);
-        tv_title_bar_title.setText("企业类型");
+        tv_title_bar_title.setText(name);
         tv_title_bar_title.setTextColor(Color.WHITE);
-        iv_title_bar_back.setVisibility(View.VISIBLE);
+        iv_title_bar_back.setVisibility(View.GONE);
         layoutTop = (RelativeLayout) findViewById(R.id.layoutTop_firm_info_type);
         layoutTop.setBackgroundColor(getResources().getColor(R.color.textColor_expandable_listview_show));
 

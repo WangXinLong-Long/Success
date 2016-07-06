@@ -380,22 +380,7 @@
             android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoTypeActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoNameActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoOfficeActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoPictureActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoAddressActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FrimInfoProvinceActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoParticularActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".fragments.homepage.preSale.PreSaleDetailActivity"
