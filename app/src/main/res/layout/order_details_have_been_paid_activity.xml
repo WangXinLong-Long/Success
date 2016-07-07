@@ -51,7 +51,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/x70"
                 android:layout_below="@id/split_line1_order_details"
-                android:background="@mipmap/to_pay_the_picture" />
+                android:background="@mipmap/completed_order" />
 
             <TextView
                 android:id="@+id/split_line3_order_details"
@@ -290,11 +290,39 @@
                         android:layout_marginRight="@dimen/x10"
                         android:src="@mipmap/my_sumao_iv_order" />
                 </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/bottom4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/bottom3"
+                    android:layout_marginTop="@dimen/x1"
+                    android:background="@color/white"
+                    android:paddingTop="@dimen/x5"
+                    android:paddingBottom="@dimen/x5">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="@dimen/x5"
+                        android:paddingLeft="@dimen/x10"
+                        android:paddingTop="@dimen/x5"
+                        android:text="物流信息"
+                        android:textColor="@color/textColor_expandable_listview_show"
+                        android:textSize="@dimen/x15" />
+
+                    <ImageView
+                        android:layout_width="@dimen/x15"
+                        android:layout_height="@dimen/x15"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/x10"
+                        android:src="@mipmap/my_sumao_iv_order" />
+                </RelativeLayout>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/x55"
                     android:text="  "
-                    android:layout_below="@id/bottom3"
+                    android:layout_below="@id/bottom4"
                     />
             </RelativeLayout>
         </RelativeLayout>
@@ -308,42 +336,21 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/x50"
-            android:background="@color/white"
+            android:background="@color/btn_blue_normal"
             >
             <TextView
                 android:id="@+id/bottom_money1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="合计金额："
-                android:layout_marginLeft="@dimen/x20"
-                android:layout_centerVertical="true"
+                android:text="创建物流需求"
+                android:layout_centerInParent="true"
                 android:paddingTop="@dimen/x10"
                 android:paddingBottom="@dimen/x10"
-                android:textSize="@dimen/x15"
-                />
-            <TextView
-                android:id="@+id/bottom_money2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="61000元"
-                android:textColor="@color/red"
-                android:layout_toRightOf="@id/bottom_money1"
-                android:layout_centerVertical="true"
-                android:textSize="@dimen/x15"
-                />
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="立即支付"
-                android:background="@color/my_sumao_title_background"
-                android:layout_alignParentRight="true"
                 android:textSize="@dimen/x15"
                 android:textColor="@color/white"
-                android:paddingTop="@dimen/x10"
-                android:paddingBottom="@dimen/x10"
-                android:paddingLeft="@dimen/x20"
-                android:paddingRight="@dimen/x20"
                 />
+
+
         </RelativeLayout>
     </LinearLayout>
 </RelativeLayout>

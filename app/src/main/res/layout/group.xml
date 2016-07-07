@@ -2,16 +2,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:orientation="vertical"
-    android:layout_height="@dimen/x53">
+    android:layout_height="wrap_content">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/x10"
+        android:layout_height="@dimen/x5"
         android:background="#EEEEF3"
         ></LinearLayout>
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/x40"
-        android:orientation="horizontal"
+        android:layout_centerVertical="true"
         >
     <TextView
         android:layout_width="wrap_content"
@@ -22,6 +22,7 @@
         android:layout_marginTop="@dimen/x10"
         android:textSize="16sp"
         android:textColor="#A4A4A4"
+        android:layout_centerVertical="true"
 
         />
     <TextView
@@ -33,6 +34,8 @@
         android:textSize="16sp"
         android:text="111111111"
         android:textColor="#29ABE2"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/tv_Order_id"
         />
     <TextView
         android:layout_width="wrap_content"
@@ -43,6 +46,8 @@
         android:textSize="16sp"
         android:text="金额:"
         android:textColor="#A4A4A4"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/tv_Order_id_value"
         />
     <TextView
         android:layout_width="wrap_content"
@@ -53,6 +58,8 @@
         android:textSize="16sp"
         android:text="77777.00"
         android:textColor="#A4A4A4"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/tv_Order_price"
         />
     <ImageView
         android:layout_width="16dp"
@@ -61,11 +68,75 @@
         android:layout_marginTop="@dimen/x12"
         android:layout_marginLeft="@dimen/x10"
         android:src="@mipmap/my_sumao_iv_order"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/x10"
+
         />
-    </LinearLayout>
+    </RelativeLayout>
      <LinearLayout
          android:background="#EEEEF3"
          android:layout_width="match_parent"
          android:layout_height="@dimen/x2"
          ></LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x30">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_order_price_people"
+            android:layout_marginTop="@dimen/x5"
+            android:layout_marginLeft="@dimen/x10"
+            android:textSize="16sp"
+            android:text="采购员:"
+            android:textColor="#A4A4A4"
+            android:layout_centerVertical="true"
+
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_order_price_people_name"
+            android:layout_marginTop="@dimen/x5"
+            android:layout_marginLeft="@dimen/x10"
+            android:textSize="16sp"
+            android:text="张三"
+            android:textColor="#A4A4A4"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/tv_order_price_people"
+
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_order_price_state"
+            android:layout_marginTop="@dimen/x5"
+            android:textSize="16sp"
+            android:text="待支付"
+            android:textColor="#F7931E"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/x10"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_order_price_state_order"
+            android:layout_marginTop="@dimen/x5"
+            android:layout_toLeftOf="@id/tv_order_price_state"
+            android:textSize="16sp"
+            android:text="张三"
+            android:textColor="#A4A4A4"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/x5"
+
+
+            />
+    </RelativeLayout>
+    <LinearLayout
+        android:background="#EEEEF3"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x2"
+        ></LinearLayout>
 </LinearLayout>

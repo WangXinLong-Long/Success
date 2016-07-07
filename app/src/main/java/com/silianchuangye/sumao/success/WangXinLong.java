@@ -32,6 +32,7 @@ public class WangXinLong extends Activity {
 //        6月30日查看照相机返回后崩溃的页面
 //        7月1日
 //        7月5日   现货加入购物车界面动画和支付订单界面
+//        7月7日  区分已支付订单和未支付订单
 
         showPayDialog();
 

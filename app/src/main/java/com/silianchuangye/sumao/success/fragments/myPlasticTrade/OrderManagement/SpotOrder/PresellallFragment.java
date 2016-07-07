@@ -11,6 +11,8 @@ import android.widget.ExpandableListView;
 
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.MyAdapter;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.OrderDetails.AlreadyPaidActivity;
+import com.silianchuangye.sumao.success.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -48,14 +50,16 @@ public class PresellallFragment extends Fragment {
         Map<String,Object> map1=new Hashtable<String,Object>();
         map1.put("id","1000001");
         map1.put("price","70000.0");
+        map1.put("states","待支付");
         listparrent.add(map1);
         Map<String,Object> map2=new Hashtable<String,Object>();
         map2.put("id","1000001");
         map2.put("price","88888888");
+        map2.put("states","已支付");
         listparrent.add(map2);
 
         listitem=new ArrayList<List<Map<String,Object>>>();
-        List<Map<String,Object>> list1=new ArrayList<Map<String,Object>>();
+        final List<Map<String,Object>> list1=new ArrayList<Map<String,Object>>();
         Map<String,Object> map=new Hashtable<String,Object>();
         map.put("type","四联创业");
         map.put("name","中国");
@@ -80,6 +84,7 @@ public class PresellallFragment extends Fragment {
         listitem.add(list1);
         listitem.add(list2);
 
+
         MyAdapter adapter=new MyAdapter(listparrent,listitem,getActivity());
         elvDemo.setAdapter(adapter);
         if(adapter!=null && listparrent!=null){
@@ -90,9 +95,17 @@ public class PresellallFragment extends Fragment {
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
 //                Toast.makeText(getContext(), "点击title", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent();
-                intent.setClass(getActivity(), SpotOrder.class);
-                startActivity(intent);
+                LogUtils.log(listparrent.get(groupPosition).get("states")+"");
+                if ("已支付".equals(listparrent.get(groupPosition).get("states"))){
+                    Intent intent = new Intent();
+                    intent.setClass(getActivity(),AlreadyPaidActivity.class);
+                    startActivity(intent);
+                }else if("待支付".equals(listparrent.get(groupPosition).get("states"))){
+                    Intent intent = new Intent();
+                    intent.setClass(getActivity(), SpotOrder.class);
+                    startActivity(intent);
+                }
+
                 return true;
 
             }

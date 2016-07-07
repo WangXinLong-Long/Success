@@ -380,22 +380,7 @@
             android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoTypeActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoNameActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoOfficeActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoPictureActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoAddressActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FrimInfoProvinceActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoParticularActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".fragments.homepage.preSale.PreSaleDetailActivity"
@@ -458,15 +443,32 @@
         <activity
             android:name=".fragments.myPlasticTrade.login.LoginUserActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".SearchActivity" />
-        <activity android:name=".fragments.type.TypeInfoActivity" />
-        <activity android:name=".fragments.logistics.CreateLogistics"></activity>
+        <activity android:name=".fragments.type.TypeInfoActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".fragments.logistics.CreateLogistics"
+            android:screenOrientation="portrait"></activity>
         <activity android:name=".fragments.homepage.goodInStock.PaymentsOrder"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".fragments.type.SearchActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".fragments.myPlasticTrade.OrderManagement.OrderDetails.OrderDetailsActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".fragments.myPlasticTrade.register.RegisterFirmActivity"
             android:screenOrientation="portrait"
-            />
-        <activity android:name=".fragments.type.SearchActivity" />
-        <activity android:name=".fragments.type.TypeInfoActivity" />
-        <activity android:name=".fragments.myPlasticTrade.register.RegisterFirmActivity"></activity>
+            ></activity>
+        <activity android:name=".fragments.myPlasticTrade.OrderManagement.OrderDetails.AlreadyPaidActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".fragments.myPlasticTrade.OrderManagement.OrderDetails.OrderDetailsHaveBeenPaid"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".dialog.Error_Dialog"
+                   android:theme="@style/Theme.AppCompat.Light.Dialog"
+            ></activity>
+        <activity android:name=".dialog.Ok_Dialog"
+                   android:theme="@style/Theme.AppCompat.Light.Dialog"
+            ></activity>
+
+
     </application>
 
 </manifest>

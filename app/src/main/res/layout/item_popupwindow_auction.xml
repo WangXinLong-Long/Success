@@ -6,7 +6,9 @@
     android:layout_height="wrap_content">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/y35">
+        android:layout_height="@dimen/y35"
+        android:id="@+id/layout_one"
+        >
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -14,6 +16,7 @@
             android:layout_marginTop="@dimen/x10"
             android:layout_marginLeft="@dimen/x10"
             android:textSize="16sp"
+            android:id="@+id/aaa"
             />
         <TextView
             android:layout_width="wrap_content"
@@ -30,16 +33,21 @@
             android:text="元"
             android:layout_marginTop="@dimen/x10"
             android:textSize="16sp"
+            android:id="@+id/yuan"
             />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/x1"
         android:background="#EEEEF3"
+        android:id="@+id/layout_two"
+        android:orientation="horizontal"
         ></LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/y30">
+        android:layout_height="@dimen/y30"
+        android:id="@+id/layout_three"
+        >
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -47,6 +55,7 @@
             android:layout_marginLeft="@dimen/x10"
             android:textSize="16sp"
             android:text="支付保证金:"
+            android:id="@+id/tv_Zhifu"
             />
         <EditText
             android:layout_width="@dimen/x120"

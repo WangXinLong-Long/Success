@@ -74,7 +74,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/bt_save_register_value"
-        android:layout_marginTop="@dimen/x20"
+        android:layout_marginTop="@dimen/x10"
         android:layout_marginRight="@dimen/x10"
         android:layout_marginLeft="@dimen/x10"
         android:background="@drawable/button_background_blue"

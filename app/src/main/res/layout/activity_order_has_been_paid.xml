@@ -5,7 +5,7 @@
 
     <include
         android:id="@+id/spot_order_title"
-        layout="@layout/title_bar" />
+        layout="@layout/child_title_bar" />
 
 
     <ScrollView
@@ -23,25 +23,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/my_sumao_background">
-
-
-                <RelativeLayout
-                    android:id="@+id/countdown"
-
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/x5"
-                    android:background="@color/white">
-
-                    <TextView
-                        android:id="@+id/tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:padding="@dimen/x5"
-                        android:textColor="@color/countdown_textview_yellow"
-                        android:textSize="@dimen/x20" />
-                </RelativeLayout>
 
                 <RelativeLayout
                     android:id="@+id/order_amount"
@@ -287,7 +268,7 @@
                             android:src="@mipmap/my_sumao_iv_order" />
                     </RelativeLayout>
 
-                    <RelativeLayout
+                    <!--<RelativeLayout
                         android:id="@+id/bottom3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -314,62 +295,16 @@
                             android:layout_centerVertical="true"
                             android:layout_marginRight="@dimen/x10"
                             android:src="@mipmap/my_sumao_iv_order" />
-                    </RelativeLayout>
+                    </RelativeLayout>-->
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/x55"
                         android:text="  "
-                        android:layout_below="@id/bottom3"
+                        android:layout_below="@id/bottom2"
                         />
                 </RelativeLayout>
             </RelativeLayout>
         </LinearLayout>
     </ScrollView>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="vertical"
-        >
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/x50"
-android:background="@color/white"
-            >
-            <TextView
-                android:id="@+id/bottom_money1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="合计金额："
-                android:layout_marginLeft="@dimen/x20"
-                android:layout_centerVertical="true"
-                android:paddingTop="@dimen/x10"
-                android:paddingBottom="@dimen/x10"
-                android:textSize="@dimen/x15"
-                />
-            <TextView
-                android:id="@+id/bottom_money2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="61000元"
-                android:textColor="@color/red"
-                android:layout_toRightOf="@id/bottom_money1"
-                android:layout_centerVertical="true"
-                android:textSize="@dimen/x15"
-                />
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="立即支付"
-                android:background="@color/my_sumao_title_background"
-                android:layout_alignParentRight="true"
-                android:textSize="@dimen/x15"
-                android:textColor="@color/white"
-                android:paddingTop="@dimen/x10"
-                android:paddingBottom="@dimen/x10"
-                android:paddingLeft="@dimen/x20"
-                android:paddingRight="@dimen/x20"
-                />
-        </RelativeLayout>
-    </LinearLayout>
+
 </RelativeLayout>

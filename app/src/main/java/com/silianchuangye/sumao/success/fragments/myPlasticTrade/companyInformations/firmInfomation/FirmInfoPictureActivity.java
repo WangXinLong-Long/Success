@@ -62,6 +62,7 @@ public class FirmInfoPictureActivity extends AppCompatActivity {
     Button sv_title_bar_serachView;
     TextView tv_title_bar_title, tv;
     RelativeLayout layoutTop;
+    private int number;
 
     private static final int REQUEST_PERMISSION_CAMERA_CODE = 1;
     private static final int REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE_CODE = 3;
@@ -70,19 +71,41 @@ public class FirmInfoPictureActivity extends AppCompatActivity {
     private Intent intent;
     private String path = "";
     private static final int TAKE_PICTURE = 0x000001;
-
+    private TextView tvinfo_firm_info_pictrue;
+    private Button btSave;
+    private TextView tvinfoValue_firm_info_pictrue;
+    private Button bt_save;
+    int number1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_firm_info_picture);
+
         title_Bar();
+        tvinfoValue_firm_info_pictrue= (TextView) findViewById(R.id.tvinfoValue_firm_info_pictrue);
+        tvinfo_firm_info_pictrue= (TextView) findViewById(R.id.tvinfo_firm_info_pictrue);
+        Bundle bundle=getIntent().getExtras();
+        String name=bundle.getString("name");
+         number1=bundle.getInt("number");
+        tvinfo_firm_info_pictrue.setText(name);
+        btSave= (Button) findViewById(R.id.bt_save_register_value);
         layout = (RelativeLayout) findViewById(R.id.layout_a);
         ivPictrue = (ImageView) findViewById(R.id.iv_firm_info_pictrue);
-        ivPictrue.setOnClickListener(new View.OnClickListener() {
+        btSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 backgroundAlpha(0.5f);
                 Popupwindow();
+            }
+        });
+        bt_save= (Button) findViewById(R.id.bt_save);
+        bt_save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent();
+                intent.putExtra("value",tvinfoValue_firm_info_pictrue.getText().toString());
+                setResult(number1,intent);
+                FirmInfoPictureActivity.this.finish();
             }
         });
 
@@ -378,14 +401,14 @@ public class FirmInfoPictureActivity extends AppCompatActivity {
         iv_title_bar_search.setVisibility(View.GONE);
         tv_title_bar_title.setText("上传图片");
         tv_title_bar_title.setTextColor(Color.WHITE);
-        iv_title_bar_back.setVisibility(View.VISIBLE);
+        iv_title_bar_back.setVisibility(View.GONE);
         layoutTop = (RelativeLayout) findViewById(R.id.layoutTop_firm_info_pivtrue);
         layoutTop.setBackgroundColor(getResources().getColor(R.color.textColor_expandable_listview_show));
 
         iv_title_bar_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirmInfoPictureActivity.this.finish();
+
             }
         });
     }

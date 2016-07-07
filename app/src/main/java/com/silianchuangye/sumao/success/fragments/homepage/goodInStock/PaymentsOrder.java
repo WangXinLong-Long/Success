@@ -1,6 +1,7 @@
 package com.silianchuangye.sumao.success.fragments.homepage.goodInStock;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -8,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.silianchuangye.sumao.success.R;
+import com.silianchuangye.sumao.success.dialog.Ok_Dialog;
 
 /**
  * Created by Administrator on 2016/7/4 0004.
@@ -81,8 +83,8 @@ public class PaymentsOrder extends Activity implements View.OnClickListener{
     public void onClick(View v) {
        switch (v.getId()){
            case R.id.buy_immediately:
-                //跳转界面
-
+               Intent intent=new Intent(PaymentsOrder.this, Ok_Dialog.class);
+               startActivity(intent);
                break;
            case R.id.title_bar_white_back:
                finish();
