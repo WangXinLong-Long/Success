@@ -81,6 +81,7 @@ public class PaymentsOrder extends Activity implements View.OnClickListener{
     public void onClick(View v) {
        switch (v.getId()){
            case R.id.buy_immediately:
+                //跳转界面
 
                break;
            case R.id.title_bar_white_back:

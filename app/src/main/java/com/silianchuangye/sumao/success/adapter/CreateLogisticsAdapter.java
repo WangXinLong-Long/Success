@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -15,7 +14,6 @@ import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.bean.Createlogistics_ExpandInfo;
-import com.silianchuangye.sumao.success.fragments.bean.Createlogistics_ListInfo;
 
 import java.util.List;
 
@@ -25,10 +23,15 @@ import java.util.List;
 public class CreateLogisticsAdapter extends BaseExpandableListAdapter{
     private Context ctx;
     private List<Createlogistics_ExpandInfo> expandList;
-    public CreateLogisticsAdapter(Context ctx,List<Createlogistics_ExpandInfo>expandList){
+    private boolean showFlag;
+    boolean expandFlag;
+    private LogisticsCall call;
+    public CreateLogisticsAdapter(Context ctx,List<Createlogistics_ExpandInfo>expandList,LogisticsCall call){
         this.ctx=ctx;
         this.expandList=expandList;
+        this.call=call;
     }
+
     @Override
     public int getGroupCount() {
         return expandList.size();
@@ -66,24 +69,24 @@ public class CreateLogisticsAdapter extends BaseExpandableListAdapter{
 
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-       ViewHolder holder;
+       ExpandHolder expand;
         if(convertView==null){
             convertView=View.inflate(ctx, R.layout.item_create_logistics,null);
-            holder=new ViewHolder();
-            holder.tv_expand_order_num= (TextView) convertView.findViewById(R.id.tv_item_create_logistics_order_num);
-            holder.tv_expand_order_name= (TextView) convertView.findViewById(R.id.tv_item_create_logistics_name);
-            holder.tv_expand_date= (TextView) convertView.findViewById(R.id.tv_item_create_logistic_date);
-            holder.tv_expand_company= (TextView) convertView.findViewById(R.id.tv_item_create_logistics_company_name);
-            holder.btn_expand_kefu= (Button) convertView.findViewById(R.id.btn_item_create_logistics_kefu);
-            convertView.setTag(holder);
+            expand=new ExpandHolder();
+            expand.tv_expand_order_num= (TextView) convertView.findViewById(R.id.tv_item_create_logistics_order_num);
+            expand.tv_expand_order_name= (TextView) convertView.findViewById(R.id.tv_item_create_logistics_name);
+            expand.tv_expand_date= (TextView) convertView.findViewById(R.id.tv_item_create_logistic_date);
+            expand.tv_expand_company= (TextView) convertView.findViewById(R.id.tv_item_create_logistics_company_name);
+            expand.btn_expand_kefu= (Button) convertView.findViewById(R.id.btn_item_create_logistics_kefu);
+            convertView.setTag(expand);
         }else {
-            holder = (ViewHolder) convertView.getTag();
+            expand = (ExpandHolder) convertView.getTag();
         }
-        holder.tv_expand_order_num.setText(expandList.get(groupPosition).order_num);
-        holder.tv_expand_order_name.setText(expandList.get(groupPosition).order_name);
-        holder.tv_expand_company.setText(expandList.get(groupPosition).company_name);
-        holder.tv_expand_date.setText(expandList.get(groupPosition).date);
-        holder.btn_expand_kefu.setOnClickListener(new View.OnClickListener() {
+        expand.tv_expand_order_num.setText(expandList.get(groupPosition).order_num);
+        expand.tv_expand_order_name.setText(expandList.get(groupPosition).order_name);
+        expand.tv_expand_company.setText(expandList.get(groupPosition).company_name);
+        expand.tv_expand_date.setText(expandList.get(groupPosition).date);
+        expand.btn_expand_kefu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(ctx,"客服",Toast.LENGTH_SHORT).show();
@@ -93,7 +96,7 @@ public class CreateLogisticsAdapter extends BaseExpandableListAdapter{
     }
 
     @Override
-    public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+    public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         final ViewHolder holder;
         if(convertView==null){
             convertView=View.inflate(ctx,R.layout.item_create_logistics_lv,null);
@@ -130,15 +133,28 @@ public class CreateLogisticsAdapter extends BaseExpandableListAdapter{
         holder.img_child_logistics_top_in.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                holder.liear_child_message.setVisibility(View.VISIBLE);
+                if(showFlag) {
+                    holder.liear_child_message.setVisibility(View.VISIBLE);
+                    holder.img_child_logistics_top_in.setImageResource(R.mipmap.my_sumao_iv_order_down);
+                }else{
+                    holder.liear_child_message.setVisibility(View.GONE);
+                    holder.img_child_logistics_top_in.setImageResource(R.mipmap.my_sumao_iv_order);
+                }
+                showFlag=!showFlag;
             }
         });
+        if(expandList.get(groupPosition).list.get(childPosition).SelectFlag){
+            holder.img_child_select.setImageResource(R.mipmap.cart_select);
+        }else{
+            holder.img_child_select.setImageResource(R.mipmap.cart_select_null);
+        }
         holder.img_child_select.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                holder.img_child_select.setImageResource(R.mipmap.cart_select);
+                Log.e("TAG","点击");
+               call.call(groupPosition,childPosition);
             }
-        });
+         });
         holder.tv_child_sub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -164,14 +180,14 @@ public class CreateLogisticsAdapter extends BaseExpandableListAdapter{
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
     }
-
-     class ViewHolder{
+    class ExpandHolder{
         TextView tv_expand_order_num;
         TextView tv_expand_order_name;
         TextView tv_expand_date;
         TextView tv_expand_company;
         Button btn_expand_kefu;
-
+    }
+     class ViewHolder{
         ImageView img_child_select,img_child_logistics_top_in;
         TextView tv_child_logistics;
         TextView tv_child_sub;
@@ -180,5 +196,8 @@ public class CreateLogisticsAdapter extends BaseExpandableListAdapter{
         LinearLayout liear_child_message;
         TextView tv_child_produce_top_name,tv_child_sort,tv_child_product_name,tv_child_num,tv_child_price
                 ,tv_child_can_num,tv_child_date,tv_child_cangku;
+    }
+    public interface LogisticsCall{
+        public void call(int groupPosition,int childPosition);
     }
 }
