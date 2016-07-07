@@ -22,7 +22,7 @@
         <ImageView
             android:layout_width="@dimen/x18"
             android:layout_height="@dimen/x18"
-            android:id="@+id/iv_dialog_error_cancel"
+            android:id="@+id/iv_dialog_ok_cancel"
             android:src="@mipmap/erroy"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
@@ -94,7 +94,11 @@
         android:layout_marginBottom="@dimen/x10"
         android:layout_marginTop="@dimen/x10"
         >
-
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="@dimen/x30"
+    android:layout_centerHorizontal="true"
+    >
 
         <Button
             android:layout_width="wrap_content"
@@ -104,7 +108,7 @@
             android:text="我的订单"
             android:id="@+id/bt_my_order"
             android:textColor="#fff"
-            android:layout_centerHorizontal="true"
+
             />
         <Button
             android:layout_width="wrap_content"
@@ -112,13 +116,14 @@
             android:background="@drawable/button_background_green"
             android:textSize="14sp"
             android:text="物流需求"
-            android:id="@+id/bt_rezhifu"
+            android:id="@+id/bt_wulliu"
             android:textColor="#fff"
             android:layout_centerHorizontal="true"
             android:layout_toRightOf="@+id/bt_my_order"
             android:layout_marginLeft="@dimen/x30"
 
             />
+</LinearLayout>
     </RelativeLayout>
 
 

@@ -90,7 +90,7 @@
         ></LinearLayout>
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/x40"
+        android:layout_height="@dimen/x30"
         android:layout_marginBottom="@dimen/x10"
         android:layout_marginTop="@dimen/x10"
         >
