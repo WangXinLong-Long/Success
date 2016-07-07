@@ -41,8 +41,8 @@
         >
         <ImageView
             android:layout_centerInParent="true"
-            android:layout_width="@dimen/x200"
-            android:layout_height="@dimen/x120"
+            android:layout_width="@dimen/x180"
+            android:layout_height="@dimen/x100"
             android:id="@+id/ivIcon_fund_info"
             android:src="@mipmap/bank_pingan_icon_big"
             />

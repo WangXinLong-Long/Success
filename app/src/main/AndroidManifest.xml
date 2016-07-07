@@ -448,6 +448,12 @@
         <activity android:name=".fragments.homepage.goodInStock.PaymentsOrder"
             android:screenOrientation="portrait"/>
         <activity android:name=".fragments.type.SearchActivity" />
+        <activity android:name=".dialog.Error_Dialog"
+                   android:theme="@style/Theme.AppCompat.Light.Dialog"
+            ></activity>
+        <activity android:name=".dialog.Ok_Dialog"
+                   android:theme="@style/Theme.AppCompat.Light.Dialog"
+            ></activity>
         <activity android:name=".fragments.myPlasticTrade.OrderManagement.OrderDetails.OrderDetailsActivity" />
         <activity android:name=".fragments.myPlasticTrade.register.RegisterFirmActivity"></activity>
     </application>
