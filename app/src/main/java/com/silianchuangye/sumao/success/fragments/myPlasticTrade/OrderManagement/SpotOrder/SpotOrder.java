@@ -2,8 +2,12 @@ package com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagemen
 
 import android.app.Activity;
 import android.content.Intent;
+import android.app.Dialog;
+import android.content.Context;
+
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AlertDialog;
@@ -24,11 +28,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.PopupWindowAdaptrer;
 import com.silianchuangye.sumao.success.adapter.SpotOrderAdapter;
 import com.silianchuangye.sumao.success.custom.CustomListView;
+import com.silianchuangye.sumao.success.dialog.Error_Dialog;
+import com.silianchuangye.sumao.success.dialog.Ok_Dialog;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.OpenAuction;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.OrderDetails.OrderDetailsActivity;
 import com.silianchuangye.sumao.success.model.SpotOrderModel;
@@ -65,6 +73,7 @@ public class SpotOrder extends Activity implements View.OnClickListener {
     private ListView lv;
     private PopupWindowAdaptrer adapter1;
      PopupWindow popupWindow;
+    Context context;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -225,44 +234,10 @@ public class SpotOrder extends Activity implements View.OnClickListener {
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                tv.setText(et.getText().toString());
-//                et.setText("");
-                popupWindow.dismiss();
-                 alert=new AlertDialog.Builder(SpotOrder.this);
-                View view=getLayoutInflater().inflate(R.layout.dialog_ok,null);
-                final ImageView iv_cancel= (ImageView) view.findViewById(R.id.iv_dialog_ok_cancel);
-                TextView tv_order_number= (TextView) view.findViewById(R.id.tv_order_number_ok);
-                Button bt_my_order= (Button) view.findViewById(R.id.bt_my_order);
-                Button bt_wuliu= (Button) view.findViewById(R.id.bt_wulliu);
-                tv_order_number.setText(tv_order_number1.getText());
-                iv_cancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                       Log.d("进入","了dialog");
-
-
-
-                    }
-                });
-                bt_my_order.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //跳转到我的订单
-                        Log.d("跳转","我的订单");
-                        //dismiss();
-                    }
-                });
-                bt_wuliu.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //跳转到物流
-                        Log.d("跳转","物流需求");
-                    }
-                });
-
-               // alert.setCancelable(false);
-                alert.setView(view);
-                alert.create().show();
+            popupWindow.dismiss();
+                Intent intent=new Intent(SpotOrder.this,Ok_Dialog.class);
+                intent.putExtra("number",tv_order_number1.getText().toString());
+                startActivity(intent);
 
             }
         });

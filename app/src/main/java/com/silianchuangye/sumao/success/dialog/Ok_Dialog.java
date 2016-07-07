@@ -1,5 +1,6 @@
 package com.silianchuangye.sumao.success.dialog;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -14,11 +15,10 @@ import com.silianchuangye.sumao.success.R;
 /**
  * Created by junjun on 2016/7/7.
  */
-public class Ok_Dialog extends AlertDialog {
+public class Ok_Dialog extends Activity {
+   private Context context;
+    private String order_number;
 
-    protected Ok_Dialog(Context context) {
-        super(context);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,14 +28,11 @@ public class Ok_Dialog extends AlertDialog {
         TextView tv_order_number= (TextView)findViewById(R.id.tv_order_number_ok);
         Button bt_my_order= (Button)findViewById(R.id.bt_my_order);
         Button bt_wuliu= (Button) findViewById(R.id.bt_wulliu);
-        tv_order_number.setText("");
+        tv_order_number.setText(order_number);
         iv_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("进入","了dialog");
-
-
-
+               Ok_Dialog.this.finish();
             }
         });
         bt_my_order.setOnClickListener(new View.OnClickListener() {

@@ -460,6 +460,15 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".fragments.myPlasticTrade.OrderManagement.OrderDetails.OrderDetailsHaveBeenPaid"
             android:screenOrientation="portrait"/>
+
+        <activity android:name=".dialog.Error_Dialog"
+                   android:theme="@style/Theme.AppCompat.Light.Dialog"
+            ></activity>
+        <activity android:name=".dialog.Ok_Dialog"
+                   android:theme="@style/Theme.AppCompat.Light.Dialog"
+            ></activity>
+
+
     </application>
 
 </manifest>
