@@ -443,14 +443,12 @@
         <activity
             android:name=".fragments.myPlasticTrade.login.LoginUserActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".SearchActivity" />
         <activity android:name=".fragments.type.TypeInfoActivity" />
         <activity android:name=".fragments.logistics.CreateLogistics"></activity>
         <activity android:name=".fragments.homepage.goodInStock.PaymentsOrder"
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait"/>
         <activity android:name=".fragments.type.SearchActivity" />
-        <activity android:name=".fragments.type.TypeInfoActivity" />
+        <activity android:name=".fragments.myPlasticTrade.OrderManagement.OrderDetails.OrderDetailsActivity" />
         <activity android:name=".fragments.myPlasticTrade.register.RegisterFirmActivity"></activity>
     </application>
 
