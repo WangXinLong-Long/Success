@@ -124,7 +124,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/tv_order_price_state_order"
             android:layout_marginTop="@dimen/x5"
-            android:layout_toLeftOf="@+id/tv_order_price_state"
+            android:layout_toLeftOf="@id/tv_order_price_state"
             android:textSize="16sp"
             android:text="张三"
             android:textColor="#A4A4A4"

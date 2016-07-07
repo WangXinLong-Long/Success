@@ -8,6 +8,7 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
 import com.silianchuangye.sumao.success.R;
+import com.silianchuangye.sumao.success.utils.LogUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,7 @@ public  class MyAdapter extends BaseExpandableListAdapter {
     private List<Map<String,Object>> listparrent;
     private List<List<Map<String,Object>>> listitem;
     private Context context;
+    TextView tv_order_price_state;
     public MyAdapter(List<Map<String,Object>> listparrent,List<List<Map<String,Object>>> listitem,Context context){
         this.listparrent=listparrent;
         this.listitem=listitem;
@@ -45,6 +47,7 @@ public  class MyAdapter extends BaseExpandableListAdapter {
     }
     //获取到一共多少组
     public int getGroupCount() {
+
         return listparrent.size();
     }
     //获取到组的序号
@@ -56,8 +59,13 @@ public  class MyAdapter extends BaseExpandableListAdapter {
         //View view =LayoutInflater().inflate(R.layout.group, arg3, false);
         View view=View.inflate(context,R.layout.group,null);
         TextView tvTitle  = (TextView) view.findViewById(R.id.tv_Order_id_value);
-        tvTitle.setText(listparrent.get(arg0).get("id").toString());
+         tv_order_price_state  = (TextView) view.findViewById(R.id.tv_order_price_state);
         TextView tvprice  = (TextView) view.findViewById(R.id.tv_order_price_value);
+
+        tv_order_price_state.setText(listparrent.get(arg0).get("states").toString());
+
+        tvTitle.setText(listparrent.get(arg0).get("id").toString());
+
         tvTitle.setText(listparrent.get(arg0).get("price").toString());
         return view;
     }

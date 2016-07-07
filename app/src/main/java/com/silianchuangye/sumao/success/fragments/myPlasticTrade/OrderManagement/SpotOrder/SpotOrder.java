@@ -1,10 +1,9 @@
 package com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.SpotOrder;
 
 import android.app.Activity;
-import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AlertDialog;
@@ -25,14 +24,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.PopupWindowAdaptrer;
 import com.silianchuangye.sumao.success.adapter.SpotOrderAdapter;
 import com.silianchuangye.sumao.success.custom.CustomListView;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.OpenAuction;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.OrderDetails.OrderDetailsActivity;
 import com.silianchuangye.sumao.success.model.SpotOrderModel;
 
 import java.text.SimpleDateFormat;
@@ -51,6 +49,7 @@ public class SpotOrder extends Activity implements View.OnClickListener {
     Button sv_title_bar_serachView;
     TextView tv_title_bar_title;
     RelativeLayout spot_order_title;
+    RelativeLayout order_amount;
     CustomListView spot_order_listView;
     /*定义一个倒计时的内部类*/
     private MyCount mc;
@@ -77,7 +76,7 @@ public class SpotOrder extends Activity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_spot_order);
+        setContentView(R.layout.activity_order_to_be_paid);
         bt_zhifu = (Button) findViewById(R.id.bt_Zhifu);
         bt_zhifu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,6 +89,8 @@ public class SpotOrder extends Activity implements View.OnClickListener {
         tv_order_number1= (TextView) findViewById(R.id.the_order_number_number);
 
         spot_order_title = ((RelativeLayout) findViewById(R.id.spot_order_title));
+        order_amount = ((RelativeLayout) findViewById(R.id.order_amount));
+        order_amount.setOnClickListener(this);
         spot_order_title.setBackgroundColor(getResources().getColor(R.color.textColor_expandable_listview_show));
 
         iv_title_bar_back = ((ImageView) findViewById(R.id.iv_title_bar_back));
@@ -105,7 +106,7 @@ public class SpotOrder extends Activity implements View.OnClickListener {
 
         iv_title_bar_back.setOnClickListener(this);
         iv_title_bar_search.setOnClickListener(this);
-        tv_title_bar_title.setText("现货订单");
+        tv_title_bar_title.setText("待支付订单");
         tv_title_bar_title.setTextColor(Color.WHITE);
 
         tv = ((TextView) findViewById(R.id.tv));
@@ -151,6 +152,11 @@ public class SpotOrder extends Activity implements View.OnClickListener {
                 Toast.makeText(this,"搜索",Toast.LENGTH_SHORT).show();
 
                 break;
+            case R.id.order_amount:
+                Intent intent = new Intent();
+                intent.setClass(this, OrderDetailsActivity.class);
+                startActivity(intent);
+                break;
         }
     }
 
@@ -170,6 +176,7 @@ public class SpotOrder extends Activity implements View.OnClickListener {
             tv.setText("剩余支付时间：" +time);
         }
     }
+
     public void Popupwindow(){
         View view=getLayoutInflater().inflate(R.layout.item_popupwindow_auction,null);
           popupWindow=new PopupWindow(findViewById(R.id.Layout_c), ActionBarOverlayLayout.LayoutParams.MATCH_PARENT, ActionBarOverlayLayout.LayoutParams.WRAP_CONTENT);
