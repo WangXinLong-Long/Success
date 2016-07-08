@@ -1,6 +1,7 @@
 package com.silianchuangye.sumao.success.fragments.logistics;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -180,22 +181,27 @@ private ExpandableListView expand_lv_create_logistics;
                 Toast.makeText(this,"全选",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btn_create_logistics_ok:
-
+                int count=0;
                 for(int i=0;i<expandList.size();i++){
                     int k= expandList.get(i).list.size();
                     for(int j=0;j<k;j++){
-                        if(expandList.get(i).list.get(j).SelectFlag){
-                            flag=true;
+                        if(!expandList.get(i).list.get(j).SelectFlag) {
+                            count++;
                         }
                     }
                 }
-                Log.e("TAG","flag===="+flag);
-                if(flag){
-                    Toast.makeText(this,"创建物流需求",Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(this,"最少选中其中一条",Toast.LENGTH_SHORT).show();
+                int sum=0;
+                for(int i=0;i<expandList.size();i++){
+                    int all= expandList.get(i).list.size();
+                    sum+=all;
                 }
-
+                if(count==sum) {
+                    Toast.makeText(this,"最少选中其中一条",Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(this,"创建物流需求",Toast.LENGTH_SHORT).show();
+                    Intent intent=new Intent(this,CreateLogisticsNeed.class);
+                    startActivity(intent);
+                }
                 break;
             case R.id.img_logistics_title_bar_back:
                 popWindow.dismiss();
