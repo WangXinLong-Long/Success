@@ -1,12 +1,20 @@
 package com.silianchuangye.sumao.success.fragments.logistics;
 
+import android.app.DatePickerDialog;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
@@ -15,6 +23,7 @@ import com.silianchuangye.sumao.success.fragments.bean.Createlogistics_ExpandInf
 import com.silianchuangye.sumao.success.fragments.bean.Createlogistics_ListInfo;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class CreateLogistics extends AppCompatActivity implements View.OnClickListener,CreateLogisticsAdapter.LogisticsCall{
@@ -27,6 +36,16 @@ private ExpandableListView expand_lv_create_logistics;
     private CreateLogisticsAdapter adapter;
     boolean All_Flag;
     private int i;
+
+    //popwindow里的控件
+    private View popView;
+    private ImageView img_pop_back;
+    private TextView tv_pop_canle;
+    private EditText edt_pop_product_order_num,edt_pop_cangku_name,
+                        edt_pop_product_name,edt_pop_company,edt_pop_order_num;
+    private TextView tv_pop_start_date,tv_pop_end_date;
+    private Button btn_pop_ok;
+    private PopupWindow popWindow;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -133,6 +152,9 @@ private ExpandableListView expand_lv_create_logistics;
                 break;
             case R.id.img_create_logistics_search:
                 Toast.makeText(this,"显示pop",Toast.LENGTH_SHORT).show();
+                backgroundAlpha(0.5f);
+                showPopWindow();
+
                 break;
             case R.id.img_create_logistics_allselsect:
                 if(!All_Flag){
@@ -168,6 +190,22 @@ private ExpandableListView expand_lv_create_logistics;
                 }
                 Toast.makeText(this,"创建物流需求",Toast.LENGTH_SHORT).show();
                 break;
+            case R.id.img_logistics_title_bar_back:
+                popWindow.dismiss();
+                break;
+            case R.id.tv_logistics_title_bar:
+                popWindow.dismiss();
+                break;
+            case R.id.btn_pop_ok:
+                Toast.makeText(this,"确认按钮",Toast.LENGTH_SHORT).show();
+                popWindow.dismiss();
+                break;
+            case R.id.tv_pop_logistics_start_date:
+                showDate(tv_pop_start_date);
+                break;
+            case R.id.tv_pop_logistics_end_date:
+                showDate(tv_pop_end_date);
+                break;
         }
     }
 
@@ -195,5 +233,68 @@ private ExpandableListView expand_lv_create_logistics;
         }else{
             img_create_logistics_allselect.setImageResource(R.mipmap.cart_select_null);
         }
+    }
+
+    //点击搜索按钮弹出popwindow
+    private void showPopWindow(){
+        popView=View.inflate(this,R.layout.popwindow_logistics,null);
+        img_pop_back= (ImageView) popView.findViewById(R.id.img_logistics_title_bar_back);
+        tv_pop_canle= (TextView) popView.findViewById(R.id.tv_logistics_title_bar);
+        edt_pop_product_order_num= (EditText) popView.findViewById(R.id.edt_pop_logistics_product_order_num);
+        edt_pop_cangku_name= (EditText) popView.findViewById(R.id.edt_pop_logistics_cangku);
+        edt_pop_product_name= (EditText) popView.findViewById(R.id.edt_pop_logistics_product_name);
+        edt_pop_company= (EditText) popView.findViewById(R.id.edt_pop_logistics_company);
+        edt_pop_order_num= (EditText) popView.findViewById(R.id.edt_pop_logistics_order_num);
+        tv_pop_start_date= (TextView) popView.findViewById(R.id.tv_pop_logistics_start_date);
+        tv_pop_end_date= (TextView) popView.findViewById(R.id.tv_pop_logistics_end_date);
+        btn_pop_ok= (Button) popView.findViewById(R.id.btn_pop_ok);
+
+        img_pop_back.setOnClickListener(this);
+        tv_pop_canle.setOnClickListener(this);
+        btn_pop_ok.setOnClickListener(this);
+        tv_pop_start_date.setOnClickListener(this);
+        tv_pop_end_date.setOnClickListener(this);
+
+        popView.measure(0,0);
+        int w=getWindowManager().getDefaultDisplay().getWidth();
+        popWindow=new PopupWindow(popView,w,popView.getMeasuredHeight());
+        popWindow.setBackgroundDrawable(new BitmapDrawable());
+        popWindow.setFocusable(true);
+        popWindow.showAtLocation(img_create_logistics_allselect, Gravity.TOP,0,55);
+        popWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                backgroundAlpha(1f);
+            }
+        });
+    }
+    public void backgroundAlpha(float bgAlpha)
+    {
+        WindowManager.LayoutParams lp = CreateLogistics.this.getWindow().getAttributes();
+        lp.alpha = bgAlpha; //0.0-1.0
+        CreateLogistics.this.getWindow().setAttributes(lp);
+    }
+    private void showDate(final TextView Tv){
+        Calendar calend1 = Calendar.getInstance();
+        calend1.setTimeInMillis(System.currentTimeMillis());
+        int year = calend1.get(Calendar.YEAR);
+        int month = calend1.get(Calendar.MONTH) + 1;
+        int day = calend1.get(Calendar.DAY_OF_MONTH);
+        DatePickerDialog dialog3 = new DatePickerDialog(
+                CreateLogistics.this,
+                new DatePickerDialog.OnDateSetListener() {
+
+                    @Override
+                    public void onDateSet(DatePicker view,
+                                          int year, int monthOfYear,
+                                          int dayOfMonth) {
+                        Toast.makeText(CreateLogistics.this,
+                                "" + year + "年" + (monthOfYear + 1)
+                                        + "月" + dayOfMonth + "日", Toast.LENGTH_LONG).show();
+                        Tv.setText(year + "年" + (monthOfYear + 1)
+                                + "月" + dayOfMonth + "日");
+                    }
+                }, year, month, day);
+        dialog3.show();
     }
 }

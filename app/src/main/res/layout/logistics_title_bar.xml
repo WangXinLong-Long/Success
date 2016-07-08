@@ -4,7 +4,7 @@
     android:layout_height="45dp"
     android:background="@color/zixun_topbg">
     <ImageView
-        android:id="@+id/img_logistics_title_bar"
+        android:id="@+id/img_logistics_title_bar_back"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:src="@mipmap/back"
