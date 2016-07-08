@@ -1,5 +1,7 @@
 package com.silianchuangye.sumao.success.fragments.bean;
 
+import android.widget.ImageView;
+
 /**
  * Created by Administrator on 2016/7/6.
  */
@@ -12,4 +14,5 @@ public class Createlogistics_ListInfo {
     public double can_num;
     public String date;
     public String cangku_name;
+    public boolean SelectFlag;
 }

@@ -469,7 +469,10 @@
             ></activity>
         <activity android:name=".fragments.myPlasticTrade.PhysicalDistributionManagement.ViewLogisticsDemands.ViewLogisticsDemand"
             android:screenOrientation="portrait"/>
-
+        <activity
+            android:name=".fragments.logistics.CreateLogistics"
+            android:screenOrientation="portrait" />
+        <activity android:name=".fragments.logistics.CreateLogisticsNeed"></activity>
     </application>
 
 </manifest>

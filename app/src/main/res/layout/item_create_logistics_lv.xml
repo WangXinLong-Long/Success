@@ -188,7 +188,6 @@
     </LinearLayout>
     <RelativeLayout
         android:id="@+id/relative_item_create_logistics_bottom"
-        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_below="@id/linear_item_create_logistics_message"

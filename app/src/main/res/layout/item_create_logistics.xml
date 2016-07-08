@@ -2,7 +2,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+   <View
+       android:layout_width="match_parent"
+       android:layout_height="10dp"
+       android:id="@+id/line1_create_logistics"
+       android:background="@color/my_sumao_background"/>
     <RelativeLayout
+        android:layout_below="@id/line1_create_logistics"
         android:id="@+id/relative_create_logistics_top"
         android:layout_width="match_parent"
         android:layout_height="40dp"
@@ -96,7 +102,7 @@
             <Button
                 android:id="@+id/btn_item_create_logistics_kefu"
                 android:layout_width="wrap_content"
-                android:layout_height="30dp"
+                android:layout_height="25dp"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="10dp"
                 android:text="联系客服"
@@ -104,4 +110,9 @@
                 android:background="@drawable/button_background_yellow"/>
         </RelativeLayout>
     </LinearLayout>
+    <View
+        android:layout_below="@id/linear_item_create_logistics_second"
+        android:layout_width="match_parent"
+        android:background="@color/my_sumao_background"
+        android:layout_height="1dp"/>
 </RelativeLayout>
