@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/selley_bg"
-    tools:context=".fragments.logistics.CreateLogistics">
+    tools:context=".fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.CreateLogistics">
     <RelativeLayout
         android:id="@+id/relative_create_logistics_top"
         android:layout_width="match_parent"

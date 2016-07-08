@@ -445,7 +445,7 @@
             android:screenOrientation="portrait" />
         <activity android:name=".fragments.type.TypeInfoActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".fragments.logistics.CreateLogistics"
+        <activity android:name=".fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.CreateLogistics"
             android:screenOrientation="portrait"></activity>
         <activity android:name=".fragments.homepage.goodInStock.PaymentsOrder"
             android:screenOrientation="portrait"/>
@@ -467,7 +467,8 @@
         <activity android:name=".dialog.Ok_Dialog"
                    android:theme="@style/Theme.AppCompat.Light.Dialog"
             ></activity>
-
+        <activity android:name=".fragments.myPlasticTrade.PhysicalDistributionManagement.ViewLogisticsDemands.ViewLogisticsDemand"
+            android:screenOrientation="portrait"/>
 
     </application>
 
