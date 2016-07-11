@@ -144,6 +144,7 @@ private ExpandableListView expand_lv_create_logistics;
         img_create_logistics_allselect.setOnClickListener(this);
         btn_create_logistics_ok.setOnClickListener(this);
     }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -280,8 +281,7 @@ private ExpandableListView expand_lv_create_logistics;
             }
         });
     }
-    public void backgroundAlpha(float bgAlpha)
-    {
+    public void backgroundAlpha(float bgAlpha){
         WindowManager.LayoutParams lp = CreateLogistics.this.getWindow().getAttributes();
         lp.alpha = bgAlpha; //0.0-1.0
         CreateLogistics.this.getWindow().setAttributes(lp);
