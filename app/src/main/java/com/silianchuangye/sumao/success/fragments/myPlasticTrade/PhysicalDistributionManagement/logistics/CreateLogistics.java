@@ -1,11 +1,9 @@
-package com.silianchuangye.sumao.success.fragments.logistics;
-
+package com.silianchuangye.sumao.success.fragments.myPlasticTrade.PhysicalDistributionManagement.logistics;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -22,6 +20,7 @@ import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.CreateLogisticsAdapter;
 import com.silianchuangye.sumao.success.fragments.bean.Createlogistics_ExpandInfo;
 import com.silianchuangye.sumao.success.fragments.bean.Createlogistics_ListInfo;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.CreateLogisticsNeed;
 
 import java.util.ArrayList;
 import java.util.Calendar;

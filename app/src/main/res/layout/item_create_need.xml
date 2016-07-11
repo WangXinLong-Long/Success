@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x35">
+        <TextView
+            android:layout_marginLeft="@dimen/x10"
+            android:id="@+id/tv_item_create_need_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:textColor="#ff0000"/>
+        <TextView
+            android:id="@+id/tv_item_create_need_second"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:textSize="14sp"
+            android:layout_toRightOf="@id/tv_item_create_need_start"/>
+        <ImageView
+            android:id="@+id/img_create_need"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/my_sumao_iv_order"
+            android:layout_width="@dimen/x17"
+            android:layout_height="@dimen/x17"
+            android:layout_marginRight="@dimen/x10"/>
+        <TextView
+
+            android:layout_toLeftOf="@id/img_create_need"
+            android:id="@+id/tv_item_create_need_three"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/x10"
+            />
+    </RelativeLayout>
+
+</RelativeLayout>
