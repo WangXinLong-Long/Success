@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y150"
+        android:background="@color/white">
+
+
+        <RelativeLayout
+            android:id="@+id/popup_window_logistics_demand"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x30"
+            android:layout_marginLeft="@dimen/x10"
+            android:layout_marginRight="@dimen/x10"
+            android:layout_marginTop="@dimen/x5">
+
+            <TextView
+                android:id="@+id/popup_window_logistics_demand1"
+                android:layout_width="@dimen/x230"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:background="@mipmap/xiala" />
+
+            <TextView
+                android:id="@+id/popup_window_logistics_demand2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/x2"
+                android:layout_toLeftOf="@id/popup_window_logistics_demand1"
+                android:text="物流需求号:" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/popup_window_type"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x30"
+            android:layout_below="@id/popup_window_logistics_demand"
+            android:layout_marginLeft="@dimen/x10"
+            android:layout_marginRight="@dimen/x10"
+            android:layout_marginTop="@dimen/x5">
+
+            <TextView
+                android:id="@+id/popup_window_type1"
+                android:layout_width="@dimen/x230"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:background="@mipmap/xiala" />
+
+            <TextView
+                android:id="@+id/popup_window_type2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/x2"
+                android:layout_toLeftOf="@id/popup_window_type1"
+                android:text="类型:" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/popup_window_distribution_mode"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x30"
+            android:layout_below="@id/popup_window_type"
+            android:layout_marginLeft="@dimen/x10"
+            android:layout_marginRight="@dimen/x10"
+            android:layout_marginTop="@dimen/x5">
+
+            <TextView
+                android:id="@+id/popup_window_distribution_mode1"
+                android:layout_width="@dimen/x230"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:background="@mipmap/xiala" />
+
+            <TextView
+                android:id="@+id/popup_window_distribution_mode2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/x2"
+                android:layout_toLeftOf="@id/popup_window_distribution_mode1"
+                android:text="配送方式:" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/popup_window_product_order"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x30"
+            android:layout_below="@id/popup_window_distribution_mode"
+            android:layout_marginLeft="@dimen/x10"
+            android:layout_marginRight="@dimen/x10"
+            android:layout_marginTop="@dimen/x5">
+
+            <TextView
+                android:id="@+id/popup_window_product_order1"
+                android:layout_width="@dimen/x230"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/textview_background" />
+
+            <TextView
+                android:id="@+id/popup_window_product_order2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/x2"
+                android:layout_toLeftOf="@id/popup_window_product_order1"
+                android:text="产品订单号:" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/popup_window_delivery_date"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x30"
+            android:layout_below="@id/popup_window_product_order"
+            android:layout_marginLeft="@dimen/x10"
+            android:layout_marginRight="@dimen/x10"
+            android:layout_marginTop="@dimen/x5">
+
+            <TextView
+                android:id="@+id/popup_window_delivery_date1"
+                android:layout_width="@dimen/x230"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:background="@mipmap/xiala" />
+
+            <TextView
+                android:id="@+id/popup_window_delivery_date2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/x2"
+                android:layout_toLeftOf="@id/popup_window_delivery_date1"
+                android:text="交货日期:" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/popup_window_split_line"
+            android:layout_below="@id/popup_window_delivery_date"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x1"
+            android:layout_marginTop="@dimen/x5"
+            android:background="@color/my_sumao_background" />
+
+        <Button
+            android:id="@+id/popup_window_search"
+            android:layout_below="@id/popup_window_split_line"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+        <RelativeLayout
+            android:id="@+id/relative_lv1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/popup_window_logistics_demand"
+            >
+            <ListView
+                android:background="@mipmap/a"
+                android:visibility="gone"
+                android:layout_alignParentRight="true"
+                android:id="@+id/lv_logistics_demand"
+                android:layout_width="@dimen/x230"
+                android:layout_marginRight="@dimen/x10"
+                android:layout_height="wrap_content"
+                ></ListView>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relative_lv2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/popup_window_type"
+            >
+            <ListView
+                android:background="@mipmap/a"
+                android:visibility="gone"
+                android:layout_alignParentRight="true"
+                android:id="@+id/lv_type"
+                android:layout_width="@dimen/x230"
+                android:layout_marginRight="@dimen/x10"
+                android:layout_height="wrap_content"
+                ></ListView>
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/relative_lv3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/popup_window_distribution_mode"
+            >
+            <ListView
+                android:background="@mipmap/a"
+                android:visibility="gone"
+                android:layout_alignParentRight="true"
+                android:id="@+id/lv_distribution_mode"
+                android:layout_width="@dimen/x230"
+                android:layout_marginRight="@dimen/x10"
+                android:layout_height="wrap_content"
+                ></ListView>
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/popup_window_back"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y400"
+        android:background="#AF000000"
+        android:orientation="vertical"></LinearLayout>
+</LinearLayout>
