@@ -35,6 +35,7 @@ public class WangXinLong extends Activity {
 //        7月7日  区分已支付订单和未支付订单
 //        7月8日 合并代码
 //        7月13日 查看物理需求
+//        7月13 修改清单文件
 
         showPayDialog();
 
