@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.silianchuangye.sumao.success.custom.CustomListView
+        android:id="@+id/logistics_child_item_listview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/x5"></com.silianchuangye.sumao.success.custom.CustomListView>
+<TextView
+    android:id="@+id/logistics_child_item_splitline1"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/x1"
+    android:background="@color/my_sumao_background"
+    android:layout_below="@id/logistics_child_item_listview"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/x5"
+        android:layout_below="@id/logistics_child_item_splitline1">
+
+        <RelativeLayout
+            android:id="@+id/delivery_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/x5"
+            >
+
+            <TextView
+                android:id="@+id/delivery_number1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="提货车号" />
+
+            <TextView
+                android:id="@+id/delivery_number2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/logistics_child_item_splitline2"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x1"
+            android:background="@color/my_sumao_background"
+            android:layout_below="@id/delivery_number"/>
+        <RelativeLayout
+            android:id="@+id/pick_up_person"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/logistics_child_item_splitline2"
+            android:padding="@dimen/x5">
+
+            <TextView
+                android:id="@+id/pick_up_person1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="提货人" />
+
+            <TextView
+                android:id="@+id/pick_up_person2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true" />
+        </RelativeLayout>
+        <TextView
+            android:id="@+id/logistics_child_item_splitline3"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x1"
+            android:background="@color/my_sumao_background"
+            android:layout_below="@id/pick_up_person"/>
+        <RelativeLayout
+            android:id="@+id/contact_information"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/logistics_child_item_splitline3"
+            android:padding="@dimen/x5">
+
+            <TextView
+                android:id="@+id/contact_information1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="联系方式" />
+
+            <TextView
+                android:id="@+id/contact_information2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/logistics_child_item_splitline4"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x1"
+            android:background="@color/my_sumao_background"
+            android:layout_below="@id/contact_information"/>
+        <RelativeLayout
+            android:id="@+id/id_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/logistics_child_item_splitline4"
+            android:padding="@dimen/x5">
+
+            <TextView
+                android:id="@+id/id_card1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="提货人身份证号" />
+
+            <TextView
+                android:id="@+id/id_card2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/logistics_child_item_splitline5"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x1"
+            android:background="@color/my_sumao_background"
+            android:layout_below="@id/id_card"/>
+        <RelativeLayout
+            android:id="@+id/remarks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/logistics_child_item_splitline5"
+            android:padding="@dimen/x5">
+
+            <TextView
+                android:id="@+id/remarks1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="备注" />
+
+            <TextView
+                android:id="@+id/remarks2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true" />
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>

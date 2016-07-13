@@ -472,7 +472,10 @@
         <activity
             android:name=".fragments.logistics.CreateLogistics"
             android:screenOrientation="portrait" />
-        <activity android:name=".fragments.logistics.CreateLogisticsNeed"></activity>
+        <activity android:name=".fragments.logistics.CreateLogisticsNeed"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".fragments.myPlasticTrade.PhysicalDistributionManagement.ViewLogisticsDemands.TrackingDistributionDetails"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
