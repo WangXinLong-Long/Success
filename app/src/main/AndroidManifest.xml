@@ -482,6 +482,9 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.Logistics_SelectAddress"
             android:screenOrientation="portrait"></activity>
+        <activity android:name=".fragments.SellerManagementPlatform.SellerManagementPlatformActivity"
+            android:screenOrientation="portrait"
+            />
     </application>
 
 </manifest>
