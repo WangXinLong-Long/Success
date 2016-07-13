@@ -15,6 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="We will rock you"
+        android:layout_marginLeft="@dimen/x15"
 
         />
     <ImageView

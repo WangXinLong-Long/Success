@@ -3,7 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="12dp"
+    android:paddingLeft="12dp"
+    android:paddingBottom="15dp"
+    android:paddingTop="15dp"
     android:background="@color/white"
     >
 <ImageView
@@ -11,6 +13,7 @@
     android:layout_width="@dimen/x10"
     android:layout_height="@dimen/x10"
     android:layout_centerVertical="true"
+    android:layout_marginLeft="@dimen/x10"
     />
     <TextView
         android:id="@+id/tv_my_sumao_parent"
@@ -19,7 +22,7 @@
         android:layout_toRightOf="@id/iv_my_sumao_parent"
         android:text="We will rock you"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="5dp"
+        android:layout_marginLeft="28dp"
 
         />
 </RelativeLayout>
