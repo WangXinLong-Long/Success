@@ -1,10 +1,9 @@
-package com.silianchuangye.sumao.success.fragments.logistics;
-
+package com.silianchuangye.sumao.success.fragments.myPlasticTrade.PhysicalDistributionManagement.logistics;
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -21,13 +20,14 @@ import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.CreateLogisticsAdapter;
 import com.silianchuangye.sumao.success.fragments.bean.Createlogistics_ExpandInfo;
 import com.silianchuangye.sumao.success.fragments.bean.Createlogistics_ListInfo;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.CreateLogisticsNeed;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 public class CreateLogistics extends AppCompatActivity implements View.OnClickListener,CreateLogisticsAdapter.LogisticsCall{
-private ExpandableListView expand_lv_create_logistics;
+    private ExpandableListView expand_lv_create_logistics;
     private ImageView img_create_logistics_back;
     private ImageView img_create_logistics_search;
     private ImageView img_create_logistics_allselect;
@@ -144,6 +144,7 @@ private ExpandableListView expand_lv_create_logistics;
         img_create_logistics_allselect.setOnClickListener(this);
         btn_create_logistics_ok.setOnClickListener(this);
     }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -180,22 +181,27 @@ private ExpandableListView expand_lv_create_logistics;
                 Toast.makeText(this,"全选",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btn_create_logistics_ok:
-
+                int count=0;
                 for(int i=0;i<expandList.size();i++){
                     int k= expandList.get(i).list.size();
                     for(int j=0;j<k;j++){
-                        if(expandList.get(i).list.get(j).SelectFlag){
-                            flag=true;
+                        if(!expandList.get(i).list.get(j).SelectFlag) {
+                            count++;
                         }
                     }
                 }
-                Log.e("TAG","flag===="+flag);
-                if(flag){
-                    Toast.makeText(this,"创建物流需求",Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(this,"最少选中其中一条",Toast.LENGTH_SHORT).show();
+                int sum=0;
+                for(int i=0;i<expandList.size();i++){
+                    int all= expandList.get(i).list.size();
+                    sum+=all;
                 }
-
+                if(count==sum) {
+                    Toast.makeText(this,"最少选中其中一条",Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(this,"创建物流需求",Toast.LENGTH_SHORT).show();
+                    Intent intent=new Intent(this,CreateLogisticsNeed.class);
+                    startActivity(intent);
+                }
                 break;
             case R.id.img_logistics_title_bar_back:
                 popWindow.dismiss();
@@ -275,8 +281,7 @@ private ExpandableListView expand_lv_create_logistics;
             }
         });
     }
-    public void backgroundAlpha(float bgAlpha)
-    {
+    public void backgroundAlpha(float bgAlpha){
         WindowManager.LayoutParams lp = CreateLogistics.this.getWindow().getAttributes();
         lp.alpha = bgAlpha; //0.0-1.0
         CreateLogistics.this.getWindow().setAttributes(lp);

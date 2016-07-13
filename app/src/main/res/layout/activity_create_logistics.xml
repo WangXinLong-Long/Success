@@ -9,14 +9,14 @@
     <RelativeLayout
         android:id="@+id/relative_create_logistics_top"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="@dimen/title_height"
         android:background="@color/zixun_topbg">
         <ImageView
             android:id="@+id/img_create_logistics_back"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="@dimen/x17"
+            android:layout_height="@dimen/x17"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="@dimen/x10"
             android:src="@mipmap/back"
             />
         <TextView
@@ -29,11 +29,11 @@
             />
         <ImageView
             android:id="@+id/img_create_logistics_search"
-            android:layout_width="25dp"
-            android:layout_height="20dp"
+            android:layout_width="@dimen/x20"
+            android:layout_height="@dimen/x20"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="@dimen/x10"
             android:src="@mipmap/search"/>
     </RelativeLayout>
     <RelativeLayout
@@ -41,20 +41,20 @@
         android:layout_alignParentBottom="true"
         android:id="@+id/relative_create_logistics_bottom"
         android:layout_width="match_parent"
-        android:layout_height="45dp">
+        android:layout_height="@dimen/title_height">
         <LinearLayout
             android:id="@+id/linear"
             android:layout_centerVertical="true"
-            android:layout_width="40dp"
+            android:layout_width="@dimen/x37"
             android:layout_height="match_parent">
             <ImageView
                 android:id="@+id/img_create_logistics_allselsect"
                 android:src="@mipmap/cart_select_null"
                 android:layout_gravity="center"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
-                android:layout_width="25dp"
-                android:layout_height="25dp" />
+                android:layout_marginLeft="@dimen/x10"
+                android:layout_width="@dimen/x20"
+                android:layout_height="@dimen/x20" />
         </LinearLayout>
         <TextView
             android:layout_width="wrap_content"
@@ -62,10 +62,10 @@
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/linear"
             android:text="全选"
-            android:layout_marginLeft="10dp"/>
+            android:layout_marginLeft="@dimen/x10"/>
         <Button
             android:id="@+id/btn_create_logistics_ok"
-            android:layout_width="150dp"
+            android:layout_width="@dimen/x145"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:background="@drawable/chinanorth"
@@ -81,6 +81,6 @@
         android:id="@+id/create_logistics_expand_lv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="@dimen/x10"
         ></ExpandableListView>
 </RelativeLayout>

@@ -9,14 +9,14 @@
        layout="@layout/logistics_title_bar"/>
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="45dp">
+        android:layout_height="@dimen/title_height">
         <EditText
             android:textSize="14sp"
             android:id="@+id/edt_pop_logistics_product_order_num"
-            android:layout_width="230dp"
-            android:layout_height="30dp"
+            android:layout_width="@dimen/x220"
+            android:layout_height="@dimen/x27"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="@dimen/x7"
             android:layout_centerVertical="true"
             android:background="@drawable/juxing"/>
         <TextView
@@ -26,18 +26,18 @@
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@id/edt_pop_logistics_product_order_num"
             android:textSize="15sp"
-            android:layout_marginRight="5dp"/>
+            android:layout_marginRight="@dimen/x5"/>
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="45dp">
+        android:layout_height="@dimen/x35">
         <EditText
             android:textSize="14sp"
             android:id="@+id/edt_pop_logistics_cangku"
-            android:layout_width="230dp"
-            android:layout_height="30dp"
+            android:layout_width="@dimen/x220"
+            android:layout_height="@dimen/x27"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="@dimen/x7"
             android:layout_centerVertical="true"
             android:background="@drawable/juxing"/>
         <TextView
@@ -47,18 +47,18 @@
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@id/edt_pop_logistics_cangku"
             android:textSize="15sp"
-            android:layout_marginRight="5dp"/>
+            android:layout_marginRight="@dimen/x5"/>
     </RelativeLayout>
     <RelativeLayout
     android:layout_width="match_parent"
-    android:layout_height="45dp">
+    android:layout_height="@dimen/x35">
     <EditText
         android:textSize="14sp"
         android:id="@+id/edt_pop_logistics_product_name"
-        android:layout_width="230dp"
-        android:layout_height="30dp"
+        android:layout_width="@dimen/x220"
+        android:layout_height="@dimen/x27"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="10dp"
+        android:layout_marginRight="@dimen/x7"
         android:layout_centerVertical="true"
         android:background="@drawable/juxing"/>
     <TextView
@@ -68,18 +68,18 @@
         android:layout_centerVertical="true"
         android:layout_toLeftOf="@id/edt_pop_logistics_product_name"
         android:textSize="15sp"
-        android:layout_marginRight="5dp"/>
+        android:layout_marginRight="@dimen/x5"/>
 </RelativeLayout>
     <RelativeLayout
     android:layout_width="match_parent"
-    android:layout_height="45dp">
+    android:layout_height="@dimen/x35">
     <EditText
         android:textSize="14sp"
         android:id="@+id/edt_pop_logistics_company"
-        android:layout_width="230dp"
-        android:layout_height="30dp"
+        android:layout_width="@dimen/x220"
+        android:layout_height="@dimen/x27"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="10dp"
+        android:layout_marginRight="@dimen/x7"
         android:layout_centerVertical="true"
         android:background="@drawable/juxing"/>
     <TextView
@@ -89,18 +89,18 @@
         android:layout_centerVertical="true"
         android:layout_toLeftOf="@id/edt_pop_logistics_company"
         android:textSize="15sp"
-        android:layout_marginRight="5dp"/>
+        android:layout_marginRight="@dimen/x5"/>
 </RelativeLayout>
     <RelativeLayout
     android:layout_width="match_parent"
-    android:layout_height="45dp">
+        android:layout_height="@dimen/x35">
     <EditText
         android:textSize="14sp"
         android:id="@+id/edt_pop_logistics_order_num"
-        android:layout_width="230dp"
-        android:layout_height="30dp"
+        android:layout_width="@dimen/x220"
+        android:layout_height="@dimen/x27"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="10dp"
+        android:layout_marginRight="@dimen/x7"
         android:layout_centerVertical="true"
         android:background="@drawable/juxing"/>
     <TextView
@@ -110,17 +110,17 @@
         android:layout_centerVertical="true"
         android:layout_toLeftOf="@id/edt_pop_logistics_order_num"
         android:textSize="15sp"
-        android:layout_marginRight="5dp"/>
+        android:layout_marginRight="@dimen/x5"/>
 </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="45dp">
+        android:layout_height="@dimen/x35">
         <TextView
             android:id="@+id/tv_pop_logistics_end_date"
-            android:layout_width="106dp"
-            android:layout_marginRight="10dp"
+            android:layout_width="@dimen/x102"
+            android:layout_marginRight="@dimen/x7"
             android:layout_alignParentRight="true"
-            android:layout_height="30dp"
+            android:layout_height="@dimen/x27"
             android:background="@drawable/juxing"
             android:layout_centerVertical="true"
             android:gravity="center_vertical"/>
@@ -132,12 +132,12 @@
             android:textSize="15sp"
             android:layout_toLeftOf="@id/tv_pop_logistics_end_date"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="2dp"
-            android:layout_marginRight="2dp"/>
+            android:layout_marginLeft="@dimen/x1"
+            android:layout_marginRight="@dimen/x1"/>
         <TextView
             android:id="@+id/tv_pop_logistics_start_date"
-            android:layout_width="106dp"
-            android:layout_height="30dp"
+            android:layout_width="@dimen/x102"
+            android:layout_height="@dimen/x27"
             android:gravity="center_vertical"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@id/tv_pop_logistics_zhi"
@@ -150,23 +150,23 @@
             android:text="交货时间 : "
             android:layout_toLeftOf="@id/tv_pop_logistics_start_date"
             android:layout_centerVertical="true"
-            android:layout_marginRight="5dp"
+            android:layout_marginRight="@dimen/x5"
             />
     </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="@dimen/x1"
         android:background="@color/selley_bg"
-        android:layout_marginTop="5dp"></View>
+        android:layout_marginTop="@dimen/x5"></View>
     <Button
         android:id="@+id/btn_pop_ok"
-        android:layout_width="130dp"
-        android:layout_height="40dp"
+        android:layout_width="@dimen/x125"
+        android:layout_height="@dimen/x37"
         android:layout_marginBottom="10dp"
         android:text="立即查询"
         android:layout_gravity="center"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/x10"
         android:textColor="@color/selley_lv"
         android:background="@drawable/button_background_blue"/>
 </LinearLayout>

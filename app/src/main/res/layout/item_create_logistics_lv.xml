@@ -6,32 +6,32 @@
     <RelativeLayout
         android:id="@+id/relative_item_create_logistics_lv_top"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="@dimen/x35"
         >
         <ImageView
             android:id="@+id/img_item_create_logistics_top_select"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="@dimen/x17"
+            android:layout_height="@dimen/x17"
             android:src="@mipmap/cart_select_null"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="@dimen/x10"
             />
         <TextView
             android:layout_toRightOf="@id/img_item_create_logistics_top_select"
             android:id="@+id/tv_item_create_logistics_product_top_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="@dimen/x10"
             android:layout_centerVertical="true"
             android:text="石化"/>
         <ImageView
             android:id="@+id/img_item_create_logistics_top_in"
-            android:layout_width="25dp"
-            android:layout_height="22dp"
-            android:layout_marginRight="10dp"
+            android:layout_width="@dimen/x17"
+            android:layout_height="@dimen/x17"
+            android:layout_marginRight="@dimen/x10"
             android:layout_alignParentRight="true"
             android:src="@mipmap/my_sumao_iv_order"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="@dimen/x10"
             android:layout_centerVertical="true"/>
         <TextView
             android:id="@+id/tv_item_create_logistics_logistica_top_type"
@@ -51,9 +51,9 @@
         android:id="@+id/line_item_create_logistics_lv"
         android:layout_below="@id/relative_item_create_logistics_lv_top"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="@dimen/x1"
         android:background="@color/my_sumao_background"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="@dimen/x5"
         ></View>
     <LinearLayout
         android:id="@+id/linear_item_create_logistics_message"
@@ -64,16 +64,16 @@
         android:orientation="vertical"
         android:background="@color/create_logistics">
         <RelativeLayout
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/x10"
             android:layout_width="match_parent"
-            android:layout_height="30dp">
+            android:layout_height="@dimen/x30">
             <TextView
                 android:id="@+id/tv_item_create_logistics_lv_sort"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:text="分类 : "
-                android:layout_marginLeft="10dp"/>
+                android:layout_marginLeft="@dimen/x10"/>
             <TextView
                 android:id="@+id/tv_item_create_logistics_lv_sort_name"
                 android:layout_width="wrap_content"
@@ -87,7 +87,7 @@
                 android:layout_height="wrap_content"
                 android:text="产品名称 : "
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="180dp"/>
+                android:layout_marginLeft="@dimen/x175"/>
             <TextView
                 android:id="@+id/tv_item_create_logistics_lv_produce_name"
                 android:layout_width="wrap_content"
@@ -98,14 +98,14 @@
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="30dp">
+            android:layout_height="@dimen/x30">
             <TextView
                 android:id="@+id/tv_item_create_logistics_lv_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:text="数量 : "
-                android:layout_marginLeft="10dp"/>
+                android:layout_marginLeft="@dimen/x10"/>
             <TextView
                 android:id="@+id/tv_item_create_logistics_lv_num_dun"
                 android:layout_width="wrap_content"
@@ -119,7 +119,7 @@
                 android:layout_height="wrap_content"
                 android:text="产品单价（元/吨） : "
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="180dp"/>
+                android:layout_marginLeft="@dimen/x175"/>
             <TextView
                 android:id="@+id/tv_item_create_logistics_lv_produce_price_money"
                 android:layout_width="wrap_content"
@@ -130,14 +130,14 @@
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="30dp">
+            android:layout_height="@dimen/x30">
             <TextView
                 android:id="@+id/tv_item_create_logistics_lv_can"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:text="可发货数量 : "
-                android:layout_marginLeft="10dp"/>
+                android:layout_marginLeft="@dimen/x10"/>
             <TextView
                 android:id="@+id/tv_item_create_logistics_lv_can_num"
                 android:layout_width="wrap_content"
@@ -151,7 +151,7 @@
                 android:layout_height="wrap_content"
                 android:text="交货时间 : "
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="180dp"/>
+                android:layout_marginLeft="@dimen/x170"/>
             <TextView
                 android:id="@+id/tv_item_create_logistics_lv_date"
                 android:layout_width="wrap_content"
@@ -162,14 +162,14 @@
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="30dp">
+            android:layout_height="@dimen/x30">
         <TextView
             android:id="@+id/tv_item_create_logistics_lv_cangku"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="仓库 : "
-            android:layout_marginLeft="10dp"/>
+            android:layout_marginLeft="@dimen/x10"/>
         <TextView
             android:id="@+id/tv_item_create_logistics_lv_cangku_name"
             android:layout_width="wrap_content"
@@ -181,32 +181,32 @@
         <View
             android:id="@+id/line_item_create_logistics_four"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="@dimen/x1"
             android:background="@color/my_sumao_background"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="@dimen/x5"
             ></View>
     </LinearLayout>
     <RelativeLayout
         android:id="@+id/relative_item_create_logistics_bottom"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="@dimen/x40"
         android:layout_below="@id/linear_item_create_logistics_message"
        >
        <TextView
            android:id="@+id/tv_item_create_logistics_lv_add"
-           android:layout_width="25dp"
-           android:layout_height="25dp"
+           android:layout_width="@dimen/x20"
+           android:layout_height="@dimen/x25"
            android:text="+"
            android:textSize="20sp"
            android:layout_centerVertical="true"
            android:gravity="center"
            android:background="@drawable/cart_num"
            android:layout_alignParentRight="true"
-           android:layout_marginRight="10dp"/>
+           android:layout_marginRight="@dimen/x10"/>
         <EditText
             android:id="@+id/edt_item_create_logistics_num"
-            android:layout_width="50dp"
-            android:layout_height="25dp"
+            android:layout_width="@dimen/x45"
+            android:layout_height="@dimen/x25"
             android:background="@drawable/juxing"
             android:layout_centerVertical="true"
             android:gravity="center"
@@ -214,8 +214,8 @@
             android:layout_toLeftOf="@id/tv_item_create_logistics_lv_add"/>
         <TextView
             android:id="@+id/tv_item_create_logistics_lv_sub"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="@dimen/x20"
+            android:layout_height="@dimen/x25"
             android:text="-"
             android:textSize="20sp"
             android:layout_centerVertical="true"
@@ -228,11 +228,11 @@
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@id/tv_item_create_logistics_lv_sub"
             android:text="本次发货数量"
-            android:layout_marginRight="10dp"/>
+            android:layout_marginRight="@dimen/x10"/>
     </RelativeLayout>
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="@dimen/x1"
         android:background="@color/my_sumao_background"
         android:layout_below="@id/relative_item_create_logistics_bottom"
         />
