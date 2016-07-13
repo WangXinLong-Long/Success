@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -21,6 +22,7 @@ import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.Create_LogisticsNeed_Adapter;
+import com.silianchuangye.sumao.success.customermanger.CustomerManager;
 import com.silianchuangye.sumao.success.fragments.PagerThree;
 import com.silianchuangye.sumao.success.fragments.bean.Create_Logistics_NeedInfo;
 
@@ -149,7 +151,7 @@ public class CreateLogisticsNeed extends AppCompatActivity implements View.OnCli
 
         adapter2=new Create_LogisticsNeed_Adapter(list2,this);
         lv_logistics_need_three.setAdapter(adapter2);
-//        setListViewHeightBasedOnChildren(lv_logistics_need);
+        setListViewHeightBasedOnChildren(lv_logistics_need);
     }
 
     @Override
@@ -189,6 +191,8 @@ public class CreateLogisticsNeed extends AppCompatActivity implements View.OnCli
                 break;
             case R.id.btn_logistics_need_ok:
                 Toast.makeText(this,"提交物流需求",Toast.LENGTH_SHORT).show();
+                Intent intent2=new Intent(this, CustomerManager.class);
+                startActivity(intent2);
                 break;
         }
     }
@@ -242,28 +246,28 @@ public class CreateLogisticsNeed extends AppCompatActivity implements View.OnCli
         super.onDestroy();
         unregisterReceiver(my);
     }
-    //计算listview高度
-//    public void setListViewHeightBasedOnChildren(ListView listView) {
-//        // 获取ListView对应的Adapter
-//
-//        if (adapter == null) {
-//            return;
-//        }
-//
-//        int totalHeight = 0;
-//        for (int i = 0, len = adapter.getCount(); i < len; i++) {
-//            // listAdapter.getCount()返回数据项的数目
-//            View listItem = adapter.getView(i, null, listView);
-//            // 计算子项View 的宽高
-//            listItem.measure(0, 0);
-//            // 统计所有子项的总高度
-//            totalHeight += listItem.getMeasuredHeight();
-//        }
-//
-//        ViewGroup.LayoutParams params = listView.getLayoutParams();
-//        params.height = totalHeight+ (listView.getDividerHeight() * (adapter.getCount() - 1));
-//        // listView.getDividerHeight()获取子项间分隔符占用的高度
-//        // params.height最后得到整个ListView完整显示需要的高度
-//        listView.setLayoutParams(params);
-//    }
+//    计算listview高度
+    public void setListViewHeightBasedOnChildren(ListView listView) {
+        // 获取ListView对应的Adapter
+
+        if (adapter == null) {
+            return;
+        }
+
+        int totalHeight = 0;
+        for (int i = 0, len = adapter.getCount(); i < len; i++) {
+            // listAdapter.getCount()返回数据项的数目
+            View listItem = adapter.getView(i, null, listView);
+            // 计算子项View 的宽高
+            listItem.measure(0, 0);
+            // 统计所有子项的总高度
+            totalHeight += listItem.getMeasuredHeight();
+        }
+
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight+ (listView.getDividerHeight() * (adapter.getCount() - 1));
+        // listView.getDividerHeight()获取子项间分隔符占用的高度
+        // params.height最后得到整个ListView完整显示需要的高度
+        listView.setLayoutParams(params);
+    }
 }

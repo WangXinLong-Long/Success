@@ -480,7 +480,8 @@
             android:name=".fragments.logistics.CreateLogistics"
             android:screenOrientation="portrait" />
         <activity android:name=".fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.CreateLogisticsNeed" />
-        <activity android:name=".fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.Logistics_SelectAddress"></activity>
+        <activity android:name=".fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.Logistics_SelectAddress" />
+        <activity android:name=".customermanger.CustomerManager"></activity>
     </application>
 
 </manifest>
