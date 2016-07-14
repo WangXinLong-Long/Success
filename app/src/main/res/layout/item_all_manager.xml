@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_paren"
+    android:layout_height="match_parent"
     android:orientation="vertical">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/selley_bg"
+        ></View>
     <RelativeLayout
+        android:id="@+id/relative_item_all_manager_title"
         android:layout_width="match_parent"
         android:layout_height="45dp">
         <TextView
@@ -52,7 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="企业名称 : "
-            android:layout_marginLeft="160dp"/>
+            android:layout_marginLeft="150dp"/>
         <TextView
             android:id="@+id/tv_item_all_manager_name"
             android:layout_width="wrap_content"
@@ -85,7 +91,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="办公地址 : "
-            android:layout_marginLeft="160dp"/>
+            android:layout_marginLeft="150dp"/>
         <TextView
             android:id="@+id/tv_item_all_manager_address"
             android:layout_width="wrap_content"
@@ -118,7 +124,7 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:text="业务员 : "
-        android:layout_marginLeft="160dp"/>
+        android:layout_marginLeft="150dp"/>
     <TextView
         android:id="@+id/tv_item_all_manager_person"
         android:layout_width="wrap_content"
@@ -136,17 +142,19 @@
         android:layout_height="40dp"
         >
         <TextView
+            android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#000"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:text="客户状态"/>
         <ImageView
             android:id="@+id/img_item_all_manager_bottem"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
             android:src="@mipmap/my_sumao_iv_order"/>
         <TextView
@@ -154,7 +162,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@id/img_item_all_manager_bottem"
-            android:textSize="16sp"
+            android:textSize="14sp"
+            android:layout_centerVertical="true"
             android:text="123"/>
     </RelativeLayout>
 </LinearLayout>

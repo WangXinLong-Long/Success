@@ -1,12 +1,16 @@
 package com.silianchuangye.sumao.success.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.silianchuangye.sumao.success.R;
+import com.silianchuangye.sumao.success.customermanger.CustomerMessage;
+import com.silianchuangye.sumao.success.customermanger.CustomerType;
 import com.silianchuangye.sumao.success.fragments.bean.AllCustomInfo;
 
 import java.util.List;
@@ -50,6 +54,8 @@ public class AllManagerAdapter extends BaseAdapter{
             holder.buy= (TextView) convertView.findViewById(R.id.tv_item_all_manager_buy);
             holder.person= (TextView) convertView.findViewById(R.id.tv_item_all_manager_person);
             holder.zhuangtai= (TextView) convertView.findViewById(R.id.tv_item_all_manager_zhuangtai);
+            holder.relative= (RelativeLayout) convertView.findViewById(R.id.relative_item_all_manager);
+            holder.relative_title= (RelativeLayout) convertView.findViewById(R.id.relative_item_all_manager_title);
             convertView.setTag(holder);
         }else{
             holder= (ViewHolder) convertView.getTag();
@@ -62,9 +68,24 @@ public class AllManagerAdapter extends BaseAdapter{
         holder.buy.setText(list.get(position).buy);
         holder.person.setText(list.get(position).person);
         holder.zhuangtai.setText(list.get(position).zhuangtai);
+        holder.relative.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(ctx,CustomerType.class);
+                ctx.startActivity(intent);
+            }
+        });
+        holder.relative_title.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(ctx, CustomerMessage.class);
+                ctx.startActivity(intent);
+            }
+        });
         return convertView;
     }
     private class ViewHolder{
         TextView title,num,name,type,address,buy,person,zhuangtai;
+        RelativeLayout relative,relative_title;
     }
 }
