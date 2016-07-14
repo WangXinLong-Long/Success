@@ -36,11 +36,12 @@ public class FirmInfoTypeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_firm_info_type);
         one= (RadioButton) findViewById(R.id.rbone_firm_info_type);
         two= (RadioButton) findViewById(R.id.rbtwo_firm_info_type);
         three= (RadioButton) findViewById(R.id.rbthree_firm_info_type);
+       // three.setChecked(true);
+        one.setChecked(false);
         three_layout= (LinearLayout) findViewById(R.id.three);
         Bundle bundle=getIntent().getExtras();
          title=bundle.getString("title");
@@ -65,17 +66,18 @@ public class FirmInfoTypeActivity extends AppCompatActivity {
         rgDemo.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                Toast.makeText(FirmInfoTypeActivity.this, "进来了",Toast.LENGTH_SHORT).show();
-                if (checkedId ==one.getId()) {
-                    //Toast.makeText(FirmInfoTypeActivity.this, "one选中", Toast.LENGTH_SHORT).show();
+
+              //  Toast.makeText(FirmInfoTypeActivity.this, "进来了",Toast.LENGTH_SHORT).show();
+                if (checkedId == one.getId()) {
+                Toast.makeText(FirmInfoTypeActivity.this, "one选中", Toast.LENGTH_SHORT).show();
                     name=one.getText().toString();
                     Log.d("企业类型",name);
                 } else if (checkedId == two.getId()) {
-                    //Toast.makeText(FirmInfoTypeActivity.this, "two选中", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(FirmInfoTypeActivity.this, "two选中", Toast.LENGTH_SHORT).show();
                     name=two.getText().toString();
                     Log.d("企业类型",name);
                 }else if (checkedId==three.getId()){
-                    //Toast.makeText(FirmInfoTypeActivity.this, "three选中", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(FirmInfoTypeActivity.this, "three选中", Toast.LENGTH_SHORT).show();
                     name=three.getText().toString();
                     Log.d("企业类型",name);
                 }
@@ -85,7 +87,7 @@ public class FirmInfoTypeActivity extends AppCompatActivity {
         btSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("点击事件","真");
+               // Log.d("点击事件","真");
                 Intent intent=new Intent();
                 intent.putExtra("name",name);
                 FirmInfoTypeActivity.this.setResult(number,intent);

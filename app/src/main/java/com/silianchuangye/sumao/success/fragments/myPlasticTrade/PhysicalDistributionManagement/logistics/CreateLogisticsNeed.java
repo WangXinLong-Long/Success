@@ -191,8 +191,6 @@ public class CreateLogisticsNeed extends AppCompatActivity implements View.OnCli
                 break;
             case R.id.btn_logistics_need_ok:
                 Toast.makeText(this,"提交物流需求",Toast.LENGTH_SHORT).show();
-                Intent intent2=new Intent(this, CustomerManager.class);
-                startActivity(intent2);
                 break;
         }
     }

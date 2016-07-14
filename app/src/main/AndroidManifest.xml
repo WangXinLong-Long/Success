@@ -491,6 +491,7 @@
             android:screenOrientation="portrait" />
         <activity android:name=".customermanger.CustomerType" />
         <activity android:name=".customermanger.CustomerMessage"></activity>
+        <activity android:name=".fragments.SellerManagementPlatform.SellerManagementPlatformActivity"/>
     </application>
 
 </manifest>

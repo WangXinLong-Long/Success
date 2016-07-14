@@ -1,27 +1,22 @@
 package com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.ContentResolver;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Matrix;
-import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.ActionBarOverlayLayout;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -32,13 +27,22 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import com.easemob.cloud.HttpClientManager;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.utils.LogUtils;
+import com.xiaomi.network.HttpUtils;
 import com.zhy.m.permission.MPermissions;
 import com.zhy.m.permission.PermissionDenied;
 import com.zhy.m.permission.PermissionGrant;
 
-import java.io.BufferedOutputStream;
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.http.annotation.HttpResponse;
+import org.xutils.http.app.ResponseParser;
+import org.xutils.http.request.UriRequest;
+import org.xutils.x;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -46,6 +50,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -74,20 +79,40 @@ public class FirmInfoPictureActivity extends AppCompatActivity {
     private TextView tvinfo_firm_info_pictrue;
     private Button btSave;
     private TextView tvinfoValue_firm_info_pictrue;
-    private Button bt_save;
+    private Button bt_save,bt_getNumber;
     int number1;
+    private RelativeLayout layoutinfo_firm_info;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_firm_info_picture);
 
         title_Bar();
+        layoutinfo_firm_info= (RelativeLayout) findViewById(R.id.layoutinfo_firm_info);
+        layoutinfo_firm_info.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(FirmInfoPictureActivity.this,CaptureActivity.class);
+                startActivityForResult(intent,8);
+            }
+        });
         tvinfoValue_firm_info_pictrue= (TextView) findViewById(R.id.tvinfoValue_firm_info_pictrue);
         tvinfo_firm_info_pictrue= (TextView) findViewById(R.id.tvinfo_firm_info_pictrue);
         Bundle bundle=getIntent().getExtras();
         String name=bundle.getString("name");
          number1=bundle.getInt("number");
         tvinfo_firm_info_pictrue.setText(name);
+        bt_getNumber= (Button) findViewById(R.id.bt_getNumber);
+        bt_getNumber.setText("获取"+name);
+        bt_getNumber.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(FirmInfoPictureActivity.this,CaptureActivity.class);
+                startActivityForResult(intent,8);
+            }
+        });
         btSave= (Button) findViewById(R.id.bt_save_register_value);
         layout = (RelativeLayout) findViewById(R.id.layout_a);
         ivPictrue = (ImageView) findViewById(R.id.iv_firm_info_pictrue);
@@ -102,6 +127,41 @@ public class FirmInfoPictureActivity extends AppCompatActivity {
         bt_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                String uri="http://192.168.32.126:7023/mnt/docs/";
+//                RequestParams rp=new RequestParams(uri);
+//
+//                rp.addBodyParameter("file",new File("content://media/external/images/media/496"));
+//
+//                Callback.Cancelable cancelable
+//                        = x.http().post(rp, new Callback.CommonCallback<ResponseEntity>() {
+//
+//                    @Override
+//                    public void onSuccess(ResponseEntity result) {
+//                        Log.d("success","上传成功");
+////                        Snackbar.make(ivPictrue, "上传成功", Snackbar.LENGTH_LONG)
+////                                .setAction("Action", null).show();
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable ex, boolean isOnCallback) {
+//                        Log.d("feil","上传失败");
+////                        Snackbar.make(ivDemo, "上传失败", Snackbar.LENGTH_LONG)
+////                                .setAction("Action", null).show();
+//
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(CancelledException cex) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onFinished() {
+//
+//                    }
+//
+//                });
+
                 Intent intent=new Intent();
                 intent.putExtra("value",tvinfoValue_firm_info_pictrue.getText().toString());
                 setResult(number1,intent);
@@ -117,6 +177,7 @@ public class FirmInfoPictureActivity extends AppCompatActivity {
         lp.alpha = bgAlpha; //0.0-1.0
         getWindow().setAttributes(lp);
     }
+
 
     public void Popupwindow() {
         View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.item_firm_info_popupwindow, null);
@@ -199,6 +260,7 @@ public class FirmInfoPictureActivity extends AppCompatActivity {
 
         path = file.getPath();
         Uri imageUri = Uri.fromFile(file);
+        Log.d("imageUri",imageUri+"");
         intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
         startActivityForResult(intent, TAKE_PICTURE);
     }//低于6.0直接使用Camera
@@ -247,6 +309,7 @@ public class FirmInfoPictureActivity extends AppCompatActivity {
                 bitmap = getPicFromBytes(mcontent, null);
                 if (getUrl(data) != null && !getUrl(data).equals("")) {
                     ivPictrue.setImageBitmap(bitmap);
+                    path=getUrl(data);
                     Log.d("正确的存储路径", getUrl(data));
                 } else {
                     ////把得到的图片绑定在控件上显示
@@ -265,6 +328,12 @@ public class FirmInfoPictureActivity extends AppCompatActivity {
 //            Bitmap copyBitmap = copyBitmap(bitmapCamera);
 
             ivPictrue.setImageBitmap(copyBitmap);
+        }else if (requestCode==8){
+            String result=data.getStringExtra("result");
+            Log.d("条形码",result);
+            tvinfoValue_firm_info_pictrue.setText(result);
+
+
         }
 //        if (resultCode == Activity.RESULT_CANCELED)//加上这个判断就好了
 //        {
@@ -419,6 +488,37 @@ public class FirmInfoPictureActivity extends AppCompatActivity {
         Log.d("路径", uri.toString());
         return uri.toString();
     }
+
+
+    @HttpResponse(parser = ResultParser.class)
+    public class ResponseEntity {
+        private String result;
+
+        public String getResult() {
+            return result;
+        }
+
+        public void setResult(String result) {
+            this.result = result;
+        }
+    }
+    public class ResultParser implements ResponseParser {
+        @Override
+        public void checkResponse(UriRequest request) throws Throwable {
+
+        }
+
+        @Override
+        public Object parse(Type resultType, Class<?> resultClass, String result) throws Throwable {
+
+            ResponseEntity responseEntity = new ResponseEntity();
+            responseEntity.setResult(result);
+            //返回ResponseEntity对象
+            return responseEntity;
+        }
+    }
+
+
 
 
 }

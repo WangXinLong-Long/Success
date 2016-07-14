@@ -41,7 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tvinfoValue_firm_info_pictrue"
-            android:text="企业执业照"
+
             android:layout_marginTop="@dimen/x10"
             android:layout_marginLeft="@dimen/x10"
             android:textSize="14sp"
@@ -76,7 +76,7 @@
         android:layout_marginRight="@dimen/x10"
         android:layout_marginLeft="@dimen/x10"
         android:background="@drawable/button_background_blue"
-        android:text="上传扫描件"
+        android:text="确定"
         android:textColor="#fff"
         android:textSize="16sp"
         android:layout_marginBottom="@dimen/x10"
@@ -85,12 +85,27 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/bt_save_register_value"
+        android:id="@+id/bt_getNumber"
         android:layout_above="@+id/bt_save"
         android:layout_marginRight="@dimen/x10"
         android:layout_marginLeft="@dimen/x10"
         android:background="@drawable/button_background_blue"
-        android:text="确定"
+
+        android:textColor="#fff"
+        android:textSize="16sp"
+        android:layout_marginBottom="@dimen/x10"
+
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/bt_save_register_value"
+        android:layout_above="@+id/bt_getNumber"
+        android:layout_marginRight="@dimen/x10"
+        android:layout_marginLeft="@dimen/x10"
+        android:background="@drawable/button_background_blue"
+        android:text="上传扫描件"
         android:textColor="#fff"
         android:textSize="16sp"
         android:layout_marginBottom="@dimen/x10"
