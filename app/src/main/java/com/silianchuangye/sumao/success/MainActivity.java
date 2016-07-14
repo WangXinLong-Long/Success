@@ -28,12 +28,12 @@ import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMMessage;
 import com.silianchuangye.sumao.success.HX.DemoHelper;
 import com.silianchuangye.sumao.success.HX.ui.ChatActivity;
+import com.silianchuangye.sumao.success.fragments.PagerFive;
 import com.silianchuangye.sumao.success.fragments.PagerFour;
 import com.silianchuangye.sumao.success.fragments.PagerOne;
 import com.silianchuangye.sumao.success.fragments.PagerThree;
 import com.silianchuangye.sumao.success.fragments.PagerTwo;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.LoginUserActivity;
-import com.silianchuangye.sumao.success.utils.GlobalVariable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,7 +85,6 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
         /**
          * 设置默认选中第几个
          */
-//        mTabHost.setCurrentTab(1);
         mTabHost.getTabWidget().getChildTabViewAt(3).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -124,6 +123,7 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
         });
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
+
     private View getTabItemView(int i) {
         View view = mLayoutInflater.inflate(R.layout.tab_item_view,null);
         ImageView iv = ((ImageView) view.findViewById(R.id.iv_tab_itmem_view_picture));
@@ -141,16 +141,19 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
 
         mFragmentArray.add(PagerOne.class);
         mFragmentArray.add(PagerTwo.class);
+        mFragmentArray.add(PagerFive.class);
         mFragmentArray.add(PagerThree.class);
         mFragmentArray.add(PagerFour.class);
 
         mImageArray.add(R.drawable.home_page);
         mImageArray.add(R.drawable.classification);
+        mImageArray.add(R.drawable.i_am_seller);
         mImageArray.add(R.drawable.shopping_car);
         mImageArray.add(R.drawable.mine_sumao);
 
         mTextArray.add("首页");
         mTextArray.add("分类");
+        mTextArray.add("我是卖家");
         mTextArray.add("购物车");
         mTextArray.add("我的塑贸");
     }

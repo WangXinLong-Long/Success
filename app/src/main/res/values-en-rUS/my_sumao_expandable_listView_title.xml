@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="title">
+    <string-array name="title_buyer">
         <item>The order management</item>
         <item>physical distribution management</item>
         <item>Personal information</item>
         <item>Enterprise information</item>
         <item>Enterprise capital account management</item>
     </string-array>
-    <string-array name="child">
+    <string-array name="child_buyer">
         <item>,,</item>
         <item>,,</item>
         <item>,,</item>
@@ -15,28 +15,28 @@
         <item>,,,</item>
         <item>,</item>
     </string-array>
-    <string-array name="child1">
+    <string-array name="child1_buyer">
         <item>The spot orders</item>
         <item>booking orders</item>
         <item>price point wish list</item>
     </string-array>
-    <string-array name="child2">
+    <string-array name="child2_buyer">
         <item>Create logistics demand</item>
         <item>View logistics demand</item>
     </string-array>
-    <string-array name="child3">
+    <string-array name="child3_buyer">
         <item>The user information</item>
         <item>password modification</item>
         <item>subscription information</item>
     </string-array>
-    <string-array name="child4">
+    <string-array name="child4_buyer">
         <item>Enterprise information</item>
         <item>user management</item>
         <item>shipping address</item>
         <item>billing information</item>
         <item>enterprise level and integral</item>
     </string-array>
-    <string-array name="child5">
+    <string-array name="child5_buyer">
         <item>Capital account information</item>
         <item>account details</item>
 

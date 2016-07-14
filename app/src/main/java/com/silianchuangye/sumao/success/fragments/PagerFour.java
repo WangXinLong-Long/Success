@@ -68,7 +68,7 @@ public class PagerFour extends BasePager {
         name_User.setText(name);
         context =mActivity;
         expandableListView = (CustomExpandableListView) view.findViewById(R.id.expandable_listView);
-        sela = new ExpandableListViewAdapter(context);
+        sela = new ExpandableListViewAdapter(context,"buyer");
         expandableListView.setAdapter(sela);
         expandableListView.setGroupIndicator(null);
 //        默认列表展开
