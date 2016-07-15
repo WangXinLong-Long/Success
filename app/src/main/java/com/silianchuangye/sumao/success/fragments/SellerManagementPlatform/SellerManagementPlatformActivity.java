@@ -12,6 +12,9 @@ import com.silianchuangye.sumao.success.adapter.ExpandableListViewAdapter;
 import com.silianchuangye.sumao.success.custom.CustomExpandableListView;
 import com.silianchuangye.sumao.success.fragments.SellerManagementPlatform.CustomerApproval.CustomerApproval;
 import com.silianchuangye.sumao.success.fragments.SellerManagementPlatform.SellerOrderManagement.OrderManagement;
+import com.silianchuangye.sumao.success.custom.CustomListView;
+import com.silianchuangye.sumao.success.customermanger.CustomerManager;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.goodsInStock.OrderGoodsActivity;
 
 /**
  * Created by Administrator on 2016/7/13 0013.
@@ -87,7 +90,8 @@ public class SellerManagementPlatformActivity extends Activity implements View.O
         {
 //            客户管理
             case R.id.customer_management:
-
+                Intent intent2=new Intent(this, CustomerManager.class);
+                startActivity(intent2);
                 break;
 //            订单管理
             case R.id.order_management:

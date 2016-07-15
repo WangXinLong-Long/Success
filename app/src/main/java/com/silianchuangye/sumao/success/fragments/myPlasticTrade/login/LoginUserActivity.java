@@ -123,12 +123,7 @@ public class LoginUserActivity extends AppCompatActivity {
         editor=sp.edit();
          name = et_account_login.getText().toString();
          password = et_pass_login.getText().toString();
-//        if (name.equals("")||password.equals(""))
-//        {
-//            new AlertDialog.Builder(LoginUserActivity.this).setTitle("失败").setMessage("用户名或者密码为空").setPositiveButton("确定",null).show();
-//        }else {
-//            isUser(name,password);
-//        }
+
         RequestParams rp=new RequestParams("http://192.168.32.126:7023/rest/model/atg/userprofiling/ProfileActor/login");
         rp.addParameter("login",name);
         rp.addParameter("password",password);
@@ -139,6 +134,49 @@ public class LoginUserActivity extends AppCompatActivity {
                     Toast.makeText(LoginUserActivity.this, "账号或密码错误请重新登录！", Toast.LENGTH_SHORT).show();
                 }else{
 //                    Log.d("object",result);
+                    sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+                    String unique=sp.getString("unique","");
+                    Log.d("唯一标识",unique);
+                    if (unique.equals("")||unique==null){
+                        sp=getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+                        editor=sp.edit();
+                        RequestParams unique_rp=new RequestParams("http://192.168.32.126:7023/rest/model/atg/rest/SessionConfirmationActor/getSessionConfirmationNumber");
+                        x.http().post(unique_rp, new CommonCallback<String>() {
+                            @Override
+                            public void onSuccess(String result) {
+                                try{
+                                    JSONObject object=new JSONObject(result);
+                                    String unique=object.getString("sessionConfirmationNumber");
+                                    Log.d("uniqueLogin","unique"+unique);
+                                    /**
+                                     * 把唯一标识储存在SharedPreferences
+                                     */
+
+                                    editor.putString("unique",unique);
+                                    editor.commit();
+                                }catch (Exception e){
+                                    Log.d("exception","解析唯一标识时错误！");
+                                }
+
+                            }
+
+                            @Override
+                            public void onError(Throwable ex, boolean isOnCallback) {
+
+                            }
+
+                            @Override
+                            public void onCancelled(CancelledException cex) {
+
+                            }
+
+                            @Override
+                            public void onFinished() {
+
+                            }
+                        });
+                    }
+                    }
                     try{
                     JSONObject object=new JSONObject(result);
                         String name=object.getString("U_name");
@@ -153,41 +191,7 @@ public class LoginUserActivity extends AppCompatActivity {
                     }
 
 
-                    RequestParams unique_rp=new RequestParams("http://192.168.32.126:7023/rest/model/atg/rest/SessionConfirmationActor/getSessionConfirmationNumber");
-                    x.http().post(unique_rp, new CommonCallback<String>() {
-                        @Override
-                        public void onSuccess(String result) {
-                            try{
-                            JSONObject object=new JSONObject(result);
-                                String unique=object.getString("sessionConfirmationNumber");
-                                Log.d("unique","unique"+unique);
-                                /**
-                                 * 把唯一标识储存在SharedPreferences
-                                 */
 
-                                editor.putString("unique",unique);
-                                editor.commit();
-                            }catch (Exception e){
-                                Log.d("exception","解析唯一标识时错误！");
-                            }
-
-                        }
-
-                        @Override
-                        public void onError(Throwable ex, boolean isOnCallback) {
-
-                        }
-
-                        @Override
-                        public void onCancelled(CancelledException cex) {
-
-                        }
-
-                        @Override
-                        public void onFinished() {
-
-                        }
-                    });
 
                     //接收mainactivity传递过来的参数
                     if(str==9){
@@ -205,7 +209,6 @@ public class LoginUserActivity extends AppCompatActivity {
                     GlobalVariable.FLAG = true;
                     LoginUserActivity.this.finish();
                 }
-            }
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {

@@ -1,6 +1,8 @@
 package com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,6 +21,10 @@ import android.widget.Toast;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceArea;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.RegisterValueActivity;
+
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -41,6 +47,7 @@ public class FirmInfoUpdateActivity extends AppCompatActivity {
     String title;
     private SimpleAdapter adapter;
     private SimpleAdapter adapter1;
+    private Button bt_save_register_value;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -223,6 +230,63 @@ public class FirmInfoUpdateActivity extends AppCompatActivity {
                 }
             }
         });
+//        bt_save_register_value= (Button) findViewById(R.id.bt_save_register_value);
+//        bt_save_register_value.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                new Thread(){
+//                    @Override
+//                    public void run() {
+//                        RequestParams rp=new RequestParams("http://192.168.32.126:7023/rest/model/atg/store/profile/RegistrationActor/updateEnterprise");
+//                        rp.addParameter("cl_mingcheng",list.get(1).get("right").toString());
+//                        rp.addParameter("cl_yewu",list.get(2).get("right").toString());
+//                        rp.addParameter("province","1414");
+//                        rp.addParameter("city","141410");
+//                        rp.addParameter("county","14141029");
+//                        rp.addParameter("cl_dizhi",list.get(3).get("right".toString()));
+//                        rp.addParameter("cl_chuanzhen",list.get(4).get("right").toString());
+//                        rp.addParameter("cl_zhengjian","1");
+//                        rp.addParameter("cl_zhizhao",list1.get(0).get("right").toString());
+//                        rp.addParameter("cl_nashuiren",list1.get(1).get("right").toString());
+//                        rp.addParameter("cl_leixing",1);
+////                        rp.addParameter("cl_jigou",list1.get(2).get("right").toString());
+////                        rp.addParameter("cl_shuiwu",list1.get(3).get("right").toString());
+//                        rp.addParameter("cl_zhizhaoimage","/mnt/docs/100.jpg");
+//                        rp.addParameter("cl_jigouimage","/mnt/docs/100.jpg");
+//                        rp.addParameter("cl_shuiwuimage","/mnt/docs/100.jpg");
+//                        rp.addParameter("cl_nashuirenimage","/mnt/docs/100.jpg");
+//                        SharedPreferences sp=getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+//                        String unique=sp.getString("unique","");
+//                        Log.d("唯一标识",unique);
+//                        rp.addParameter("_dynSessConf",unique);
+//                        //还有图片路径没有写
+//
+//                        x.http().post(rp, new Callback.CommonCallback<String>() {
+//                            @Override
+//                            public void onSuccess(String result) {
+//                                Toast.makeText(FirmInfoUpdateActivity.this, "修改成功", Toast.LENGTH_SHORT).show();
+//                            }
+//
+//                            @Override
+//                            public void onError(Throwable ex, boolean isOnCallback) {
+//
+//                            }
+//
+//                            @Override
+//                            public void onCancelled(CancelledException cex) {
+//
+//                            }
+//
+//                            @Override
+//                            public void onFinished() {
+//
+//                            }
+//                        });
+//                    }
+//                }.start();
+//            }
+//        });
+
 
 
 

@@ -8,14 +8,24 @@
     <include
         android:id="@+id/layoutTop_firm_info_update"
         layout="@layout/title_bar"></include>
-    <ListView
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/layoutTop_firm_info_update"
+        >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        >
+    <com.silianchuangye.sumao.success.custom.customCalendar.CustomListView
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/lvUpdate_firm_info"
-        android:layout_marginTop="@dimen/x10"
-        android:layout_below="@+id/layoutTop_firm_info_update"
-        ></ListView>
+        android:layout_marginTop="@dimen/x5"
+
+        ></com.silianchuangye.sumao.success.custom.customCalendar.CustomListView>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/x1"
@@ -63,18 +73,18 @@
         android:background="#EEEEF3"
         android:orientation="horizontal"
         ></LinearLayout>
-    <ListView
+    <com.silianchuangye.sumao.success.custom.customCalendar.CustomListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/lvUpdate_firm_info_two"
 
-        android:layout_below="@+id/aaaa"></ListView>
+        android:layout_below="@+id/aaaa"></com.silianchuangye.sumao.success.custom.customCalendar.CustomListView>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/bt_save_register_value"
-        android:layout_marginTop="@dimen/x10"
+        android:layout_marginTop="@dimen/x5"
         android:layout_marginRight="@dimen/x10"
         android:layout_marginLeft="@dimen/x10"
         android:background="@drawable/button_background_blue"
@@ -83,5 +93,6 @@
         android:textSize="16sp"
         android:layout_below="@+id/lvUpdate_firm_info_two"
         />
-
+    </RelativeLayout>
+    </ScrollView>
 </RelativeLayout>

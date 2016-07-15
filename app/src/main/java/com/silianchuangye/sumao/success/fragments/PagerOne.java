@@ -274,7 +274,7 @@ public class PagerOne extends BasePager {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        gallery.destroy();
+//        gallery.destroy();
     }
 
     @Override

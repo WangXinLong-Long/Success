@@ -67,8 +67,15 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
               //  register();
-
                 Intent intent=new Intent(RegisterActivity.this, RegisterFirmActivity.class);
+                intent.putExtra("account",list.get(0).get("minute").toString());
+                intent.putExtra("pass",list.get(1).get("pass").toString());
+                Log.d("pass",list.get(1).get("pass").toString());
+                intent.putExtra("repass",list.get(2).get("pass").toString());
+                Log.d("repass",list.get(2).get("pass").toString());
+                intent.putExtra("name",list.get(3).get("minute").toString());
+                intent.putExtra("email",list.get(4).get("minute").toString());
+                intent.putExtra("phone",et_phone_register.getText().toString());
                 startActivity(intent);
 
             }
@@ -198,45 +205,6 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-
-    private void register() {
-        if (!(name.equals("")||password.equals("")))
-        {
-            if (addUser(name,password)){
-                DialogInterface.OnClickListener ss = new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent intent  = new Intent();
-                        intent.setClass(RegisterActivity.this, LoginUserActivity.class);
-                        startActivity(intent);
-
-                    }
-                };
-                new AlertDialog.Builder(RegisterActivity.this).setTitle("注册成功").setMessage("保存成功").setPositiveButton("确定",ss).show();
-            }else {
-                new AlertDialog.Builder(RegisterActivity.this).setTitle("注册失败").setMessage("保存失败").setPositiveButton("确定",null).show();
-
-            }
-        }else {
-            new AlertDialog.Builder(RegisterActivity.this).setTitle("失败").setMessage("用户名或密码为空").setPositiveButton("确定",null).show();
-
-        }
-    }
-
-    private Boolean addUser(String name,String password)
-    {
-        String str = "insert into tb_silian values(?,?)";
-        db = SQLiteDatabase.openOrCreateDatabase(RegisterActivity.this.getFilesDir().toString()+"/test.dbs",null);
-        LoginUserActivity loginuserActivity = new LoginUserActivity();
-        loginuserActivity.db = db;
-        try {
-            db.execSQL(str,new String[]{name,password});
-            return true;
-        } catch (SQLException e) {
-           // loginuserActivity.createDb();
-        }
-        return false;
-    }
 
     @Override
     protected void onDestroy() {
