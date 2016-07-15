@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.goodsInStock.OrderGoodsActivity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoPictureActivity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoTypeActivity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceArea;
@@ -82,15 +83,15 @@ public class RegisterFirmActivity extends AppCompatActivity {
             Login=account;
         }
         pass = bundle.getString("pass");
+        Log.d("pass",pass);
         repass = bundle.getString("repass");
+        Log.d("repass",repass);
         name = bundle.getString("name");
         email = bundle.getString("email");
         phone = bundle.getString("phone");
+        String RegisterUri="http://192.168.32.126:7023/rest/model/atg/store/profile/RegistrationActor/createUser";
+        rp=new RequestParams(RegisterUri);
 
-        if (sp_firm_info.getItemAtPosition(0).toString().equals("三证独立")){
-            Toast.makeText(RegisterFirmActivity.this, "三证独立", Toast.LENGTH_SHORT).show();
-            Log.d("企业注册类型","三证独立");
-        }
         bt_save_register_value = (Button) findViewById(R.id.bt_save_register_value);
         bt_save_register_value.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,25 +103,13 @@ public class RegisterFirmActivity extends AppCompatActivity {
                         RequestParams rp1 = new RequestParams(uri);
                         rp1.addParameter("type","mobile");
                         rp1.addParameter("attr", phone);
-//                        rp.addParameter("mail", email);
-//                        rp.addParameter("licenseNO", "licenseNO");
-//                        rp.addParameter("organizationCode", "304820345823045894");
-//                        rp.addParameter("taxID", "0928201347189232203335");
-//                        Log.d("公司名称", list.get(2).get("right").toString());
-//                        rp.addParameter("enterpriseName", "北京海明技术发展有限公司");
-//                        sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
-//                        String unique = sp.getString("unique","");
-//                        Log.d("注册时唯一标识", unique);
-//                        rp.addParameter("_dynSessConf",unique);
+
                         x.http().post(rp1, new Callback.CommonCallback<Boolean>() {
-
-
                             @Override
                             public void onSuccess(Boolean result) {
                                 if (result) {
                                     Log.d("可以注册,终于可以了", "可以注册");
-                                    String RegisterUri="http://192.168.32.126:7023/rest/model/atg/store/profile/RegistrationActor/createUser";
-                                    rp=new RequestParams(RegisterUri);
+
                                     rp.addParameter("cl_mingcheng",list.get(2).get("right").toString());
                                     rp.addParameter("cl_yewu",list.get(3).get("right").toString());
                                     rp.addParameter("province","1414");
@@ -132,30 +121,55 @@ public class RegisterFirmActivity extends AppCompatActivity {
                                     rp.addParameter("cl_entName",list.get(6).get("right").toString());
                                     rp.addParameter("cl_taxNum",list.get(7).get("right").toString());
                                    // if (sp_firm_info.getClipBounds(0)=="三证独立")
-                                    rp.addParameter("cl_entName","张三");
-                                    rp.addParameter("cl_taxNum","217391472093417243");
-                                   if (sp_firm_info.getItemAtPosition(0).toString().equals("三证独立")){
-                                       rp.addParameter("cl_zhengjian",4);
-                                       rp.addParameter("cl_zhizhao",list1.get(1).get("right").toString());
-                                       rp.addParameter("cl_jigou",list1.get(2).get("right").toString());
-                                       rp.addParameter("cl_shuiwu",list1.get(3).get("right").toString());
-                                       if (list1.get(0).get("right").toString().equals("一般纳税人")){
-                                           rp.addParameter("cl_nashuiren",6);
-                                       }else{
-                                           rp.addParameter("cl_nashuiren",7);
-                                       }
-
-                                   }else{
-                                       rp.addParameter("cl_zhengjian",5);
-                                       rp.addParameter("cl_zhizhao","0928201347189232203334");
-//                                       rp.addParameter("cl_zhizhao",list1.get(0).get("right").toString());
-                                       if (list1.get(1).get("right").toString().equals("一般纳税人")){
-                                           rp.addParameter("cl_nashuiren",6);
-                                       }else{
-                                           rp.addParameter("cl_nashuiren",7);
-                                       }
-
-                                   }
+//                                    rp.addParameter("cl_entName","张三");
+//                                    rp.addParameter("cl_taxNum","217391472093417243");
+//                                    sp_firm_info.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//                                        @Override
+//                                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                                            if (sp_firm_info.getItemAtPosition(0).toString().equals("三证独立")){
+//                                                rp.addParameter("cl_zhengjian",4);
+//                                                rp.addParameter("cl_zhizhao",list1.get(1).get("right").toString());
+//                                                rp.addParameter("cl_jigou",list1.get(2).get("right").toString());
+//                                                rp.addParameter("cl_shuiwu",list1.get(3).get("right").toString());
+//                                                if (list1.get(0).get("right").toString().equals("一般纳税人")){
+//                                                    rp.addParameter("cl_nashuiren",6);
+//                                                }else{
+//                                                    rp.addParameter("cl_nashuiren",7);
+//                                                }
+//                                            }else{
+//                                                rp.addParameter("cl_zhengjian",5);
+//                                                rp.addParameter("cl_zhizhao","0928201347189232203334");
+////                                       rp.addParameter("cl_zhizhao",list1.get(0).get("right").toString());
+//                                                if (list1.get(1).get("right").toString().equals("一般纳税人")){
+//                                                    rp.addParameter("cl_nashuiren",6);
+//                                                }else{
+//                                                    rp.addParameter("cl_nashuiren",7);
+//                                                }
+//                                            }
+//                                        }
+//                                    });
+//                                   if (sp_firm_info.getItemAtPosition(0).toString().equals("三证独立")){
+//                                       rp.addParameter("cl_zhengjian",4);
+//                                       rp.addParameter("cl_zhizhao",list1.get(1).get("right").toString());
+//                                       rp.addParameter("cl_jigou",list1.get(2).get("right").toString());
+//                                       rp.addParameter("cl_shuiwu",list1.get(3).get("right").toString());
+//                                       if (list1.get(0).get("right").toString().equals("一般纳税人")){
+//                                           rp.addParameter("cl_nashuiren",6);
+//                                       }else{
+//                                           rp.addParameter("cl_nashuiren",7);
+//                                       }
+//
+//                                   }else{
+//                                       rp.addParameter("cl_zhengjian",5);
+//                                       rp.addParameter("cl_zhizhao","0928201347189232203334");
+////                                       rp.addParameter("cl_zhizhao",list1.get(0).get("right").toString());
+//                                       if (list1.get(1).get("right").toString().equals("一般纳税人")){
+//                                           rp.addParameter("cl_nashuiren",6);
+//                                       }else{
+//                                           rp.addParameter("cl_nashuiren",7);
+//                                       }
+//
+//                                   }
 
                                     if (list.get(1).get("right").toString().equals("贸易商")){
                                        rp.addParameter("cl_leixing",1);
@@ -168,7 +182,7 @@ public class RegisterFirmActivity extends AppCompatActivity {
                                     rp.addParameter("cl_jigouimage","/mnt/docs/100.jpg");
                                     rp.addParameter("cl_zhizhaoimage","/mnt/docs/100.jpg");
                                     rp.addParameter("cl_nashuirenimage","/mnt/docs/100.jpg");
-                                    rp.addParameter("cl_login",account);
+                                    rp.addParameter("cl_login",Login);
                                     rp.addParameter("cl_password",pass);
                                     rp.addParameter("cl_confirmPassword",repass);
                                     rp.addParameter("cl_firstName",name);
@@ -191,15 +205,12 @@ public class RegisterFirmActivity extends AppCompatActivity {
                                             }else{
                                                 Log.d("注册失败11",""+result);
                                                 try {
-                                                    //Log.d("result",result);
+                                                    Log.d("result",result);
                                                     String Exceptions="";
-                                                    if (result.contains("error")){
-                                                        JSONObject object=new JSONObject(result);
-                                                        Exceptions=object.getString("error");
-                                                    }else{
+
                                                         JSONObject object=new JSONObject(result);
                                                         Exceptions=object.getString("formExceptions");
-                                                    }
+
                                                    // Log.d("json解析内容",Exceptions);
                                                     JSONArray array=new JSONArray(Exceptions);
                                                     JSONObject json=array.getJSONObject(0);
@@ -368,13 +379,26 @@ public class RegisterFirmActivity extends AppCompatActivity {
 
                         adapter1 = new SimpleAdapter(RegisterFirmActivity.this, list1, R.layout.item_firm_info, new String[]{"left", "center", "right", "icon"}, new int[]{R.id.tv_firm_info, R.id.tvTitle_firm_info, R.id.tvValue_firm_info, R.id.ivMore_firm_info});
                         lvupdate_firm_info_two.setAdapter(adapter1);
-
-
-
-
-
                     }
                     Toast.makeText(RegisterFirmActivity.this, "" + list1.size(), Toast.LENGTH_SHORT).show();
+                    //把三证合一传的参数删除掉
+                    rp.removeParameter("cl_zhengjian");
+                    rp.removeParameter("cl_zhizhao");
+                    rp.removeParameter("cl_nashuiren");
+                    //添加三证独立时需要的参数
+                    rp.addParameter("cl_zhengjian",4);
+//                    rp.addParameter("cl_zhizhao",list1.get(1).get("right").toString());
+//                    rp.addParameter("cl_jigou",list1.get(2).get("right").toString());
+//                    rp.addParameter("cl_shuiwu",list1.get(3).get("right").toString());
+                    rp.addParameter("cl_zhizhao","0928201347189232203334");
+                    rp.addParameter("cl_jigou","0928201347189232203334");
+                    rp.addParameter("cl_shuiwu","0928201347189232203334");
+                    if (list1.get(0).get("right").toString().equals("一般纳税人")){
+                        rp.addParameter("cl_nashuiren",6);
+                    }else{
+                        rp.addParameter("cl_nashuiren",7);
+                    }
+                    Log.d("nihao",rp+"");
                 } else if (sp_firm_info.getItemAtPosition(position).toString().equals("三证合一")) {
                     if (list1.size() > 2) {
                         for (int i = 0; i < 4; i++) {
@@ -395,6 +419,19 @@ public class RegisterFirmActivity extends AppCompatActivity {
                         lvupdate_firm_info_two.setAdapter(adapter1);
 
                     }
+                    if(rp.getUri().contains("cl_shuiwu")){
+                        Toast.makeText(RegisterFirmActivity.this, "由三证独立变换而来", Toast.LENGTH_SHORT).show();
+                    }
+                    //三证合一
+                    rp.addParameter("cl_zhengjian",5);
+                    rp.addParameter("cl_zhizhao","0928201347189232203334");
+//                                       rp.addParameter("cl_zhizhao",list1.get(0).get("right").toString());
+                    if (list1.get(1).get("right").toString().equals("一般纳税人")){
+                        rp.addParameter("cl_nashuiren",6);
+                    }else{
+                        rp.addParameter("cl_nashuiren",7);
+                    }
+                    Log.d("nihao",rp+"");
                 }
             }
 
