@@ -69,8 +69,10 @@ public class RegisterActivity extends AppCompatActivity {
               //  register();
                 Intent intent=new Intent(RegisterActivity.this, RegisterFirmActivity.class);
                 intent.putExtra("account",list.get(0).get("minute").toString());
-                intent.putExtra("pass",list.get(1).get("minute").toString());
-                intent.putExtra("repass",list.get(2).get("minute").toString());
+                intent.putExtra("pass",list.get(1).get("pass").toString());
+                Log.d("pass",list.get(1).get("pass").toString());
+                intent.putExtra("repass",list.get(2).get("pass").toString());
+                Log.d("repass",list.get(2).get("pass").toString());
                 intent.putExtra("name",list.get(3).get("minute").toString());
                 intent.putExtra("email",list.get(4).get("minute").toString());
                 intent.putExtra("phone",et_phone_register.getText().toString());
