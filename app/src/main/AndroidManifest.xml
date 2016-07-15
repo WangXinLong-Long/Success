@@ -493,10 +493,7 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".fragments.SellerManagementPlatform.SellerOrderManagement.SellerAlreadyPaidOrderDetails"
             android:screenOrientation="portrait"/>
-
         <activity android:name=".customermanger.CustomerManager" />
-
-
         <activity android:name=".customermanger.CustomerType" />
         <activity android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.CaptureActivity"
                    android:configChanges="orientation|keyboardHidden"
