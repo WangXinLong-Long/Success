@@ -21,7 +21,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="创建物流需求"
+            android:text="北京四联京津冀"
             android:textSize="18sp"
             android:textColor="@color/selley_lv"
             android:layout_centerInParent="true"
@@ -34,6 +34,7 @@
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true">
             <TextView
+                android:id="@+id/tv_customer_message_editor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -45,9 +46,10 @@
         </RelativeLayout>
 </RelativeLayout>
     <ScrollView
+        android:id="@+id/sc"
         android:layout_below="@id/relative_top"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -105,7 +107,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginTop="10dp"
-                android:layout_below="@id/lv_customer_message"
+                android:layout_below="@id/lv_customer_message_three"
                 >
                 <TextView
                     android:layout_width="wrap_content"
@@ -115,7 +117,7 @@
                     android:layout_centerInParent="true"/>
             </RelativeLayout>
             <com.silianchuangye.sumao.success.custom.CustomListView
-                android:layout_below="@id/relative_customer_message_three"
+                android:layout_below="@id/relative_customer_message_four"
                 android:background="@color/selley_lv"
                 android:id="@+id/lv_customer_message_four"
                 android:layout_width="match_parent"
@@ -125,5 +127,4 @@
             </com.silianchuangye.sumao.success.custom.CustomListView>
         </RelativeLayout>
     </ScrollView>
-
 </RelativeLayout>

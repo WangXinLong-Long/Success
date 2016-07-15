@@ -42,6 +42,7 @@
         android:layout_marginLeft="10dp"
         android:layout_centerVertical="true"/>
       <TextView
+          android:id="@+id/tv_customer_type_top"
           android:layout_toRightOf="@id/img_customer_type_top"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
@@ -68,6 +69,7 @@
             android:layout_marginLeft="10dp"
             android:layout_centerVertical="true"/>
         <TextView
+            android:id="@+id/tv_customer_type_bottem"
             android:layout_toRightOf="@id/img_customer_type_bottem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

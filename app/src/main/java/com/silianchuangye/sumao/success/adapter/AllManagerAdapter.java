@@ -1,7 +1,10 @@
 package com.silianchuangye.sumao.success.adapter;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -21,9 +24,15 @@ import java.util.List;
 public class AllManagerAdapter extends BaseAdapter{
     private List<AllCustomInfo> list;
     private Context ctx;
+    private My my=new My();
+    private int i;
+    String str;
     public AllManagerAdapter(List<AllCustomInfo>list,Context ctx){
         this.ctx=ctx;
         this.list=list;
+        IntentFilter intent=new IntentFilter();
+        intent.addAction("type");
+        ctx.registerReceiver(my,intent);
     }
     @Override
     public int getCount() {
@@ -41,7 +50,8 @@ public class AllManagerAdapter extends BaseAdapter{
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
+        i=position;
         ViewHolder holder;
         if(convertView==null){
             convertView=View.inflate(ctx, R.layout.item_all_manager,null);
@@ -79,6 +89,7 @@ public class AllManagerAdapter extends BaseAdapter{
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(ctx, CustomerMessage.class);
+                intent.putExtra("int",position);
                 ctx.startActivity(intent);
             }
         });
@@ -87,5 +98,12 @@ public class AllManagerAdapter extends BaseAdapter{
     private class ViewHolder{
         TextView title,num,name,type,address,buy,person,zhuangtai;
         RelativeLayout relative,relative_title;
+    }
+    private class My extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+           str =intent.getStringExtra("type");
+            int k=intent.getIntExtra("p",-2);
+        }
     }
 }

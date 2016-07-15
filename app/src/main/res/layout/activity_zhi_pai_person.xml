@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/selley_bg"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".customermanger.CustomerManager"
-    android:orientation="vertical">
+    tools:context="com.silianchuangye.sumao.success.customermanger.ZhiPaiPerson">
     <RelativeLayout
+        android:id="@+id/relative_buy_top"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:background="@color/zixun_topbg"
@@ -19,45 +19,37 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/x10"/>
         <TextView
+            android:id="@+id/tv_top_center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="客户管理"
             android:textSize="18sp"
             android:textColor="@color/selley_lv"
             android:layout_centerInParent="true"
             />
         <RelativeLayout
-            android:id="@+id/img_logistics_title_bar_search"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:id="@+id/tv_logistics_title_bar_search"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
             android:layout_marginRight="10dp"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true">
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+            <TextView
+                android:id="@+id/tv_customer_message_editor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="@dimen/x7"
                 android:layout_centerVertical="true"
                 android:textColor="@color/selley_lv"
-                android:src="@mipmap/search"
+                android:text="保存"
                 android:textSize="16sp"/>
         </RelativeLayout>
-
     </RelativeLayout>
-    <android.support.design.widget.TabLayout
-        android:layout_marginTop="5dp"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/y30"
-        android:id="@+id/tlDemo_OrderPrice_activity"
-        app:tabSelectedTextColor="#28ABE3"
-        app:tabIndicatorColor="#28ABE3"
-        android:layout_below="@+id/orderPrice_layout_top"
-        ></android.support.design.widget.TabLayout>
-    <android.support.v4.view.ViewPager
+    <ListView
+        android:layout_below="@id/relative_buy_top"
+        android:id="@+id/lv_buy"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tlDemo_OrderPrice_activity"
-        android:id="@+id/vpDemo_OrderPrice_activity"
-        ></android.support.v4.view.ViewPager>
-</LinearLayout>
+        android:layout_marginTop="10dp"
+        android:background="@color/selley_lv"></ListView>
+</RelativeLayout>

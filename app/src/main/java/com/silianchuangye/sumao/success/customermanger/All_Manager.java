@@ -1,11 +1,17 @@
 package com.silianchuangye.sumao.success.customermanger;
 
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.silianchuangye.sumao.success.R;
@@ -18,20 +24,20 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class All_Manager extends Fragment {
+public class All_Manager extends Fragment implements AdapterView.OnItemClickListener{
     private ListView lv;
     private View v;
     private List<AllCustomInfo>list;
     private AllManagerAdapter adapter;
-    public All_Manager() {
-        // Required empty public constructor
-    }
+//    private My my=new My();
+    int i;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         v=inflater.inflate(R.layout.fragment_blank, container, false);
+
         initDate();
         initView();
         return v;
@@ -67,6 +73,14 @@ public class All_Manager extends Fragment {
         lv= (ListView) v.findViewById(R.id.lv_all_manager);
         adapter=new AllManagerAdapter(list,getActivity());
         lv.setAdapter(adapter);
+        lv.setOnItemClickListener(this);
     }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        i=position;
+        Log.e("TAG","点击了第"+i+"条数据");
+    }
+
 
 }
