@@ -496,7 +496,6 @@
         <activity android:name=".customermanger.CustomerManager" />
         <activity android:name=".customermanger.CustomerType" />
         <activity android:name=".customermanger.CustomerMessage" />
-        <activity android:name=".fragments.SellerManagementPlatform.SellerManagementPlatformActivity" />
         <activity android:name=".customermanger.SaveCustomerMessage" />
         <activity android:name=".customermanger.Buy" />
         <activity android:name=".customermanger.ZhiPaiPerson"></activity>
@@ -504,7 +503,6 @@
                    android:configChanges="orientation|keyboardHidden"
                    android:screenOrientation="portrait"
             ></activity>
-        <activity android:name=".customermanger.CustomerMessage"></activity>
 
     </application>
 

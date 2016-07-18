@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.INotificationSideChannel;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,12 +25,12 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class All_Manager extends Fragment implements AdapterView.OnItemClickListener{
+public class All_Manager extends Fragment implements AdapterView.OnItemClickListener,AllManagerAdapter.CallBackType {
     private ListView lv;
     private View v;
     private List<AllCustomInfo>list;
     private AllManagerAdapter adapter;
-//    private My my=new My();
+    private My my=new My();
     int i;
 
     @Override
@@ -37,10 +38,18 @@ public class All_Manager extends Fragment implements AdapterView.OnItemClickList
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         v=inflater.inflate(R.layout.fragment_blank, container, false);
-
+        IntentFilter intent=new IntentFilter();
+        intent.addAction("type");
+        getActivity().registerReceiver(my,intent);
         initDate();
         initView();
         return v;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getActivity().unregisterReceiver(my);
     }
 
     private void initDate() {
@@ -71,16 +80,33 @@ public class All_Manager extends Fragment implements AdapterView.OnItemClickList
 
     private void initView() {
         lv= (ListView) v.findViewById(R.id.lv_all_manager);
-        adapter=new AllManagerAdapter(list,getActivity());
+        adapter=new AllManagerAdapter(list,getActivity(),this);
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(this);
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        i=position;
         Log.e("TAG","点击了第"+i+"条数据");
     }
+    private String str;
+    private class My extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            str =intent.getStringExtra("type");
+            list.get(i).zhuangtai=str;
+            adapter.notifyDataSetChanged();
+        }
+    }
 
+    @Override
+    public void call(int poistion) {
+        i=poistion;
+        list.get(poistion).flag=!list.get(poistion).flag;
+        if(list.get(poistion).flag){
+            Intent intent=new Intent(getActivity(),CustomerType.class);
+            startActivity(intent);
+        }
 
+    }
 }

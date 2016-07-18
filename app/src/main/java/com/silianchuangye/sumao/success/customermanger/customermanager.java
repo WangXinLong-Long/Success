@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
@@ -37,12 +38,14 @@ public class CustomerManager extends AppCompatActivity implements View.OnClickLi
     private View popView;
     private PopupWindow popupWindow;
     private ImageView img_pop_back;
-    private TextView tv_pop_canle,tv_pop_type,tv_pop_num,tv_pop_sheng,tv_pop_shi,
+    private TextView tv_pop_canle,tv_pop_type,tv_pop_sheng,tv_pop_shi,
                         tv_pop_qu,tv_pop_zhuangtai,tv_pop_buy,tv_pop_maifang,
                         tv_pop_customer;
+    private EditText tv_pop_num;
     private EditText edt_pop_name;
     private Button btn_pop_search;
     private ListView lv_type,lv_sheng,lv_shi,lv_qu,lv_zhuangtai,lv_buy,lv_maifang,lv_customer;
+    private LinearLayout linear1,linear2,linear3,linear4,linear5,linear_shi,linear_qu,linear_sheng;
     private List<String>popList;
     private ArrayAdapter<String>pop_adapter;
     @Override
@@ -89,7 +92,7 @@ public class CustomerManager extends AppCompatActivity implements View.OnClickLi
         img_pop_back= (ImageView) popView.findViewById(R.id.img_pop_title_bar_back);
         tv_pop_canle= (TextView) popView.findViewById(R.id.tv_pop_customer_canler);
         tv_pop_type= (TextView) popView.findViewById(R.id.tv_pop_customer_type);
-        tv_pop_num= (TextView) popView.findViewById(R.id.tv_pop_customer_num);
+        tv_pop_num= (EditText) popView.findViewById(R.id.tv_pop_customer_num);
         tv_pop_sheng= (TextView) popView.findViewById(R.id.tv_pop_customer_sheng);
         tv_pop_shi= (TextView) popView.findViewById(R.id.tv_pop_customer_shi);
         tv_pop_qu= (TextView) popView.findViewById(R.id.tv_pop_customer_qu);
@@ -108,17 +111,24 @@ public class CustomerManager extends AppCompatActivity implements View.OnClickLi
         lv_buy= (ListView) popView.findViewById(R.id.lv_buy);
         lv_maifang= (ListView) popView.findViewById(R.id.lv_maifang);
         lv_customer= (ListView) popView.findViewById(R.id.lv_customer);
+        linear1= (LinearLayout) popView.findViewById(R.id.linear1);
+        linear2= (LinearLayout) popView.findViewById(R.id.linear2);
+        linear3= (LinearLayout) popView.findViewById(R.id.linear3);
+        linear4= (LinearLayout) popView.findViewById(R.id.linear4);
+        linear5= (LinearLayout) popView.findViewById(R.id.linear5);
+        linear_sheng= (LinearLayout) popView.findViewById(R.id.linear_sheng);
+        linear_shi= (LinearLayout) popView.findViewById(R.id.linear_shi);
+        linear_qu= (LinearLayout) popView.findViewById(R.id.linear_qu);
+        linear1.setOnClickListener(this);
+        linear2.setOnClickListener(this);
+        linear3.setOnClickListener(this);
+        linear4.setOnClickListener(this);
+        linear5.setOnClickListener(this);
+        linear_sheng.setOnClickListener(this);
+        linear_shi.setOnClickListener(this);
+        linear_qu.setOnClickListener(this);
         img_pop_back.setOnClickListener(this);
         tv_pop_canle.setOnClickListener(this);
-        tv_pop_type.setOnClickListener(this);
-        tv_pop_num.setOnClickListener(this);
-        tv_pop_sheng.setOnClickListener(this);
-        tv_pop_shi.setOnClickListener(this);
-        tv_pop_qu.setOnClickListener(this);
-        tv_pop_zhuangtai.setOnClickListener(this);
-        tv_pop_buy.setOnClickListener(this);
-        tv_pop_maifang.setOnClickListener(this);
-        tv_pop_customer.setOnClickListener(this);
         btn_pop_search.setOnClickListener(this);
         img_back.setOnClickListener(this);
         relative_top.setOnClickListener(this);
@@ -149,7 +159,7 @@ public class CustomerManager extends AppCompatActivity implements View.OnClickLi
             case R.id.tv_pop_customer_canler:
                 popupWindow.dismiss();
                 break;
-            case R.id.tv_pop_customer_type:
+            case R.id.linear1:
                 ShowLv(lv_type);
                 HideLv(lv_qu);
                 HideLv(lv_sheng);
@@ -159,7 +169,7 @@ public class CustomerManager extends AppCompatActivity implements View.OnClickLi
                 HideLv(lv_maifang);
                 HideLv(lv_customer);
                 break;
-            case R.id.tv_pop_customer_sheng:
+            case R.id.linear_sheng:
                 ShowLv(lv_sheng);
                 HideLv(lv_qu);
                 HideLv(lv_type);
@@ -169,7 +179,7 @@ public class CustomerManager extends AppCompatActivity implements View.OnClickLi
                 HideLv(lv_maifang);
                 HideLv(lv_customer);
                 break;
-            case R.id.tv_pop_customer_shi:
+            case R.id.linear_shi:
                 ShowLv(lv_shi);
                 HideLv(lv_qu);
                 HideLv(lv_type);
@@ -179,7 +189,7 @@ public class CustomerManager extends AppCompatActivity implements View.OnClickLi
                 HideLv(lv_maifang);
                 HideLv(lv_customer);
                 break;
-            case R.id.tv_pop_customer_qu:
+            case R.id.linear_qu:
                 ShowLv(lv_qu);
                 HideLv(lv_sheng);
                 HideLv(lv_type);
@@ -189,7 +199,7 @@ public class CustomerManager extends AppCompatActivity implements View.OnClickLi
                 HideLv(lv_maifang);
                 HideLv(lv_customer);
                 break;
-            case R.id.tv_pop_customer_zhuangtai:
+            case R.id.linear2:
                 ShowLv(lv_zhuangtai);
                 HideLv(lv_qu);
                 HideLv(lv_type);
@@ -199,7 +209,7 @@ public class CustomerManager extends AppCompatActivity implements View.OnClickLi
                 HideLv(lv_maifang);
                 HideLv(lv_customer);
                 break;
-            case R.id.tv_pop_customer_buy:
+            case R.id.linear3:
                 ShowLv(lv_buy);
                 HideLv(lv_qu);
                 HideLv(lv_type);
@@ -209,7 +219,7 @@ public class CustomerManager extends AppCompatActivity implements View.OnClickLi
                 HideLv(lv_maifang);
                 HideLv(lv_customer);
                 break;
-            case R.id.tv_pop_customer_maifang:
+            case R.id.linear4:
                 ShowLv(lv_maifang);
                 HideLv(lv_qu);
                 HideLv(lv_type);
@@ -219,7 +229,7 @@ public class CustomerManager extends AppCompatActivity implements View.OnClickLi
                 HideLv(lv_sheng);
                 HideLv(lv_customer);
                 break;
-            case R.id.tv_pop_customer_customer:
+            case R.id.linear5:
                 ShowLv(lv_customer);
                 HideLv(lv_qu);
                 HideLv(lv_type);

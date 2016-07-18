@@ -90,8 +90,7 @@ public class SellerManagementPlatformActivity extends Activity implements View.O
         {
 //            客户管理
             case R.id.customer_management:
-                Intent intent2=new Intent(this, CustomerManager.class);
-                startActivity(intent2);
+                intent.setClass(this,CustomerManager.class);
                 break;
 //            订单管理
             case R.id.order_management:

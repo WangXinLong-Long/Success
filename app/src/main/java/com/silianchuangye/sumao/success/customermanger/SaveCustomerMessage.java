@@ -29,7 +29,7 @@ public class SaveCustomerMessage extends AppCompatActivity implements View.OnCli
     private List<Map<String,Object>> list3=new ArrayList<Map<String,Object>>();
     private SimpleAdapter adapter;
     private SimpleAdapter adapter2,adapter3;
-    private TextView tv;
+    private TextView tv,tv_title;
     String str,str1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +40,9 @@ public class SaveCustomerMessage extends AppCompatActivity implements View.OnCli
     }
 
     private void initView() {
+        String title=getIntent().getStringExtra("title");
+        tv_title= (TextView) findViewById(R.id.tv_customer_manager_title);
+        tv_title.setText(title);
         tv= (TextView) findViewById(R.id.tv_customer_message_editor);
         tv.setText("保存");
         img_back= (ImageView) findViewById(R.id.img_logistics_title_bar_back);

@@ -8,7 +8,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.silianchuangye.sumao.success.MainActivity;
@@ -26,6 +28,7 @@ public class ChinaNorth_MyPrice extends AppCompatActivity implements View.OnClic
     private ListView lv_myprivce;
     private List<String> list=new ArrayList<String>();
     private ArrayAdapter<String>adapter;
+    private RelativeLayout relative_chinanorth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,10 +53,12 @@ public class ChinaNorth_MyPrice extends AppCompatActivity implements View.OnClic
         tv_myprice_telnum= (TextView) findViewById(R.id.tv_myprice_telnum);
         tv_myprice_title= (TextView) findViewById(R.id.tv_myprice_title);
         lv_myprivce= (ListView) findViewById(R.id.lv_myprice_bottem);
+        relative_chinanorth= (RelativeLayout) findViewById(R.id.relative_chinanorth);
 
         img_myprice_back.setOnClickListener(this);
         img_myprice_cart.setOnClickListener(this);
         lv_myprivce.setOnItemClickListener(this);
+        relative_chinanorth.setOnClickListener(this);
         //接收道传递回来的数据
         Intent intent=this.getIntent();
         String str=intent.getStringExtra("name");
@@ -76,6 +81,9 @@ public class ChinaNorth_MyPrice extends AppCompatActivity implements View.OnClic
                 startActivity(intent);
                 Log.e("TAG","发送广播");
                 break;
+            case R.id.relative_chinanorth:
+                Intent intent2=new Intent(ChinaNorth_MyPrice.this,ChinaNorth_Price.class);
+                startActivity(intent2);
         }
     }
 

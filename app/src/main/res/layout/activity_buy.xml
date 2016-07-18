@@ -8,7 +8,7 @@
     <RelativeLayout
         android:id="@+id/relative_buy_top"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="@dimen/title_height"
         android:background="@color/zixun_topbg"
         >
         <ImageView
@@ -28,9 +28,9 @@
             />
         <RelativeLayout
             android:id="@+id/tv_logistics_title_bar_search"
-            android:layout_width="50dp"
-            android:layout_height="40dp"
-            android:layout_marginRight="10dp"
+            android:layout_width="@dimen/x47"
+            android:layout_height="@dimen/x37"
+            android:layout_marginRight="@dimen/x7"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true">
             <TextView
@@ -50,6 +50,6 @@
         android:id="@+id/lv_buy"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/x7"
         android:background="@color/selley_lv"></ListView>
 </RelativeLayout>

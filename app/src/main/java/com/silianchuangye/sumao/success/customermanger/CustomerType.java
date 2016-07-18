@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -28,7 +29,6 @@ private ImageView img_back,img_top,img_bottem;
     }
 
     private void initView() {
-        position=getIntent().getIntExtra("int",-1);
         img_back= (ImageView) findViewById(R.id.img_logistics_title_bar_back);
         img_top= (ImageView) findViewById(R.id.img_customer_type_top);
         img_bottem= (ImageView) findViewById(R.id.img_customer_type_bottem);
@@ -61,11 +61,9 @@ private ImageView img_back,img_top,img_bottem;
                 break;
             case R.id.btn_customer_type:
                 Toast.makeText(this,"保存",Toast.LENGTH_SHORT).show();
-
                 Intent intent=new Intent();
                 intent.setAction("type");
                 intent.putExtra("type",str);
-                intent.putExtra("p",position);
                 sendBroadcast(intent);
                 finish();
                 break;

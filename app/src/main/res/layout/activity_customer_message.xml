@@ -8,7 +8,7 @@
     <RelativeLayout
         android:id="@+id/relative_top"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="@dimen/title_height"
         android:background="@color/zixun_topbg"
         >
         <ImageView
@@ -19,18 +19,18 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/x10"/>
         <TextView
+            android:id="@+id/tv_customer_manager_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="北京四联京津冀"
             android:textSize="18sp"
             android:textColor="@color/selley_lv"
             android:layout_centerInParent="true"
             />
         <RelativeLayout
             android:id="@+id/tv_logistics_title_bar_search"
-            android:layout_width="50dp"
-            android:layout_height="40dp"
-            android:layout_marginRight="10dp"
+            android:layout_width="@dimen/x47"
+            android:layout_height="@dimen/x40"
+            android:layout_marginRight="@dimen/x10"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true">
             <TextView
@@ -55,11 +55,10 @@
             android:layout_height="match_parent">
             <RelativeLayout
                 android:id="@+id/relative_customer_message_two"
-                android:layout_marginTop="10dp"
-
+                android:layout_marginTop="@dimen/x7"
                 android:layout_width="match_parent"
                 android:background="@color/selley_lv"
-                android:layout_height="40dp">
+                android:layout_height="@dimen/x40">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -81,8 +80,8 @@
                 android:id="@+id/relative_customer_message_three"
                 android:background="@color/selley_lv"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginTop="10dp"
+                android:layout_height="@dimen/x40"
+                android:layout_marginTop="@dimen/x10"
                 android:layout_below="@id/lv_customer_message"
                 >
                 <TextView
@@ -105,8 +104,8 @@
                 android:id="@+id/relative_customer_message_four"
                 android:background="@color/selley_lv"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginTop="10dp"
+                android:layout_height="@dimen/x40"
+                android:layout_marginTop="@dimen/x10"
                 android:layout_below="@id/lv_customer_message_three"
                 >
                 <TextView

@@ -33,6 +33,7 @@ public class CustomerMessage extends AppCompatActivity implements View.OnClickLi
     private List<Map<String,Object>> list3=new ArrayList<Map<String,Object>>();
     private SimpleAdapter adapter,adapter2,adapter3;
     private String str,str1;
+    private TextView tv_title;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +43,9 @@ public class CustomerMessage extends AppCompatActivity implements View.OnClickLi
     }
 
     private void initView() {
+        String title=getIntent().getStringExtra("title");
+        tv_title= (TextView) findViewById(R.id.tv_customer_manager_title);
+        tv_title.setText(title);
         img_back= (ImageView) findViewById(R.id.img_logistics_title_bar_back);
         relative_editor= (RelativeLayout) findViewById(R.id.tv_logistics_title_bar_search);
         lv= (CustomListView) findViewById(R.id.lv_customer_message);
@@ -229,6 +233,7 @@ public class CustomerMessage extends AppCompatActivity implements View.OnClickLi
                 Intent intent=new Intent(this,SaveCustomerMessage.class);
                 intent.putExtra("buy",list.get(14).get("right").toString());
                 intent.putExtra("person",list.get(18).get("right").toString());
+                intent.putExtra("title",tv_title.getText().toString());
                 startActivityForResult(intent,0);
                 break;
         }
