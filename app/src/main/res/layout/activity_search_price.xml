@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.silianchuangye.sumao.success.fragments.SellerManagementPlatform.acutionManagement.SearchPriceActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="#29ABE2"
+        android:layout_height="@dimen/x43"
+        android:id="@+id/layout_f"
+        >
+
+        <ImageView
+            android:layout_width="@dimen/x20"
+            android:layout_height="@dimen/x20"
+            android:id="@+id/iv_Back_Price_Search"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/x10"
+            android:src="@mipmap/back"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textColor="#fff"
+            android:textSize="16sp"
+            android:text="报价查询"
+            />
+        <ImageView
+            android:layout_width="@dimen/x20"
+            android:layout_height="@dimen/x20"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/x10"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/search"
+            android:id="@+id/iv_search"
+
+
+            />
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x6"
+        android:background="#EEEEF3"
+        ></LinearLayout>
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/lv_Price_Search"
+        android:background="#fff"
+
+
+        ></ListView>
+</LinearLayout>

@@ -7,6 +7,7 @@ import com.silianchuangye.sumao.success.R;
 
 /**
  * Created by Administrator on 2016/7/15 0015.
+ * 待支付界面
  */
 public class SellerNotPaidOrderDetails extends Activity{
 
