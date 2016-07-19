@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <RelativeLayout
+        android:id="@+id/customer_approval_item_content1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/x5"
+        >
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="@dimen/x15"
+            android:layout_centerVertical="true"
+
+            />
+        <ImageView
+            android:id="@+id/customer_approval_item_detail"
+            android:layout_width="@dimen/x15"
+            android:layout_height="@dimen/x15"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/x10"
+            android:src="@mipmap/my_sumao_iv_order" />
+        <TextView
+            android:id="@+id/state"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@id/customer_approval_item_detail"
+            android:textSize="@dimen/x15"
+            android:layout_marginRight="@dimen/x10"
+            />
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/customer_approval_item_split_line1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x1"
+        android:background="@color/my_sumao_background"
+        android:layout_below="@id/customer_approval_item_content1"
+        />
+    <RelativeLayout
+        android:id="@+id/customer_approval_item_content2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/customer_approval_item_split_line1"
+        android:padding="@dimen/x5">
+        <TextView
+            android:id="@+id/number1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/x5"
+            android:paddingLeft="@dimen/x10"
+            android:paddingTop="@dimen/x5"
+            android:text="企业编号:"
+            android:textSize="@dimen/x13" />
+
+        <TextView
+            android:id="@+id/number2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/number1"
+            android:paddingBottom="@dimen/x5"
+            android:paddingRight="@dimen/x5"
+            android:paddingTop="@dimen/x5"
+            android:text="80"
+            android:textSize="@dimen/x13" />
+
+        <TextView
+            android:id="@+id/enterpriseName1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/number1"
+            android:paddingBottom="@dimen/x5"
+            android:paddingTop="@dimen/x5"
+            android:layout_marginLeft="@dimen/x50"
+            android:text="企业名称:"
+            android:textSize="@dimen/x13" />
+
+        <TextView
+            android:id="@+id/enterpriseName2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/enterpriseName1"
+            android:paddingBottom="@dimen/x5"
+            android:paddingRight="@dimen/x5"
+            android:paddingTop="@dimen/x5"
+            android:text="四联创业化工集团"
+            android:textSize="@dimen/x13" />
+
+
+        <RelativeLayout
+            android:id="@+id/second_line_information"
+            android:layout_below="@id/number1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/typeOfEnterprise1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/x5"
+                android:paddingLeft="@dimen/x10"
+                android:paddingTop="@dimen/x5"
+                android:text="企业类型:"
+                android:textSize="@dimen/x13" />
+
+            <TextView
+                android:id="@+id/typeOfEnterprise2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/typeOfEnterprise1"
+                android:paddingBottom="@dimen/x5"
+                android:paddingRight="@dimen/x5"
+                android:paddingTop="@dimen/x5"
+                android:text="生产厂"
+                android:textSize="@dimen/x13" />
+            <TextView
+                android:id="@+id/officeAddress1"
+                android:layout_toRightOf="@+id/typeOfEnterprise1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x50"
+                android:paddingBottom="@dimen/x5"
+                android:paddingRight="@dimen/x5"
+                android:paddingTop="@dimen/x5"
+                android:textSize="@dimen/x13"
+
+                android:text="办公地址:"
+                />
+            <TextView
+                android:id="@+id/officeAddress2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/officeAddress1"
+                android:text="河北省邢台市沙河县"
+                android:paddingBottom="@dimen/x5"
+                android:paddingRight="@dimen/x5"
+                android:textSize="@dimen/x13"
+                android:paddingTop="@dimen/x5"
+                />
+
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/third_line_information"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/second_line_information"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/customerStatus1"
+
+                android:layout_marginLeft="@dimen/x10"
+                android:text="客户状态:"
+                android:textSize="@dimen/x13"
+                android:paddingBottom="@dimen/x5"
+                android:paddingRight="@dimen/x5"
+                android:paddingTop="@dimen/x5"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/customerStatus2"
+                android:layout_toRightOf="@id/customerStatus1"
+                android:text="失效"
+                android:paddingBottom="@dimen/x5"
+                android:paddingRight="@dimen/x5"
+                android:textSize="@dimen/x13"
+                android:paddingTop="@dimen/x5"
+                />
+
+            <TextView
+                android:id="@+id/purchasingQualification1"
+                android:layout_toRightOf="@+id/state1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x110"
+                android:paddingBottom="@dimen/x5"
+                android:paddingRight="@dimen/x5"
+                android:paddingTop="@dimen/x5"
+                android:textSize="@dimen/x13"
+
+                android:text="购买资质:"
+                />
+            <TextView
+                android:id="@+id/purchasingQualification2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/purchasingQualification1"
+                android:text="有"
+                android:paddingBottom="@dimen/x5"
+                android:paddingRight="@dimen/x5"
+                android:textSize="@dimen/x13"
+                android:paddingTop="@dimen/x5"
+                />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/salesman1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/third_line_information"
+            android:paddingBottom="@dimen/x5"
+            android:paddingLeft="@dimen/x10"
+            android:paddingTop="@dimen/x5"
+            android:text="业务员:"
+            android:textSize="@dimen/x13" />
+
+        <TextView
+            android:id="@+id/salesman2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/third_line_information"
+            android:layout_toRightOf="@id/salesman1"
+            android:paddingBottom="@dimen/x5"
+            android:paddingRight="@dimen/x5"
+            android:paddingTop="@dimen/x5"
+            android:text="陈奥"
+            android:textSize="@dimen/x13" />
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/customer_approval_item_split_line2"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x1"
+        android:background="@color/my_sumao_background"
+        android:layout_below="@id/customer_approval_item_content2"
+        />
+    <RelativeLayout
+        android:id="@+id/notApprovedReasons"
+        android:layout_below="@+id/customer_approval_item_split_line2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/x5"
+        android:visibility="gone"
+        >
+
+        <TextView
+            android:id="@+id/notApprovedReasons1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/x13"
+            android:layout_centerVertical="true"
+            android:text="未通过审批原因:"
+            />
+        <TextView
+            android:layout_toRightOf="@id/notApprovedReasons1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/notApprovedReasons2"
+            android:layout_centerVertical="true"
+            android:textSize="@dimen/x13"
+            />
+    </RelativeLayout>
+</RelativeLayout>

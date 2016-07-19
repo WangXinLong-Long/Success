@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.CartAdapter;
 import com.silianchuangye.sumao.success.adapter.CartItemAdapter;
+import com.silianchuangye.sumao.success.custom.CustomListView;
 import com.silianchuangye.sumao.success.fragments.bean.CartInfo;
 import com.silianchuangye.sumao.success.fragments.bean.CartItemInfo;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.PaymentsOrder;
@@ -36,7 +37,7 @@ import java.util.List;
  * 购物车界面
  */
 public class PagerThree extends BasePager implements AdapterView.OnItemClickListener,CartAdapter.SelectCallBack{
-    private ListView lv_Cart;
+    private CustomListView lv_Cart;
     private CartAdapter adapter;
     private List<CartInfo> list;
     private ImageView img_Cart_All_Select;
@@ -83,7 +84,7 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
         rl_title.setVisibility(View.GONE);
         View v = View.inflate(getActivity(), R.layout.activity_cart, null);
         fl_content.addView(v);
-        lv_Cart = (ListView) v.findViewById(R.id.lv_activity_cart);
+        lv_Cart = (CustomListView) v.findViewById(R.id.lv_activity_cart);
         btn_Cart_Ok = (Button) v.findViewById(R.id.btn_activity_cart_ok);
         img_Cart_All_Select = (ImageView) v.findViewById(R.id.img_activity_cart_allselect);
         tv_Cart_All_Price = (TextView) v.findViewById(R.id.tv_activity_cart_all_price);

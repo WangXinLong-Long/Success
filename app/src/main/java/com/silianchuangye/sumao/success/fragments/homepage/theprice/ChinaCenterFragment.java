@@ -39,7 +39,7 @@ import java.util.List;
     private TextView tv_chinanorth;
     private ImageView img_chiannorth;
     private ListView lv_chinanorth;
-    private List<ChinaNorthInfo> list=new ArrayList<ChinaNorthInfo>();
+    private List<ChinaNorthInfo> list;
     private List<String> allList=new ArrayList<String>();
     private ChinaNorthAdapter adapter;
 
@@ -54,6 +54,7 @@ import java.util.List;
     }
 
     private void initDate() {
+        list=new ArrayList<ChinaNorthInfo>();
         for(int i=0;i<3;i++){
             ChinaNorthInfo info=new ChinaNorthInfo();
             info.title="油化工线性聚乙烯LLDPE-"+i;

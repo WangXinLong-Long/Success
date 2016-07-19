@@ -10,6 +10,8 @@ import android.widget.RelativeLayout;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.ExpandableListViewAdapter;
 import com.silianchuangye.sumao.success.custom.CustomExpandableListView;
+import com.silianchuangye.sumao.success.fragments.SellerManagementPlatform.CustomerApproval.CustomerApproval;
+import com.silianchuangye.sumao.success.fragments.SellerManagementPlatform.SellerOrderManagement.OrderManagement;
 import com.silianchuangye.sumao.success.custom.CustomListView;
 import com.silianchuangye.sumao.success.customermanger.CustomerManager;
 import com.silianchuangye.sumao.success.fragments.SellerManagementPlatform.acutionManagement.SearchPriceActivity;
@@ -88,23 +90,24 @@ public class SellerManagementPlatformActivity extends Activity implements View.O
 
     @Override
     public void onClick(View v) {
+        Intent intent = new Intent();
         switch (v.getId())
         {
 //            客户管理
             case R.id.customer_management:
-                Intent intent2=new Intent(this, CustomerManager.class);
-                startActivity(intent2);
+                intent.setClass(this,CustomerManager.class);
                 break;
 //            订单管理
             case R.id.order_management:
-
+                intent.setClass(this,OrderManagement.class);
                 break;
 //            客户审批
             case R.id.customer_approval:
-
+                intent.setClass(this,CustomerApproval.class);
                 break;
             default:
                 break;
         }
+        startActivity(intent);
     }
 }

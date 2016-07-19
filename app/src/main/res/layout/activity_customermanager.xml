@@ -8,7 +8,7 @@
     android:orientation="vertical">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="@dimen/title_height"
         android:background="@color/zixun_topbg"
         >
         <ImageView
@@ -21,21 +21,21 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="创建物流需求"
+            android:text="客户管理"
             android:textSize="18sp"
             android:textColor="@color/selley_lv"
             android:layout_centerInParent="true"
             />
         <RelativeLayout
             android:id="@+id/img_logistics_title_bar_search"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="@dimen/x27"
+            android:layout_height="@dimen/x27"
             android:layout_marginRight="10dp"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true">
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="@dimen/x17"
+                android:layout_height="@dimen/x17"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="@dimen/x7"
                 android:layout_centerVertical="true"
@@ -46,7 +46,7 @@
 
     </RelativeLayout>
     <android.support.design.widget.TabLayout
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="@dimen/x5"
         android:layout_width="match_parent"
         android:layout_height="@dimen/y30"
         android:id="@+id/tlDemo_OrderPrice_activity"
