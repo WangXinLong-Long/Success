@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <RelativeLayout
+        android:id="@+id/already_paid_item_content1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/x5"
+        >
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="@dimen/x15"
+            android:layout_centerVertical="true"
+
+            />
+
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/already_paid_item_split_line1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x1"
+        android:background="@color/my_sumao_background"
+        android:layout_below="@id/already_paid_item_content1"
+        />
+    <RelativeLayout
+        android:id="@+id/already_paid_item_content2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/already_paid_item_split_line1"
+        android:padding="@dimen/x5">
+        <TextView
+            android:id="@+id/classification1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/x5"
+            android:paddingLeft="@dimen/x5"
+            android:paddingTop="@dimen/x5"
+            android:text="分类:"
+            android:textSize="@dimen/x13" />
+
+        <TextView
+            android:id="@+id/classification2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/classification1"
+            android:paddingBottom="@dimen/x5"
+            android:paddingRight="@dimen/x5"
+            android:paddingTop="@dimen/x5"
+            android:text="默认"
+            android:textSize="@dimen/x13" />
+
+        <TextView
+            android:id="@+id/productName1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/classification1"
+            android:paddingBottom="@dimen/x5"
+            android:paddingTop="@dimen/x5"
+            android:layout_marginLeft="@dimen/x105"
+            android:text="产品名称:"
+            android:textSize="@dimen/x13" />
+
+        <TextView
+            android:id="@+id/productName2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/productName1"
+            android:paddingBottom="@dimen/x5"
+            android:paddingRight="@dimen/x5"
+            android:paddingTop="@dimen/x5"
+            android:text="兰州石化7042"
+            android:textSize="@dimen/x13" />
+
+
+        <RelativeLayout
+            android:id="@+id/second_line_information"
+            android:layout_below="@id/classification1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/originalUnitPrice1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/x5"
+                android:paddingLeft="@dimen/x5"
+                android:paddingTop="@dimen/x5"
+                android:text="原单价(元/吨):"
+                android:textSize="@dimen/x13" />
+
+            <TextView
+                android:id="@+id/originalUnitPrice2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/originalUnitPrice1"
+                android:paddingBottom="@dimen/x5"
+                android:paddingRight="@dimen/x5"
+                android:paddingTop="@dimen/x5"
+                android:text="6100"
+                android:textSize="@dimen/x13" />
+            <TextView
+                android:id="@+id/number1"
+                android:layout_toRightOf="@+id/originalUnitPrice1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x50"
+                android:paddingBottom="@dimen/x5"
+                android:paddingRight="@dimen/x5"
+                android:paddingTop="@dimen/x5"
+                android:textSize="@dimen/x13"
+
+                android:text="数量:"
+                />
+            <TextView
+                android:id="@+id/number2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/number1"
+                android:text="10"
+                android:paddingBottom="@dimen/x5"
+                android:paddingRight="@dimen/x5"
+                android:textSize="@dimen/x13"
+                android:paddingTop="@dimen/x5"
+                />
+
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/third_line_information"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/second_line_information"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/newUnitPrice1"
+
+                android:layout_marginLeft="@dimen/x5"
+                android:text="新单价(元/吨):"
+                android:textSize="@dimen/x13"
+                android:paddingBottom="@dimen/x5"
+                android:paddingTop="@dimen/x5"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/newUnitPrice2"
+                android:layout_toRightOf="@id/newUnitPrice1"
+                android:text="6100"
+                android:paddingBottom="@dimen/x5"
+                android:paddingRight="@dimen/x5"
+                android:textSize="@dimen/x13"
+                android:paddingTop="@dimen/x5"
+                />
+
+            <TextView
+                android:id="@+id/totalProductPrice1"
+                android:layout_toRightOf="@+id/newUnitPrice1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x50"
+                android:paddingBottom="@dimen/x5"
+                android:paddingRight="@dimen/x5"
+                android:paddingTop="@dimen/x5"
+                android:textSize="@dimen/x13"
+
+                android:text="产品总价(元/吨):"
+                />
+            <TextView
+                android:id="@+id/totalProductPrice2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/totalProductPrice1"
+                android:text="6000"
+                android:paddingBottom="@dimen/x5"
+                android:paddingRight="@dimen/x5"
+                android:textSize="@dimen/x13"
+                android:paddingTop="@dimen/x5"
+                />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/warehouse1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/third_line_information"
+            android:paddingBottom="@dimen/x5"
+            android:paddingLeft="@dimen/x5"
+            android:paddingTop="@dimen/x5"
+            android:text="仓库:"
+            android:textSize="@dimen/x13" />
+
+        <TextView
+            android:id="@+id/warehouse2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/third_line_information"
+            android:layout_toRightOf="@id/warehouse1"
+            android:paddingBottom="@dimen/x5"
+            android:paddingRight="@dimen/x5"
+            android:paddingTop="@dimen/x5"
+            android:text="讯帮物流1号库"
+            android:textSize="@dimen/x13" />
+    </RelativeLayout>
+
+</RelativeLayout>

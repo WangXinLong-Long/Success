@@ -22,6 +22,7 @@ import java.util.List;
 
 /**
  * Created by Administrator on 2016/7/14 0014.
+ * 订单管理，全部订单fragment界面
  */
 public class SellerAllOrdersFragment extends Fragment implements View.OnClickListener,AdapterView.OnItemClickListener{
     private List<SellerOrderanagementModel> lists;

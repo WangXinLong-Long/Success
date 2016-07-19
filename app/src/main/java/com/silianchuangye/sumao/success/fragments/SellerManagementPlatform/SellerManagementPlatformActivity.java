@@ -18,6 +18,7 @@ import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement
 
 /**
  * Created by Administrator on 2016/7/13 0013.
+ * 订单管理界面
  */
 public class SellerManagementPlatformActivity extends Activity implements View.OnClickListener{
 

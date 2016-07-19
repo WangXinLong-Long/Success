@@ -53,7 +53,6 @@ public class CustomerApproval extends Activity implements AdapterView.OnItemClic
                 customerApprovalModel.setState("未审批");
             }else {
                 customerApprovalModel.setState("未通过");
-
             }
             customerApprovalModel.setNumber(80+i+"");
             customerApprovalModel.setEnterpriseName("四联创业化工集团");
