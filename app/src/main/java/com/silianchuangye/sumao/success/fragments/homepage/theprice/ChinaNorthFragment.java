@@ -27,6 +27,7 @@ import com.silianchuangye.sumao.success.MyApp;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.ChinaNorthAdapter;
 import com.silianchuangye.sumao.success.customermanger.CustomerManager;
+import com.silianchuangye.sumao.success.salesearch.SaleSearch;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,7 +83,7 @@ public class ChinaNorthFragment extends Fragment implements View.OnClickListener
                 //跳转到点价界面
 //                Intent intent=new Intent(getActivity(),ChinaNorth_Price.class);
 //                startActivity(intent);
-                Intent intent=new Intent(getActivity(), CustomerManager.class);
+                Intent intent=new Intent(getActivity(), SaleSearch.class);
                 startActivity(intent);
                 break;
         }
