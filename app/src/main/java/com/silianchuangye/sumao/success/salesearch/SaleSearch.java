@@ -1,0 +1,70 @@
+package com.silianchuangye.sumao.success.salesearch;
+
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
+
+import com.silianchuangye.sumao.success.R;
+import com.silianchuangye.sumao.success.adapter.SaleSearh_Adapter;
+import com.silianchuangye.sumao.success.fragments.bean.SaleSearchInfo;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class SaleSearch extends AppCompatActivity implements View.OnClickListener{
+    private ImageView img_back;
+    private RelativeLayout relative_search;
+    private ListView lv;
+    private List<SaleSearchInfo> list;
+    private SaleSearh_Adapter adapter;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_sale_search);
+        initDate();
+        initView();
+    }
+
+    private void initDate() {
+        list=new ArrayList<SaleSearchInfo>();
+        for(int i=0;i<3;i++){
+            SaleSearchInfo info1=new SaleSearchInfo();
+            info1.title="兰州石化7024"+i;
+            info1.num="00123489888"+i;
+            info1.sort="聚乙烯"+i;
+            info1.product_name="中石化华北公司"+i;
+            info1.pai_num="LLDPE"+i;
+            info1.price="4,500元";
+            info1.sheng_num="10吨";
+            info1.cangku_name="北京迅帮1库"+i;
+            list.add(info1);
+        }
+
+    }
+
+    private void initView() {
+        img_back= (ImageView) findViewById(R.id.img_logistics_title_bar_back);
+        relative_search= (RelativeLayout) findViewById(R.id.img_logistics_title_bar_search);
+        lv= (ListView) findViewById(R.id.lv_sale_search);
+        adapter=new SaleSearh_Adapter(list,this);
+        lv.setAdapter(adapter);
+        img_back.setOnClickListener(this);
+        relative_search.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.img_logistics_title_bar_back:
+                finish();
+                break;
+            case R.id.img_logistics_title_bar_search:
+                Toast.makeText(this,"popwindow",Toast.LENGTH_SHORT).show();
+                break;
+        }
+    }
+}

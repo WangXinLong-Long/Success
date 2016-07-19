@@ -8,7 +8,7 @@
     tools:context="com.silianchuangye.sumao.success.customermanger.CustomerType">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="@dimen/title_height"
         android:background="@color/zixun_topbg"
         >
         <ImageView
@@ -32,21 +32,22 @@
       android:id="@+id/relative_customer_top"
       android:background="@color/selley_lv"
       android:layout_width="match_parent"
-      android:layout_height="40dp"
-      android:layout_marginTop="10dp">
+      android:layout_height="@dimen/x35"
+      android:layout_marginTop="@dimen/x10">
     <ImageView
         android:id="@+id/img_customer_type_top"
-        android:layout_width="17dp"
-        android:layout_height="17dp"
-        android:src="@mipmap/cart_select"
-        android:layout_marginLeft="10dp"
+        android:layout_width="@dimen/x17"
+        android:layout_height="@dimen/x17"
+        android:src="@mipmap/cart_select_null"
+        android:layout_marginLeft="@dimen/x10"
         android:layout_centerVertical="true"/>
       <TextView
+          android:id="@+id/tv_customer_type_top"
           android:layout_toRightOf="@id/img_customer_type_top"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:text="有"
-          android:layout_marginLeft="10dp"
+          android:layout_marginLeft="@dimen/x10"
           android:layout_centerVertical="true"
           />
   </RelativeLayout>
@@ -57,32 +58,33 @@
     <RelativeLayout
         android:id="@+id/relative_customer_bottom"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="@dimen/x35"
         android:background="@color/selley_lv"
         >
         <ImageView
             android:id="@+id/img_customer_type_bottem"
-            android:layout_width="17dp"
-            android:layout_height="17dp"
+            android:layout_width="@dimen/x17"
+            android:layout_height="@dimen/x17"
             android:src="@mipmap/cart_select_null"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="@dimen/x10"
             android:layout_centerVertical="true"/>
         <TextView
+            android:id="@+id/tv_customer_type_bottem"
             android:layout_toRightOf="@id/img_customer_type_bottem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="待审核"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="@dimen/x10"
             android:layout_centerVertical="true"
             />
     </RelativeLayout>
     <Button
         android:id="@+id/btn_customer_type"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_height="@dimen/x35"
+        android:layout_marginLeft="@dimen/x10"
+        android:layout_marginRight="@dimen/x10"
+        android:layout_marginTop="@dimen/x10"
         android:text="保存"
         android:textColor="@color/selley_lv"
         android:background="@drawable/button_background_blue"/>

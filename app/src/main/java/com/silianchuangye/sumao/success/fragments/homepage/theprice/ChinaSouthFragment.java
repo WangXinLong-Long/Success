@@ -39,8 +39,7 @@ public class ChinaSouthFragment extends Fragment implements AdapterView.OnItemCl
     private TextView tv_chinanorth;
     private ImageView img_chiannorth;
     private ListView lv_chinanorth;
-    private List<ChinaNorthInfo> list=new ArrayList<ChinaNorthInfo>();
-    private List<String> allList=new ArrayList<String>();
+    private List<ChinaNorthInfo> list;
     private ChinaNorthAdapter adapter;
     private boolean flag=true;
     private boolean check1flag,check2flag;
@@ -56,6 +55,7 @@ public class ChinaSouthFragment extends Fragment implements AdapterView.OnItemCl
     }
 
     private void initDate() {
+        list=new ArrayList<ChinaNorthInfo>();
         for(int i=0;i<3;i++){
             ChinaNorthInfo info=new ChinaNorthInfo();
             info.title="油化工线性聚乙烯LLDPE-"+i;

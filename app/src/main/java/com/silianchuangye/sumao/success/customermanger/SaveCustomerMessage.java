@@ -12,28 +12,25 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.baidu.mapapi.map.Text;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.custom.CustomListView;
-
-import org.apache.qpid.management.common.sasl.UsernameHashedPasswordCallbackHandler;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
-public class CustomerMessage extends AppCompatActivity implements View.OnClickListener{
+public class SaveCustomerMessage extends AppCompatActivity implements View.OnClickListener,AdapterView.OnItemClickListener{
     private ImageView img_back;
     private RelativeLayout relative_editor;//编辑tv
     private CustomListView lv,lv2,lv3;
     private List<Map<String,Object>> list=new ArrayList<Map<String,Object>>();
     private List<Map<String,Object>> list2=new ArrayList<Map<String,Object>>();
     private List<Map<String,Object>> list3=new ArrayList<Map<String,Object>>();
-    private SimpleAdapter adapter,adapter2,adapter3;
-    private String str,str1;
-    private TextView tv_title;
+    private SimpleAdapter adapter;
+    private SimpleAdapter adapter2,adapter3;
+    private TextView tv,tv_title;
+    String str,str1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,18 +43,19 @@ public class CustomerMessage extends AppCompatActivity implements View.OnClickLi
         String title=getIntent().getStringExtra("title");
         tv_title= (TextView) findViewById(R.id.tv_customer_manager_title);
         tv_title.setText(title);
+        tv= (TextView) findViewById(R.id.tv_customer_message_editor);
+        tv.setText("保存");
         img_back= (ImageView) findViewById(R.id.img_logistics_title_bar_back);
         relative_editor= (RelativeLayout) findViewById(R.id.tv_logistics_title_bar_search);
         lv= (CustomListView) findViewById(R.id.lv_customer_message);
         lv2= (CustomListView) findViewById(R.id.lv_customer_message_three);
         lv3= (CustomListView) findViewById(R.id.lv_customer_message_four);
-
         img_back.setOnClickListener(this);
         relative_editor.setOnClickListener(this);
         adapter=new SimpleAdapter(this,list,R.layout.item_customer_message_lv,
                 new String[]{
                         "left","right","see","img"
-             }, new int[]{
+                }, new int[]{
                 R.id.tv_item_customer_message_lv_left,
                 R.id.tv_item_customer_message_lv_right,
                 R.id.tv_item_customer_message_lv_see,
@@ -86,6 +84,8 @@ public class CustomerMessage extends AppCompatActivity implements View.OnClickLi
                 R.id.img_item_customer_message
         });
         lv3.setAdapter(adapter3);
+
+        lv.setOnItemClickListener(this);
     }
 
     private void initDate() {
@@ -104,21 +104,18 @@ public class CustomerMessage extends AppCompatActivity implements View.OnClickLi
         map5.put("right","生产厂");
         Map<String,Object>map6=new HashMap<String,Object>();
         map6.put("left","统一社会信用代码");
-        map6.put("img",R.mipmap.my_sumao_iv_order);
         map6.put("right","3321");
         map6.put("see","查看扫描件");
         Map<String,Object>map7=new HashMap<String,Object>();
         map7.put("left","开户银行许可证");
         map7.put("right","2134fsdf");
         map7.put("see","查看扫描件");
-        map7.put("img",R.mipmap.my_sumao_iv_order);
         Map<String,Object>map8=new HashMap<String,Object>();
         map8.put("left","企业名称");
         map8.put("right","艾泽拉斯国家情报局");
         Map<String,Object>map9=new HashMap<String,Object>();
         map9.put("left","组织机构代码");
         map9.put("see","查看扫描件");
-        map9.put("img",R.mipmap.my_sumao_iv_order);
         Map<String,Object>map10=new HashMap<String,Object>();
         map10.put("left","年需求量");
         map10.put("right","22222吨/年");
@@ -140,7 +137,7 @@ public class CustomerMessage extends AppCompatActivity implements View.OnClickLi
         map15.put("see","查看扫描件");
         Map<String,Object>map16=new HashMap<String,Object>();
         map16.put("left","购买资质");
-        map16.put("right","有");
+        map16.put("right",getIntent().getStringExtra("buy"));
         Map<String,Object>map17=new HashMap<String,Object>();
         map17.put("left","传真号");
         map17.put("right","12312321312321");
@@ -151,7 +148,7 @@ public class CustomerMessage extends AppCompatActivity implements View.OnClickLi
         map19.put("right","有效");
         Map<String,Object> map20=new HashMap<String,Object>();
         map20.put("left","指派业务员");
-        map20.put("right","张三");
+        map20.put("right",getIntent().getStringExtra("person"));
         list.add(map2);
         list.add(map3);
         list.add(map4);
@@ -230,28 +227,50 @@ public class CustomerMessage extends AppCompatActivity implements View.OnClickLi
                 finish();
                 break;
             case R.id.tv_logistics_title_bar_search:
-                Intent intent=new Intent(this,SaveCustomerMessage.class);
-                intent.putExtra("buy",list.get(14).get("right").toString());
-                intent.putExtra("person",list.get(18).get("right").toString());
-                intent.putExtra("title",tv_title.getText().toString());
-                startActivityForResult(intent,0);
+                Toast.makeText(this,"保存",Toast.LENGTH_SHORT).show();
+                Intent intent=new Intent();
+                if(str==null&&str1==null){
+                    setResult(3,intent);
+                }
+                intent.putExtra("select", list.get(14).get("right").toString());
+                intent.putExtra("name", list.get(18).get("right").toString());
+                Log.e("TAG","werwrw"+list.get(14).get("right").toString());
+                Log.e("TAG","sdfsf"+list.get(18).get("right").toString());
+                setResult(2, intent);
+                finish();
                 break;
+        }
+    }
+int i;
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        i=position;
+        if(list.get(position).get("left").equals("购买资质")){
+            Toast.makeText(this,"购买资质",Toast.LENGTH_SHORT).show();
+            Intent intent=new Intent(this,Buy.class);
+            intent.putExtra("title",list.get(position).get("left").toString());
+            startActivityForResult(intent,0);
+        }
+        if(list.get(position).get("left").equals("指派业务员")){
+            Toast.makeText(this,"指派业务员",Toast.LENGTH_SHORT).show();
+            Intent intent=new Intent(this,ZhiPaiPerson.class);
+            intent.putExtra("name",list.get(position).get("right").toString());
+            startActivityForResult(intent,0);
         }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode==2){
+        Log.e("TAG","str=="+str);
+        if(resultCode==1){
             str=data.getStringExtra("select");
-            str1=data.getStringExtra("name");
             list.get(14).put("right",str);
+        }
+        if(resultCode==2){
+            str1=data.getStringExtra("name");
             list.get(18).put("right",str1);
-            adapter.notifyDataSetChanged();
-            Log.e("TAG","14"+list.get(14).get("right").toString());
         }
-        if(requestCode==3){
-
-        }
+        adapter.notifyDataSetChanged();
     }
 }

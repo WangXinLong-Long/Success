@@ -14,6 +14,7 @@ import com.silianchuangye.sumao.success.fragments.SellerManagementPlatform.Custo
 import com.silianchuangye.sumao.success.fragments.SellerManagementPlatform.SellerOrderManagement.OrderManagement;
 import com.silianchuangye.sumao.success.custom.CustomListView;
 import com.silianchuangye.sumao.success.customermanger.CustomerManager;
+import com.silianchuangye.sumao.success.fragments.SellerManagementPlatform.acutionManagement.SearchPriceActivity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.goodsInStock.OrderGoodsActivity;
 
 /**
@@ -64,9 +65,13 @@ public class SellerManagementPlatformActivity extends Activity implements View.O
                                         int groupPosition, int childPosition, long id) {
                 if (adapter.getChild(groupPosition, childPosition).toString().equals("报价查询"))
                 {
+                    Intent intent=new Intent(SellerManagementPlatformActivity.this, SearchPriceActivity.class);
+                    startActivity(intent);
 
                 }else if (adapter.getChild(groupPosition, childPosition).toString().equals("竞拍结果查看"))
                 {
+//                    Intent intent=new Intent(SellerManagementPlatformActivity.this,);
+//                    startActivity(intent);
 
                 }else if (adapter.getChild(groupPosition, childPosition).toString().equals("日需求查看"))
                 {
@@ -91,8 +96,7 @@ public class SellerManagementPlatformActivity extends Activity implements View.O
         {
 //            客户管理
             case R.id.customer_management:
-                Intent intent2=new Intent(this, CustomerManager.class);
-                startActivity(intent2);
+                intent.setClass(this,CustomerManager.class);
                 break;
 //            订单管理
             case R.id.order_management:

@@ -5,4 +5,5 @@ package com.silianchuangye.sumao.success.fragments.bean;
  */
 public class AllCustomInfo {
     public String title,num,name,type,address,buy,person,zhuangtai;
+    public boolean flag;
 }

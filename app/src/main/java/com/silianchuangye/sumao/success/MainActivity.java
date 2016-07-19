@@ -90,7 +90,6 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
             public void onClick(View v) {
                 sp=getSharedPreferences("sumao",Context.MODE_PRIVATE);
                 username=sp.getString("name","");
-                Log.e("TAG","username2222=========="+username);
                 if (username!=""){
                     mTabHost.setCurrentTab(3);
                 }else {
@@ -255,9 +254,8 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
     private void showCart(){
         SharedPreferences share=getSharedPreferences("sumao",Context.MODE_PRIVATE);
         String str=share.getString("name","");
-        Log.e("TAG","str=="+str);
         if (str!=""){
-            mTabHost.setCurrentTab(2);
+            mTabHost.setCurrentTab(3);
         }else {
             Intent intent = new Intent();
             intent.putExtra("cart1", 9);

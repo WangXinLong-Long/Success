@@ -26,6 +26,8 @@ import android.widget.Toast;
 import com.silianchuangye.sumao.success.MyApp;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.ChinaNorthAdapter;
+import com.silianchuangye.sumao.success.customermanger.CustomerManager;
+import com.silianchuangye.sumao.success.salesearch.SaleSearch;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,8 +41,7 @@ public class ChinaNorthFragment extends Fragment implements View.OnClickListener
     private TextView tv_chinanorth;
     private ImageView img_chiannorth;
     private ListView lv_chinanorth;
-    private List<ChinaNorthInfo> list=new ArrayList<ChinaNorthInfo>();
-    private List<String> allList=new ArrayList<String>();
+    private List<ChinaNorthInfo> list;
     private ChinaNorthAdapter adapter;
     private boolean flag=true;
 
@@ -49,11 +50,11 @@ public class ChinaNorthFragment extends Fragment implements View.OnClickListener
         chinanorth =inflater.inflate(R.layout.fragment_china_north, container, false);
         initDate();
         initView();
-//
         return chinanorth;
     }
 
     private void initDate() {
+        list=new ArrayList<ChinaNorthInfo>();
         for(int i=0;i<3;i++){
             ChinaNorthInfo info=new ChinaNorthInfo();
             info.title="油化工线性聚乙烯LLDPE-"+i;
@@ -68,10 +69,11 @@ public class ChinaNorthFragment extends Fragment implements View.OnClickListener
         img_chiannorth= (ImageView) chinanorth.findViewById(R.id.img_chinanorth);
         lv_chinanorth= (ListView) chinanorth.findViewById(R.id.lv_chainanorth);
         relative_chinanorth= (RelativeLayout) chinanorth.findViewById(R.id.relative_chinanorth);
-        relative_chinanorth.setOnClickListener(this);
-        lv_chinanorth.setOnItemClickListener(this);
         adapter=new ChinaNorthAdapter(list,getActivity());
         lv_chinanorth.setAdapter(adapter);
+
+        relative_chinanorth.setOnClickListener(this);
+        lv_chinanorth.setOnItemClickListener(this);
     }
 
     @Override
@@ -79,7 +81,9 @@ public class ChinaNorthFragment extends Fragment implements View.OnClickListener
         switch (v.getId()){
             case R.id.relative_chinanorth:
                 //跳转到点价界面
-                Intent intent=new Intent(getActivity(),ChinaNorth_Price.class);
+//                Intent intent=new Intent(getActivity(),ChinaNorth_Price.class);
+//                startActivity(intent);
+                Intent intent=new Intent(getActivity(), SaleSearch.class);
                 startActivity(intent);
                 break;
         }

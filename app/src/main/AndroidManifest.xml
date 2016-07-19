@@ -476,31 +476,33 @@
         <activity
             android:name=".fragments.myPlasticTrade.PhysicalDistributionManagement.ViewLogisticsDemands.ViewLogisticsDemand"
             android:screenOrientation="portrait" />
-        <activity android:name=".fragments.myPlasticTrade.PhysicalDistributionManagement.ViewLogisticsDemands.TrackingDistributionDetails"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.CreateLogisticsNeed"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.Logistics_SelectAddress"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".fragments.SellerManagementPlatform.SellerManagementPlatformActivity"
-            android:screenOrientation="portrait"
-            />
-        <activity android:name=".fragments.SellerManagementPlatform.CustomerApproval.CustomerApproval"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".fragments.SellerManagementPlatform.SellerOrderManagement.OrderManagement"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".fragments.SellerManagementPlatform.SellerOrderManagement.SellerNotPaidOrderDetails"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".fragments.SellerManagementPlatform.SellerOrderManagement.SellerAlreadyPaidOrderDetails"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".customermanger.CustomerManager" />
+        <activity
+            android:name=".fragments.myPlasticTrade.PhysicalDistributionManagement.ViewLogisticsDemands.TrackingDistributionDetails"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.CreateLogisticsNeed"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.Logistics_SelectAddress"
+            android:screenOrientation="portrait" />
         <activity android:name=".customermanger.CustomerType" />
-        <activity android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.CaptureActivity"
-                   android:configChanges="orientation|keyboardHidden"
-                   android:screenOrientation="portrait"
-            ></activity>
-        <activity android:name=".customermanger.CustomerMessage"></activity>
+        <activity
+            android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.CaptureActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity android:name=".customermanger.CustomerMessage" />
+        <activity android:name=".fragments.SellerManagementPlatform.SellerManagementPlatformActivity" />
+        <activity android:name=".fragments.SellerManagementPlatform.acutionManagement.SearchPriceActivity">
+         <!--   <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
+        </activity>
+        <activity android:name=".fragments.SellerManagementPlatform.acutionManagement.PriceSearchinfoActivity" />
+        <activity android:name=".fragments.SellerManagementPlatform.acutionManagement.AcutionResultActivity" />
+        <activity android:name=".fragments.SellerManagementPlatform.acutionManagement.AuctionSuccessActivity" />
+        <activity android:name=".fragments.SellerManagementPlatform.acutionManagement.AcutionFailActivity"></activity>
     </application>
 
 </manifest>
