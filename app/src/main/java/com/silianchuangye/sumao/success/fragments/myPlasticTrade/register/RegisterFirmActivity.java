@@ -33,6 +33,8 @@ import org.xutils.http.RequestParams;
 import org.xutils.http.body.StringBody;
 import org.xutils.x;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
@@ -92,6 +94,8 @@ public class RegisterFirmActivity extends AppCompatActivity {
         String RegisterUri="http://192.168.32.126:7023/rest/model/atg/store/profile/RegistrationActor/createUser";
         rp=new RequestParams(RegisterUri);
 
+        rp.setCharset("UTF-8");
+
         bt_save_register_value = (Button) findViewById(R.id.bt_save_register_value);
         bt_save_register_value.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,7 +124,9 @@ public class RegisterFirmActivity extends AppCompatActivity {
                                     rp.addParameter("cl_chuanzhen",list.get(5).get("right").toString());
                                     rp.addParameter("cl_entName",list.get(6).get("right").toString());
                                     rp.addParameter("cl_taxNum",list.get(7).get("right").toString());
-                                   // if (sp_firm_info.getClipBounds(0)=="三证独立")
+
+
+                                    // if (sp_firm_info.getClipBounds(0)=="三证独立")
 //                                    rp.addParameter("cl_entName","张三");
 //                                    rp.addParameter("cl_taxNum","217391472093417243");
 //                                    sp_firm_info.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -194,6 +200,7 @@ public class RegisterFirmActivity extends AppCompatActivity {
                                     rp.addParameter("_dynSessConf",unique123);
                                     Log.d("unique",unique123);
                                     Log.d("传的值",rp+"");
+                                    rp.getCharset();
                                     x.http().post(rp, new CommonCallback<String>() {
                                         @Override
                                         public void onSuccess(String result) {
