@@ -39,6 +39,7 @@ public class WangXinLong extends Activity {
 //        7月19日 卖家订单管理已支付状态页面
 //        7月19日 卖家订单管理已支付状态页面
 //        7月19日 卖家订单管理已支付状态页面
+//        7月19日 卖家订单管理已支付状态页面
 
         showPayDialog();
 
