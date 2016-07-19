@@ -500,7 +500,6 @@
         <activity
             android:name=".fragments.SellerManagementPlatform.SellerOrderManagement.SellerAlreadyPaidOrderDetails"
             android:screenOrientation="portrait" />
-        <activity android:name=".customermanger.CustomerManager" />
         <activity android:name=".customermanger.CustomerType" />
         <activity android:name=".customermanger.CustomerMessage" />
         <activity android:name=".customermanger.SaveCustomerMessage" />
@@ -510,7 +509,8 @@
             android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.CaptureActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
-        <activity android:name=".salesearch.SaleSearch"></activity>
+        <activity android:name=".salesearch.SaleSearch" />
+        <activity android:name=".customermanger.CustomerParent"></activity>
     </application>
 
 </manifest>

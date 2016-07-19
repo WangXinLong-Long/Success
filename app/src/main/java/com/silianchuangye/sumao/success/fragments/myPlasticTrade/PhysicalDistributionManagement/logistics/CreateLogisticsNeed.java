@@ -17,13 +17,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.Create_LogisticsNeed_Adapter;
-import com.silianchuangye.sumao.success.customermanger.CustomerManager;
-import com.silianchuangye.sumao.success.fragments.PagerThree;
 import com.silianchuangye.sumao.success.fragments.bean.Create_Logistics_NeedInfo;
 
 import java.util.ArrayList;
