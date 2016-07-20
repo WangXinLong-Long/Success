@@ -69,9 +69,10 @@ public class SaleSearch extends AppCompatActivity implements View.OnClickListene
         popView=View.inflate(this,R.layout.salepop,null);
         img_pop_back= (ImageView) popView.findViewById(R.id.img_logistics_title_bar_back_sale_pop);
         relative_pop_calce= (RelativeLayout) popView.findViewById(R.id.img_logistics_title_bar_search_sale_pop);
-        btn_pop_search= (Button) popView.findViewById(R.id.btn_pop_ok);
+        btn_pop_search= (Button) popView.findViewById(R.id.btn_salepop_search);
         img_pop_back.setOnClickListener(this);
         relative_pop_calce.setOnClickListener(this);
+        btn_pop_search.setOnClickListener(this);
     }
 
     @Override
@@ -92,6 +93,9 @@ public class SaleSearch extends AppCompatActivity implements View.OnClickListene
             case R.id.img_logistics_title_bar_search_sale_pop:
                 popWindow.dismiss();
                 break;
+            case R.id.btn_salepop_search:
+                popWindow.dismiss();
+                break;
         }
     }
     private void showPop(){
@@ -100,7 +104,7 @@ public class SaleSearch extends AppCompatActivity implements View.OnClickListene
         popWindow=new PopupWindow(popView,w,popView.getMeasuredHeight());
         popWindow.setFocusable(true);
         popWindow.setBackgroundDrawable(new BitmapDrawable());
-        popWindow.showAtLocation(lv, Gravity.TOP,0,65);
+        popWindow.showAtLocation(lv, Gravity.TOP,0,55);
         popWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {

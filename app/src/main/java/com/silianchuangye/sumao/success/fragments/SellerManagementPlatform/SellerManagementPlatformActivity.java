@@ -3,6 +3,7 @@ package com.silianchuangye.sumao.success.fragments.SellerManagementPlatform;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.RelativeLayout;
@@ -14,9 +15,9 @@ import com.silianchuangye.sumao.success.customermanger.CustomerParent;
 import com.silianchuangye.sumao.success.fragments.SellerManagementPlatform.CustomerApproval.CustomerApproval;
 import com.silianchuangye.sumao.success.fragments.SellerManagementPlatform.SellerOrderManagement.OrderManagement;
 import com.silianchuangye.sumao.success.custom.CustomListView;
-import com.silianchuangye.sumao.success.customermanger.CustomerManager;
 import com.silianchuangye.sumao.success.fragments.SellerManagementPlatform.acutionManagement.SearchPriceActivity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.goodsInStock.OrderGoodsActivity;
+import com.silianchuangye.sumao.success.salesearch.SaleSearch;
 
 /**
  * Created by Administrator on 2016/7/13 0013.
@@ -78,10 +79,10 @@ public class SellerManagementPlatformActivity extends Activity implements View.O
 
                 }else if (adapter.getChild(groupPosition, childPosition).toString().equals("月需求查看"))
                 {
-
-                }else if (adapter.getChild(groupPosition, childPosition).toString().equals("在线商品查询"))
+                }else if (adapter.getChild(groupPosition, childPosition).toString().equals("在售商品查询"))
                 {
-
+                    Intent intent2=new Intent(SellerManagementPlatformActivity.this, SaleSearch.class);
+                    startActivity(intent2);
                 }
 
                 return true;
@@ -96,7 +97,7 @@ public class SellerManagementPlatformActivity extends Activity implements View.O
         {
 //            客户管理
             case R.id.customer_management:
-                intent.setClass(this,CustomerManager.class);
+                intent.setClass(this,CustomerParent.class);
                 break;
 //            订单管理
             case R.id.order_management:

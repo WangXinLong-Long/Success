@@ -68,9 +68,7 @@ public class ChinaNorthFragment extends Fragment implements View.OnClickListener
         switch (v.getId()){
             case R.id.relative_chinanorth:
                 //跳转到点价界面
-//                Intent intent=new Intent(getActivity(),ChinaNorth_Price.class);
-//                startActivity(intent);
-                Intent intent=new Intent(getActivity(), SaleSearch.class);
+                Intent intent=new Intent(getActivity(),ChinaNorth_Price.class);
                 startActivity(intent);
                 break;
         }
