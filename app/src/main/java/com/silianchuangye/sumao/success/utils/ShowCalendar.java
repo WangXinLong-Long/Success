@@ -12,7 +12,7 @@ import java.util.Calendar;
  * Created by Administrator on 2016/7/12 0012.
  */
 public class ShowCalendar {
-    public static void showDate(final TextView Tv, final Context context){
+    public static void showDate(final TextView Tv, final Context context, final Boolean flag){
         Calendar calend1 = Calendar.getInstance();
         calend1.setTimeInMillis(System.currentTimeMillis());
         int year = calend1.get(Calendar.YEAR);
@@ -29,10 +29,17 @@ public class ShowCalendar {
                         Toast.makeText(context,
                                 "" + year + "年" + (monthOfYear + 1)
                                         + "月" + dayOfMonth + "日", Toast.LENGTH_LONG).show();
-                        Tv.setText(year + "年" + (monthOfYear + 1)
-                                + "月" + dayOfMonth + "日");
+                        if (flag)
+                        {
+                            Tv.setText(year + "年" + (monthOfYear + 1)
+                                    + "月\n" + dayOfMonth + "日");
+                        }else {
+                            Tv.setText(year + "年" + (monthOfYear + 1)
+                                    + "月" + dayOfMonth + "日");
+                        }
                     }
                 }, year, month, day);
         dialog3.show();
     }
+
 }

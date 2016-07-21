@@ -1,10 +1,16 @@
 package com.silianchuangye.sumao.success.salesearch;
 
+import android.graphics.drawable.BitmapDrawable;
+import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -21,6 +27,11 @@ public class SaleSearch extends AppCompatActivity implements View.OnClickListene
     private ListView lv;
     private List<SaleSearchInfo> list;
     private SaleSearh_Adapter adapter;
+    private View popView;
+    private PopupWindow popWindow;
+    private ImageView img_pop_back;
+    private RelativeLayout relative_pop_calce;
+    private Button btn_pop_search;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +65,14 @@ public class SaleSearch extends AppCompatActivity implements View.OnClickListene
         lv.setAdapter(adapter);
         img_back.setOnClickListener(this);
         relative_search.setOnClickListener(this);
+
+        popView=View.inflate(this,R.layout.salepop,null);
+        img_pop_back= (ImageView) popView.findViewById(R.id.img_logistics_title_bar_back_sale_pop);
+        relative_pop_calce= (RelativeLayout) popView.findViewById(R.id.img_logistics_title_bar_search_sale_pop);
+        btn_pop_search= (Button) popView.findViewById(R.id.btn_salepop_search);
+        img_pop_back.setOnClickListener(this);
+        relative_pop_calce.setOnClickListener(this);
+        btn_pop_search.setOnClickListener(this);
     }
 
     @Override
@@ -64,7 +83,38 @@ public class SaleSearch extends AppCompatActivity implements View.OnClickListene
                 break;
             case R.id.img_logistics_title_bar_search:
                 Toast.makeText(this,"popwindow",Toast.LENGTH_SHORT).show();
+                showPop();
+                backgroundAlpha(0.5f);
+                break;
+            case R.id.img_logistics_title_bar_back_sale_pop:
+                Toast.makeText(this,"返回",Toast.LENGTH_SHORT).show();
+                popWindow.dismiss();
+                break;
+            case R.id.img_logistics_title_bar_search_sale_pop:
+                popWindow.dismiss();
+                break;
+            case R.id.btn_salepop_search:
+                popWindow.dismiss();
                 break;
         }
+    }
+    private void showPop(){
+        popView.measure(0,0);
+        int w=getWindowManager().getDefaultDisplay().getWidth();
+        popWindow=new PopupWindow(popView,w,popView.getMeasuredHeight());
+        popWindow.setFocusable(true);
+        popWindow.setBackgroundDrawable(new BitmapDrawable());
+        popWindow.showAtLocation(lv, Gravity.TOP,0,55);
+        popWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                backgroundAlpha(1f);
+            }
+        });
+    }
+    public void backgroundAlpha(float bgAlpha){
+        WindowManager.LayoutParams lp=this.getWindow().getAttributes();
+        lp.alpha=bgAlpha;
+        this.getWindow().setAttributes(lp);
     }
 }

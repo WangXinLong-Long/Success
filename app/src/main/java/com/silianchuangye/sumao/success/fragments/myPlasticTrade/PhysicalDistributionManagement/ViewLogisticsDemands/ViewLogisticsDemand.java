@@ -61,11 +61,12 @@ public class ViewLogisticsDemand extends Activity implements View.OnClickListene
     private ListView lv_logistics_demand;
     private ListView lv_type;
     private ListView lv_distribution_mode;
-
+    private ShowCalendar showCalendar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_logistics_demand_activity);
+
         listview = ((CustomExpandableListView) findViewById(R.id.listview));
         view_logistics_demand_activity_title = ((RelativeLayout) findViewById(R.id.view_logistics_demand_activity_title));
 //        题目
@@ -176,7 +177,7 @@ public class ViewLogisticsDemand extends Activity implements View.OnClickListene
                 hideListView(lv_logistics_demand);
                 break;
             case R.id.popup_window_delivery_date1:
-                ShowCalendar.showDate(popup_window_delivery_date1,this);
+                ShowCalendar.showDate(popup_window_delivery_date1,this,false);
                 break;
             default:
                 break;
