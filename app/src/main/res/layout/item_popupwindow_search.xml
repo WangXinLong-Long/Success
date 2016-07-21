@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:orientation="vertical"
+    android:layout_height="wrap_content"
     android:id="@+id/layout_e"
     android:background="#fff"
-    android:layout_height="wrap_content">
+    >
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/x40"
+        android:layout_height="@dimen/x30"
         android:weightSum="10"
+        android:id="@+id/layout_1"
         >
     <RelativeLayout
         android:layout_width="match_parent"
@@ -32,8 +33,8 @@
         >
         <EditText
             android:layout_width="match_parent"
-            android:layout_height="@dimen/x30"
-            android:layout_marginRight="@dimen/x10"
+            android:layout_height="@dimen/x20"
+            android:layout_marginRight="@dimen/x30"
             android:background="@drawable/juxing"
             android:layout_centerVertical="true"
             android:id="@+id/ed_fenlai"
@@ -42,8 +43,10 @@
     </LinearLayout>
     <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="@dimen/x40"
+    android:layout_height="@dimen/x30"
     android:weightSum="10"
+        android:layout_below="@+id/layout_1"
+        android:id="@+id/layout_2"
     >
     <RelativeLayout
         android:layout_width="match_parent"
@@ -67,8 +70,8 @@
         >
         <EditText
             android:layout_width="match_parent"
-            android:layout_height="@dimen/x30"
-            android:layout_marginRight="@dimen/x10"
+            android:layout_height="@dimen/x20"
+            android:layout_marginRight="@dimen/x30"
             android:background="@drawable/juxing"
             android:layout_centerVertical="true"
             android:id="@+id/ed_paihao"
@@ -77,8 +80,10 @@
 </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/x40"
+        android:layout_height="@dimen/x30"
         android:weightSum="10"
+        android:layout_below="@+id/layout_2"
+        android:id="@+id/layout_3"
         >
         <RelativeLayout
             android:layout_width="match_parent"
@@ -102,19 +107,20 @@
             >
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/x30"
-                android:layout_marginRight="@dimen/x10"
+                android:layout_height="@dimen/x20"
+                android:layout_marginRight="@dimen/x30"
                 android:background="@drawable/juxing"
                 android:layout_centerVertical="true"
-                android:id="@+id/ed_way"
+                android:id="@+id/tv_way"
                 />
             <ImageView
                 android:layout_width="@dimen/x20"
                 android:layout_height="@dimen/x20"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/x11"
+                android:layout_marginRight="@dimen/x31"
                 android:layout_alignParentRight="true"
                 android:src="@mipmap/drop_down"
+                android:id="@+id/iv_way"
                 />
          <!--   <ListView
                 android:layout_width="wrap_content"
@@ -125,10 +131,13 @@
 
         </RelativeLayout>
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/x40"
+        android:layout_height="@dimen/x30"
         android:weightSum="10"
+        android:id="@+id/layout_4"
+        android:layout_below="@+id/layout_3"
         >
         <RelativeLayout
             android:layout_width="match_parent"
@@ -142,7 +151,7 @@
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="@dimen/x8"
-                android:text="牌号:"
+                android:text="交货日期:"
                 />
         </RelativeLayout>
         <RelativeLayout
@@ -150,28 +159,31 @@
             android:layout_height="match_parent"
             android:layout_weight="3"
             >
-            <EditText
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/x30"
-                android:layout_marginRight="@dimen/x10"
+                android:layout_height="@dimen/x20"
+                android:layout_marginRight="@dimen/x30"
                 android:background="@drawable/juxing"
                 android:layout_centerVertical="true"
-                android:id="@+id/ed_riqi"
+                android:id="@+id/tv_riqi"
                 />
             <ImageView
                 android:layout_width="@dimen/x20"
                 android:layout_height="@dimen/x20"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/x11"
+                android:layout_marginRight="@dimen/x31"
                 android:layout_alignParentRight="true"
                 android:src="@mipmap/candela"
+                android:id="@+id/iv_riqi"
                 />
         </RelativeLayout>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/x40"
+        android:layout_height="@dimen/x30"
         android:weightSum="10"
+        android:id="@+id/layout_5"
+        android:layout_below="@+id/layout_4"
         >
         <RelativeLayout
             android:layout_width="match_parent"
@@ -195,8 +207,8 @@
             >
             <EditText
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/x30"
-                android:layout_marginRight="@dimen/x10"
+                android:layout_height="@dimen/x20"
+                android:layout_marginRight="@dimen/x30"
                 android:background="@drawable/juxing"
                 android:layout_centerVertical="true"
                 android:id="@+id/ed_name"
@@ -205,8 +217,10 @@
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/x40"
+        android:layout_height="@dimen/x30"
         android:weightSum="10"
+        android:id="@+id/layout_6"
+        android:layout_below="@+id/layout_5"
         >
         <RelativeLayout
             android:layout_width="match_parent"
@@ -228,28 +242,31 @@
             android:layout_height="match_parent"
             android:layout_weight="3"
             >
-            <EditText
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/x30"
-                android:layout_marginRight="@dimen/x11"
+                android:layout_height="@dimen/x20"
+                android:layout_marginRight="@dimen/x30"
                 android:background="@drawable/juxing"
                 android:layout_centerVertical="true"
-                android:id="@+id/ed_zhuangtai"
+                android:id="@+id/tv_zhuangtai"
                 />
             <ImageView
                 android:layout_width="@dimen/x20"
                 android:layout_height="@dimen/x20"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/x10"
+                android:layout_marginRight="@dimen/x31"
                 android:layout_alignParentRight="true"
                 android:src="@mipmap/drop_down"
+                android:id="@+id/iv_zhuangtai"
                 />
         </RelativeLayout>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/x40"
+        android:layout_height="@dimen/x30"
         android:weightSum="10"
+        android:id="@+id/layout_7"
+        android:layout_below="@+id/layout_6"
         >
         <RelativeLayout
             android:layout_width="match_parent"
@@ -271,40 +288,150 @@
             android:layout_height="match_parent"
             android:layout_weight="3"
             >
-            <EditText
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/x30"
-                android:layout_marginRight="@dimen/x11"
+                android:layout_height="@dimen/x20"
+                android:layout_marginRight="@dimen/x30"
                 android:background="@drawable/juxing"
                 android:layout_centerVertical="true"
-                android:id="@+id/ed_fabufangmingcheng"
+                android:id="@+id/tv_fabufangmingcheng"
                 />
             <ImageView
             android:layout_width="@dimen/x20"
             android:layout_height="@dimen/x20"
             android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/x11"
+            android:layout_marginRight="@dimen/x31"
             android:layout_alignParentRight="true"
             android:src="@mipmap/drop_down"
+            android:id="@+id/iv_fangbufang"
             />
         </RelativeLayout>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="@dimen/x75"
+        android:weightSum="10"
+        android:layout_marginTop="@dimen/x85"
+        android:id="@+id/layout_10"
+        android:visibility="gone"
+
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="7"
+
+            >
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+
+            >
+
+            <ListView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+
+                   android:id="@+id/lv_way"
+                   ></ListView>
+
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x75"
+        android:weightSum="10"
+        android:layout_marginTop="@dimen/x175"
+        android:id="@+id/layout_12"
+        android:visibility="gone"
+
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="7"
+
+            >
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+
+            >
+
+             <ListView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+
+                   android:id="@+id/lv_zhuangtai"
+                   ></ListView>
+
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="@dimen/x1"
         android:background="#EEEEF3"
+        android:orientation="horizontal"
+        android:id="@+id/layout_8"
+        android:layout_below="@+id/layout_6"
+        android:layout_marginTop="@dimen/x30"
         ></LinearLayout>
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/x35">
+        android:layout_height="@dimen/x45"
+        android:id="@+id/layout_9"
+        android:layout_below="@+id/layout_8"
+
+        >
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/x80"
             android:layout_height="@dimen/x30"
             android:id="@+id/bt_Search"
-            android:background="@drawable/button_background_blue"
+            android:background="@drawable/button_backgroup_save"
             android:text="立即查询"
             android:textColor="#fff"
             android:layout_centerInParent="true"
             />
     </RelativeLayout>
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x75"
+        android:weightSum="10"
+        android:layout_marginTop="@dimen/x205"
+        android:id="@+id/layout_13"
+        android:visibility="gone"
+
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="7"
+
+            >
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+
+            >
+
+            <ListView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:id="@+id/lv_fabufang"
+                ></ListView>
+
+
+        </RelativeLayout>
+    </LinearLayout>
+</RelativeLayout>
