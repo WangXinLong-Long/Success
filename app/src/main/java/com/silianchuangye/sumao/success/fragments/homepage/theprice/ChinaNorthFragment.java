@@ -26,7 +26,6 @@ import android.widget.Toast;
 import com.silianchuangye.sumao.success.MyApp;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.ChinaNorthAdapter;
-import com.silianchuangye.sumao.success.customermanger.CustomerManager;
 import com.silianchuangye.sumao.success.salesearch.SaleSearch;
 
 import java.util.ArrayList;

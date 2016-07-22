@@ -49,7 +49,7 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
     private Context ctx;
     private MyReciver my;
     private Cart_MyDialog dialog;
-    private RelativeLayout relative_cart_null,relative_cart_tishi;
+    private RelativeLayout relative_cart_null,relative_cart_tishi,relative_activity_cart_bottom;
  private List<Integer>imgList=new ArrayList<Integer>();
     public class MyReciver extends BroadcastReceiver {
         @Override
@@ -88,6 +88,7 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
         fl_content.addView(v);
         relative_cart_null= (RelativeLayout) v.findViewById(R.id.relative_cart_null);
         relative_cart_tishi= (RelativeLayout) v.findViewById(R.id.relative_cart_tishi);
+        relative_activity_cart_bottom= (RelativeLayout) v.findViewById(R.id.relative_activity_cart_bottom);
         lv_Cart = (CustomListView) v.findViewById(R.id.lv_activity_cart);
         btn_Cart_Ok = (Button) v.findViewById(R.id.btn_activity_cart_ok);
         img_Cart_All_Select = (ImageView) v.findViewById(R.id.img_activity_cart_allselect);
@@ -250,9 +251,11 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
     public void CartNull(List<CartInfo>list) {
         Log.e("TAG","list.size()==="+list.size());
         if(list.size()==0){
+            relative_activity_cart_bottom.setVisibility(View.GONE);
             relative_cart_tishi.setVisibility(View.GONE);
             relative_cart_null.setVisibility(View.VISIBLE);
         }else{
+            relative_activity_cart_bottom.setVisibility(View.VISIBLE);
             relative_cart_tishi.setVisibility(View.VISIBLE);
             relative_cart_null.setVisibility(View.GONE);
         }
