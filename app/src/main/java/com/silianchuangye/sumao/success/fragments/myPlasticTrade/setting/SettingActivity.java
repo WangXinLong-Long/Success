@@ -114,7 +114,7 @@ public class SettingActivity extends AppCompatActivity {
 //                                            }
 //                                            Toast.makeText(SettingActivity.this, "删除文件成功", Toast.LENGTH_SHORT).show();
 
-                                            Intent intent=new Intent(SettingActivity.this,LoginUserActivity.class);
+                                            Intent intent=new Intent(SettingActivity.this,LoginActivity.class);
                                             startActivity(intent);
                                             SettingActivity.this.finish();
 

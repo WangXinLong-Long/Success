@@ -53,7 +53,7 @@ public class LoginUserActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login_user);
+        setContentView(R.layout.activity_login_for_mai_mai);
         title_Bar();
         db = SQLiteDatabase.openOrCreateDatabase(this.getFilesDir().toString()+"/test.dbs",null);
         et_account_login= (EditText) findViewById(R.id.et_account_login);
@@ -79,6 +79,9 @@ public class LoginUserActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
               //跳转找回密码界面
+//                Log.d("跳进了","买卖方交换界面");
+//                Intent intent=new Intent(LoginUserActivity.this,LoginActivity.class);
+//                startActivity(intent);
             }
         });
         str =getIntent().getIntExtra("cart1",0);
@@ -86,38 +89,7 @@ public class LoginUserActivity extends AppCompatActivity {
 
 
 
-    public void title_Bar(){
 
-        iv_title_bar_back = ((ImageView) findViewById(R.id.iv_title_bar_back));
-        iv_title_bar_logo = ((ImageView) findViewById(R.id.iv_title_bar_logo));
-        iv_title_bar_service = ((ImageView) findViewById(R.id.iv_title_bar_service));
-        iv_title_bar_search = ((ImageView) findViewById(R.id.iv_title_bar_search));
-        sv_title_bar_serachView = ((Button) findViewById(R.id.sv_title_bar_serachView));
-        tv_title_bar_title  = ((TextView) findViewById(R.id.tv_title_bar_title));
-
-        tvUpdate= (TextView) findViewById(R.id.tvUpdate);
-        iv_title_bar_logo.setVisibility(View.GONE);
-        iv_title_bar_service.setVisibility(View.GONE);
-        sv_title_bar_serachView.setVisibility(View.GONE);
-        iv_title_bar_search.setVisibility(View.GONE);
-
-        tvUpdate.setVisibility(View.GONE);
-        tv_title_bar_title.setText("登录账号");
-
-
-        tv_title_bar_title.setTextColor(Color.WHITE);
-        iv_title_bar_back.setVisibility(View.VISIBLE);
-        layoutTop= (RelativeLayout) findViewById(R.id.layoutTop_Login);
-        layoutTop.setBackgroundColor(getResources().getColor(R.color.textColor_expandable_listview_show));
-
-        iv_title_bar_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LoginUserActivity.this.finish();
-            }
-        });
-
-    }
     private void login() {
         sp=getSharedPreferences("sumao", Activity.MODE_PRIVATE);
         editor=sp.edit();
@@ -226,6 +198,44 @@ public class LoginUserActivity extends AppCompatActivity {
             }
         });
 
+    }
+    public void title_Bar(){
+
+        iv_title_bar_back = ((ImageView) findViewById(R.id.iv_title_bar_back));
+        iv_title_bar_logo = ((ImageView) findViewById(R.id.iv_title_bar_logo));
+        iv_title_bar_service = ((ImageView) findViewById(R.id.iv_title_bar_service));
+        iv_title_bar_search = ((ImageView) findViewById(R.id.iv_title_bar_search));
+        sv_title_bar_serachView = ((Button) findViewById(R.id.sv_title_bar_serachView));
+        tv_title_bar_title  = ((TextView) findViewById(R.id.tv_title_bar_title));
+
+        tvUpdate= (TextView) findViewById(R.id.tvUpdate);
+        iv_title_bar_logo.setVisibility(View.GONE);
+        iv_title_bar_service.setVisibility(View.GONE);
+        sv_title_bar_serachView.setVisibility(View.GONE);
+        iv_title_bar_search.setVisibility(View.GONE);
+
+        tvUpdate.setVisibility(View.GONE);
+        tv_title_bar_title.setText("塑贸登录");
+
+
+        tv_title_bar_title.setTextColor(Color.WHITE);
+        iv_title_bar_back.setVisibility(View.GONE);
+        layoutTop= (RelativeLayout) findViewById(R.id.layoutTop_Login);
+        layoutTop.setBackgroundColor(getResources().getColor(R.color.textColor_expandable_listview_show));
+
+        iv_title_bar_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LoginUserActivity.this.finish();
+            }
+        });
+//        tvUpdate.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent=new Intent(SettingActivity.this,FirmInfoUpdateActivity.class);
+//                startActivity(intent);
+//            }
+//        });
     }
 
 

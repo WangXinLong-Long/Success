@@ -94,7 +94,7 @@ public class RegisterFirmActivity extends AppCompatActivity {
         String RegisterUri="http://192.168.32.126:7023/rest/model/atg/store/profile/RegistrationActor/createUser";
         rp=new RequestParams(RegisterUri);
 
-        rp.setCharset("UTF-8");
+        //rp.setCharset("Unicode");
 
         bt_save_register_value = (Button) findViewById(R.id.bt_save_register_value);
         bt_save_register_value.setOnClickListener(new View.OnClickListener() {
@@ -184,9 +184,7 @@ public class RegisterFirmActivity extends AppCompatActivity {
                                     }else if (list.get(1).get("right").toString().equals("生产商")){
                                         rp.addParameter("cl_leixing",3);
                                     }
-                                    rp.addParameter("cl_shuiwuimage","/mnt/docs/100.jpg");
-                                    rp.addParameter("cl_jigouimage","/mnt/docs/100.jpg");
-                                    rp.addParameter("cl_zhizhaoimage","/mnt/docs/100.jpg");
+
                                     rp.addParameter("cl_nashuirenimage","/mnt/docs/100.jpg");
                                     rp.addParameter("cl_login",Login);
                                     rp.addParameter("cl_password",pass);
@@ -201,6 +199,7 @@ public class RegisterFirmActivity extends AppCompatActivity {
                                     Log.d("unique",unique123);
                                     Log.d("传的值",rp+"");
                                     rp.getCharset();
+                                    Log.d("字符编码",""+rp.getCharset());
                                     x.http().post(rp, new CommonCallback<String>() {
                                         @Override
                                         public void onSuccess(String result) {
@@ -392,6 +391,7 @@ public class RegisterFirmActivity extends AppCompatActivity {
                     rp.removeParameter("cl_zhengjian");
                     rp.removeParameter("cl_zhizhao");
                     rp.removeParameter("cl_nashuiren");
+                    rp.removeParameter("cl_zhizhaoimage");
                     //添加三证独立时需要的参数
                     rp.addParameter("cl_zhengjian",4);
 //                    rp.addParameter("cl_zhizhao",list1.get(1).get("right").toString());
@@ -400,6 +400,9 @@ public class RegisterFirmActivity extends AppCompatActivity {
                     rp.addParameter("cl_zhizhao","0928201347189232203334");
                     rp.addParameter("cl_jigou","0928201347189232203334");
                     rp.addParameter("cl_shuiwu","0928201347189232203334");
+                    rp.addParameter("cl_shuiwuimage","/mnt/docs/100.jpg");
+                    rp.addParameter("cl_jigouimage","/mnt/docs/100.jpg");
+                    rp.addParameter("cl_zhizhaoimage","/mnt/docs/100.jpg");
                     if (list1.get(0).get("right").toString().equals("一般纳税人")){
                         rp.addParameter("cl_nashuiren",6);
                     }else{
@@ -432,6 +435,7 @@ public class RegisterFirmActivity extends AppCompatActivity {
                     //三证合一
                     rp.addParameter("cl_zhengjian",5);
                     rp.addParameter("cl_zhizhao","0928201347189232203334");
+                    rp.addParameter("cl_zhizhaoimage","/mnt/docs/100.jpg");
 //                                       rp.addParameter("cl_zhizhao",list1.get(0).get("right").toString());
                     if (list1.get(1).get("right").toString().equals("一般纳税人")){
                         rp.addParameter("cl_nashuiren",6);
@@ -515,8 +519,7 @@ public class RegisterFirmActivity extends AppCompatActivity {
                 list.get(3).put("right", name1);
                 adapter.notifyDataSetChanged();
                 break;
-            case 4:
-                break;
+
             case 5:
                 String number = data.getStringExtra("name");
                 list.get(5).put("right", number);
@@ -568,47 +571,53 @@ public class RegisterFirmActivity extends AppCompatActivity {
         }
     }
 
-    public String getUnique(){
+    public String getUnique() {
 
-        sp=getSharedPreferences("sumao", Activity.MODE_PRIVATE);
-        editor=sp.edit();
-        RequestParams unique_rp=new RequestParams("http://192.168.32.126:7023/rest/model/atg/rest/SessionConfirmationActor/getSessionConfirmationNumber");
-        x.http().post(unique_rp, new Callback.CommonCallback<String>() {
-            @Override
-            public void onSuccess(String result) {
-                try{
-                    JSONObject object=new JSONObject(result);
-                    unique=object.getString("sessionConfirmationNumber");
-                    Log.d("unique","unique"+unique);
-                    /**
-                     * 把唯一标识储存在SharedPreferences
-                     */
-                    editor.putString("unique",unique);
-                    editor.commit();
-                }catch (Exception e){
-                    Log.d("exception","解析唯一标识时错误！");
+        sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+        //
+        String unique_reg = sp.getString("unique", "");
+        Log.d("unique_reg",unique_reg);
+        if (unique_reg.toString().equals("") || unique_reg == null) {
+            editor = sp.edit();
+            RequestParams unique_rp = new RequestParams("http://192.168.32.126:7023/rest/model/atg/rest/SessionConfirmationActor/getSessionConfirmationNumber");
+            x.http().post(unique_rp, new Callback.CommonCallback<String>() {
+                @Override
+                public void onSuccess(String result) {
+                    try {
+                        JSONObject object = new JSONObject(result);
+                        unique = object.getString("sessionConfirmationNumber");
+                        Log.d("unique", "unique" + unique);
+                        /**
+                         * 把唯一标识储存在SharedPreferences
+                         */
+                        editor.putString("unique", unique);
+                        editor.commit();
+                    } catch (Exception e) {
+                        Log.d("exception", "解析唯一标识时错误！");
+                    }
+
                 }
 
-            }
+                @Override
+                public void onError(Throwable ex, boolean isOnCallback) {
 
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
+                }
 
-            }
+                @Override
+                public void onCancelled(CancelledException cex) {
 
-            @Override
-            public void onCancelled(CancelledException cex) {
+                }
 
-            }
+                @Override
+                public void onFinished() {
 
-            @Override
-            public void onFinished() {
+                }
+            });
+        }
 
-            }
-        });
+            return unique;
+        }
 
-        return unique;
-    }
 
 
     public void title_Bar(String title) {
