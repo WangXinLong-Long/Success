@@ -10,6 +10,7 @@ import android.widget.SimpleAdapter;
 import com.silianchuangye.sumao.success.R;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -48,14 +49,30 @@ public class AuctionSuccessActivity extends AppCompatActivity {
             }
         });
 
-
-
     }
 
     /**
      * 添加数据
      */
     public void addData(){
+        for (int i=0;i<=3;i++){
+            Map<String,Object> map=new HashMap<String,Object>();
+            map.put("people","讯帮业务员"+1+i);
+            map.put("price_count","12000元");
+            map.put("price","2000元");
+            map.put("number","6吨");
+            list.add(map);
+        }
+        adapter=new SimpleAdapter(AuctionSuccessActivity.this,list,R.layout.item_auction_success,
+                 new String[]{"people","price_count","price","number"},
+                 new int[]{
+                         R.id.tv_aucton_success,
+                         R.id.tv_aucton_success_price,
+                         R.id.tv_aucton_price_value,
+                         R.id.tv_aucton_success_number
+                 }
+                );
+        lv_auction_success.setAdapter(adapter);
 
     }
 }

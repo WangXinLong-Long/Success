@@ -1,19 +1,32 @@
 package com.silianchuangye.sumao.success.fragments.homepage.theprice;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.silianchuangye.sumao.success.MyApp;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.ChinaNorthAdapter;
-import com.silianchuangye.sumao.success.customermanger.CustomerParent;
+import com.silianchuangye.sumao.success.customermanger.CustomerManager;
 import com.silianchuangye.sumao.success.salesearch.SaleSearch;
 
 import java.util.ArrayList;
