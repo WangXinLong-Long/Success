@@ -8,6 +8,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
@@ -32,6 +33,7 @@ public class SaleSearch extends AppCompatActivity implements View.OnClickListene
     private ImageView img_pop_back;
     private RelativeLayout relative_pop_calce;
     private Button btn_pop_search;
+    private EditText edt_num,edt_cangku_name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +72,8 @@ public class SaleSearch extends AppCompatActivity implements View.OnClickListene
         img_pop_back= (ImageView) popView.findViewById(R.id.img_logistics_title_bar_back_sale_pop);
         relative_pop_calce= (RelativeLayout) popView.findViewById(R.id.img_logistics_title_bar_search_sale_pop);
         btn_pop_search= (Button) popView.findViewById(R.id.btn_salepop_search);
+        edt_num= (EditText) popView.findViewById(R.id.tv_salepop_num);
+        edt_cangku_name= (EditText) popView.findViewById(R.id.tv_salepop_cangku);
         img_pop_back.setOnClickListener(this);
         relative_pop_calce.setOnClickListener(this);
         btn_pop_search.setOnClickListener(this);
