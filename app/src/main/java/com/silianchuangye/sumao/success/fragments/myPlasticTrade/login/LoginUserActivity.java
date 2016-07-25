@@ -22,6 +22,7 @@ import com.silianchuangye.sumao.success.MainActivity;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.RegisterActivity;
 import com.silianchuangye.sumao.success.utils.GlobalVariable;
+import com.silianchuangye.sumao.success.utils.LogUtils;
 
 import org.json.JSONObject;
 import org.xutils.common.Callback;
@@ -84,8 +85,6 @@ public class LoginUserActivity extends AppCompatActivity {
         str =getIntent().getIntExtra("cart1",0);
     }
 
-
-
     public void title_Bar(){
 
         iv_title_bar_back = ((ImageView) findViewById(R.id.iv_title_bar_back));
@@ -118,6 +117,7 @@ public class LoginUserActivity extends AppCompatActivity {
         });
 
     }
+
     private void login() {
         sp=getSharedPreferences("sumao", Activity.MODE_PRIVATE);
         editor=sp.edit();
@@ -130,6 +130,7 @@ public class LoginUserActivity extends AppCompatActivity {
         x.http().post(rp, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
+                LogUtils.log("LoginUserActivity-->onSuccess--->"+result);
                 if (result.contains("formError")){
                     Toast.makeText(LoginUserActivity.this, "账号或密码错误请重新登录！", Toast.LENGTH_SHORT).show();
                 }else{
@@ -212,7 +213,7 @@ public class LoginUserActivity extends AppCompatActivity {
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-
+                LogUtils.log("LoginUserActivity-->onError--->"+ex);
             }
 
             @Override

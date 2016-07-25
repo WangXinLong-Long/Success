@@ -493,16 +493,21 @@
         <activity android:name=".customermanger.CustomerMessage" />
         <activity android:name=".fragments.SellerManagementPlatform.SellerManagementPlatformActivity" />
         <activity android:name=".fragments.SellerManagementPlatform.acutionManagement.SearchPriceActivity">
-         <!--   <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
         </activity>
         <activity android:name=".fragments.SellerManagementPlatform.acutionManagement.PriceSearchinfoActivity" />
         <activity android:name=".fragments.SellerManagementPlatform.acutionManagement.AcutionResultActivity" />
         <activity android:name=".fragments.SellerManagementPlatform.acutionManagement.AuctionSuccessActivity" />
         <activity android:name=".fragments.SellerManagementPlatform.acutionManagement.AcutionFailActivity"></activity>
+        <activity android:name=".fragments.SellerManagementPlatform.SellerOrderManagement.OrderManagement"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".fragments.SellerManagementPlatform.SellerOrderManagement.SellerNotPaidOrderDetails"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".fragments.SellerManagementPlatform.SellerOrderManagement.SellerAlreadyPaidOrderDetails"
+            android:screenOrientation="portrait"
+            />
+
     </application>
 
 </manifest>

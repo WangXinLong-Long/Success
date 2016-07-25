@@ -35,6 +35,11 @@ import com.silianchuangye.sumao.success.fragments.PagerThree;
 import com.silianchuangye.sumao.success.fragments.PagerTwo;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.LoginUserActivity;
 
+import org.json.JSONObject;
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,15 +64,18 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
     int id;
     String username;
     SharedPreferences sp;
+    private SharedPreferences.Editor editor;
+    private String unique;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        sp=getSharedPreferences("sumao",Context.MODE_PRIVATE);
 //      初始化数据
         initData();
 //      初始化组件
         initView();
+        getUnique();
         init();
     }
 
@@ -88,7 +96,7 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
         mTabHost.getTabWidget().getChildTabViewAt(3).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sp=getSharedPreferences("sumao",Context.MODE_PRIVATE);
+
                 username=sp.getString("name","");
                 if (username!=""){
                     mTabHost.setCurrentTab(3);
@@ -339,6 +347,47 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
         }
 
     }
+
+    public String getUnique() {
+        editor = sp.edit();
+        RequestParams unique_rp = new RequestParams("http://192.168.32.126:7023/rest/model/atg/rest/SessionConfirmationActor/getSessionConfirmationNumber");
+        x.http().post(unique_rp, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                try {
+                    JSONObject object = new JSONObject(result);
+                    unique = object.getString("sessionConfirmationNumber");
+                    Log.d("unique", "unique" + unique);
+                    /**
+                     * 把唯一标识储存在SharedPreferences
+                     */
+                    editor.putString("unique", unique);
+                    editor.commit();
+                } catch (Exception e) {
+                    Log.d("exception", "解析唯一标识时错误！");
+                }
+
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+
+        return unique;
+    }
+
 
 }
 
