@@ -1,10 +1,13 @@
 package com.silianchuangye.sumao.success.fragments.type;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -14,6 +17,8 @@ import android.widget.Toast;
 
 import com.easemob.easeui.domain.EaseEmojicon;
 import com.silianchuangye.sumao.success.R;
+import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockDetailActivity;
+import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.PaymentsOrder;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -96,7 +101,7 @@ public class TypeInfoActivity extends AppCompatActivity {
             map.put("price","10000");
             map.put("address","北京市房山区东流水路四联创业集团");
             map.put("cangku","讯邦仓库1号");
-            map.put("state","现货产品");
+            map.put("state","现货");
             list.add(map);
 
         }
@@ -109,6 +114,51 @@ public class TypeInfoActivity extends AppCompatActivity {
                          R.id.tv_cangku_type_two,R.id.tv_state_type_two
                         });
         lv_Type.setAdapter(adapter);
+        lv_Type.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (list.get(position).get("state").toString().equals("现货")){
+                    Intent intent=new Intent(TypeInfoActivity.this, GoodsInStockDetailActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
+
+    }
+    class MyAdapter extends SimpleAdapter{
+
+
+        public MyAdapter(Context context, List<? extends Map<String, ?>> data, int resource, String[] from, int[] to) {
+            super(context, data, resource, from, to);
+        }
+
+        @Override
+        public int getCount() {
+            return list.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return list.get(position);
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            ViewHolder viewHolder;
+            if (convertView==null){
+                viewHolder=new ViewHolder();
+                convertView=getLayoutInflater().inflate(R.layout.item_type_two,null);
+                viewHolder.text_Name= (TextView) convertView.findViewById(R.id.tv_name_type_two);
+                convertView.setTag(viewHolder);
+            }else{
+                viewHolder= (ViewHolder) convertView.getTag();
+            }
+
+            return convertView;
+        }
+    }
+    class ViewHolder{
+        TextView text_Name;
 
     }
 }

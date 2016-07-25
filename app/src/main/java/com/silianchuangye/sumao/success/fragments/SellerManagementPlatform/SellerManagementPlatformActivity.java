@@ -15,6 +15,7 @@ import com.silianchuangye.sumao.success.customermanger.CustomerParent;
 import com.silianchuangye.sumao.success.fragments.SellerManagementPlatform.CustomerApproval.CustomerApproval;
 import com.silianchuangye.sumao.success.fragments.SellerManagementPlatform.SellerOrderManagement.OrderManagement;
 import com.silianchuangye.sumao.success.custom.CustomListView;
+import com.silianchuangye.sumao.success.fragments.SellerManagementPlatform.acutionManagement.AcutionResultActivity;
 import com.silianchuangye.sumao.success.fragments.SellerManagementPlatform.acutionManagement.SearchPriceActivity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.goodsInStock.OrderGoodsActivity;
 import com.silianchuangye.sumao.success.salesearch.SaleSearch;
@@ -71,8 +72,8 @@ public class SellerManagementPlatformActivity extends Activity implements View.O
 
                 }else if (adapter.getChild(groupPosition, childPosition).toString().equals("竞拍结果查看"))
                 {
-//                    Intent intent=new Intent(SellerManagementPlatformActivity.this,);
-//                    startActivity(intent);
+                    Intent intent=new Intent(SellerManagementPlatformActivity.this, AcutionResultActivity.class);
+                    startActivity(intent);
 
                 }else if (adapter.getChild(groupPosition, childPosition).toString().equals("日需求查看"))
                 {
