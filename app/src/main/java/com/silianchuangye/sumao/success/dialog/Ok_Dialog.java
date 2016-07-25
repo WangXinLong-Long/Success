@@ -2,6 +2,7 @@ package com.silianchuangye.sumao.success.dialog;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.silianchuangye.sumao.success.R;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.goodsInStock.OrderGoodsActivity;
 
 /**
  * Created by junjun on 2016/7/7.
@@ -38,9 +40,10 @@ public class Ok_Dialog extends Activity {
         bt_my_order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //跳转到我的订单
-                Log.d("跳转","我的订单");
-                //dismiss();
+
+                Intent intent=new Intent(Ok_Dialog.this, OrderGoodsActivity.class);
+                intent.putExtra("title","现货订单");
+                startActivity(intent);
             }
         });
         bt_wuliu.setOnClickListener(new View.OnClickListener() {

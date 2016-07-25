@@ -485,7 +485,26 @@
         <activity
             android:name=".fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.Logistics_SelectAddress"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".fragments.SellerManagementPlatform.SellerManagementPlatformActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".fragments.SellerManagementPlatform.CustomerApproval.CustomerApproval"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".fragments.SellerManagementPlatform.SellerOrderManagement.OrderManagement"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".fragments.SellerManagementPlatform.SellerOrderManagement.SellerNotPaidOrderDetails"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".fragments.SellerManagementPlatform.SellerOrderManagement.SellerAlreadyPaidOrderDetails"
+            android:screenOrientation="portrait" />
         <activity android:name=".customermanger.CustomerType" />
+        <activity android:name=".customermanger.CustomerMessage" />
+        <activity android:name=".customermanger.SaveCustomerMessage" />
+        <activity android:name=".customermanger.Buy" />
+        <activity android:name=".customermanger.ZhiPaiPerson" />
         <activity
             android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.CaptureActivity"
             android:configChanges="orientation|keyboardHidden"
@@ -508,6 +527,9 @@
             android:screenOrientation="portrait"
             />
 
+        <activity android:name=".fragments.SellerManagementPlatform.acutionManagement.AcutionFailActivity" />
+        <activity android:name=".salesearch.SaleSearch" />
+        <activity android:name=".customermanger.CustomerParent" />
     </application>
 
 </manifest>

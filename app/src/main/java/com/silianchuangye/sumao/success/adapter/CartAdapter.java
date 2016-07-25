@@ -97,6 +97,9 @@ private List<CartInfo> list;
             public void onClick(View v) {
                 list.remove(list.get(position));
                 notifyDataSetChanged();
+                if(list.size()==0){
+                    call.CartNull(list);
+                }
             }
         });
 
@@ -176,5 +179,6 @@ private List<CartInfo> list;
 
     public interface SelectCallBack{
         public void Call(int index);
+        public void CartNull(List<CartInfo>list);
     }
 }

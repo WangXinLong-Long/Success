@@ -9,16 +9,94 @@
         android:layout_height="@dimen/x1"
         android:background="#29ABE2"
         ></LinearLayout>
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/x30"></LinearLayout>
+        android:layout_height="@dimen/x30"
+
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="#000"
+            android:id="@+id/tv_aucton_success"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/x10"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:id="@+id/tv_aucton_success_price"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/x10"
+            android:textColor="@color/red"
+            android:layout_alignParentRight="true"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/x3"
+            android:layout_toLeftOf="@+id/tv_aucton_success_price"
+            android:text="竞拍总单价"
+
+            />
+
+
+    </RelativeLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/x1"
         android:background="#EEEEF3"
         ></LinearLayout>
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/x30"></LinearLayout>
+        android:layout_height="@dimen/x30">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:id="@+id/tv_aucton_price"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/x10"
+            android:text="竞拍单价:"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:id="@+id/tv_aucton_price_value"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/tv_aucton_price"
+            android:layout_marginLeft="@dimen/x2"
+
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:id="@+id/tv_aucton_success_number"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/x10"
+            android:layout_alignParentRight="true"
+
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/x3"
+            android:layout_toLeftOf="@+id/tv_aucton_success_number"
+            android:text="竞拍数量:"
+
+
+            />
+
+
+    </RelativeLayout>
 
 </LinearLayout>

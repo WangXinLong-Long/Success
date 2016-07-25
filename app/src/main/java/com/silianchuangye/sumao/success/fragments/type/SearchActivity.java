@@ -1,5 +1,6 @@
 package com.silianchuangye.sumao.success.fragments.type;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.silianchuangye.sumao.success.R;
+import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSale;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +38,10 @@ public class SearchActivity extends AppCompatActivity {
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //进行搜索功能
+                //进行搜索功能,跳到现货界面
+                Intent intent=new Intent(SearchActivity.this, PreSale.class);
+                startActivity(intent);
+
             }
         });
     }

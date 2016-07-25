@@ -316,8 +316,37 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/x40"
+            android:background="#fff"
+            android:layout_marginTop="@dimen/x10"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="竞拍已结束"
+                android:textSize="15sp"
+                android:textColor="#FAC382"
+                android:layout_marginLeft="@dimen/x10"
+                android:id="@+id/tv_auction_end"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="竞拍已结束"
+                android:textSize="15sp"
+                android:textColor="#FAC382"
+                android:layout_marginRight="@dimen/x10"
+                android:id="@+id/tv_auction_time"
+                android:layout_alignParentRight="true"
+                />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x40"
             android:layout_marginTop="@dimen/x10"
             android:background="#fff"
+
             >
             <TextView
                 android:layout_width="wrap_content"

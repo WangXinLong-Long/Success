@@ -5,7 +5,7 @@
     android:orientation="vertical">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="45dp">
+        android:layout_height="@dimen/title_height">
         <TextView
             android:id="@+id/tv_item_sale_search_title"
             android:layout_width="wrap_content"
@@ -14,7 +14,7 @@
             android:textSize="16sp"
             android:textColor="#000"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"/>
+            android:layout_marginLeft="@dimen/x10"/>
     </RelativeLayout>
     <View
         android:layout_width="match_parent"
@@ -22,14 +22,14 @@
         android:background="@color/selley_bg"/>
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="@dimen/x30"
         >
         <TextView
             android:id="@+id/tv_left_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="@dimen/x10"
             android:text="产品编号 : "/>
         <TextView
             android:id="@+id/tv_item_sale_search_num"
@@ -43,7 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="分类 : "
-            android:layout_marginLeft="210dp"
+            android:layout_marginLeft="@dimen/x200"
             android:layout_centerVertical="true"/>
         <TextView
             android:id="@+id/tv_item_sale_search_sort"
@@ -55,14 +55,14 @@
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="@dimen/x30"
         >
         <TextView
             android:id="@+id/tv_left_qiye_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="@dimen/x10"
             android:text="生产企业 : "/>
         <TextView
             android:id="@+id/tv_item_sale_search_product_name"
@@ -76,7 +76,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="牌号 : "
-            android:layout_marginLeft="210dp"
+            android:layout_marginLeft="@dimen/x200"
             android:layout_centerVertical="true"/>
         <TextView
             android:id="@+id/tv_item_sale_search_pai_num"
@@ -88,14 +88,14 @@
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="@dimen/x30"
         >
         <TextView
             android:id="@+id/tv_left_product_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="@dimen/x10"
             android:text="产品单价 : "/>
         <TextView
             android:id="@+id/tv_item_sale_search_price"
@@ -109,7 +109,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="剩余数量 : "
-            android:layout_marginLeft="210dp"
+            android:layout_marginLeft="@dimen/x200"
             android:layout_centerVertical="true"/>
         <TextView
             android:id="@+id/tv_item_sale_search_sheng_num"
@@ -121,14 +121,14 @@
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="@dimen/x30"
         >
         <TextView
             android:id="@+id/tv_left_cangku"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="@dimen/x10"
             android:text="仓库 : "/>
         <TextView
             android:id="@+id/tv_item_sale_search_cangku_name"
@@ -140,6 +140,6 @@
     </RelativeLayout>
     <View
         android:layout_width="match_parent"
-        android:layout_height="5dp"
+        android:layout_height="@dimen/x5"
         android:background="@color/selley_bg"/>
 </LinearLayout>

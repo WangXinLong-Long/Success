@@ -1,8 +1,8 @@
 package com.silianchuangye.sumao.success.customermanger;
 
 import android.graphics.drawable.BitmapDrawable;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,7 +27,7 @@ import com.silianchuangye.sumao.success.adapter.MyPageAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CustomerManager extends AppCompatActivity implements View.OnClickListener,AdapterView.OnItemClickListener{
+public class CustomerParent extends AppCompatActivity implements View.OnClickListener,AdapterView.OnItemClickListener{
     private ImageView img_back;
     private RelativeLayout relative_top;
     private ViewPager vp;
@@ -39,22 +39,25 @@ public class CustomerManager extends AppCompatActivity implements View.OnClickLi
     private PopupWindow popupWindow;
     private ImageView img_pop_back;
     private TextView tv_pop_canle,tv_pop_type,tv_pop_sheng,tv_pop_shi,
-                        tv_pop_qu,tv_pop_zhuangtai,tv_pop_buy,tv_pop_maifang,
-                        tv_pop_customer;
+            tv_pop_qu,tv_pop_zhuangtai,tv_pop_buy,tv_pop_maifang,
+            tv_pop_customer;
     private EditText tv_pop_num;
     private EditText edt_pop_name;
     private Button btn_pop_search;
     private ListView lv_type,lv_sheng,lv_shi,lv_qu,lv_zhuangtai,lv_buy,lv_maifang,lv_customer;
     private LinearLayout linear1,linear2,linear3,linear4,linear5,linear_shi,linear_qu,linear_sheng;
-    private List<String>popList;
-    private ArrayAdapter<String>pop_adapter;
+    private List<String> popList;
+    private ArrayAdapter<String> pop_adapter;
+
+    public CustomerParent() {
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customermanager);
         initDate();
         initView();
-
     }
     private void initDate() {
         listFragment=new ArrayList<Fragment>();

@@ -1,6 +1,7 @@
 package com.silianchuangye.sumao.success.fragments.SellerManagementPlatform.acutionManagement;
 
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 
@@ -17,18 +18,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.silianchuangye.sumao.success.R;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
@@ -40,11 +46,16 @@ public class SearchPriceActivity extends AppCompatActivity {
     private List<Map<String, Object>> list;
     private SimpleAdapter adapter;
     private RelativeLayout layout_f;
+    private ImageView iv_way,iv_riqi,iv_zhuangtai,iv_fabufang;
+    private ListView lv_way,lv_zhuangtai,lv_fabufang;
+    private boolean isGone;
+   // private EditText ed_fenlei,ed_paihao,ed_name;
+    private TextView tv_way,tv_riqi,tv_zhuangtai,tv_fabufangmingcheng;
+    private LinearLayout layout10,layout11,layout12,layout_13;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
-    private GoogleApiClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +64,7 @@ public class SearchPriceActivity extends AppCompatActivity {
         init();
         addData();
         event();
+        isGone=true;
 
     }
 
@@ -121,9 +133,291 @@ public class SearchPriceActivity extends AppCompatActivity {
         iv_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // backgroundAlpha(0.5f);
+                backgroundAlpha(0.5f);
                 //弹出popupwindow
-                popupWindow_toShow();
+                View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.item_popupwindow_search, null);
+                final PopupWindow popupWindow = new PopupWindow(findViewById(R.id.layout_f), ActionBarOverlayLayout.LayoutParams.MATCH_PARENT, ActionBarOverlayLayout.LayoutParams.WRAP_CONTENT);
+                popupWindow.setContentView(view);
+                EditText ed_fenlei= (EditText) view.findViewById(R.id.ed_fenlai);
+                EditText ed_paihao= (EditText) view.findViewById(R.id.ed_paihao);
+                EditText ed_name= (EditText) view.findViewById(R.id.ed_name);
+                tv_way= (TextView) view.findViewById(R.id.tv_way);
+                tv_riqi= (TextView) view.findViewById(R.id.tv_riqi);
+                tv_zhuangtai= (TextView) view.findViewById(R.id.tv_zhuangtai);
+                tv_fabufangmingcheng= (TextView) view.findViewById(R.id.tv_fabufangmingcheng);
+                Button bt_Search= (Button) view.findViewById(R.id.bt_Search);
+                iv_way= (ImageView) view.findViewById(R.id.iv_way);
+                iv_riqi= (ImageView) view.findViewById(R.id.iv_riqi);
+                iv_zhuangtai= (ImageView) view.findViewById(R.id.iv_zhuangtai);
+                iv_fabufang= (ImageView) view.findViewById(R.id.iv_fangbufang);
+                layout10= (LinearLayout) view.findViewById(R.id.layout_10);
+                //  layout11= (LinearLayout) view.findViewById(R.id.layout_11);
+                layout12= (LinearLayout) view.findViewById(R.id.layout_12);
+                layout_13= (LinearLayout) view.findViewById(R.id.layout_13);
+                lv_way= (ListView) view.findViewById(R.id.lv_way);
+                lv_zhuangtai= (ListView) view.findViewById(R.id.lv_zhuangtai);
+                lv_fabufang= (ListView) view.findViewById(R.id.lv_fabufang);
+                //  cv_riqi= (CalendarView) view.findViewById(R.id.cv_riqi);
+
+                /**
+                 * 事件监听
+                 */
+                bt_Search.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        /**
+                         * 调用搜索接口
+                         */
+                    }
+                });
+                tv_way.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        /**
+                         * ListView的显示与隐藏
+                         */
+                        if (isGone){
+                            layout10.setVisibility(View.VISIBLE);
+//                            layout11.setVisibility(View.GONE);
+//                            layout_13.setVisibility(View.GONE);
+                            final List<String> list=new ArrayList<String>();
+                            for (int i=0;i<=4;i++){
+                                list.add("测试数据");
+                            }
+                            ArrayAdapter<String> adapter=new ArrayAdapter<String>(SearchPriceActivity.this,R.layout.item_for_textview,R.id.tv_text,list);
+                            lv_way.setAdapter(adapter);
+                            lv_way.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                                    tv_way.setText(list.get(position).toString());
+
+                                    layout10.setVisibility(View.GONE);
+
+                                }
+                            });
+                            //  lv_way.setVisibility(View.GONE);
+                        }
+                    }
+                });
+
+                iv_way.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        /**
+                         * ListView的显示与隐藏
+                         */
+                        if (isGone){
+                            layout10.setVisibility(View.VISIBLE);
+//                            layout11.setVisibility(View.GONE);
+//                            layout_13.setVisibility(View.GONE);
+                            final List<String> list=new ArrayList<String>();
+                            for (int i=0;i<=4;i++){
+                                list.add("测试数据");
+                            }
+                            ArrayAdapter<String> adapter=new ArrayAdapter<String>(SearchPriceActivity.this,R.layout.item_for_textview,R.id.tv_text,list);
+                            lv_way.setAdapter(adapter);
+                            lv_way.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                                    tv_way.setText(list.get(position).toString());
+
+                                    layout10.setVisibility(View.GONE);
+
+                                }
+                            });
+                            //  lv_way.setVisibility(View.GONE);
+                        }
+                    }
+                });
+
+                tv_riqi.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        Calendar calend1 = Calendar.getInstance();
+                        calend1.setTimeInMillis(System.currentTimeMillis());
+                        int year = calend1.get(Calendar.YEAR);
+                        int month = calend1.get(Calendar.MONTH) + 1;
+                        int day = calend1.get(Calendar.DAY_OF_MONTH);
+                        DatePickerDialog dialog3 = new DatePickerDialog(
+                                SearchPriceActivity.this,
+                                new DatePickerDialog.OnDateSetListener() {
+
+                                    @Override
+                                    public void onDateSet(DatePicker view,
+                                                          int year, int monthOfYear,
+                                                          int dayOfMonth) {
+//                                        Toast.makeText(SearchPriceActivity.this,
+//                                                "" + year + "年" + (monthOfYear)
+//                                                        + "月" + dayOfMonth + "日", Toast.LENGTH_LONG).show();
+                                        tv_riqi.setText(year + "年" + (monthOfYear +1)
+                                                + "月" + dayOfMonth + "日");
+                                    }
+                                }, year, month, day);
+                        dialog3.show();
+                    }
+
+
+
+                });
+                iv_riqi.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        /**
+                         * 调用系统日期
+                         */
+                        //显示日期
+
+                        Calendar calend1 = Calendar.getInstance();
+                        calend1.setTimeInMillis(System.currentTimeMillis());
+                        int year = calend1.get(Calendar.YEAR);
+                        int month = calend1.get(Calendar.MONTH) + 1;
+                        int day = calend1.get(Calendar.DAY_OF_MONTH);
+                        DatePickerDialog dialog3 = new DatePickerDialog(
+                                SearchPriceActivity.this,
+                                new DatePickerDialog.OnDateSetListener() {
+
+                                    @Override
+                                    public void onDateSet(DatePicker view,
+                                                          int year, int monthOfYear,
+                                                          int dayOfMonth) {
+                                        Toast.makeText(SearchPriceActivity.this,
+                                                "" + year + "年" + (monthOfYear)
+                                                        + "月" + dayOfMonth + "日", Toast.LENGTH_LONG).show();
+                                        tv_riqi.setText(year + "年" + (monthOfYear)
+                                                + "月" + dayOfMonth + "日");
+                                    }
+                                }, year, month, day);
+                        dialog3.show();
+                    }
+
+                });
+                tv_zhuangtai.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        /**
+                         * Listview的隐藏与显示
+                         */
+                        if (isGone){
+                            layout12.setVisibility(View.VISIBLE);
+                            final List<String> list=new ArrayList<String>();
+                            for (int i=0;i<=4;i++){
+                                list.add("测试数据");
+                            }
+                            ArrayAdapter<String> adapter=new ArrayAdapter<String>(SearchPriceActivity.this,R.layout.item_for_textview,R.id.tv_text,list);
+                            lv_zhuangtai.setAdapter(adapter);
+                            lv_zhuangtai.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                                    tv_zhuangtai.setText(list.get(position).toString());
+                                    layout12.setVisibility(View.GONE);
+                                }
+                            });
+
+
+                        }
+                    }
+                });
+                iv_zhuangtai.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        /**
+                         * ListView的隐藏与显示
+                         */
+                        if (isGone){
+                            layout12.setVisibility(View.VISIBLE);
+                            final List<String> list=new ArrayList<String>();
+                            for (int i=0;i<=4;i++){
+                                list.add("测试数据");
+                            }
+                            ArrayAdapter<String> adapter=new ArrayAdapter<String>(SearchPriceActivity.this,R.layout.item_for_textview,R.id.tv_text,list);
+                            lv_zhuangtai.setAdapter(adapter);
+                            lv_zhuangtai.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                                    tv_zhuangtai.setText(list.get(position).toString());
+                                    layout12.setVisibility(View.GONE);
+                                }
+                            });
+
+
+                        }
+                    }
+                });
+                tv_fabufangmingcheng.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        /**
+                         * 发布方的ListView的隐藏与显示
+                         */
+                        if (isGone){
+                            layout_13.setVisibility(View.VISIBLE);
+                            final List<String> list=new ArrayList<String>();
+                            for (int i=0;i<=4;i++){
+                                list.add("测试数据");
+                            }
+                            ArrayAdapter<String> adapter=new ArrayAdapter<String>(SearchPriceActivity.this,R.layout.item_for_textview,R.id.tv_text,list);
+                            lv_fabufang.setAdapter(adapter);
+                            lv_fabufang.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                                    tv_fabufangmingcheng.setText(list.get(position).toString());
+                                    layout_13.setVisibility(View.GONE);
+                                }
+                            });
+
+                        }
+                    }
+                });
+                iv_fabufang.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        /**
+                         * 发布方的ListView的隐藏与显示
+                         */
+                        if (isGone){
+                            layout_13.setVisibility(View.VISIBLE);
+                            final List<String> list=new ArrayList<String>();
+                            for (int i=0;i<=4;i++){
+                                list.add("测试数据");
+                            }
+                            ArrayAdapter<String> adapter=new ArrayAdapter<String>(SearchPriceActivity.this,R.layout.item_for_textview,R.id.tv_text,list);
+                            lv_fabufang.setAdapter(adapter);
+                            lv_fabufang.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                                    tv_fabufangmingcheng.setText(list.get(position).toString());
+                                    layout_13.setVisibility(View.GONE);
+                                }
+                            });
+
+                        }
+                    }
+                });
+
+
+
+                popupWindow.setTouchable(true);
+                popupWindow.setBackgroundDrawable(new BitmapDrawable());
+                popupWindow.setOutsideTouchable(true);
+                popupWindow.setFocusable(true);
+
+                popupWindow.showAtLocation(lv_Demo, Gravity.TOP, 0,65);
+
+                popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                    @Override
+                    public void onDismiss() {
+                        popupWindow.dismiss();
+                        backgroundAlpha(1f);
+                    }
+                });
+
             }
         });
         /**
@@ -153,11 +447,8 @@ public class SearchPriceActivity extends AppCompatActivity {
      */
 
     public void popupWindow_toShow() {
-        View view=View.inflate(SearchPriceActivity.this,R.layout.item_popupwindow_search,null);
-        PopupWindow popupWindow=new PopupWindow(findViewById(R.id.layout_e), LinearLayoutCompat.LayoutParams.MATCH_PARENT, LinearLayoutCompat.LayoutParams.WRAP_CONTENT);
-        Log.d("宽",popupWindow.getWidth()+"");
-        Log.d("高",popupWindow.getHeight()+"");
-        setContentView(view);
+
+
     }
     //设置背景透明
     public void backgroundAlpha(float bgAlpha) {
