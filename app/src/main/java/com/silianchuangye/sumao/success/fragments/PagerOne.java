@@ -15,6 +15,8 @@ import android.widget.Toast;
 
 
 import com.silianchuangye.sumao.success.activity.WelcomeActivity;
+import com.silianchuangye.sumao.success.fragments.SellerManagementPlatform.SellerManagementPlatformActivity;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.LoginUserActivity;
 import com.silianchuangye.sumao.success.fragments.type.SearchActivity;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.AuctionActivity;
 import com.silianchuangye.sumao.success.HX.Constant;
@@ -142,6 +144,9 @@ public class PagerOne extends BasePager {
         Map<String,Object> map7=new HashMap<String,Object>();
         map7.put("icon",R.mipmap.more);
         list.add(map7);
+        Map<String,Object> map13=new HashMap<String,Object>();
+        map13.put("icon",R.mipmap.maifang);
+        list.add(map13);
         SimpleAdapter adapter=new SimpleAdapter(mActivity,list,R.layout.fragmentoneitem,new String[]{"icon"},new int[]{R.id.ivIcon});
         gvFragmentone.setAdapter(adapter);
         /**
@@ -150,23 +155,24 @@ public class PagerOne extends BasePager {
         gvFragmentone.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(list.get(position).get("icon").equals(R.mipmap.more)){
-                    if(list.size()==8){
-                    list.remove(position);
-                   // Toast.makeText(mActivity, "点击了更多按钮", Toast.LENGTH_SHORT).show();
-                    Map<String,Object> map7=new HashMap<String,Object>();
-                    map7.put("icon",R.mipmap.togther);
-                    list.add(map7);
-                    Map<String,Object> map8=new HashMap<String,Object>();
-                    map8.put("icon",R.mipmap.groupon);
-                    list.add(map8);
-                    Map<String,Object> map9=new HashMap<String,Object>();
-                    map9.put("icon",R.mipmap.more);
-                    list.add(map9);
-                    SimpleAdapter adapter=new SimpleAdapter(mActivity,list,R.layout.fragmentoneitem,new String[]{"icon"},new int[]{R.id.ivIcon});
-                    gvFragmentone.setAdapter(adapter);
-                }
-                }else if(list.get(position).get("icon").equals(R.mipmap.togther)){
+//                if(list.get(position).get("icon").equals(R.mipmap.more)){
+//                    if(list.size()==8){
+//                    list.remove(position);
+//                   // Toast.makeText(mActivity, "点击了更多按钮", Toast.LENGTH_SHORT).show();
+//                    Map<String,Object> map7=new HashMap<String,Object>();
+//                    map7.put("icon",R.mipmap.togther);
+//                    list.add(map7);
+//                    Map<String,Object> map8=new HashMap<String,Object>();
+//                    map8.put("icon",R.mipmap.groupon);
+//                    list.add(map8);
+//                    Map<String,Object> map9=new HashMap<String,Object>();
+//                    map9.put("icon",R.mipmap.more);
+//                    list.add(map9);
+//                    SimpleAdapter adapter=new SimpleAdapter(mActivity,list,R.layout.fragmentoneitem,new String[]{"icon"},new int[]{R.id.ivIcon});
+//                    gvFragmentone.setAdapter(adapter);
+//                }
+              //   }else
+                 if(list.get(position).get("icon").equals(R.mipmap.togther)){
                     Toast.makeText(mActivity, "点击了撮合按钮", Toast.LENGTH_SHORT).show();
 
                 }else if(list.get(position).get("icon").equals(R.mipmap.groupon)){
@@ -194,7 +200,13 @@ public class PagerOne extends BasePager {
                     Toast.makeText(mActivity, "点击了物流按钮", Toast.LENGTH_SHORT).show();
                 }else if(list.get(position).get("icon").equals(R.mipmap.consult)){
                     Toast.makeText(mActivity, "点击了塑贸咨询按钮", Toast.LENGTH_SHORT).show();
-                }
+                }else if (list.get(position).get("icon").equals(R.mipmap.maifang)){
+//                    Toast.makeText(mActivity, "点击了卖方中心按钮", Toast.LENGTH_SHORT).show();
+                     Intent intent = new Intent();
+                     intent.setClass(mActivity,LoginUserActivity.class);
+                     intent.putExtra("roles","seller");
+                     startActivity(intent);
+                 }
             }
         });
     }

@@ -20,8 +20,10 @@ import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.MainActivity;
 import com.silianchuangye.sumao.success.R;
+import com.silianchuangye.sumao.success.fragments.SellerManagementPlatform.SellerManagementPlatformActivity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.RegisterActivity;
 import com.silianchuangye.sumao.success.utils.GlobalVariable;
+import com.silianchuangye.sumao.success.utils.LogUtils;
 
 import org.json.JSONObject;
 import org.xutils.common.Callback;
@@ -47,23 +49,35 @@ public class LoginUserActivity extends AppCompatActivity {
     private String user_Name;
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
-
+    private String roles;
 
     int str;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login_user);
+        setContentView(R.layout.activity_login_for_mai_mai);
         title_Bar();
         db = SQLiteDatabase.openOrCreateDatabase(this.getFilesDir().toString()+"/test.dbs",null);
         et_account_login= (EditText) findViewById(R.id.et_account_login);
         et_pass_login= (EditText) findViewById(R.id.et_pass_login);
         bt_Login= (Button) findViewById(R.id.bt_login);
+        Intent intent = getIntent();
+        roles = intent.getStringExtra("roles");
+        LogUtils.log("roles-->"+roles+"<--roles");
+//        登录账号按钮
         bt_Login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //登录功能
-                login();
+                if (roles.equals("seller"))
+                {
+                    //卖家登录
+                    sellerlogin();
+                }else if (roles.equals("buyer")){
+                    //买家登录功能
+                    buyerlogin();
+                }
+
+
             }
         });
         tv_register= (TextView) findViewById(R.id.tv_register_login);
@@ -79,12 +93,13 @@ public class LoginUserActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
               //跳转找回密码界面
+//                Log.d("跳进了","买卖方交换界面");
+//                Intent intent=new Intent(LoginUserActivity.this,LoginActivity.class);
+//                startActivity(intent);
             }
         });
         str =getIntent().getIntExtra("cart1",0);
     }
-
-
 
     public void title_Bar(){
 
@@ -118,7 +133,13 @@ public class LoginUserActivity extends AppCompatActivity {
         });
 
     }
-    private void login() {
+
+    private void sellerlogin() {
+        Intent intent = new Intent(this, SellerManagementPlatformActivity.class);
+        startActivity(intent);
+    }
+
+    private void buyerlogin() {
         sp=getSharedPreferences("sumao", Activity.MODE_PRIVATE);
         editor=sp.edit();
          name = et_account_login.getText().toString();
@@ -212,7 +233,7 @@ public class LoginUserActivity extends AppCompatActivity {
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-
+                LogUtils.log("LoginUserActivity-->onError--->"+ex);
             }
 
             @Override
@@ -227,8 +248,6 @@ public class LoginUserActivity extends AppCompatActivity {
         });
 
     }
-
-
 
 
 }
