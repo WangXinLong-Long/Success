@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -67,6 +68,8 @@ private List<CartInfo> list;
             holder.Img_del= (ImageView) convertView.findViewById(R.id.img_item_cart_del);
             holder.Tv_buy_Sub= (TextView) convertView.findViewById(R.id.img_item_cart_buy_sub);
             holder.Tv_buy_Add= (TextView) convertView.findViewById(R.id.img_item_cart_buy_add);
+            holder.Tv_no_much= (TextView) convertView.findViewById(R.id.item_cart_tv_no_much);
+            holder.relative_item_cart= (RelativeLayout) convertView.findViewById(R.id.relative_item_cart);
             convertView.setTag(holder);
         }else{
            holder= (ViewHolder) convertView.getTag();
@@ -108,10 +111,17 @@ private List<CartInfo> list;
             @Override
             public void onClick(View v) {
                 String str=holder.Edt_buy_num.getText().toString();
+                if(str.equals("")){
+                    str="0";
+                }
                 int num=Integer.valueOf(str);
                 num--;
-                if(num>=1) {
+                if(num>=0) {
                     holder.Edt_buy_num.setText("" + num);
+                    holder.relative_item_cart.setVisibility(View.GONE);
+                }
+                if(num==0){
+                    Toast.makeText(ctx,"购买数量不能为零",Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -119,12 +129,18 @@ private List<CartInfo> list;
             @Override
             public void onClick(View v) {
                 String str=holder.Edt_buy_num.getText().toString();
+                if(str.equals("")){
+                    str="0";
+                }
                 int num=Integer.valueOf(str);
                 num++;
                 if(num>=15){
+                    holder.relative_item_cart.setVisibility(View.VISIBLE);
+                    holder.Tv_no_much.setText("产品库存不足"+num+"吨");
                     dialog.show();
                 }
                 if(num<15&&num>=0) {
+                    holder.relative_item_cart.setVisibility(View.GONE);
                     holder.Edt_buy_num.setText("" + num);
                 }
             }
@@ -147,16 +163,17 @@ private List<CartInfo> list;
             public void afterTextChanged(Editable s) {
                 String str=holder.Edt_buy_num.getText().toString();
                 if(str.equals("")){
-                    str=temp;
-                    holder.Edt_buy_num.setText(str);
+                    str="0";
+//                    holder.Edt_buy_num.setText(str);
+                    Toast.makeText(ctx,"购买数量不能为零",Toast.LENGTH_SHORT).show();
                 }
                 int i=Integer.valueOf(str);
-                if(i>=15){
-                   holder.Edt_buy_num.setText(temp);
+                if(i>=15) {
+                    holder.relative_item_cart.setVisibility(View.VISIBLE);
+                    holder.Tv_no_much.setText("产品库存不足" + i + "吨");
                     dialog.show();
-                }
-                if(i<1){
-                    holder.Edt_buy_num.setText(temp);
+                }else{
+                    holder.relative_item_cart.setVisibility(View.GONE);
                 }
 
             }
@@ -173,8 +190,9 @@ private List<CartInfo> list;
         TextView Tv_company;
         EditText Edt_buy_num;
         TextView Tv_buy_Sub,Tv_buy_Add;
-        TextView Tv_all_price;
+        TextView Tv_all_price,Tv_no_much;
         ImageView Img_select,Img_del;
+        RelativeLayout relative_item_cart;
     }
 
     public interface SelectCallBack{

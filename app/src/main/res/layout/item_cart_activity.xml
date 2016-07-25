@@ -5,6 +5,10 @@
     android:orientation="vertical"
     android:background="@color/selley_bg"
     >
+    <View
+        android:layout_width="match_parent"
+        android:background="@color/selley_bg"
+        android:layout_height="5dp"/>
     <RelativeLayout
         android:background="@color/selley_lv"
         android:layout_width="match_parent"
@@ -167,7 +171,7 @@
         android:background="@color/selley_lv"
         android:layout_width="match_parent"
         android:layout_height="@dimen/x30"
-        android:layout_marginBottom="@dimen/x5">
+       >
         <TextView
             android:id="@+id/tv_item_cart_buy"
             style="@style/tv_dingdan"
@@ -223,5 +227,25 @@
             android:layout_toLeftOf="@id/tv_item_cart_all_price"
             android:text="总价（元） : "
             />
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/selley_bg"
+        />
+    <RelativeLayout
+        android:id="@+id/relative_item_cart"
+        android:visibility="gone"
+        android:background="@color/selley_lv"
+        android:layout_width="match_parent"
+
+        android:layout_height="40dp">
+        <TextView
+            android:layout_centerInParent="true"
+            android:textColor="#ff0000"
+            android:id="@+id/item_cart_tv_no_much"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="34"/>
     </RelativeLayout>
 </LinearLayout>

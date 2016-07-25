@@ -15,6 +15,8 @@ import android.widget.Toast;
 
 
 import com.silianchuangye.sumao.success.activity.WelcomeActivity;
+import com.silianchuangye.sumao.success.fragments.SellerManagementPlatform.SellerManagementPlatformActivity;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.LoginUserActivity;
 import com.silianchuangye.sumao.success.fragments.type.SearchActivity;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.AuctionActivity;
 import com.silianchuangye.sumao.success.HX.Constant;
@@ -199,7 +201,11 @@ public class PagerOne extends BasePager {
                 }else if(list.get(position).get("icon").equals(R.mipmap.consult)){
                     Toast.makeText(mActivity, "点击了塑贸咨询按钮", Toast.LENGTH_SHORT).show();
                 }else if (list.get(position).get("icon").equals(R.mipmap.maifang)){
-                    Toast.makeText(mActivity, "点击了卖方中心按钮", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(mActivity, "点击了卖方中心按钮", Toast.LENGTH_SHORT).show();
+                     Intent intent = new Intent();
+                     intent.setClass(mActivity,LoginUserActivity.class);
+                     intent.putExtra("roles","seller");
+                     startActivity(intent);
                  }
             }
         });

@@ -50,6 +50,8 @@ public class RegisterActivity extends AppCompatActivity {
     String rePassword;
     String email;
     private SimpleAdapter adapter;
+//    如果在修改页面中写了文字，并保存，设置为true,即使写了“6-16个字符”字样
+    private boolean sixToSixteenCharacter = false;
 
 
     @Override
@@ -70,9 +72,9 @@ public class RegisterActivity extends AppCompatActivity {
                 Intent intent=new Intent(RegisterActivity.this, RegisterFirmActivity.class);
                 intent.putExtra("account",list.get(0).get("minute").toString());
                 intent.putExtra("pass",list.get(1).get("pass").toString());
-                Log.d("pass",list.get(1).get("pass").toString());
+//                Log.d("pass",list.get(1).get("pass").toString());
                 intent.putExtra("repass",list.get(2).get("pass").toString());
-                Log.d("repass",list.get(2).get("pass").toString());
+//                Log.d("repass",list.get(2).get("pass").toString());
                 intent.putExtra("name",list.get(3).get("minute").toString());
                 intent.putExtra("email",list.get(4).get("minute").toString());
                 intent.putExtra("phone",et_phone_register.getText().toString());
@@ -138,31 +140,64 @@ public class RegisterActivity extends AppCompatActivity {
         {
 
             case 0:
+
                 account  = data.getStringExtra("name");
               //  Log.d("账号",name);
-                list.get(0).put("minute",account);
+                if (!account.equals("")){
+                    list.get(0).put("minute",account);
+                    sixToSixteenCharacter =true;
+                }else{
+                    sixToSixteenCharacter =false;
+                }
+
                 adapter.notifyDataSetChanged();
+
                 break;
             case 1:
                 password = data.getStringExtra("name");
-                list.get(1).put("pass",password);
-                list.get(1).put("minute","");
+                if (!password.equals("")){
+                    sixToSixteenCharacter =true;
+                    list.get(1).put("pass",password);
+                    list.get(1).put("minute","");
+                }else{
+                    sixToSixteenCharacter =false;
+
+                }
+
                 adapter.notifyDataSetChanged();
                 break;
             case 2:
                 rePassword=data.getStringExtra("name");
-                list.get(2).put("pass",rePassword);
-                list.get(2).put("minute","");
+                if (!rePassword.equals("")){
+                    sixToSixteenCharacter =true;
+                    list.get(2).put("pass",rePassword);
+                    list.get(2).put("minute","");
+                }else{
+                    sixToSixteenCharacter =false;
+                }
+
                 adapter.notifyDataSetChanged();
                 break;
             case 3:
                 name=data.getStringExtra("name");
-                list.get(3).put("minute",name);
+                if (!rePassword.equals("")){
+                    sixToSixteenCharacter =true;
+                    list.get(3).put("minute",name);
+                }else{
+                    sixToSixteenCharacter =false;
+                }
+
                 adapter.notifyDataSetChanged();
                 break;
             case 4:
                 email=data.getStringExtra("name");
-                list.get(4).put("minute",email);
+                if (!rePassword.equals("")){
+                    sixToSixteenCharacter =true;
+                    list.get(4).put("minute",email);
+                }else{
+                    sixToSixteenCharacter =false;
+                }
+
                 adapter.notifyDataSetChanged();
                 break;
 
@@ -188,7 +223,7 @@ public class RegisterActivity extends AppCompatActivity {
         iv_title_bar_search.setVisibility(View.GONE);
 
         tvUpdate.setVisibility(View.GONE);
-        tv_title_bar_title.setText("登录账号");
+        tv_title_bar_title.setText("注册账号");
 
 
         tv_title_bar_title.setTextColor(Color.WHITE);

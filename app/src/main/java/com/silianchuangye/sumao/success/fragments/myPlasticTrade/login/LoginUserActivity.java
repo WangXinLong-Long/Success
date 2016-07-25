@@ -20,8 +20,10 @@ import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.MainActivity;
 import com.silianchuangye.sumao.success.R;
+import com.silianchuangye.sumao.success.fragments.SellerManagementPlatform.SellerManagementPlatformActivity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.RegisterActivity;
 import com.silianchuangye.sumao.success.utils.GlobalVariable;
+import com.silianchuangye.sumao.success.utils.LogUtils;
 
 import org.json.JSONObject;
 import org.xutils.common.Callback;
@@ -47,7 +49,7 @@ public class LoginUserActivity extends AppCompatActivity {
     private String user_Name;
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
-
+    private String roles;
 
     int str;
     @Override
@@ -59,11 +61,23 @@ public class LoginUserActivity extends AppCompatActivity {
         et_account_login= (EditText) findViewById(R.id.et_account_login);
         et_pass_login= (EditText) findViewById(R.id.et_pass_login);
         bt_Login= (Button) findViewById(R.id.bt_login);
+        Intent intent = getIntent();
+        roles = intent.getStringExtra("roles");
+        LogUtils.log("roles-->"+roles+"<--roles");
+//        登录账号按钮
         bt_Login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //登录功能
-                login();
+                if (roles.equals("seller"))
+                {
+                    //卖家登录
+                    sellerlogin();
+                }else if (roles.equals("buyer")){
+                    //买家登录功能
+                    buyerlogin();
+                }
+
+
             }
         });
         tv_register= (TextView) findViewById(R.id.tv_register_login);
@@ -87,10 +101,45 @@ public class LoginUserActivity extends AppCompatActivity {
         str =getIntent().getIntExtra("cart1",0);
     }
 
+    public void title_Bar(){
+
+        iv_title_bar_back = ((ImageView) findViewById(R.id.iv_title_bar_back));
+        iv_title_bar_logo = ((ImageView) findViewById(R.id.iv_title_bar_logo));
+        iv_title_bar_service = ((ImageView) findViewById(R.id.iv_title_bar_service));
+        iv_title_bar_search = ((ImageView) findViewById(R.id.iv_title_bar_search));
+        sv_title_bar_serachView = ((Button) findViewById(R.id.sv_title_bar_serachView));
+        tv_title_bar_title  = ((TextView) findViewById(R.id.tv_title_bar_title));
+
+        tvUpdate= (TextView) findViewById(R.id.tvUpdate);
+        iv_title_bar_logo.setVisibility(View.GONE);
+        iv_title_bar_service.setVisibility(View.GONE);
+        sv_title_bar_serachView.setVisibility(View.GONE);
+        iv_title_bar_search.setVisibility(View.GONE);
+
+        tvUpdate.setVisibility(View.GONE);
+        tv_title_bar_title.setText("登录账号");
 
 
+        tv_title_bar_title.setTextColor(Color.WHITE);
+        iv_title_bar_back.setVisibility(View.VISIBLE);
+        layoutTop= (RelativeLayout) findViewById(R.id.layoutTop_Login);
+        layoutTop.setBackgroundColor(getResources().getColor(R.color.textColor_expandable_listview_show));
 
-    private void login() {
+        iv_title_bar_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LoginUserActivity.this.finish();
+            }
+        });
+
+    }
+
+    private void sellerlogin() {
+        Intent intent = new Intent(this, SellerManagementPlatformActivity.class);
+        startActivity(intent);
+    }
+
+    private void buyerlogin() {
         sp=getSharedPreferences("sumao", Activity.MODE_PRIVATE);
         editor=sp.edit();
          name = et_account_login.getText().toString();
@@ -184,7 +233,7 @@ public class LoginUserActivity extends AppCompatActivity {
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-
+                LogUtils.log("LoginUserActivity-->onError--->"+ex);
             }
 
             @Override
@@ -199,46 +248,6 @@ public class LoginUserActivity extends AppCompatActivity {
         });
 
     }
-    public void title_Bar(){
-
-        iv_title_bar_back = ((ImageView) findViewById(R.id.iv_title_bar_back));
-        iv_title_bar_logo = ((ImageView) findViewById(R.id.iv_title_bar_logo));
-        iv_title_bar_service = ((ImageView) findViewById(R.id.iv_title_bar_service));
-        iv_title_bar_search = ((ImageView) findViewById(R.id.iv_title_bar_search));
-        sv_title_bar_serachView = ((Button) findViewById(R.id.sv_title_bar_serachView));
-        tv_title_bar_title  = ((TextView) findViewById(R.id.tv_title_bar_title));
-
-        tvUpdate= (TextView) findViewById(R.id.tvUpdate);
-        iv_title_bar_logo.setVisibility(View.GONE);
-        iv_title_bar_service.setVisibility(View.GONE);
-        sv_title_bar_serachView.setVisibility(View.GONE);
-        iv_title_bar_search.setVisibility(View.GONE);
-
-        tvUpdate.setVisibility(View.GONE);
-        tv_title_bar_title.setText("塑贸登录");
-
-
-        tv_title_bar_title.setTextColor(Color.WHITE);
-        iv_title_bar_back.setVisibility(View.GONE);
-        layoutTop= (RelativeLayout) findViewById(R.id.layoutTop_Login);
-        layoutTop.setBackgroundColor(getResources().getColor(R.color.textColor_expandable_listview_show));
-
-        iv_title_bar_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LoginUserActivity.this.finish();
-            }
-        });
-//        tvUpdate.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent=new Intent(SettingActivity.this,FirmInfoUpdateActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-    }
-
-
 
 
 }

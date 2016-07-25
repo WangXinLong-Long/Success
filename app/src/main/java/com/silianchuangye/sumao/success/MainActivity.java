@@ -28,12 +28,16 @@ import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMMessage;
 import com.silianchuangye.sumao.success.HX.DemoHelper;
 import com.silianchuangye.sumao.success.HX.ui.ChatActivity;
-import com.silianchuangye.sumao.success.fragments.PagerFive;
 import com.silianchuangye.sumao.success.fragments.PagerFour;
 import com.silianchuangye.sumao.success.fragments.PagerOne;
 import com.silianchuangye.sumao.success.fragments.PagerThree;
 import com.silianchuangye.sumao.success.fragments.PagerTwo;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.LoginUserActivity;
+
+import org.json.JSONObject;
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,15 +63,18 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
     int id;
     String username;
     SharedPreferences sp;
+    private SharedPreferences.Editor editor;
+    private String unique;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        sp=getSharedPreferences("sumao",Context.MODE_PRIVATE);
 //      初始化数据
         initData();
 //      初始化组件
         initView();
+        getUnique();
         init();
     }
 
@@ -88,12 +95,13 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
         mTabHost.getTabWidget().getChildTabViewAt(3).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sp=getSharedPreferences("sumao",Context.MODE_PRIVATE);
+
                 username=sp.getString("name","");
                 if (username!=""){
                     mTabHost.setCurrentTab(3);
                 }else {
                     Intent intent = new Intent();
+                    intent.putExtra("roles","buyer");
                     intent.setClass(MainActivity.this, LoginUserActivity.class);
                     startActivity(intent);
                 }
@@ -114,7 +122,9 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
                     mTabHost.setCurrentTab(2);
                 }else {
                     Intent intent = new Intent();
+                    intent.putExtra("roles","buyer");
                     intent.putExtra("cart1", 9);
+
                     intent.setClass(MainActivity.this, LoginUserActivity.class);
                     startActivity(intent);
                 }
@@ -140,19 +150,16 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
 
         mFragmentArray.add(PagerOne.class);
         mFragmentArray.add(PagerTwo.class);
-        mFragmentArray.add(PagerFive.class);
         mFragmentArray.add(PagerThree.class);
         mFragmentArray.add(PagerFour.class);
 
         mImageArray.add(R.drawable.home_page);
         mImageArray.add(R.drawable.classification);
-        mImageArray.add(R.drawable.i_am_seller);
         mImageArray.add(R.drawable.shopping_car);
         mImageArray.add(R.drawable.mine_sumao);
 
         mTextArray.add("首页");
         mTextArray.add("分类");
-        mTextArray.add("我是卖家");
         mTextArray.add("购物车");
         mTextArray.add("我的塑贸");
     }
@@ -259,6 +266,7 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
         }else {
             Intent intent = new Intent();
             intent.putExtra("cart1", 9);
+            intent.putExtra("roles","buyer");
             intent.setClass(MainActivity.this, LoginUserActivity.class);
             startActivity(intent);
             MainActivity.this.finish();
@@ -293,6 +301,7 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
                 }else {
                     Intent intent = new Intent();
                     intent.setClass(MainActivity.this, LoginUserActivity.class);
+                    intent.putExtra("roles","buyer");
                     startActivity(intent);
                     MainActivity.this.finish();
                 }
@@ -339,6 +348,47 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
         }
 
     }
+
+    public String getUnique() {
+        editor = sp.edit();
+        RequestParams unique_rp = new RequestParams("http://192.168.32.126:7023/rest/model/atg/rest/SessionConfirmationActor/getSessionConfirmationNumber");
+        x.http().post(unique_rp, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                try {
+                    JSONObject object = new JSONObject(result);
+                    unique = object.getString("sessionConfirmationNumber");
+                    Log.d("unique", "unique" + unique);
+                    /**
+                     * 把唯一标识储存在SharedPreferences
+                     */
+                    editor.putString("unique", unique);
+                    editor.commit();
+                } catch (Exception e) {
+                    Log.d("exception", "解析唯一标识时错误！");
+                }
+
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+
+        return unique;
+    }
+
 
 }
 
