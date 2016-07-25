@@ -142,8 +142,8 @@ public class LoginUserActivity extends AppCompatActivity {
     private void buyerlogin() {
         sp=getSharedPreferences("sumao", Activity.MODE_PRIVATE);
         editor=sp.edit();
-         name = et_account_login.getText().toString();
-         password = et_pass_login.getText().toString();
+         name = et_account_login.getText().toString().trim();
+         password = et_pass_login.getText().toString().trim();
 
         RequestParams rp=new RequestParams("http://192.168.32.126:7023/rest/model/atg/userprofiling/ProfileActor/login");
         rp.addParameter("login",name);
