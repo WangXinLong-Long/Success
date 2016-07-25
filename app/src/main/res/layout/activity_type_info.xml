@@ -70,7 +70,7 @@
             android:layout_marginTop="@dimen/x5"
             android:layout_marginBottom="@dimen/x5"
             android:orientation="horizontal"
-            android:weightSum="4"
+            android:weightSum="5"
             android:background="#fff"
             >
             <RelativeLayout
@@ -82,7 +82,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/tv_pattern_Type"
-                    android:text="交易模式"
+                    android:text="分类"
                     android:layout_centerInParent="true"
                     android:textColor="#000"
                     android:textSize="14sp"
@@ -102,7 +102,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/tv_type_Type"
-                    android:text="分类"
+                    android:text="牌号"
                     android:layout_centerInParent="true"
                     android:textColor="#000"
                     android:textSize="14sp"
@@ -148,6 +148,26 @@
                     android:textSize="14sp"
                     />
             </RelativeLayout>
+            <LinearLayout
+                android:layout_width="@dimen/x1"
+                android:layout_height="match_parent"
+                android:background="#E6E6E6"
+                ></LinearLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_address_search"
+                    android:text="筛选"
+                    android:layout_centerInParent="true"
+                    android:textColor="#000"
+                    android:textSize="14sp"
+                    />
+            </RelativeLayout>
         </LinearLayout>
     </RelativeLayout>
     <ListView
@@ -156,6 +176,8 @@
         android:layout_below="@+id/layout_center_Type"
         android:background="#fff"
         android:id="@+id/lv_Type"
+        android:divider="#EFEEF4"
+        android:dividerHeight="@dimen/x5"
 
         ></ListView>
 

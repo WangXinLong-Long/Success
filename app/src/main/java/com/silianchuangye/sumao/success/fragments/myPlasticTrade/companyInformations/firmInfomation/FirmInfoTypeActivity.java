@@ -1,15 +1,21 @@
 package com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -17,6 +23,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class FirmInfoTypeActivity extends AppCompatActivity {
     ImageView iv_title_bar_logo,
@@ -26,61 +37,45 @@ public class FirmInfoTypeActivity extends AppCompatActivity {
     Button sv_title_bar_serachView;
     TextView tv_title_bar_title, tv;
     RelativeLayout layoutTop;
-    RadioButton one,two,three;
+   // RadioButton one,two,three;
     RadioGroup rgDemo;
     private String name;
     private Button btSave;
     private LinearLayout three_layout;
     String title;
     int number;
+    private ListView lv_type;
+    private List<String> list;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_firm_info_type);
-        one= (RadioButton) findViewById(R.id.rbone_firm_info_type);
-        two= (RadioButton) findViewById(R.id.rbtwo_firm_info_type);
-        three= (RadioButton) findViewById(R.id.rbthree_firm_info_type);
-       // three.setChecked(true);
-        one.setChecked(false);
-        three_layout= (LinearLayout) findViewById(R.id.three);
+        lv_type= (ListView) findViewById(R.id.lv_Firm_Type);
+        list=new ArrayList<String>();
+
         Bundle bundle=getIntent().getExtras();
          title=bundle.getString("title");
           number=bundle.getInt("number");
         Log.d("number",number+"");
         if (title.equals("企业类型")){
-            one.setText("贸易商");
-            two.setText("工贸一体");
-            three.setText("生产厂");
+            list.add("贸易商");
+            list.add("工贸一体");
+            list.add("生产厂");
         }else if (title.equals("纳税人类型")){
-            one.setText("一般纳税人");
-            two.setText("小规模纳税人");
-            three_layout.setVisibility(View.GONE);
-            three.setVisibility(View.GONE);
-        }
-        rgDemo= (RadioGroup) findViewById(R.id.rgDemo);
-       // rgDemo.setOnCheckedChangeListener(radiogpchange);
-        int id=rgDemo.getCheckedRadioButtonId();
-        if (id==-1){
-            Toast.makeText(FirmInfoTypeActivity.this, "请选择一个", Toast.LENGTH_SHORT).show();
-        }
-        rgDemo.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
 
-              //  Toast.makeText(FirmInfoTypeActivity.this, "进来了",Toast.LENGTH_SHORT).show();
-                if (checkedId == one.getId()) {
-                Toast.makeText(FirmInfoTypeActivity.this, "one选中", Toast.LENGTH_SHORT).show();
-                    name=one.getText().toString();
-                    Log.d("企业类型",name);
-                } else if (checkedId == two.getId()) {
-                    Toast.makeText(FirmInfoTypeActivity.this, "two选中", Toast.LENGTH_SHORT).show();
-                    name=two.getText().toString();
-                    Log.d("企业类型",name);
-                }else if (checkedId==three.getId()){
-                    Toast.makeText(FirmInfoTypeActivity.this, "three选中", Toast.LENGTH_SHORT).show();
-                    name=three.getText().toString();
-                    Log.d("企业类型",name);
-                }
+            list.add("一般纳税人");
+            list.add("小规模纳税人");
+        }
+
+        ListAdapter adapter=new ListAdapter(getApplication(),list);
+        lv_type.setAdapter(adapter);
+        lv_type.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        lv_type.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(FirmInfoTypeActivity.this, "进来listview的item的点击事件", Toast.LENGTH_SHORT).show();
+                name=list.get(position).toString();
+                Log.d("选中的文字",name);
             }
         });
         btSave= (Button) findViewById(R.id.btSave);
@@ -124,5 +119,85 @@ public class FirmInfoTypeActivity extends AppCompatActivity {
                 FirmInfoTypeActivity.this.finish();
             }
         });
+    }
+    class ViewHolder {
+
+        RadioButton rb_state;
+    }
+    class ListAdapter extends BaseAdapter{
+        private Context context;
+        private List<String> list;
+        Map<String, Boolean> states = new HashMap<String, Boolean>();
+
+        public ListAdapter(Context context,List<String> list){
+
+            this.context=context;
+            this.list=list;
+
+        }
+
+        @Override
+        public int getCount() {
+            return list.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return list.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(final int position, View convertView, ViewGroup parent) {
+            ViewHolder holder;
+
+            LayoutInflater inflater = LayoutInflater.from(FirmInfoTypeActivity.this);
+            if (convertView == null) {
+                convertView = inflater.inflate(
+                        R.layout.item_type_radio_button, null);
+                holder = new ViewHolder();
+                convertView.setTag(holder);
+            } else {
+                holder = (ViewHolder) convertView.getTag();
+            }
+
+            final RadioButton radio=(RadioButton) convertView.findViewById(R.id.rbCheck);
+            holder.rb_state = radio;
+            radio.setText(list.get(position));
+            holder.rb_state.setOnClickListener(new View.OnClickListener() {
+
+                public void onClick(View v) {
+                    name=list.get(position).toString();
+                 //   Log.d("name的值",name);
+
+                    for (String key : states.keySet()) {
+                        states.put(key, false);
+
+                    }
+                    //选中点中的
+                    states.put(String.valueOf(position),radio.isChecked());
+                    Log.d("states",String.valueOf(position)+"");
+                    ListAdapter.this.notifyDataSetChanged();
+                }
+            });
+
+            boolean res = false;
+            if (states.get(String.valueOf(position)) == null
+                    || states.get(String.valueOf(position)) == false) {
+                res = false;
+                states.put(String.valueOf(position), false);
+            } else
+                res = true;
+
+
+            holder.rb_state.setChecked(res);
+            return convertView;
+
+
+        }
     }
 }
