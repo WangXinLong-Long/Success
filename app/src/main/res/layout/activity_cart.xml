@@ -99,11 +99,22 @@
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/selley_lv"
         android:layout_below="@id/reative_activity_cart_top">
-        <TextView
+        <ImageView
+            android:id="@+id/img_cart_null"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            android:src="@mipmap/cart_null"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/x80"/>
+
+        <TextView
+            android:layout_marginTop="@dimen/x10"
+            android:layout_below="@id/img_cart_null"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
             android:text="购物车里什么都没有，快去选购商品吧！"/>
     </RelativeLayout>
 </RelativeLayout>
