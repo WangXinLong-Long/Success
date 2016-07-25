@@ -57,16 +57,16 @@ public class OpenAuctionActivity extends AppCompatActivity {
                 OpenAuctionActivity.this.finish();
             }
         });
-        gouwuche= (ImageView) findViewById(R.id.ivGouwuche);
-        gouwuche.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(OpenAuctionActivity.this, MainActivity.class);
-                intent.putExtra("cart",1);
-                startActivity(intent);
-                OpenAuctionActivity.this.finish();
-            }
-        });
+//        gouwuche= (ImageView) findViewById(R.id.ivGouwuche);
+//        gouwuche.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent=new Intent(OpenAuctionActivity.this, MainActivity.class);
+//                intent.putExtra("cart",1);
+//                startActivity(intent);
+//                OpenAuctionActivity.this.finish();
+//            }
+//        });
         lv_auction= (ListView) findViewById(R.id.lv_auction);
         list=new ArrayList<Map<String,Object>>();
         Map<String,Object> map1=new Hashtable<String,Object>();

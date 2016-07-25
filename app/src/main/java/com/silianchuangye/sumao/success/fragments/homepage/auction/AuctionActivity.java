@@ -4,8 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -22,6 +24,7 @@ public class AuctionActivity extends AppCompatActivity {
     private ImageView imageback;
     private ListView lvAuction;
     private List<Map<String,Object>> list;
+    private String name;
 
 
     private Button bu;
@@ -52,8 +55,19 @@ public class AuctionActivity extends AppCompatActivity {
         MyAdapter adapter=new MyAdapter(this,list,R.layout.auctionitem,new String[]{"name"},new int[]{R.id.tv_auction_name});
         lvAuction.setAdapter(adapter);
 
+
     }
     public void event(){
+      lvAuction.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+          @Override
+          public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+              Log.d("进入了","list得item的点击事件");
+//              if (name.equals("参与竞拍")){
+                  Intent intent=new Intent(AuctionActivity.this,OpenAuctionActivity.class);
+                  startActivity(intent);
+//              }
+          }
+      });
 
     }
     class MyAdapter extends SimpleAdapter{
@@ -77,15 +91,8 @@ public class AuctionActivity extends AppCompatActivity {
         public View getView(int position, View convertView, ViewGroup parent) {
             View view=getLayoutInflater().inflate(R.layout.auctionitem,null);
             bu= (Button) view.findViewById(R.id.bt_auctionitem);
-            bu.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(bu.getText().toString().equals("参与竞拍")){
-                       Intent intent=new Intent(AuctionActivity.this,OpenAuctionActivity.class);
-                        startActivity(intent);
-                    }
-                }
-            });
+            name= bu.getText().toString();
+            Log.d("name的值",""+name);
             return view;
         }
     }
