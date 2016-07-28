@@ -262,7 +262,7 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
         SharedPreferences share=getSharedPreferences("sumao",Context.MODE_PRIVATE);
         String str=share.getString("name","");
         if (str!=""){
-            mTabHost.setCurrentTab(3);
+            mTabHost.setCurrentTab(2);
         }else {
             Intent intent = new Intent();
             intent.putExtra("cart1", 9);

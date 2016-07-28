@@ -84,6 +84,7 @@ public class SellerAllOrdersFragment extends Fragment implements View.OnClickLis
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent();
         if ("待支付".equals(lists.get(position).getOrderStatus())){
+            intent.putExtra("title", lists.get(position).getOrderNumber());
             intent.setClass(getActivity(),SellerNotPaidOrderDetails.class);
         }else {
             intent.setClass(getActivity(),SellerAlreadyPaidOrderDetails.class);

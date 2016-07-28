@@ -509,14 +509,16 @@
             android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.CaptureActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
-        <activity android:name=".fragments.SellerManagementPlatform.acutionManagement.SearchPriceActivity">
-        </activity>
+        <activity android:name=".fragments.SellerManagementPlatform.acutionManagement.SearchPriceActivity" />
         <activity android:name=".fragments.SellerManagementPlatform.acutionManagement.PriceSearchinfoActivity" />
         <activity android:name=".fragments.SellerManagementPlatform.acutionManagement.AcutionResultActivity" />
         <activity android:name=".fragments.SellerManagementPlatform.acutionManagement.AuctionSuccessActivity" />
-        <activity android:name=".fragments.SellerManagementPlatform.acutionManagement.AcutionFailActivity"></activity>
+        <activity android:name=".fragments.SellerManagementPlatform.acutionManagement.AcutionFailActivity" />
         <activity android:name=".salesearch.SaleSearch" />
         <activity android:name=".customermanger.CustomerParent" />
+        <activity android:name=".fragments.SellerManagementPlatform.SellerOrderManagement.ReNumAndPrice" />
+        <activity android:name=".fragments.SellerManagementPlatform.SellerOrderManagement.NewPrice" />
+        <activity android:name=".fragments.SellerManagementPlatform.SellerOrderManagement.Num"></activity>
     </application>
 
 </manifest>
