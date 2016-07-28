@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2016/7/27 0027.
  */
-public class LeiXing implements Serializable {
+class LeiXing implements Serializable {
     List<EnterpriseInformation> cl_leixing;
 
     public List<EnterpriseInformation> getCl_leixing() {
