@@ -52,22 +52,34 @@ public class AuctionActivity extends AppCompatActivity {
         Map<String,Object> map1=new Hashtable<String,Object>();
         map1.put("name","福建联合");
         list.add(map1);
-        MyAdapter adapter=new MyAdapter(this,list,R.layout.auctionitem,new String[]{"name"},new int[]{R.id.tv_auction_name});
+        SimpleAdapter adapter=new SimpleAdapter(this,list,R.layout.auctionitem,new String[]{"name"},new int[]{R.id.tv_auction_name});
         lvAuction.setAdapter(adapter);
+        lvAuction.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // Log.d("进入了","list得item的点击事件");
+//              if (name.equals("参与竞拍")){
+                if (position%3==0){
+                    Intent intent=new Intent(AuctionActivity.this,OpenAuctionActivity.class);
+                    intent.putExtra("name","竞拍已开始");
+                    startActivity(intent);
+                }else if (position%3==1){
+                    Intent intent=new Intent(AuctionActivity.this,OpenAuctionActivity.class);
+                    intent.putExtra("name","竞拍未开始");
+                    startActivity(intent);
+                }else if (position%3==2){
+                    Intent intent=new Intent(AuctionActivity.this,OpenAuctionActivity.class);
+                    intent.putExtra("name","竞拍已结束");
+                    startActivity(intent);
+                }
+//              }
+            }
+        });
 
 
     }
     public void event(){
-      lvAuction.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-          @Override
-          public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-              Log.d("进入了","list得item的点击事件");
-//              if (name.equals("参与竞拍")){
-                  Intent intent=new Intent(AuctionActivity.this,OpenAuctionActivity.class);
-                  startActivity(intent);
-//              }
-          }
-      });
+
 
     }
     class MyAdapter extends SimpleAdapter{

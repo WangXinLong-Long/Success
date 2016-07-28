@@ -218,6 +218,7 @@
             android:layout_height="@dimen/x1"
             android:background="#EEEEF3"
             ></LinearLayout>
+           <!--
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/x30"
@@ -391,6 +392,197 @@
                 />
 
         </LinearLayout>
+           -->
+           <RelativeLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:padding="@dimen/x5"
+
+               android:background="@color/white">
+               <TextView
+                   android:id="@+id/surplus_amount_tv"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginBottom="@dimen/x5"
+                   android:textSize="@dimen/x10"
+                   android:text="剩余数量："/>
+               <TextView
+                   android:id="@+id/surplus_amount_et"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginBottom="@dimen/x5"
+                   android:layout_toRightOf="@id/surplus_amount_tv"
+                   android:textSize="@dimen/x10"
+                   android:text="123.011吨"/>
+               <TextView
+                   android:id="@+id/purchase_quantity_tv"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginBottom="@dimen/x5"
+                   android:text="起购量："
+                   android:textSize="@dimen/x10"
+                   android:layout_below="@id/surplus_amount_tv"/>
+               <TextView
+                   android:id="@+id/purchase_quantity_et"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginBottom="@dimen/x5"
+                   android:layout_toRightOf="@id/purchase_quantity_tv"
+                   android:text="1吨"
+                   android:textSize="@dimen/x10"
+                   android:layout_below="@id/surplus_amount_tv"/>
+               <TextView
+                   android:id="@+id/min_variable_tv"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginBottom="@dimen/x5"
+                   android:text="最小变量单位："
+                   android:textSize="@dimen/x10"
+                   android:layout_below="@id/purchase_quantity_tv"/>
+               <TextView
+                   android:id="@+id/min_variable_et"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginBottom="@dimen/x5"
+                   android:layout_toRightOf="@id/min_variable_tv"
+                   android:text="1吨"
+                   android:textSize="@dimen/x10"
+                   android:layout_below="@id/purchase_quantity_tv"/>
+               <TextView
+                   android:id="@+id/delivery_time_tv"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginBottom="@dimen/x5"
+                   android:text="交货时间："
+                   android:textSize="@dimen/x10"
+                   android:layout_below="@id/min_variable_tv"/>
+               <TextView
+                   android:id="@+id/delivery_time_et"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginBottom="@dimen/x5"
+                   android:layout_toRightOf="@id/delivery_time_tv"
+                   android:text="2016-3-3至2016-4-4"
+                   android:textSize="@dimen/x10"
+                   android:layout_below="@id/min_variable_tv"/>
+               <TextView
+                   android:id="@+id/warehouse_address_tv"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginBottom="@dimen/x5"
+                   android:text="仓库地址："
+                   android:textSize="@dimen/x10"
+                   android:layout_below="@id/delivery_time_tv"/>
+               <TextView
+                   android:id="@+id/warehouse_address_et"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginBottom="@dimen/x5"
+                   android:layout_toRightOf="@id/warehouse_address_tv"
+                   android:text="上海市红桥区哈哈哈哈库房"
+                   android:textSize="@dimen/x10"
+                   android:layout_below="@id/delivery_time_tv"/>
+               <TextView
+                   android:id="@+id/delivery_mode_tv"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginBottom="@dimen/x5"
+                   android:text="交货方式："
+                   android:textSize="@dimen/x10"
+                   android:layout_below="@id/warehouse_address_tv"/>
+               <TextView
+                   android:id="@+id/delivery_mode_et"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginBottom="@dimen/x5"
+                   android:layout_toRightOf="@id/warehouse_address_tv"
+                   android:text="塑料配送、卖家配送、自提"
+                   android:textSize="@dimen/x10"
+                   android:layout_below="@id/warehouse_address_tv"/>
+               <TextView
+                   android:id="@+id/classification_pre_sale_tv"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="分类："
+                   android:textSize="@dimen/x10"
+                   android:layout_toRightOf="@id/delivery_mode_et"
+                   android:layout_marginBottom="@dimen/x5"
+                   android:layout_marginLeft="@dimen/x5"
+                   />
+               <TextView
+                   android:id="@+id/classification_pre_sale_et"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:textSize="@dimen/x10"
+                   android:text="LLDPE"
+                   android:layout_toRightOf="@id/classification_pre_sale_tv"
+                   android:layout_marginBottom="@dimen/x5"
+                   />
+               <TextView
+                   android:id="@+id/warehouse_tv"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="仓库："
+                   android:textSize="@dimen/x10"
+                   android:layout_toRightOf="@id/delivery_mode_et"
+                   android:layout_marginBottom="@dimen/x5"
+                   android:layout_below="@id/classification_pre_sale_tv"
+                   android:layout_marginLeft="@dimen/x5"
+                   />
+               <TextView
+                   android:id="@+id/warehouse_et"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:textSize="@dimen/x10"
+                   android:text="讯帮1号仓库"
+                   android:layout_toRightOf="@id/warehouse_tv"
+                   android:layout_marginBottom="@dimen/x5"
+                   android:layout_below="@id/classification_pre_sale_tv"
+                   />
+               <TextView
+                   android:id="@+id/region_tv"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="地区："
+                   android:textSize="@dimen/x10"
+                   android:layout_toRightOf="@id/delivery_mode_et"
+                   android:layout_marginBottom="@dimen/x5"
+                   android:layout_below="@id/warehouse_tv"
+                   android:layout_marginLeft="@dimen/x5"
+                   />
+               <TextView
+                   android:id="@+id/region_et"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:textSize="@dimen/x10"
+                   android:text="北京"
+                   android:layout_toRightOf="@id/warehouse_tv"
+                   android:layout_marginBottom="@dimen/x5"
+                   android:layout_below="@id/warehouse_tv"
+                   />
+               <TextView
+                   android:id="@+id/company_tv"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="公司："
+                   android:textSize="@dimen/x10"
+                   android:layout_toRightOf="@id/delivery_mode_et"
+                   android:layout_marginBottom="@dimen/x5"
+                   android:layout_below="@id/region_tv"
+                   android:layout_marginLeft="@dimen/x5"
+                   />
+               <TextView
+                   android:id="@+id/company_et"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:textSize="@dimen/x10"
+                   android:text="四联创业化工集团"
+                   android:layout_toRightOf="@id/warehouse_tv"
+                   android:layout_marginBottom="@dimen/x5"
+                   android:layout_below="@id/region_tv"
+                   />
+
+           </RelativeLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/x4"
@@ -436,39 +628,13 @@
             android:layout_below="@+id/aaa"
 
             ></com.silianchuangye.sumao.success.custom.CustomListView>
-       <!--可以删除  -->  <RelativeLayout
-
+       <!--可以删除  -->
+           <RelativeLayout
                android:layout_width="match_parent"
                android:layout_height="@dimen/x50"
-
+               android:id="@+id/layout_non"
+               android:background="#EEEEF3"
                >
-               <LinearLayout
-                   android:layout_width="match_parent"
-                   android:layout_height="match_parent"
-                   android:weightSum="2"
-                   android:layout_alignParentBottom="true"
-                   >
-                   <Button
-                       android:layout_width="match_parent"
-                       android:layout_height="match_parent"
-                       android:layout_weight="1"
-                       android:textColor="#fff"
-                       android:background="#29ABE2"
-                       android:textStyle="bold"
-                       android:text="支付保证金"
-                       android:textSize="16sp"
-                />
-                   <Button
-                       android:layout_width="match_parent"
-                       android:layout_height="match_parent"
-                       android:layout_weight="1"
-                       android:textColor="#fff"
-                       android:background="#0071BC"
-                       android:textStyle="bold"
-                       android:text="立即竞拍"
-                       android:textSize="16sp"
-                       />
-               </LinearLayout>
            </RelativeLayout>
     </LinearLayout>
     </ScrollView>
@@ -502,8 +668,41 @@
                 android:textColor="#fff"
                 android:background="#0071BC"
                 android:textStyle="bold"
-                android:text="立即竞拍"
+                android:text="立即报价"
                 android:textSize="16sp"
+                android:id="@+id/bt_jinpai"
+                />
+        </LinearLayout>
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/Layout_Button_close"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x50"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="2"
+            android:layout_alignParentBottom="true"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                ></LinearLayout>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textColor="#fff"
+                android:background="#0071BC"
+                android:textStyle="bold"
+                android:text="支付保证金"
+                android:textSize="16sp"
+                android:id="@+id/bt_jinpai_colse"
                 />
         </LinearLayout>
     </RelativeLayout>

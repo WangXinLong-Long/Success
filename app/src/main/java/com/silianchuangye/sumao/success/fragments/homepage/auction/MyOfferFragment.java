@@ -41,41 +41,42 @@ public class MyOfferFragment extends Fragment {
         list.add("报价编号");
         list.add("竞价单价(元/吨)");
         list.add("竞价数量(元/吨)");
-        list.add("可接受最少成交数量(吨)");
+      //  list.add("可接受最少成交数量(吨)");
         list.add("提交时间");
         list.add("报价编号");
         list.add("竞价单价(元/吨)");
         list.add("竞价数量(元/吨)");
-        list.add("可接受最少成交数量(吨)");
+       // list.add("可接受最少成交数量(吨)");
         list.add("提交时间");
         list.add("报价编号");
         list.add("竞价单价(元/吨)");
         list.add("竞价数量(元/吨)");
-        list.add("可接受最少成交数量(吨)");
-        list.add("提交时间");  list.add("报价编号");
-        list.add("竞价单价(元/吨)");
-        list.add("竞价数量(元/吨)");
-        list.add("可接受最少成交数量(吨)");
+      //  list.add("可接受最少成交数量(吨)");
         list.add("提交时间");
         list.add("报价编号");
         list.add("竞价单价(元/吨)");
         list.add("竞价数量(元/吨)");
-        list.add("可接受最少成交数量(吨)");
+       // list.add("可接受最少成交数量(吨)");
         list.add("提交时间");
         list.add("报价编号");
         list.add("竞价单价(元/吨)");
         list.add("竞价数量(元/吨)");
-        list.add("可接受最少成交数量(吨)");
+        //list.add("可接受最少成交数量(吨)");
         list.add("提交时间");
         list.add("报价编号");
         list.add("竞价单价(元/吨)");
         list.add("竞价数量(元/吨)");
-        list.add("可接受最少成交数量(吨)");
+      //  list.add("可接受最少成交数量(吨)");
         list.add("提交时间");
         list.add("报价编号");
         list.add("竞价单价(元/吨)");
         list.add("竞价数量(元/吨)");
-        list.add("可接受最少成交数量(吨)");
+       // list.add("可接受最少成交数量(吨)");
+        list.add("提交时间");
+        list.add("报价编号");
+        list.add("竞价单价(元/吨)");
+        list.add("竞价数量(元/吨)");
+       // list.add("可接受最少成交数量(吨)");
         list.add("提交时间");
 
 
@@ -102,7 +103,7 @@ public class MyOfferFragment extends Fragment {
                 viewHolder.layout= (RelativeLayout) convertView.findViewById(R.id.layout_item_vessel_one);
                 AbsListView.LayoutParams params;
 
-                if(gridView.getChildCount()/5==0){
+                if(gridView.getChildCount()/4==0){
                     params=new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,200);
                 }else{
                     params=new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,100);
@@ -112,22 +113,20 @@ public class MyOfferFragment extends Fragment {
             }else{
                 viewHolder= (ViewHolder) convertView.getTag();
             }
-            if (position%5==0 &&position!=0){
+            if (position%4==0 &&position!=0){
                 viewHolder.tv.setText("1111");
-            }else if(position%5==1 &&position!=1){
+            }else if(position%4==1 &&position!=1){
                 viewHolder.tv.setText("5980");
-            }else if(position%5==2&&position!=2){
-                viewHolder.tv.setText("40");
-            }else if (position%5==3&&position!=3){
+            }else if(position%4==2&&position!=2){
                 viewHolder.tv.setText("40");
             }else if (position%5==4 &&position!=4){
                 viewHolder.tv.setText("12:00:00");
             }else {
                 viewHolder.tv.setText(list.get(position));
             }
-            if (gridView.getChildCount()/5==0){
+            if (gridView.getChildCount()/4==0){
                 viewHolder.layout.setBackgroundColor(getResources().getColor(R.color.bottom_background));
-            }else if((gridView.getChildCount()/5)%2==0 &&gridView.getChildCount()/5!=0){
+            }else if((gridView.getChildCount()/4)%2==0 &&gridView.getChildCount()/4!=0){
                 viewHolder.layout.setBackgroundColor(getResources().getColor(R.color.colorGreen));
             }else{
                 viewHolder.layout.setBackgroundColor(Color.WHITE);

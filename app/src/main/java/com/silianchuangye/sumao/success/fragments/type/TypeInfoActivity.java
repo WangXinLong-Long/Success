@@ -34,11 +34,64 @@ public class TypeInfoActivity extends AppCompatActivity {
     private ImageView iv_Back;
     private TextView tv_Search;
     private EditText Search;
+    private TextView tv_pattern_Type,tv_type_Type,tv_apple_Type_for_Type,tv_address_Type,tv_address_search;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_type_info);
+        TextView tv_pattern_Type= (TextView) findViewById(R.id.tv_pattern_Type);
+        TextView tv_type_Type= (TextView) findViewById(R.id.tv_type_Type);
+        TextView tv_apple_Type_for_Type= (TextView) findViewById(R.id.tv_apple_Type_for_Type);
+        TextView tv_address_Type= (TextView) findViewById(R.id.tv_address_Type);
+        TextView tv_address_search= (TextView) findViewById(R.id.tv_address_search);
+        /**
+         * 分类的popupWindow
+         */
+        tv_pattern_Type.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        /**
+         *应用的popupwindow
+         */
+        tv_apple_Type_for_Type.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        /**
+         * 牌号的popupwindow
+         */
+        tv_type_Type.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        /**
+         * 地区的popupwindow
+         */
+        tv_address_Type.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        /**
+         * 筛选的popupwindow
+         */
+        tv_address_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+
        // closeInputMethod();
         iv_Back= (ImageView) findViewById(R.id.iv_Back_Type);
         iv_Back.setOnClickListener(new View.OnClickListener() {
@@ -65,32 +118,6 @@ public class TypeInfoActivity extends AppCompatActivity {
         init_listView();
     }
 
-    /**
-     * 关闭软键盘
-     */
-//    public void closeInputMethod(){
-//        try {
-//            ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE))
-//                    .hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
-//                            InputMethodManager.HIDE_NOT_ALWAYS);
-//        } catch (Exception e) { }finally{ }
-//    }
-
-    /**
-     * 打开软键盘
-     * @param
-     */
-//    public void openInputMethod(final EditText editText){
-//        Timer timer = new Timer();
-//        timer.schedule(new TimerTask() {
-//            public void run() {
-//                InputMethodManager inputManager = (InputMethodManager) editText
-//                        .getContext().getSystemService(
-//                                Context.INPUT_METHOD_SERVICE);
-//                inputManager.showSoftInput(editText, 0);
-//            }
-//        }, 200);
-//    }
     public void init_listView(){
         lv_Type= (ListView) findViewById(R.id.lv_Type);
         list = new ArrayList<Map<String, Object>>();
