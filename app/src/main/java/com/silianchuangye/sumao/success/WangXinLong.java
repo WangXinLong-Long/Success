@@ -72,6 +72,5 @@ public class WangXinLong extends Activity {
                 });
 
         builder.create().show();
-        Toast.makeText(this,"hah",Toast.LENGTH_SHORT).show();
     }
 }
