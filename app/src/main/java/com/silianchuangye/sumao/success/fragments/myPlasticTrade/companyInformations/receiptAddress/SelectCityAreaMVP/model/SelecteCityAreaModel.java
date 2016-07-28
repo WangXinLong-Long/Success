@@ -53,6 +53,7 @@ public class SelecteCityAreaModel implements ISelecteCityAreaModel {
                 @Override
                 public void onError(Throwable ex, boolean isOnCallback) {
                     LogUtils.log("--------->" + "3.2+onError" + ex.toString() + "<-----------");
+                    ex.toString();
                 }
 
                 @Override
