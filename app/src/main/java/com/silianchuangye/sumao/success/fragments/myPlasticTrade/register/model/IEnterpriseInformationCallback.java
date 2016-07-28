@@ -1,6 +1,5 @@
 package com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.model;
 
-import com.silianchuangye.sumao.success.fragments.bean.LeiXing;
 import com.silianchuangye.sumao.success.model.EnterpriseInformation;
 
 import java.util.List;

@@ -21,7 +21,6 @@ import android.widget.Toast;
 import com.silianchuangye.sumao.success.MainActivity;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.SellerManagementPlatform.SellerManagementPlatformActivity;
-import com.silianchuangye.sumao.success.fragments.bean.LeiXing;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.RegisterActivity;
 import com.silianchuangye.sumao.success.utils.GlobalVariable;
 import com.silianchuangye.sumao.success.utils.LogUtils;
