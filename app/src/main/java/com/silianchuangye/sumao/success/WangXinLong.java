@@ -40,6 +40,9 @@ public class WangXinLong extends Activity {
 //        7月19日 卖家订单管理已支付状态页面
 //        7月19日 卖家订单管理已支付状态页面
 //        7月19日 卖家订单管理已支付状态页面
+//        7月25日 解决注册页面中返回崩溃问题
+//        7月26日 使用MVP架构模式，
+//        7月27日 解决MVP中model层往Presenter传递数据的空指针异常
 //        7月28日 注册，地址相关接口
 
         showPayDialog();
