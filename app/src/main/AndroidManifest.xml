@@ -326,13 +326,13 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".fragments.myPlasticTrade.companyInformations.receiptAddress.SelectCityArea"
+            android:name=".fragments.myPlasticTrade.companyInformations.receiptAddress.SelectCityAreaMVP.view.SelectCityArea"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".fragments.myPlasticTrade.companyInformations.receiptAddress.SelectCountyArea"
+            android:name=".fragments.myPlasticTrade.companyInformations.receiptAddress.SelectCountyAreaMVP.view.SelectCountyArea"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceArea"
+            android:name=".fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceAreaMVP.view.SelectProvinceArea"
             android:screenOrientation="portrait" />
         <activity
             android:name=".fragments.myPlasticTrade.companyInformations.receiptAddress.SelectDetailArea"

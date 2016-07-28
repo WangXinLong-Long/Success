@@ -1,7 +1,6 @@
 package com.silianchuangye.sumao.success.adapter;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,9 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.silianchuangye.sumao.success.R;
-import com.silianchuangye.sumao.success.model.CityModel;
-import com.silianchuangye.sumao.success.model.CountyModel;
-import com.silianchuangye.sumao.success.model.ProvinceModel;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceAreaMVP.bean.Area;
 
 import java.util.List;
 
@@ -22,10 +19,10 @@ public class SelectProvinceAreaAdapter extends BaseAdapter {
 
     Context context;
 
-    List<ProvinceModel> list;
+    List<Area> list;
 
     LayoutInflater inflater;
-    public SelectProvinceAreaAdapter(Context context, List<ProvinceModel> list) {
+    public SelectProvinceAreaAdapter(Context context, List<Area> list) {
         this.context = context;
         this.list = list;
         inflater = LayoutInflater.from(context);
@@ -41,7 +38,7 @@ public class SelectProvinceAreaAdapter extends BaseAdapter {
     }
 
     @Override
-    public ProvinceModel getItem(int position) {
+    public Area getItem(int position) {
         return list.get(position);
     }
 
@@ -62,7 +59,7 @@ public class SelectProvinceAreaAdapter extends BaseAdapter {
         }else {
             viewHolder = ((ViewHolder) convertView.getTag());
         }
-        viewHolder.textView.setText(list.get(position).getProvince());
+        viewHolder.textView.setText(list.get(position).getName());
         return convertView;
     }
     class ViewHolder

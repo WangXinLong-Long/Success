@@ -29,6 +29,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/lv_Firm_Type"
             ></ListView>
+
        <!-- </RadioGroup>-->
    <!--     <RadioGroup
             android:layout_width="match_parent"
@@ -103,6 +104,13 @@
 
         </RadioGroup>-->
     </LinearLayout>
+    <TextView
+        android:id="@+id/prompt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_marginLeft="@dimen/x10"
+        android:layout_marginTop="@dimen/x10"/>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

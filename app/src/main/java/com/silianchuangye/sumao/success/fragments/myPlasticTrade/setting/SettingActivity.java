@@ -116,6 +116,7 @@ public class SettingActivity extends AppCompatActivity {
 
                                             Intent intent=new Intent(SettingActivity.this,LoginUserActivity.class);
                                             intent.putExtra("roles","buyer");
+                                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                             startActivity(intent);
                                             SettingActivity.this.finish();
 

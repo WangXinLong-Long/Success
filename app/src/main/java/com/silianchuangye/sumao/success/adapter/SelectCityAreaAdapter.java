@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.silianchuangye.sumao.success.R;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceAreaMVP.bean.Area;
 import com.silianchuangye.sumao.success.model.CityModel;
 import com.silianchuangye.sumao.success.model.ProvinceModel;
 
@@ -20,10 +21,10 @@ public class SelectCityAreaAdapter extends BaseAdapter {
 
     Context context;
 
-    List<CityModel> list;
+    List<Area> list;
 
     LayoutInflater inflater;
-    public SelectCityAreaAdapter(Context context, List<CityModel> list) {
+    public SelectCityAreaAdapter(Context context, List<Area> list) {
         this.context = context;
         this.list = list;
         inflater = LayoutInflater.from(context);
@@ -39,7 +40,7 @@ public class SelectCityAreaAdapter extends BaseAdapter {
     }
 
     @Override
-    public CityModel getItem(int position) {
+    public Area getItem(int position) {
         return list.get(position);
     }
 
@@ -60,7 +61,7 @@ public class SelectCityAreaAdapter extends BaseAdapter {
         }else {
             viewHolder = ((ViewHolder) convertView.getTag());
         }
-        viewHolder.textView.setText(list.get(position).getCity());
+        viewHolder.textView.setText(list.get(position).getName());
         return convertView;
     }
     class ViewHolder

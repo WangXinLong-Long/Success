@@ -145,6 +145,7 @@ public class RegisterValueActivity extends AppCompatActivity {
             }
         });
     }
+
     public void title_Bar(String string) {
 
         iv_title_bar_back = ((ImageView) findViewById(R.id.iv_title_bar_back));
