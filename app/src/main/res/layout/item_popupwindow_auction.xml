@@ -105,10 +105,10 @@
         ></ListView>
     <RelativeLayout
         android:layout_width="match_parent"
-
         android:layout_height="@dimen/y30">
+
         <Button
-            android:layout_width="@dimen/x180"
+            android:layout_width="@dimen/x150"
             android:layout_height="match_parent"
             android:id="@+id/btZhifu"
             android:textColor="#fff"
@@ -117,6 +117,36 @@
             android:text="支付保证金"
             android:textSize="16sp"
             />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@+id/btZhifu"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/x10"
+                android:text="合计金额:"
+                android:textColor="#222"
+                android:id="@+id/AA"
+           />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/AA"
+                android:layout_marginLeft="@dimen/x3"
+                android:textColor="@color/red"
+                android:textSize="16sp"
+                android:text="61000元"
+                />
+
+
+
+
+        </RelativeLayout>
     </RelativeLayout>
 
 </LinearLayout>

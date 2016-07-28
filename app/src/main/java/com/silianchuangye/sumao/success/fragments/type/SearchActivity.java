@@ -39,7 +39,7 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //进行搜索功能,跳到现货界面
-                Intent intent=new Intent(SearchActivity.this, PreSale.class);
+                Intent intent=new Intent(SearchActivity.this, TypeInfoActivity.class);
                 startActivity(intent);
 
             }

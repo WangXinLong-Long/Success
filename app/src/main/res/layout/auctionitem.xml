@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:background="#fff"
+    android:descendantFocusability="blocksDescendants"
     android:layout_height="wrap_content">
     <RelativeLayout
         android:layout_width="match_parent"
@@ -58,10 +59,10 @@
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/x2"
+        android:layout_height="@dimen/x1"
         android:background="#d3d3d3"
-       android:layout_marginLeft="@dimen/x20"
-        android:layout_marginRight="@dimen/x20"
+       android:layout_marginLeft="@dimen/x10"
+        android:layout_marginRight="@dimen/x10"
         ></RelativeLayout><RelativeLayout
         android:id="@+id/a"
         android:layout_width="match_parent"
@@ -147,9 +148,18 @@
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
+        android:layout_height="@dimen/x1"
+        android:background="#d3d3d3"
+        android:layout_marginLeft="@dimen/x10"
+        android:layout_marginRight="@dimen/x10"
+        android:layout_marginTop="@dimen/x3"
+        ></RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/a"
         android:layout_marginTop="@dimen/x5">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -167,14 +177,30 @@
             android:textSize="12sp"
             android:layout_toRightOf="@+id/tv_auction_werhouse"
             />
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/x3"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_auction_comm"
+            android:textSize="12sp"
+            android:text="公司:"
+            android:layout_marginLeft="@dimen/x20"
+
+            />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tv_auction_commAdress"
             android:textSize="12sp"
             android:text="东莞市住友塑料有限公司"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/x20"
+            android:layout_toRightOf="@+id/tv_auction_comm"
+            android:layout_marginLeft="@dimen/x3"
 
             />
     </RelativeLayout>

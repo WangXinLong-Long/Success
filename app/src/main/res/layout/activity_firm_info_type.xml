@@ -16,7 +16,21 @@
         android:layout_marginTop="@dimen/x5"
         android:orientation="vertical"
         >
-        <RadioGroup
+
+       <!-- <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/rgDemo"
+            android:orientation="vertical"
+
+            >-->
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/lv_Firm_Type"
+            ></ListView>
+       <!-- </RadioGroup>-->
+   <!--     <RadioGroup
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/rgDemo"
@@ -87,7 +101,7 @@
                 ></LinearLayout>
 
 
-        </RadioGroup>
+        </RadioGroup>-->
     </LinearLayout>
     <Button
         android:layout_width="match_parent"

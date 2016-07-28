@@ -114,7 +114,8 @@ public class SettingActivity extends AppCompatActivity {
 //                                            }
 //                                            Toast.makeText(SettingActivity.this, "删除文件成功", Toast.LENGTH_SHORT).show();
 
-                                            Intent intent=new Intent(SettingActivity.this,LoginActivity.class);
+                                            Intent intent=new Intent(SettingActivity.this,LoginUserActivity.class);
+                                            intent.putExtra("roles","buyer");
                                             startActivity(intent);
                                             SettingActivity.this.finish();
 
