@@ -6,13 +6,13 @@ import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -23,13 +23,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.presenter.GetEntInformationPresenter;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.view.IFirmInfoTypeActivity;
+import com.silianchuangye.sumao.success.model.EnterpriseInformation;
+import com.silianchuangye.sumao.success.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class FirmInfoTypeActivity extends AppCompatActivity {
+public class FirmInfoTypeActivity extends AppCompatActivity implements IFirmInfoTypeActivity {
     ImageView iv_title_bar_logo,
             iv_title_bar_back,
             iv_title_bar_service,
@@ -37,7 +41,7 @@ public class FirmInfoTypeActivity extends AppCompatActivity {
     Button sv_title_bar_serachView;
     TextView tv_title_bar_title, tv;
     RelativeLayout layoutTop;
-   // RadioButton one,two,three;
+    // RadioButton one,two,three;
     RadioGroup rgDemo;
     private String name;
     private Button btSave;
@@ -46,54 +50,72 @@ public class FirmInfoTypeActivity extends AppCompatActivity {
     int number;
     private ListView lv_type;
     private List<String> list;
+    GetEntInformationPresenter getEntInformation;
+    Intent intent;
+    ListAdapter adapter;
+    private TextView prompt;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_firm_info_type);
-        lv_type= (ListView) findViewById(R.id.lv_Firm_Type);
-        list=new ArrayList<String>();
+        getEntInformation = new GetEntInformationPresenter(this);
+        lv_type = (ListView) findViewById(R.id.lv_Firm_Type);
+        prompt = ((TextView) findViewById(R.id.prompt));
+        list = new ArrayList<String>();
+        intent = new Intent();
+        Bundle bundle = getIntent().getExtras();
+        title = bundle.getString("title");
+        number = bundle.getInt("number");
+        Log.d("number", number + "");
 
-        Bundle bundle=getIntent().getExtras();
-         title=bundle.getString("title");
-          number=bundle.getInt("number");
-        Log.d("number",number+"");
-        if (title.equals("企业类型")){
-            list.add("贸易商");
-            list.add("工贸一体");
-            list.add("生产厂");
-        }else if (title.equals("纳税人类型")){
-
-            list.add("一般纳税人");
-            list.add("小规模纳税人");
+        if (title.equals("企业类型")) {
+            getEntInformation.setDataInView(1);
+        } else if (title.equals("纳税人类型")) {
+            getEntInformation.setDataInView(2);
         }
 
-        ListAdapter adapter=new ListAdapter(getApplication(),list);
-        lv_type.setAdapter(adapter);
+
         lv_type.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         lv_type.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(FirmInfoTypeActivity.this, "进来listview的item的点击事件", Toast.LENGTH_SHORT).show();
-                name=list.get(position).toString();
-                Log.d("选中的文字",name);
+                name = list.get(position).toString();
+                Log.d("选中的文字", name);
             }
         });
-        btSave= (Button) findViewById(R.id.btSave);
+        btSave = (Button) findViewById(R.id.btSave);
         btSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // Log.d("点击事件","真");
-                Intent intent=new Intent();
-                intent.putExtra("name",name);
-                FirmInfoTypeActivity.this.setResult(number,intent);
-                FirmInfoTypeActivity.this.finish();
+                if (name == null||name.isEmpty()){
+
+                    prompt.setText("请选择类型");
+
+                    prompt.setTextColor(Color.RED);
+                    prompt.setVisibility(View.VISIBLE);
+                }else {
+                    Intent intent = new Intent();
+                    intent.putExtra("name", name);
+                    FirmInfoTypeActivity.this.setResult(number, intent);
+                    FirmInfoTypeActivity.this.finish();
+
+                }
             }
         });
 
         title_Bar(title);
     }
 
-
+    @Override
+    public void initFirmInfoTypeActivityView(List<EnterpriseInformation> names) {
+        for (int i = 0; i < names.size(); i++) {
+            list.add(names.get(i).getDisplayName());
+        }
+        adapter = new ListAdapter(getApplication(), list);
+        lv_type.setAdapter(adapter);
+    }
 
     public void title_Bar(String name) {
         iv_title_bar_back = ((ImageView) findViewById(R.id.iv_title_bar_back));
@@ -120,20 +142,20 @@ public class FirmInfoTypeActivity extends AppCompatActivity {
             }
         });
     }
+
     class ViewHolder {
 
         RadioButton rb_state;
     }
-    class ListAdapter extends BaseAdapter{
+
+    class ListAdapter extends BaseAdapter {
         private Context context;
         private List<String> list;
         Map<String, Boolean> states = new HashMap<String, Boolean>();
 
-        public ListAdapter(Context context,List<String> list){
-
-            this.context=context;
-            this.list=list;
-
+        public ListAdapter(Context context, List<String> list) {
+            this.context = context;
+            this.list = list;
         }
 
         @Override
@@ -154,40 +176,34 @@ public class FirmInfoTypeActivity extends AppCompatActivity {
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
             ViewHolder holder;
-
             LayoutInflater inflater = LayoutInflater.from(FirmInfoTypeActivity.this);
             if (convertView == null) {
-                convertView = inflater.inflate(
-                        R.layout.item_type_radio_button, null);
+                convertView = inflater.inflate(R.layout.item_type_radio_button, null);
                 holder = new ViewHolder();
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
 
-            final RadioButton radio=(RadioButton) convertView.findViewById(R.id.rbCheck);
+            final RadioButton radio = (RadioButton) convertView.findViewById(R.id.rbCheck);
             holder.rb_state = radio;
             radio.setText(list.get(position));
             holder.rb_state.setOnClickListener(new View.OnClickListener() {
 
                 public void onClick(View v) {
-                    name=list.get(position).toString();
-                 //   Log.d("name的值",name);
-
+                    name = list.get(position).toString();
                     for (String key : states.keySet()) {
                         states.put(key, false);
-
                     }
                     //选中点中的
-                    states.put(String.valueOf(position),radio.isChecked());
-                    Log.d("states",String.valueOf(position)+"");
+                    states.put(String.valueOf(position), radio.isChecked());
+                    Log.d("states", String.valueOf(position) + "");
                     ListAdapter.this.notifyDataSetChanged();
                 }
             });
 
             boolean res = false;
-            if (states.get(String.valueOf(position)) == null
-                    || states.get(String.valueOf(position)) == false) {
+            if (states.get(String.valueOf(position)) == null || states.get(String.valueOf(position)) == false) {
                 res = false;
                 states.put(String.valueOf(position), false);
             } else
@@ -199,5 +215,17 @@ public class FirmInfoTypeActivity extends AppCompatActivity {
 
 
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+            setValueName();
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+    void setValueName(){
+        intent.putExtra("name", "");
+        FirmInfoTypeActivity.this.setResult(RESULT_OK, intent);
     }
 }

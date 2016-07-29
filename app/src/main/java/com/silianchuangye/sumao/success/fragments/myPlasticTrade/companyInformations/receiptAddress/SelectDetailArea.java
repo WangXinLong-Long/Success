@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.InvoiceInformation;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.RegisterFirmActivity;
 
 /**
  * Created by Administrator on 2016/5/13 0013.
@@ -73,7 +74,10 @@ public class SelectDetailArea extends Activity implements View.OnClickListener{
             }else if (className.equals("InvoiceInformation"))
             {
                 intent.setClass(SelectDetailArea.this,InvoiceInformation.class);
+            }else if (className.equals("RegisterFirmActivity")){
+                intent.setClass(SelectDetailArea.this,RegisterFirmActivity.class);
             }
+
 
             startActivity(intent);
         }

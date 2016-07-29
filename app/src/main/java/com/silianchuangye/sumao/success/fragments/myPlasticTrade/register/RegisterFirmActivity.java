@@ -1,7 +1,6 @@
 package com.silianchuangye.sumao.success.fragments.myPlasticTrade.register;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -25,20 +24,14 @@ import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation.FirmActivity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoPictureActivity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoTypeActivity;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceArea;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.LoginUserActivity;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceAreaMVP.view.SelectProvinceArea;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.xutils.common.Callback;
 import org.xutils.http.HttpMethod;
 import org.xutils.http.RequestParams;
-import org.xutils.http.body.StringBody;
 import org.xutils.x;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
@@ -99,11 +92,10 @@ public class RegisterFirmActivity extends AppCompatActivity {
         rp = new RequestParams(RegisterUri);
         rp.setConnectTimeout(30*1000);
         bt_save_register_value = (Button) findViewById(R.id.bt_save_register_value);
+
         bt_save_register_value.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-//                registerMethod();
                 registerMethodW();
 
             }
@@ -403,7 +395,7 @@ public class RegisterFirmActivity extends AppCompatActivity {
                     intent.putExtra("content", list.get(position).get("right").toString());
                     startActivityForResult(intent, position);
                 } else if (position == 4) {
-                    Intent intent = new Intent(RegisterFirmActivity.this, FirmActivity.class);
+                    Intent intent = new Intent(RegisterFirmActivity.this, SelectProvinceArea.class);
                     startActivityForResult(intent, position);
 
                 }
@@ -581,9 +573,6 @@ public class RegisterFirmActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
                 break;
             case 4:
-                String address=data.getStringExtra("address");
-                list.get(4).put("right",address);
-                adapter.notifyDataSetChanged();
                 break;
             case 5:
                 String number = data.getStringExtra("name");

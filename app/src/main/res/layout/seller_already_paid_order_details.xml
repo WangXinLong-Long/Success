@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/selley_lv">
 
     <include
         android:id="@+id/seller_already_paid_order_details_title"
@@ -35,12 +36,14 @@
                 <RelativeLayout
                     android:id="@+id/seller_already_paid_order_details_order_number"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="30dp">
 
                     <TextView
+                        android:layout_marginLeft="10dp"
                         android:id="@+id/order_number_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
                         android:text="订单编号:" />
 
                     <TextView
@@ -53,6 +56,7 @@
                 </RelativeLayout>
 
                 <TextView
+                    android:layout_marginLeft="10dp"
                     android:id="@+id/seller_already_paid_order_details_split_line1"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/x1"
@@ -60,46 +64,55 @@
                     android:background="@color/my_sumao_background" />
 
                 <TextView
+                    android:layout_marginLeft="10dp"
                     android:id="@+id/already_paid_order_details_name_of_buyer1"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="20dp"
+                    android:gravity="center_vertical"
                     android:layout_below="@id/seller_already_paid_order_details_split_line1"
                     android:text="买方企业名称:"
-                    android:textSize="@dimen/x10" />
+                     />
 
                 <TextView
                     android:id="@+id/already_paid_order_details_name_of_buyer2"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/already_paid_order_details_name_of_buyer1"
                     android:text=""
+                    android:layout_height="25dp"
+                    android:gravity="center_vertical"
                     android:textSize="@dimen/x10" />
 
                 <TextView
+                    android:layout_marginLeft="10dp"
                     android:id="@+id/already_paid_order_details_name_of_seller1"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="25dp"
+                    android:gravity="center_vertical"
                     android:layout_below="@id/already_paid_order_details_name_of_buyer1"
                     android:text="卖家企业名称:" />
 
                 <TextView
                     android:id="@+id/already_paid_order_details_name_of_seller2"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="25dp"
+                    android:gravity="center_vertical"
                     android:layout_below="@id/already_paid_order_details_name_of_buyer1"
                     android:layout_toRightOf="@id/already_paid_order_details_name_of_seller1" />
 
                 <TextView
+                    android:layout_marginLeft="10dp"
                     android:id="@+id/already_paid_order_details_order_type1"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="25dp"
+                    android:gravity="center_vertical"
                     android:layout_below="@id/already_paid_order_details_name_of_seller1"
                     android:text="订单类型:" />
 
                 <TextView
                     android:id="@+id/already_paid_order_details_order_type2"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="25dp"
+                    android:gravity="center_vertical"
                     android:layout_below="@id/already_paid_order_details_name_of_seller1"
                     android:layout_toRightOf="@id/already_paid_order_details_order_type1"
                     android:text="" />
@@ -107,7 +120,8 @@
                 <TextView
                     android:id="@+id/already_paid_order_details_order_time1"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="25dp"
+                    android:gravity="center_vertical"
                     android:layout_below="@id/already_paid_order_details_name_of_seller1"
                     android:layout_marginLeft="@dimen/x70"
                     android:layout_toRightOf="@id/already_paid_order_details_order_type1"
@@ -116,22 +130,26 @@
                 <TextView
                     android:id="@+id/already_paid_order_details_order_time2"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="25dp"
+                    android:gravity="center_vertical"
                     android:layout_below="@id/already_paid_order_details_name_of_seller1"
                     android:layout_toRightOf="@id/already_paid_order_details_order_time1"
                     android:text="" />
 
                 <TextView
+                    android:layout_marginLeft="10dp"
                     android:id="@+id/already_paid_order_details_next_single1"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="25dp"
+                    android:gravity="center_vertical"
                     android:layout_below="@id/already_paid_order_details_order_type1"
                     android:text="下单人:" />
 
                 <TextView
                     android:id="@+id/already_paid_order_details_next_single2"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="25dp"
+                    android:gravity="center_vertical"
                     android:layout_below="@id/already_paid_order_details_order_type1"
                     android:layout_toRightOf="@id/already_paid_order_details_next_single1"
                     android:text="" />
@@ -139,7 +157,8 @@
                 <TextView
                     android:id="@+id/already_paid_order_details_order_status1"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="25dp"
+                    android:gravity="center_vertical"
                     android:layout_alignLeft="@id/already_paid_order_details_order_time1"
                     android:layout_below="@id/already_paid_order_details_order_type1"
                     android:text="订单状态:" />
@@ -147,37 +166,44 @@
                 <TextView
                     android:id="@+id/already_paid_order_details_order_status2"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="25dp"
+                    android:gravity="center_vertical"
                     android:layout_below="@id/already_paid_order_details_order_type1"
                     android:layout_toRightOf="@id/already_paid_order_details_order_status1"
                     android:text="" />
 
                 <TextView
+                    android:layout_marginLeft="10dp"
                     android:id="@+id/already_paid_order_details_salesman1"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="25dp"
+                    android:gravity="center_vertical"
                     android:layout_below="@id/already_paid_order_details_next_single1"
                     android:text="业务员:" />
 
                 <TextView
                     android:id="@+id/already_paid_order_details_salesman2"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="25dp"
+                    android:gravity="center_vertical"
                     android:layout_below="@id/already_paid_order_details_next_single1"
                     android:layout_toRightOf="@id/already_paid_order_details_salesman1"
                     android:text="业务员:" />
 
                 <TextView
+                    android:layout_marginLeft="10dp"
                     android:id="@+id/already_paid_order_details_examination_and_approval_of_people1"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="20dp"
+                    android:gravity="center_vertical"
                     android:layout_below="@id/already_paid_order_details_salesman1"
                     android:text="审批人:" />
 
                 <TextView
                     android:id="@+id/already_paid_order_details_examination_and_approval_of_people2"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="25dp"
+                    android:gravity="center_vertical"
                     android:layout_below="@id/already_paid_order_details_salesman1"
                     android:layout_toRightOf="@id/already_paid_order_details_examination_and_approval_of_people1"
                     android:text="" />
@@ -190,16 +216,19 @@
                     android:background="@color/my_sumao_background" />
 
                 <TextView
+                    android:layout_marginLeft="10dp"
                     android:id="@+id/seller_already_paid_order_details_total_order1"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="25dp"
+                    android:gravity="center_vertical"
                     android:layout_below="@+id/seller_already_paid_order_details_split_line2"
                     android:text="订单总额:" />
 
                 <TextView
                     android:id="@+id/seller_already_paid_order_details_total_order2"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="30dp"
+                    android:gravity="center_vertical"
                     android:layout_below="@+id/seller_already_paid_order_details_split_line2"
                     android:layout_toRightOf="@id/seller_already_paid_order_details_total_order1" />
             </RelativeLayout>

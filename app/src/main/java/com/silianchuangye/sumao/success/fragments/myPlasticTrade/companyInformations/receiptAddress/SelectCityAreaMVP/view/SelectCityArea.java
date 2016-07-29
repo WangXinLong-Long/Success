@@ -12,7 +12,11 @@ import android.widget.TextView;
 
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.SelectCityAreaAdapter;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectCityAreaMVP.presenter.SelecteCityAreaPresenter;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectCountyAreaMVP.view.SelectCountyArea;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceAreaMVP.bean.Area;
 import com.silianchuangye.sumao.success.model.CityModel;
+import com.silianchuangye.sumao.success.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,13 +27,13 @@ import java.util.List;
 public class SelectCityArea  extends Activity implements View.OnClickListener{
     ListView listView;
     SelectCityAreaAdapter adapter;
-    List<CityModel> lists;
-    CityModel city;
+    List<Area> lists;
     Intent intent;
     String province;
     ImageView iv_child_title_bar_back;
     TextView tv_child_title_bar_title;
     String className;
+    SelecteCityAreaPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,18 +46,17 @@ public class SelectCityArea  extends Activity implements View.OnClickListener{
         listView = ((ListView) findViewById(R.id.listview));
         lists = new ArrayList<>();
         intent = getIntent();
-        province= intent.getStringExtra("province");
-        for (int i = 0; i < 10; i++) {
-            city = new CityModel();
-            city.setCity("地区"+i+"市");
-            lists.add(city);
-        }
+//        省的level
+        province = intent.getStringExtra("province");
+        LogUtils.log("SelectCityArea:province----->" + province);
+        presenter = new SelecteCityAreaPresenter(this);
+        presenter.getCityInfo(province);
         className = getIntent().getStringExtra("className");
-        adapter = new SelectCityAreaAdapter(this,lists);
-        listView.setAdapter(adapter);
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                presenter.jumpCounty(position);
                 Intent intent = new Intent();
                 intent.putExtra("city",lists.get(position).getCity().toString());
                 Log.d("市",lists.get(position).getCity().toString());
@@ -65,13 +68,28 @@ public class SelectCityArea  extends Activity implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
-        switch (v.getId())
-        {
+        switch (v.getId()) {
             case R.id.iv_child_title_bar_back:
                 finish();
                 break;
             default:
                 break;
         }
+    }
+
+    @Override
+    public void initCityView(List<Area> areas) {
+        adapter = new SelectCityAreaAdapter(this, areas);
+        lists = areas;
+        listView.setAdapter(adapter);
+    }
+
+    @Override
+    public void jumpCountryActivity(int position) {
+        Intent intent = new Intent();
+        intent.setClass(SelectCityArea.this, SelectCountyArea.class);
+        intent.putExtra("city", lists.get(position).getLevel());
+        intent.putExtra("className", className);
+        startActivity(intent);
     }
 }

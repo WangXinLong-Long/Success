@@ -12,7 +12,10 @@ import android.widget.TextView;
 
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.SelectProvinceAreaAdapter;
-import com.silianchuangye.sumao.success.model.ProvinceModel;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectCityAreaMVP.view.SelectCityArea;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceAreaMVP.bean.Area;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceAreaMVP.presenter.SelectProvinceAreaPresenter;
+import com.silianchuangye.sumao.success.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,14 +23,17 @@ import java.util.List;
 /**
  * Created by Administrator on 2016/5/13 0013.
  */
-public class SelectProvinceArea extends Activity implements View.OnClickListener{
+public class SelectProvinceArea extends Activity implements View.OnClickListener,ISelectProvinceAreaView{
     ListView listview;
     SelectProvinceAreaAdapter adapter;
-    List<ProvinceModel> lists;
-    ProvinceModel province;
+    List<Area> lists;
+    Area province;
     ImageView iv_child_title_bar_back;
     TextView tv_child_title_bar_title;
     String className;
+    private String name;
+    SelectProvinceAreaPresenter presenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,24 +43,14 @@ public class SelectProvinceArea extends Activity implements View.OnClickListener
         tv_child_title_bar_title.setText("选择省/自治区");
         listview = ((ListView) findViewById(R.id.listview));
         lists = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-           province = new ProvinceModel();
-            province.setProvince("地区"+i+"省");
-            lists.add(province);
-        }
+        presenter = new SelectProvinceAreaPresenter(this);
+        presenter.putResultInView();
          className = getIntent().getStringExtra("className");
         iv_child_title_bar_back.setOnClickListener(this);
-        adapter = new SelectProvinceAreaAdapter(this,lists);
-        listview.setAdapter(adapter);
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent();
-                intent.putExtra("sheng",lists.get(position).getProvince().toString());
-                Log.d("省",lists.get(position).getProvince().toString());
-                SelectProvinceArea.this.setResult(0, intent);
-                SelectProvinceArea.this.finish();
-
+                presenter.JumpToCity(position);
             }
         });
     }
@@ -71,4 +67,20 @@ public class SelectProvinceArea extends Activity implements View.OnClickListener
     }
 
 
+    @Override
+    public void initProvinceAreaView(List<Area> provList) {
+        adapter = new SelectProvinceAreaAdapter(this,provList);
+        this.lists = provList;
+        listview.setAdapter(adapter);
+    }
+
+    @Override
+    public void onListItemClick(int position) {
+        Intent intent = new Intent();
+        intent.setClass(SelectProvinceArea.this,SelectCityArea.class);
+        intent.putExtra("province",lists.get(position).getLevel());
+        intent.putExtra("className",className);
+        startActivity(intent);
+
+    }
 }

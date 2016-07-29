@@ -28,6 +28,7 @@ import com.silianchuangye.sumao.success.utils.LogUtils;
 
 import org.json.JSONObject;
 import org.xutils.common.Callback;
+import org.xutils.http.HttpMethod;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
@@ -97,6 +98,52 @@ public class LoginUserActivity extends AppCompatActivity {
 //                Log.d("跳进了","买卖方交换界面");
 //                Intent intent=new Intent(LoginUserActivity.this,LoginActivity.class);
 //                startActivity(intent);
+
+
+                String url = "http://192.168.32.126:7023/rest/model/atg/store/profile/RegistrationActor/userVerify/getEntInfo";
+                RequestParams rp = new RequestParams(url);
+                LogUtils.log("--------->" + "3.1" + "<-----------");
+
+                try {
+                    x.http().request(HttpMethod.POST, rp, new Callback.CacheCallback<String>() {
+
+                        @Override
+                        public boolean onCache(String result) {
+                            return false;
+                        }
+
+                        @Override
+                        public void onSuccess(String result) {
+                            LogUtils.log("--------->" + "3.2" + "<-----------");
+                            LogUtils.log("result--->" + result + "<---result");
+//                            types = gson.fromJson(result, LeiXing.class);
+//                            cl_leixing = types.getCl_leixing();
+                            LogUtils.log("--------->" + "3.2.1" + "<-----------");
+                            LogUtils.log("--------->" + "3.2.2" + "<-----------");
+                        }
+
+                        @Override
+                        public void onError(Throwable ex, boolean isOnCallback) {
+                            LogUtils.log("--------->" + "3.2+onError" + "<-----------");
+                        }
+
+                        @Override
+                        public void onCancelled(CancelledException cex) {
+                            LogUtils.log("--------->" + "3.2+onCancelled" + "<-----------");
+                        }
+
+                        @Override
+                        public void onFinished() {
+                            LogUtils.log("--------->" + "3.2+onFinished" + "<-----------");
+                        }
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    LogUtils.log("--------->" + "3.2+printStackTrace"+e.toString() + "<-----------");
+                }
+
+
+
             }
         });
         str =getIntent().getIntExtra("cart1",0);
@@ -220,12 +267,14 @@ public class LoginUserActivity extends AppCompatActivity {
                         Intent intent = new Intent();
                         intent.putExtra("cart",4);
                         intent.setClass(LoginUserActivity.this, MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                     }else {
                         Intent intent = new Intent();
                         intent.setClass(LoginUserActivity.this, MainActivity.class);
                         intent.putExtra("cart", 3);
                         intent.putExtra("name", name);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                     }
                     GlobalVariable.FLAG = true;
