@@ -3,6 +3,7 @@ package com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInforma
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -54,10 +55,10 @@ public class SelectCityArea  extends Activity implements View.OnClickListener{
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent();
-                intent.setClass(SelectCityArea.this,SelectCountyArea.class);
-                intent.putExtra("city",province+lists.get(position).getCity());
-                intent.putExtra("className",className);
-                startActivity(intent);
+                intent.putExtra("city",lists.get(position).getCity().toString());
+                Log.d("市",lists.get(position).getCity().toString());
+                SelectCityArea.this.setResult(1, intent);
+                SelectCityArea.this.finish();
             }
         });
     }

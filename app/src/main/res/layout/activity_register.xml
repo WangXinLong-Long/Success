@@ -16,69 +16,7 @@
         android:id="@+id/lv_register"
         android:background="#fff"
         ></ListView>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/x40"
-        android:layout_marginTop="@dimen/x8"
-        android:background="#fff"
-        >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/tv_phone_register"
-            android:text="手机号码"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/x10"
-            />
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/x30"
-            android:id="@+id/bt_get_register"
-            android:text="获取验证码"
-            android:textColor="#fff"
-            android:background="@drawable/button_background_blue"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/x10"
-            />
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/tv_phone_register"
-            android:layout_toLeftOf="@+id/bt_get_register"
-            android:background="@null"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/x10"
-            android:id="@+id/et_phone_register"
 
-            />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/x40"
-        android:layout_marginTop="@dimen/x1"
-        android:background="#fff"
-        >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/tv_get_register"
-            android:text="手机验证码"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/x10"
-            />
-        <EditText
-            android:id="@+id/et_phone"
-            android:layout_width="@dimen/x100"
-            android:layout_height="@dimen/x30"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/x10"
-            android:background="@drawable/edittext_backgroup"
-            />
-
-    </RelativeLayout>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

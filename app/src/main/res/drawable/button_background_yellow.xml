@@ -4,5 +4,5 @@
     <solid android:color="@color/countdown_textview_yellow"/>
     <padding android:bottom="@dimen/x2" android:top="@dimen/x2" android:left="@dimen/x2" android:right="@dimen/x2" ></padding>
 
-    <corners android:radius="@dimen/x5"></corners>
+    <corners android:radius="@dimen/x4"></corners>
 </shape>

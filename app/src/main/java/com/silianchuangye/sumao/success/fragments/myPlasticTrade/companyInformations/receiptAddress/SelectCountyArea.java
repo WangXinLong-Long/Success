@@ -3,6 +3,7 @@ package com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInforma
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.SelectCountyAreaAdapter;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation.FirmActivity;
 import com.silianchuangye.sumao.success.model.CountyModel;
 
 import java.util.ArrayList;
@@ -54,10 +56,11 @@ public class SelectCountyArea extends Activity implements View.OnClickListener{
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent();
-                intent.setClass(SelectCountyArea.this,SelectDetailArea.class);
-                intent.putExtra("county",city+lists.get(position).getCounty());
-                intent.putExtra("className",className);
-                startActivity(intent);
+                intent.putExtra("xianqu",lists.get(position).getCounty().toString());
+                Log.d("县",lists.get(position).getCounty().toString());
+                setResult(2,intent);
+                SelectCountyArea.this.finish();
+
             }
         });
     }

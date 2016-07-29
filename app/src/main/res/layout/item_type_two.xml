@@ -100,7 +100,7 @@
         android:layout_toRightOf="@+id/tv_cangku_name"
         android:layout_marginBottom="@dimen/x10"
         />
-   <!-- <LinearLayout
+ <!--  <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/x5"
         android:background="#EFEEF4"

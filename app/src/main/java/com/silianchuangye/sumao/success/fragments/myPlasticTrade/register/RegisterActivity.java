@@ -58,12 +58,14 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        //电话号码
-        et_phone_register= (EditText) findViewById(R.id.et_phone_register);
-        //手机验证码
-        editText= (EditText) findViewById(R.id.et_phone);
-        //获取验证码按钮
-        bt_get_register= (Button) findViewById(R.id.bt_get_register);
+//        //电话号码
+//       et_phone_register= (EditText) findViewById(R.id.et_phone_register);
+//        //手机验证码
+//        editText= (EditText) findViewById(R.id.et_phone);
+//        //获取验证码按钮
+//        bt_get_register= (Button) findViewById(R.id.bt_get_register);
+        Bundle bundle=getIntent().getExtras();
+        final String phone=bundle.getString("phone");
         tv_next_register= (Button) findViewById(R.id.tv_next_register);
         tv_next_register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,7 +79,7 @@ public class RegisterActivity extends AppCompatActivity {
 //                Log.d("repass",list.get(2).get("pass").toString());
                 intent.putExtra("name",list.get(3).get("minute").toString());
                 intent.putExtra("email",list.get(4).get("minute").toString());
-                intent.putExtra("phone",et_phone_register.getText().toString());
+                intent.putExtra("phone",phone);
                 startActivity(intent);
 
             }

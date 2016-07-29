@@ -66,6 +66,7 @@
     <color name="search_tv">#ff0000</color>
     <color name="searchback_tv">#000</color>
     <color name="colorGreen">#EEFFFC</color>
+    <color name="touming">#00d3d3d3</color>
 
     <!-- 奇数行颜色 -->
     <color name="even">#FFADD8E6</color>
@@ -91,4 +92,5 @@
     <color name="green_black">#549008</color>
     <color name="gray_type">#F2F2F2</color>
     <color name="create_logistics">#F2FBFA</color>
-</resources>
+    <color name="transparent">#4000</color>
+    </resources>

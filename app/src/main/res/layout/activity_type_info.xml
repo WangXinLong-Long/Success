@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
+    android:id="@+id/layout_ff"
     tools:context="com.silianchuangye.sumao.success.fragments.type.TypeInfoActivity">
 
     <RelativeLayout
@@ -37,7 +37,7 @@
             android:src="@mipmap/search"
             android:layout_marginLeft="@dimen/x26"
             android:layout_marginTop="@dimen/x9"
-
+            android:id="@+id/iv_search"
 
             />
 
@@ -86,6 +86,7 @@
                     android:layout_centerInParent="true"
                     android:textColor="#000"
                     android:textSize="14sp"
+
                     />
             </RelativeLayout>
              <LinearLayout
@@ -170,16 +171,21 @@
             </RelativeLayout>
         </LinearLayout>
     </RelativeLayout>
-    <ListView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/layout_center_Type"
         android:background="#fff"
+        android:id="@+id/layout_type_list"
+        >
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:id="@+id/lv_Type"
         android:divider="#EFEEF4"
         android:dividerHeight="@dimen/x5"
 
         ></ListView>
 
-
+    </RelativeLayout>
 </RelativeLayout>

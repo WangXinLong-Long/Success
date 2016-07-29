@@ -53,7 +53,7 @@ public class RegisterValueActivity extends AppCompatActivity {
         ed_content_value = (EditText) findViewById(R.id.et_content_value);
         bt_save_register_value = (Button) findViewById(R.id.bt_save_register_value);
         intent = new Intent();
-        RegisterFirmActivity registerFirmActivity = new RegisterFirmActivity();
+       // RegisterFirmActivity registerFirmActivity = new RegisterFirmActivity();
 
         Bundle bundle = getIntent().getExtras();
         title = bundle.getString("title");
@@ -75,6 +75,8 @@ public class RegisterValueActivity extends AppCompatActivity {
             tv_a.setVisibility(View.VISIBLE);
             tv_a.setText("6-16个字符,可由中英文,数字,'-','_'组成");
             ed_content_value.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+        }else if (title.equals("地址详情")){
+            tv_a.setText("6-16个字符,可由中英文,数字,'-','_'组成");
         }
 
 //        保存按钮

@@ -22,6 +22,7 @@ import com.silianchuangye.sumao.success.MainActivity;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.SellerManagementPlatform.SellerManagementPlatformActivity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.RegisterActivity;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.RegisterPhoneActivity;
 import com.silianchuangye.sumao.success.utils.GlobalVariable;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 
@@ -85,7 +86,7 @@ public class LoginUserActivity extends AppCompatActivity {
         tv_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(LoginUserActivity.this, RegisterActivity.class);
+                Intent intent=new Intent(LoginUserActivity.this, RegisterPhoneActivity.class);
                 startActivity(intent);
             }
         });
