@@ -88,16 +88,16 @@ public class RegisterValueActivity extends AppCompatActivity {
                     type = "login";
                 } else if (title.equals("邮箱")) {
                     type = "mail";
-                }else {
-                    setResultW();
                 }
                 LogUtils.log("ed_content_value------->"+ed_content_value.getText().toString()+"<---");
-                if (ed_content_value.getText().toString() == null|| ed_content_value.getText().toString().isEmpty()) {
+                if (ed_content_value.getText().toString().trim() == null|| ed_content_value.getText().toString().trim().isEmpty()) {
                     tv_a.setText( title + "不能为空");
                     tv_a.setTextColor(Color.RED);
                     LogUtils.log("tv_a------->"+tv_a.getText().toString()+"<---");
+                }else if (type=="login"||type == "mail"){
+                    toDetermineWhetherOrNotToRegister(type, ed_content_value.getText().toString().trim());
                 }else {
-                    toDetermineWhetherOrNotToRegister(type, ed_content_value.getText().toString());
+                    setResultW();
                 }
 
             }
@@ -187,10 +187,18 @@ public class RegisterValueActivity extends AppCompatActivity {
     ;
 
     public void setResultW() {
-        LogUtils.log("setResultW------->"+""+"<---setResultW");
-            intent.putExtra("name", ed_content_value.getText().toString());
+        /*if (ed_content_value.getText().toString().trim() == null|| ed_content_value.getText().toString().trim().isEmpty()) {
+            tv_a.setText( title + "不能为空");
+            tv_a.setTextColor(Color.RED);
+            tv_a.setVisibility(View.VISIBLE);
+            LogUtils.log("tv_a------->"+tv_a.getText().toString()+"<---");
+        }else{*/
+            intent.putExtra("name", ed_content_value.getText().toString().trim());
+            LogUtils.log("ed_content_value------->setResultW:"+ed_content_value.getText().toString()+"<---");
             RegisterValueActivity.this.setResult(RESULT_OK, intent);
             this.finish();
+       /* }*/
+
 
     }
 }
