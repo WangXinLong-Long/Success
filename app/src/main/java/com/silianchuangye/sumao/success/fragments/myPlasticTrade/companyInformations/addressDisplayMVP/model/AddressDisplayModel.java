@@ -1,0 +1,76 @@
+package com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.addressDisplayMVP.model;
+
+import com.google.gson.Gson;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.addressDisplayMVP.bean.AddressDisplay;
+import com.silianchuangye.sumao.success.utils.LogUtils;
+
+import org.xutils.common.Callback;
+import org.xutils.http.HttpMethod;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Created by Administrator on 2016/7/28 0028.
+ */
+public class AddressDisplayModel implements IAddressDisplayModel {
+    String province;
+    String city;
+    String county;
+    Gson gson = new Gson();
+    AddressDisplay addressDisplay;
+    public AddressDisplayModel(String province, String city, String county) {
+        this.province = province;
+        this.city = city;
+        this.county = county;
+    }
+
+    @Override
+    public void getAddressDisplayInfo(final IAddressDisplayCallback callback) {
+        String url = "http://192.168.32.126:7023/rest/model/atg/userprofiling/ProfileActor/addressDisplay"+"?prov="+province+"&city="+city+"&county="+county;
+        RequestParams requestParams = new RequestParams(url);
+        try {
+            x.http().request(HttpMethod.POST, requestParams, new Callback.CacheCallback<String>() {
+
+
+                private String address;
+
+                @Override
+                public boolean onCache(String result) {
+                    return false;
+                }
+
+                @Override
+                public void onSuccess(String result) {
+                    LogUtils.log("AddressDisplayModel:result--->" + result + "<---result");
+                    addressDisplay = gson.fromJson(result,AddressDisplay.class);
+                    address = addressDisplay.getAddress();
+                    LogUtils.log("AddressDisplayModel:result--->" + address + "<---result");
+
+                    callback.callbackAddressDisplayInfo(address);
+                }
+
+                @Override
+                public void onError(Throwable ex, boolean isOnCallback) {
+                    LogUtils.log("--------->" + "AddressDisplayModel:3.2+onError" +ex.toString()+ "<-----------");
+                }
+
+                @Override
+                public void onCancelled(CancelledException cex) {
+                    LogUtils.log("--------->" + "AddressDisplayModel:3.2+onCancelled" + "<-----------");
+                }
+
+                @Override
+                public void onFinished() {
+                    LogUtils.log("--------->" + "AddressDisplayModel:3.2+onFinished" + "<-----------");
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+            LogUtils.log("--------->" + "AddressDisplayModel:3.2+printStackTrace"+e.toString() + "<-----------");
+        }
+
+    }
+}
