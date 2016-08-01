@@ -353,10 +353,8 @@
         <activity
             android:name=".fragments.myPlasticTrade.EnterpriseCapitalAccountManagement.SearchMoney"
             android:screenOrientation="portrait" />
-        <!--
- ATTENTION: This was auto-generated to add Google Play services to your project for
-     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
-        -->
+        <!--<activity android:name=".fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.InvoiceInformation
+   -->
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -517,6 +515,12 @@
         <activity android:name=".fragments.SellerManagementPlatform.acutionManagement.AcutionFailActivity"></activity>
         <activity android:name=".salesearch.SaleSearch" />
         <activity android:name=".customermanger.CustomerParent" />
+        <activity android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmActivity"></activity>
+        <activity android:name=".fragments.myPlasticTrade.register.RegisterPhoneActivity"></activity>
+        <activity android:name=".fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceArea"></activity>
+        <activity android:name=".fragments.myPlasticTrade.companyInformations.receiptAddress.SelectCityArea"></activity>
+        <activity android:name=".fragments.myPlasticTrade.companyInformations.receiptAddress.SelectCountyArea"></activity>
+
     </application>
 
 </manifest>

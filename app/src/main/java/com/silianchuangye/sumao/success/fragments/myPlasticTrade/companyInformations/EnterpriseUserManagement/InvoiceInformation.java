@@ -9,7 +9,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.silianchuangye.sumao.success.R;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceAreaMVP.view.SelectProvinceArea;
+//import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceAreaMVP.view.SelectProvinceArea;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceArea;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.personalInformation.ModifyName;
 
 /**

@@ -9,6 +9,7 @@ public class Area implements Serializable {
     private String name;
     private String level;
 
+
     public String getName() {
         return name;
     }

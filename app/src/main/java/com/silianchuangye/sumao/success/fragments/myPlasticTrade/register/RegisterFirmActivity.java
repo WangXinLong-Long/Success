@@ -24,9 +24,13 @@ import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation.FirmActivity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoPictureActivity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoTypeActivity;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceAreaMVP.view.SelectProvinceArea;
+
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceArea;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.LoginUserActivity;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.xutils.common.Callback;
 import org.xutils.http.HttpMethod;
 import org.xutils.http.RequestParams;
@@ -395,7 +399,7 @@ public class RegisterFirmActivity extends AppCompatActivity {
                     intent.putExtra("content", list.get(position).get("right").toString());
                     startActivityForResult(intent, position);
                 } else if (position == 4) {
-                    Intent intent = new Intent(RegisterFirmActivity.this, SelectProvinceArea.class);
+                    Intent intent = new Intent(RegisterFirmActivity.this, FirmActivity.class);
                     startActivityForResult(intent, position);
 
                 }
@@ -573,6 +577,9 @@ public class RegisterFirmActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
                 break;
             case 4:
+                String address=data.getStringExtra("address");
+                list.get(4).put("right",address);
+                adapter.notifyDataSetChanged();
                 break;
             case 5:
                 String number = data.getStringExtra("name");

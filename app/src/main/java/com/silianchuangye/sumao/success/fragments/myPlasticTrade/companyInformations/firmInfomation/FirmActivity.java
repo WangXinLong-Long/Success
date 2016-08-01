@@ -106,6 +106,7 @@ public class FirmActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent=new Intent();
                 String address=list.get(0).get("minute").toString()+list.get(1).get("minute").toString()+list.get(2).get("minute").toString()+tv_xiangsi_dizhi.getText().toString();
+                Log.d("地址",address);
                 intent.putExtra("address",address);
                 setResult(4,intent);
                 FirmActivity.this.finish();

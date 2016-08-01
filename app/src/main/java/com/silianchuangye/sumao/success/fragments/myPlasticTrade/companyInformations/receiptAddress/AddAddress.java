@@ -10,11 +10,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.silianchuangye.sumao.success.R;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceAreaMVP.view.SelectProvinceArea;
 
-/**
- * Created by Administrator on 2016/5/13 0013.
- */
+
+
 public class AddAddress extends Activity implements View.OnClickListener {
     ImageView iv_child_title_bar_back;
     TextView tv_child_title_bar_title;
@@ -52,7 +50,7 @@ public class AddAddress extends Activity implements View.OnClickListener {
             case R.id.address_add_address:
                 Intent intent = new Intent();
                 intent.putExtra("className","AddAddress");
-                intent.setClass(AddAddress.this,SelectProvinceArea.class);
+                intent.setClass(AddAddress.this, com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceArea.class);
                 startActivity(intent);
                 break;
             default:

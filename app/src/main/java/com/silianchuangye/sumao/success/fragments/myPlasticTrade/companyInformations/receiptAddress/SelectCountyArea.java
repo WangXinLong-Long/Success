@@ -15,10 +15,12 @@ import com.silianchuangye.sumao.success.adapter.SelectCountyAreaAdapter;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation.FirmActivity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectCountyAreaMVP.model.ISelectCountyAreaModel;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectCountyAreaMVP.presenter.SelectCountyAreaPresenter;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectCountyAreaMVP.view.ISelectCountyAreaView;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectDetailArea;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceAreaMVP.bean.Area;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceAreaMVP.view.ISelectProvinceAreaView;
 import com.silianchuangye.sumao.success.model.CountyModel;
+import com.silianchuangye.sumao.success.model.ProvinceModel;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 
 import java.util.ArrayList;
@@ -27,10 +29,11 @@ import java.util.List;
 /**
  * Created by Administrator on 2016/5/13 0013.
  */
-public class SelectCountyArea extends Activity implements View.OnClickListener,ISelectCountyAreaView{
+public class SelectCountyArea extends Activity implements View.OnClickListener,ISelectCountyAreaView {
     ListView listView;
     SelectCountyAreaAdapter adapter;
     List<Area> lists;
+    SelectCityArea cityArea;
     Intent intent;
     String city;
     ImageView iv_child_title_bar_back;
@@ -49,6 +52,10 @@ public class SelectCountyArea extends Activity implements View.OnClickListener,I
         city = getIntent().getStringExtra("city");
         LogUtils.log("city------>"+city);
         lists = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+
+        }
+
         presenter = new SelectCountyAreaPresenter(this);
         presenter.getCountyInfo(city);
         intent = getIntent();
@@ -57,10 +64,10 @@ public class SelectCountyArea extends Activity implements View.OnClickListener,I
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                presenter.jumpVillage(position);
+             //   presenter.jumpVillage(position);
                 Intent intent = new Intent();
-                intent.putExtra("xianqu",lists.get(position).getCounty().toString());
-                Log.d("县",lists.get(position).getCounty().toString());
+                intent.putExtra("xianqu",lists.get(position).getName().toString());
+                Log.d("县",lists.get(position).getName().toString());
                 setResult(2,intent);
                 SelectCountyArea.this.finish();
 
