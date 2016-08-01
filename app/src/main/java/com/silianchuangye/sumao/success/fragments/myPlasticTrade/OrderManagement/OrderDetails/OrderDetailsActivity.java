@@ -1,8 +1,11 @@
 package com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.OrderDetails;
 
 import android.app.Activity;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.silianchuangye.sumao.success.R;
@@ -25,16 +28,21 @@ public class OrderDetailsActivity  extends Activity{
     private List<OrderDeatilsModel> list;
     private OrderDeatilsModel orderDeatilsModel;
     private TextView tv_child_title_bar_title;
+    private Button bt_copy;
+    private TextView tv_order_number;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.order_details_activity);
+        bt_copy= (Button) findViewById(R.id.bt_copy);
+        tv_order_number= (TextView) findViewById(R.id.tv_order_number);
         order_details_listView = (CustomListView)findViewById(R.id.order_details_listView);
         tv_child_title_bar_title = ((TextView) findViewById(R.id.tv_child_title_bar_title));
         tv_child_title_bar_title.setText("订单详情");
         initdata();
         order_details_listView.setAdapter(adapter);
+        enevt();
     }
     private void initdata() {
 
@@ -53,6 +61,17 @@ public class OrderDetailsActivity  extends Activity{
         }
         adapter = new OrderDetailsListViewAdapter(this, list);
 
+    }
+    public void enevt(){
+        bt_copy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ClipboardManager copy = (ClipboardManager) OrderDetailsActivity.this
+                        .getSystemService(Context.CLIPBOARD_SERVICE);
+                copy.setText(tv_order_number.getText().toString());
+
+            }
+        });
     }
 
 }

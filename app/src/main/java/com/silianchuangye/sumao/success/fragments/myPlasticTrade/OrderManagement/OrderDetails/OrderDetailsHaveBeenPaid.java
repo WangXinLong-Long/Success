@@ -1,9 +1,12 @@
 package com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.OrderDetails;
 
 import android.app.Activity;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -25,11 +28,15 @@ public class OrderDetailsHaveBeenPaid extends Activity implements View.OnClickLi
     private OrderDeatilsModel orderDeatilsModel;
     private TextView tv_child_title_bar_title;
     private ImageView iv_child_title_bar_back;
+    private Button bt_copy;
+    private TextView tv_order_number;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.order_details_have_been_paid_activity);
+        bt_copy= (Button) findViewById(R.id.bt_copy);
+        tv_order_number= (TextView) findViewById(R.id.tv_order_number);
         order_details_listView = ((CustomListView) findViewById(R.id.order_details_listView));
         tv_child_title_bar_title = ((TextView) findViewById(R.id.tv_child_title_bar_title));
         iv_child_title_bar_back = ((ImageView) findViewById(R.id.iv_child_title_bar_back));
@@ -64,6 +71,12 @@ public class OrderDetailsHaveBeenPaid extends Activity implements View.OnClickLi
             case R.id.iv_child_title_bar_back:
                 finish();
                 break;
+            case R.id.bt_copy:
+                ClipboardManager copy = (ClipboardManager) OrderDetailsHaveBeenPaid.this
+                        .getSystemService(Context.CLIPBOARD_SERVICE);
+                copy.setText(tv_order_number.getText().toString());
+                break;
+
             default:
                 break;
         }

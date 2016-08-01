@@ -54,31 +54,20 @@
                         android:textColor="@color/the_order_number_textview_blue"
                         android:textSize="@dimen/x15" />
 
-                    <TextView
-                        android:id="@+id/the_amount_of_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/x10"
-                        android:layout_toRightOf="@id/the_order_number_number"
-                        android:paddingBottom="@dimen/x5"
-                        android:paddingTop="@dimen/x5"
-                        android:text="@string/my_sumao_amount_of"
-                        android:textColor="@color/textColor_expandable_listview_hide"
-                        android:textSize="@dimen/x15" />
-
-                    <TextView
-                        android:id="@+id/the_amount_of_number"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toRightOf="@id/the_amount_of_text"
-                        android:paddingBottom="@dimen/x5"
-                        android:paddingTop="@dimen/x5"
-                        android:text="200000000"
-                        android:textColor="@color/the_amount_of_textview_red"
-                        android:textSize="@dimen/x15"
-
-                        />
+                     <Button
+                         android:layout_width="@dimen/x36"
+                         android:layout_height="@dimen/x20"
+                         android:layout_centerVertical="true"
+                         android:layout_toLeftOf="@+id/iv_More"
+                         android:layout_marginRight="@dimen/x5"
+                         android:text="复制"
+                         android:textColor="#59BEE9"
+                         android:textSize="12sp"
+                         android:id="@+id/bt_copy"
+                         android:background="@drawable/text_corner"
+                         />
                     <ImageView
+                        android:id="@+id/iv_More"
                         android:layout_width="@dimen/x15"
                         android:layout_height="@dimen/x15"
                         android:layout_alignParentRight="true"
@@ -86,12 +75,60 @@
                         android:layout_marginRight="@dimen/x10"
                         android:src="@mipmap/my_sumao_iv_order" />
                 </RelativeLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/x1"
+                    android:background="#EEEEF3"
 
+                    android:layout_below="@+id/order_amount"
+                    android:id="@+id/order_line"
+                    android:orientation="horizontal"
+                    ></LinearLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/order_line"
+                    android:layout_marginTop="@dimen/x1"
+                    android:background="@color/white"
+                    android:id="@+id/layout_two"
+                    >
+                    <TextView
+                        android:id="@+id/the_order_price_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/x5"
+                        android:paddingBottom="@dimen/x5"
+                        android:paddingTop="@dimen/x5"
+                        android:text="金额:"
+                        android:textColor="@color/textColor_expandable_listview_hide"
+                        android:textSize="@dimen/x15" />
+
+                    <TextView
+                        android:id="@+id/the_order_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/the_order_price_text"
+                        android:paddingBottom="@dimen/x5"
+                        android:paddingTop="@dimen/x5"
+                        android:text="1000000000"
+                        android:textColor="@color/red"
+                        android:textSize="@dimen/x15" />
+
+                </RelativeLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/x1"
+                    android:background="#EEEEF3"
+
+                    android:layout_below="@+id/layout_two"
+                    android:id="@+id/order_line_line"
+                    android:orientation="horizontal"
+                    ></LinearLayout>
                 <RelativeLayout
                     android:id="@+id/detail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/order_amount"
+                    android:layout_below="@id/order_line_line"
                     android:layout_marginTop="@dimen/x1"
                     android:background="@color/white">
 

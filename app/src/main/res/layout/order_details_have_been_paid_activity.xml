@@ -70,11 +70,24 @@
                 android:background="@color/white">
 
                 <TextView
+                    android:id="@+id/tv_order_number"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/x5"
                     android:text="产品订单号：DJ2016051300178"
                     android:textColor="@color/btn_blue_normal" />
+                <Button
+                    android:id="@+id/bt_copy"
+                    android:layout_width="@dimen/x36"
+                    android:layout_height="@dimen/x20"
+                    android:layout_centerVertical="true"
+                   android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/x10"
+                    android:text="复制"
+                    android:textColor="#59BEE9"
+                    android:textSize="12sp"
+                    android:background="@drawable/text_corner"
+                    />
             </RelativeLayout>
 
             <TextView

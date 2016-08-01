@@ -1,6 +1,7 @@
 package com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.SpotOrder;
 
 import android.app.Activity;
+import android.content.ClipboardManager;
 import android.content.Intent;
 import android.app.Dialog;
 import android.content.Context;
@@ -74,6 +75,8 @@ public class SpotOrder extends Activity implements View.OnClickListener {
     private PopupWindowAdaptrer adapter1;
      PopupWindow popupWindow;
     Context context;
+    private Button bt_copy;
+    private TextView the_order_number_number;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -86,12 +89,23 @@ public class SpotOrder extends Activity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_to_be_paid);
+        bt_copy= (Button) findViewById(R.id.bt_copy);
+        the_order_number_number= (TextView) findViewById(R.id.the_order_number_number);
         bt_zhifu = (Button) findViewById(R.id.bt_Zhifu);
         bt_zhifu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Popupwindow();
                 backgroundAlpha(0.5f);
+
+            }
+        });
+        bt_copy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ClipboardManager copy = (ClipboardManager) SpotOrder.this
+                        .getSystemService(Context.CLIPBOARD_SERVICE);
+                copy.setText(the_order_number_number.getText().toString());
 
             }
         });
