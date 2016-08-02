@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:orientation="vertical"
-    android:layout_height="match_parent">
+    android:layout_height="@dimen/x200">
 
     <ScrollView
         android:background="#F2F2F2"
@@ -13,8 +13,12 @@
         >
         <RelativeLayout
             android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            >
+            android:id="@+id/layout_shang"
+                >
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -33,7 +37,7 @@
                 <com.silianchuangye.sumao.success.custom.customCalendar.CustomGridView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:numColumns="5"
+                    android:numColumns="3"
                     android:descendantFocusability="blocksDescendants"
                     android:focusable="true"
                     android:horizontalSpacing="@dimen/x10"
@@ -63,7 +67,7 @@
                 <com.silianchuangye.sumao.success.custom.customCalendar.CustomGridView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:numColumns="4"
+                    android:numColumns="3"
                     android:horizontalSpacing="@dimen/x10"
                     android:verticalSpacing="@dimen/x10"
                     android:id="@+id/gv_Number_Type"
@@ -130,12 +134,12 @@
 
             </RelativeLayout>
         </RelativeLayout>
-    </ScrollView>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_marginBottom="@dimen/x10"
-        android:background="#F2F2F2"
-        android:layout_height="@dimen/x35">
+          <RelativeLayout
+              android:layout_width="match_parent"
+              android:layout_marginBottom="@dimen/x10"
+              android:background="#F2F2F2"
+              android:layout_below="@+id/layout_shang"
+              android:layout_height="@dimen/x35">
     <Button
         android:layout_width="wrap_content"
         android:layout_height="@dimen/x28"
@@ -158,5 +162,7 @@
         android:layout_alignParentRight="true"
         />
     </RelativeLayout>
+        </RelativeLayout>
+    </ScrollView>
 
 </LinearLayout>

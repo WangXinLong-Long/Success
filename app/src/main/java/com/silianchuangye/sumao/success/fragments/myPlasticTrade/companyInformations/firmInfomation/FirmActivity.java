@@ -45,7 +45,7 @@ public class FirmActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_firm);
         title_Bar();
-        tv_xiangsi_dizhi= (TextView) findViewById(R.id.tv_xiangsi_dizhi);
+       // tv_xiangsi_dizhi= (TextView) findViewById(R.id.tv_xiangsi_dizhi);
         list=new ArrayList<Map<String,Object>>();
         lv_Demo= (ListView) findViewById(R.id.lv_province);
         Map<String,Object> map1=new Hashtable<String,Object>();
@@ -88,18 +88,18 @@ public class FirmActivity extends AppCompatActivity {
                 }
             }
         });
-        layout_bottom= (RelativeLayout) findViewById(R.id.layout_bottom);
-        layout_bottom.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //跳到详细地址页
-                Intent intent=new Intent(FirmActivity.this,RegisterValueActivity.class);
-                intent.putExtra("title","地址详情");
-                intent.putExtra("pass","");
-                intent.putExtra("content","");
-                startActivityForResult(intent,3);
-            }
-        });
+       // layout_bottom= (RelativeLayout) findViewById(R.id.layout_bottom);
+       // layout_bottom.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                //跳到详细地址页
+//                Intent intent=new Intent(FirmActivity.this,RegisterValueActivity.class);
+//                intent.putExtra("title","地址详情");
+//                intent.putExtra("pass","");
+//                intent.putExtra("content","");
+//                startActivityForResult(intent,3);
+//            }
+//        });
         bt_save= (Button) findViewById(R.id.bt_save);
         bt_save.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,10 +137,10 @@ public class FirmActivity extends AppCompatActivity {
                 Log.d("接受过来的区县",xianqu);
                 adapter.notifyDataSetChanged();
                 break;
-            case 3:
-                String xiangxi=data.getStringExtra("name");
-                tv_xiangsi_dizhi.setText(xiangxi);
-                break;
+//            case 3:
+//                String xiangxi=data.getStringExtra("name");
+//                tv_xiangsi_dizhi.setText(xiangxi);
+//                break;
         }
     }
 

@@ -361,10 +361,15 @@ public class RegisterFirmActivity extends AppCompatActivity {
         map4.put("icon", R.mipmap.my_sumao_iv_order);
         list.add(map4);
         Map<String, Object> map5 = new Hashtable<String, Object>();
-        map5.put("left", "办公地址");
+        map5.put("left", "办公地区");
         map5.put("right", "");
         map5.put("icon", R.mipmap.my_sumao_iv_order);
         list.add(map5);
+        Map<String, Object> map9 = new Hashtable<String, Object>();
+        map9.put("left", "办公地址");
+        map9.put("right", "");
+        map9.put("icon", R.mipmap.my_sumao_iv_order);
+        list.add(map9);
         Map<String, Object> map6 = new Hashtable<String, Object>();
         map6.put("left", "传真号");
         map6.put("right", "");
@@ -393,7 +398,7 @@ public class RegisterFirmActivity extends AppCompatActivity {
                     intent.putExtra("title", list.get(position).get("left").toString());
                     intent.putExtra("number", position);
                     startActivityForResult(intent, position);
-                } else if (position == 3 || position == 2 || position == 5 || position == 6 || position == 7) {
+                } else if (position == 3 || position == 2 || position == 5 || position == 6 || position == 7||position==8) {
                     Intent intent = new Intent(RegisterFirmActivity.this, RegisterValueActivity.class);
                     intent.putExtra("title", list.get(position).get("left").toString());
                     intent.putExtra("content", list.get(position).get("right").toString());
@@ -596,6 +601,12 @@ public class RegisterFirmActivity extends AppCompatActivity {
                 list.get(7).put("right", name3);
                 adapter.notifyDataSetChanged();
                 break;
+            case 8:
+                String name8 = data.getStringExtra("name");
+                list.get(8).put("right", name8);
+                adapter.notifyDataSetChanged();
+                break;
+
             case 10:
                 String value = data.getStringExtra("value");
                 list1.get(0).put("right", value);

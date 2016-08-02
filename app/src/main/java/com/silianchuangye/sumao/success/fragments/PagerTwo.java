@@ -119,7 +119,7 @@ public class PagerTwo extends BasePager {
         list_Number.add("T305");
         list_Number.add("T8395");
         list_Number.add("Xd-040");
-        adapter=new ArrayAdapter<String>(getActivity(),R.layout.item_type,R.id.tv_Type,list_Number);
+        adapter=new ArrayAdapter<String>(getActivity(),R.layout.layout,R.id.tv_Type,list_Number);
         gv_Numebr_Type.setAdapter(adapter);
         layout_Number= (RelativeLayout) view.findViewById(R.id.layout_Number_Type);
         if(list_Number.size()<=0){
@@ -194,7 +194,7 @@ public class PagerTwo extends BasePager {
         list_Firm.add("广西石化");
         list_Firm.add("抚顺石化");
         list_Firm.add("独山子石化");
-        adapter=new ArrayAdapter<String>(getActivity(),R.layout.item_type,R.id.tv_Type,list_Firm);
+        adapter=new ArrayAdapter<String>(getActivity(),R.layout.layout,R.id.tv_Type,list_Firm);
         gv_Firm_Type.setAdapter(adapter);
         gv_Firm_Type.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
