@@ -42,11 +42,6 @@ public class SelectProvinceArea extends Activity implements View.OnClickListener
         tv_child_title_bar_title.setText("选择省/自治区");
         listview = ((ListView) findViewById(R.id.listview));
         lists = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            province = new Area();
-            province.setName("地区"+i+"省");
-            lists.add(province);
-        }
 
         presenter = new SelectProvinceAreaPresenter(this);
         presenter.putResultInView();

@@ -457,7 +457,8 @@
             android:name=".fragments.myPlasticTrade.OrderManagement.OrderDetails.OrderDetailsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".fragments.myPlasticTrade.register.RegisterFirmActivity"
+            android:name=".fragments.myPlasticTrade.register.RegisterFirmActivityMVP.view.RegisterFirmActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".fragments.myPlasticTrade.OrderManagement.OrderDetails.AlreadyPaidActivity"

@@ -1,4 +1,4 @@
-package com.silianchuangye.sumao.success.fragments.myPlasticTrade.register;
+package com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.RegisterFirmActivityMVP.view;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -20,11 +20,14 @@ import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.custom.CustomListView;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation.FirmActivity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoPictureActivity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoTypeActivity;
 
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.AddAddressMVP.presenter.AddAddressPresenter;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceAreaMVP.view.SelectProvinceArea;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.LoginUserActivity;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.RegisterFirmActivityMVP.presenter.RegisterFirmActivityPresenter;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.RegisterValueActivity;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 
 import org.json.JSONArray;
@@ -39,7 +42,7 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
-public class RegisterFirmActivity extends AppCompatActivity {
+public class RegisterFirmActivity extends AppCompatActivity implements IRegisterFirmActivityView {
     ImageView iv_title_bar_logo,
             iv_title_bar_back,
             iv_title_bar_service,
@@ -70,6 +73,7 @@ public class RegisterFirmActivity extends AppCompatActivity {
     private String leixing;
     private String mingcheng;
     private String yewu;
+    private RegisterFirmActivityPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -400,8 +404,10 @@ public class RegisterFirmActivity extends AppCompatActivity {
                     intent.putExtra("content", list.get(position).get("right").toString());
                     startActivityForResult(intent, position);
                 } else if (position == 4) {
-                    Intent intent = new Intent(RegisterFirmActivity.this, FirmActivity.class);
-                    startActivityForResult(intent, position);
+                    Intent intent = new Intent();
+                    intent.putExtra("className","RegisterFirmActivity");
+                    intent.setClass(RegisterFirmActivity.this, SelectProvinceArea.class);
+                    startActivityForResult(intent,position);
 
                 }
             }
@@ -581,11 +587,11 @@ public class RegisterFirmActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
                 break;
             //            办公地址
-            case 4:
+            /*case 4:
                 String address=data.getStringExtra("address");
                 list.get(4).put("right",address);
                 adapter.notifyDataSetChanged();
-                break;
+                break;*/
             case 5:
                 String number = data.getStringExtra("name");
                 list.get(5).put("right", number);
@@ -668,5 +674,39 @@ public class RegisterFirmActivity extends AppCompatActivity {
                 RegisterFirmActivity.this.finish();
             }
         });
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+        String address = getIntent().getStringExtra("address");
+        LogUtils.log("address------->RegisterFirmActivity:"+address);
+        StringBuilder sb = new StringBuilder();
+        sb.append(address);
+        LogUtils.log("StringBuilder------->RegisterFirmActivity:"+sb.toString());
+        presenter = new RegisterFirmActivityPresenter(this);
+        LogUtils.log("StringBuilder------->RegisterFirmActivity:"+sb.substring(0,4)+"+"+sb.substring(0,6)+"+"+sb.toString());
+        presenter.setDetailAddress(sb.substring(0,4),sb.substring(0,6),sb.toString());
+
+    }
+
+    @Override
+    public void setStringInText(String address) {
+        LogUtils.log("address------->RegisterFirmActivity:"+address);
+        list.get(4).put("right",address);
+        adapter.notifyDataSetChanged();
     }
 }

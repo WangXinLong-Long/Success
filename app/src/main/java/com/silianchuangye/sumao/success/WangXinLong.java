@@ -49,6 +49,7 @@ public class WangXinLong extends Activity {
 //        7月29日 我的塑贸，企业信息，收货地址一级页面接口
 //        8月1日  解决收货地址，获取省市县请求数据后，存储不到list的问题
 //        8月2日  解决收货地址确定后的参数传递崩溃问题
+//        8月2日 解决办公地址放回数据的问题
 
         showPayDialog();
 

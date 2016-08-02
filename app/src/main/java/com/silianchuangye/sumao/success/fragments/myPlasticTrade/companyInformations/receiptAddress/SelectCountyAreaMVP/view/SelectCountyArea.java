@@ -15,6 +15,7 @@ import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformat
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectCountyAreaMVP.presenter.SelectCountyAreaPresenter;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectDetailAreaMVP.view.SelectDetailArea;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceAreaMVP.bean.Area;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.RegisterFirmActivityMVP.view.RegisterFirmActivity;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 
 import java.util.ArrayList;
@@ -90,10 +91,20 @@ public class SelectCountyArea extends Activity implements View.OnClickListener,I
 
     @Override
     public void jumpVillageActivity(int position) {
-        Intent intent = new Intent();
-        intent.setClass(SelectCountyArea.this,SelectDetailArea.class);
-        intent.putExtra("county",lists.get(position).getLevel());
-        intent.putExtra("className",className);
-        startActivity(intent);
+
+
+
+        if (className.equals("RegisterFirmActivity")){
+            intent.putExtra("address",lists.get(position).getLevel());
+            LogUtils.log("county----------->"+lists.get(position).getLevel());
+            intent.setClass(SelectCountyArea.this,RegisterFirmActivity.class);
+            startActivity(intent);
+        }else {
+            Intent intent = new Intent();
+            intent.setClass(SelectCountyArea.this,SelectDetailArea.class);
+            intent.putExtra("county",lists.get(position).getLevel());
+            intent.putExtra("className",className);
+            startActivity(intent);
+        }
     }
 }

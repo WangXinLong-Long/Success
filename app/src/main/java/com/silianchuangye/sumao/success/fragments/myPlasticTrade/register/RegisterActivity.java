@@ -1,9 +1,6 @@
 package com.silianchuangye.sumao.success.fragments.myPlasticTrade.register;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
@@ -21,8 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoUpdateActivity;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.LoginUserActivity;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.RegisterFirmActivityMVP.view.RegisterFirmActivity;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 
 import java.util.ArrayList;
