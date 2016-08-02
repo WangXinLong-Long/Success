@@ -18,7 +18,7 @@ import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
 
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceArea;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceAreaMVP.view.SelectProvinceArea;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.RegisterValueActivity;
 
 import java.util.ArrayList;

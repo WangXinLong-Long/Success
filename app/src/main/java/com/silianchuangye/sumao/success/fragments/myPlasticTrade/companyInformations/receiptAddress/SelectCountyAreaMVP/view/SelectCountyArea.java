@@ -1,9 +1,8 @@
-package com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress;
+package com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectCountyAreaMVP.view;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -12,15 +11,10 @@ import android.widget.TextView;
 
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.SelectCountyAreaAdapter;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation.FirmActivity;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectCountyAreaMVP.model.ISelectCountyAreaModel;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectCityAreaMVP.view.SelectCityArea;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectCountyAreaMVP.presenter.SelectCountyAreaPresenter;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectCountyAreaMVP.view.ISelectCountyAreaView;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectDetailArea;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectDetailAreaMVP.view.SelectDetailArea;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceAreaMVP.bean.Area;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceAreaMVP.view.ISelectProvinceAreaView;
-import com.silianchuangye.sumao.success.model.CountyModel;
-import com.silianchuangye.sumao.success.model.ProvinceModel;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 
 import java.util.ArrayList;
@@ -64,12 +58,12 @@ public class SelectCountyArea extends Activity implements View.OnClickListener,I
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-             //   presenter.jumpVillage(position);
-                Intent intent = new Intent();
+                presenter.jumpVillage(position);
+               /* Intent intent = new Intent();
                 intent.putExtra("xianqu",lists.get(position).getName().toString());
                 Log.d("县",lists.get(position).getName().toString());
                 setResult(2,intent);
-                SelectCountyArea.this.finish();
+                SelectCountyArea.this.finish();*/
 
             }
         });
@@ -98,7 +92,7 @@ public class SelectCountyArea extends Activity implements View.OnClickListener,I
     public void jumpVillageActivity(int position) {
         Intent intent = new Intent();
         intent.setClass(SelectCountyArea.this,SelectDetailArea.class);
-        intent.putExtra("county",city+lists.get(position).getLevel());
+        intent.putExtra("county",lists.get(position).getLevel());
         intent.putExtra("className",className);
         startActivity(intent);
     }

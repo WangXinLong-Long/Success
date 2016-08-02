@@ -322,7 +322,7 @@
             android:name=".fragments.myPlasticTrade.companyInformations.receiptAddress.ReceiptAddressDetail"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".fragments.myPlasticTrade.companyInformations.receiptAddress.AddAddress"
+            android:name=".fragments.myPlasticTrade.companyInformations.receiptAddress.AddAddressMVP.view.AddAddress"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
@@ -335,7 +335,7 @@
             android:name=".fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceAreaMVP.view.SelectProvinceArea"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".fragments.myPlasticTrade.companyInformations.receiptAddress.SelectDetailArea"
+            android:name=".fragments.myPlasticTrade.companyInformations.receiptAddress.SelectDetailAreaMVP.view.SelectDetailArea"
             android:screenOrientation="portrait" />
         <activity
             android:name=".fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.CompanyUserActivity"
@@ -517,9 +517,6 @@
         <activity android:name=".customermanger.CustomerParent" />
         <activity android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmActivity"></activity>
         <activity android:name=".fragments.myPlasticTrade.register.RegisterPhoneActivity"></activity>
-        <activity android:name=".fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceArea"></activity>
-        <activity android:name=".fragments.myPlasticTrade.companyInformations.receiptAddress.SelectCityArea"></activity>
-        <activity android:name=".fragments.myPlasticTrade.companyInformations.receiptAddress.SelectCountyArea"></activity>
 
     </application>
 

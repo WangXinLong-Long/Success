@@ -1,9 +1,8 @@
-package com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress;
+package com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectCityAreaMVP.view;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -14,9 +13,8 @@ import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.SelectCityAreaAdapter;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectCityAreaMVP.presenter.SelecteCityAreaPresenter;
 
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectCountyAreaMVP.view.ISelectCountyAreaView;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectCountyAreaMVP.view.SelectCountyArea;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceAreaMVP.bean.Area;
-import com.silianchuangye.sumao.success.model.CityModel;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 
 import java.util.ArrayList;
@@ -25,7 +23,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2016/5/13 0013.
  */
-public class SelectCityArea  extends Activity implements View.OnClickListener,ISelectCountyAreaView {
+public class SelectCityArea  extends Activity implements View.OnClickListener,ISelecteCityAreaView {
     ListView listView;
     SelectCityAreaAdapter adapter;
     List<Area> lists;
@@ -55,7 +53,7 @@ public class SelectCityArea  extends Activity implements View.OnClickListener,IS
 //        省的level
             province = intent.getStringExtra("province");
             LogUtils.log("SelectCityArea:province----->" + province);
-            //presenter = new SelecteCityAreaPresenter();
+            presenter = new SelecteCityAreaPresenter(this);
             presenter.getCityInfo(province);
             className = getIntent().getStringExtra("className");
 
@@ -63,11 +61,11 @@ public class SelectCityArea  extends Activity implements View.OnClickListener,IS
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     presenter.jumpCounty(position);
-                    Intent intent = new Intent();
+                    /*Intent intent = new Intent();
                     intent.putExtra("city", lists.get(position).getName().toString());
                     Log.d("市", lists.get(position).getName().toString());
                     SelectCityArea.this.setResult(1, intent);
-                    SelectCityArea.this.finish();
+                    SelectCityArea.this.finish();*/
                 }
             });
         }
@@ -93,19 +91,11 @@ public class SelectCityArea  extends Activity implements View.OnClickListener,IS
 
     public void jumpCountryActivity(int position) {
         Intent intent = new Intent();
-        intent.setClass(SelectCityArea.this, com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectCountyArea.class);
+        intent.setClass(SelectCityArea.this, SelectCountyArea.class);
         intent.putExtra("city", lists.get(position).getLevel());
         intent.putExtra("className", className);
         startActivity(intent);
     }
 
-    @Override
-    public void initCountyView(List<Area> areas) {
 
-    }
-
-    @Override
-    public void jumpVillageActivity(int position) {
-
-    }
 }

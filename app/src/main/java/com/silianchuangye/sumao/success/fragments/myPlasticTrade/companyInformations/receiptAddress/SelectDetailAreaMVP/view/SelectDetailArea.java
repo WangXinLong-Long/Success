@@ -1,4 +1,4 @@
-package com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress;
+package com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectDetailAreaMVP.view;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -12,12 +12,14 @@ import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.InvoiceInformation;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.AddAddressMVP.view.AddAddress;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.RegisterFirmActivity;
+import com.silianchuangye.sumao.success.utils.LogUtils;
 
 /**
  * Created by Administrator on 2016/5/13 0013.
  */
-public class SelectDetailArea extends Activity implements View.OnClickListener{
+public class SelectDetailArea extends Activity implements View.OnClickListener,ISelectDetailAreaView{
     ImageView iv_child_title_bar_back;
     TextView tv_child_title_bar_title;
     Intent intent;
@@ -47,9 +49,11 @@ public class SelectDetailArea extends Activity implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId())
         {
+//            保存按钮
             case R.id.modify_name_save:
                 canCloseThisActivity();
                 break;
+//            返回按钮
             case R.id.iv_child_title_bar_back:
                 finish();
                 break;
@@ -67,9 +71,12 @@ public class SelectDetailArea extends Activity implements View.OnClickListener{
             /**
              * 在这里吧EditText的文本信息获取到，调用接口传到服务器上
              */
-            Toast.makeText(SelectDetailArea.this, "调用接口传到服务器上", Toast.LENGTH_SHORT).show();
+
             Intent intent = new Intent();
             if (className.equals("AddAddress")){
+                intent.putExtra("address",county);
+                LogUtils.log("county----------->"+county);
+                intent.putExtra("detailAddress",modify_information.getText().toString().trim());
                 intent.setClass(SelectDetailArea.this,AddAddress.class);
             }else if (className.equals("InvoiceInformation"))
             {
@@ -82,5 +89,6 @@ public class SelectDetailArea extends Activity implements View.OnClickListener{
             startActivity(intent);
         }
     }
+
 
 }
