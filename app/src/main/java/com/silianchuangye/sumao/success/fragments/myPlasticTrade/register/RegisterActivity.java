@@ -72,19 +72,19 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //  register();
-//                if (!(password.trim() .equals(rePassword.trim())) ) {
-//                    Toast.makeText(RegisterActivity.this, "两次输入密码不一致", Toast.LENGTH_SHORT).show();
-//                } else if (account.trim() == null || account.trim().isEmpty()) {
-//                    Toast.makeText(RegisterActivity.this, "登录账号为空", Toast.LENGTH_SHORT).show();
-//                } else if (password.trim() == null || password.trim().isEmpty()) {
-//                    Toast.makeText(RegisterActivity.this, "登录密码为空", Toast.LENGTH_SHORT).show();
-//                } else if (rePassword.trim() == null || rePassword.trim().isEmpty()) {
-//                    Toast.makeText(RegisterActivity.this, "确认密码为空", Toast.LENGTH_SHORT).show();
-//                } else if (name.trim() == null || name.trim().isEmpty()) {
-//                    Toast.makeText(RegisterActivity.this, "姓名为空", Toast.LENGTH_SHORT).show();
-//                } else if (email.trim() == null || email.trim().isEmpty()) {
-//                    Toast.makeText(RegisterActivity.this, "邮箱为空", Toast.LENGTH_SHORT).show();
-//                } else {
+                if (!(password.trim() .equals(rePassword.trim())) ) {
+                    Toast.makeText(RegisterActivity.this, "两次输入密码不一致", Toast.LENGTH_SHORT).show();
+                } else if (account.trim() == null || account.trim().isEmpty()) {
+                    Toast.makeText(RegisterActivity.this, "登录账号为空", Toast.LENGTH_SHORT).show();
+                } else if (password.trim() == null || password.trim().isEmpty()) {
+                    Toast.makeText(RegisterActivity.this, "登录密码为空", Toast.LENGTH_SHORT).show();
+                } else if (rePassword.trim() == null || rePassword.trim().isEmpty()) {
+                    Toast.makeText(RegisterActivity.this, "确认密码为空", Toast.LENGTH_SHORT).show();
+                } else if (name.trim() == null || name.trim().isEmpty()) {
+                    Toast.makeText(RegisterActivity.this, "姓名为空", Toast.LENGTH_SHORT).show();
+                } else if (email.trim() == null || email.trim().isEmpty()) {
+                    Toast.makeText(RegisterActivity.this, "邮箱为空", Toast.LENGTH_SHORT).show();
+                } else {
                     Intent intent = new Intent(RegisterActivity.this, RegisterFirmActivity.class);
                     intent.putExtra("account", password.trim());
                     intent.putExtra("pass",password.trim());
@@ -93,7 +93,7 @@ public class RegisterActivity extends AppCompatActivity {
                     intent.putExtra("email", email.trim());
                     intent.putExtra("phone", phone);
                     startActivity(intent);
-           //     }
+                }
 
 
             }
