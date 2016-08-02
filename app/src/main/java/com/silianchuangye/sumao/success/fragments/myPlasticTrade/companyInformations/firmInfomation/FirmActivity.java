@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -40,6 +41,7 @@ public class FirmActivity extends AppCompatActivity {
     private Button bt_save;
     private List<Map<String,Object>>  list;
     private SimpleAdapter adapter;
+    Intent intent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +67,7 @@ public class FirmActivity extends AppCompatActivity {
         map3.put("minute","");
         map3.put("icon",R.mipmap.my_sumao_iv_order);
         map3.put("pass","");
+
         list.add(map3);
          adapter=new SimpleAdapter(this,list,R.layout.item_firm_info,
                 new String[]{"text","minute","icon","pass"},
@@ -175,5 +178,16 @@ public class FirmActivity extends AppCompatActivity {
             }
         });
 
+        intent = new Intent();
+
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+            intent.putExtra("address", "");
+            FirmActivity.this.setResult(RESULT_OK, intent);
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

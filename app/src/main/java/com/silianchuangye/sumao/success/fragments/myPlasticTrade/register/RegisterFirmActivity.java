@@ -69,6 +69,9 @@ public class RegisterFirmActivity extends AppCompatActivity {
     private String unique;
     String Login;
     private RequestParams rp;
+    private String leixing;
+    private String mingcheng;
+    private String yewu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,13 +85,8 @@ public class RegisterFirmActivity extends AppCompatActivity {
         initList(add);
         Bundle bundle = getIntent().getExtras();
         account = bundle.getString("account");
-        if (!account.equals(" 6-16个字符")) {
-            Login = account;
-        }
         pass = bundle.getString("pass");
-        Log.d("pass", pass);
         repass = bundle.getString("repass");
-        Log.d("repass", repass);
         name = bundle.getString("name");
         email = bundle.getString("email");
         phone = bundle.getString("phone");
@@ -107,8 +105,8 @@ public class RegisterFirmActivity extends AppCompatActivity {
     }
 
     private void registerMethodW() {
-        rp.addParameter("cl_mingcheng","TestApp3");//企业名称
-        rp.addParameter("cl_yewu","TestApp3");//业务部门（可空）
+        rp.addParameter("cl_mingcheng",mingcheng);//企业名称
+        rp.addParameter("cl_yewu",yewu);//业务部门（可空）
         rp.addParameter("province","1414");//省
         rp.addParameter("city","141410");//市
         rp.addParameter("county","14141029");//县
@@ -117,19 +115,19 @@ public class RegisterFirmActivity extends AppCompatActivity {
         rp.addParameter("cl_zhengjian","4");//企业注册证件
         rp.addParameter("cl_zhizhao","0928201347189232203334");//企业营业执照
         rp.addParameter("cl_nashuiren","6");//纳税人类型
-        rp.addParameter("cl_leixing","1");//纳税人类型
+        rp.addParameter("cl_leixing",leixing);//企业类型
         rp.addParameter("cl_zhizhaoimage","/mnt/docs/100.jpg");//营业执照图片路劲
         rp.addParameter("cl_zhizhaoimage","/mnt/docs/100.jpg");//组织机构代码图片路劲
         rp.addParameter("cl_shuiwuimage","/mnt/docs/100.jpg");//税务登记号图片路劲
         rp.addParameter("cl_nashuirenimage","/mnt/docs/100.jpg");//纳税人图片路劲
         rp.addParameter("cl_jigou","0928201347189232203334");//纳税人图片路劲
         rp.addParameter("cl_shuiwu","0928201347189232203334");//纳税人图片路劲
-        rp.addParameter("cl_login","哈哈呵呵");//登录账号
-        rp.addParameter("cl_password","11112222");//密码
-        rp.addParameter("cl_confirmPassword","11112222");//确认密码
-        rp.addParameter("cl_firstName","哈哈");//姓名
-        rp.addParameter("cl_email","2969320005@qq.con");//邮箱
-        rp.addParameter("cl_mobilePhone","18401564320");//电话号码
+        rp.addParameter("cl_login",account);//登录账号
+        rp.addParameter("cl_password",pass);//密码
+        rp.addParameter("cl_confirmPassword",repass);//确认密码
+        rp.addParameter("cl_firstName",name);//姓名
+        rp.addParameter("cl_email",email);//邮箱
+        rp.addParameter("cl_mobilePhone",phone);//电话号码
         rp.addParameter("cl_applyType","8");//申请成为(买方)
         rp.addParameter("cl_entName","美女");//企业法人
         rp.addParameter("cl_taxNum","217391472093417243");//税号
@@ -560,22 +558,26 @@ public class RegisterFirmActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
+//            企业类型
             case 1:
-                String one = data.getStringExtra("name");
+                leixing = data.getStringExtra("name");
                 Log.d("nameValue", name);
-                list.get(1).put("right", one);
+                list.get(1).put("right", leixing);
                 adapter.notifyDataSetChanged();
                 break;
+            //            企业名称
             case 2:
-                String name = data.getStringExtra("name");
-                list.get(2).put("right", name);
+                mingcheng = data.getStringExtra("name");
+                list.get(2).put("right", mingcheng);
                 adapter.notifyDataSetChanged();
                 break;
+            //            业务部门
             case 3:
-                String name1 = data.getStringExtra("name");
-                list.get(3).put("right", name1);
+                yewu = data.getStringExtra("name");
+                list.get(3).put("right", yewu);
                 adapter.notifyDataSetChanged();
                 break;
+            //            办公地址
             case 4:
                 String address=data.getStringExtra("address");
                 list.get(4).put("right",address);
