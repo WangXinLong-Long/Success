@@ -38,6 +38,9 @@ public class JoinActivity extends AppCompatActivity {
 
     }
     public void event(){
+        /**
+         *
+         */
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
