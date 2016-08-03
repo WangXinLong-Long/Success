@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
 
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoPicture.FirmInfoPictureActivity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceAreaMVP.view.SelectProvinceArea;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.RegisterValueActivity;
 
@@ -185,6 +186,7 @@ public class FirmInfoUpdateActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (list1.size()==2){
                     if (position==0){
+//                        统一社会信用代码
                         Intent intent=new Intent(FirmInfoUpdateActivity.this, FirmInfoPictureActivity.class);
                         intent.putExtra("name",list1.get(0).get("left").toString());
                         intent.putExtra("number",10);
@@ -334,6 +336,7 @@ public class FirmInfoUpdateActivity extends AppCompatActivity {
                 adapter1.notifyDataSetChanged();
                 break;
             case 20:
+//                统一社会信用代码
                 String value4=data.getStringExtra("name");
                 list1.get(0).put("right",value4);
                 adapter1.notifyDataSetChanged();

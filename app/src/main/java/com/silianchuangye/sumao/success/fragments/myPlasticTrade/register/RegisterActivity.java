@@ -67,8 +67,17 @@ public class RegisterActivity extends AppCompatActivity {
         tv_next_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Intent intent = new Intent(RegisterActivity.this, RegisterFirmActivity.class);
+                intent.putExtra("account", password.trim());
+                intent.putExtra("pass",password.trim());
+                intent.putExtra("repass",rePassword.trim() );
+                intent.putExtra("name", name.trim() );
+                intent.putExtra("email", email.trim());
+                intent.putExtra("phone", phone.trim());
+                startActivity(intent);
                 //  register();
-                if (!(password.trim() .equals(rePassword.trim())) ) {
+               /* if (!(password.trim() .equals(rePassword.trim())) ) {
                     Toast.makeText(RegisterActivity.this, "两次输入密码不一致", Toast.LENGTH_SHORT).show();
                 } else if (account.trim() == null || account.trim().isEmpty()) {
                     Toast.makeText(RegisterActivity.this, "登录账号为空", Toast.LENGTH_SHORT).show();
@@ -89,7 +98,7 @@ public class RegisterActivity extends AppCompatActivity {
                     intent.putExtra("email", email.trim());
                     intent.putExtra("phone", phone);
                     startActivity(intent);
-                }
+                }*/
 
 
             }

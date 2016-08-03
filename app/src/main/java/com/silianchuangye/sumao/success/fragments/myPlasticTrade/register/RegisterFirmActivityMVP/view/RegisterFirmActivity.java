@@ -20,10 +20,9 @@ import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.custom.CustomListView;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoPictureActivity;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoPicture.FirmInfoPictureActivity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoTypeActivity;
 
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.AddAddressMVP.presenter.AddAddressPresenter;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceAreaMVP.view.SelectProvinceArea;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.LoginUserActivity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.RegisterFirmActivityMVP.presenter.RegisterFirmActivityPresenter;
@@ -74,6 +73,9 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
     private String mingcheng;
     private String yewu;
     private RegisterFirmActivityPresenter presenter;
+    private StringBuilder sb;
+    private String leixingLevel;
+    private String naShuiRenLevel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,15 +111,15 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
     private void registerMethodW() {
         rp.addParameter("cl_mingcheng",mingcheng);//企业名称
         rp.addParameter("cl_yewu",yewu);//业务部门（可空）
-        rp.addParameter("province","1414");//省
-        rp.addParameter("city","141410");//市
-        rp.addParameter("county","14141029");//县
-        rp.addParameter("cl_dizhi","14141029");//详细地址
-        rp.addParameter("cl_chuanzhen","07438776097");//传真
+        rp.addParameter("province",sb.substring(0,4));//省
+        rp.addParameter("city",sb.substring(0,6));//市
+        rp.addParameter("county",sb.toString());//县
+        rp.addParameter("cl_dizhi",list.get(5).get("right").toString().trim());//详细地址
+        rp.addParameter("cl_chuanzhen",list.get(6).get("right").toString().trim());//传真
         rp.addParameter("cl_zhengjian","4");//企业注册证件
         rp.addParameter("cl_zhizhao","0928201347189232203334");//企业营业执照
-        rp.addParameter("cl_nashuiren","6");//纳税人类型
-        rp.addParameter("cl_leixing",leixing);//企业类型
+        rp.addParameter("cl_nashuiren",naShuiRenLevel);//纳税人类型
+        rp.addParameter("cl_leixing",leixingLevel);//企业类型
         rp.addParameter("cl_zhizhaoimage","/mnt/docs/100.jpg");//营业执照图片路劲
         rp.addParameter("cl_zhizhaoimage","/mnt/docs/100.jpg");//组织机构代码图片路劲
         rp.addParameter("cl_shuiwuimage","/mnt/docs/100.jpg");//税务登记号图片路劲
@@ -131,8 +133,8 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
         rp.addParameter("cl_email",email);//邮箱
         rp.addParameter("cl_mobilePhone",phone);//电话号码
         rp.addParameter("cl_applyType","8");//申请成为(买方)
-        rp.addParameter("cl_entName","美女");//企业法人
-        rp.addParameter("cl_taxNum","217391472093417243");//税号
+        rp.addParameter("cl_entName",list.get(7).get("right").toString().trim());//企业法人
+        rp.addParameter("cl_taxNum",list.get(8).get("right").toString().trim());//税号
         sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
         String unique123 = sp.getString("unique", "");
         rp.addParameter("_dynSessConf", unique123);
@@ -399,10 +401,16 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
                     intent.putExtra("number", position);
                     startActivityForResult(intent, position);
                 } else if (position == 3 || position == 2 || position == 5 || position == 6 || position == 7||position==8) {
-                    Intent intent = new Intent(RegisterFirmActivity.this, RegisterValueActivity.class);
-                    intent.putExtra("title", list.get(position).get("left").toString());
-                    intent.putExtra("content", list.get(position).get("right").toString());
-                    startActivityForResult(intent, position);
+                    if (position == 5&& (list.get(4).get("right").toString().trim()==null||list.get(4).get("right").toString().trim().isEmpty()))
+                    {
+                        Toast.makeText(RegisterFirmActivity.this,"请填写办公地区",Toast.LENGTH_SHORT).show();
+                    }else{
+                        Intent intent = new Intent(RegisterFirmActivity.this, RegisterValueActivity.class);
+                        intent.putExtra("title", list.get(position).get("left").toString());
+                        intent.putExtra("content", list.get(position).get("right").toString());
+                        startActivityForResult(intent, position);
+                    }
+
                 } else if (position == 4) {
                     Intent intent = new Intent();
                     intent.putExtra("className","RegisterFirmActivity");
@@ -571,6 +579,7 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
             case 1:
                 leixing = data.getStringExtra("name");
                 Log.d("nameValue", name);
+                leixingLevel = data.getStringExtra("level");
                 list.get(1).put("right", leixing);
                 adapter.notifyDataSetChanged();
                 break;
@@ -635,11 +644,15 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
                 break;
             case 20:
                 String value4 = data.getStringExtra("name");
+
                 list1.get(0).put("right", value4);
                 adapter1.notifyDataSetChanged();
                 break;
             case 21:
+//                纳税人类型
                 String value5 = data.getStringExtra("name");
+                naShuiRenLevel = data.getStringExtra("level");
+                LogUtils.log("naShuiRenLevel---------->"+naShuiRenLevel);
                 Log.d("nnnnnn", value5);
                 list1.get(1).put("right", value5);
                 adapter1.notifyDataSetChanged();
@@ -694,12 +707,12 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
         setIntent(intent);
         String address = getIntent().getStringExtra("address");
         LogUtils.log("address------->RegisterFirmActivity:"+address);
-        StringBuilder sb = new StringBuilder();
+        sb = new StringBuilder();
         sb.append(address);
-        LogUtils.log("StringBuilder------->RegisterFirmActivity:"+sb.toString());
+        LogUtils.log("StringBuilder------->RegisterFirmActivity:"+ sb.toString());
         presenter = new RegisterFirmActivityPresenter(this);
-        LogUtils.log("StringBuilder------->RegisterFirmActivity:"+sb.substring(0,4)+"+"+sb.substring(0,6)+"+"+sb.toString());
-        presenter.setDetailAddress(sb.substring(0,4),sb.substring(0,6),sb.toString());
+        LogUtils.log("StringBuilder------->RegisterFirmActivity:"+ sb.substring(0,4)+"+"+ sb.substring(0,6)+"+"+ sb.toString());
+        presenter.setDetailAddress(sb.substring(0,4), sb.substring(0,6), sb.toString());
 
     }
 

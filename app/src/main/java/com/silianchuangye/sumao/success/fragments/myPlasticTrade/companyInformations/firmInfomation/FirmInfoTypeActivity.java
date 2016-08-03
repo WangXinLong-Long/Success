@@ -54,6 +54,8 @@ public class FirmInfoTypeActivity extends AppCompatActivity implements IFirmInfo
     Intent intent;
     ListAdapter adapter;
     private TextView prompt;
+    private List<EnterpriseInformation> typeAndLevel;
+    private String level;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +100,7 @@ public class FirmInfoTypeActivity extends AppCompatActivity implements IFirmInfo
                 }else {
                     Intent intent = new Intent();
                     intent.putExtra("name", name);
+                    intent.putExtra("level",level);
                     FirmInfoTypeActivity.this.setResult(number, intent);
                     FirmInfoTypeActivity.this.finish();
 
@@ -110,10 +113,9 @@ public class FirmInfoTypeActivity extends AppCompatActivity implements IFirmInfo
 
     @Override
     public void initFirmInfoTypeActivityView(List<EnterpriseInformation> names) {
-        for (int i = 0; i < names.size(); i++) {
-            list.add(names.get(i).getDisplayName());
-        }
-        adapter = new ListAdapter(getApplication(), list);
+//        list.add(names.get(i).getDisplayName());
+        typeAndLevel = names;
+        adapter = new ListAdapter(getApplication(), names);
         lv_type.setAdapter(adapter);
     }
 
@@ -150,10 +152,10 @@ public class FirmInfoTypeActivity extends AppCompatActivity implements IFirmInfo
 
     class ListAdapter extends BaseAdapter {
         private Context context;
-        private List<String> list;
+        private List<EnterpriseInformation> list;
         Map<String, Boolean> states = new HashMap<String, Boolean>();
 
-        public ListAdapter(Context context, List<String> list) {
+        public ListAdapter(Context context,List<EnterpriseInformation> list) {
             this.context = context;
             this.list = list;
         }
@@ -187,11 +189,12 @@ public class FirmInfoTypeActivity extends AppCompatActivity implements IFirmInfo
 
             final RadioButton radio = (RadioButton) convertView.findViewById(R.id.rbCheck);
             holder.rb_state = radio;
-            radio.setText(list.get(position));
+            radio.setText(list.get(position).getDisplayName());
             holder.rb_state.setOnClickListener(new View.OnClickListener() {
 
                 public void onClick(View v) {
-                    name = list.get(position).toString();
+                    name = list.get(position).getDisplayName().toString();
+                    level = list.get(position).getId().trim();
                     for (String key : states.keySet()) {
                         states.put(key, false);
                     }
