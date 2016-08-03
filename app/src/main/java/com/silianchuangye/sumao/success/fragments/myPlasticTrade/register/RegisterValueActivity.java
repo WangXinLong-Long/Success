@@ -77,6 +77,8 @@ public class RegisterValueActivity extends AppCompatActivity {
             ed_content_value.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
         }else if (title.equals("地址详情")){
             tv_a.setText("6-16个字符,可由中英文,数字,'-','_'组成");
+        }else {
+            tv_a.setText("6-16个字符,可由中英文,数字,'-','_'组成");
         }
 
 //        保存按钮
@@ -91,6 +93,7 @@ public class RegisterValueActivity extends AppCompatActivity {
                 }
                 LogUtils.log("ed_content_value------->"+ed_content_value.getText().toString()+"<---");
                 if (ed_content_value.getText().toString().trim() == null|| ed_content_value.getText().toString().trim().isEmpty()) {
+                    tv_a.setVisibility(View.VISIBLE);
                     tv_a.setText( title + "不能为空");
                     tv_a.setTextColor(Color.RED);
                     LogUtils.log("tv_a------->"+tv_a.getText().toString()+"<---");

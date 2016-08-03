@@ -1,8 +1,10 @@
-package com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation;
+package com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoPicture;
 
 import android.Manifest;
 import android.content.ContentResolver;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -10,8 +12,10 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.ActionBarOverlayLayout;
@@ -25,23 +29,19 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
-import com.easemob.cloud.HttpClientManager;
 import com.silianchuangye.sumao.success.R;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation.CaptureActivity;
 import com.silianchuangye.sumao.success.utils.LogUtils;
-import com.xiaomi.network.HttpUtils;
 import com.zhy.m.permission.MPermissions;
 import com.zhy.m.permission.PermissionDenied;
 import com.zhy.m.permission.PermissionGrant;
+import com.zhy.m.permission.ShowRequestPermissionRationale;
 
-import org.xutils.common.Callback;
-import org.xutils.http.RequestParams;
 import org.xutils.http.annotation.HttpResponse;
 import org.xutils.http.app.ResponseParser;
 import org.xutils.http.request.UriRequest;
-import org.xutils.x;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -67,10 +67,9 @@ public class FirmInfoPictureActivity extends AppCompatActivity {
     Button sv_title_bar_serachView;
     TextView tv_title_bar_title, tv;
     RelativeLayout layoutTop;
-    private int number;
-
     private static final int REQUEST_PERMISSION_CAMERA_CODE = 1;
     private static final int REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE_CODE = 3;
+    private static final int REQUEST_PERMISSION_CAMERA_QR_CODE = 2;
     private File file;
     private Bitmap bitmapCamera;
     private Intent intent;
@@ -79,41 +78,54 @@ public class FirmInfoPictureActivity extends AppCompatActivity {
     private TextView tvinfo_firm_info_pictrue;
     private Button btSave;
     private TextView tvinfoValue_firm_info_pictrue;
-    private Button bt_save,bt_getNumber;
+    private Button bt_save, bt_getNumber;
     int number1;
     private RelativeLayout layoutinfo_firm_info;
-
+    static final String[] PERMISSIONS = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
+    public static final int PERMISSIONS_GRANTED = 0; // 权限授权
+    public static final int PERMISSIONS_DENIED = 1; // 权限拒绝
+    private static final String PACKAGE_URL_SCHEME = "package:"; // 方案
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_firm_info_picture);
-
         title_Bar();
-        layoutinfo_firm_info= (RelativeLayout) findViewById(R.id.layoutinfo_firm_info);
+        layoutinfo_firm_info = (RelativeLayout) findViewById(R.id.layoutinfo_firm_info);
         layoutinfo_firm_info.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(FirmInfoPictureActivity.this,CaptureActivity.class);
-                startActivityForResult(intent,8);
+                /**
+                 * 首先要获取权限
+                 */if (ActivityCompat.checkSelfPermission(FirmInfoPictureActivity.this,
+                        Manifest.permission.CALL_PHONE)
+                        != PackageManager.PERMISSION_GRANTED) {
+
+                    MPermissions.requestPermissions(FirmInfoPictureActivity.this, REQUEST_PERMISSION_CAMERA_QR_CODE, PERMISSIONS);
+                } else {
+                    Intent intent = new Intent(FirmInfoPictureActivity.this, CaptureActivity.class);
+                    startActivityForResult(intent, 8);
+                }
+//
+
             }
         });
-        tvinfoValue_firm_info_pictrue= (TextView) findViewById(R.id.tvinfoValue_firm_info_pictrue);
-        tvinfo_firm_info_pictrue= (TextView) findViewById(R.id.tvinfo_firm_info_pictrue);
-        Bundle bundle=getIntent().getExtras();
-        String name=bundle.getString("name");
-         number1=bundle.getInt("number");
+        tvinfoValue_firm_info_pictrue = (TextView) findViewById(R.id.tvinfoValue_firm_info_pictrue);
+        tvinfo_firm_info_pictrue = (TextView) findViewById(R.id.tvinfo_firm_info_pictrue);
+        Bundle bundle = getIntent().getExtras();
+        String name = bundle.getString("name");
+        number1 = bundle.getInt("number");
         tvinfo_firm_info_pictrue.setText(name);
-        bt_getNumber= (Button) findViewById(R.id.bt_getNumber);
-        bt_getNumber.setText("获取"+name);
+        bt_getNumber = (Button) findViewById(R.id.bt_getNumber);
+        bt_getNumber.setText("获取" + name);
         bt_getNumber.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(FirmInfoPictureActivity.this,CaptureActivity.class);
-                startActivityForResult(intent,8);
+                Intent intent = new Intent(FirmInfoPictureActivity.this, CaptureActivity.class);
+                startActivityForResult(intent, 8);
             }
         });
-        btSave= (Button) findViewById(R.id.bt_save_register_value);
+        btSave = (Button) findViewById(R.id.bt_save_register_value);
         layout = (RelativeLayout) findViewById(R.id.layout_a);
         ivPictrue = (ImageView) findViewById(R.id.iv_firm_info_pictrue);
         btSave.setOnClickListener(new View.OnClickListener() {
@@ -123,7 +135,7 @@ public class FirmInfoPictureActivity extends AppCompatActivity {
                 Popupwindow();
             }
         });
-        bt_save= (Button) findViewById(R.id.bt_save);
+        bt_save = (Button) findViewById(R.id.bt_save);
         bt_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -162,9 +174,9 @@ public class FirmInfoPictureActivity extends AppCompatActivity {
 //
 //                });
 
-                Intent intent=new Intent();
-                intent.putExtra("value",tvinfoValue_firm_info_pictrue.getText().toString());
-                setResult(number1,intent);
+                Intent intent = new Intent();
+                intent.putExtra("value", tvinfoValue_firm_info_pictrue.getText().toString());
+                setResult(number1, intent);
                 FirmInfoPictureActivity.this.finish();
             }
         });
@@ -234,10 +246,6 @@ public class FirmInfoPictureActivity extends AppCompatActivity {
         startActivityForResult(intent, 0);
     }
 
-    protected void getImageFromCamera() {
-        MPermissions.requestPermissions(FirmInfoPictureActivity.this, REQUEST_PERMISSION_CAMERA_CODE, Manifest.permission.CAMERA);
-    }
-
     public void useCamera() {
         Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
 
@@ -256,18 +264,56 @@ public class FirmInfoPictureActivity extends AppCompatActivity {
         }
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
 
-         file = new File(fileDir, "IMG_" + sdf.format(new Date()) + ".jpg");
+        file = new File(fileDir, "IMG_" + sdf.format(new Date()) + ".jpg");
 
         path = file.getPath();
         Uri imageUri = Uri.fromFile(file);
-        Log.d("imageUri",imageUri+"");
+        Log.d("imageUri", imageUri + "");
         intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
         startActivityForResult(intent, TAKE_PICTURE);
     }//低于6.0直接使用Camera
 
+    // 显示缺失权限提示
+    public void showMissingPermissionDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(FirmInfoPictureActivity.this);
+        builder.setTitle(R.string.help);
+        builder.setMessage(R.string.string_help_text);
+
+        // 拒绝, 退出应用
+        builder.setNegativeButton(R.string.quit, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+//                setResult(PERMISSIONS_DENIED);
+
+            }
+        });
+
+        builder.setPositiveButton(R.string.settings, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                startAppSettings();
+            }
+        });
+
+        builder.setCancelable(false);
+
+        builder.show();
+    }
+
+    // 启动应用的设置
+    private void startAppSettings() {
+        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        intent.setData(Uri.parse(PACKAGE_URL_SCHEME + getPackageName()));
+        startActivity(intent);
+    }
+
+    protected void getImageFromCamera() {
+        MPermissions.requestPermissions(FirmInfoPictureActivity.this, REQUEST_PERMISSION_CAMERA_CODE, PERMISSIONS);
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        MPermissions.requestPermissions(FirmInfoPictureActivity.this, REQUEST_PERMISSION_CAMERA_CODE, Manifest.permission.CAMERA);
+        MPermissions.onRequestPermissionsResult(FirmInfoPictureActivity.this, requestCode, permissions, grantResults);
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
@@ -277,21 +323,32 @@ public class FirmInfoPictureActivity extends AppCompatActivity {
     }
 
     @PermissionDenied(REQUEST_PERMISSION_CAMERA_CODE)
-    public void requestCameeraFailed() {
-        Toast.makeText(this, "请授权允许使用相机", Toast.LENGTH_SHORT).show();
+    public void requestCameraFailed() {
+        showMissingPermissionDialog();
+    }
+
+    @PermissionGrant(REQUEST_PERMISSION_CAMERA_QR_CODE)
+    public void requestCameraQRSuccess() {
+        Intent intent = new Intent(FirmInfoPictureActivity.this, CaptureActivity.class);
+        startActivityForResult(intent, 8);
+    }
+
+    @PermissionDenied(REQUEST_PERMISSION_CAMERA_QR_CODE)
+    public void requestCameraQRFailed() {
+        showMissingPermissionDialog();
     }
 
     @PermissionGrant(REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE_CODE)
-    public void requestExternalStorageSuccess() {
-        Intent data = intent;
-//        createData(data);
+    public void requestEXTERNAL_STORAGESuccess() {
     }
 
     @PermissionDenied(REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE_CODE)
-    public void requestExternalStorageFailed() {
-        Toast.makeText(this, "请授权允许读写内存", Toast.LENGTH_SHORT).show();
+    public void requestEXTERNAL_STORAGEFailed() {
+        showMissingPermissionDialog();
     }
 
+
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         ContentResolver resolver = this.getContentResolver();
@@ -309,7 +366,7 @@ public class FirmInfoPictureActivity extends AppCompatActivity {
                 bitmap = getPicFromBytes(mcontent, null);
                 if (getUrl(data) != null && !getUrl(data).equals("")) {
                     ivPictrue.setImageBitmap(bitmap);
-                    path=getUrl(data);
+                    path = getUrl(data);
                     Log.d("正确的存储路径", getUrl(data));
                 } else {
                     ////把得到的图片绑定在控件上显示
@@ -328,9 +385,9 @@ public class FirmInfoPictureActivity extends AppCompatActivity {
 //            Bitmap copyBitmap = copyBitmap(bitmapCamera);
 
             ivPictrue.setImageBitmap(copyBitmap);
-        }else if (requestCode==8){
-            String result=data.getStringExtra("result");
-            Log.d("条形码",result);
+        } else if (requestCode == 8) {
+            String result = data.getStringExtra("result");
+            Log.d("条形码", result);
             tvinfoValue_firm_info_pictrue.setText(result);
 
 
@@ -347,10 +404,11 @@ public class FirmInfoPictureActivity extends AppCompatActivity {
 
     /**
      * 根据图片字节数组，对图片可能进行二次采样，不致于加载过大图片出现内存溢出
+     *
      * @param
      * @return
      */
-    public static Bitmap getBitmapByBytes(File file){
+    public static Bitmap getBitmapByBytes(File file) {
 
         //对于图片的二次采样,主要得到图片的宽与高
         int width = 0;
@@ -376,8 +434,9 @@ public class FirmInfoPictureActivity extends AppCompatActivity {
         options.inJustDecodeBounds = false;
         //并且制定缩放比例
         options.inSampleSize = sampleSize;
-        return  BitmapFactory.decodeFile(file.getAbsolutePath(), options);
+        return BitmapFactory.decodeFile(file.getAbsolutePath(), options);
     }
+
     public static File insertFileToSd(File file) {
         String path = Environment.getExternalStorageDirectory().getPath();
         LogUtils.log("path的值是-----》" + path);
@@ -502,6 +561,7 @@ public class FirmInfoPictureActivity extends AppCompatActivity {
             this.result = result;
         }
     }
+
     public class ResultParser implements ResponseParser {
         @Override
         public void checkResponse(UriRequest request) throws Throwable {
@@ -517,8 +577,6 @@ public class FirmInfoPictureActivity extends AppCompatActivity {
             return responseEntity;
         }
     }
-
-
 
 
 }

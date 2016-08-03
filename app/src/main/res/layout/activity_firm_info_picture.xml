@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="#EEEEF3"
     android:id="@+id/layout_a"
-    tools:context=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoPictureActivity">
+    tools:context=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoPicture.FirmInfoPictureActivity">
 
 <include
     android:id="@+id/layoutTop_firm_info_pivtrue"

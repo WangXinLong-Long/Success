@@ -322,7 +322,7 @@
             android:name=".fragments.myPlasticTrade.companyInformations.receiptAddress.ReceiptAddressDetail"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".fragments.myPlasticTrade.companyInformations.receiptAddress.AddAddress"
+            android:name=".fragments.myPlasticTrade.companyInformations.receiptAddress.AddAddressMVP.view.AddAddress"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
@@ -335,7 +335,7 @@
             android:name=".fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceAreaMVP.view.SelectProvinceArea"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".fragments.myPlasticTrade.companyInformations.receiptAddress.SelectDetailArea"
+            android:name=".fragments.myPlasticTrade.companyInformations.receiptAddress.SelectDetailAreaMVP.view.SelectDetailArea"
             android:screenOrientation="portrait" />
         <activity
             android:name=".fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.CompanyUserActivity"
@@ -353,7 +353,8 @@
         <activity
             android:name=".fragments.myPlasticTrade.EnterpriseCapitalAccountManagement.SearchMoney"
             android:screenOrientation="portrait" />
-        <!-- <activity android:name=".fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.InvoiceInformation -->
+        <!--<activity android:name=".fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.InvoiceInformation
+   -->
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -377,7 +378,7 @@
             android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoTypeActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoPictureActivity"
+            android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoPicture.FirmInfoPictureActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".fragments.homepage.preSale.PreSaleDetailActivity"
@@ -522,6 +523,9 @@
         <activity android:name=".fragments.homepage.groupbuying.GroupBuyingSuccessActivity" />
         <activity android:name=".fragments.homepage.groupbuying.RuleActivity" />
         <activity android:name=".fragments.homepage.groupbuying.JoinActivity"></activity>
+        <activity android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmActivity"></activity>
+        <activity android:name=".fragments.myPlasticTrade.register.RegisterPhoneActivity"></activity>
+
     </application>
 
 </manifest>

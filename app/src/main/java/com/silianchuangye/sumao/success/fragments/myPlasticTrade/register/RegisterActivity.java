@@ -21,8 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoUpdateActivity;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.LoginUserActivity;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.RegisterFirmActivityMVP.view.RegisterFirmActivity;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 
 import java.util.ArrayList;
@@ -156,6 +155,7 @@ public class RegisterActivity extends AppCompatActivity {
         switch (requestCode) {
 
             case 0:
+
                 account = data.getStringExtra("name");
                 Log.d("zhanghao",account);
                 if (!account.equals("")) {
