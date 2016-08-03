@@ -125,20 +125,26 @@ public class FirmActivity extends AppCompatActivity {
             case 0:
                 String sheng=data.getStringExtra("sheng");
                 Log.d("接收过来的省",sheng);
-                list.get(0).put("minute",sheng);
-                adapter.notifyDataSetChanged();
+                if (sheng !=null){
+                    list.get(0).put("minute",sheng);
+                    adapter.notifyDataSetChanged();
+                }
                 break;
             case 1:
                 String city=data.getStringExtra("city");
                 Log.d("接收过来的市",city);
-                list.get(1).put("minute",city);
-                adapter.notifyDataSetChanged();
+                if (city!=null) {
+                    list.get(1).put("minute", city);
+                    adapter.notifyDataSetChanged();
+                }
                 break;
             case 2:
                 String xianqu=data.getStringExtra("xianqu");
                 list.get(2).put("minute",xianqu);
-                Log.d("接受过来的区县",xianqu);
-                adapter.notifyDataSetChanged();
+                if (xianqu!=null) {
+                    Log.d("接受过来的区县", xianqu);
+                    adapter.notifyDataSetChanged();
+                }
                 break;
 //            case 3:
 //                String xiangxi=data.getStringExtra("name");

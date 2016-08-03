@@ -2,8 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/layout_item_vessel_one"
     android:background="#fff"
-    android:layout_width="@dimen/x63"
-    android:layout_height="@dimen/x65"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/x50"
     >
     <TextView
        android:layout_centerInParent="true"

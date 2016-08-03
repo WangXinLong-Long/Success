@@ -353,8 +353,7 @@
         <activity
             android:name=".fragments.myPlasticTrade.EnterpriseCapitalAccountManagement.SearchMoney"
             android:screenOrientation="portrait" />
-        <!--<activity android:name=".fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.InvoiceInformation
-   -->
+        <!-- <activity android:name=".fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.InvoiceInformation -->
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -507,20 +506,22 @@
             android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.CaptureActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
-        <activity android:name=".fragments.SellerManagementPlatform.acutionManagement.SearchPriceActivity">
-        </activity>
+        <activity android:name=".fragments.SellerManagementPlatform.acutionManagement.SearchPriceActivity" />
         <activity android:name=".fragments.SellerManagementPlatform.acutionManagement.PriceSearchinfoActivity" />
         <activity android:name=".fragments.SellerManagementPlatform.acutionManagement.AcutionResultActivity" />
         <activity android:name=".fragments.SellerManagementPlatform.acutionManagement.AuctionSuccessActivity" />
-        <activity android:name=".fragments.SellerManagementPlatform.acutionManagement.AcutionFailActivity"></activity>
+        <activity android:name=".fragments.SellerManagementPlatform.acutionManagement.AcutionFailActivity" />
         <activity android:name=".salesearch.SaleSearch" />
         <activity android:name=".customermanger.CustomerParent" />
-        <activity android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmActivity"></activity>
-        <activity android:name=".fragments.myPlasticTrade.register.RegisterPhoneActivity"></activity>
-        <activity android:name=".fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceArea"></activity>
-        <activity android:name=".fragments.myPlasticTrade.companyInformations.receiptAddress.SelectCityArea"></activity>
-        <activity android:name=".fragments.myPlasticTrade.companyInformations.receiptAddress.SelectCountyArea"></activity>
-
+        <activity android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmActivity" />
+        <activity android:name=".fragments.myPlasticTrade.register.RegisterPhoneActivity" />
+        <activity android:name=".fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceArea" />
+        <activity android:name=".fragments.myPlasticTrade.companyInformations.receiptAddress.SelectCityArea" />
+        <activity android:name=".fragments.myPlasticTrade.companyInformations.receiptAddress.SelectCountyArea" />
+        <activity android:name=".fragments.homepage.groupbuying.GroupBuyingActivity" />
+        <activity android:name=".fragments.homepage.groupbuying.GroupBuyingSuccessActivity" />
+        <activity android:name=".fragments.homepage.groupbuying.RuleActivity" />
+        <activity android:name=".fragments.homepage.groupbuying.JoinActivity"></activity>
     </application>
 
 </manifest>

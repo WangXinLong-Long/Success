@@ -74,7 +74,7 @@ public  class MyAdapter extends BaseExpandableListAdapter {
                              ViewGroup arg4) {
         //View view =getActivity().getLayoutInflater().inflate(R.layout.item, arg4,false);
         View view=View.inflate(context,R.layout.item,null);
-        TextView tvName = (TextView) view.findViewById(R.id.tv_order_goods);
+        TextView tvName = (TextView) view.findViewById(R.id.tv_order_goods_type);
         tvName.setText(listitem.get(arg0).get(arg1).get("type").toString());
         TextView tvContent = (TextView) view.findViewById(R.id.tv_order_productionName);
         tvContent.setText(listitem.get(arg0).get(arg1).get("name").toString());

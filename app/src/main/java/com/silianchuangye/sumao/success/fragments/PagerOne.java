@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.activity.WelcomeActivity;
 import com.silianchuangye.sumao.success.fragments.SellerManagementPlatform.SellerManagementPlatformActivity;
+import com.silianchuangye.sumao.success.fragments.homepage.groupbuying.GroupBuyingActivity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.LoginUserActivity;
 import com.silianchuangye.sumao.success.fragments.type.SearchActivity;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.AuctionActivity;
@@ -132,6 +133,9 @@ public class PagerOne extends BasePager {
         Map<String,Object> map3=new HashMap<String,Object>();
         map3.put("icon",R.mipmap.order);
         list.add(map3);
+        Map<String,Object> map8=new HashMap<String,Object>();
+        map8.put("icon",R.mipmap.groupon);
+        list.add(map8);
         Map<String,Object> map4=new HashMap<String,Object>();
         map4.put("icon",R.mipmap.direct);
         list.add(map4);
@@ -141,12 +145,12 @@ public class PagerOne extends BasePager {
         Map<String,Object> map6=new HashMap<String,Object>();
         map6.put("icon",R.mipmap.consult);
         list.add(map6);
-        Map<String,Object> map7=new HashMap<String,Object>();
-        map7.put("icon",R.mipmap.more);
-        list.add(map7);
         Map<String,Object> map13=new HashMap<String,Object>();
         map13.put("icon",R.mipmap.maifang);
         list.add(map13);
+        Map<String,Object> map7=new HashMap<String,Object>();
+        map7.put("icon",R.mipmap.more);
+        list.add(map7);
         SimpleAdapter adapter=new SimpleAdapter(mActivity,list,R.layout.fragmentoneitem,new String[]{"icon"},new int[]{R.id.ivIcon});
         gvFragmentone.setAdapter(adapter);
         /**
@@ -174,9 +178,10 @@ public class PagerOne extends BasePager {
               //   }else
                  if(list.get(position).get("icon").equals(R.mipmap.togther)){
                     Toast.makeText(mActivity, "点击了撮合按钮", Toast.LENGTH_SHORT).show();
-
                 }else if(list.get(position).get("icon").equals(R.mipmap.groupon)){
-                    Toast.makeText(mActivity, "点击了团购按钮", Toast.LENGTH_SHORT).show();
+                     Intent intent=new Intent(mActivity, GroupBuyingActivity.class);
+                     startActivity(intent);
+                    //Toast.makeText(mActivity, "点击了团购按钮", Toast.LENGTH_SHORT).show();
                 }else if(list.get(position).get("icon").equals(R.mipmap.goods)){
                     Intent intent=new Intent(mActivity, GoodsInStockActivity.class);
                     //Toast.makeText(mActivity, "点击了现货按钮", Toast.LENGTH_SHORT).show();
