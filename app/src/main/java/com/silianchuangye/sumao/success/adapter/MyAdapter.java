@@ -1,6 +1,7 @@
 package com.silianchuangye.sumao.success.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ public  class MyAdapter extends BaseExpandableListAdapter {
     private List<List<Map<String,Object>>> listitem;
     private Context context;
     TextView tv_order_price_state;
+    TextView tv_people;
     public MyAdapter(List<Map<String,Object>> listparrent,List<List<Map<String,Object>>> listitem,Context context){
         this.listparrent=listparrent;
         this.listitem=listitem;
@@ -59,14 +61,16 @@ public  class MyAdapter extends BaseExpandableListAdapter {
         //View view =LayoutInflater().inflate(R.layout.group, arg3, false);
         View view=View.inflate(context,R.layout.group,null);
         TextView tvTitle  = (TextView) view.findViewById(R.id.tv_Order_id_value);
+        tv_people= (TextView) view.findViewById(R.id.tv_order_price_people_name);
          tv_order_price_state  = (TextView) view.findViewById(R.id.tv_order_price_state);
         TextView tvprice  = (TextView) view.findViewById(R.id.tv_order_price_value);
 
         tv_order_price_state.setText(listparrent.get(arg0).get("states").toString());
 
         tvTitle.setText(listparrent.get(arg0).get("id").toString());
-
-        tvTitle.setText(listparrent.get(arg0).get("price").toString());
+//        Log.e("TAG","listparrent.get(arg0).get(\"p\").toString()="+listparrent.get(arg0).get("p").toString());
+        tv_people.setText(listparrent.get(arg0).get("id").toString());
+        tvprice.setText(listparrent.get(arg0).get("price").toString());
         return view;
     }
     //获取到子项布局效果
@@ -74,7 +78,7 @@ public  class MyAdapter extends BaseExpandableListAdapter {
                              ViewGroup arg4) {
         //View view =getActivity().getLayoutInflater().inflate(R.layout.item, arg4,false);
         View view=View.inflate(context,R.layout.item,null);
-        TextView tvName = (TextView) view.findViewById(R.id.tv_order_goods);
+        TextView tvName = (TextView) view.findViewById(R.id.tv_order_goods_type);
         tvName.setText(listitem.get(arg0).get(arg1).get("type").toString());
         TextView tvContent = (TextView) view.findViewById(R.id.tv_order_productionName);
         tvContent.setText(listitem.get(arg0).get(arg1).get("name").toString());
