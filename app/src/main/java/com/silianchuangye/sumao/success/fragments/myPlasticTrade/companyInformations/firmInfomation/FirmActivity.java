@@ -16,9 +16,9 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.silianchuangye.sumao.success.R;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectCityArea;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectCountyArea;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceArea;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectCityAreaMVP.view.SelectCityArea;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectCountyAreaMVP.view.SelectCountyArea;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceAreaMVP.view.SelectProvinceArea;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.RegisterValueActivity;
 
 import java.util.ArrayList;
@@ -47,7 +47,7 @@ public class FirmActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_firm);
         title_Bar();
-        tv_xiangsi_dizhi= (TextView) findViewById(R.id.tv_xiangsi_dizhi);
+       // tv_xiangsi_dizhi= (TextView) findViewById(R.id.tv_xiangsi_dizhi);
         list=new ArrayList<Map<String,Object>>();
         lv_Demo= (ListView) findViewById(R.id.lv_province);
         Map<String,Object> map1=new Hashtable<String,Object>();
@@ -91,18 +91,18 @@ public class FirmActivity extends AppCompatActivity {
                 }
             }
         });
-        layout_bottom= (RelativeLayout) findViewById(R.id.layout_bottom);
-        layout_bottom.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //跳到详细地址页
-                Intent intent=new Intent(FirmActivity.this,RegisterValueActivity.class);
-                intent.putExtra("title","地址详情");
-                intent.putExtra("pass","");
-                intent.putExtra("content","");
-                startActivityForResult(intent,3);
-            }
-        });
+       // layout_bottom= (RelativeLayout) findViewById(R.id.layout_bottom);
+       // layout_bottom.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                //跳到详细地址页
+//                Intent intent=new Intent(FirmActivity.this,RegisterValueActivity.class);
+//                intent.putExtra("title","地址详情");
+//                intent.putExtra("pass","");
+//                intent.putExtra("content","");
+//                startActivityForResult(intent,3);
+//            }
+//        });
         bt_save= (Button) findViewById(R.id.bt_save);
         bt_save.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,25 +125,31 @@ public class FirmActivity extends AppCompatActivity {
             case 0:
                 String sheng=data.getStringExtra("sheng");
                 Log.d("接收过来的省",sheng);
-                list.get(0).put("minute",sheng);
-                adapter.notifyDataSetChanged();
+                if (sheng !=null){
+                    list.get(0).put("minute",sheng);
+                    adapter.notifyDataSetChanged();
+                }
                 break;
             case 1:
                 String city=data.getStringExtra("city");
                 Log.d("接收过来的市",city);
-                list.get(1).put("minute",city);
-                adapter.notifyDataSetChanged();
+                if (city!=null) {
+                    list.get(1).put("minute", city);
+                    adapter.notifyDataSetChanged();
+                }
                 break;
             case 2:
                 String xianqu=data.getStringExtra("xianqu");
                 list.get(2).put("minute",xianqu);
-                Log.d("接受过来的区县",xianqu);
-                adapter.notifyDataSetChanged();
+                if (xianqu!=null) {
+                    Log.d("接受过来的区县", xianqu);
+                    adapter.notifyDataSetChanged();
+                }
                 break;
-            case 3:
-                String xiangxi=data.getStringExtra("name");
-                tv_xiangsi_dizhi.setText(xiangxi);
-                break;
+//            case 3:
+//                String xiangxi=data.getStringExtra("name");
+//                tv_xiangsi_dizhi.setText(xiangxi);
+//                break;
         }
     }
 

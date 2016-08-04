@@ -322,7 +322,7 @@
             android:name=".fragments.myPlasticTrade.companyInformations.receiptAddress.ReceiptAddressDetail"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".fragments.myPlasticTrade.companyInformations.receiptAddress.AddAddress"
+            android:name=".fragments.myPlasticTrade.companyInformations.receiptAddress.AddAddressMVP.view.AddAddress"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
@@ -335,7 +335,7 @@
             android:name=".fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceAreaMVP.view.SelectProvinceArea"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".fragments.myPlasticTrade.companyInformations.receiptAddress.SelectDetailArea"
+            android:name=".fragments.myPlasticTrade.companyInformations.receiptAddress.SelectDetailAreaMVP.view.SelectDetailArea"
             android:screenOrientation="portrait" />
         <activity
             android:name=".fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.CompanyUserActivity"
@@ -378,7 +378,7 @@
             android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoTypeActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoPictureActivity"
+            android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoPicture.FirmInfoPictureActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".fragments.homepage.preSale.PreSaleDetailActivity"
@@ -507,19 +507,24 @@
             android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.CaptureActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
-        <activity android:name=".fragments.SellerManagementPlatform.acutionManagement.SearchPriceActivity">
-        </activity>
+        <activity android:name=".fragments.SellerManagementPlatform.acutionManagement.SearchPriceActivity" />
         <activity android:name=".fragments.SellerManagementPlatform.acutionManagement.PriceSearchinfoActivity" />
         <activity android:name=".fragments.SellerManagementPlatform.acutionManagement.AcutionResultActivity" />
         <activity android:name=".fragments.SellerManagementPlatform.acutionManagement.AuctionSuccessActivity" />
-        <activity android:name=".fragments.SellerManagementPlatform.acutionManagement.AcutionFailActivity"></activity>
+        <activity android:name=".fragments.SellerManagementPlatform.acutionManagement.AcutionFailActivity" />
         <activity android:name=".salesearch.SaleSearch" />
         <activity android:name=".customermanger.CustomerParent" />
+        <activity android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmActivity" />
+        <activity android:name=".fragments.myPlasticTrade.register.RegisterPhoneActivity" />
+        <activity android:name=".fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceArea" />
+        <activity android:name=".fragments.myPlasticTrade.companyInformations.receiptAddress.SelectCityArea" />
+        <activity android:name=".fragments.myPlasticTrade.companyInformations.receiptAddress.SelectCountyArea" />
+        <activity android:name=".fragments.homepage.groupbuying.GroupBuyingActivity" />
+        <activity android:name=".fragments.homepage.groupbuying.GroupBuyingSuccessActivity" />
+        <activity android:name=".fragments.homepage.groupbuying.RuleActivity" />
+        <activity android:name=".fragments.homepage.groupbuying.JoinActivity"></activity>
         <activity android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmActivity"></activity>
         <activity android:name=".fragments.myPlasticTrade.register.RegisterPhoneActivity"></activity>
-        <activity android:name=".fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceArea"></activity>
-        <activity android:name=".fragments.myPlasticTrade.companyInformations.receiptAddress.SelectCityArea"></activity>
-        <activity android:name=".fragments.myPlasticTrade.companyInformations.receiptAddress.SelectCountyArea"></activity>
 
     </application>
 

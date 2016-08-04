@@ -1,9 +1,8 @@
-package com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress;
+package com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceAreaMVP.view;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -13,11 +12,9 @@ import android.widget.TextView;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.SelectProvinceAreaAdapter;
 
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectCityAreaMVP.view.SelectCityArea;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceAreaMVP.bean.Area;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceAreaMVP.presenter.SelectProvinceAreaPresenter;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceAreaMVP.view.ISelectProvinceAreaView;
-import com.silianchuangye.sumao.success.model.ProvinceModel;
-import com.silianchuangye.sumao.success.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,11 +42,6 @@ public class SelectProvinceArea extends Activity implements View.OnClickListener
         tv_child_title_bar_title.setText("选择省/自治区");
         listview = ((ListView) findViewById(R.id.listview));
         lists = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            province = new Area();
-            province.setName("地区"+i+"省");
-            lists.add(province);
-        }
 
         presenter = new SelectProvinceAreaPresenter(this);
         presenter.putResultInView();
@@ -85,9 +77,10 @@ public class SelectProvinceArea extends Activity implements View.OnClickListener
     @Override
     public void onListItemClick(int position) {
         Intent intent = new Intent();
-        intent.putExtra("sheng",lists.get(position).getName().toString());
-        setResult(0,intent);
-        SelectProvinceArea.this.finish();
+        intent.setClass(SelectProvinceArea.this, SelectCityArea.class);
+        intent.putExtra("province", lists.get(position).getLevel());
+        intent.putExtra("className", className);
+        startActivity(intent);
 
     }
 }

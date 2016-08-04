@@ -328,7 +328,7 @@ public class TypeInfoActivity extends AppCompatActivity {
         for (int i=0;i<=8;i++){
             list_gv_fenlei.add("HDFE");
         }
-        ArrayAdapter<String> adapter=new ArrayAdapter<String>(TypeInfoActivity.this,R.layout.item_type,R.id.tv_Type,list_gv_fenlei);
+        ArrayAdapter<String> adapter=new ArrayAdapter<String>(TypeInfoActivity.this,R.layout.layout,R.id.tv_Type,list_gv_fenlei);
         gv_Apple_Type.setAdapter(adapter);
         gv_Apple_Type.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -344,7 +344,7 @@ public class TypeInfoActivity extends AppCompatActivity {
         for (int i=0;i<=8;i++){
             list_gv_paihao.add("FS8888");
         }
-        ArrayAdapter<String> adapter1=new ArrayAdapter<String>(TypeInfoActivity.this,R.layout.item_type,R.id.tv_Type,list_gv_paihao);
+        ArrayAdapter<String> adapter1=new ArrayAdapter<String>(TypeInfoActivity.this,R.layout.layout,R.id.tv_Type,list_gv_paihao);
         gv_Number_Type.setAdapter(adapter1);
         /**
          * 应用
@@ -362,7 +362,7 @@ public class TypeInfoActivity extends AppCompatActivity {
         CustomGridView gv_Firm_Type= (CustomGridView) view.findViewById(R.id.gv_Firm_Type);
         List<String> list_gv_diqu=new ArrayList<String>();
         for (int i=0;i<=8;i++){
-            list_gv_diqu.add("上海");
+            list_gv_diqu.add("上海市");
         }
         ArrayAdapter<String> adapter3=new ArrayAdapter<String>(TypeInfoActivity.this,R.layout.item_type,R.id.tv_Type,list_gv_diqu);
         gv_Firm_Type.setAdapter(adapter3);

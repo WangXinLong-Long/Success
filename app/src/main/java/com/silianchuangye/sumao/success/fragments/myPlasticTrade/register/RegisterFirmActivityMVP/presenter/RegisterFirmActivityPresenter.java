@@ -1,30 +1,27 @@
-package com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.addressDisplayMVP.presenter;
+package com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.RegisterFirmActivityMVP.presenter;
 
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.addressDisplayMVP.model.AddressDisplayModel;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.addressDisplayMVP.model.IAddressDisplayCallback;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.addressDisplayMVP.model.IAddressDisplayModel;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.addressDisplayMVP.view.IAddressDisplayView;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.AddAddressMVP.view.IAddAddress;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.ReceiptAddressMVP.model.ReceiptAddressModel;
-
-import java.util.List;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.RegisterFirmActivityMVP.view.IRegisterFirmActivityView;
 
 /**
- * Created by Administrator on 2016/7/28 0028.
+ * Created by Administrator on 2016/8/2 0002.
  */
-public class AddressDisplayPresenter {
-    IAddressDisplayView addressDisplayView ;
-    ReceiptAddressModel model;
-    IAddAddress addAddress;
-    public AddressDisplayPresenter(IAddressDisplayView addressDisplayView ) {
-        this.addressDisplayView = addressDisplayView;
+public class RegisterFirmActivityPresenter  {
+    IRegisterFirmActivityView registerFirmActivityView;
+
+    public  RegisterFirmActivityPresenter(IRegisterFirmActivityView registerFirmActivityView){
+        this.registerFirmActivityView = registerFirmActivityView;
+
     }
     public void setDetailAddress(String province,String city,String county){
         IAddressDisplayModel addressDisplayModel = new AddressDisplayModel(province,city,county);
         addressDisplayModel.getAddressDisplayInfo(new IAddressDisplayCallback() {
             @Override
             public void callbackAddressDisplayInfo(String address) {
-                addressDisplayView.setAddressDisplay(address);
+                registerFirmActivityView.setStringInText(address);
 
             }
         });
