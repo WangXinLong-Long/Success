@@ -1,12 +1,15 @@
 package com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.goodsInStock;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.SharedPreferences;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -43,6 +46,10 @@ import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.SpotOrder.ServiceFinishFragment;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.SpotOrder.ServiceShipmentsFragment;
 
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -58,6 +65,10 @@ public class OrderGoodsActivity extends AppCompatActivity implements View.OnClic
     private Button btn_dingdan_my,btn_dingdan_all;
     private List<String> list=new ArrayList<String>();
     private ArrayAdapter<String> LvAdapter;
+    private List<String> Jylist=new ArrayList<String>();
+    private ArrayAdapter<String> JyLvAdapter;
+    private List<String> Kplist=new ArrayList<String>();
+    private ArrayAdapter<String> KpLvAdapter;
     private boolean flag=true;
     String first = "first";
     String second = "second";
@@ -72,7 +83,12 @@ public class OrderGoodsActivity extends AppCompatActivity implements View.OnClic
     private TextView tv_title_name;
     private String  title;
 
-
+    private int i;
+    private String OrderType;
+    private String OrderState;
+    private int CheckType;
+    private String startDate,endDate;
+    private String company,OrderId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -224,12 +240,16 @@ public class OrderGoodsActivity extends AppCompatActivity implements View.OnClic
         Tv_dingdan_enddate.setOnClickListener(this);
         btn_dingdan_my.setOnClickListener(this);
         btn_dingdan_all.setOnClickListener(this);
+        Lv_dingdan.setAdapter(LvAdapter);
+        Lv_jiaoyi.setAdapter(JyLvAdapter);
+        Lv_kaipiao.setAdapter(KpLvAdapter);
         Lv_jiaoyi.setOnItemClickListener(this);
         Lv_kaipiao.setOnItemClickListener(this);
         Lv_dingdan.setOnItemClickListener(this);
-        Tv_jiaoyi.setText(LvAdapter.getItem(0));
-        Tv_dingdan.setText(LvAdapter.getItem(0));
-        Tv_kaipiao.setText(LvAdapter.getItem(0));
+        Tv_jiaoyi.setText(JyLvAdapter.getItem(0));
+//        Tv_dingdan.setText(LvAdapter.getItem(0));
+//        Tv_kaipiao.setText(KpLvAdapter.getItem(0));
+
     }
     @Override
     public void onClick(View v) {
@@ -267,9 +287,13 @@ public class OrderGoodsActivity extends AppCompatActivity implements View.OnClic
                 showDate(Tv_dingdan_enddate);
                 break;
             case R.id.btn_dingdan_my:
+                i=1;
+                sendMy();
                 Toast.makeText(OrderGoodsActivity.this,"点击了我的意向单",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btn_dingdan_all:
+                i=2;
+                sendMy();
                 Toast.makeText(OrderGoodsActivity.this,"点击了所有意向单",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.linear7_dingdan_bottem:
@@ -279,12 +303,32 @@ public class OrderGoodsActivity extends AppCompatActivity implements View.OnClic
     }
     //给ListView添加虚假数据源
     private void initData() {
-        for(int i=0;i<5;i++){
-            list.add("itemview"+i);
-        }
+        List<String> list=new ArrayList<String>();
+        List<String> Jylist=new ArrayList<String>();
+        List<String> Kplist=new ArrayList<String>();
+        list.add("所有");
+       list.add("待支付");
+        list.add("已支付");
+        list.add("已发货");
+        list.add("已完成");
+        list.add("已取消");
+        list.add("已变更");
         LvAdapter=new ArrayAdapter<String>(this,
                 R.layout.item_view,
                 R.id.tv_item,list);
+        Kplist.add("所有");
+        Kplist.add("代开票");
+        Kplist.add("已开票");
+        KpLvAdapter=new ArrayAdapter<String>(this,R.layout.item_view,
+                R.id.tv_item,Kplist);
+        Jylist.add("现货");
+        Jylist.add("公开竞拍");
+        Jylist.add("密封竞拍");
+        Jylist.add("团购");
+        Jylist.add("预售");
+        JyLvAdapter =new ArrayAdapter<String>(this,R.layout.item_view,
+                R.id.tv_item,Jylist);
+
     }
     //弹出的popWindow
     private void showPopView(){
@@ -302,7 +346,7 @@ public class OrderGoodsActivity extends AppCompatActivity implements View.OnClic
     private void showLv(ListView Lv){
         if(flag){
             Lv.setVisibility(View.VISIBLE);
-            Lv.setAdapter(LvAdapter);
+//            Lv.setAdapter(LvAdapter);
             flag=false;
         }else{
             Lv.setVisibility(View.GONE);
@@ -336,15 +380,46 @@ public class OrderGoodsActivity extends AppCompatActivity implements View.OnClic
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if(Lv_jiaoyi==parent){
-            Tv_jiaoyi.setText(LvAdapter.getItem(position));
+            Tv_jiaoyi.setText(JyLvAdapter.getItem(position));
+            if(Tv_jiaoyi.getText().equals("现货")){
+                OrderType="fixedPricingOrder";
+            }else if(Tv_jiaoyi.getText().equals("公开竞拍")){
+                OrderType="openAuctionOrder";
+            }else if(Tv_jiaoyi.getText().equals("密封竞拍")){
+                OrderType="sealedAuctionOrder";
+            }else if(Tv_jiaoyi.getText().equals("团购")){
+                OrderType="integratePurchaseOrder";
+            }else if(Tv_jiaoyi.getText().equals("预售")){
+                OrderType="forwardPricingOrder";
+            }
             Lv_jiaoyi.setVisibility(View.GONE);
         }
         if(Lv_kaipiao==parent){
-            Tv_kaipiao.setText(LvAdapter.getItem(position));
+            Tv_kaipiao.setText(KpLvAdapter.getItem(position));
+            if(Tv_kaipiao.getText().equals("待开票")){
+                CheckType=0;
+            }else if(Tv_kaipiao.getText().equals("已开票")){
+                CheckType=1;
+            }
             Lv_kaipiao.setVisibility(View.GONE);
         }
         if(Lv_dingdan==parent){
             Tv_dingdan.setText(LvAdapter.getItem(position));
+            if(Tv_dingdan.getText().equals("所有")){
+                OrderState="0";
+            }else if(Tv_dingdan.getText().equals("待支付")){
+                OrderState=1+"";
+            }else if(Tv_dingdan.getText().equals("已支付")){
+                OrderState="QUOTED";
+            }else if(Tv_dingdan.getText().equals("已发货")){
+                OrderState="PRESSING1";
+            }else if(Tv_dingdan.getText().equals("已完成")){
+                OrderState="NO_PENDING_ACTIO";
+            }else if(Tv_dingdan.getText().equals("已取消")){
+                OrderState="REMOVED";
+            }else if(Tv_dingdan.getText().equals("已变更")){
+                OrderState="CHANGED";
+            }
             Lv_dingdan.setVisibility(View.GONE);
         }
     }
@@ -369,4 +444,47 @@ public class OrderGoodsActivity extends AppCompatActivity implements View.OnClic
     {
         listview.setVisibility(View.GONE);
     }
+    private void sendMy(){
+        startDate=Tv_dingdan_startdate.getText().toString();//开始日期
+        endDate=Tv_dingdan_enddate.getText().toString();//结束日期
+        company=edt_dingdan_company.getText().toString();//公司
+        OrderId=edt_dingdan_num.getText().toString();//订单号
+        Log.e("TAG","OrderId---"+OrderId+"----startDate---"+startDate+"----endDate-----"+endDate+"---company===="+company);
+        RequestParams params=new RequestParams("http://192.168.32.126:7023/rest/model/atg/userprofiling/ProfileActor/myOrders");
+        params.addParameter("pageNum",1);
+        params.addParameter("searchOrderId",OrderId);
+        params.addParameter("startDate",startDate);
+        params.addParameter("endDate",endDate);
+        params.addParameter("submitType",i);
+        params.addParameter("searchOrderType",OrderType);
+        params.addParameter("searchOrderState",OrderState);
+//        params.addParameter("searchCompanyName",company);
+        params.addParameter("searchCheckType",CheckType);
+        SharedPreferences sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+        String unique123 = sp.getString("unique", "");
+        params.addParameter("_dynSessConf", unique123);
+        Log.e("TAG","parames======"+params);
+        x.http().post(params, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.e("TAG","result----"+result);
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                Log.e("TAG","失败呢");
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+    }
 }
+
