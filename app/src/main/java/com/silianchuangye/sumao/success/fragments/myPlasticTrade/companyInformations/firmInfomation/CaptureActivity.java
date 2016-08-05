@@ -50,6 +50,7 @@ public class CaptureActivity extends Activity implements Callback {
 	// private static final float BEEP_VOLUME = 0.10f;
 	private boolean vibrate;
 	CameraManager cameraManager;
+	String result;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -59,7 +60,7 @@ public class CaptureActivity extends Activity implements Callback {
 		setContentView(R.layout.activity_capture);
 		surfaceView = (SurfaceView) findViewById(R.id.surfaceview);
 		viewfinderView = (ViewfinderView) findViewById(R.id.viewfinderview);
-
+         result="";
 		Window window = getWindow();
 		//使界面是透明的
 		window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -202,10 +203,7 @@ public class CaptureActivity extends Activity implements Callback {
 		builder.setCancelable(false);
 		builder.show();
 
-		// Intent intent = new Intent();
-		// intent.putExtra(QR_RESULT, rawResult.getText());
-		// setResult(RESULT_OK, intent);
-		// finish();
+
 	}
 
 	public void restartPreviewAfterDelay(long delayMS) {
@@ -260,7 +258,12 @@ public class CaptureActivity extends Activity implements Callback {
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			setResult(RESULT_CANCELED);
+//			setResult(RESULT_CANCELED);
+//			finish();
+			Intent intent=new Intent();
+			//Intent intent = new Intent();
+			intent.putExtra("result",result);
+			setResult(8, intent);
 			finish();
 			return true;
 		} else if (keyCode == KeyEvent.KEYCODE_FOCUS || keyCode == KeyEvent.KEYCODE_CAMERA) {
