@@ -234,21 +234,37 @@
                         android:layout_height="wrap_content"
                         android:text="成团进度:"
                         android:layout_marginLeft="@dimen/x10"
-                        android:layout_marginTop="@dimen/x10"
+                        android:layout_marginTop="@dimen/x20"
                         android:id="@+id/tv_progress"
                         />
                     <ProgressBar
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="@dimen/x10"
                         android:layout_toRightOf="@+id/tv_progress"
                         android:layout_marginLeft="@dimen/x5"
-                        style="?android:attr/progressBarStyleHorizontal"
-                        android:max="100"
+                        android:id="@+id/pbDemo"
+                        style="@android:style/Widget.ProgressBar.Horizontal"
                         android:progress="50"
-                        android:secondaryProgress="70"
-                        android:layout_marginTop="@dimen/x10"
+                        android:progressDrawable="@drawable/progressdrawable"
+                        android:layout_marginTop="@dimen/x25"
                         android:layout_marginRight="@dimen/x10"
 
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0t"
+                        android:layout_below="@id/pbDemo"
+                        android:layout_toRightOf="@+id/tv_progress"
+                        android:layout_marginLeft="@dimen/x5"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="@dimen/x10"
+                        android:text="100t"
+                        android:layout_below="@+id/pbDemo"
                         />
                 </RelativeLayout>
                 <LinearLayout
@@ -572,11 +588,15 @@
                     />
 
             </RelativeLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/x5"
+                android:background="#EDEDF1"></LinearLayout>
             <com.silianchuangye.sumao.success.custom.customCalendar.CustomListView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/lv_demo"
-                android:layout_marginTop="@dimen/x5"
+
                 ></com.silianchuangye.sumao.success.custom.customCalendar.CustomListView>
         </LinearLayout>
     </ScrollView>
