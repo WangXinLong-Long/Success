@@ -49,11 +49,13 @@ public class PresellPayFragment extends Fragment {
         map1.put("id","1000001");
         map1.put("price","70000.0");
         map1.put("states","待支付");
+        map1.put("name","张三");
         listparrent.add(map1);
         Map<String,Object> map2=new Hashtable<String,Object>();
         map2.put("id","1000001");
         map2.put("price","88888888");
         map2.put("states","待支付");
+        map2.put("name","lisi");
         listparrent.add(map2);
 
         listitem=new ArrayList<List<Map<String,Object>>>();

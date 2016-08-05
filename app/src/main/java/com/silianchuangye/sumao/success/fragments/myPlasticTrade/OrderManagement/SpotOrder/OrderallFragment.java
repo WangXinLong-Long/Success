@@ -35,6 +35,7 @@ import java.util.Map;
  * A simple {@link Fragment} subclass.
  */
 public class OrderallFragment extends Fragment {
+    private String name;
     private ExpandableListView elvDemo;
     private List<Map<String,Object>> listparrent=new ArrayList<Map<String,Object>>();;
     private List<List<Map<String,Object>>> listitem=new ArrayList<List<Map<String,Object>>>();;
@@ -64,7 +65,7 @@ public class OrderallFragment extends Fragment {
             public void run() {
                 Log.e("TAG","therw");
                 super.run();
-                sendMy();
+              //  sendMy();
             }
         }.start();
 
@@ -146,6 +147,7 @@ public class OrderallFragment extends Fragment {
             @Override
             public void onSuccess(String result) {
                 Log.e("TAG","result----"+result);
+                if (!result.contains("fail")){
                 try {
                     JSONObject job=new JSONObject(result);
                     String str=job.getString("order");
@@ -185,13 +187,15 @@ public class OrderallFragment extends Fragment {
                         String orderId=j.getString("orderId");//订单编号
 //                    /    String cl_amount=j.getString("cl_amount");
 //                        Log.e("TAG","zhuant "+state+orderId+owner+cl_jine);
+                        Log.d("采购员",""+owner);
 
                         Map<String,Object> map1=new Hashtable<String,Object>();
                         map1.put("id",orderId);
                         map1.put("price","金额");
                         map1.put("states",state1);
-                        map1.put("p",owner);
-                        Log.e("TAG","map1-----"+map1);
+                        map1.put("name","张三");
+                        name=owner;
+                        Log.e("TAG的值","map1-----"+map1);
                         listparrent.add(map1);
                         JSONArray j1=new JSONArray(cl);
                         for(int k=0;k<j1.length();k++){
@@ -207,16 +211,17 @@ public class OrderallFragment extends Fragment {
                         }
 
                     }
-                    adapter=new MyAdapter(listparrent,listitem,getActivity());
-                    elvDemo.setAdapter(adapter);
-                    if(adapter!=null && listparrent!=null){
-                        for (int i = 0; i < listparrent.size(); i++) {
-                            elvDemo.expandGroup(i);
-                        }}
+//                    adapter=new MyAdapter(listparrent,listitem,getActivity());
+//                    elvDemo.setAdapter(adapter);
+//                    if(adapter!=null && listparrent!=null){
+//                        for (int i = 0; i < listparrent.size(); i++) {
+//                            elvDemo.expandGroup(i);
+//                        }}
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+            }
             }
 
             @Override

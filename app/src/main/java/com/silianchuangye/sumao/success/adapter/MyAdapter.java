@@ -22,12 +22,13 @@ public  class MyAdapter extends BaseExpandableListAdapter {
     private List<Map<String,Object>> listparrent;
     private List<List<Map<String,Object>>> listitem;
     private Context context;
-    TextView tv_order_price_state;
-    TextView tv_people;
+    //private String name;
+
     public MyAdapter(List<Map<String,Object>> listparrent,List<List<Map<String,Object>>> listitem,Context context){
         this.listparrent=listparrent;
         this.listitem=listitem;
         this.context=context;
+        //this.name=name;
     }
 
 
@@ -61,15 +62,15 @@ public  class MyAdapter extends BaseExpandableListAdapter {
         //View view =LayoutInflater().inflate(R.layout.group, arg3, false);
         View view=View.inflate(context,R.layout.group,null);
         TextView tvTitle  = (TextView) view.findViewById(R.id.tv_Order_id_value);
-        tv_people= (TextView) view.findViewById(R.id.tv_order_price_people_name);
-         tv_order_price_state  = (TextView) view.findViewById(R.id.tv_order_price_state);
+        TextView tv_people= (TextView) view.findViewById(R.id.tv_order_price_people_name);
+        TextView tv_order_price_state  = (TextView) view.findViewById(R.id.tv_order_price_state);
         TextView tvprice  = (TextView) view.findViewById(R.id.tv_order_price_value);
-
+        Log.d("map",listparrent.get(arg0).toString());
+//        Log.d("采购员",listparrent.get(arg0).get("name").toString());
         tv_order_price_state.setText(listparrent.get(arg0).get("states").toString());
-
         tvTitle.setText(listparrent.get(arg0).get("id").toString());
-//        Log.e("TAG","listparrent.get(arg0).get(\"p\").toString()="+listparrent.get(arg0).get("p").toString());
-        tv_people.setText(listparrent.get(arg0).get("id").toString());
+     //  Log.e("TAG","listparrent.get(arg0).get(\"p\").toString()="+listparrent.get(arg0).get("p").toString());
+        tv_people.setText(listparrent.get(arg0).get("name").toString());
         tvprice.setText(listparrent.get(arg0).get("price").toString());
         return view;
     }
