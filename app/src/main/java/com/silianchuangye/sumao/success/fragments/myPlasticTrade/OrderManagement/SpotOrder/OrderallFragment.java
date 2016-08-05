@@ -140,7 +140,7 @@ public class OrderallFragment extends Fragment {
 //        params.addParameter("searchCompanyName",company);
         final SharedPreferences sp = getActivity().getSharedPreferences("sumao", Activity.MODE_PRIVATE);
         String unique123 = sp.getString("unique", "");
-//        params.addParameter("_dynSessConf", unique123);
+        params.addParameter("_dynSessConf", unique123);
         Log.e("TAG","parames======"+params);
         x.http().post(params, new Callback.CommonCallback<String>() {
             @Override
@@ -157,6 +157,7 @@ public class OrderallFragment extends Fragment {
                         String state=j.getString("state");//状态
                         String shippingGroupState=j.getString("shippingGroupState");
                         String type=j.getString("type");
+                        String cl_amount="";
                         if(state.equals("SUBMITTED")||state.equals("PENDING_APPROVAL")||state.equals("APPROVED")||state.equals("FAILED_APPROVAL")){
                             if(type.equals("offlineOrder")) {
                                 state1 = "订单生成";
@@ -172,40 +173,39 @@ public class OrderallFragment extends Fragment {
                             }else{
                                 state1="已发货";
                             }
-                        }else if(state.equals("PRESSING1")){
-                            state1="已发货";
                         }else if (state.equals("NO_PENDING_ACTION")){
                             state1="已完成";
-                        }else if (state.equals("REMOVED")){
-                            state1="已取消";
-                        }else if (state.equals("CHANGED")){
-                            state1="已变更";
+                        }else if(state.equals("REMOVED")||state.equals("PENGDING_CANCEL")){
+                            if(type.equals("fixedPricingOrder")||type.equals("traderFixedPricingOrder")){
+                                state1="已取消";
+                            }else{
+                                state1="竞拍失败";
+                            }
                         }
                         String owner=j.getString("owner");//采购员
                         String orderId=j.getString("orderId");//订单编号
-//                    /    String cl_amount=j.getString("cl_amount");
-//                        Log.e("TAG","zhuant "+state+orderId+owner+cl_jine);
 
-                        Map<String,Object> map1=new Hashtable<String,Object>();
-                        map1.put("id",orderId);
-                        map1.put("price","金额");
-                        map1.put("states",state1);
-                        map1.put("p",owner);
-                        Log.e("TAG","map1-----"+map1);
-                        listparrent.add(map1);
                         JSONArray j1=new JSONArray(cl);
                         for(int k=0;k<j1.length();k++){
                             JSONObject job1= (JSONObject) j1.get(k);
+                            cl_amount=job1.getString("cl_amount");//金额
                             String cl_mingcheng=job1.getString("cl_mingcheng");//产品名称
+                            String cl_fenlei=job1.getString("cl_fenlei");
                             Log.e("TAG","mingc=="+cl_mingcheng);
                             List<Map<String,Object>> list1=new ArrayList<Map<String,Object>>();
                             Map<String,Object> map=new Hashtable<String,Object>();
-                            map.put("type","四联创业");
+                            map.put("type",cl_fenlei);
                             map.put("name",cl_mingcheng);
                             list1.add(map);
                             listitem.add(list1);
                         }
-
+                        Map<String,Object> map1=new Hashtable<String,Object>();
+                        map1.put("id",orderId);
+                        map1.put("price",cl_amount);
+                        map1.put("states",state1);
+                        map1.put("p",owner);
+                        Log.e("TAG","map1-----"+map1);
+                        listparrent.add(map1);
                     }
                     adapter=new MyAdapter(listparrent,listitem,getActivity());
                     elvDemo.setAdapter(adapter);
