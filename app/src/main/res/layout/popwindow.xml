@@ -25,7 +25,7 @@
                 >
                 <TextView
                     style="@style/tv_dingdan"
-                    android:text="交易订单 : "
+                    android:text="交易类型 : "
                     />
                 <TextView
                     android:id="@+id/tv_dingdan_jiaoyi"
