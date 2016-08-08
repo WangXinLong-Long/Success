@@ -4,6 +4,10 @@ import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformat
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.addressDisplayMVP.model.IAddressDisplayCallback;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.addressDisplayMVP.model.IAddressDisplayModel;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.addressDisplayMVP.view.IAddressDisplayView;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.AddAddressMVP.bean.AddAddressBean;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.AddAddressMVP.mdel.AddAddressModel;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.AddAddressMVP.mdel.IAddAddressCallback;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.AddAddressMVP.mdel.IAddAddressModel;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.AddAddressMVP.view.IAddAddress;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.ReceiptAddressMVP.model.ReceiptAddressModel;
 
@@ -11,7 +15,6 @@ import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformat
  * Created by Administrator on 2016/8/2 0002.
  */
 public class AddAddressPresenter {
-    ReceiptAddressModel model;
     IAddAddress addAddress;
 
     public  AddAddressPresenter(IAddAddress addAddress){
@@ -27,5 +30,25 @@ public class AddAddressPresenter {
 
             }
         });
+    }
+    public void sendAddAddressInfo(String address,String sessionId,String consignee,String phone,String zip_code,String mobile,String detail){
+        IAddAddressModel model = new AddAddressModel(address,sessionId,consignee,phone,zip_code,mobile,detail);
+        model.sendAddAddressInfoToServer(new IAddAddressCallback() {
+            @Override
+            public void addAddresscallback(String addAddressBean) {
+                if (addAddressBean.contains("sucess")){
+                    addAddress.sendAddAddressToServerSuccess();
+
+                }else if (addAddressBean.contains("formError")){
+                    addAddress.sendAddAddressToServerFaild();
+                }
+            }
+        });
+
+    }
+
+    public void sendAddAddressToServer(){
+        addAddress.sendAddAddressToServer();
+
     }
 }

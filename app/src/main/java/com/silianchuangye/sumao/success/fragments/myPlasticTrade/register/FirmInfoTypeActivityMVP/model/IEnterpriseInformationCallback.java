@@ -1,4 +1,4 @@
-package com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.model;
+package com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.FirmInfoTypeActivityMVP.model;
 
 import com.silianchuangye.sumao.success.model.EnterpriseInformation;
 

@@ -1,10 +1,15 @@
 package com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.ReceiptAddressMVP.view;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.util.AttributeSet;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -12,32 +17,33 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.ReceiptAddressAdapter;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.addressDisplayMVP.presenter.AddressDisplayPresenter;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.addressDisplayMVP.view.IAddressDisplayView;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.AddAddressMVP.view.AddAddress;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.ReceiptAddressDetail;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.ReceiptAddressDetailMVP.view.ReceiptAddressDetail;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.ReceiptAddressMVP.bean.ReAddress;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.ReceiptAddressMVP.presenter.ReceiptAddressPresenter;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2016/5/10 0010.
  */
-public class ReceiptAddress extends Activity implements View.OnClickListener,IReceiptAddressView,IAddressDisplayView {
+public class ReceiptAddress extends Activity implements View.OnClickListener, IReceiptAddressView, IAddressDisplayView {
 
     ImageView iv_title_bar_logo,
             iv_title_bar_back,
             iv_title_bar_service,
             iv_title_bar_search;
     Button sv_title_bar_serachView;
-    TextView tv_title_bar_title,tv;
+    TextView tv_title_bar_title, tv;
     RelativeLayout receip_address_title;
     RelativeLayout add_address_rl;
     ListView listView;
@@ -49,8 +55,9 @@ public class ReceiptAddress extends Activity implements View.OnClickListener,IRe
     List<String> addressDisplays;
     private AddressDisplayPresenter addressDisplayPresenter;
     private String[] addressDis;
-    int position=0;
-
+    int position = 0;
+    private String unique;
+    private ArrayList<String> al;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +72,7 @@ public class ReceiptAddress extends Activity implements View.OnClickListener,IRe
         iv_title_bar_service = ((ImageView) findViewById(R.id.iv_title_bar_service));
         iv_title_bar_search = ((ImageView) findViewById(R.id.iv_title_bar_search));
         sv_title_bar_serachView = ((Button) findViewById(R.id.sv_title_bar_serachView));
-        tv_title_bar_title  = ((TextView) findViewById(R.id.tv_title_bar_title));
+        tv_title_bar_title = ((TextView) findViewById(R.id.tv_title_bar_title));
         add_address_rl = ((RelativeLayout) findViewById(R.id.add_address_rl));
 
         iv_title_bar_logo.setVisibility(View.INVISIBLE);
@@ -80,20 +87,18 @@ public class ReceiptAddress extends Activity implements View.OnClickListener,IRe
         listView = ((ListView) findViewById(R.id.receipt_address_listView));
         lists = new ArrayList<>();
         presenter = new ReceiptAddressPresenter(this);
+        al = new ArrayList<>();
 
+        SharedPreferences sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+        unique = sp.getString("unique", "");
 
-        SharedPreferences sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
-        String unique=sp.getString("unique","");
-        presenter.setReceiptAddressListView(unique);
-        LogUtils.log("address----->"+lists.size()+"--------------------->");
+        LogUtils.log("address----->" + lists.size() + "--------------------->");
         addressDisplayPresenter = new AddressDisplayPresenter(this);
 
-//
-//        LogUtils.log("address----->"+lists.get(0).getProvince()+"--------------------->");
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(ReceiptAddress.this,"dianji"+position+"条",Toast.LENGTH_SHORT).show();
+                presenter.onReceiptAddressListViewClick(position);
 
             }
         });
@@ -101,11 +106,10 @@ public class ReceiptAddress extends Activity implements View.OnClickListener,IRe
 
     @Override
     public void onClick(View v) {
-        switch (v.getId())
-        {
+        switch (v.getId()) {
             case R.id.add_address_rl:
                 Intent intent = new Intent();
-                intent.setClass(ReceiptAddress.this,AddAddress.class);
+                intent.setClass(ReceiptAddress.this, AddAddress.class);
                 startActivity(intent);
                 break;
             case R.id.iv_title_bar_back:
@@ -120,26 +124,44 @@ public class ReceiptAddress extends Activity implements View.OnClickListener,IRe
     public void initReceiptAddressListView(List<ReAddress> address) {
         lists = address;
 //        LogUtils.log("address----->"+lists.size()+"--------------------->");
-        LogUtils.log("ReceiptAddress--->lists.size();----->"+lists.size());
+        LogUtils.log("ReceiptAddress--->lists.size();----->" + lists.size());
         addressDis = new String[lists.size()];
         for (int i = 0; i < lists.size(); i++) {
-            LogUtils.log("ReceiptAddress--->addressDisplay.size()----->"+lists.get(i).getAddress());
-            addressDisplayPresenter.setDetailAddress(lists.get(i).getProvince(),lists.get(i).getCity(),lists.get(i).getCounty());
+            LogUtils.log("ReceiptAddress--->addressDisplay.size()----->" + lists.get(i).getAddress());
+            addressDisplayPresenter.setDetailAddress(lists.get(i).getProvince(), lists.get(i).getCity(), lists.get(i).getCounty());
         }
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LogUtils.log("onResume--->");
+        lists.clear();
+        presenter.setReceiptAddressListView(unique);
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        LogUtils.log("onRestart--->");
+//        lists.clear();
+        presenter.setReceiptAddressListView(unique);
+        adapter.notifyDataSetChanged();
     }
 
     @Override
     public void onReceiptAddressListViewClick(int position) {
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
-        intent.setClass(ReceiptAddress.this,ReceiptAddressDetail.class);
-        bundle.putString("state",lists.get(position).getAddressType());
-        bundle.putString("name",lists.get(position).getName());
-        bundle.putString("address",lists.get(position).getAddress());
-        bundle.putString("zipCode",lists.get(position).getZipCode());
-        bundle.putString("telephone",lists.get(position).getMobile());
-        bundle.putString("fixedTelephone",lists.get(position).getPhone());
+        intent.setClass(ReceiptAddress.this, ReceiptAddressDetail.class);
+        bundle.putString("sessionId", unique);
+        bundle.putString("id", lists.get(position).getId());
+        bundle.putString("state", lists.get(position).getAddressType());
+        bundle.putString("name", lists.get(position).getName());
+        bundle.putString("address", lists.get(position).getAddress());
+        bundle.putString("zipCode", lists.get(position).getZipCode());
+        bundle.putString("telephone", lists.get(position).getMobile());
+        bundle.putString("fixedTelephone", lists.get(position).getPhone());
         intent.putExtras(bundle);
         startActivity(intent);
 
@@ -147,17 +169,31 @@ public class ReceiptAddress extends Activity implements View.OnClickListener,IRe
 
     @Override
     public void setAddressDisplay(String display) {
-        LogUtils.log("ReceiptAddress--->setAddressDisplay----->"+display);
         addressDisplay = display;
-        LogUtils.log("ReceiptAddress---> addressDisplay----->"+  addressDisplay);
         addressDis[position++] = addressDisplay;
-        for (String s:addressDis){
+        al.add(display);
+        for (String s : al) {
+            LogUtils.log("ReceiptAddress---> 小蚂蚁display----->" + s);
+        }
 
-            LogUtils.log("ReceiptAddress---> addressDisplay----->"+  s);
-        }
-        if (position == lists.size()){
-            adapter = new ReceiptAddressAdapter(this,lists,addressDis);
+
+        if (position == lists.size()) {
+//            ArrayList<Map<ReAddress,String>> reAdd = new ArrayList<>();
+            Map<ReAddress,String> map = new HashMap<>();
+            for (int i = 0; i < lists.size(); i++) {
+                map.put(lists.get(i),al.get(i));
+//                reAdd.add(map);
+            }
+            for (ReAddress s : map.keySet()) {
+                LogUtils.log("ReceiptAddress---> 小蚂蚁display----->" + s);
+            }
+            adapter = new ReceiptAddressAdapter(this, lists, addressDis/*al*/);
+//            adapter.notifyDataSetChanged();
+            LogUtils.log("ReceiptAddress--->小蚂蚁 adapter----->" );
             listView.setAdapter(adapter);
+            position = 0;
+//            lists.clear();
         }
+//
     }
 }

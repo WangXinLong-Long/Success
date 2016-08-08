@@ -33,8 +33,10 @@ public class ReceiptAddressModel implements IReceiptAddressModel {
     public void getReceiptAddressInfo(final IReceiptAddressCallback callback) {
 
 
-        String url = "http://192.168.32.126:7023/rest/model/atg/userprofiling/ProfileActor/EntAddress" + "?_dynSessConf=" + sessionId;
+        String url = "http://192.168.32.126:7023/rest/model/atg/userprofiling/ProfileActor/EntAddress";
+        LogUtils.log("ReceiptAddressModel：sessionId--->" + sessionId + "<---sessionId：ReceiptAddressModel");
         RequestParams requestParams = new RequestParams(url);
+        requestParams.addParameter("_dynSessConf" , sessionId);
         try {
             x.http().request(HttpMethod.POST, requestParams, new Callback.CommonCallback<String>() {
 

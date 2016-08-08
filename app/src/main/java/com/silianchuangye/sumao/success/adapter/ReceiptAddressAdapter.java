@@ -24,12 +24,14 @@ public class ReceiptAddressAdapter extends BaseAdapter {
     List<ReAddress> lists;
     LayoutInflater inflater;
     private String[] addressDisplay ;
+    private List<String > display;
 
-    public ReceiptAddressAdapter(Context context, List<ReAddress> lists,String[] addressDisplay) {
+    public ReceiptAddressAdapter(Context context, List<ReAddress> lists,String[] addressDisplay/* List<String> display*/) {
         this.context = context;
         this.lists = lists;
         inflater = LayoutInflater.from(context);
         this.addressDisplay = addressDisplay;
+//        this.display =display;
     }
 
     @Override
@@ -76,7 +78,7 @@ public class ReceiptAddressAdapter extends BaseAdapter {
         holder.consignee2.setText(lists.get(position).getName());
         holder.Zip_code_num.setText(lists.get(position).getZipCode());
 //        LogUtils.log("addressDisplay.get(position)--->Adapter"+addressDisplay.size());
-        holder.address.setText(addressDisplay[position]+lists.get(position).getAddress());
+        holder.address.setText(addressDisplay[position]/*display.get(position)*/+lists.get(position).getAddress());
         holder.telephone.setText(lists.get(position).getMobile());
         if (lists.get(position).getPhone() == null || lists.get(position).getPhone().equals("")) {
             holder.fixed_telephone_tv.setVisibility(View.INVISIBLE);
@@ -86,7 +88,7 @@ public class ReceiptAddressAdapter extends BaseAdapter {
             holder.fixed_telephone_tv.setVisibility(View.VISIBLE);
         }
 
-
+        LogUtils.log("ReceiptAddress--->小蚂蚁 adapter  getView----->" );
         return convertView;
     }
 
