@@ -12,6 +12,7 @@ import android.widget.ExpandableListView;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.MyAdapter;
 
+
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
@@ -45,18 +46,18 @@ public class OrderCancelFragment extends Fragment {
         //去掉ListView之间的线
         elvDemo.setDivider(null);
 
-//        listparrent=new ArrayList<Map<String,Object>>();
+        listparrent=new ArrayList<Map<String,Object>>();
         Map<String,Object> map1=new Hashtable<String,Object>();
         map1.put("id","1000001");
         map1.put("price","70000.0");
         map1.put("states","待支付");
-        map1.put("name","张三");
+        map1.put("name","李四");
         listparrent.add(map1);
         Map<String,Object> map2=new Hashtable<String,Object>();
         map2.put("id","1000001");
         map2.put("price","88888888");
         map2.put("states","已支付");
-        map1.put("name","lisi");
+        map2.put("name","qqq");
         listparrent.add(map2);
 
         listitem=new ArrayList<List<Map<String,Object>>>();
@@ -86,6 +87,7 @@ public class OrderCancelFragment extends Fragment {
         listitem.add(list2);
 
         MyAdapter adapter=new MyAdapter(listparrent,listitem,getActivity());
+       // MyNameAdapter adapter=new MyNameAdapter(listparrent,listitem,"张三",getActivity());
         elvDemo.setAdapter(adapter);
         if(adapter!=null && listparrent!=null){
             for (int i = 0; i < listparrent.size(); i++) {

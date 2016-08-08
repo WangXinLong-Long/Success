@@ -8,6 +8,9 @@ import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.custom.CustomPayDialog;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+
 /**
  * Created by Administrator on 2016/4/13 0013.
  */
@@ -50,8 +53,13 @@ public class WangXinLong extends Activity {
 //        8月1日  解决收货地址，获取省市县请求数据后，存储不到list的问题
 //        8月2日  解决收货地址确定后的参数传递崩溃问题
 //        8月2日 解决办公地址放回数据的问题
+//        8月3日 系统权限二次处理
+//        8月4日  调通新增收货地址接口
+//        8月8日  收货地址更新问题解决
 
         showPayDialog();
+        ArrayList<String> arrayList = new ArrayList<>();
+        LinkedList<String> linkedList = new LinkedList<>();
 
     }
 

@@ -116,6 +116,7 @@ public class RegisterValueActivity extends AppCompatActivity {
         LogUtils.log("onSuccess------->"+type+"<---onSuccess");
         rp.addParameter("attr", attr.trim());
         LogUtils.log("onSuccess------->"+attr+"<---onSuccess");
+        LogUtils.log("RegisterValueActivity------->"+rp+"<---RegisterValueActivity");
         x.http().request(HttpMethod.POST, rp, new Callback.CacheCallback<String>() {
             @Override
             public boolean onCache(String result) {

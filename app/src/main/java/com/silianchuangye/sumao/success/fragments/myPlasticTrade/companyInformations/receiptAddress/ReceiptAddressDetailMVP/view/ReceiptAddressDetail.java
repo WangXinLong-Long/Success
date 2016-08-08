@@ -1,4 +1,4 @@
-package com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress;
+package com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.ReceiptAddressDetailMVP.view;
 
 import android.app.Activity;
 import android.content.DialogInterface;
@@ -15,12 +15,15 @@ import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.custom.CustomDialog;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.ReceiptAddressDetailMVP.presenter.ReceiptAddressDetailPresenter;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.ReceiptAddressMVP.presenter.ReceiptAddressPresenter;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.personalInformation.ModifyName;
+import com.silianchuangye.sumao.success.utils.LogUtils;
 
 /**
  * Created by Administrator on 2016/5/12 0012.
  */
-public class ReceiptAddressDetail extends Activity implements View.OnClickListener{
+public class ReceiptAddressDetail extends Activity implements View.OnClickListener,IReceiptAddressDetailView{
     ImageView iv_title_bar_logo,
             iv_title_bar_back,
             iv_title_bar_service,
@@ -36,11 +39,15 @@ public class ReceiptAddressDetail extends Activity implements View.OnClickListen
     TextView consignee_name,address_text1,address_text2,zip_code_text,telephone_detail_text,fixed_telephone_detail_text;
     Button default_receiving_address_false,default_receiving_address_true,remove_receipt_address;
     RelativeLayout consignee1_rl,receip_address_address,zip_code_rl,telephone_rl,fixed_telephone_rl;
+    private ReceiptAddressDetailPresenter presenter;
+    private String id;
+    private String sessionId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_receipt_address_detail);
-
+        presenter = new ReceiptAddressDetailPresenter(this);
         receipt_address_detail_title = ((RelativeLayout) findViewById(R.id.receipt_address_detail_title));
         receipt_address_detail_title.setBackgroundColor(getResources().getColor(R.color.textColor_expandable_listview_show));
 
@@ -63,7 +70,9 @@ public class ReceiptAddressDetail extends Activity implements View.OnClickListen
 
         intent = getIntent();
         bundle =  intent.getExtras();
-        boolean state = bundle.getBoolean("state");
+        String state = bundle.getString("state");
+        sessionId = bundle.getString("sessionId");
+        id = bundle.getString("id");
         String name = bundle.getString("name");
         String address = bundle.getString("address");
         String zipCode = bundle.getString("zipCode");
@@ -81,7 +90,7 @@ public class ReceiptAddressDetail extends Activity implements View.OnClickListen
         default_receiving_address_true = ((Button) findViewById(R.id.default_receiving_address_true));
         remove_receipt_address = ((Button) findViewById(R.id.remove_receipt_address));
 
-        if (state)
+        if (state.equals("true"))
         {
             default_receiving_address_true.setVisibility(View.VISIBLE);
             default_receiving_address_false.setVisibility(View.INVISIBLE);
@@ -119,8 +128,10 @@ public class ReceiptAddressDetail extends Activity implements View.OnClickListen
 
         switch (v.getId())
         {
+//            设为默认收货地址
             case R.id.default_receiving_address_false:
-
+                presenter.setDefaultReceivingAddress(id,sessionId);
+                finish();
                 break;
             case R.id.default_receiving_address_true:
                 newAlertDialog();
@@ -190,8 +201,12 @@ public class ReceiptAddressDetail extends Activity implements View.OnClickListen
         builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(ReceiptAddressDetail.this,"删除成功",Toast.LENGTH_SHORT).show();
+                presenter.RemoveReceiptAddress(id,sessionId);
+                Intent intent = new Intent();
+                intent.setAction("updateReceiptAddressListView");
+                ReceiptAddressDetail.this.sendBroadcast(intent);
                 dialog.dismiss();
+                finish();
             }
         });
         builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -203,4 +218,13 @@ public class ReceiptAddressDetail extends Activity implements View.OnClickListen
         builder.create().show();
     }
 
+    @Override
+    public void defaultReceivingAddress(String result) {
+        LogUtils.log("defaultReceivingAddress--->"+result+"<---defaultReceivingAddress");
+    }
+
+    @Override
+    public void removeReceiptAddress(String result) {
+        LogUtils.log("defaultReceivingAddress--->"+result+"<---defaultReceivingAddress");
+    }
 }

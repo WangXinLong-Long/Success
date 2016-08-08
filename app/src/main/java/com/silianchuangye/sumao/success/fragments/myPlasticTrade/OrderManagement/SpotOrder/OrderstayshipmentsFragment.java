@@ -45,7 +45,7 @@ public class OrderstayshipmentsFragment extends Fragment {
         //去掉ListView之间的线
         elvDemo.setDivider(null);
 
-       listparrent=new ArrayList<Map<String,Object>>();
+        listparrent=new ArrayList<Map<String,Object>>();
         Map<String,Object> map1=new Hashtable<String,Object>();
         map1.put("id","1000001");
         map1.put("price","70000.0");

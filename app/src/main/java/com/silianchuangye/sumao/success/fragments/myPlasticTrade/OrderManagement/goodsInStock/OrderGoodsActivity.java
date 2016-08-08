@@ -110,10 +110,11 @@ public class OrderGoodsActivity extends AppCompatActivity implements View.OnClic
             listFragment.add(goods);
             OrderAlreadyFinishFragment finish=new OrderAlreadyFinishFragment();
             listFragment.add(finish);
-            OrderCancelFragment cancel=new OrderCancelFragment();
-            listFragment.add(cancel);
+
             OrderUpdateFragment update=new OrderUpdateFragment();
             listFragment.add(update);
+            OrderCancelFragment cancel=new OrderCancelFragment();
+            listFragment.add(cancel);
 
         }else if(title.equals("预售订单")){
             //预售订单访问数据库的内容

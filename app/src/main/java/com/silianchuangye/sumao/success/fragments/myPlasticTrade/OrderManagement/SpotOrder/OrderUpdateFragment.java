@@ -12,6 +12,7 @@ import android.widget.ExpandableListView;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.MyAdapter;
 
+
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
@@ -86,6 +87,7 @@ public class OrderUpdateFragment extends Fragment {
         listitem.add(list2);
 
         MyAdapter adapter=new MyAdapter(listparrent,listitem,getActivity());
+       // MyNameAdapter adapter=new MyNameAdapter(listparrent,listitem,"张三",getActivity());
         elvDemo.setAdapter(adapter);
         if(adapter!=null && listparrent!=null){
             for (int i = 0; i < listparrent.size(); i++) {

@@ -1,11 +1,10 @@
-package com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.presenter;
+package com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.FirmInfoTypeActivityMVP.presenter;
 
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.model.IEnterpriseInformationCallback;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.model.IUserRegisterModel;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.model.UserRegisterModel;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.view.IFirmInfoTypeActivity;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.FirmInfoTypeActivityMVP.model.IEnterpriseInformationCallback;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.FirmInfoTypeActivityMVP.model.IUserRegisterModel;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.FirmInfoTypeActivityMVP.model.UserRegisterModel;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.FirmInfoTypeActivityMVP.view.IFirmInfoTypeActivity;
 import com.silianchuangye.sumao.success.model.EnterpriseInformation;
-import com.silianchuangye.sumao.success.utils.LogUtils;
 
 import java.util.List;
 
