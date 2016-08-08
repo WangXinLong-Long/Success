@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.MyAdapter;
+
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.OrderDetails.AlreadyPaidActivity;
 
 import org.json.JSONArray;
@@ -40,7 +41,7 @@ public class OrderallFragment extends Fragment {
     private List<List<Map<String,Object>>> listitem=new ArrayList<List<Map<String,Object>>>();;
 //    private List<Map<String,Object>> alllistparrent=new ArrayList<Map<String,Object>>();
 //    private List<List<Map<String,Object>>> alllistitem=new ArrayList<List<Map<String,Object>>>() ;
-    MyAdapter adapter;
+    //MyAdapter adapter;
     String state1;
     public OrderallFragment() {
         // Required empty public constructor
@@ -72,21 +73,20 @@ public class OrderallFragment extends Fragment {
 //        Map<String,Object> map1=new Hashtable<String,Object>();
 //        map1.put("id","1000001");
 //        map1.put("price","70000.0");
-//        map1.put("states","待支付1");
-//        map1.put("p","123213");
+//        map1.put("states","待支付");
+//        map1.put("name","李四");
 //        listparrent.add(map1);
 //        Map<String,Object> map2=new Hashtable<String,Object>();
 //        map2.put("id","1000001");
 //        map2.put("price","88888888");
-//        map2.put("states","已支付2");
-//        map2.put("p","123");
+//        map2.put("states","已支付");
+//        map2.put("name","qqq");
 //        listparrent.add(map2);
 //
 //        listitem=new ArrayList<List<Map<String,Object>>>();
 //        List<Map<String,Object>> list1=new ArrayList<Map<String,Object>>();
 //        Map<String,Object> map=new Hashtable<String,Object>();
 //        map.put("type","四联创业");
-//
 //        map.put("name","中国");
 //        Map<String,Object> map3=new Hashtable<String,Object>();
 //        map3.put("type","四联创业");
@@ -109,8 +109,24 @@ public class OrderallFragment extends Fragment {
 //        listitem.add(list1);
 //        listitem.add(list2);
 //
-//        adapter=new MyAdapter(listparrent,listitem,getActivity());
+//        MyAdapter adapter=new MyAdapter(listparrent,listitem,getActivity());
 //        elvDemo.setAdapter(adapter);
+//        if(adapter!=null && listparrent!=null){
+//            for (int i = 0; i < listparrent.size(); i++) {
+//                elvDemo.expandGroup(i);
+//            }}
+//        elvDemo.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+//            @Override
+//            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+////                Toast.makeText(getContext(), "点击title", Toast.LENGTH_SHORT).show();
+//                Intent intent = new Intent();
+//                intent.setClass(getActivity(), SpotOrder.class);
+//                startActivity(intent);
+//                return true;
+//
+//            }
+//        });
+
         elvDemo.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
@@ -146,10 +162,12 @@ public class OrderallFragment extends Fragment {
             @Override
             public void onSuccess(String result) {
                 Log.e("TAG","result----"+result);
+
                 try {
                     JSONObject job=new JSONObject(result);
                     String str=job.getString("order");
                     JSONArray jay=new JSONArray(str);
+
                     for(int i=0;i<jay.length();i++){
                         Log.e("TAG","i=="+i);
                         JSONObject j= (JSONObject) jay.get(i);
@@ -184,8 +202,9 @@ public class OrderallFragment extends Fragment {
                         }
                         String owner=j.getString("owner");//采购员
                         String orderId=j.getString("orderId");//订单编号
-
+                       //  list.add(j.getString("owner"));
                         JSONArray j1=new JSONArray(cl);
+
                         for(int k=0;k<j1.length();k++){
                             JSONObject job1= (JSONObject) j1.get(k);
                             cl_amount=job1.getString("cl_amount");//金额
@@ -203,11 +222,12 @@ public class OrderallFragment extends Fragment {
                         map1.put("id",orderId);
                         map1.put("price",cl_amount);
                         map1.put("states",state1);
-                        map1.put("p",owner);
+                        map1.put("name",owner);
                         Log.e("TAG","map1-----"+map1);
                         listparrent.add(map1);
                     }
-                    adapter=new MyAdapter(listparrent,listitem,getActivity());
+                    //Log.d("list",list.toString());
+                    MyAdapter adapter=new MyAdapter(listparrent,listitem,getActivity());
                     elvDemo.setAdapter(adapter);
                     if(adapter!=null && listparrent!=null){
                         for (int i = 0; i < listparrent.size(); i++) {
