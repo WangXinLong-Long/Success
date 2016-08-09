@@ -42,7 +42,6 @@ public class PresellallFragment extends Fragment {
     private List<List<Map<String,Object>>> listitem=new ArrayList<List<Map<String,Object>>>();
     MyAdapter adapter;
     private String url="http://192.168.32.126:7023/rest/model/atg/userprofiling/ProfileActor/myOrders";
-   private OrderNetutils orderNetutils;
     public PresellallFragment() {
         // Required empty public constructor
     }
@@ -59,7 +58,6 @@ public class PresellallFragment extends Fragment {
         elvDemo.setGroupIndicator(null);
         //去掉ListView之间的线
         elvDemo.setDivider(null);
-        orderNetutils=new OrderNetutils(getActivity());
         new Thread(){
             @Override
             public void run() {

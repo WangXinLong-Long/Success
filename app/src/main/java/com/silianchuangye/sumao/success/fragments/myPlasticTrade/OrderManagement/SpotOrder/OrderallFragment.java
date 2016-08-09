@@ -203,7 +203,7 @@ public class OrderallFragment extends Fragment {
                         map1.put("id",orderId);
                         map1.put("price",cl_amount);
                         map1.put("states",state1);
-                        map1.put("p",owner);
+                        map1.put("name",owner);
                         Log.e("TAG","map1-----"+map1);
                         listparrent.add(map1);
                     }
