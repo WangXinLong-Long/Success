@@ -1,6 +1,9 @@
 package com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.ReceiptAddressDetailMVP.presenter;
 
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.ReceiptAddressDetailMVP.model.IReceiptAddressDetailModel;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.ReceiptAddressDetailMVP.model.ModifyReceiptInformation.IModifyReceiptInformationModel;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.ReceiptAddressDetailMVP.model.ModifyReceiptInformation.ModifyReceiptInformationCallback;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.ReceiptAddressDetailMVP.model.ModifyReceiptInformation.ModifyReceiptInformationModel;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.ReceiptAddressDetailMVP.model.ReceiptAddressDetailCallback;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.ReceiptAddressDetailMVP.model.ReceiptAddressDetailModel;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.ReceiptAddressDetailMVP.model.RemoveReceiptAddress.IRemoveReceiptAddressModel;
@@ -37,6 +40,20 @@ public class ReceiptAddressDetailPresenter {
             }
         });
 
+    }
+
+    public void ModifyReceiptInformation(String name,String region,String addressDetail,String zipCode,String mobile,String phone,String addr,String sessionId){
+        IModifyReceiptInformationModel modifyReceiptInformationModel = new ModifyReceiptInformationModel(name, region, addressDetail, zipCode, mobile, phone, addr,sessionId);
+        modifyReceiptInformationModel.sendModifyReceiptInformationRequest(new ModifyReceiptInformationCallback() {
+            @Override
+            public void callbackModifyReceiptInformation(String result) {
+                if (result.contains("sucess")){
+                    receiptAddressDetailView.savaModifyReceiptInformationSuccess();
+                }else if (result.contains("formExcepution")){
+                    receiptAddressDetailView.savaModifyReceiptInformationFailed();
+                }
+            }
+        });
     }
 
 }

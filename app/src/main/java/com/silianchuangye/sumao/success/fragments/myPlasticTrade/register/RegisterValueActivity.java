@@ -17,9 +17,13 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.utils.LogUtils;
+import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.xutils.common.Callback;
 import org.xutils.http.HttpMethod;
 import org.xutils.http.RequestParams;
@@ -42,8 +46,9 @@ public class RegisterValueActivity extends AppCompatActivity {
     String content;
     String pass;
     String type;
-    String url = "http://192.168.32.126:7023/rest/model/atg/store/profile/RegistrationActor/userVerify";
+    String url = SuMaoConstant.SUMAO_IP+"/rest/model/atg/store/profile/RegistrationActor/userVerify";
     SharedPreferences sharePreference;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +58,7 @@ public class RegisterValueActivity extends AppCompatActivity {
         ed_content_value = (EditText) findViewById(R.id.et_content_value);
         bt_save_register_value = (Button) findViewById(R.id.bt_save_register_value);
         intent = new Intent();
-       // RegisterFirmActivity registerFirmActivity = new RegisterFirmActivity();
+        // RegisterFirmActivity registerFirmActivity = new RegisterFirmActivity();
 
         Bundle bundle = getIntent().getExtras();
         title = bundle.getString("title");
@@ -75,9 +80,9 @@ public class RegisterValueActivity extends AppCompatActivity {
             tv_a.setVisibility(View.VISIBLE);
             tv_a.setText("6-16个字符,可由中英文,数字,'-','_'组成");
             ed_content_value.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
-        }else if (title.equals("地址详情")){
+        } else if (title.equals("地址详情")) {
             tv_a.setText("6-16个字符,可由中英文,数字,'-','_'组成");
-        }else {
+        } else {
             tv_a.setText("6-16个字符,可由中英文,数字,'-','_'组成");
         }
 
@@ -91,15 +96,15 @@ public class RegisterValueActivity extends AppCompatActivity {
                 } else if (title.equals("邮箱")) {
                     type = "mail";
                 }
-                LogUtils.log("ed_content_value------->"+ed_content_value.getText().toString()+"<---");
-                if (ed_content_value.getText().toString().trim() == null|| ed_content_value.getText().toString().trim().isEmpty()) {
+                LogUtils.log("ed_content_value------->" + ed_content_value.getText().toString() + "<---");
+                if (ed_content_value.getText().toString().trim() == null || ed_content_value.getText().toString().trim().isEmpty()) {
                     tv_a.setVisibility(View.VISIBLE);
-                    tv_a.setText( title + "不能为空");
+                    tv_a.setText(title + "不能为空");
                     tv_a.setTextColor(Color.RED);
-                    LogUtils.log("tv_a------->"+tv_a.getText().toString()+"<---");
-                }else if (type=="login"||type == "mail"){
+                    LogUtils.log("tv_a------->" + tv_a.getText().toString() + "<---");
+                } else if (type == "login" || type == "mail") {
                     toDetermineWhetherOrNotToRegister(type, ed_content_value.getText().toString().trim());
-                }else {
+                } else {
                     setResultW();
                 }
 
@@ -108,15 +113,21 @@ public class RegisterValueActivity extends AppCompatActivity {
 
     }
 
-    private void toDetermineWhetherOrNotToRegister( String type, String attr) {
+    private void toDetermineWhetherOrNotToRegister(String type, String attr) {
         RequestParams rp = new RequestParams(url);
-        rp.setCharset("UTF-8");
+        rp.setCharset("utf-8");
+        rp.setAsJsonContent(true);
+//        {"type":"login","attr":"本宝宝在此"}
+        JSONObject json = new JSONObject();
+        try {
+            json.put("type", "login");
+            json.put("attr", attr.trim());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
-        rp.addParameter("type", type);
-        LogUtils.log("onSuccess------->"+type+"<---onSuccess");
-        rp.addParameter("attr", attr.trim());
-        LogUtils.log("onSuccess------->"+attr+"<---onSuccess");
-        LogUtils.log("RegisterValueActivity------->"+rp+"<---RegisterValueActivity");
+        rp.setBodyContent(json.toString());
+        LogUtils.log(json.toString());
         x.http().request(HttpMethod.POST, rp, new Callback.CacheCallback<String>() {
             @Override
             public boolean onCache(String result) {
@@ -125,7 +136,7 @@ public class RegisterValueActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess(String result) {
-                LogUtils.log("onSuccess------->"+result+"<---onSuccess");
+                LogUtils.log("onSuccess------->" + result + "<---onSuccess");
                 if (result.equals("true")) {
                     setResultW();
                 } else {
@@ -197,10 +208,10 @@ public class RegisterValueActivity extends AppCompatActivity {
             tv_a.setVisibility(View.VISIBLE);
             LogUtils.log("tv_a------->"+tv_a.getText().toString()+"<---");
         }else{*/
-            intent.putExtra("name", ed_content_value.getText().toString().trim());
-            LogUtils.log("ed_content_value------->setResultW:"+ed_content_value.getText().toString()+"<---");
-            RegisterValueActivity.this.setResult(RESULT_OK, intent);
-            this.finish();
+        intent.putExtra("name", ed_content_value.getText().toString().trim());
+        LogUtils.log("ed_content_value------->setResultW:" + ed_content_value.getText().toString() + "<---");
+        RegisterValueActivity.this.setResult(RESULT_OK, intent);
+        this.finish();
        /* }*/
 
 

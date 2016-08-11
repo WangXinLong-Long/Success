@@ -29,6 +29,8 @@ import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformat
 import com.silianchuangye.sumao.success.utils.LogUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,6 +58,7 @@ public class ReceiptAddress extends Activity implements View.OnClickListener, IR
     private AddressDisplayPresenter addressDisplayPresenter;
     private String[] addressDis;
     int position = 0;
+    int count = 0;
     private String unique;
     private ArrayList<String> al;
 
@@ -125,10 +128,16 @@ public class ReceiptAddress extends Activity implements View.OnClickListener, IR
         lists = address;
 //        LogUtils.log("address----->"+lists.size()+"--------------------->");
         LogUtils.log("ReceiptAddress--->lists.size();----->" + lists.size());
+        for (int i = 0; i < address.size(); i++) {
+            StringBuilder builder = new StringBuilder();
+            builder.append(lists.get(i).getProvince());
+            builder.append( lists.get(i).getCity());
+            builder.append(lists.get(i).getCounty());
+        }
         addressDis = new String[lists.size()];
         for (int i = 0; i < lists.size(); i++) {
             LogUtils.log("ReceiptAddress--->addressDisplay.size()----->" + lists.get(i).getAddress());
-            addressDisplayPresenter.setDetailAddress(lists.get(i).getProvince(), lists.get(i).getCity(), lists.get(i).getCounty());
+            addressDisplayPresenter.setDetailAddress(lists.get(i).getProvince(), lists.get(i).getCity(), lists.get(i).getCounty(),i);
         }
     }
 
@@ -155,10 +164,12 @@ public class ReceiptAddress extends Activity implements View.OnClickListener, IR
         Bundle bundle = new Bundle();
         intent.setClass(ReceiptAddress.this, ReceiptAddressDetail.class);
         bundle.putString("sessionId", unique);
+        bundle.putString("addressType",  lists.get(position).getAddressType());
         bundle.putString("id", lists.get(position).getId());
         bundle.putString("state", lists.get(position).getAddressType());
         bundle.putString("name", lists.get(position).getName());
         bundle.putString("address", lists.get(position).getAddress());
+        bundle.putString("displayAddress",addressDis[position]);
         bundle.putString("zipCode", lists.get(position).getZipCode());
         bundle.putString("telephone", lists.get(position).getMobile());
         bundle.putString("fixedTelephone", lists.get(position).getPhone());
@@ -168,31 +179,14 @@ public class ReceiptAddress extends Activity implements View.OnClickListener, IR
     }
 
     @Override
-    public void setAddressDisplay(String display) {
+    public void setAddressDisplay(String display,int position) {
         addressDisplay = display;
-        addressDis[position++] = addressDisplay;
-        al.add(display);
-        for (String s : al) {
-            LogUtils.log("ReceiptAddress---> 小蚂蚁display----->" + s);
-        }
-
-
-        if (position == lists.size()) {
-//            ArrayList<Map<ReAddress,String>> reAdd = new ArrayList<>();
-            Map<ReAddress,String> map = new HashMap<>();
-            for (int i = 0; i < lists.size(); i++) {
-                map.put(lists.get(i),al.get(i));
-//                reAdd.add(map);
-            }
-            for (ReAddress s : map.keySet()) {
-                LogUtils.log("ReceiptAddress---> 小蚂蚁display----->" + s);
-            }
+        addressDis[position] = addressDisplay;
+        count++;
+        if (count == lists.size()) {
             adapter = new ReceiptAddressAdapter(this, lists, addressDis/*al*/);
-//            adapter.notifyDataSetChanged();
-            LogUtils.log("ReceiptAddress--->小蚂蚁 adapter----->" );
             listView.setAdapter(adapter);
-            position = 0;
-//            lists.clear();
+            count = 0;
         }
 //
     }

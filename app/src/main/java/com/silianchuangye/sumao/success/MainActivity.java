@@ -33,6 +33,7 @@ import com.silianchuangye.sumao.success.fragments.PagerOne;
 import com.silianchuangye.sumao.success.fragments.PagerThree;
 import com.silianchuangye.sumao.success.fragments.PagerTwo;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.LoginUserActivity;
+import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
 import org.json.JSONObject;
 import org.xutils.common.Callback;
@@ -351,7 +352,7 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
 
     public String getUnique() {
         editor = sp.edit();
-        RequestParams unique_rp = new RequestParams("http://192.168.32.126:7023/rest/model/atg/rest/SessionConfirmationActor/getSessionConfirmationNumber");
+        RequestParams unique_rp = new RequestParams(SuMaoConstant.SUMAO_IP+"/rest/model/atg/rest/SessionConfirmationActor/getSessionConfirmationNumber");
         x.http().post(unique_rp, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {

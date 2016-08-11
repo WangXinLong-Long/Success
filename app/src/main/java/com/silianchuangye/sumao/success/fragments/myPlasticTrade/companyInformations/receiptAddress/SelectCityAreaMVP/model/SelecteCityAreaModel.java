@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceAreaMVP.bean.AreaResult;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceAreaMVP.model.IResultCallbackListener;
 import com.silianchuangye.sumao.success.utils.LogUtils;
+import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
 import org.xutils.common.Callback;
 import org.xutils.http.HttpMethod;
@@ -28,7 +29,7 @@ public class SelecteCityAreaModel implements ISelecteCityAreaModel {
 
     void getCityInfo(final ICityAreaCallbackListener callback) {
 
-        String url = "http://192.168.32.126:7023/rest/model/atg/userprofiling/ProfileActor/addressDroplet?type=city"+"&level="+level;
+        String url = SuMaoConstant.SUMAO_IP+"/rest/model/atg/userprofiling/ProfileActor/addressDroplet?type=city"+"&level="+level;
         LogUtils.log("URL----->"+url+"<-----URL");
         RequestParams requestParams = new RequestParams(url);
         try {

@@ -320,6 +320,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".fragments.myPlasticTrade.companyInformations.receiptAddress.ReceiptAddressDetailMVP.view.ReceiptAddressDetail"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".fragments.myPlasticTrade.companyInformations.receiptAddress.AddAddressMVP.view.AddAddress"
@@ -440,6 +441,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".fragments.myPlasticTrade.login.LoginUserActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".fragments.type.TypeInfoActivity"
@@ -455,9 +457,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".fragments.myPlasticTrade.OrderManagement.OrderDetails.OrderDetailsActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".fragments.myPlasticTrade.register.RegisterFirmActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".fragments.myPlasticTrade.OrderManagement.OrderDetails.AlreadyPaidActivity"
@@ -515,15 +514,10 @@
         <activity android:name=".salesearch.SaleSearch" />
         <activity android:name=".customermanger.CustomerParent" />
         <activity android:name=".fragments.myPlasticTrade.register.RegisterPhoneActivity" />
-        <activity android:name=".fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceArea" />
-        <activity android:name=".fragments.myPlasticTrade.companyInformations.receiptAddress.SelectCityArea" />
-        <activity android:name=".fragments.myPlasticTrade.companyInformations.receiptAddress.SelectCountyArea" />
         <activity android:name=".fragments.homepage.groupbuying.GroupBuyingActivity" />
         <activity android:name=".fragments.homepage.groupbuying.GroupBuyingSuccessActivity" />
         <activity android:name=".fragments.homepage.groupbuying.RuleActivity" />
         <activity android:name=".fragments.homepage.groupbuying.JoinActivity"></activity>
-        <activity android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmActivity"></activity>
-        <activity android:name=".fragments.myPlasticTrade.register.RegisterPhoneActivity"></activity>
         <activity android:name=".fragments.myPlasticTrade.register.RegisterFirmActivityMVP.view.RegisterFirmActivity"/>
 
     </application>

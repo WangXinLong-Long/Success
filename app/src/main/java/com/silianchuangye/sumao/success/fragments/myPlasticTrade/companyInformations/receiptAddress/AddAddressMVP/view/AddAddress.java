@@ -120,19 +120,6 @@ public class AddAddress extends Activity implements View.OnClickListener , IAddA
         }else {
             SharedPreferences sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
             String unique=sp.getString("unique","");
-//            builder.
-//                    append(sb.substring(0,4)).append(",").//省的level
-//                    append(sb.substring(0,6)).append(",").//市的level
-//                    append( sb.toString()).append(",").//县的level
-//                    append(unique).append(",").//sessionId
-//                    append(consignee1_name.getText().toString().trim()).append(",").//收货人
-//                    append(fix_telehone_code_number.getText().toString().trim()).append(",").//固定电话
-//                    append(zip_code_number.getText().toString().trim()).append(",").//邮编
-//                    append(telephone_number.getText().toString().trim()).append(",").//移动电话
-//                    append(address_detail.getText().toString().trim());//详细地址
-//            for (String s:builder.toString().split(",")){
-//                LogUtils.log("StringBuilder--->s:"+s);
-//            }
 
             presenter.sendAddAddressInfo(sb.toString(),unique,consignee1_name.getText().toString(),
                     fix_telehone_code_number.getText().toString(),zip_code_number.getText().toString(),

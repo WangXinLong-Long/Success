@@ -36,7 +36,7 @@ public class LoginActivity extends BaseActivity {
 	private ProgressDialog progressDialog;
 	private int selectedIndex = Constant.INTENT_CODE_IMG_SELECTED_DEFAULT;
 	private int messageToIndex = Constant.MESSAGE_TO_DEFAULT;
-
+	private String imServiceKey  = Constant.DEFAULT_COSTOMER_ACCOUNT;
 	@Override
 	protected void onCreate(Bundle arg0) {
 		super.onCreate(arg0);
@@ -44,6 +44,7 @@ public class LoginActivity extends BaseActivity {
 		selectedIndex = intent.getIntExtra(Constant.INTENT_CODE_IMG_SELECTED_KEY,
 				Constant.INTENT_CODE_IMG_SELECTED_DEFAULT);
 		messageToIndex = intent.getIntExtra(Constant.MESSAGE_TO_INTENT_EXTRA, Constant.MESSAGE_TO_DEFAULT);
+		imServiceKey = intent.getStringExtra(Constant.IM_SERVICE_NUMBER);
 		
 		//EMChat.getInstance().isLoggedIn() 可以检测是否已经登录过环信，如果登录过则环信SDK会自动登录，不需要再次调用登录操作
 		if (EMChat.getInstance().isLoggedIn()) {
@@ -213,7 +214,7 @@ public class LoginActivity extends BaseActivity {
 				// 进入主页面
 				startActivity(new Intent(LoginActivity.this, ChatActivity.class).putExtra(
 						Constant.INTENT_CODE_IMG_SELECTED_KEY, selectedIndex).putExtra(
-						Constant.MESSAGE_TO_INTENT_EXTRA, messageToIndex));
+						Constant.MESSAGE_TO_INTENT_EXTRA, messageToIndex).putExtra(Constant.IM_SERVICE_NUMBER,imServiceKey));
 				finish();
 			}
 		});

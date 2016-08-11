@@ -19,12 +19,12 @@ public class AddressDisplayPresenter {
     public AddressDisplayPresenter(IAddressDisplayView addressDisplayView ) {
         this.addressDisplayView = addressDisplayView;
     }
-    public void setDetailAddress(String province,String city,String county){
-        IAddressDisplayModel addressDisplayModel = new AddressDisplayModel(province,city,county);
+    public void setDetailAddress(String province,String city,String county,int position){
+        IAddressDisplayModel addressDisplayModel = new AddressDisplayModel(province,city,county,position);
         addressDisplayModel.getAddressDisplayInfo(new IAddressDisplayCallback() {
             @Override
-            public void callbackAddressDisplayInfo(String address) {
-                addressDisplayView.setAddressDisplay(address);
+            public void callbackAddressDisplayInfo(String address,int position) {
+                addressDisplayView.setAddressDisplay(address,position);
 
             }
         });
