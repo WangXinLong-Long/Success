@@ -203,6 +203,11 @@ public class PagerOne extends BasePager {
                     Toast.makeText(mActivity, "点击了上游直销按钮", Toast.LENGTH_SHORT).show();
                 }else if(list.get(position).get("icon").equals(R.mipmap.aa)){
                     Toast.makeText(mActivity, "点击了物流按钮", Toast.LENGTH_SHORT).show();
+                     Intent intent = new Intent();
+                     intent.setClass(mActivity, LoginActivity.class);
+                     intent.putExtra(Constant.MESSAGE_TO_INTENT_EXTRA, Constant.MESSAGE_TO_DEFAULT);
+                     intent.putExtra(Constant.IM_SERVICE_NUMBER,"feisumaokefu1");
+                     startActivity(intent);
                 }else if(list.get(position).get("icon").equals(R.mipmap.consult)){
                     Toast.makeText(mActivity, "点击了塑贸咨询按钮", Toast.LENGTH_SHORT).show();
                 }else if (list.get(position).get("icon").equals(R.mipmap.maifang)){
@@ -304,6 +309,7 @@ public class PagerOne extends BasePager {
         Intent intent = new Intent();
         intent.setClass(mActivity, LoginActivity.class);
         intent.putExtra(Constant.MESSAGE_TO_INTENT_EXTRA, Constant.MESSAGE_TO_DEFAULT);
+        intent.putExtra(Constant.IM_SERVICE_NUMBER,"sumaokefu");
         startActivity(intent);
 
     }

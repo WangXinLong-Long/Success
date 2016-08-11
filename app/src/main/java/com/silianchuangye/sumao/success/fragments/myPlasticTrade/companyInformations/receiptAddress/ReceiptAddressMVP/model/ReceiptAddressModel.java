@@ -9,6 +9,7 @@ import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformat
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceAreaMVP.bean.Area;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceAreaMVP.bean.AreaResult;
 import com.silianchuangye.sumao.success.utils.LogUtils;
+import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
 import org.xutils.common.Callback;
 import org.xutils.http.HttpMethod;
@@ -33,7 +34,7 @@ public class ReceiptAddressModel implements IReceiptAddressModel {
     public void getReceiptAddressInfo(final IReceiptAddressCallback callback) {
 
 
-        String url = "http://192.168.32.126:7023/rest/model/atg/userprofiling/ProfileActor/EntAddress";
+        String url = SuMaoConstant.SUMAO_IP+"/rest/model/atg/userprofiling/ProfileActor/EntAddress";
         LogUtils.log("ReceiptAddressModel：sessionId--->" + sessionId + "<---sessionId：ReceiptAddressModel");
         RequestParams requestParams = new RequestParams(url);
         requestParams.addParameter("_dynSessConf" , sessionId);

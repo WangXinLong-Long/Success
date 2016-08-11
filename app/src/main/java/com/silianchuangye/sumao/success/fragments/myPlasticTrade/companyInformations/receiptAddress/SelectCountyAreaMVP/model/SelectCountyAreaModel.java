@@ -5,6 +5,7 @@ import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformat
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceAreaMVP.bean.Area;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceAreaMVP.bean.AreaResult;
 import com.silianchuangye.sumao.success.utils.LogUtils;
+import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
 import org.xutils.common.Callback;
 import org.xutils.http.HttpMethod;
@@ -30,7 +31,7 @@ public class SelectCountyAreaModel implements ISelectCountyAreaModel {
     }
     void getCountyInfo(final ICountyAreaCallbackListener callback) {
 
-        String url = "http://192.168.32.126:7023/rest/model/atg/userprofiling/ProfileActor/addressDroplet?type=county"+"&level="+level;
+        String url = SuMaoConstant.SUMAO_IP+"/rest/model/atg/userprofiling/ProfileActor/addressDroplet?type=county"+"&level="+level;
         LogUtils.log("URL----->"+url+"<-----URL");
         RequestParams requestParams = new RequestParams(url);
         try {

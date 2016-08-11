@@ -45,6 +45,7 @@ import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.SpotOrder.ServiceChangeFragment;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.SpotOrder.ServiceFinishFragment;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.SpotOrder.ServiceShipmentsFragment;
+import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
@@ -451,7 +452,7 @@ public class OrderGoodsActivity extends AppCompatActivity implements View.OnClic
         company=edt_dingdan_company.getText().toString();//公司
         OrderId=edt_dingdan_num.getText().toString();//订单号
         Log.e("TAG","OrderId---"+OrderId+"----startDate---"+startDate+"----endDate-----"+endDate+"---company===="+company);
-        RequestParams params=new RequestParams("http://192.168.32.126:7023/rest/model/atg/userprofiling/ProfileActor/myOrders");
+        RequestParams params=new RequestParams(SuMaoConstant.SUMAO_IP+"/rest/model/atg/userprofiling/ProfileActor/myOrders");
         params.addParameter("pageNum",1);
         params.addParameter("searchOrderId",OrderId);
         params.addParameter("startDate",startDate);

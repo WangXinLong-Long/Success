@@ -17,10 +17,10 @@ public class RegisterFirmActivityPresenter  {
 
     }
     public void setDetailAddress(String province,String city,String county){
-        IAddressDisplayModel addressDisplayModel = new AddressDisplayModel(province,city,county);
+        IAddressDisplayModel addressDisplayModel = new AddressDisplayModel(province,city,county,0);
         addressDisplayModel.getAddressDisplayInfo(new IAddressDisplayCallback() {
             @Override
-            public void callbackAddressDisplayInfo(String address) {
+            public void callbackAddressDisplayInfo(String address,int position) {
                 registerFirmActivityView.setStringInText(address);
 
             }

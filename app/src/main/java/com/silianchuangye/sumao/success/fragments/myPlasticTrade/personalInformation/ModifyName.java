@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
+import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
 
 /**
@@ -33,6 +34,8 @@ public class ModifyName extends Activity implements View.OnClickListener{
     EditText modify_information;
     TextView prompt_information;
     String message;
+    private Intent intent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,8 +57,8 @@ public class ModifyName extends Activity implements View.OnClickListener{
         iv_title_bar_search.setVisibility(View.INVISIBLE);
         iv_title_bar_back.setOnClickListener(this);
 
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
+        Intent intents = getIntent();
+        Bundle bundle = intents.getExtras();
         receivingInformation = bundle.getString("receivingInformation");
         canBeAmpty  = bundle.getBoolean("canBeAmpty");
         message = bundle.getString("message");
@@ -65,7 +68,7 @@ public class ModifyName extends Activity implements View.OnClickListener{
         modify_name_save = ((Button) findViewById(R.id.modify_name_save));
         modify_information = ((EditText) findViewById(R.id.modify_information));
         prompt_information  = ((TextView) findViewById(R.id.prompt_information));
-
+        intent = new Intent();
     }
 
     @Override
@@ -90,7 +93,10 @@ public class ModifyName extends Activity implements View.OnClickListener{
     {
         if (modify_information.getText().toString().equals(""))
         {
-            if (canBeAmpty) {finish();}
+            if (canBeAmpty) {
+                intent.putExtra(SuMaoConstant.MODIFY_INFORMATION, "");
+                ModifyName.this.setResult(RESULT_OK, intent);
+                finish();}
             else
             {
                 prompt_information.setText("*请输入"+message);
@@ -102,7 +108,9 @@ public class ModifyName extends Activity implements View.OnClickListener{
             /**
              * 在这里吧EditText的文本信息获取到，调用接口传到服务器上
              */
-        Toast.makeText(ModifyName.this,"调用接口传到服务器上",Toast.LENGTH_SHORT).show();
+
+            intent.putExtra(SuMaoConstant.MODIFY_INFORMATION,modify_information.getText().toString().trim());
+            setResult(RESULT_OK, intent);
             finish();
         }
     }
@@ -111,8 +119,8 @@ public class ModifyName extends Activity implements View.OnClickListener{
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode==KeyEvent.KEYCODE_BACK&&event.getAction()==KeyEvent.ACTION_DOWN)
         {
-            finish();
-            return  true;
+            intent.putExtra(SuMaoConstant.MODIFY_INFORMATION, "");
+            ModifyName.this.setResult(RESULT_OK, intent);
         }
         return super.onKeyDown(keyCode, event);
     }

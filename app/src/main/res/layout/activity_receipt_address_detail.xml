@@ -238,4 +238,27 @@
         android:background="@drawable/button_background_red"
         android:layout_margin="@dimen/x5"
         />
+    <Button
+        android:id="@+id/save_receipt_address1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="保存修改地址"
+        android:textColor="@color/white"
+        android:layout_below="@id/remove_receipt_address"
+        android:background="@drawable/button_background_red"
+        android:layout_margin="@dimen/x5"
+        android:visibility="gone"
+        />
+    <Button
+        android:id="@+id/save_receipt_address2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="保存修改地址2"
+        android:textColor="@color/white"
+        android:layout_below="@id/default_receiving_address_true"
+        android:background="@drawable/button_background_red"
+        android:layout_margin="@dimen/x5"
+        android:visibility="gone"
+        />
+
 </RelativeLayout>

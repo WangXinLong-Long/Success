@@ -81,8 +81,8 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
 		currentUserNick = HelpDeskPreferenceUtils.getInstance(getActivity()).getSettingCurrentNick();
 
 //		//从商品详情进来都为售后，只为演示用。
-//		if (imgSelectedIndex != Constant.INTENT_CODE_IMG_SELECTED_DEFAULT) {
-//			messageToIndex = Constant.MESSAGE_TO_AFTER_SALES;
+//		if (imgSelectedIndex != SuMaoConstant.INTENT_CODE_IMG_SELECTED_DEFAULT) {
+//			messageToIndex = SuMaoConstant.MESSAGE_TO_AFTER_SALES;
 //		}
 		if (savedInstanceState == null) {
 			sendPictureTxtMessage(imgSelectedIndex);
