@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.util.Log;
@@ -51,6 +52,7 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
     private Cart_MyDialog dialog;
     private RelativeLayout relative_cart_null,relative_cart_tishi,relative_activity_cart_bottom;
  private List<Integer>imgList=new ArrayList<Integer>();
+    private List list1=new ArrayList();
     public class MyReciver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -76,13 +78,13 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
     }
 
     private void initView() {
+        initList();
         ctx=getActivity();
         dialog=new Cart_MyDialog(ctx);
         my=new MyReciver();
         IntentFilter intent=new IntentFilter();
         intent.addAction("close_cart_dialog");
         getActivity().registerReceiver(my,intent);
-        initList();
         rl_title.setVisibility(View.GONE);
         View v = View.inflate(getActivity(), R.layout.activity_cart, null);
         fl_content.addView(v);
@@ -95,6 +97,7 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
         tv_Cart_All_Price = (TextView) v.findViewById(R.id.tv_activity_cart_all_price);
         adapter = new CartAdapter(getActivity(),list,this,dialog);
         lv_Cart.setAdapter(adapter);
+
         lv_Cart.setOnItemClickListener(this);
         img_Cart_All_Select.setOnClickListener(this);
         btn_Cart_Ok.setOnClickListener(this);
@@ -106,6 +109,7 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
         //popwindow的适配器
         cartItemAdapter=new CartItemAdapter(item_list,getActivity(),imgList);
         pop_lv.setAdapter(cartItemAdapter);
+
     }
 
     @Override
@@ -199,6 +203,7 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
         info3.buy_num="10";
         info3.all_price="1";
         list.add(info3);
+
 ////popwindow的数据源
         CartItemInfo iteminfo1=new CartItemInfo();
         iteminfo1.bank_name="中国邮政银行";
@@ -310,4 +315,5 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
         lp.alpha = bgAlpha; //0.0-1.0
         getActivity().getWindow().setAttributes(lp);
     }
+
 }

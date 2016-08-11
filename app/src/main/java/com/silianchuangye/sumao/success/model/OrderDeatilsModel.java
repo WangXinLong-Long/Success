@@ -15,7 +15,7 @@ public class OrderDeatilsModel implements Serializable {
 //    分类
     private String classification;
 //    数量
-    private int number;
+    private double number;
 //    配送方式：
     private String distributionMode;
 //    仓库
@@ -43,11 +43,11 @@ public class OrderDeatilsModel implements Serializable {
         this.classification = classification;
     }
 
-    public int getNumber() {
+    public double getNumber() {
         return number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(double number) {
         this.number = number;
     }
 

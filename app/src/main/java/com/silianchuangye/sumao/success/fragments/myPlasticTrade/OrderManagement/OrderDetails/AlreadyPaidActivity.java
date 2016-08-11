@@ -4,19 +4,33 @@ import android.app.Activity;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
+import com.silianchuangye.sumao.success.adapter.OrderDetailsListViewAdapter;
 import com.silianchuangye.sumao.success.adapter.SpotOrderAdapter;
 import com.silianchuangye.sumao.success.custom.CustomListView;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.SpotOrder.SpotOrder;
+import com.silianchuangye.sumao.success.model.OrderDeatilsModel;
 import com.silianchuangye.sumao.success.model.SpotOrderModel;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,20 +43,29 @@ public class AlreadyPaidActivity extends Activity implements View.OnClickListene
     //    SpotOrde模型
     private SpotOrderModel model, dada;
     //      创建SpotOrderModel对象集合
-    List<SpotOrderModel> list;
+    List<SpotOrderModel> list=new ArrayList<SpotOrderModel>();
     //    适配器
     SpotOrderAdapter adapter;
     private RelativeLayout order_amount;
     private ImageView iv_child_title_bar_back;
     private Button Copy;
-    private TextView the_order_number_number;
-
+    private TextView the_order_number_number,the_order_price,type2,buyer2,state2,company2;
+    String type,Id;//类型和ID-现货的
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_has_been_paid);
+        type=getIntent().getStringExtra("type");
+        Id=getIntent().getStringExtra("ID");
+
         Copy= (Button) findViewById(R.id.bt_copy);
         the_order_number_number= (TextView) findViewById(R.id.the_order_number_number);
+        the_order_price= (TextView) findViewById(R.id.the_order_price);
+        type2= (TextView) findViewById(R.id.type2);
+        buyer2= (TextView) findViewById(R.id.buyer2);
+        state2= (TextView) findViewById(R.id.state2);
+        company2= (TextView) findViewById(R.id.company2);
+
         tv_child_title_bar_title = ((TextView) findViewById(R.id.tv_child_title_bar_title));
         tv_child_title_bar_title.setText("已支付订单");
         spot_order_listView = ((CustomListView) findViewById(R.id.spot_order_listView));
@@ -62,21 +85,27 @@ public class AlreadyPaidActivity extends Activity implements View.OnClickListene
 
             }
         });
-
-        list = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            model = new SpotOrderModel();
-            model.setUnivalent(i * 100);
-            model.setNumber(i + 1);
-            model.setEnterprise("中石油");
-            model.setTotalMoney((i*100)*(i+1));
-            model.setWarehouse("讯帮"+i+"库");
-            model.setCompany(i+"联创业集团");
-            model.setProductModel("中国石油"+i+"型产品");
-            list.add(model);
-        }
-        adapter = new SpotOrderAdapter(this,list);
-        spot_order_listView.setAdapter(adapter);
+        new Thread(){
+            @Override
+            public void run() {
+                super.run();
+                sendMy();
+            }
+        }.start();
+//        list = new ArrayList<>();
+//        for (int i = 0; i < 10; i++) {
+//            model = new SpotOrderModel();
+//            model.setUnivalent(i * 100);
+//            model.setNumber(i + 1);
+//            model.setEnterprise("中石油");
+//            model.setTotalMoney((i*100)*(i+1));
+//            model.setWarehouse("讯帮"+i+"库");
+//            model.setCompany(i+"联创业集团");
+//            model.setProductModel("中国石油"+i+"型产品");
+//            list.add(model);
+//        }
+//        adapter = new SpotOrderAdapter(this,list);
+//        spot_order_listView.setAdapter(adapter);
     }
 
     @Override
@@ -94,5 +123,141 @@ public class AlreadyPaidActivity extends Activity implements View.OnClickListene
             default:
                 break;
         }
+    }
+    private void sendMy(){
+        RequestParams params=new RequestParams("http://192.168.32.126:7023/rest/model/atg/userprofiling/ProfileActor/myOrders");
+        params.addParameter("pageNum","1");
+        params.addParameter("searchOrderId",Id);
+        params.addParameter("searchOrderType",type);
+        params.addParameter("searchOrderState","QUOTED");
+        SharedPreferences sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+        String unique123 = sp.getString("unique", "");
+        Log.e("TAG","parames======"+params);
+        x.http().post(params, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.e("TAG","result----"+result);
+                try {
+
+                    JSONObject job=new JSONObject(result);
+                    String info=job.getString("info");
+                    if(info.equals("fail")){
+                        Toast.makeText(AlreadyPaidActivity.this,"获取数据失败",Toast.LENGTH_SHORT).show();
+                    }else{
+                        String str=job.getString("order");
+                        JSONArray jay=new JSONArray(str);
+                        for(int i=0;i<jay.length();i++) {
+                            model = new SpotOrderModel();
+                            JSONObject j = (JSONObject) jay.get(i);
+                            String cl = (String) j.getString("cl");
+                            String type=j.getString("type");//类型
+                            String type1=getType(type);
+                            Log.e("TAG","类型-----"+type1);
+                            type2.setText(type1);
+                            String shippingGroupState=j.getString("shippingGroupState");
+                            String state = j.getString("state");//状态
+                            Log.e("TAG","状态--"+state);
+                            String state1="";
+                            if(state.equals("SUBMITTED")||state.equals("PENDING_APPROVAL")||state.equals("APPROVED")||state.equals("FAILED_APPROVAL")){
+                                if(type.equals("offlineOrder")) {
+                                    state1 = "订单生成";
+                                }else{
+                                    state1="待支付";
+                                }
+                            }
+                            if(state.equals("DEPOSIT_CONFIRMED")){
+                                state1="支付保证金已冻结";
+                            }else if(state.equals("QUOTED")){
+                                if(shippingGroupState.equals("INITIAL")) {
+                                    state1 = "已支付";
+                                }else{
+                                    state1="已发货";
+                                }
+                            }else if(state.equals("PRESSING1")){
+                                state1="已发货";
+                            }else if (state.equals("NO_PENDING_ACTION")){
+                                state1="已完成";
+                            }else if (state.equals("REMOVED")){
+                                state1="已取消";
+                            }else if (state.equals("CHANGED")){
+                                state1="已变更";
+                            }
+                            state2.setText(state1);
+                            String owner = j.getString("owner");//采购员
+                            String orderId = j.getString("orderId");//订单编号
+                            the_order_number_number.setText(orderId);
+                            String cl_amount = "";
+
+                            Long submittedDate=j.getLong("submittedDate");
+                            String now = new SimpleDateFormat("yyyy-MM-dd").format(submittedDate);
+//                            enterprise2.setText(now);
+                            JSONArray j1 = new JSONArray(cl);
+                            for (int k = 0; k < j1.length(); k++) {
+                                JSONObject job1 = (JSONObject) j1.get(k);
+                                String cl_mingcheng = job1.getString("cl_mingcheng");//产品名称
+                                String fenlei = job1.getString("cl_fenlei");//分类
+                                cl_amount = job1.getString("cl_amount");//金额
+                                the_order_price.setText(cl_amount);
+                                String cl_cangku=job1.getString("cl_cangku");//仓库
+                                String cl_gongsi=job1.getString("cl_gongsi");//公司
+                                company2.setText(cl_gongsi);
+                                String cl_jituan=job1.getString("cl_jituan");//生产企业
+                                String cl_shuliang=job1.getString("cl_shuliang");//数量
+                                String cl_jine=job1.getString("cl_jine");
+                                model.setWarehouse(cl_cangku);
+                                model.setWarehouse(cl_cangku);
+                                model.setTotalMoney(Double.valueOf(cl_amount));
+                                model.setCompany(cl_gongsi);
+                                model.setNumber(Integer.valueOf(cl_shuliang));
+                                model.setUnivalent(Double.valueOf(cl_jine));
+                                model.setProductModel("");
+                                model.setEnterprise(cl_jituan);
+                                list.add(model);
+                                Log.e("TAG","list.size()==="+list.size());
+                            }
+                            Log.e("TAG","list-----"+list.size());
+                            adapter = new SpotOrderAdapter(AlreadyPaidActivity.this,list);
+                            spot_order_listView.setAdapter(adapter);
+                        }
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+                Log.e("TAG","失败呢ex------"+ex);
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+    }
+    private String getType(String type){
+        String str="";
+        if(type.equals("fixedPricingOrder")){
+            str="现货";
+        }else if(type.equals("openAuctionOrder")){
+            str="公开竞拍";
+        }else if(type.equals("sealedAuctionOrder")){
+            str="密封竞拍";
+        }else if(type.equals("integratePurchaseOrder")){
+            str="团购";
+        }else if(type.equals("forwardPricingOrder")){
+            str="预售";
+        }else if(type.equals("offlineOrder")){
+            str="客服订单";
+        }
+        return str;
     }
 }
