@@ -2,7 +2,6 @@ package com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInforma
 
 import com.google.gson.Gson;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceAreaMVP.bean.AreaResult;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceAreaMVP.model.IResultCallbackListener;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
@@ -14,7 +13,7 @@ import org.xutils.x;
 /**
  * Created by Administrator on 2016/7/28 0028.
  */
-public class SelecteCityAreaModel implements ISelecteCityAreaModel {
+public class SelecteCityAreaModel implements IselecteCityAreaModel {
     String level;
 
     public SelecteCityAreaModel(String level) {
@@ -23,11 +22,11 @@ public class SelecteCityAreaModel implements ISelecteCityAreaModel {
 
     Gson gson = new Gson();
     @Override
-    public void requestCityInfo(ICityAreaCallbackListener callback) {
+    public void requestCityInfo(IcityAreaCallbackListener callback) {
         getCityInfo(callback);
     }
 
-    void getCityInfo(final ICityAreaCallbackListener callback) {
+    void getCityInfo(final IcityAreaCallbackListener callback) {
 
         String url = SuMaoConstant.SUMAO_IP+"/rest/model/atg/userprofiling/ProfileActor/addressDroplet?type=city"+"&level="+level;
         LogUtils.log("URL----->"+url+"<-----URL");

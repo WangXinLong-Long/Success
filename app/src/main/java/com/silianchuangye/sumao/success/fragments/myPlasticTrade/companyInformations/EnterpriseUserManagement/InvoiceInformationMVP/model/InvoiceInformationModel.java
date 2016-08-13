@@ -2,7 +2,6 @@ package com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInforma
 
 import com.google.gson.Gson;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.InvoiceInformationMVP.bean.InvoiceInformationBean;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceAreaMVP.bean.AreaResult;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
@@ -14,7 +13,7 @@ import org.xutils.x;
 /**
  * Created by Administrator on 2016/8/11 0011.
  */
-public class InvoiceInformationModel implements IInvoiceInformationModel {
+public class InvoiceInformationModel implements IinvoiceInformationModel {
     String sessionId;
 
     public InvoiceInformationModel(String sessionId) {

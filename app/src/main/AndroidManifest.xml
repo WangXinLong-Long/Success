@@ -431,7 +431,7 @@
             android:name=".fragments.myPlasticTrade.register.RegisterValueActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".fragments.homepage.goodInStock.GoodsInStockDetailActivity"
+            android:name=".fragments.homepage.goodInStock.GoodsInStockDetailActivityMVP.view.GoodsInStockDetailActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".fragments.homepage.goodInStock.LikeProduct"

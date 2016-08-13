@@ -1,7 +1,5 @@
 package com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.InvoiceInformationMVP.model.saveModifyInvoiceInformationModel;
 
-import com.google.gson.Gson;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.InvoiceInformationMVP.bean.InvoiceInformationBean;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
@@ -15,7 +13,7 @@ import org.xutils.x;
 /**
  * Created by Administrator on 2016/8/11 0011.
  */
-public class SaveModifyInvoiceInformationModel implements ISaveModifyInvoiceInformationModel {
+public class SaveModifyInvoiceInformationModel implements IsaveModifyInvoiceInformationModel  {
     private String tax;
     private String address;
     private String phoneNO;

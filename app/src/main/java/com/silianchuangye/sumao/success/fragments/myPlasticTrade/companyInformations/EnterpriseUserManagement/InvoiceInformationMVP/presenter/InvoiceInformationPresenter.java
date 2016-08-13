@@ -1,10 +1,10 @@
 package com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.InvoiceInformationMVP.presenter;
 
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.InvoiceInformationMVP.bean.InvoiceInformationBean;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.InvoiceInformationMVP.model.IInvoiceInformationModel;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.InvoiceInformationMVP.model.IinvoiceInformationModel;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.InvoiceInformationMVP.model.InvoiceInformationCallback;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.InvoiceInformationMVP.model.InvoiceInformationModel;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.InvoiceInformationMVP.model.saveModifyInvoiceInformationModel.ISaveModifyInvoiceInformationModel;
+;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.InvoiceInformationMVP.model.saveModifyInvoiceInformationModel.SaveModifyInvoiceInformationCallback;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.InvoiceInformationMVP.model.saveModifyInvoiceInformationModel.SaveModifyInvoiceInformationModel;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.InvoiceInformationMVP.view.IInvoiceInformationView;
@@ -22,7 +22,7 @@ public class InvoiceInformationPresenter {
 
 //    从服务器获取数据，设置到对应的位置上
     public void getInvoiceInformationToBean(String sessionId){
-        IInvoiceInformationModel model = new InvoiceInformationModel(sessionId);
+        IinvoiceInformationModel model = new InvoiceInformationModel(sessionId);
         model.getInvoiceInformationFromService(new InvoiceInformationCallback() {
             @Override
             public void callbackInvoiceInformation(InvoiceInformationBean bean) {
@@ -38,7 +38,7 @@ public class InvoiceInformationPresenter {
                                              String notesRecipientCity, String notesRecipientCounty,
                                              String notesRecipientAddress, String notesRecipientZipCode,
                                              String sessionId){
-        ISaveModifyInvoiceInformationModel saveModifyInvoiceInformationModel = new SaveModifyInvoiceInformationModel(tax,  address,  phoneNO,  bank,
+        SaveModifyInvoiceInformationModel  saveModifyInvoiceInformationModel = new SaveModifyInvoiceInformationModel(tax,  address,  phoneNO,  bank,
                  bankAccount,  notesRecipientName,  notesRecipientMobile, notesRecipientPhone,  notesRecipientProvince,
                  notesRecipientCity,  notesRecipientCounty,notesRecipientAddress,  notesRecipientZipCode,sessionId);
         saveModifyInvoiceInformationModel.SaveModifyInvoiceInformationToServer(new SaveModifyInvoiceInformationCallback() {

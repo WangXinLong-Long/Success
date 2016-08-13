@@ -3,6 +3,6 @@ package com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInforma
 /**
  * Created by Administrator on 2016/8/10 0010.
  */
-public interface IModifyReceiptInformationModel {
+public interface ImodifyReceiptInformationModel {
     void sendModifyReceiptInformationRequest(ModifyReceiptInformationCallback callback);
 }

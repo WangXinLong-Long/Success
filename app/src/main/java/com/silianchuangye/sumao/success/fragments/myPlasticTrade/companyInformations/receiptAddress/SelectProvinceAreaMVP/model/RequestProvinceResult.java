@@ -13,13 +13,13 @@ import org.xutils.x;
 /**
  * Created by Administrator on 2016/7/28 0028.
  */
-public class RequestProvinceResult implements IRequestProvinceResult{
+public class RequestProvinceResult implements IrequestProvinceResult {
 Gson gson = new Gson();
     @Override
-    public void requestRrovinceResult(IResultCallbackListener callback) {
+    public void requestRrovinceResult(IresultCallbackListener callback) {
         getStringFromURL(callback);
     }
-    public  void  getStringFromURL(final IResultCallbackListener callback){
+    public  void  getStringFromURL(final IresultCallbackListener callback){
         String url = SuMaoConstant.SUMAO_IP+"/rest/model/atg/userprofiling/ProfileActor/addressDroplet?type=prov";
         RequestParams requestParams = new RequestParams(url);
         try {

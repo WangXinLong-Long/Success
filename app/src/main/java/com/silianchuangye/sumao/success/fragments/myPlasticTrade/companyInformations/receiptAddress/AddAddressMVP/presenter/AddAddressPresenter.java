@@ -2,16 +2,13 @@ package com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInforma
 
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.InvoiceInformationMVP.view.IInvoiceInformationView;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.addressDisplayMVP.model.AddressDisplayModel;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.addressDisplayMVP.model.IAddressDisplayCallback;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.addressDisplayMVP.model.IAddressDisplayModel;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.addressDisplayMVP.view.IAddressDisplayView;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.AddAddressMVP.bean.AddAddressBean;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.addressDisplayMVP.model.IaddressDisplayCallback;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.addressDisplayMVP.model.IaddressDisplayModel;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.AddAddressMVP.mdel.AddAddressModel;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.AddAddressMVP.mdel.IAddAddressCallback;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.AddAddressMVP.mdel.IAddAddressModel;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.AddAddressMVP.mdel.IaddAddressCallback;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.AddAddressMVP.mdel.IaddAddressModel;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.AddAddressMVP.view.IAddAddress;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.ReceiptAddressDetailMVP.view.IReceiptAddressDetailView;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.ReceiptAddressMVP.model.ReceiptAddressModel;
 
 /**
  * Created by Administrator on 2016/8/2 0002.
@@ -34,8 +31,8 @@ public class AddAddressPresenter {
     }
 
     public void sendrequestGetAddress(String province,String city,String county){
-        IAddressDisplayModel addressDisplayModel = new AddressDisplayModel(province,city,county,0);
-        addressDisplayModel.getAddressDisplayInfo(new IAddressDisplayCallback() {
+        IaddressDisplayModel addressDisplayModel = new AddressDisplayModel(province,city,county,0);
+        addressDisplayModel.getAddressDisplayInfo(new IaddressDisplayCallback() {
             @Override
             public void callbackAddressDisplayInfo(String address,int position) {
                 invoiceInformationView.setRegionInText(address);
@@ -45,8 +42,8 @@ public class AddAddressPresenter {
     }
 
     public void setDisplaylAddress(String province,String city,String county){
-        IAddressDisplayModel addressDisplayModel = new AddressDisplayModel(province,city,county,0);
-        addressDisplayModel.getAddressDisplayInfo(new IAddressDisplayCallback() {
+        IaddressDisplayModel addressDisplayModel = new AddressDisplayModel(province,city,county,0);
+        addressDisplayModel.getAddressDisplayInfo(new IaddressDisplayCallback() {
             @Override
             public void callbackAddressDisplayInfo(String address,int position) {
                 receiptAddressDetailView.setDisplayAddressInAddress(address);
@@ -55,8 +52,8 @@ public class AddAddressPresenter {
         });
     }
     public void setDetailAddress(String province,String city,String county){
-        IAddressDisplayModel addressDisplayModel = new AddressDisplayModel(province,city,county,0);
-        addressDisplayModel.getAddressDisplayInfo(new IAddressDisplayCallback() {
+        IaddressDisplayModel addressDisplayModel = new AddressDisplayModel(province,city,county,0);
+        addressDisplayModel.getAddressDisplayInfo(new IaddressDisplayCallback() {
             @Override
             public void callbackAddressDisplayInfo(String address,int position) {
                 addAddress.setAddressInText(address);
@@ -65,8 +62,8 @@ public class AddAddressPresenter {
         });
     }
     public void sendAddAddressInfo(String address,String sessionId,String consignee,String phone,String zip_code,String mobile,String detail){
-        IAddAddressModel model = new AddAddressModel(address,sessionId,consignee,phone,zip_code,mobile,detail);
-        model.sendAddAddressInfoToServer(new IAddAddressCallback() {
+        IaddAddressModel model = new AddAddressModel(address,sessionId,consignee,phone,zip_code,mobile,detail);
+        model.sendAddAddressInfoToServer(new IaddAddressCallback() {
             @Override
             public void addAddresscallback(String addAddressBean) {
                 if (addAddressBean.contains("sucess")){

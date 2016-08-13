@@ -1,9 +1,7 @@
 package com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.model;
 
 import com.google.gson.Gson;
-import com.google.zxing.common.StringUtils;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.bean.GoodsInStockActivityBean;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceAreaMVP.bean.AreaResult;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
@@ -15,7 +13,7 @@ import org.xutils.x;
 /**
  * Created by Administrator on 2016/8/12 0012.
  */
-public class GoodsInStockActivityModel implements IGoodsInStockActivityModel {
+public class GoodsInStockActivityModel implements IgoodsInStockActivityModel {
     String region2;
     String classification2;
     String application2;

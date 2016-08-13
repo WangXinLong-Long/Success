@@ -1,4 +1,4 @@
-package com.silianchuangye.sumao.success.fragments.homepage.goodInStock;
+package com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockDetailActivityMVP.view;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -18,6 +18,9 @@ import com.silianchuangye.sumao.success.MainActivity;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.custom.customCalendar.CalendarView;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.VesselThreeActivity;
+import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.LikeProduct;
+import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.PaymentsOrder;
+import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.SeeProduct;
 import com.silianchuangye.sumao.success.fragments.shoppingCart.dialog.Cart_MyDialog;
 
 /**

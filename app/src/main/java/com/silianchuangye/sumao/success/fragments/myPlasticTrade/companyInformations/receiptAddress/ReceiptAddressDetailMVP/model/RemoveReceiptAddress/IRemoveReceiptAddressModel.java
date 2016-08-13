@@ -3,6 +3,6 @@ package com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInforma
 /**
  * Created by Administrator on 2016/8/5 0005.
  */
-public interface IRemoveReceiptAddressModel {
+public interface IremoveReceiptAddressModel {
     void removeReceiptAddressRequest(RemoveReceiptAddressCallback callback);
 }

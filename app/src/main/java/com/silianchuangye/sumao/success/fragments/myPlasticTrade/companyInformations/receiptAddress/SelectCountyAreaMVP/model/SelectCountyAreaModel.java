@@ -1,7 +1,6 @@
 package com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectCountyAreaMVP.model;
 
 import com.google.gson.Gson;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectCityAreaMVP.model.ICityAreaCallbackListener;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceAreaMVP.bean.Area;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceAreaMVP.bean.AreaResult;
 import com.silianchuangye.sumao.success.utils.LogUtils;
@@ -17,7 +16,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2016/7/28 0028.
  */
-public class SelectCountyAreaModel implements ISelectCountyAreaModel {
+public class SelectCountyAreaModel implements IselectCountyAreaModel {
     Gson gson =  new Gson();
     String level;
 
@@ -26,10 +25,10 @@ public class SelectCountyAreaModel implements ISelectCountyAreaModel {
     }
 
     @Override
-    public void requestCountyInfo(ICountyAreaCallbackListener callback) {
+    public void requestCountyInfo(IcountyAreaCallbackListener callback) {
         getCountyInfo(callback);
     }
-    void getCountyInfo(final ICountyAreaCallbackListener callback) {
+    void getCountyInfo(final IcountyAreaCallbackListener callback) {
 
         String url = SuMaoConstant.SUMAO_IP+"/rest/model/atg/userprofiling/ProfileActor/addressDroplet?type=county"+"&level="+level;
         LogUtils.log("URL----->"+url+"<-----URL");

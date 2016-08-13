@@ -3,6 +3,6 @@ package com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInforma
 /**
  * Created by Administrator on 2016/8/4 0004.
  */
-public interface IReceiptAddressDetailModel {
+public interface IreceiptAddressDetailModel {
     void setDefaultReceivingAddress(ReceiptAddressDetailCallback callback);
 }

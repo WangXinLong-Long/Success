@@ -3,7 +3,7 @@ package com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInforma
 /**
  * Created by Administrator on 2016/7/28 0028.
  */
-public interface IReceiptAddressModel {
-//    IReceiptAddressCallback
-    void getReceiptAddressInfo(IReceiptAddressCallback callback);
+public interface IreceiptAddressModel {
+//    IreceiptAddressCallback
+    void getReceiptAddressInfo(IreceiptAddressCallback callback);
 }

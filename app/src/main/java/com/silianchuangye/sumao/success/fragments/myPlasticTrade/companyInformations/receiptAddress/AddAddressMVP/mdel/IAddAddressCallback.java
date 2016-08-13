@@ -5,6 +5,6 @@ import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformat
 /**
  * Created by Administrator on 2016/8/3 0003.
  */
-public interface IAddAddressCallback {
+public interface IaddAddressCallback {
    void  addAddresscallback(String bean);
 }

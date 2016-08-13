@@ -12,7 +12,7 @@ import org.xutils.x;
 /**
  * Created by Administrator on 2016/8/4 0004.
  */
-public class ReceiptAddressDetailModel implements IReceiptAddressDetailModel {
+public class ReceiptAddressDetailModel implements IreceiptAddressDetailModel {
 
 String addr;
     String sessionId;

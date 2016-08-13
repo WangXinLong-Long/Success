@@ -3,6 +3,6 @@ package com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInS
 /**
  * Created by Administrator on 2016/8/12 0012.
  */
-public interface IGoodsInStockActivityModel {
+public interface IgoodsInStockActivityModel {
     void getGoodsInStockActivityResult(GoodsInStockActivityCallback callback);
 }

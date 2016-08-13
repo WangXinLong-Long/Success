@@ -2,12 +2,8 @@ package com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInforma
 
 
 import com.google.gson.Gson;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.addressDisplayMVP.presenter.AddressDisplayPresenter;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.ReceiptAddressMVP.bean.ReAddress;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.ReceiptAddressMVP.bean.ReceiptAddress;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectCountyAreaMVP.model.ICountyAreaCallbackListener;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceAreaMVP.bean.Area;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceAreaMVP.bean.AreaResult;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
@@ -21,7 +17,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2016/7/28 0028.
  */
-public class ReceiptAddressModel implements IReceiptAddressModel {
+public class ReceiptAddressModel implements IreceiptAddressModel {
     String sessionId;
     List<String> addressDisplays;
 
@@ -31,7 +27,7 @@ public class ReceiptAddressModel implements IReceiptAddressModel {
 
     Gson gson = new Gson();
     @Override
-    public void getReceiptAddressInfo(final IReceiptAddressCallback callback) {
+    public void getReceiptAddressInfo(final IreceiptAddressCallback callback) {
 
 
         String url = SuMaoConstant.SUMAO_IP+"/rest/model/atg/userprofiling/ProfileActor/EntAddress";

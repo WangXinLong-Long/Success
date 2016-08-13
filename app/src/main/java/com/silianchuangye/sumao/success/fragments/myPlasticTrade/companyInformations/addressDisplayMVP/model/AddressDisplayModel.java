@@ -10,19 +10,10 @@ import org.xutils.http.HttpMethod;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Queue;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.locks.Condition;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
-
 /**
  * Created by Administrator on 2016/7/28 0028.
  */
-public class AddressDisplayModel implements IAddressDisplayModel {
+public class AddressDisplayModel implements IaddressDisplayModel {
     String province;
     String city;
     String county;
@@ -37,7 +28,7 @@ public class AddressDisplayModel implements IAddressDisplayModel {
     }
 
     @Override
-    public void getAddressDisplayInfo(final IAddressDisplayCallback callback) {
+    public void getAddressDisplayInfo(final IaddressDisplayCallback callback) {
 
         String url = SuMaoConstant.SUMAO_IP+"/rest/model/atg/userprofiling/ProfileActor/addressDisplay"+"?prov="+province+"&city="+city+"&county="+county;
         final RequestParams requestParams = new RequestParams(url);

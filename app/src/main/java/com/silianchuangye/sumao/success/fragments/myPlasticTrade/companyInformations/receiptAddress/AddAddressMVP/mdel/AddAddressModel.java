@@ -2,8 +2,6 @@ package com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInforma
 
 import com.google.gson.Gson;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.AddAddressMVP.bean.AddAddressBean;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.ReceiptAddressMVP.bean.ReAddress;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.ReceiptAddressMVP.bean.ReceiptAddress;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
@@ -14,13 +12,10 @@ import org.xutils.http.HttpMethod;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by Administrator on 2016/8/3 0003.
  */
-public class AddAddressModel implements IAddAddressModel {
+public class AddAddressModel implements IaddAddressModel {
     Gson gson = new Gson();
     String address;
     String consignee;
@@ -40,7 +35,7 @@ public class AddAddressModel implements IAddAddressModel {
     }
 
     @Override
-    public void sendAddAddressInfoToServer(final IAddAddressCallback callback) {
+    public void sendAddAddressInfoToServer(final IaddAddressCallback callback) {
 //            String[] addressinfo = info.split(",");
 //        for (String s : addressinfo) {
 //            LogUtils.log("AddAddressMdel：s--->" + s + "<---s：AddAddressMdel");

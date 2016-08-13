@@ -1,8 +1,8 @@
 package com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.ReceiptAddressMVP.presenter;
 
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.ReceiptAddressMVP.bean.ReAddress;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.ReceiptAddressMVP.model.IReceiptAddressCallback;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.ReceiptAddressMVP.model.IReceiptAddressModel;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.ReceiptAddressMVP.model.IreceiptAddressCallback;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.ReceiptAddressMVP.model.IreceiptAddressModel;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.ReceiptAddressMVP.model.ReceiptAddressModel;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.ReceiptAddressMVP.view.IReceiptAddressView;
 
@@ -19,8 +19,8 @@ public class ReceiptAddressPresenter {
         this.receiptAddressView = receiptAddressView;
     }
     public void setReceiptAddressListView(String sessinoId){
-        IReceiptAddressModel receiptAddressModel = new ReceiptAddressModel(sessinoId);
-        receiptAddressModel.getReceiptAddressInfo(new IReceiptAddressCallback() {
+        IreceiptAddressModel receiptAddressModel = new ReceiptAddressModel(sessinoId);
+        receiptAddressModel.getReceiptAddressInfo(new IreceiptAddressCallback() {
             @Override
             public void callbackReceiptAddressInfo(List<ReAddress> address) {
                 receiptAddressView.initReceiptAddressListView(address);

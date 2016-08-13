@@ -1,8 +1,8 @@
 package com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceAreaMVP.presenter;
 
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceAreaMVP.bean.Area;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceAreaMVP.model.IRequestProvinceResult;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceAreaMVP.model.IResultCallbackListener;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceAreaMVP.model.IrequestProvinceResult;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceAreaMVP.model.IresultCallbackListener;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceAreaMVP.model.RequestProvinceResult;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceAreaMVP.view.ISelectProvinceAreaView;
 
@@ -13,13 +13,13 @@ import java.util.List;
  */
 public class SelectProvinceAreaPresenter {
     ISelectProvinceAreaView selectProvinceAreaView;
-    IRequestProvinceResult requestProvinceResult = new RequestProvinceResult();
+    IrequestProvinceResult requestProvinceResult = new RequestProvinceResult();
     public SelectProvinceAreaPresenter(ISelectProvinceAreaView selectProvinceAreaView) {
         this.selectProvinceAreaView = selectProvinceAreaView;
     }
 
     public void putResultInView(){
-        requestProvinceResult.requestRrovinceResult(new IResultCallbackListener() {
+        requestProvinceResult.requestRrovinceResult(new IresultCallbackListener() {
             @Override
             public void setProvinceData(List<Area> provs) {
                 selectProvinceAreaView.initProvinceAreaView(provs);
