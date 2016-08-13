@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.silianchuangye.sumao.success.R;
+import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.bean.SMCl;
 import com.silianchuangye.sumao.success.model.PreSaleModel;
 
 import java.util.List;
@@ -17,9 +18,9 @@ import java.util.List;
  */
 public class PreSaleAdapter extends BaseAdapter {
     private  Context context;
-    private List<PreSaleModel> preSaleModels;
+    private  List<SMCl> preSaleModels;
     LayoutInflater inflater;
-    public PreSaleAdapter(Context context, List<PreSaleModel> preSaleModels) {
+    public PreSaleAdapter(Context context,  List<SMCl> preSaleModels) {
         this.context = context;
         this.preSaleModels = preSaleModels;
         inflater = LayoutInflater.from(context);
@@ -52,17 +53,17 @@ public class PreSaleAdapter extends BaseAdapter {
             viewHolder.price = (TextView) convertView.findViewById(R.id.price_presale_item);
             viewHolder.company = (TextView) convertView.findViewById(R.id.company_presale_item);
             viewHolder.warehouse = (TextView) convertView.findViewById(R.id.warehouse_presale_item);
-            viewHolder.productType = (TextView) convertView.findViewById(R.id.productType_presale_item);
+//            viewHolder.productType = (TextView) convertView.findViewById(R.id.productType_presale_item);
             convertView.setTag(viewHolder);
         }else {
             viewHolder = (ViewHolder)convertView.getTag();
         }
-        viewHolder.title.setText(preSaleModels.get(position).getName());
-        viewHolder.number.setText(preSaleModels.get(position).getNumber());
-        viewHolder.price.setText(preSaleModels.get(position).getPrice());
-        viewHolder.company.setText(preSaleModels.get(position).getCompany());
-        viewHolder.warehouse.setText(preSaleModels.get(position).getWarehouse());
-        viewHolder.productType.setText(preSaleModels.get(position).getProductType());
+        viewHolder.title.setText(preSaleModels.get(position).getCl_mingcheng());
+        viewHolder.number.setText(preSaleModels.get(position).getCl_shuliang());
+        viewHolder.price.setText(preSaleModels.get(position).getCl_jine());
+        viewHolder.company.setText(preSaleModels.get(position).getCl_qiye());
+        viewHolder.warehouse.setText(preSaleModels.get(position).getCl_cangku());
+//        viewHolder.productType.setText(preSaleModels.get(position).getProductType());
 
         return convertView;
     }

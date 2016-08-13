@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.PreSaleAdapter;
+import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.bean.SMCl;
 import com.silianchuangye.sumao.success.model.PreSaleModel;
 
 import java.util.ArrayList;
@@ -38,15 +39,15 @@ public class PreSale extends Activity implements View.OnClickListener, AdapterVi
     ListView popupWindowListView;
     LinearLayout bottom_pre_sale_search,popup_window_back;
 
-    List<PreSaleModel> lists;
+    List<SMCl> lists;
+    SMCl preSaleModel;
     PreSaleAdapter adapter;
     PopupWindow popupWindow;
     PopupWindow listPopupWindow;
     RelativeLayout pre_sale_title;
     TextView classification, application, region;
-//    TextView manufacturing_enterprise;
+    //    TextView manufacturing_enterprise;
     ListView pre_sale_listView;
-    PreSaleModel preSaleModel;
     ArrayList<String> mArrayList;
     RelativeLayout selection_condition;
     TextView split_line;
@@ -200,13 +201,13 @@ public class PreSale extends Activity implements View.OnClickListener, AdapterVi
 
         lists = new ArrayList<>();
         for (int i = 0; i < 15; i++) {
-            preSaleModel = new PreSaleModel();
-            preSaleModel.setCompany("北京公司" + i + "分公司");
-            preSaleModel.setWarehouse(i + "仓库");
-            preSaleModel.setName("产品" + i);
-            preSaleModel.setNumber(i + "");
-            preSaleModel.setPrice(i * 100 + "");
-            preSaleModel.setProductType("预售");
+            preSaleModel = new SMCl();
+//            preSaleModel.setCompany("北京公司" + i + "分公司");
+//            preSaleModel.setWarehouse(i + "仓库");
+//            preSaleModel.setName("产品" + i);
+//            preSaleModel.setNumber(i + "");
+//            preSaleModel.setPrice(i * 100 + "");
+//            preSaleModel.setProductType("预售");
 
             lists.add(preSaleModel);
         }
