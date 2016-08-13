@@ -100,7 +100,7 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
                 startActivity(intent);
                 break;
             case R.id.pre_sale_sale_detail_similar_product:
-               Toast.makeText(this,"相似产品",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this,"相似产品",Toast.LENGTH_SHORT).show();
                 intent.setClass(GoodsInStockDetailActivity.this, LikeProduct.class);
                 startActivity(intent);
                 break;
@@ -130,8 +130,8 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
                 }
                 break;
             case R.id.img_item_cart_buy_add:
-                 str=tv_item_cart_buy_num.getText().toString();
-                 num=Integer.valueOf(str);
+                str=tv_item_cart_buy_num.getText().toString();
+                num=Integer.valueOf(str);
                 num++;
                 if(num>=15){
                     dialog.show();
