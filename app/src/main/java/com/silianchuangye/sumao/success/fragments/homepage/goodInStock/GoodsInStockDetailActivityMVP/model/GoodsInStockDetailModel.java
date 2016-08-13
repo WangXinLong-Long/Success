@@ -6,7 +6,7 @@ package com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInS
 public class GoodsInStockDetailModel implements IGoodsInStockDetailModel {
 
     @Override
-    public void getGoodsInStockDetailResult(GoodsInStockDetailCallback callback) {
+    public void getGoodsInStockDetailResult(goodsInStockDetailCallback callback) {
 
     }
 
