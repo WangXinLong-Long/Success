@@ -2,8 +2,10 @@ package com.silianchuangye.sumao.success.fragments.myPlasticTrade.personalInform
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +17,10 @@ import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
+
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
 
 
 /**
@@ -35,7 +41,7 @@ public class ModifyName extends Activity implements View.OnClickListener{
     TextView prompt_information;
     String message;
     private Intent intent;
-
+    String email,phoneNum,name,i;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +66,10 @@ public class ModifyName extends Activity implements View.OnClickListener{
         Intent intents = getIntent();
         Bundle bundle = intents.getExtras();
         receivingInformation = bundle.getString("receivingInformation");
+        email=bundle.getString("email");
+        phoneNum=bundle.getString("phoneNum");
+        name=bundle.getString("name");
+        i=bundle.getString("i");
         canBeAmpty  = bundle.getBoolean("canBeAmpty");
         message = bundle.getString("message");
         tv_title_bar_title.setText(receivingInformation);
@@ -104,14 +114,52 @@ public class ModifyName extends Activity implements View.OnClickListener{
             }
 
         }else {
+            Log.e("TAG","修改用户名");
+            RequestParams params=new RequestParams(SuMaoConstant.SUMAO_IP+"/rest/model/atg/store/profile/RegistrationActor/updateUser");
+            if(receivingInformation.equals("修改姓名")) {
+                params.addParameter("firstName", modify_information.getText().toString());
+                params.addParameter("email",email);
+                params.addParameter("phoneNumber",phoneNum);
+            }else if(receivingInformation.equals("修改邮箱")){
+                params.addParameter("email", modify_information.getText().toString());
+                params.addParameter("firstName",name);
+                params.addParameter("phoneNumber",phoneNum);
+            }
+            SharedPreferences sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+            String unique = sp.getString("unique", "");
+            params.addParameter("_dynSessConf",unique);
+            Log.e("TAG","parames------"+params);
+            x.http().post(params, new Callback.CommonCallback<String>() {
+                @Override
+                public void onSuccess(String result) {
+                    Log.e("TAG","修改result------"+result);
+                    intent.putExtra(SuMaoConstant.MODIFY_INFORMATION,modify_information.getText().toString().trim());
+                    Log.e("TAG","RESULT_OK===="+RESULT_OK);
+                    setResult(RESULT_OK, intent);
+                    finish();
+                }
+
+                @Override
+                public void onError(Throwable ex, boolean isOnCallback) {
+                    Log.e("TAG","ex---"+ex);
+                }
+
+                @Override
+                public void onCancelled(CancelledException cex) {
+
+                }
+
+                @Override
+                public void onFinished() {
+
+                }
+            });
             prompt_information.setVisibility(View.INVISIBLE);
             /**
              * 在这里吧EditText的文本信息获取到，调用接口传到服务器上
              */
 
-            intent.putExtra(SuMaoConstant.MODIFY_INFORMATION,modify_information.getText().toString().trim());
-            setResult(RESULT_OK, intent);
-            finish();
+
         }
     }
 

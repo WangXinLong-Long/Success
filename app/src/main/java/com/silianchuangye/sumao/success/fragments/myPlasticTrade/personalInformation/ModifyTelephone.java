@@ -1,9 +1,11 @@
 package com.silianchuangye.sumao.success.fragments.myPlasticTrade.personalInformation;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,6 +15,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
+import com.silianchuangye.sumao.success.utils.SuMaoConstant;
+
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
 
 
 /**
@@ -29,7 +36,7 @@ public class ModifyTelephone extends Activity implements View.OnClickListener {
     EditText nmb_number;
     SharedPreferences sp;
     SharedPreferences.Editor editor;
-
+String name,email;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +60,10 @@ public class ModifyTelephone extends Activity implements View.OnClickListener {
         omp_number = ((TextView) findViewById(R.id.Omp_number));
         nmb_number = ((EditText) findViewById(R.id.Nmb_number));
         sp = getSharedPreferences("silian",MODE_PRIVATE);
+        Log.e("TAG","sp.getString===="+sp.getString("count",""));
         omp_number.setText(sp.getString("count",""));
+        name=getIntent().getStringExtra("name");
+        email=getIntent().getStringExtra("email");
     }
 
     @Override
@@ -76,8 +86,40 @@ public class ModifyTelephone extends Activity implements View.OnClickListener {
                      editor = sp.edit();
                     editor.putString("count",telephone);
                     editor.commit();
+                    Intent intent =new Intent();
+                    RequestParams params=new RequestParams(SuMaoConstant.SUMAO_IP+"/rest/model/atg/store/profile/RegistrationActor/updateUser");
+                    params.addParameter("email", email);
+                    params.addParameter("firstName",name);
+                    params.addParameter("phoneNumber",telephone);
+                    SharedPreferences sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+                    String unique = sp.getString("unique", "");
+                    params.addParameter("_dynSessConf",unique);
+                    Log.e("TAG","params===="+params);
+                    x.http().post(params, new Callback.CommonCallback<String>() {
+                        @Override
+                        public void onSuccess(String result) {
+                            Log.e("TAG","手机result-----"+result);
+                        }
+
+                        @Override
+                        public void onError(Throwable ex, boolean isOnCallback) {
+
+                        }
+
+                        @Override
+                        public void onCancelled(CancelledException cex) {
+
+                        }
+
+                        @Override
+                        public void onFinished() {
+
+                        }
+                    });
+                    setResult(0,intent);
+                    finish();
                 }
-                 finish();
+
                 break;
         }
     }

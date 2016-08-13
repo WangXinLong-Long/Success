@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.MyAdapter;
+import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,14 +34,14 @@ import java.util.Map;
  */
 public class PresellChangeFragment extends Fragment {
     private ExpandableListView elvDemo;
-//    private List<Map<String,Object>> listparrent;
-//    private List<List<Map<String,Object>>> listitem;
+    private List<Map<String,Object>> listparrent;
+    private List<List<Map<String,Object>>> listitem;
 
-    private List<Map<String,Object>> listparrent=new ArrayList<Map<String,Object>>();
-    private List<List<Map<String,Object>>> listitem=new ArrayList<List<Map<String,Object>>>();
+//    private List<Map<String,Object>> listparrent=new ArrayList<Map<String,Object>>();
+//    private List<List<Map<String,Object>>> listitem=new ArrayList<List<Map<String,Object>>>();
     MyAdapter adapter;
     String state1;
-    private String url="http://192.168.32.126:7023/rest/model/atg/userprofiling/ProfileActor/myOrders";
+    private String url= SuMaoConstant.SUMAO_IP+"/rest/model/atg/userprofiling/ProfileActor/myOrders";
 
     public PresellChangeFragment() {
         // Required empty public constructor
@@ -127,6 +128,8 @@ public class PresellChangeFragment extends Fragment {
         return view;
     }
     private void sendMy(){
+        listparrent=new ArrayList<Map<String,Object>>();;
+        listitem=new ArrayList<List<Map<String,Object>>>();;
         RequestParams params=new RequestParams(url);
         params.addParameter("pageNum",1);
         params.addParameter("submitType",1);

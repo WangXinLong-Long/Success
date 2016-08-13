@@ -7,13 +7,13 @@ import java.io.Serializable;
  */
 public class SpotOrderModel implements Serializable {
 //    单价
-    private int univalent;
+    private double univalent;
 //    数量
-    private int number;
+    private double number;
 //    生产企业
     private String  enterprise;
 //    总价
-    private int totalMoney;
+    private double totalMoney;
 //    仓库
     private String warehouse;
 //   公司
@@ -21,19 +21,19 @@ public class SpotOrderModel implements Serializable {
 //    产品型号
     private String productModel;
 
-    public int getUnivalent() {
+    public double getUnivalent() {
         return univalent;
     }
 
-    public void setUnivalent(int univalent) {
+    public void setUnivalent(double univalent) {
         this.univalent = univalent;
     }
 
-    public int getNumber() {
+    public double getNumber() {
         return number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(double number) {
         this.number = number;
     }
 
@@ -45,11 +45,11 @@ public class SpotOrderModel implements Serializable {
         this.enterprise = enterprise;
     }
 
-    public int getTotalMoney() {
+    public double getTotalMoney() {
         return totalMoney;
     }
 
-    public void setTotalMoney(int totalMoney) {
+    public void setTotalMoney(double totalMoney) {
         this.totalMoney = totalMoney;
     }
 
