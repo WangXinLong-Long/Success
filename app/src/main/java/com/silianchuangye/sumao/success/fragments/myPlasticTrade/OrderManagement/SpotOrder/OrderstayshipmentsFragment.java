@@ -125,7 +125,7 @@ public class OrderstayshipmentsFragment extends Fragment{
 //                startActivity(intent);
                 if ("已支付".equals(listparrent.get(groupPosition).get("states"))){
                     Intent intent = new Intent();
-                    intent.putExtra("ID",orderId);
+                    intent.putExtra("ID",listparrent.get(groupPosition).get("id").toString());
                     intent.putExtra("type",type);
                     Log.e("TAG","yizhifutype===="+type);
                     intent.setClass(getActivity(),AlreadyPaidActivity.class);
