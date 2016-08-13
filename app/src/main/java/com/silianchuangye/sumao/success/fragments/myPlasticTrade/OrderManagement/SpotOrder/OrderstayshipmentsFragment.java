@@ -132,7 +132,7 @@ public class OrderstayshipmentsFragment extends Fragment{
                     startActivity(intent);
                 }else if("待支付".equals(listparrent.get(groupPosition).get("states"))){
                     Intent intent = new Intent();
-                    intent.putExtra("ID",orderId);
+                    intent.putExtra("ID",listparrent.get(groupPosition).get("id").toString());
                     intent.putExtra("type",type);
                     intent.setClass(getActivity(), SpotOrder.class);
                     startActivity(intent);
