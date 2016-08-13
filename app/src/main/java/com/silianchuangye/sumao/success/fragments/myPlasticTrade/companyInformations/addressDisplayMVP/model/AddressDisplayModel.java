@@ -13,7 +13,7 @@ import org.xutils.x;
 /**
  * Created by Administrator on 2016/7/28 0028.
  */
-public class AddressDisplayModel implements IaddressDisplayModel {
+public class AddressDisplayModel implements IAddressDisplayModel {
     String province;
     String city;
     String county;
@@ -28,7 +28,7 @@ public class AddressDisplayModel implements IaddressDisplayModel {
     }
 
     @Override
-    public void getAddressDisplayInfo(final IaddressDisplayCallback callback) {
+    public void getAddressDisplayInfo(final IAddressDisplayCallback callback) {
 
         String url = SuMaoConstant.SUMAO_IP+"/rest/model/atg/userprofiling/ProfileActor/addressDisplay"+"?prov="+province+"&city="+city+"&county="+county;
         final RequestParams requestParams = new RequestParams(url);

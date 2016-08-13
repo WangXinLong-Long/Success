@@ -1,7 +1,7 @@
 package com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectCountyAreaMVP.presenter;
 
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectCountyAreaMVP.model.IcountyAreaCallbackListener;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectCountyAreaMVP.model.IselectCountyAreaModel;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectCountyAreaMVP.model.ICountyAreaCallbackListener;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectCountyAreaMVP.model.ISelectCountyAreaModel;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectCountyAreaMVP.model.SelectCountyAreaModel;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectCountyAreaMVP.view.ISelectCountyAreaView;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceAreaMVP.bean.Area;
@@ -18,8 +18,8 @@ public class SelectCountyAreaPresenter  {
         this.selectCountyAreaView = selectCountyAreaView;
     }
     public void getCountyInfo(String level){
-        IselectCountyAreaModel model = new SelectCountyAreaModel(level);
-        model.requestCountyInfo(new IcountyAreaCallbackListener() {
+        ISelectCountyAreaModel model = new SelectCountyAreaModel(level);
+        model.requestCountyInfo(new ICountyAreaCallbackListener() {
             @Override
             public void callbackCountyInfor(List<Area> areas) {
                 selectCountyAreaView.initCountyView(areas);

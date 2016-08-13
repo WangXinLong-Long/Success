@@ -3,6 +3,6 @@ package com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInforma
 /**
  * Created by Administrator on 2016/8/3 0003.
  */
-public interface IaddAddressModel {
-    void sendAddAddressInfoToServer(IaddAddressCallback addAddressCallback);
+public interface IAddAddressModel {
+    void sendAddAddressInfoToServer(IAddAddressCallback addAddressCallback);
 }

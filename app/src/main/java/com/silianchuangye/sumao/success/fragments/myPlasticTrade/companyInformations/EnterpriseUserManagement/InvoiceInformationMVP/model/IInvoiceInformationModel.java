@@ -3,7 +3,7 @@ package com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInforma
 /**
  * Created by Administrator on 2016/8/11 0011.
  */
-public interface IinvoiceInformationModel {
+public interface IInvoiceInformationModel {
 //
     void getInvoiceInformationFromService(InvoiceInformationCallback callback);
 }

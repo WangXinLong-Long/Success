@@ -13,7 +13,7 @@ import org.xutils.x;
 /**
  * Created by Administrator on 2016/8/10 0010.
  */
-public class ModifyReceiptInformationModel implements ImodifyReceiptInformationModel {
+public class ModifyReceiptInformationModel implements IModifyReceiptInformationModel {
 
     String name;
     String region;

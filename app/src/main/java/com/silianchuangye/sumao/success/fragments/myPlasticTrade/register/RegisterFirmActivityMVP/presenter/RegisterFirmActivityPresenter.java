@@ -1,8 +1,8 @@
 package com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.RegisterFirmActivityMVP.presenter;
 
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.addressDisplayMVP.model.AddressDisplayModel;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.addressDisplayMVP.model.IaddressDisplayCallback;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.addressDisplayMVP.model.IaddressDisplayModel;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.addressDisplayMVP.model.IAddressDisplayCallback;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.addressDisplayMVP.model.IAddressDisplayModel;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.RegisterFirmActivityMVP.view.IRegisterFirmActivityView;
 
 /**
@@ -16,8 +16,8 @@ public class RegisterFirmActivityPresenter  {
 
     }
     public void setDetailAddress(String province,String city,String county){
-        IaddressDisplayModel addressDisplayModel = new AddressDisplayModel(province,city,county,0);
-        addressDisplayModel.getAddressDisplayInfo(new IaddressDisplayCallback() {
+        IAddressDisplayModel addressDisplayModel = new AddressDisplayModel(province,city,county,0);
+        addressDisplayModel.getAddressDisplayInfo(new IAddressDisplayCallback() {
             @Override
             public void callbackAddressDisplayInfo(String address,int position) {
                 registerFirmActivityView.setStringInText(address);

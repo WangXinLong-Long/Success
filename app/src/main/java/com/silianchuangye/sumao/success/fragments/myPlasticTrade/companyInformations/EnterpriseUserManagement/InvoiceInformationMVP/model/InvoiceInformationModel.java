@@ -13,7 +13,7 @@ import org.xutils.x;
 /**
  * Created by Administrator on 2016/8/11 0011.
  */
-public class InvoiceInformationModel implements IinvoiceInformationModel {
+public class InvoiceInformationModel implements IInvoiceInformationModel {
     String sessionId;
 
     public InvoiceInformationModel(String sessionId) {

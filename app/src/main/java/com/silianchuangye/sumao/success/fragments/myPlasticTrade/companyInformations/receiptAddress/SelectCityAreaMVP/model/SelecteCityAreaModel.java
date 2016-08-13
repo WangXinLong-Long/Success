@@ -13,7 +13,7 @@ import org.xutils.x;
 /**
  * Created by Administrator on 2016/7/28 0028.
  */
-public class SelecteCityAreaModel implements IselecteCityAreaModel {
+public class SelecteCityAreaModel implements ISelecteCityAreaModel {
     String level;
 
     public SelecteCityAreaModel(String level) {
@@ -22,11 +22,11 @@ public class SelecteCityAreaModel implements IselecteCityAreaModel {
 
     Gson gson = new Gson();
     @Override
-    public void requestCityInfo(IcityAreaCallbackListener callback) {
+    public void requestCityInfo(ICityAreaCallbackListener callback) {
         getCityInfo(callback);
     }
 
-    void getCityInfo(final IcityAreaCallbackListener callback) {
+    void getCityInfo(final ICityAreaCallbackListener callback) {
 
         String url = SuMaoConstant.SUMAO_IP+"/rest/model/atg/userprofiling/ProfileActor/addressDroplet?type=city"+"&level="+level;
         LogUtils.log("URL----->"+url+"<-----URL");

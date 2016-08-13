@@ -3,6 +3,6 @@ package com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInforma
 /**
  * Created by Administrator on 2016/8/2 0002.
  */
-public interface IselectDetailAreaCallback {
+public interface ISelectDetailAreaCallback {
      void callbackDetailArea();
 }

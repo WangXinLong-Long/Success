@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2016/7/28 0028.
  */
-public class ReceiptAddressModel implements IreceiptAddressModel {
+public class ReceiptAddressModel implements IReceiptAddressModel {
     String sessionId;
     List<String> addressDisplays;
 
@@ -27,7 +27,7 @@ public class ReceiptAddressModel implements IreceiptAddressModel {
 
     Gson gson = new Gson();
     @Override
-    public void getReceiptAddressInfo(final IreceiptAddressCallback callback) {
+    public void getReceiptAddressInfo(final IReceiptAddressCallback callback) {
 
 
         String url = SuMaoConstant.SUMAO_IP+"/rest/model/atg/userprofiling/ProfileActor/EntAddress";

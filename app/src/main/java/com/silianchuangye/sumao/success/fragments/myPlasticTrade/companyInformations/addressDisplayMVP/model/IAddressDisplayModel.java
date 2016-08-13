@@ -3,6 +3,6 @@ package com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInforma
 /**
  * Created by Administrator on 2016/7/28 0028.
  */
-public interface IaddressDisplayModel {
-    void getAddressDisplayInfo(IaddressDisplayCallback callback);
+public interface IAddressDisplayModel {
+    void getAddressDisplayInfo(IAddressDisplayCallback callback);
 }

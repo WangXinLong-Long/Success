@@ -16,17 +16,17 @@ import java.util.List;
 /**
  * Created by Administrator on 2016/7/26 0026.
  */
-public class UserRegisterModel implements IuserRegisterModel {
+public class UserRegisterModel implements IUserRegisterModel {
     Gson gson = new Gson();
     DifferentTypes types;
     String result;
 
     @Override
-    public void getEntInfo(int position,IenterpriseInformationCallback callback) {
+    public void getEntInfo(int position,IEnterpriseInformationCallback callback) {
         getStringFromURL(position,callback);
     }
 
-    public  void  getStringFromURL(final int position, final IenterpriseInformationCallback callback){
+    public  void  getStringFromURL(final int position, final IEnterpriseInformationCallback callback){
         String url = SuMaoConstant.SUMAO_IP+"/rest/model/atg/store/profile/RegistrationActor/userVerify/getEntInfo";
         RequestParams requestParams = new RequestParams(url);
         try {

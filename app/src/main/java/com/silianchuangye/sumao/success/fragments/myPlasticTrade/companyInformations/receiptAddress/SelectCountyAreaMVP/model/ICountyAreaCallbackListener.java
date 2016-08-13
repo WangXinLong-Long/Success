@@ -7,6 +7,6 @@ import java.util.List;
 /**
  * Created by Administrator on 2016/7/28 0028.
  */
-public interface IcountyAreaCallbackListener {
+public interface ICountyAreaCallbackListener {
     void callbackCountyInfor(List<Area> areas);
 }

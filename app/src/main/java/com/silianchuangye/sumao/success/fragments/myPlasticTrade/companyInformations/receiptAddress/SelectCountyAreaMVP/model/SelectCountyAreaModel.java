@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2016/7/28 0028.
  */
-public class SelectCountyAreaModel implements IselectCountyAreaModel {
+public class SelectCountyAreaModel implements ISelectCountyAreaModel {
     Gson gson =  new Gson();
     String level;
 
@@ -25,10 +25,10 @@ public class SelectCountyAreaModel implements IselectCountyAreaModel {
     }
 
     @Override
-    public void requestCountyInfo(IcountyAreaCallbackListener callback) {
+    public void requestCountyInfo(ICountyAreaCallbackListener callback) {
         getCountyInfo(callback);
     }
-    void getCountyInfo(final IcountyAreaCallbackListener callback) {
+    void getCountyInfo(final ICountyAreaCallbackListener callback) {
 
         String url = SuMaoConstant.SUMAO_IP+"/rest/model/atg/userprofiling/ProfileActor/addressDroplet?type=county"+"&level="+level;
         LogUtils.log("URL----->"+url+"<-----URL");

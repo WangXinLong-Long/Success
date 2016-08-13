@@ -3,7 +3,7 @@ package com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.FirmI
 /**
  * Created by Administrator on 2016/7/26 0026.
  */
-public interface IuserRegisterModel {
+public interface IUserRegisterModel {
 
-   void getEntInfo(int position,IenterpriseInformationCallback callback);
+   void getEntInfo(int position,IEnterpriseInformationCallback callback);
 }

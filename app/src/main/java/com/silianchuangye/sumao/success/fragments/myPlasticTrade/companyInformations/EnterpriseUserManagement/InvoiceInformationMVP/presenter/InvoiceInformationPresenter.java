@@ -1,7 +1,7 @@
 package com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.InvoiceInformationMVP.presenter;
 
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.InvoiceInformationMVP.bean.InvoiceInformationBean;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.InvoiceInformationMVP.model.IinvoiceInformationModel;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.InvoiceInformationMVP.model.IInvoiceInformationModel;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.InvoiceInformationMVP.model.InvoiceInformationCallback;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.InvoiceInformationMVP.model.InvoiceInformationModel;
 ;
@@ -22,7 +22,7 @@ public class InvoiceInformationPresenter {
 
 //    从服务器获取数据，设置到对应的位置上
     public void getInvoiceInformationToBean(String sessionId){
-        IinvoiceInformationModel model = new InvoiceInformationModel(sessionId);
+        IInvoiceInformationModel model = new InvoiceInformationModel(sessionId);
         model.getInvoiceInformationFromService(new InvoiceInformationCallback() {
             @Override
             public void callbackInvoiceInformation(InvoiceInformationBean bean) {

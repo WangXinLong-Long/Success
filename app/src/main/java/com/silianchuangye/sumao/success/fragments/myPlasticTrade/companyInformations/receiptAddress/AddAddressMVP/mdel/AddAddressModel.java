@@ -15,7 +15,7 @@ import org.xutils.x;
 /**
  * Created by Administrator on 2016/8/3 0003.
  */
-public class AddAddressModel implements IaddAddressModel {
+public class AddAddressModel implements IAddAddressModel {
     Gson gson = new Gson();
     String address;
     String consignee;
@@ -35,7 +35,7 @@ public class AddAddressModel implements IaddAddressModel {
     }
 
     @Override
-    public void sendAddAddressInfoToServer(final IaddAddressCallback callback) {
+    public void sendAddAddressInfoToServer(final IAddAddressCallback callback) {
 //            String[] addressinfo = info.split(",");
 //        for (String s : addressinfo) {
 //            LogUtils.log("AddAddressMdel：s--->" + s + "<---s：AddAddressMdel");
