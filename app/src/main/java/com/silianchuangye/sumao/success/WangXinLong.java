@@ -59,6 +59,7 @@ public class WangXinLong extends Activity {
 //        8月9日   解决乱码问题
 //        8月10日  收货地址新增，删除，修改全部做完
 //        8月11日  开票信息接口处理完毕
+//        8月13日  修改类名
 
         showPayDialog();
         ArrayList<String> arrayList = new ArrayList<>();
