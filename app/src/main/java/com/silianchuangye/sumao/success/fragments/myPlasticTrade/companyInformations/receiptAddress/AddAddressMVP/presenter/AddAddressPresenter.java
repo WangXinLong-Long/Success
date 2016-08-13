@@ -1,5 +1,6 @@
 package com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.AddAddressMVP.presenter;
 
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.InvoiceInformationMVP.view.IInvoiceInformationView;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.addressDisplayMVP.model.AddressDisplayModel;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.addressDisplayMVP.model.IAddressDisplayCallback;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.addressDisplayMVP.model.IAddressDisplayModel;
@@ -18,6 +19,12 @@ import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformat
 public class AddAddressPresenter {
     IAddAddress addAddress;
     IReceiptAddressDetailView receiptAddressDetailView;
+    IInvoiceInformationView invoiceInformationView;
+
+    public AddAddressPresenter(IInvoiceInformationView invoiceInformationView) {
+        this.invoiceInformationView = invoiceInformationView;
+    }
+
     public  AddAddressPresenter(IAddAddress addAddress){
         this.addAddress = addAddress;
     }
@@ -26,6 +33,16 @@ public class AddAddressPresenter {
         this.receiptAddressDetailView = receiptAddressDetailView;
     }
 
+    public void sendrequestGetAddress(String province,String city,String county){
+        IAddressDisplayModel addressDisplayModel = new AddressDisplayModel(province,city,county,0);
+        addressDisplayModel.getAddressDisplayInfo(new IAddressDisplayCallback() {
+            @Override
+            public void callbackAddressDisplayInfo(String address,int position) {
+                invoiceInformationView.setRegionInText(address);
+
+            }
+        });
+    }
 
     public void setDisplaylAddress(String province,String city,String county){
         IAddressDisplayModel addressDisplayModel = new AddressDisplayModel(province,city,county,0);

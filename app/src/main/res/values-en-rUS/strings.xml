@@ -171,6 +171,7 @@
     <string name="company_name">Company name</string>
     <string name="duty_paragraph">duty paragraph</string>
     <string name="invoice_information_bank_account">Bank account</string>
+    <string name="account_number">Account Number</string>
     <string name="bill_mailing_address">Bill mailing address</string>
     <string name="bill_mailing_address_mailing_address">Mailing address</string>
     <string name="order_payment">order payment</string>

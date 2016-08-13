@@ -39,12 +39,34 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
     private TextView tv_item_cart_buy_num;
     private Cart_MyDialog dialog;
     private Button determine_buy_immediately_button;
+    private Intent activityiIntent;
+    private String cl_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goods_in_stock_detail);
 
+        activityiIntent = getIntent();
+        cl_id = activityiIntent.getStringExtra("cl_id");
+
+        initView();
+        initListener();
+
+    }
+
+    private void initListener() {
+        buy_immediately.setOnClickListener(this);
+        join_shopping_cart.setOnClickListener(this);
+        title_bar_white_back.setOnClickListener(this);
+        title_bar_white_shopping_cart.setOnClickListener(this);
+        pre_sale_sale_detail_detail.setOnClickListener(this);
+        pre_sale_sale_detail_similar_product.setOnClickListener(this);
+        pre_sale_sale_detail_similar_liulan.setOnClickListener(this);
+        title_bar_white_title.setText("现货");
+    }
+
+    private void initView() {
         title_bar_white_back = ((ImageView) findViewById(R.id.title_bar_white_back));
         title_bar_white_title = ((TextView) findViewById(R.id.title_bar_white_title));
         title_bar_white_shopping_cart = ((ImageView) findViewById(R.id.title_bar_white_shopping_cart));
@@ -54,15 +76,6 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
         buy_immediately = ((Button) findViewById(R.id.buy_immediately));
         join_shopping_cart = ((Button) findViewById(R.id.join_shopping_cart));
         dialog = new Cart_MyDialog(this);
-
-        buy_immediately.setOnClickListener(this);
-        join_shopping_cart.setOnClickListener(this);
-        title_bar_white_back.setOnClickListener(this);
-        title_bar_white_shopping_cart.setOnClickListener(this);
-        pre_sale_sale_detail_detail.setOnClickListener(this);
-        pre_sale_sale_detail_similar_product.setOnClickListener(this);
-        pre_sale_sale_detail_similar_liulan.setOnClickListener(this);
-        title_bar_white_title.setText("现货");
     }
 
     @Override
