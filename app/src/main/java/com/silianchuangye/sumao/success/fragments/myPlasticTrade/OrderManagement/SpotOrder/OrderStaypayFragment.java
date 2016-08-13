@@ -16,6 +16,7 @@ import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.MyAdapter;
 
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.OrderDetails.AlreadyPaidActivity;
+import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,14 +36,14 @@ import java.util.Map;
  */
 public class OrderStaypayFragment extends Fragment {
     private ExpandableListView elvDemo;
-//    private List<Map<String,Object>> listparrent;
-//    private List<List<Map<String,Object>>> listitem;
+    private List<Map<String,Object>> listparrent;
+    private List<List<Map<String,Object>>> listitem;
 
-    private List<Map<String,Object>> listparrent=new ArrayList<Map<String,Object>>();;
-    private List<List<Map<String,Object>>> listitem=new ArrayList<List<Map<String,Object>>>();;
+//    private List<Map<String,Object>> listparrent=new ArrayList<Map<String,Object>>();;
+//    private List<List<Map<String,Object>>> listitem=new ArrayList<List<Map<String,Object>>>();;
     MyAdapter adapter;
     String state1;
-
+    String orderId;
     public OrderStaypayFragment() {
         // Required empty public constructor
     }
@@ -118,6 +119,8 @@ public class OrderStaypayFragment extends Fragment {
             public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
 //                Toast.makeText(getContext(), "点击title", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent();
+                intent.putExtra("ID",listparrent.get(groupPosition).get("id").toString());
+                Log.e("TAG","orderId----------"+orderId);
                 intent.setClass(getActivity(), SpotOrder.class);
                 startActivity(intent);
                 return true;
@@ -129,11 +132,13 @@ public class OrderStaypayFragment extends Fragment {
         return view;
     }
     private void sendMy(){
-        RequestParams params=new RequestParams("http://192.168.32.126:7023/rest/model/atg/userprofiling/ProfileActor/myOrders");
+        listparrent=new ArrayList<Map<String,Object>>();;
+        listitem=new ArrayList<List<Map<String,Object>>>();;
+        RequestParams params=new RequestParams(SuMaoConstant.SUMAO_IP+"/rest/model/atg/userprofiling/ProfileActor/myOrders");
         params.addParameter("pageNum",1);
         params.addParameter("submitType",1);
         params.addParameter("searchOrderType","fixedPricingOrder");
-        params.addParameter("searchOrderState",1);
+        params.addParameter("searchOrderState","1");
 //        params.addParameter("searchCompanyName",company);
         final SharedPreferences sp = getActivity().getSharedPreferences("sumao", Activity.MODE_PRIVATE);
         String unique123 = sp.getString("unique", "");
@@ -148,12 +153,11 @@ public class OrderStaypayFragment extends Fragment {
                     String str=job.getString("order");
                     JSONArray jay=new JSONArray(str);
                     for(int i=0;i<jay.length();i++){
-                        Log.e("TAG","i=="+i);
                         JSONObject j= (JSONObject) jay.get(i);
                         String cl= (String) j.getString("cl");
                         String state=j.getString("state");//状态
                         String shippingGroupState=j.getString("shippingGroupState");
-                        String type=j.getString("type");
+                       String  type=j.getString("type");
                         String cl_amount="";
                         if(state.equals("SUBMITTED")||state.equals("PENDING_APPROVAL")||state.equals("APPROVED")||state.equals("FAILED_APPROVAL")){
                             if(type.equals("offlineOrder")) {
@@ -180,8 +184,8 @@ public class OrderStaypayFragment extends Fragment {
                             state1="已变更";
                         }
                         String owner=j.getString("owner");//采购员
-                        String orderId=j.getString("orderId");//订单编号
-
+                        orderId=j.getString("orderId");//订单编号
+                        Log.e("TAG","orderId网络====="+orderId);
                         JSONArray j1=new JSONArray(cl);
                         for(int k=0;k<j1.length();k++){
                             JSONObject job1= (JSONObject) j1.get(k);

@@ -42,6 +42,7 @@
             android:textSize="@dimen/x15"
             />
         <TextView
+            android:id="@+id/tv_loginNum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="zhangsan001"
@@ -67,6 +68,7 @@
             android:textSize="@dimen/x15"
             />
         <TextView
+            android:id="@+id/tv_loginPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="zhangsan001"
@@ -102,6 +104,7 @@
 
             />
         <TextView
+            android:id="@+id/tv_loginName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="zhangsan001"
@@ -139,6 +142,7 @@
             android:layout_centerVertical="true"
             />
         <TextView
+            android:id="@+id/tv_loginEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="zhangsan001"
@@ -174,6 +178,7 @@
             android:layout_centerVertical="true"
             />
         <TextView
+            android:id="@+id/tv_loginPhoneNum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="zhangsan001"

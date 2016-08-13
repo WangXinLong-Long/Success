@@ -16,6 +16,7 @@ import android.widget.ExpandableListView;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.MyAdapter;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.OrderDetails.AlreadyPaidActivity;
+import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
 
 import org.json.JSONArray;
@@ -36,11 +37,11 @@ import java.util.Map;
  */
 public class OrderstayshipmentsFragment extends Fragment{
     private ExpandableListView elvDemo;
-//    private List<Map<String,Object>> listparrent;
-//    private List<List<Map<String,Object>>> listitem;
+    private List<Map<String,Object>> listparrent;
+    private List<List<Map<String,Object>>> listitem;
 
-    private List<Map<String,Object>> listparrent=new ArrayList<Map<String,Object>>();;
-    private List<List<Map<String,Object>>> listitem=new ArrayList<List<Map<String,Object>>>();;
+//    private List<Map<String,Object>> listparrent=new ArrayList<Map<String,Object>>();;
+//    private List<List<Map<String,Object>>> listitem=new ArrayList<List<Map<String,Object>>>();;
     MyAdapter adapter;
     String state1;
     String orderId;
@@ -126,10 +127,13 @@ public class OrderstayshipmentsFragment extends Fragment{
                     Intent intent = new Intent();
                     intent.putExtra("ID",orderId);
                     intent.putExtra("type",type);
+                    Log.e("TAG","yizhifutype===="+type);
                     intent.setClass(getActivity(),AlreadyPaidActivity.class);
                     startActivity(intent);
                 }else if("待支付".equals(listparrent.get(groupPosition).get("states"))){
                     Intent intent = new Intent();
+                    intent.putExtra("ID",orderId);
+                    intent.putExtra("type",type);
                     intent.setClass(getActivity(), SpotOrder.class);
                     startActivity(intent);
                 }
@@ -141,7 +145,9 @@ public class OrderstayshipmentsFragment extends Fragment{
         return view;
     }
     private void sendMy(){
-        RequestParams params=new RequestParams("http://192.168.32.126:7023/rest/model/atg/userprofiling/ProfileActor/myOrders");
+        listparrent=new ArrayList<Map<String,Object>>();;
+        listitem=new ArrayList<List<Map<String,Object>>>();;
+        RequestParams params=new RequestParams(SuMaoConstant.SUMAO_IP+"/rest/model/atg/userprofiling/ProfileActor/myOrders");
         params.addParameter("pageNum",1);
         params.addParameter("submitType",1);
         params.addParameter("searchOrderType","fixedPricingOrder");

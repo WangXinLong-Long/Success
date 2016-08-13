@@ -22,6 +22,7 @@ import com.silianchuangye.sumao.success.custom.CustomListView;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.SpotOrder.SpotOrder;
 import com.silianchuangye.sumao.success.model.OrderDeatilsModel;
 import com.silianchuangye.sumao.success.model.SpotOrderModel;
+import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -57,7 +58,7 @@ public class AlreadyPaidActivity extends Activity implements View.OnClickListene
         setContentView(R.layout.activity_order_has_been_paid);
         type=getIntent().getStringExtra("type");
         Id=getIntent().getStringExtra("ID");
-
+        Log.e("TAG","type已支付--"+type);
         Copy= (Button) findViewById(R.id.bt_copy);
         the_order_number_number= (TextView) findViewById(R.id.the_order_number_number);
         the_order_price= (TextView) findViewById(R.id.the_order_price);
@@ -114,6 +115,7 @@ public class AlreadyPaidActivity extends Activity implements View.OnClickListene
         {
             case R.id.order_amount:
                 Intent intent = new Intent();
+                intent.putExtra("ID",Id);
                 intent.setClass(this,OrderDetailsHaveBeenPaid.class);
                 startActivity(intent);
                 break;
@@ -125,7 +127,7 @@ public class AlreadyPaidActivity extends Activity implements View.OnClickListene
         }
     }
     private void sendMy(){
-        RequestParams params=new RequestParams("http://192.168.32.126:7023/rest/model/atg/userprofiling/ProfileActor/myOrders");
+        RequestParams params=new RequestParams(SuMaoConstant.SUMAO_IP+"/rest/model/atg/userprofiling/ProfileActor/myOrders");
         params.addParameter("pageNum","1");
         params.addParameter("searchOrderId",Id);
         params.addParameter("searchOrderType",type);
@@ -138,7 +140,6 @@ public class AlreadyPaidActivity extends Activity implements View.OnClickListene
             public void onSuccess(String result) {
                 Log.e("TAG","result----"+result);
                 try {
-
                     JSONObject job=new JSONObject(result);
                     String info=job.getString("info");
                     if(info.equals("fail")){
@@ -184,7 +185,7 @@ public class AlreadyPaidActivity extends Activity implements View.OnClickListene
                             }
                             state2.setText(state1);
                             String owner = j.getString("owner");//采购员
-                            String orderId = j.getString("orderId");//订单编号
+                            String orderId  = j.getString("orderId");//订单编号
                             the_order_number_number.setText(orderId);
                             String cl_amount = "";
 
@@ -195,22 +196,28 @@ public class AlreadyPaidActivity extends Activity implements View.OnClickListene
                             for (int k = 0; k < j1.length(); k++) {
                                 JSONObject job1 = (JSONObject) j1.get(k);
                                 String cl_mingcheng = job1.getString("cl_mingcheng");//产品名称
+                                Log.e("TAG","名称");
                                 String fenlei = job1.getString("cl_fenlei");//分类
+                                Log.e("TAG","分类");
                                 cl_amount = job1.getString("cl_amount");//金额
+                                Log.e("TAG","金额二");
                                 the_order_price.setText(cl_amount);
                                 String cl_cangku=job1.getString("cl_cangku");//仓库
                                 String cl_gongsi=job1.getString("cl_gongsi");//公司
                                 company2.setText(cl_gongsi);
                                 String cl_jituan=job1.getString("cl_jituan");//生产企业
+                                Log.e("TAG","生产企业");
                                 String cl_shuliang=job1.getString("cl_shuliang");//数量
+                                Log.e("TAG","数量");
                                 String cl_jine=job1.getString("cl_jine");
+                                Log.e("TAG","金额");
                                 model.setWarehouse(cl_cangku);
                                 model.setWarehouse(cl_cangku);
                                 model.setTotalMoney(Double.valueOf(cl_amount));
                                 model.setCompany(cl_gongsi);
-                                model.setNumber(Integer.valueOf(cl_shuliang));
+                                model.setNumber(Double.valueOf(cl_shuliang));
                                 model.setUnivalent(Double.valueOf(cl_jine));
-                                model.setProductModel("");
+                                model.setProductModel(cl_mingcheng);
                                 model.setEnterprise(cl_jituan);
                                 list.add(model);
                                 Log.e("TAG","list.size()==="+list.size());

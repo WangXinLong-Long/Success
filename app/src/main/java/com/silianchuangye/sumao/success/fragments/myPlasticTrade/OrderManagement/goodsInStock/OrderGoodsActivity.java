@@ -290,12 +290,12 @@ public class OrderGoodsActivity extends AppCompatActivity implements View.OnClic
                 break;
             case R.id.btn_dingdan_my:
                 i=1;
-                sendMy();
+//                sendMy();
                 Toast.makeText(OrderGoodsActivity.this,"点击了我的意向单",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btn_dingdan_all:
                 i=2;
-                sendMy();
+//                sendMy();
                 Toast.makeText(OrderGoodsActivity.this,"点击了所有意向单",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.linear7_dingdan_bottem:

@@ -9,7 +9,7 @@ public class SpotOrderModel implements Serializable {
 //    单价
     private double univalent;
 //    数量
-    private int number;
+    private double number;
 //    生产企业
     private String  enterprise;
 //    总价
@@ -29,11 +29,11 @@ public class SpotOrderModel implements Serializable {
         this.univalent = univalent;
     }
 
-    public int getNumber() {
+    public double getNumber() {
         return number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(double number) {
         this.number = number;
     }
 
