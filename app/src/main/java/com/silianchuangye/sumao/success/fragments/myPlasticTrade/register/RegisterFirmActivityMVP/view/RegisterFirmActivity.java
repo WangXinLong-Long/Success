@@ -36,6 +36,8 @@ import org.xutils.http.HttpMethod;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
@@ -102,7 +104,7 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
         bt_save_register_value.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                registerMethodW();
+                registerMethod();
 
             }
         });
@@ -138,6 +140,13 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
         sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
         String unique123 = sp.getString("unique", "");
         rp.addParameter("_dynSessConf", unique123);
+         // String deviceIntoTime=deviceIntoTime.
+        try {
+            rp.addBodyParameter("deviceIntoTime", URLEncoder.encode(rp.toString(), "utf-8"));
+            Log.d("bianma",rp.toString());
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
 
         x.http().request(HttpMethod.POST, rp, new Callback.CacheCallback<String>() {
             @Override
@@ -179,7 +188,8 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
                 if (result) {
                     Log.d("可以注册,终于可以了", "可以注册");
 
-                    rp.addParameter("cl_mingcheng", list.get(2).get("right").toString());
+                   // rp.addParameter("cl_mingcheng", list.get(2).get("right").toString());
+                    rp.addParameter("cl_mingcheng", "北京四联创业集团");
                     rp.addParameter("cl_yewu", list.get(3).get("right").toString());
                     rp.addParameter("province", "1414");
                     rp.addParameter("city", "141410");
@@ -255,19 +265,29 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
                     rp.addParameter("cl_jigouimage", "/mnt/docs/100.jpg");
                     rp.addParameter("cl_zhizhaoimage", "/mnt/docs/100.jpg");
                     rp.addParameter("cl_nashuirenimage", "/mnt/docs/100.jpg");
-                    rp.addParameter("cl_login", Login);
+                    rp.addParameter("cl_login", account);
                     rp.addParameter("cl_password", pass);
                     rp.addParameter("cl_confirmPassword", repass);
-                    rp.addParameter("cl_firstName", name);
+                    try {
+                        rp.addParameter("cl_firstName", new String(name.getBytes("UTF-8"),"UTF-8") );
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
                     rp.addParameter("cl_email", email);
                     rp.addParameter("cl_mobilePhone", phone);
                     rp.addParameter("cl_applyType", 8);
                     sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
                     String unique123 = sp.getString("unique", "");
-                    rp.addParameter("_dynSessConf", "8726190966731542210");
+                    rp.addParameter("_dynSessConf", unique123);
                     Log.d("unique", unique123);
                     Log.d("传的值", rp + "");
                     rp.getCharset();
+                    try {
+                        rp.addBodyParameter("deviceIntoTime", URLEncoder.encode(rp.toString(), "utf-8"));
+                        Log.d("bianma",rp.toString());
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
                     x.http().post(rp, new CommonCallback<String>() {
                         @Override
                         public void onSuccess(String result) {
@@ -644,7 +664,6 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
                 break;
             case 20:
                 String value4 = data.getStringExtra("name");
-
                 list1.get(0).put("right", value4);
                 adapter1.notifyDataSetChanged();
                 break;

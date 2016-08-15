@@ -60,7 +60,7 @@ public class CaptureActivity extends Activity implements Callback {
 		setContentView(R.layout.activity_capture);
 		surfaceView = (SurfaceView) findViewById(R.id.surfaceview);
 		viewfinderView = (ViewfinderView) findViewById(R.id.viewfinderview);
-         result="";
+        result="";
 		Window window = getWindow();
 		//使界面是透明的
 		window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
