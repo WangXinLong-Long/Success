@@ -147,6 +147,7 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/pre_sale_detail_integral_rule"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/x10"
@@ -222,12 +223,48 @@
                     android:layout_toRightOf="@id/min_variable_tv"
                     android:text="1吨"
                     android:textSize="@dimen/x10" />
+                <TextView
+                    android:id="@+id/margin_proportion_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/min_variable_tv"
+                    android:layout_marginBottom="@dimen/x5"
+                    android:text="保证金比例："
+                    android:textSize="@dimen/x10" />
+
+                <TextView
+                    android:id="@+id/margin_proportion_et"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/min_variable_tv"
+                    android:layout_marginBottom="@dimen/x5"
+                    android:layout_toRightOf="@id/margin_proportion_tv"
+                    android:text="30%"
+                    android:textSize="@dimen/x10" />
+                <TextView
+                    android:id="@+id/company_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/margin_proportion_tv"
+                    android:layout_marginBottom="@dimen/x5"
+                    android:text="公司："
+                    android:textSize="@dimen/x10" />
+
+                <TextView
+                    android:id="@+id/company_et"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/margin_proportion_tv"
+                    android:layout_marginBottom="@dimen/x5"
+                    android:layout_toRightOf="@id/company_tv"
+                    android:text="四联创业化工集团"
+                    android:textSize="@dimen/x10" />
 
                 <TextView
                     android:id="@+id/delivery_time_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/min_variable_tv"
+                    android:layout_below="@id/company_tv"
                     android:layout_marginBottom="@dimen/x5"
                     android:text="交货时间："
                     android:textSize="@dimen/x10" />
@@ -236,9 +273,18 @@
                     android:id="@+id/delivery_time_et"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/min_variable_tv"
+                    android:layout_below="@id/company_tv"
                     android:layout_marginBottom="@dimen/x5"
                     android:layout_toRightOf="@id/delivery_time_tv"
+                    android:text="2016-3-3至2016-4-4"
+                    android:textSize="@dimen/x10" />
+                <TextView
+                    android:id="@+id/delivery_time_et_end"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/company_tv"
+                    android:layout_marginBottom="@dimen/x5"
+                    android:layout_toRightOf="@id/delivery_time_et"
                     android:text="2016-3-3至2016-4-4"
                     android:textSize="@dimen/x10" />
 
@@ -341,47 +387,9 @@
                     android:text="北京"
                     android:textSize="@dimen/x10" />
 
-                <TextView
-                    android:id="@+id/company_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/region_tv"
-                    android:layout_marginBottom="@dimen/x5"
-                    android:layout_marginLeft="@dimen/x5"
-                    android:layout_toRightOf="@id/delivery_mode_et"
-                    android:text="公司："
-                    android:textSize="@dimen/x10" />
 
-                <TextView
-                    android:id="@+id/company_et"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/region_tv"
-                    android:layout_marginBottom="@dimen/x5"
-                    android:layout_toRightOf="@id/warehouse_tv"
-                    android:text="四联创业化工集团"
-                    android:textSize="@dimen/x10" />
 
-                <TextView
-                    android:id="@+id/margin_proportion_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/company_tv"
-                    android:layout_marginBottom="@dimen/x5"
-                    android:layout_marginLeft="@dimen/x5"
-                    android:layout_toRightOf="@id/delivery_mode_et"
-                    android:text="保证金比例："
-                    android:textSize="@dimen/x10" />
 
-                <TextView
-                    android:id="@+id/margin_proportion_et"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/company_tv"
-                    android:layout_marginBottom="@dimen/x5"
-                    android:layout_toRightOf="@id/margin_proportion_tv"
-                    android:text="30%"
-                    android:textSize="@dimen/x10" />
             </RelativeLayout>
 
             <TextView
@@ -396,6 +404,7 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/pre_sale_detail_remark"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/x10"

@@ -382,13 +382,13 @@
             android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoPicture.FirmInfoPictureActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".fragments.homepage.preSale.PreSaleDetailActivity"
+            android:name=".fragments.homepage.preSale.PreSaleDetailActivityMVP.view.PreSaleDetailActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".fragments.myPlasticTrade.EnterpriseCapitalAccountManagement.FundInfoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".fragments.homepage.preSale.PreSale"
+            android:name=".fragments.homepage.preSale.PreSaleMVP.view.PreSale"
             android:screenOrientation="portrait" />
         <activity
             android:name=".fragments.homepage.theprice.ChinaNorth_MyPrice"
@@ -437,7 +437,7 @@
             android:name=".fragments.homepage.goodInStock.LikeProduct"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".fragments.homepage.goodInStock.SeeProduct"
+            android:name=".fragments.homepage.goodInStock.SeeProductMVP.view.SeeProduct"
             android:screenOrientation="portrait" />
         <activity
             android:name=".fragments.myPlasticTrade.login.LoginUserActivity"
