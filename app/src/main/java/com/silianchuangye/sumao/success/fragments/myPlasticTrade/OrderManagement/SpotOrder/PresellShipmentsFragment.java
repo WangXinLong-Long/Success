@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.MyAdapter;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.OrderDetails.AlreadyPaidActivity;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
 import org.json.JSONArray;
@@ -116,7 +117,8 @@ public class PresellShipmentsFragment extends Fragment {
             public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
 //                Toast.makeText(getContext(), "点击title", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent();
-                intent.setClass(getActivity(), SpotOrder.class);
+                intent.putExtra("ID",listparrent.get(groupPosition).get("id").toString());
+                intent.setClass(getActivity(), AlreadyPaidActivity.class);
                 startActivity(intent);
                 return true;
 

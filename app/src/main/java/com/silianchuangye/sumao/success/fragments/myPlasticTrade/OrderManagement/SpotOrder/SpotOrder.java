@@ -203,6 +203,8 @@ public class SpotOrder extends Activity implements View.OnClickListener {
                 break;
             case R.id.order_amount:
                 Intent intent = new Intent();
+                intent.putExtra("ID",Id);
+                Log.e("TAG","IdSend---"+Id);
                 intent.setClass(this, OrderDetailsActivity.class);
                 startActivity(intent);
                 break;
@@ -305,11 +307,12 @@ public class SpotOrder extends Activity implements View.OnClickListener {
         getWindow().setAttributes(lp);
     }
     private void sendMy(){
+        list = new ArrayList<>();
         RequestParams params=new RequestParams(SuMaoConstant.SUMAO_IP+"/rest/model/atg/userprofiling/ProfileActor/myOrders");
         params.addParameter("pageNum","1");
         params.addParameter("searchOrderId",Id);
 //        params.addParameter("searchOrderType",type);
-        params.addParameter("searchOrderState","1");
+//        params.addParameter("searchOrderState","1");
         SharedPreferences sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
         String unique123 = sp.getString("unique", "");
         Log.e("TAG","parames======"+params);
@@ -361,15 +364,20 @@ public class SpotOrder extends Activity implements View.OnClickListener {
                             }else if (state.equals("CHANGED")){
                                 state1="已变更";
                             }
+                            Log.e("TAG","state1----"+state1);
                             state2.setText(state1);
                             String owner = j.getString("owner");//采购员
+                            Log.e("TAG","采购员-------"+owner);
                             String orderId  = j.getString("orderId");//订单编号
+                            Log.e("TAG","订单编号-----"+orderId);
                             the_order_number_number.setText(orderId);
                             String cl_amount = "";
 
                             Long submittedDate=j.getLong("submittedDate");
+                            Log.e("TAG","sub日期=----"+submittedDate);
                             String now = new SimpleDateFormat("yyyy-MM-dd").format(submittedDate);
 //                            enterprise2.setText(now);
+                            Log.e("TAG","日期---"+now);
                             JSONArray j1 = new JSONArray(cl);
                             for (int k = 0; k < j1.length(); k++) {
                                 JSONObject job1 = (JSONObject) j1.get(k);
@@ -381,8 +389,10 @@ public class SpotOrder extends Activity implements View.OnClickListener {
                                 Log.e("TAG","金额二");
                                 the_order_price.setText(cl_amount);
                                 String cl_cangku=job1.getString("cl_cangku");//仓库
+                                Log.e("TAG","仓库");
                                 String cl_gongsi=job1.getString("cl_gongsi");//公司
                                 company2.setText(cl_gongsi);
+                                Log.e("TAG","公司");
                                 String cl_jituan=job1.getString("cl_jituan");//生产企业
                                 Log.e("TAG","生产企业");
                                 String cl_shuliang=job1.getString("cl_shuliang");//数量
@@ -390,13 +400,19 @@ public class SpotOrder extends Activity implements View.OnClickListener {
                                 String cl_jine=job1.getString("cl_jine");
                                 Log.e("TAG","金额");
                                 model.setWarehouse(cl_cangku);
-                                model.setWarehouse(cl_cangku);
+                                Log.e("TAG","model仓库"+model.getWarehouse());
                                 model.setTotalMoney(Double.valueOf(cl_amount));
+                                Log.e("TAG","model金额"+model.getTotalMoney());
                                 model.setCompany(cl_gongsi);
+                                Log.e("TAG","model公司"+model.getCompany());
                                 model.setNumber(Double.valueOf(cl_shuliang));
+                                Log.e("TAG","model数量"+model.getNumber());
                                 model.setUnivalent(Double.valueOf(cl_jine));
+                                Log.e("TAG","model单价"+model.getUnivalent());
                                 model.setProductModel(cl_mingcheng);
+                                Log.e("TAG","model名称"+model.getProductModel());
                                 model.setEnterprise(cl_jituan);
+                                Log.e("TAG","model集团"+model.getEnterprise());
                                 list.add(model);
                                 Log.e("TAG","list.size()==="+list.size());
                             }

@@ -120,10 +120,12 @@ public class PresellallFragment extends Fragment {
                 LogUtils.log(listparrent.get(groupPosition).get("states")+"");
                 if ("已支付".equals(listparrent.get(groupPosition).get("states"))){
                     Intent intent = new Intent();
+                    intent.putExtra("ID",listparrent.get(groupPosition).get("id").toString());
                     intent.setClass(getActivity(),AlreadyPaidActivity.class);
                     startActivity(intent);
                 }else if("待支付".equals(listparrent.get(groupPosition).get("states"))){
                     Intent intent = new Intent();
+                    intent.putExtra("ID",listparrent.get(groupPosition).get("id").toString());
                     intent.setClass(getActivity(), SpotOrder.class);
                     startActivity(intent);
                 }

@@ -18,6 +18,8 @@ import android.widget.Toast;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
@@ -117,9 +119,19 @@ public class ModifyName extends Activity implements View.OnClickListener{
             Log.e("TAG","修改用户名");
             RequestParams params=new RequestParams(SuMaoConstant.SUMAO_IP+"/rest/model/atg/store/profile/RegistrationActor/updateUser");
             if(receivingInformation.equals("修改姓名")) {
-                params.addParameter("firstName", modify_information.getText().toString());
-                params.addParameter("email",email);
-                params.addParameter("phoneNumber",phoneNum);
+//                params.addParameter("firstName", modify_information.getText().toString());
+//                params.addParameter("email",email);
+//                params.addParameter("phoneNumber",phoneNum);
+                params.setCharset("UTF-8");
+                JSONObject job=new JSONObject();
+                try {
+                    job.put("firstName",modify_information.getText().toString().trim());
+                    job.put("email",email.trim());
+                    job.put("phoneNumber",phoneNum.trim());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                params.setBodyContent(job.toString());
             }else if(receivingInformation.equals("修改邮箱")){
                 params.addParameter("email", modify_information.getText().toString());
                 params.addParameter("firstName",name);
