@@ -16,8 +16,8 @@ import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.MyAdapter;
-
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.OrderDetails.AlreadyPaidActivity;
+import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,12 +37,13 @@ import java.util.Map;
  */
 public class OrderallFragment extends Fragment {
     private ExpandableListView elvDemo;
-    private List<Map<String,Object>> listparrent=new ArrayList<Map<String,Object>>();;
-    private List<List<Map<String,Object>>> listitem=new ArrayList<List<Map<String,Object>>>();;
+    private List<Map<String,Object>> listparrent;
+    private List<List<Map<String,Object>>> listitem;
 //    private List<Map<String,Object>> alllistparrent=new ArrayList<Map<String,Object>>();
 //    private List<List<Map<String,Object>>> alllistitem=new ArrayList<List<Map<String,Object>>>() ;
-    //MyAdapter adapter;
+    MyAdapter adapter;
     String state1;
+    String orderId,type;
     public OrderallFragment() {
         // Required empty public constructor
     }
@@ -73,20 +74,21 @@ public class OrderallFragment extends Fragment {
 //        Map<String,Object> map1=new Hashtable<String,Object>();
 //        map1.put("id","1000001");
 //        map1.put("price","70000.0");
-//        map1.put("states","待支付");
-//        map1.put("name","李四");
+//        map1.put("states","待支付1");
+//        map1.put("p","123213");
 //        listparrent.add(map1);
 //        Map<String,Object> map2=new Hashtable<String,Object>();
 //        map2.put("id","1000001");
 //        map2.put("price","88888888");
-//        map2.put("states","已支付");
-//        map2.put("name","qqq");
+//        map2.put("states","已支付2");
+//        map2.put("p","123");
 //        listparrent.add(map2);
 //
 //        listitem=new ArrayList<List<Map<String,Object>>>();
 //        List<Map<String,Object>> list1=new ArrayList<Map<String,Object>>();
 //        Map<String,Object> map=new Hashtable<String,Object>();
 //        map.put("type","四联创业");
+//
 //        map.put("name","中国");
 //        Map<String,Object> map3=new Hashtable<String,Object>();
 //        map3.put("type","四联创业");
@@ -109,34 +111,24 @@ public class OrderallFragment extends Fragment {
 //        listitem.add(list1);
 //        listitem.add(list2);
 //
-//        MyAdapter adapter=new MyAdapter(listparrent,listitem,getActivity());
+//        adapter=new MyAdapter(listparrent,listitem,getActivity());
 //        elvDemo.setAdapter(adapter);
-//        if(adapter!=null && listparrent!=null){
-//            for (int i = 0; i < listparrent.size(); i++) {
-//                elvDemo.expandGroup(i);
-//            }}
-//        elvDemo.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-//            @Override
-//            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-////                Toast.makeText(getContext(), "点击title", Toast.LENGTH_SHORT).show();
-//                Intent intent = new Intent();
-//                intent.setClass(getActivity(), SpotOrder.class);
-//                startActivity(intent);
-//                return true;
-//
-//            }
-//        });
-
         elvDemo.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
                 Toast.makeText(getContext(), "点击title", Toast.LENGTH_SHORT).show();
                 if ("已支付".equals(listparrent.get(groupPosition).get("states"))){
                     Intent intent = new Intent();
+                    intent.putExtra("ID",listparrent.get(groupPosition).get("id").toString());
+                    intent.putExtra("type",type);
+                    Log.e("TAG","yizhifutype==="+type);
                     intent.setClass(getActivity(),AlreadyPaidActivity.class);
                     startActivity(intent);
                 }else if("待支付".equals(listparrent.get(groupPosition).get("states"))){
                     Intent intent = new Intent();
+                    intent.putExtra("ID",listparrent.get(groupPosition).get("id").toString());
+                    intent.putExtra("type",type);
+                    Log.e("TAG","type====="+type);
                     intent.setClass(getActivity(), SpotOrder.class);
                     startActivity(intent);
                 }
@@ -148,11 +140,12 @@ public class OrderallFragment extends Fragment {
         return view;
     }
     private void sendMy(){
-        RequestParams params=new RequestParams("http://192.168.32.126:7023/rest/model/atg/userprofiling/ProfileActor/myOrders");
+        listparrent=new ArrayList<Map<String,Object>>();
+        listitem=new ArrayList<List<Map<String,Object>>>();
+        RequestParams params=new RequestParams(SuMaoConstant.SUMAO_IP+"/rest/model/atg/userprofiling/ProfileActor/myOrders");
         params.addParameter("pageNum",1);
         params.addParameter("submitType",1);
         params.addParameter("searchOrderType","fixedPricingOrder");
-        params.addParameter("searchOrderState",0);
 //        params.addParameter("searchCompanyName",company);
         final SharedPreferences sp = getActivity().getSharedPreferences("sumao", Activity.MODE_PRIVATE);
         String unique123 = sp.getString("unique", "");
@@ -162,7 +155,6 @@ public class OrderallFragment extends Fragment {
             @Override
             public void onSuccess(String result) {
                 Log.e("TAG","result----"+result);
-
                 try {
                     JSONObject job=new JSONObject(result);
                     String str=job.getString("order");
@@ -174,7 +166,8 @@ public class OrderallFragment extends Fragment {
                         String cl= (String) j.getString("cl");
                         String state=j.getString("state");//状态
                         String shippingGroupState=j.getString("shippingGroupState");
-                        String type=j.getString("type");
+                        type=j.getString("type");
+                        Log.e("TAG","type000000000----"+type);
                         String cl_amount="";
                         if(state.equals("SUBMITTED")||state.equals("PENDING_APPROVAL")||state.equals("APPROVED")||state.equals("FAILED_APPROVAL")){
                             if(type.equals("offlineOrder")) {
@@ -201,33 +194,41 @@ public class OrderallFragment extends Fragment {
                             state1="已变更";
                         }
                         String owner=j.getString("owner");//采购员
-                        String orderId=j.getString("orderId");//订单编号
-                       //  list.add(j.getString("owner"));
-                        JSONArray j1=new JSONArray(cl);
+                        orderId=j.getString("orderId");//订单编号
 
+                        JSONArray j1=new JSONArray(cl);
+                        List<Map<String,Object>> list1=new ArrayList<Map<String,Object>>();
+                        Map<String,Object> map=new Hashtable<String,Object>();
                         for(int k=0;k<j1.length();k++){
                             JSONObject job1= (JSONObject) j1.get(k);
                             cl_amount=job1.getString("cl_amount");//金额
                             String cl_mingcheng=job1.getString("cl_mingcheng");//产品名称
                             String cl_fenlei=job1.getString("cl_fenlei");
                             Log.e("TAG","mingc=="+cl_mingcheng);
-                            List<Map<String,Object>> list1=new ArrayList<Map<String,Object>>();
-                            Map<String,Object> map=new Hashtable<String,Object>();
                             map.put("type",cl_fenlei);
                             map.put("name",cl_mingcheng);
-                            list1.add(map);
-                            listitem.add(list1);
+                            Log.e("TAG","type======="+type);
+                            if(type.equals("fixedPricingOrder")) {
+                                list1.add(map);
+                                Log.e("TAG","list----"+ list1.size());
+                                listitem.add(list1);
+                                Log.e("TAG","listitem====="+listitem);
+                            }
+
                         }
                         Map<String,Object> map1=new Hashtable<String,Object>();
-                        map1.put("id",orderId);
-                        map1.put("price",cl_amount);
-                        map1.put("states",state1);
-                        map1.put("name",owner);
-                        Log.e("TAG","map1-----"+map1);
-                        listparrent.add(map1);
+                            map1.put("id",orderId);
+                            map1.put("price",cl_amount);
+                            map1.put("states",state1);
+                            map1.put("name",owner);
+                            Log.e("TAG","map1-----"+map1);
+                        Log.e("TAG","typepare===="+type);
+                        if(type.equals("fixedPricingOrder")) {
+                            listparrent.add(map1);
+                            Log.e("TAG","listparrent----"+listparrent.size());
+                        }
                     }
-                    //Log.d("list",list.toString());
-                    MyAdapter adapter=new MyAdapter(listparrent,listitem,getActivity());
+                    adapter=new MyAdapter(listparrent,listitem,getActivity());
                     elvDemo.setAdapter(adapter);
                     if(adapter!=null && listparrent!=null){
                         for (int i = 0; i < listparrent.size(); i++) {

@@ -10,8 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.silianchuangye.sumao.success.R;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.InvoiceInformation;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.InvoiceInformationMVP.view.InvoiceInformation;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.AddAddressMVP.view.AddAddress;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.ReceiptAddressDetailMVP.view.ReceiptAddressDetail;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.RegisterFirmActivityMVP.view.RegisterFirmActivity;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 
@@ -72,16 +73,18 @@ public class SelectDetailArea extends Activity implements View.OnClickListener,I
              */
 
             Intent intent = new Intent();
+            intent.putExtra("address",county);
+            LogUtils.log("county----------->"+county);
+            intent.putExtra("detailAddress",modify_information.getText().toString().trim());
             if (className.equals("AddAddress")){
-                intent.putExtra("address",county);
-                LogUtils.log("county----------->"+county);
-                intent.putExtra("detailAddress",modify_information.getText().toString().trim());
                 intent.setClass(SelectDetailArea.this,AddAddress.class);
             }else if (className.equals("InvoiceInformation"))
             {
                 intent.setClass(SelectDetailArea.this,InvoiceInformation.class);
             }else if (className.equals("RegisterFirmActivity")){
                 intent.setClass(SelectDetailArea.this,RegisterFirmActivity.class);
+            }else if (className.equals("ReceiptAddressDetail")){
+                intent.setClass(SelectDetailArea.this,ReceiptAddressDetail.class);
             }
 
 

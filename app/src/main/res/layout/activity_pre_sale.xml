@@ -141,7 +141,15 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/x1"
     android:background="@color/my_sumao_background"/>
-    <ListView
+
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
+        android:id="@+id/pre_sale_listView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/split_line"
+        android:background="@color/white"
+        ></com.handmark.pulltorefresh.library.PullToRefreshListView>
+   <!-- <ListView
         android:id="@+id/pre_sale_listView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -150,6 +158,6 @@
         android:background="@color/white"
         >
 
-    </ListView>
+    </ListView>-->
 
 </RelativeLayout>

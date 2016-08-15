@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.silianchuangye.sumao.success.HX.ui.LoginActivity;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.LoginUserActivity;
+import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
@@ -89,7 +90,7 @@ public class SettingActivity extends AppCompatActivity {
                         new Thread(){
                             @Override
                             public void run() {
-                                RequestParams  rp=new RequestParams("http://192.168.32.126:7023/rest/model/atg/userprofiling/ProfileActor/logout");
+                                RequestParams  rp=new RequestParams(SuMaoConstant.SUMAO_IP+"/rest/model/atg/userprofiling/ProfileActor/logout");
                                 SharedPreferences sp=getSharedPreferences("sumao",0);
                                 String unique=sp.getString("unique","默认值");
                                 rp.addParameter("_dynSessConf",unique);
@@ -100,6 +101,10 @@ public class SettingActivity extends AppCompatActivity {
                                         if (result.contains("messageCode")){
 
                                             Toast.makeText(SettingActivity.this, "用户必须登录才能访问资源", Toast.LENGTH_SHORT).show();
+                                            Intent intent = new Intent(SettingActivity.this,LoginUserActivity.class);
+                                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                            intent.putExtra("roles","buyer");
+                                            startActivity(intent);
                                         }else{
                                             SharedPreferences sp=getSharedPreferences("sumao", Activity.MODE_PRIVATE);
                                             SharedPreferences.Editor editor=sp.edit();

@@ -3,6 +3,7 @@ package com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInforma
 import com.google.gson.Gson;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceAreaMVP.bean.AreaResult;
 import com.silianchuangye.sumao.success.utils.LogUtils;
+import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
 import org.xutils.common.Callback;
 import org.xutils.http.HttpMethod;
@@ -12,14 +13,14 @@ import org.xutils.x;
 /**
  * Created by Administrator on 2016/7/28 0028.
  */
-public class RequestProvinceResult implements IRequestProvinceResult{
+public class RequestProvinceResult implements IRequestProvinceResult {
 Gson gson = new Gson();
     @Override
     public void requestRrovinceResult(IResultCallbackListener callback) {
         getStringFromURL(callback);
     }
     public  void  getStringFromURL(final IResultCallbackListener callback){
-        String url = "http://192.168.32.126:7023/rest/model/atg/userprofiling/ProfileActor/addressDroplet?type=prov";
+        String url = SuMaoConstant.SUMAO_IP+"/rest/model/atg/userprofiling/ProfileActor/addressDroplet?type=prov";
         RequestParams requestParams = new RequestParams(url);
         try {
             x.http().request(HttpMethod.POST, requestParams, new Callback.CacheCallback<String>() {

@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.silianchuangye.sumao.success.model.DifferentTypes;
 import com.silianchuangye.sumao.success.model.EnterpriseInformation;
 import com.silianchuangye.sumao.success.utils.LogUtils;
+import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
 import org.xutils.common.Callback;
 import org.xutils.http.HttpMethod;
@@ -26,7 +27,7 @@ public class UserRegisterModel implements IUserRegisterModel {
     }
 
     public  void  getStringFromURL(final int position, final IEnterpriseInformationCallback callback){
-        String url = "http://192.168.32.126:7023/rest/model/atg/store/profile/RegistrationActor/userVerify/getEntInfo";
+        String url = SuMaoConstant.SUMAO_IP+"/rest/model/atg/store/profile/RegistrationActor/userVerify/getEntInfo";
         RequestParams requestParams = new RequestParams(url);
         try {
             x.http().request(HttpMethod.POST, requestParams, new Callback.CacheCallback<String>() {

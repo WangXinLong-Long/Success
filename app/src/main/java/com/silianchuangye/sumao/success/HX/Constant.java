@@ -29,7 +29,7 @@ public class Constant extends EaseConstant {
 	public static final String WEICHAT_MSG = "weichat";
 
 	public static final String DEFAULT_COSTOMER_APPKEY = "xiongmaowang1#ziguang";
-	public static final String DEFAULT_COSTOMER_ACCOUNT = "panda1";
+	public static final String DEFAULT_COSTOMER_ACCOUNT = "sumaokefu";
 	public static final String DEFAULT_ACCOUNT_PWD = "123456";
 
 	public static final int MESSAGE_TO_DEFAULT = 0;
@@ -50,4 +50,7 @@ public class Constant extends EaseConstant {
 	public static final int MODIFY_INDEX_APPKEY = 1;
 	public static final int MODIFY_INDEX_ACCOUNT = 2;
 	public static final int MODIFY_INDEX_NICK = 3;
+	public static final String IM_SERVICE_NUMBER = "IMServiceNumber";
+
+
 }

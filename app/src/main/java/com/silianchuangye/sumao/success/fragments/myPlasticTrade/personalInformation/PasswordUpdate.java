@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
+import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -76,7 +77,7 @@ public class PasswordUpdate extends AppCompatActivity {
                     new Thread() {
                         @Override
                         public void run() {
-                            String uri = "http://192.168.32.126:7023/rest/model/atg/userprofiling/ProfileActor/changePassword";
+                            String uri = SuMaoConstant.SUMAO_IP+"/rest/model/atg/userprofiling/ProfileActor/changePassword";
                             RequestParams rp = new RequestParams(uri);
                             rp.addParameter("oldPassword", etOld_password_update.getText().toString());//原来密码
                             rp.addParameter("password", etNew_password_update.getText().toString());//新密码

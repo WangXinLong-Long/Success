@@ -115,13 +115,20 @@
                     android:text="@string/duty_paragraph"
                     android:layout_centerVertical="true"
                     />
+                <ImageView
+                    android:id="@+id/duty_paragraph_iv"
+                    android:layout_width="@dimen/x15"
+                    android:layout_height="@dimen/x15"
+                    android:src="@mipmap/my_sumao_iv_order"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"/>
                 <TextView
                     android:id="@+id/duty_paragraph_tv"
-                    android:layout_alignParentRight="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="610104073412011"/>
+                    android:layout_toLeftOf="@id/duty_paragraph_iv"
+                    android:text="610104073412011"
+                    android:paddingRight="@dimen/x5"/>
             </RelativeLayout>
             <RelativeLayout
                 android:id="@+id/invoice_information_address_rl"
@@ -165,7 +172,7 @@
                 android:background="@color/white"
                 android:paddingTop="@dimen/x5"
                 android:paddingBottom="@dimen/x5"
-                android:layout_below="@id/duty_paragraph_rl"
+                android:layout_below="@id/invoice_information_address_rl"
                 android:layout_marginTop="@dimen/x1"
                 android:clickable="true">
                 <TextView
@@ -241,7 +248,7 @@
                     android:id="@+id/invoice_information_account_number"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/invoice_information_bank_account"
+                    android:text="@string/account_number"
                     android:layout_centerVertical="true"
                     />
                 <ImageView
@@ -264,6 +271,7 @@
 
         </RelativeLayout>
         </RelativeLayout>
+        <!--上面下面分界线-->
         <RelativeLayout
             android:id="@+id/bill_mailing_address_rl"
             android:layout_width="match_parent"
@@ -283,6 +291,7 @@
                 android:textColor="@color/btn_blue_normal"
                 />
         </RelativeLayout>
+        <!--票据邮寄地址以下-->
         <RelativeLayout
             android:id="@+id/bill_mailing_address_parent"
             android:layout_width="match_parent"
@@ -412,6 +421,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/bill_mailing_address_mailing_address"
+                        android:layout_centerVertical="true"
                         />
                     <ImageView
                         android:id="@+id/bill_mailing_address_mailing_address_iv"
@@ -421,13 +431,21 @@
                         android:layout_centerVertical="true"
                         android:layout_alignParentRight="true"/>
                     <TextView
-                        android:id="@+id/bill_mailing_address_mailing_address_tv"
+                        android:id="@+id/bill_mailing_address_mailing_address_tv_region"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="北京 北京市 房山区燕山东流水路x号"
                         android:layout_toLeftOf="@id/bill_mailing_address_mailing_address_iv"
-                        android:layout_centerVertical="true"
                         android:paddingRight="@dimen/x5"
+                        />
+                    <TextView
+                        android:id="@+id/bill_mailing_address_mailing_address_tv_detail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="北京 北京市 房山区燕山东流水路x号"
+                        android:layout_toLeftOf="@id/bill_mailing_address_mailing_address_iv"
+                        android:paddingRight="@dimen/x5"
+                        android:layout_below="@id/bill_mailing_address_mailing_address_tv_region"
                         />
                 </RelativeLayout>
                 <RelativeLayout
@@ -465,5 +483,16 @@
                 </RelativeLayout>
             </RelativeLayout>
         </RelativeLayout>
+        <Button
+            android:id="@+id/save_modify_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="保存修改信息"
+            android:textColor="@color/white"
+            android:layout_below="@id/bill_mailing_address_parent"
+            android:background="@drawable/button_background_red"
+            android:layout_margin="@dimen/x5"
+            android:visibility="gone"
+            />
     </RelativeLayout>
 </RelativeLayout>

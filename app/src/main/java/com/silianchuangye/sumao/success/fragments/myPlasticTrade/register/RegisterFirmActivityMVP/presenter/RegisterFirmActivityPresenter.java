@@ -3,7 +3,6 @@ package com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.Regis
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.addressDisplayMVP.model.AddressDisplayModel;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.addressDisplayMVP.model.IAddressDisplayCallback;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.addressDisplayMVP.model.IAddressDisplayModel;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.AddAddressMVP.view.IAddAddress;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.RegisterFirmActivityMVP.view.IRegisterFirmActivityView;
 
 /**
@@ -17,10 +16,10 @@ public class RegisterFirmActivityPresenter  {
 
     }
     public void setDetailAddress(String province,String city,String county){
-        IAddressDisplayModel addressDisplayModel = new AddressDisplayModel(province,city,county);
+        IAddressDisplayModel addressDisplayModel = new AddressDisplayModel(province,city,county,0);
         addressDisplayModel.getAddressDisplayInfo(new IAddressDisplayCallback() {
             @Override
-            public void callbackAddressDisplayInfo(String address) {
+            public void callbackAddressDisplayInfo(String address,int position) {
                 registerFirmActivityView.setStringInText(address);
 
             }

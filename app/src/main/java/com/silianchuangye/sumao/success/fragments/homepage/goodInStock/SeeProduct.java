@@ -5,14 +5,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.PreSaleAdapter;
-import com.silianchuangye.sumao.success.model.PreSaleModel;
+import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.bean.SMCl;
+import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockDetailActivityMVP.view.GoodsInStockDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,8 +25,8 @@ public class SeeProduct extends Activity implements AdapterView.OnItemClickListe
     private ImageView img_like_product_back;
     private ListView lv_like_product;
     PreSaleAdapter adapter;
-    List<PreSaleModel> lists;
-    PreSaleModel preSaleModel;
+    List<SMCl> lists;
+    SMCl preSaleModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,13 +40,13 @@ public class SeeProduct extends Activity implements AdapterView.OnItemClickListe
 
         lists = new ArrayList<>();
         for (int i = 0; i < 15; i++) {
-            preSaleModel = new PreSaleModel();
-            preSaleModel.setCompany("北京公司" + i + "分公司");
-            preSaleModel.setWarehouse(i + "仓库");
-            preSaleModel.setName("产品" + i);
-            preSaleModel.setNumber(i + "");
-            preSaleModel.setPrice(i * 100 + "");
-            preSaleModel.setProductType("现货");
+            preSaleModel = new SMCl();
+//            preSaleModel.setCompany("北京公司" + i + "分公司");
+//            preSaleModel.setWarehouse(i + "仓库");
+//            preSaleModel.setName("产品" + i);
+//            preSaleModel.setNumber(i + "");
+//            preSaleModel.setPrice(i * 100 + "");
+//            preSaleModel.setProductType("现货");
 
             lists.add(preSaleModel);
         }

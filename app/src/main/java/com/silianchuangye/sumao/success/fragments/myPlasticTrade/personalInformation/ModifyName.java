@@ -2,8 +2,10 @@ package com.silianchuangye.sumao.success.fragments.myPlasticTrade.personalInform
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +16,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
+import com.silianchuangye.sumao.success.utils.SuMaoConstant;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
 
 
 /**
@@ -33,6 +42,8 @@ public class ModifyName extends Activity implements View.OnClickListener{
     EditText modify_information;
     TextView prompt_information;
     String message;
+    private Intent intent;
+    String email,phoneNum,name,i;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,9 +65,13 @@ public class ModifyName extends Activity implements View.OnClickListener{
         iv_title_bar_search.setVisibility(View.INVISIBLE);
         iv_title_bar_back.setOnClickListener(this);
 
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
+        Intent intents = getIntent();
+        Bundle bundle = intents.getExtras();
         receivingInformation = bundle.getString("receivingInformation");
+        email=bundle.getString("email");
+        phoneNum=bundle.getString("phoneNum");
+        name=bundle.getString("name");
+        i=bundle.getString("i");
         canBeAmpty  = bundle.getBoolean("canBeAmpty");
         message = bundle.getString("message");
         tv_title_bar_title.setText(receivingInformation);
@@ -65,7 +80,7 @@ public class ModifyName extends Activity implements View.OnClickListener{
         modify_name_save = ((Button) findViewById(R.id.modify_name_save));
         modify_information = ((EditText) findViewById(R.id.modify_information));
         prompt_information  = ((TextView) findViewById(R.id.prompt_information));
-
+        intent = new Intent();
     }
 
     @Override
@@ -90,7 +105,10 @@ public class ModifyName extends Activity implements View.OnClickListener{
     {
         if (modify_information.getText().toString().equals(""))
         {
-            if (canBeAmpty) {finish();}
+            if (canBeAmpty) {
+                intent.putExtra(SuMaoConstant.MODIFY_INFORMATION, "");
+                ModifyName.this.setResult(RESULT_OK, intent);
+                finish();}
             else
             {
                 prompt_information.setText("*请输入"+message);
@@ -98,12 +116,62 @@ public class ModifyName extends Activity implements View.OnClickListener{
             }
 
         }else {
+            Log.e("TAG","修改用户名");
+            RequestParams params=new RequestParams(SuMaoConstant.SUMAO_IP+"/rest/model/atg/store/profile/RegistrationActor/updateUser");
+            if(receivingInformation.equals("修改姓名")) {
+//                params.addParameter("firstName", modify_information.getText().toString());
+//                params.addParameter("email",email);
+//                params.addParameter("phoneNumber",phoneNum);
+                params.setCharset("UTF-8");
+                JSONObject job=new JSONObject();
+                try {
+                    job.put("firstName",modify_information.getText().toString().trim());
+                    job.put("email",email.trim());
+                    job.put("phoneNumber",phoneNum.trim());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                params.setBodyContent(job.toString());
+            }else if(receivingInformation.equals("修改邮箱")){
+                params.addParameter("email", modify_information.getText().toString());
+                params.addParameter("firstName",name);
+                params.addParameter("phoneNumber",phoneNum);
+            }
+            SharedPreferences sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+            String unique = sp.getString("unique", "");
+            params.addParameter("_dynSessConf",unique);
+            Log.e("TAG","parames------"+params);
+            x.http().post(params, new Callback.CommonCallback<String>() {
+                @Override
+                public void onSuccess(String result) {
+                    Log.e("TAG","修改result------"+result);
+                    intent.putExtra(SuMaoConstant.MODIFY_INFORMATION,modify_information.getText().toString().trim());
+                    Log.e("TAG","RESULT_OK===="+RESULT_OK);
+                    setResult(RESULT_OK, intent);
+                    finish();
+                }
+
+                @Override
+                public void onError(Throwable ex, boolean isOnCallback) {
+                    Log.e("TAG","ex---"+ex);
+                }
+
+                @Override
+                public void onCancelled(CancelledException cex) {
+
+                }
+
+                @Override
+                public void onFinished() {
+
+                }
+            });
             prompt_information.setVisibility(View.INVISIBLE);
             /**
              * 在这里吧EditText的文本信息获取到，调用接口传到服务器上
              */
-        Toast.makeText(ModifyName.this,"调用接口传到服务器上",Toast.LENGTH_SHORT).show();
-            finish();
+
+
         }
     }
 
@@ -111,8 +179,8 @@ public class ModifyName extends Activity implements View.OnClickListener{
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode==KeyEvent.KEYCODE_BACK&&event.getAction()==KeyEvent.ACTION_DOWN)
         {
-            finish();
-            return  true;
+            intent.putExtra(SuMaoConstant.MODIFY_INFORMATION, "");
+            ModifyName.this.setResult(RESULT_OK, intent);
         }
         return super.onKeyDown(keyCode, event);
     }

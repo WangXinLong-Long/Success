@@ -22,11 +22,11 @@ public class ChatActivity extends BaseActivity {
         super.onCreate(arg0);
         setContentView(R.layout.em_activity_chat);
         activityInstance = this;
-        // 聊天人或群id
-        toChatUsername = HelpDeskPreferenceUtils.getInstance(this).getSettingCustomerAccount();
         // 可以直接new EaseChatFratFragment使用
         chatFragment = new ChatFragment();
         Intent intent = getIntent();
+        // 聊天人或群id
+        toChatUsername =  intent.getStringExtra(Constant.IM_SERVICE_NUMBER);;
         intent.putExtra(Constant.EXTRA_USER_ID, toChatUsername);
         intent.putExtra(Constant.EXTRA_SHOW_USERNICK, true);
         // 传入参数

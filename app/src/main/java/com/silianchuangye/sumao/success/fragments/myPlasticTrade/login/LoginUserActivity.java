@@ -25,6 +25,7 @@ import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.Regist
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.RegisterPhoneActivity;
 import com.silianchuangye.sumao.success.utils.GlobalVariable;
 import com.silianchuangye.sumao.success.utils.LogUtils;
+import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
 import org.json.JSONObject;
 import org.xutils.common.Callback;
@@ -147,7 +148,7 @@ public class LoginUserActivity extends AppCompatActivity {
          name = et_account_login.getText().toString().trim();
          password = et_pass_login.getText().toString().trim();
 
-        RequestParams rp=new RequestParams("http://192.168.32.126:7023/rest/model/atg/userprofiling/ProfileActor/login");
+        RequestParams rp=new RequestParams(SuMaoConstant.SUMAO_IP+"/rest/model/atg/userprofiling/ProfileActor/login");
         rp.addParameter("login",name);
         rp.addParameter("password",password);
         x.http().post(rp, new Callback.CommonCallback<String>() {
@@ -163,7 +164,7 @@ public class LoginUserActivity extends AppCompatActivity {
                     if (unique.equals("")||unique==null){
                         sp=getSharedPreferences("sumao", Activity.MODE_PRIVATE);
                         editor=sp.edit();
-                        RequestParams unique_rp=new RequestParams("http://192.168.32.126:7023/rest/model/atg/rest/SessionConfirmationActor/getSessionConfirmationNumber");
+                        RequestParams unique_rp=new RequestParams(SuMaoConstant.SUMAO_IP+"/rest/model/atg/rest/SessionConfirmationActor/getSessionConfirmationNumber");
                         x.http().post(unique_rp, new CommonCallback<String>() {
                             @Override
                             public void onSuccess(String result) {

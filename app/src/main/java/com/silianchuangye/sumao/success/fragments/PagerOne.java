@@ -15,14 +15,13 @@ import android.widget.Toast;
 
 
 import com.silianchuangye.sumao.success.activity.WelcomeActivity;
-import com.silianchuangye.sumao.success.fragments.SellerManagementPlatform.SellerManagementPlatformActivity;
 import com.silianchuangye.sumao.success.fragments.homepage.groupbuying.GroupBuyingActivity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.LoginUserActivity;
 import com.silianchuangye.sumao.success.fragments.type.SearchActivity;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.AuctionActivity;
 import com.silianchuangye.sumao.success.HX.Constant;
 import com.silianchuangye.sumao.success.HX.ui.LoginActivity;
-import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivity;
+import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.view.GoodsInStockActivity;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSale;
 import com.silianchuangye.sumao.success.fragments.homepage.theprice.MidpointsListctivity;
 import com.silianchuangye.sumao.success.utils.scrollviewAD.MyGallery;
@@ -203,6 +202,11 @@ public class PagerOne extends BasePager {
                     Toast.makeText(mActivity, "点击了上游直销按钮", Toast.LENGTH_SHORT).show();
                 }else if(list.get(position).get("icon").equals(R.mipmap.aa)){
                     Toast.makeText(mActivity, "点击了物流按钮", Toast.LENGTH_SHORT).show();
+                     Intent intent = new Intent();
+                     intent.setClass(mActivity, LoginActivity.class);
+                     intent.putExtra(Constant.MESSAGE_TO_INTENT_EXTRA, Constant.MESSAGE_TO_DEFAULT);
+                     intent.putExtra(Constant.IM_SERVICE_NUMBER,"feisumaokefu1");
+                     startActivity(intent);
                 }else if(list.get(position).get("icon").equals(R.mipmap.consult)){
                     Toast.makeText(mActivity, "点击了塑贸咨询按钮", Toast.LENGTH_SHORT).show();
                 }else if (list.get(position).get("icon").equals(R.mipmap.maifang)){
@@ -304,6 +308,7 @@ public class PagerOne extends BasePager {
         Intent intent = new Intent();
         intent.setClass(mActivity, LoginActivity.class);
         intent.putExtra(Constant.MESSAGE_TO_INTENT_EXTRA, Constant.MESSAGE_TO_DEFAULT);
+        intent.putExtra(Constant.IM_SERVICE_NUMBER,"sumaokefu");
         startActivity(intent);
 
     }

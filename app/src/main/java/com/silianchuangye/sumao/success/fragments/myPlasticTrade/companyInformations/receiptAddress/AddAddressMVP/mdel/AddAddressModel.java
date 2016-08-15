@@ -2,17 +2,15 @@ package com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInforma
 
 import com.google.gson.Gson;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.AddAddressMVP.bean.AddAddressBean;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.ReceiptAddressMVP.bean.ReAddress;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.ReceiptAddressMVP.bean.ReceiptAddress;
 import com.silianchuangye.sumao.success.utils.LogUtils;
+import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.xutils.common.Callback;
 import org.xutils.http.HttpMethod;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Administrator on 2016/8/3 0003.
@@ -42,18 +40,25 @@ public class AddAddressModel implements IAddAddressModel {
 //        for (String s : addressinfo) {
 //            LogUtils.log("AddAddressMdel：s--->" + s + "<---s：AddAddressMdel");
 //        }
-        String url = "http://192.168.32.126:7023/rest/model/atg/userprofiling/ProfileActor/createAddress" ;
+        String url = SuMaoConstant.SUMAO_IP+"/rest/model/atg/userprofiling/ProfileActor/createAddress" ;
         RequestParams requestParams = new RequestParams(url);
         requestParams.setCharset("UTF-8");
-        requestParams.addParameter("province",address.substring(0,4).trim());
-        requestParams.addParameter("city",address.substring(0,6).trim());
-        requestParams.addParameter("county",address.trim());
-        requestParams.addParameter("_dynSessConf",sessionId.trim());
-        requestParams.addParameter("address",detail.trim());
-        requestParams.addParameter("name",consignee.trim());
-        requestParams.addParameter("mobile",mobile.trim());
-        requestParams.addParameter("postcode",zip_code);
-        requestParams.addParameter("phone",phone);
+        requestParams.setAsJsonContent(true);
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("name",consignee.trim());
+            jsonObject.put("address",detail.trim());
+            jsonObject.put("province",address.substring(0,4).trim());
+            jsonObject.put("city",address.substring(0,6).trim());
+            jsonObject.put("county",address.trim());
+            jsonObject.put("_dynSessConf",sessionId.trim());
+            jsonObject.put("mobile",mobile.trim());
+            jsonObject.put("postcode",zip_code);
+            jsonObject.put("phone",phone);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        requestParams.setBodyContent(jsonObject.toString());
         LogUtils.log("AddAddressMdel：url--->" + requestParams + "<---url：AddAddressMdel");
         try {
             x.http().request(HttpMethod.POST, requestParams, new Callback.CacheCallback<String>() {

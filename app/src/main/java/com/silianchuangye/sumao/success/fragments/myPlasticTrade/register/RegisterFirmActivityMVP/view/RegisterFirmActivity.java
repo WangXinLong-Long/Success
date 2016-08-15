@@ -28,6 +28,7 @@ import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.LoginUser
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.RegisterFirmActivityMVP.presenter.RegisterFirmActivityPresenter;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.RegisterValueActivity;
 import com.silianchuangye.sumao.success.utils.LogUtils;
+import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -96,7 +97,7 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
         name = bundle.getString("name");
         email = bundle.getString("email");
         phone = bundle.getString("phone");
-        String RegisterUri = "http://192.168.32.126:7023/rest/model/atg/store/profile/RegistrationActor/createUser";
+        String RegisterUri = SuMaoConstant.SUMAO_IP+"/rest/model/atg/store/profile/RegistrationActor/createUser";
         rp = new RequestParams(RegisterUri);
         rp.setConnectTimeout(30*1000);
         bt_save_register_value = (Button) findViewById(R.id.bt_save_register_value);
@@ -177,7 +178,7 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
     }
 
     private void registerMethod() {
-        String uri = "http://192.168.32.126:7023/rest/model/atg/store/profile/RegistrationActor/userVerify";
+        String uri = SuMaoConstant.SUMAO_IP+"/rest/model/atg/store/profile/RegistrationActor/userVerify";
         RequestParams rp1 = new RequestParams(uri);
         rp1.addParameter("type", "mobile");
         rp1.addParameter("attr", phone);

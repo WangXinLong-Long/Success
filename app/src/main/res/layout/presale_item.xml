@@ -75,5 +75,7 @@
         android:layout_marginTop="@dimen/x5"
         android:layout_marginBottom="@dimen/x5"
         android:layout_marginRight="@dimen/x10"
-        android:textColor="@color/voip_interface_text_color"/>
+        android:textColor="@color/voip_interface_text_color"
+        android:visibility="gone"
+        />
 </RelativeLayout>

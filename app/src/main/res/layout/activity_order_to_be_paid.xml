@@ -221,69 +221,13 @@
                             android:paddingTop="@dimen/x5"
                             android:text="待支付1"
                             android:textSize="@dimen/x13" />
-                        <TextView
-                            android:id="@+id/date1_activity_order_to_be_paid"
-                            android:layout_toRightOf="@+id/state1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/x110"
-                            android:paddingBottom="@dimen/x5"
-                            android:paddingRight="@dimen/x5"
-                            android:paddingTop="@dimen/x5"
-                            android:textSize="@dimen/x13"
-
-                            android:text="日期:"
-                            />
-                        <TextView
-                            android:id="@+id/date2_activity_order"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_toRightOf="@id/date1_activity_order_to_be_paid"
-                            android:text="2016-09-06"
-                            android:paddingBottom="@dimen/x5"
-                            android:paddingRight="@dimen/x5"
-                            android:textSize="@dimen/x13"
-                            android:paddingTop="@dimen/x5"
-                            />
-
 
                     </RelativeLayout>
-                    <RelativeLayout
-                        android:id="@+id/third_line_information"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/second_line_information"
-                        >
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/warehouse1_activity_order_to_be_paid"
-
-                            android:layout_marginLeft="@dimen/x10"
-                            android:text="仓库:"
-                            android:textSize="@dimen/x13"
-                            android:paddingBottom="@dimen/x5"
-                            android:paddingRight="@dimen/x5"
-                            android:paddingTop="@dimen/x5"
-                            />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/warehouse2_activity_order_to_be_paid"
-                            android:layout_toRightOf="@id/warehouse1_activity_order_to_be_paid"
-                            android:text="讯帮1库"
-                            android:paddingBottom="@dimen/x5"
-                            android:paddingRight="@dimen/x5"
-                            android:textSize="@dimen/x13"
-                            android:paddingTop="@dimen/x5"
-                            />
-                    </RelativeLayout>
-
                     <TextView
                         android:id="@+id/company1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/third_line_information"
+                        android:layout_below="@id/second_line_information"
                         android:paddingBottom="@dimen/x5"
                         android:paddingLeft="@dimen/x10"
                         android:paddingTop="@dimen/x5"
@@ -294,7 +238,7 @@
                         android:id="@+id/company2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/third_line_information"
+                        android:layout_below="@id/second_line_information"
                         android:layout_toRightOf="@id/company1"
                         android:paddingBottom="@dimen/x5"
                         android:paddingRight="@dimen/x5"
@@ -307,7 +251,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/x25"
                         android:layout_alignParentRight="true"
-                        android:layout_below="@id/third_line_information"
+                        android:layout_below="@id/second_line_information"
                         android:layout_marginBottom="@dimen/x5"
                         android:layout_marginRight="@dimen/x5"
                         android:background="@drawable/button_background"
