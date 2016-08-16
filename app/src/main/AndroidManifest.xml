@@ -453,7 +453,7 @@
             android:name=".fragments.homepage.goodInStock.PaymentsOrder"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".fragments.type.SearchActivity"
+            android:name=".fragments.SearchActivityMVP.view.SearchActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".fragments.myPlasticTrade.OrderManagement.OrderDetails.OrderDetailsActivity"
