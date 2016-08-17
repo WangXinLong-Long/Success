@@ -18,7 +18,7 @@ import android.widget.TextView;
 import com.silianchuangye.sumao.success.HX.Constant;
 import com.silianchuangye.sumao.success.HX.ui.LoginActivity;
 import com.silianchuangye.sumao.success.R;
-import com.silianchuangye.sumao.success.fragments.type.SearchActivity;
+import com.silianchuangye.sumao.success.fragments.SearchActivityMVP.view.SearchActivity;
 import com.silianchuangye.sumao.success.fragments.type.TypeInfoActivity;
 
 import java.util.ArrayList;

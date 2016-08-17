@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * Created by Administrator on 2016/7/27 0027.
+ * Created by Administrator on 2016/8/15 0015.
  */
 class LeiXing implements Serializable {
     List<EnterpriseInformation> cl_leixing;

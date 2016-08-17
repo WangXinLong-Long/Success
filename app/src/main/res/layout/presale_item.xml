@@ -51,6 +51,9 @@
         android:layout_marginTop="@dimen/x5"
         android:layout_marginBottom="@dimen/x5"
         android:textColor="@color/voip_interface_text_color"
+        android:ems="9"
+        android:singleLine="true"
+        android:ellipsize="end"
 
         />
     <TextView

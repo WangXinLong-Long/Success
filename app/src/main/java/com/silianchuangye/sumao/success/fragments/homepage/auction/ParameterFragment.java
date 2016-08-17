@@ -10,6 +10,8 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
 import com.silianchuangye.sumao.success.R;
+import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockDetailActivityMVP.bean.CLAttribute;
+import com.silianchuangye.sumao.success.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -35,12 +37,18 @@ public class ParameterFragment extends Fragment {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_parameter, container, false);
         lv_parameter= (ListView) view.findViewById(R.id.lv_parameter);
+        Bundle bundle = getArguments();
+        ArrayList<CLAttribute> cl_attribute =(ArrayList<CLAttribute>) bundle.getSerializable("cl_attribute");
+        LogUtils.log("ParameterFragment---->cl_attribute:"+cl_attribute);
         list=new ArrayList<Map<String,Object>>();
-        Map<String,Object> map=new Hashtable<String,Object>();
-        map.put("text","产品名称");
-        map.put("value","大庆石化DNDA8320");
-        list.add(map);
-        Map<String,Object> map1=new Hashtable<String,Object>();
+        for (int i = 0;i<cl_attribute.size();i++){
+            Map<String,Object> map=new Hashtable<String,Object>();
+            map.put("text",cl_attribute.get(i).getAttrName());
+            map.put("value",cl_attribute.get(i).getAttrValue());
+            list.add(map);
+
+        }
+      /*  Map<String,Object> map1=new Hashtable<String,Object>();
         map1.put("text","分类");
         map1.put("value","LLDPE");
         list.add(map1);
@@ -63,7 +71,7 @@ public class ParameterFragment extends Fragment {
         Map<String,Object> map6=new Hashtable<String,Object>();
         map6.put("text","生产企业");
         map6.put("value","大庆石化");
-        list.add(map6);
+        list.add(map6);*/
 
         SimpleAdapter adapter=new SimpleAdapter(getActivity(),list,R.layout.item_vessel_tow,new String[]{"text","value"},new int[]{R.id.tv_a,R.id.tv_b});
         lv_parameter.setAdapter(adapter);

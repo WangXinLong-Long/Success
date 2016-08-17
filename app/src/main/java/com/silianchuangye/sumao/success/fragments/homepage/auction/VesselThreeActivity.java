@@ -1,5 +1,6 @@
 package com.silianchuangye.sumao.success.fragments.homepage.auction;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -10,6 +11,8 @@ import android.widget.ImageView;
 
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.MyPageAdapter;
+import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockDetailActivityMVP.bean.CLAttribute;
+import com.silianchuangye.sumao.success.utils.LogUtils;
 
 import java.util.ArrayList;
 
@@ -20,10 +23,19 @@ public class VesselThreeActivity extends AppCompatActivity {
     private ViewPager vp_vessel_three;
     private ArrayList<Fragment> list;
     private MyPageAdapter adapter;
+    private ArrayList<CLAttribute> cl_attribute;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vessel_three);
+        Intent intent = getIntent();
+        cl_attribute = (ArrayList<CLAttribute>) intent.getSerializableExtra("cl_attribute");
+        LogUtils.log("VesselThreeActivity--->cl_attribute:"+cl_attribute);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("cl_attribute",cl_attribute);
+       ParameterFragment pf =  new ParameterFragment();
+        pf.setArguments(bundle);
         ivBack_vessel_three= (ImageView) findViewById(R.id.ivBack_vessel_three);
         ivBack_vessel_three.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,7 +52,7 @@ public class VesselThreeActivity extends AppCompatActivity {
         });
         list=new ArrayList<Fragment>();
         list.add(new ContractFragment());
-        list.add(new ParameterFragment());
+        list.add(pf);
         list.add(new PhotographFragment());
         adapter=new MyPageAdapter(getSupportFragmentManager());
         adapter.setData(list);
@@ -54,6 +66,7 @@ public class VesselThreeActivity extends AppCompatActivity {
         tab_vessel_three= (TabLayout) findViewById(R.id.tab_vessel_three);
         vp_vessel_three.setAdapter(adapter);
         tab_vessel_three.setupWithViewPager(vp_vessel_three );
+
 
 
     }

@@ -39,7 +39,7 @@ public class WelcomeActivity extends Activity {
             @Override
             public void run() {
                 try {
-                    Thread.sleep(3000);
+                    Thread.sleep(2000);
                     Intent intent = new Intent(WelcomeActivity.this,MainActivity.class);
                     WelcomeActivity.this.finish();
                     startActivity(intent);

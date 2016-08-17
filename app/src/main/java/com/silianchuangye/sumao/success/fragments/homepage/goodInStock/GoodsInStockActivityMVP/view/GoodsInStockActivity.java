@@ -328,7 +328,7 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
 
 //        if (pre_sale_listView == parent) {
         Intent intent = new Intent();
-        intent.putExtra("cl_id",smClList.get(position).getCl_id());
+        intent.putExtra("cl_id",smClList.get(position-1).getCl_id());
         intent.setClass(this, GoodsInStockDetailActivity.class);
         startActivity(intent);
 //        }

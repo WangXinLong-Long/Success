@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.type.SearchActivity">
+    tools:context=".fragments.SearchActivityMVP.view.SearchActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -47,7 +47,7 @@
             android:layout_marginLeft="@dimen/x10"
             android:background="@drawable/edit_search"
             android:layout_marginRight="@dimen/x10"
-
+            android:id="@+id/search_content"
             android:hint="输入你要搜索的内容"
             android:layout_toRightOf="@+id/iv_Back_Search"
             >

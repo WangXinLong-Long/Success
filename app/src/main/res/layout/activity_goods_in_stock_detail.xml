@@ -137,6 +137,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/x30">
             <TextView
+                android:id="@+id/integral_rule"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
@@ -163,7 +164,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/x5"
             android:textSize="@dimen/x10"
-            android:text="剩余数量："/>
+            android:text="剩余数量:"/>
         <TextView
             android:id="@+id/surplus_amount_et"
             android:layout_width="wrap_content"
@@ -177,7 +178,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/x5"
-            android:text="起购量："
+            android:text="起购量:"
             android:textSize="@dimen/x10"
             android:layout_below="@id/surplus_amount_tv"/>
         <TextView
@@ -194,7 +195,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/x5"
-            android:text="最小变量单位："
+            android:text="最小变量单位:"
             android:textSize="@dimen/x10"
             android:layout_below="@id/purchase_quantity_tv"/>
         <TextView
@@ -206,29 +207,62 @@
             android:text="1吨"
             android:textSize="@dimen/x10"
             android:layout_below="@id/purchase_quantity_tv"/>
+
+        <TextView
+            android:id="@+id/company_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="公司:"
+            android:textSize="@dimen/x10"
+            android:layout_marginBottom="@dimen/x5"
+            android:layout_below="@id/min_variable_tv"
+            />
+        <TextView
+            android:id="@+id/company_et"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/x10"
+            android:text="四联创业化工集团哈哈哈哈哈哈哈哈哈啊"
+            android:layout_toRightOf="@id/company_tv"
+            android:layout_marginBottom="@dimen/x5"
+            android:layout_below="@id/min_variable_tv"
+            android:ems="20"
+            android:ellipsize="end"
+            android:singleLine="true"
+            />
+
         <TextView
             android:id="@+id/delivery_time_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/x5"
-            android:text="交货时间："
+            android:text="交货时间:"
             android:textSize="@dimen/x10"
-            android:layout_below="@id/min_variable_tv"/>
+            android:layout_below="@id/company_tv"/>
         <TextView
             android:id="@+id/delivery_time_et"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/x5"
             android:layout_toRightOf="@id/delivery_time_tv"
-            android:text="2016-3-3至2016-4-4"
+            android:text="2016年03月03日"
             android:textSize="@dimen/x10"
-            android:layout_below="@id/min_variable_tv"/>
+            android:layout_below="@id/company_tv"/>
+        <TextView
+            android:id="@+id/delivery_time_et_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/x5"
+            android:layout_toRightOf="@id/delivery_time_et"
+            android:text="到2016年03月03日"
+            android:textSize="@dimen/x10"
+            android:layout_below="@id/company_tv"/>
         <TextView
             android:id="@+id/warehouse_address_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/x5"
-            android:text="仓库地址："
+            android:text="仓库地址:"
             android:textSize="@dimen/x10"
             android:layout_below="@id/delivery_time_tv"/>
         <TextView
@@ -245,7 +279,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/x5"
-            android:text="交货方式："
+            android:text="交货方式:"
             android:textSize="@dimen/x10"
             android:layout_below="@id/warehouse_address_tv"/>
         <TextView
@@ -261,11 +295,11 @@
             android:id="@+id/classification_pre_sale_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="分类："
+            android:text="分类:"
             android:textSize="@dimen/x10"
-            android:layout_toRightOf="@id/delivery_mode_et"
+
             android:layout_marginBottom="@dimen/x5"
-            android:layout_marginLeft="@dimen/x5"
+            android:layout_marginLeft="@dimen/x160"
             />
         <TextView
             android:id="@+id/classification_pre_sale_et"
@@ -280,12 +314,11 @@
             android:id="@+id/warehouse_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="仓库："
+            android:text="仓库:"
             android:textSize="@dimen/x10"
-            android:layout_toRightOf="@id/delivery_mode_et"
             android:layout_marginBottom="@dimen/x5"
             android:layout_below="@id/classification_pre_sale_tv"
-            android:layout_marginLeft="@dimen/x5"
+            android:layout_marginLeft="@dimen/x160"
             />
         <TextView
             android:id="@+id/warehouse_et"
@@ -301,12 +334,11 @@
             android:id="@+id/region_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="地区："
+            android:text="地区:"
             android:textSize="@dimen/x10"
-            android:layout_toRightOf="@id/delivery_mode_et"
             android:layout_marginBottom="@dimen/x5"
             android:layout_below="@id/warehouse_tv"
-            android:layout_marginLeft="@dimen/x5"
+            android:layout_marginLeft="@dimen/x160"
             />
         <TextView
             android:id="@+id/region_et"
@@ -317,27 +349,6 @@
             android:layout_toRightOf="@id/warehouse_tv"
             android:layout_marginBottom="@dimen/x5"
             android:layout_below="@id/warehouse_tv"
-            />
-        <TextView
-            android:id="@+id/company_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="公司："
-            android:textSize="@dimen/x10"
-            android:layout_toRightOf="@id/delivery_mode_et"
-            android:layout_marginBottom="@dimen/x5"
-            android:layout_below="@id/region_tv"
-            android:layout_marginLeft="@dimen/x5"
-            />
-        <TextView
-            android:id="@+id/company_et"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/x10"
-            android:text="四联创业化工集团"
-            android:layout_toRightOf="@id/warehouse_tv"
-            android:layout_marginBottom="@dimen/x5"
-            android:layout_below="@id/region_tv"
             />
 
     </RelativeLayout>
@@ -480,23 +491,34 @@
         android:layout_height="@dimen/x40"
         android:layout_alignParentBottom="true"
 
-        > <LinearLayout
+        >
+
+        <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:weightSum="2"
         android:layout_alignParentBottom="true"
         >
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:textColor="#fff"
-            android:background="#29ABE2"
-            android:textStyle="bold"
-            android:text="加入购物车"
-            android:textSize="16sp"
-            android:id="@+id/join_shopping_cart"
-            />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:textColor="#fff"
+                    android:background="#29ABE2"
+                    android:textStyle="bold"
+                    android:text="加入购物车"
+                    android:textSize="16sp"
+                    android:id="@+id/join_shopping_cart"
+                    android:onClick="joincart"
+                    />
+
+            </RelativeLayout>
+
         <Button
             android:id="@+id/buy_immediately"
             android:layout_width="match_parent"
@@ -508,7 +530,18 @@
             android:text="立即购买"
             android:textSize="16sp"
             />
+
     </LinearLayout>
 
     </RelativeLayout>
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/ic_launcher"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone"
+        android:layout_marginLeft="20dp"
+        />
 </RelativeLayout>
