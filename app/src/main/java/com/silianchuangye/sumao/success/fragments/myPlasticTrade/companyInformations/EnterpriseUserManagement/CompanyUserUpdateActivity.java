@@ -245,7 +245,7 @@ public class CompanyUserUpdateActivity extends AppCompatActivity {
         String role_id="";
         if (jiaose.contains("企业管理员")){
             role_id=role_id+" 50";
-        }
+        }///////
         if (jiaose.contains("财务员")){
             role_id=role_id+" 53";
         }
