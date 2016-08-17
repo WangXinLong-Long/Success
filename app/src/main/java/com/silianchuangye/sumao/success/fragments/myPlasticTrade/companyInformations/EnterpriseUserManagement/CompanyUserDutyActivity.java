@@ -238,7 +238,7 @@ public class CompanyUserDutyActivity extends AppCompatActivity {
     }
     void setValueName(){
         Intent intent=new Intent();
-        intent.putExtra("name", "");
+        intent.putExtra("people", "");
         CompanyUserDutyActivity.this.setResult(4, intent);
         finish();
     }

@@ -41,6 +41,8 @@ public class CompanyUserActivity extends AppCompatActivity {
     RelativeLayout layoutTop,add_address_rl;
     private String name,email,phone,jiaose,state,account;
     private String role;
+    private String user_id;
+    private SimpleAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,13 +50,7 @@ public class CompanyUserActivity extends AppCompatActivity {
         setContentView(R.layout.activity_company_user);
         elistview= (ListView) findViewById(R.id.elvinfo_company_user);
         listitem=new ArrayList<Map<String,Object>>();
-        new Thread(){
-            @Override
-            public void run() {
-                //  super.run();
-                getAllUser();
-            }
-        }.start();
+
         iv_title_bar_back = ((ImageView) findViewById(R.id.iv_title_bar_back));
         iv_title_bar_logo = ((ImageView) findViewById(R.id.iv_title_bar_logo));
         iv_title_bar_service = ((ImageView) findViewById(R.id.iv_title_bar_service));
@@ -82,6 +78,7 @@ public class CompanyUserActivity extends AppCompatActivity {
             }
         });
 
+
        // iv_title_bar_search.setOnClickListener(this);
         tv_title_bar_title.setText("企业用户管理");
         tv_title_bar_title.setTextColor(Color.WHITE);
@@ -92,6 +89,13 @@ public class CompanyUserActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        new Thread(){
+            @Override
+            public void run() {
+                super.run();
+                getAllUser();
+            }
+        }.start();
         /**
          * 修改用户
          */
@@ -105,9 +109,25 @@ public class CompanyUserActivity extends AppCompatActivity {
                 intent.putExtra("phone",listitem.get(position).get("phone").toString());
                 intent.putExtra("jiaose",listitem.get(position).get("role").toString());
                 intent.putExtra("state",listitem.get(position).get("state").toString());
+                intent.putExtra("userid",user_id);
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+//        new Thread(){
+//            @Override
+
+    }
+
+   @Override
+    protected void onRestart() {
+        super.onRestart();
+        if (adapter!=null)
+        adapter.notifyDataSetChanged();
     }
 
     /**
@@ -127,6 +147,7 @@ public class CompanyUserActivity extends AppCompatActivity {
                     Log.d("object_cl的值",object_cl.toString());
                     JSONArray array=new JSONArray(object_cl.toString());
                     for (int i=0;i<array.length();i++){
+                        Log.d("解析json数组",array.toString());
                         JSONObject object_info=array.getJSONObject(i);
                         name=object_info.getString("cl_mingcheng");
                         email=object_info.getString("cl_shuliang");
@@ -134,6 +155,8 @@ public class CompanyUserActivity extends AppCompatActivity {
                         jiaose=object_info.getString("cl_qiye");
                         state=object_info.getString("cl_cangku");
                         account=object_info.getString("cl_cpid");
+                        user_id=object_info.getString("cl_uid");
+                        Log.d("角色的值",jiaose);
                         role="";
                         Map<String,Object> map=new Hashtable<String,Object>();
                         map.put("account",account);
@@ -158,6 +181,8 @@ public class CompanyUserActivity extends AppCompatActivity {
                             //map.put("role",listitem.get(i).get("role")+" 财务员");
                         }
 
+
+
                         if (state.equals("31"))
                         {
                             map.put("state","有效");
@@ -167,7 +192,7 @@ public class CompanyUserActivity extends AppCompatActivity {
                         listitem.add(map);
 
                     }
-                    SimpleAdapter adapter=new SimpleAdapter(
+                     adapter=new SimpleAdapter(
                             CompanyUserActivity.this,
                             listitem,
                             R.layout.item_company_user,
@@ -177,7 +202,8 @@ public class CompanyUserActivity extends AppCompatActivity {
                     adapter.notifyDataSetChanged();
 
                 }catch (Exception e){
-                    Log.d("解析异常",""+e.getMessage());
+                    //Log.d("解析异常",""+e.printStackTrace());
+                    e.printStackTrace();
                 }
 
             }

@@ -111,6 +111,7 @@ public class CompanyUserAddActivity extends AppCompatActivity {
                    Intent intent=new Intent(CompanyUserAddActivity.this,CompanyUserValueActivity.class);
                    intent.putExtra("title",list.get(position).get("text").toString());
                    intent.putExtra("number",position);
+                   intent.putExtra("content","");
                    startActivityForResult(intent,position);
                }
 
@@ -143,7 +144,10 @@ public class CompanyUserAddActivity extends AppCompatActivity {
                 if (role.contains("业务员")){
                     role_id=role_id+" 52";
                 }
-                rp.addParameter("cl_qiye","50");
+                Log.d("role_id的值",role_id);
+                String zhize=role_id.trim().replaceAll(" ",",");
+                Log.d("职责",zhize);
+                rp.addParameter("cl_qiye",zhize);
                 SharedPreferences sp=getSharedPreferences("sumao", Activity.MODE_PRIVATE);
                 String unique=sp.getString("unique","");
                 Log.d("unique",unique);
@@ -247,9 +251,7 @@ public class CompanyUserAddActivity extends AppCompatActivity {
         });
     }
 
-    public void addUser(){
 
-    }
 
 
 //    class Adapter extends SimpleAdapter {

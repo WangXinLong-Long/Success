@@ -39,7 +39,7 @@ public class CompanyUserUpdateActivity extends AppCompatActivity {
             iv_title_bar_search;
     Button sv_title_bar_serachView;
     TextView tv_title_bar_title,tv;
-    private String account,name,phone,jiaose,state,email,zhuangtai,role;
+    private String account,name,phone,jiaose,state,email,zhuangtai,role,user_id,people;
     private SimpleAdapter adapter;
 
     @Override
@@ -82,6 +82,7 @@ public class CompanyUserUpdateActivity extends AppCompatActivity {
         jiaose=bundle.getString("jiaose");
         state=bundle.getString("state");
         email=bundle.getString("email");
+        user_id=bundle.getString("userid");
         zhuangtai="";
         if (state.equals("31")){
             zhuangtai="有效";
@@ -144,9 +145,10 @@ public class CompanyUserUpdateActivity extends AppCompatActivity {
         lvupdate.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (position==0||position==1||position==2||position==3){
+                if (position==1||position==2||position==3){
                     Intent intent=new Intent(CompanyUserUpdateActivity.this,CompanyUserValueActivity.class);
                     intent.putExtra("title",list.get(position).get("text").toString());
+                    intent.putExtra("content",list.get(position).get("value").toString());
                     intent.putExtra("number",position);
                     startActivityForResult(intent,position);
                 }else if (position==4){
@@ -156,8 +158,9 @@ public class CompanyUserUpdateActivity extends AppCompatActivity {
                     Intent intent=new Intent(CompanyUserUpdateActivity.this,CompanyUserStateActivity.class);
                     intent.putExtra("title","状态");
                     startActivityForResult(intent,100);
+                }else if (position==0){
+                    Toast.makeText(CompanyUserUpdateActivity.this, "用户名称不可修改", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
         btSave.setOnClickListener(new View.OnClickListener() {
@@ -214,10 +217,10 @@ public class CompanyUserUpdateActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
                 break;
             case 4:
-                String people=data.getStringExtra("people");
+                people=data.getStringExtra("people");
                 Log.d("account",people);
                 if (people!=null) {
-                    list.get(4).put("value", state);
+                    list.get(4).put("value", people);
                 }
                 adapter.notifyDataSetChanged();
                 break;
@@ -234,21 +237,25 @@ public class CompanyUserUpdateActivity extends AppCompatActivity {
     public void updateUser(){
         String url="http://192.168.32.126:7023/rest/model/atg/userprofiling/ProfileActor/modifyUser";
         RequestParams rp=new RequestParams(url);
-        rp.addParameter("cl_yhid","52250065");
+        rp.addParameter("cl_yhid",user_id);
         rp.addParameter("cl_mingcheng",list.get(1).get("value").toString());
         rp.addParameter("cl_jiner",list.get(2).get("value").toString());
         rp.addParameter("cl_shuliang",list.get(3).get("value").toString());
+        Log.d("role修改的值",jiaose);
         String role_id="";
-        if (role.contains("企业管理员")){
+        if (jiaose.contains("企业管理员")){
             role_id=role_id+" 50";
         }
-        if (role.contains("财务员")){
+        if (jiaose.contains("财务员")){
             role_id=role_id+" 53";
         }
-        if (role.contains("业务员")){
+        if (jiaose.contains("业务员")){
             role_id=role_id+" 52";
         }
-        rp.addParameter("cl_qiye","50");
+        Log.d("role_id的值修改",role_id);
+        String zhize=role_id.trim().replaceAll(" ",",");
+        Log.d("职责的值",zhize);
+        rp.addParameter("cl_qiye",zhize);
         if (list.get(5).get("value").toString().equals("有效")){
             rp.addParameter("cl_cangku",31);
         }else{
@@ -287,5 +294,17 @@ public class CompanyUserUpdateActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d("进入了","onStart");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.d("进入了","onReStart");
     }
 }

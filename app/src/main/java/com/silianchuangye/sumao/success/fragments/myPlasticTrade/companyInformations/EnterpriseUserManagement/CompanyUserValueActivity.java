@@ -29,6 +29,7 @@ public class CompanyUserValueActivity extends AppCompatActivity {
     int position;
     String account;
     private TextView tv_a;
+    String Content;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +39,7 @@ public class CompanyUserValueActivity extends AppCompatActivity {
         Bundle bundle=getIntent().getExtras();
         String title=bundle.getString("title");
         position=bundle.getInt("number");
+        Content=bundle.getString("content");
         title_Bar(title);
         tv_a.setVisibility(View.VISIBLE);
         tv_a.setText("请填写正确的格式");
@@ -45,6 +47,7 @@ public class CompanyUserValueActivity extends AppCompatActivity {
 
         et_content_value= (EditText) findViewById(R.id.et_content_value);
         et_content_value.setFocusable(true);
+        et_content_value.setText(Content);
         //Log.d("账号的值",account);
         bt_Save= (Button) findViewById(R.id.bt_save_register_value);
         bt_Save.setOnClickListener(new View.OnClickListener() {
@@ -102,10 +105,10 @@ public class CompanyUserValueActivity extends AppCompatActivity {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
 //			setResult(RESULT_CANCELED);
 //			finish();
-            account="";
+            //account="";
             Intent intent=new Intent();
             //Intent intent = new Intent();
-            intent.putExtra("content",account);
+            intent.putExtra("content",Content);
             setResult(position, intent);
             finish();
             return true;
