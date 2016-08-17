@@ -9,4 +9,6 @@ import java.util.List;
  */
 public interface IEnterpriseInformationCallback {
     void setData( List<EnterpriseInformation> cl_leixing);
+
+    //void setAddData(List<EnterpriseInformation> cl_state);
 }

@@ -6,4 +6,6 @@ package com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.FirmI
 public interface IUserRegisterModel {
 
    void getEntInfo(int position,IEnterpriseInformationCallback callback);
+
+   //void getEntInfo(IEnterpriseInformationCallback callback_User);
 }

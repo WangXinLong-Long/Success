@@ -243,6 +243,7 @@ public class PagerOne extends BasePager {
 
                 ImageView preSelImg = (ImageView) layouticon
                         .findViewById(preSelImgIndex);
+
                 preSelImg.setImageDrawable(mActivity
                         .getResources().getDrawable(R.drawable.ic_focus));
                 //修改当前选中项的背景
