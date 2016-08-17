@@ -70,6 +70,7 @@
             android:layout_height="@dimen/x17"
             android:src="@mipmap/add_address"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/x3"
             />
         <TextView
             android:id="@+id/tvupdate"

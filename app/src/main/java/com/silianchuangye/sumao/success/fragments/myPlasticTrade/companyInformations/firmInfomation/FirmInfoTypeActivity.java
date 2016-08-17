@@ -93,9 +93,9 @@ public class FirmInfoTypeActivity extends AppCompatActivity implements IFirmInfo
                 if (name == null||name.isEmpty()){
 
                     prompt.setText("请选择类型");
-
                     prompt.setTextColor(Color.RED);
                     prompt.setVisibility(View.VISIBLE);
+
                 }else {
                     Intent intent = new Intent();
                     intent.putExtra("name", name);
@@ -218,6 +218,8 @@ public class FirmInfoTypeActivity extends AppCompatActivity implements IFirmInfo
 
         }
     }
+
+
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
