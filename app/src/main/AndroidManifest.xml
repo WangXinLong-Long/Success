@@ -524,7 +524,6 @@
             />
 
         <activity android:name=".fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.CompanyUserValueActivity" />
-        <activity android:name=".fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.CompanyUserStateActivity"></activity>
     </application>
 
 </manifest>
