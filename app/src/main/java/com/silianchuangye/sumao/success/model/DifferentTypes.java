@@ -11,6 +11,7 @@ public class DifferentTypes implements Serializable{
     List<EnterpriseInformation> cl_zhengjian;
     List<EnterpriseInformation> cl_applyType;
     List<EnterpriseInformation> cl_nashuiren;
+    List<EnterpriseInformation> cl_state;
 
     public List<EnterpriseInformation> getCl_leixing() {
         return cl_leixing;
@@ -42,5 +43,13 @@ public class DifferentTypes implements Serializable{
 
     public void setCl_nashuiren(List<EnterpriseInformation> cl_nashuiren) {
         this.cl_nashuiren = cl_nashuiren;
+    }
+
+    public List<EnterpriseInformation> getCl_state() {
+        return cl_state;
+    }
+
+    public void setCl_state(List<EnterpriseInformation> cl_state) {
+        this.cl_state = cl_state;
     }
 }

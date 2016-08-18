@@ -10,7 +10,7 @@
     <include
         android:id="@+id/layoutTop_duty"
         layout="@layout/title_bar"></include>
-    <LinearLayout
+  <!--  <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/x40"
         android:background="#fff"
@@ -71,7 +71,19 @@
             android:textSize="16sp"
             android:layout_marginTop="@dimen/x10"
             />
-    </LinearLayout>
+    </LinearLayout>-->
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lv_Firm_Type"
+        ></ListView>
+    <TextView
+        android:id="@+id/prompt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_marginLeft="@dimen/x10"
+        android:layout_marginTop="@dimen/x10"/>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -82,5 +94,6 @@
         android:textColor="#fff"
         android:textSize="16sp"
         android:layout_marginTop="@dimen/x10"
+        android:id="@+id/btSave"
         />
 </LinearLayout>

@@ -1,5 +1,7 @@
 package com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.FirmInfoTypeActivityMVP.model;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.silianchuangye.sumao.success.model.DifferentTypes;
 import com.silianchuangye.sumao.success.model.EnterpriseInformation;
@@ -26,6 +28,10 @@ public class UserRegisterModel implements IUserRegisterModel {
         getStringFromURL(position,callback);
     }
 
+
+
+
+
     public  void  getStringFromURL(final int position, final IEnterpriseInformationCallback callback){
         String url = SuMaoConstant.SUMAO_IP+"/rest/model/atg/store/profile/RegistrationActor/userVerify/getEntInfo";
         RequestParams requestParams = new RequestParams(url);
@@ -51,6 +57,8 @@ public class UserRegisterModel implements IUserRegisterModel {
                         case 2:
                             types = differentTypes.getCl_nashuiren();
                             break;
+                        case 3:
+
                     }
 
                     callback.setData(types);
@@ -77,5 +85,6 @@ public class UserRegisterModel implements IUserRegisterModel {
         }
 
     }
+
 
 }

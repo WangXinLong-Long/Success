@@ -13,7 +13,7 @@ import org.xutils.x;
 /**
  * Created by Administrator on 2016/8/12 0012.
  */
-public class GoodsInStockActivityModel implements IgoodsInStockActivityModel {
+public class GoodsInStockActivityModel implements IGoodsInStockActivityModel {
     String region2;
     String classification2;
     String application2;

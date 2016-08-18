@@ -21,6 +21,7 @@ import android.os.Bundle;
 import android.support.v7.widget.ActionBarOverlayLayout;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -576,6 +577,23 @@ public class FirmInfoPictureActivity extends AppCompatActivity {
             //返回ResponseEntity对象
             return responseEntity;
         }
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+//			setResult(RESULT_CANCELED);
+//			finish();
+
+            Intent intent=new Intent();
+            //Intent intent = new Intent();
+            intent.putExtra("value","");
+            setResult(number1, intent);
+            finish();
+            return true;
+        } else if (keyCode == KeyEvent.KEYCODE_FOCUS || keyCode == KeyEvent.KEYCODE_CAMERA) {
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
 

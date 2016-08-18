@@ -26,9 +26,12 @@ public class GetEntInformationPresenter {
             public void setData(List<EnterpriseInformation> informations) {
                 firmInfoTypeActivity.initFirmInfoTypeActivityView(informations);
             }
+
+
         });
 
     }
 
     ;
+
 }

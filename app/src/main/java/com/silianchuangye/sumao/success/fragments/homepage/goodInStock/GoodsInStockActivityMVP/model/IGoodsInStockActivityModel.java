@@ -1,8 +1,8 @@
 package com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.model;
 
 /**
- * Created by Administrator on 2016/8/12 0012.
+ * Created by junjun on 2016/8/17.
  */
-public interface IgoodsInStockActivityModel {
+public interface IGoodsInStockActivityModel {
     void getGoodsInStockActivityResult(GoodsInStockActivityCallback callback);
 }
