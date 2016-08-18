@@ -1,5 +1,6 @@
 package com.silianchuangye.sumao.success.fragments.SearchActivityMVP.presenter;
 
+import com.silianchuangye.sumao.success.fragments.SearchActivityMVP.bean.SearchActivityBean;
 import com.silianchuangye.sumao.success.fragments.SearchActivityMVP.model.ISearchActivityModel;
 import com.silianchuangye.sumao.success.fragments.SearchActivityMVP.model.SearchActivityCallback;
 import com.silianchuangye.sumao.success.fragments.SearchActivityMVP.model.SearchActivityModel;
@@ -18,8 +19,8 @@ public class SearchActivityPresenter {
         ISearchActivityModel searchActivityModel = new SearchActivityModel(Ntt);
         searchActivityModel.getSearchActivityInfo(new SearchActivityCallback() {
             @Override
-            public void callbackSearchActivity() {
-
+            public void callbackSearchActivity(SearchActivityBean searchActivityBean) {
+                searchActivityView.getSearchActivityData(searchActivityBean);
             }
         });
     }

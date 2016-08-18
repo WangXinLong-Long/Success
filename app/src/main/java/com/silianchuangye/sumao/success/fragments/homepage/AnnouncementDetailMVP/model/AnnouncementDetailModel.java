@@ -1,9 +1,8 @@
-package com.silianchuangye.sumao.success.fragments.SearchActivityMVP.model;
+package com.silianchuangye.sumao.success.fragments.homepage.AnnouncementDetailMVP.model;
 
 import com.google.gson.Gson;
 import com.silianchuangye.sumao.success.fragments.SearchActivityMVP.bean.SearchActivityBean;
-import com.silianchuangye.sumao.success.model.DifferentTypes;
-import com.silianchuangye.sumao.success.model.EnterpriseInformation;
+import com.silianchuangye.sumao.success.fragments.homepage.AnnouncementDetailMVP.bean.AnnouncementDetailBean;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
@@ -14,26 +13,25 @@ import org.xutils.http.HttpMethod;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
-import java.util.List;
-
 /**
- * Created by Administrator on 2016/8/15 0015.
+ * Created by Administrator on 2016/8/18 0018.
  */
-public class SearchActivityModel implements ISearchActivityModel {
-    String Ntt;
+public class AnnouncementDetailModel implements IAnnouncementDetailModel {
+    String id;
 
-    public SearchActivityModel(String ntt) {
-        Ntt = ntt;
+    public AnnouncementDetailModel(String id) {
+        this.id = id;
     }
 
+
     @Override
-    public void getSearchActivityInfo(final SearchActivityCallback callback) {
-        String url = SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/catalog/ProductCatalogActor/researchProduct";
+    public void getAnnouncementDetailInfo(final AnnouncementDetailCallback callback) {
+        String url = SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/catalog/ProductCatalogActor/articleDetail";
         RequestParams requestParams = new RequestParams(url);
-       requestParams.setAsJsonContent(true);
+        requestParams.setAsJsonContent(true);
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("Ntt", Ntt);
+            jsonObject.put("id", id);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -41,7 +39,7 @@ public class SearchActivityModel implements ISearchActivityModel {
         try {
             x.http().request(HttpMethod.POST, requestParams, new Callback.CacheCallback<String>() {
 
-                private SearchActivityBean searchActivityBean;
+                private AnnouncementDetailBean announcementDetailBean1;
 
                 @Override
                 public boolean onCache(String result) {
@@ -52,8 +50,8 @@ public class SearchActivityModel implements ISearchActivityModel {
                 public void onSuccess(String result) {
                     LogUtils.log("result--->" + result + "<---result");
                     Gson gson = new Gson();
-                    searchActivityBean = gson.fromJson(result, SearchActivityBean.class);
-                    callback.callbackSearchActivity(searchActivityBean);
+                    announcementDetailBean1 = gson.fromJson(result, AnnouncementDetailBean.class);
+                    callback.callbackAnnouncementDetail(announcementDetailBean1);
                 }
 
                 @Override
@@ -75,6 +73,5 @@ public class SearchActivityModel implements ISearchActivityModel {
             e.printStackTrace();
             LogUtils.log("--------->" + "3.2+printStackTrace"+e.toString() + "<-----------");
         }
-
     }
 }

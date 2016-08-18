@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.silianchuangye.sumao.success.R;
+import com.silianchuangye.sumao.success.fragments.SearchActivityMVP.bean.SearchActivityBean;
 import com.silianchuangye.sumao.success.fragments.SearchActivityMVP.presenter.SearchActivityPresenter;
 import com.silianchuangye.sumao.success.fragments.type.TypeInfoActivity;
 
@@ -48,8 +49,6 @@ public class SearchActivity extends AppCompatActivity implements ISearchActivity
                 //进行搜索功能,跳到现货界面
                 searchActivityPresenter = new SearchActivityPresenter(SearchActivity.this);
                 searchActivityPresenter.sendSearchActivityData(search_content.getText().toString().trim());
-
-
             }
         });
 
@@ -73,8 +72,9 @@ public class SearchActivity extends AppCompatActivity implements ISearchActivity
     }
 
     @Override
-    public void getSearchActivityData() {
+    public void getSearchActivityData(SearchActivityBean searchActivityBean) {
         Intent intent=new Intent(SearchActivity.this, TypeInfoActivity.class);
+        intent.putExtra("searchActivityBean",searchActivityBean);
         startActivity(intent);
     }
 }
