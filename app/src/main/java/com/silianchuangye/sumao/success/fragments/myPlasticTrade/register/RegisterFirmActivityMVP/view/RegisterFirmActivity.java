@@ -37,6 +37,7 @@ import org.xutils.http.HttpMethod;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -79,6 +80,11 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
     private StringBuilder sb;
     private String leixingLevel;
     private String naShuiRenLevel;
+    private String picturePath;
+    private String value;
+    private String picturePath1;
+    private String picturePath2;
+    private String picturePath3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,6 +118,7 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
     }
 
     private void registerMethodW() {
+        rp.setMultipart(true);
         rp.addParameter("cl_mingcheng",mingcheng);//企业名称
         rp.addParameter("cl_yewu",yewu);//业务部门（可空）
         rp.addParameter("province",sb.substring(0,4));//省
@@ -120,15 +127,19 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
         rp.addParameter("cl_dizhi",list.get(5).get("right").toString().trim());//详细地址
         rp.addParameter("cl_chuanzhen",list.get(6).get("right").toString().trim());//传真
         rp.addParameter("cl_zhengjian","4");//企业注册证件
-        rp.addParameter("cl_zhizhao","0928201347189232203334");//企业营业执照
         rp.addParameter("cl_nashuiren",naShuiRenLevel);//纳税人类型
         rp.addParameter("cl_leixing",leixingLevel);//企业类型
-        rp.addParameter("cl_zhizhaoimage","/mnt/docs/100.jpg");//营业执照图片路劲
-        rp.addParameter("cl_zhizhaoimage","/mnt/docs/100.jpg");//组织机构代码图片路劲
-        rp.addParameter("cl_shuiwuimage","/mnt/docs/100.jpg");//税务登记号图片路劲
-        rp.addParameter("cl_nashuirenimage","/mnt/docs/100.jpg");//纳税人图片路劲
-        rp.addParameter("cl_jigou","0928201347189232203334");//纳税人图片路劲
-        rp.addParameter("cl_shuiwu","0928201347189232203334");//纳税人图片路劲
+        if (picturePath!=null){
+            rp.addParameter("cl_zhizhaoimage",new File(picturePath));//营业执照图片路劲
+        }else {
+            rp.addParameter("cl_zhizhaoimage",new File(picturePath1));
+        }
+        rp.addParameter("cl_zhizhaoimage",new File(picturePath2));//组织机构代码图片路劲
+        rp.addParameter("cl_jigou", list1.get(1).get("right").toString().trim());//组织机构代码
+        rp.addParameter("cl_shuiwuimage",new File(picturePath3));//税务登记号图片路劲
+        rp.addParameter("cl_shuiwu", list1.get(2).get("right").toString().trim());//税务登记号
+        rp.addParameter("cl_nashuirenimage",new File(picturePath1));//纳税人图片路劲
+        rp.addParameter("cl_zhizhao", list1.get(3).get("right").toString().trim());//企业营业执照
         rp.addParameter("cl_login",account);//登录账号
         rp.addParameter("cl_password",pass);//密码
         rp.addParameter("cl_confirmPassword",repass);//确认密码
@@ -544,6 +555,7 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
                 Toast.makeText(RegisterFirmActivity.this, "请选择", Toast.LENGTH_SHORT).show();
             }
         });
+
         lvupdate_firm_info_two.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -643,23 +655,31 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
                 adapter.notifyDataSetChanged();
                 break;
 
+//            三证合一，统一社会信用代码
             case 10:
-                String value = data.getStringExtra("value");
+                value = data.getStringExtra("value");
+                picturePath = data.getStringExtra("picturePath");
                 list1.get(0).put("right", value);
                 adapter1.notifyDataSetChanged();
                 break;
+//            三证独立，营业执照号
             case 11:
                 String value1 = data.getStringExtra("value");
+                picturePath1 = data.getStringExtra("picturePath");
                 list1.get(1).put("right", value1);
                 adapter1.notifyDataSetChanged();
                 break;
+//            三证独立，组织机构代码
             case 12:
                 String value2 = data.getStringExtra("value");
+                picturePath2 = data.getStringExtra("picturePath");
                 list1.get(2).put("right", value2);
                 adapter1.notifyDataSetChanged();
                 break;
+//            三证独立，税务登记号
             case 13:
                 String value3 = data.getStringExtra("value");
+                picturePath3 = data.getStringExtra("picturePath");
                 list1.get(3).put("right", value3);
                 adapter1.notifyDataSetChanged();
                 break;
