@@ -44,6 +44,7 @@ public class OrderDetailsActivity  extends Activity{
     private TextView tv_order_number;
     private String Id;
     private TextView totalMoney2,univalent2,number2,enterprise2,warehouse2;
+    private TextView bottom_money2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +61,7 @@ public class OrderDetailsActivity  extends Activity{
         order_details_listView = (CustomListView)findViewById(R.id.order_details_listView);
         tv_child_title_bar_title = ((TextView) findViewById(R.id.tv_child_title_bar_title));
         tv_child_title_bar_title.setText("订单详情");
+        bottom_money2= (TextView) findViewById(R.id.bottom_money2);
 //        initdata();
         order_details_listView.setAdapter(adapter);
         enevt();
@@ -118,7 +120,7 @@ public class OrderDetailsActivity  extends Activity{
                     JSONObject job2=new JSONObject(str);
                     String price=job2.getString("price");
                     Log.e("TAG","price--"+price);
-                    totalMoney2.setText(price);
+                    bottom_money2.setText(price);
                     String type=job2.getString("type");//类型
                     String type1=getType(type);
                     Log.e("TAG","类型-----"+type1);
@@ -126,31 +128,7 @@ public class OrderDetailsActivity  extends Activity{
                     String shippingGroupState=job2.getString("shippingGroupState");
                     String state = job2.getString("state");//状态
                     Log.e("TAG","状态--"+state);
-                    String state1="";
-                    if(state.equals("SUBMITTED")||state.equals("PENDING_APPROVAL")||state.equals("APPROVED")||state.equals("FAILED_APPROVAL")){
-                        if(type.equals("offlineOrder")) {
-                            state1 = "订单生成";
-                        }else{
-                            state1="待支付";
-                        }
-                    }
-                    if(state.equals("DEPOSIT_CONFIRMED")){
-                        state1="支付保证金已冻结";
-                    }else if(state.equals("QUOTED")){
-                        if(shippingGroupState.equals("INITIAL")) {
-                            state1 = "已支付";
-                        }else{
-                            state1="已发货";
-                        }
-                    }else if(state.equals("PRESSING1")){
-                        state1="已发货";
-                    }else if (state.equals("NO_PENDING_ACTION")){
-                        state1="已完成";
-                    }else if (state.equals("REMOVED")){
-                        state1="已取消";
-                    }else if (state.equals("CHANGED")){
-                        state1="已变更";
-                    }
+                  String state1=getState(state,type,shippingGroupState);
                     number2.setText(state1);
 //                        String owner = job2.getString("owner");//采购员
                     String orderId = job2.getString("orderId");//订单编号
@@ -167,7 +145,6 @@ public class OrderDetailsActivity  extends Activity{
                         JSONObject j = (JSONObject) jay.get(i);
                         String cl_amount = "";
 
-
                         JSONArray j1 = new JSONArray(cl);
                         for (int k = 0; k < j1.length(); k++) {
                             JSONObject job1 = (JSONObject) j1.get(k);
@@ -178,6 +155,7 @@ public class OrderDetailsActivity  extends Activity{
 
                             cl_amount = job1.getString("cl_amount");//金额
                             Log.e("TAG","总额----"+cl_amount);
+                            totalMoney2.setText(cl_amount);
                             String cl_cangku=job1.getString("cl_cangku");//仓库
                             Log.e("TAG","仓库----"+cl_cangku);
                             String cl_gongsi=job1.getString("cl_gongsi");//公司
@@ -243,5 +221,37 @@ public class OrderDetailsActivity  extends Activity{
             str="客服订单";
         }
         return str;
+    }
+    private String getState(String state,String type,String shippingGroupState){
+        String s="ldkjfg";
+        if(state.equals("SUBMITTED")||state.equals("PENDING_APPROVAL")||state.equals("APPROVED")||state.equals("FAILED_APPROVAL")){
+            if(type.equals("offlineOrder")) {
+                s = "订单生成";
+            }else{
+                s="待支付";
+            }
+        }
+        else if(state.equals("DEPOSIT_CONFIRMED")){
+            s="支付保证金已冻结";
+        }else if(state.equals("QUOTED")){
+            if(shippingGroupState.equals("INITIAL")) {
+                s = "已支付";
+            }else{
+                s="已发货";
+            }
+        }else if (state.equals("NO_PENDING_ACTION")){
+            s="已完成";
+        }else if (state.equals("REMOVED")||state.equals("PENGDING_CANCEL")){
+            if(type.equals("fixedPricingOrder")||type.equals("traderFixedPricingOrder")){
+                s="已取消";
+            }else{
+                s="竞拍失败";
+            }
+        }else if (state.equals("CHANGED")){
+            s="已变更";
+        }else{
+            s="等待客服处理";
+        }
+        return s;
     }
 }
