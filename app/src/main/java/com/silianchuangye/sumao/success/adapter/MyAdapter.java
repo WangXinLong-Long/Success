@@ -65,7 +65,7 @@ public  class MyAdapter extends BaseExpandableListAdapter {
         TextView tv_people= (TextView) view.findViewById(R.id.tv_order_price_people_name);
         TextView tv_order_price_state  = (TextView) view.findViewById(R.id.tv_order_price_state);
         TextView tvprice  = (TextView) view.findViewById(R.id.tv_order_price_value);
-        Log.d("map",listparrent.get(arg0).toString());
+//        Log.d("map",listparrent.get(arg0).toString());
 //        Log.d("采购员",listparrent.get(arg0).get("name").toString());
         tv_order_price_state.setText(listparrent.get(arg0).get("states").toString());
         tvTitle.setText(listparrent.get(arg0).get("id").toString());

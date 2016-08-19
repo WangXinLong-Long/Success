@@ -17,6 +17,8 @@ import android.widget.Toast;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
@@ -32,11 +34,11 @@ public class ModifyTelephone extends Activity implements View.OnClickListener {
     TextView tv_title_bar_title;
 
     RelativeLayout title_modify_telephone;
-    TextView omp_number;
+    EditText omp_number;
     EditText nmb_number;
     SharedPreferences sp;
     SharedPreferences.Editor editor;
-String name,email;
+String name,email,phone;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,13 +59,14 @@ String name,email;
         tv_title_bar_title.setText("修改电话");
         tv_title_bar_title.setTextColor(Color.WHITE);
 
-        omp_number = ((TextView) findViewById(R.id.Omp_number));
+        omp_number = ((EditText) findViewById(R.id.Omp_number));
         nmb_number = ((EditText) findViewById(R.id.Nmb_number));
-        sp = getSharedPreferences("silian",MODE_PRIVATE);
-        Log.e("TAG","sp.getString===="+sp.getString("count",""));
-        omp_number.setText(sp.getString("count",""));
+//        sp = getSharedPreferences("silian",MODE_PRIVATE);
+//        Log.e("TAG","sp.getString===="+sp.getString("count",""));
+//        omp_number.setText(sp.getString("count",""));
         name=getIntent().getStringExtra("name");
         email=getIntent().getStringExtra("email");
+        phone=getIntent().getStringExtra("phoneNum");
     }
 
     @Override
@@ -74,7 +77,7 @@ String name,email;
                 finish();
                 break;
             case R.id.modify_telephone_save:
-                Toast.makeText(this,"修改了手机号",Toast.LENGTH_SHORT).show();
+
 
                 /**
                  * 这里要加n多层判断
@@ -82,42 +85,56 @@ String name,email;
                 if (true)
                 {
                     String telephone = nmb_number.getText().toString();
-                     sp = getSharedPreferences("silian",MODE_PRIVATE);
-                     editor = sp.edit();
-                    editor.putString("count",telephone);
-                    editor.commit();
-                    Intent intent =new Intent();
-                    RequestParams params=new RequestParams(SuMaoConstant.SUMAO_IP+"/rest/model/atg/store/profile/RegistrationActor/updateUser");
-                    params.addParameter("email", email);
-                    params.addParameter("firstName",name);
-                    params.addParameter("phoneNumber",telephone);
-                    SharedPreferences sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
-                    String unique = sp.getString("unique", "");
-                    params.addParameter("_dynSessConf",unique);
-                    Log.e("TAG","params===="+params);
-                    x.http().post(params, new Callback.CommonCallback<String>() {
-                        @Override
-                        public void onSuccess(String result) {
-                            Log.e("TAG","手机result-----"+result);
+//                     sp = getSharedPreferences("silian",MODE_PRIVATE);
+//                     editor = sp.edit();
+//                    editor.putString("count",telephone);
+//                    editor.commit();
+                    Log.e("TAG","phone-----"+phone);
+                    if(phone.equals(omp_number.getText().toString())){
+                        Intent intent =new Intent();
+                        RequestParams params=new RequestParams(SuMaoConstant.SUMAO_IP+"/rest/model/atg/store/profile/RegistrationActor/updateUser");
+                        params.setCharset("UTF-8");
+                        JSONObject job=new JSONObject();
+                        try {
+                            job.put("firstName",name);
+                            job.put("email",email.trim());
+                            job.put("phoneNumber",telephone);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
+                        params.setBodyContent(job.toString());
+                        SharedPreferences sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+                        String unique = sp.getString("unique", "");
+                        params.addParameter("_dynSessConf",unique);
+                        Log.e("TAG","params===="+params);
+                        x.http().post(params, new Callback.CommonCallback<String>() {
+                            @Override
+                            public void onSuccess(String result) {
+                                Log.e("TAG","手机result-----"+result);
+                                Toast.makeText(ModifyTelephone.this,"修改了手机号",Toast.LENGTH_SHORT).show();
+                            }
 
-                        @Override
-                        public void onError(Throwable ex, boolean isOnCallback) {
+                            @Override
+                            public void onError(Throwable ex, boolean isOnCallback) {
 
-                        }
+                            }
 
-                        @Override
-                        public void onCancelled(CancelledException cex) {
+                            @Override
+                            public void onCancelled(CancelledException cex) {
 
-                        }
+                            }
 
-                        @Override
-                        public void onFinished() {
+                            @Override
+                            public void onFinished() {
 
-                        }
-                    });
-                    setResult(0,intent);
-                    finish();
+                            }
+                        });
+                        setResult(0,intent);
+                        finish();
+                    }else{
+                        Toast.makeText(ModifyTelephone.this,"与原手机号码不一致，修改失败",Toast.LENGTH_SHORT).show();
+                    }
+
                 }
 
                 break;

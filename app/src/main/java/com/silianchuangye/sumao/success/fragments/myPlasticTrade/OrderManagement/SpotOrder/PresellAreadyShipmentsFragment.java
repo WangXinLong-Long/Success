@@ -116,10 +116,11 @@ public class PresellAreadyShipmentsFragment extends Fragment {
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
 //                Toast.makeText(getContext(), "点击title", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent();
-                intent.putExtra("ID",listparrent.get(groupPosition).get("id").toString());
-                intent.setClass(getActivity(), SpotOrder.class);
-                startActivity(intent);
+//                Intent intent = new Intent();
+//                intent.putExtra("ID",listparrent.get(groupPosition).get("id").toString());
+//                intent.setClass(getActivity(), SpotOrder.class);
+//                startActivity(intent);
+                Toast.makeText(getActivity(),"跳转已发货界面",Toast.LENGTH_SHORT).show();
                 return true;
 
             }
@@ -160,30 +161,7 @@ public class PresellAreadyShipmentsFragment extends Fragment {
                             String shippingGroupState = j.getString("shippingGroupState");
                             String type = j.getString("type");
                             String cl_amount = "";
-                            if (state.equals("SUBMITTED") || state.equals("PENDING_APPROVAL") || state.equals("APPROVED") || state.equals("FAILED_APPROVAL")) {
-                                if (type.equals("offlineOrder")) {
-                                    state1 = "订单生成";
-                                } else {
-                                    state1 = "待支付";
-                                }
-                            }
-                            if (state.equals("DEPOSIT_CONFIRMED")) {
-                                state1 = "支付保证金已冻结";
-                            } else if (state.equals("QUOTED")) {
-                                if (shippingGroupState.equals("INITIAL")) {
-                                    state1 = "已支付";
-                                } else {
-                                    state1 = "已发货";
-                                }
-                            } else if (state.equals("NO_PENDING_ACTION")) {
-                                state1 = "已完成";
-                            } else if (state.equals("REMOVED") || state.equals("PENGDING_CANCEL")) {
-                                if (type.equals("fixedPricingOrder") || type.equals("traderFixedPricingOrder")) {
-                                    state1 = "已取消";
-                                } else {
-                                    state1 = "竞拍失败";
-                                }
-                            }
+                           state1=getState(state,type,shippingGroupState);
                             String owner = j.getString("owner");//采购员
                             String orderId = j.getString("orderId");//订单编号
 
@@ -238,5 +216,37 @@ public class PresellAreadyShipmentsFragment extends Fragment {
 
             }
         });
+    }
+    private String getState(String state,String type,String shippingGroupState){
+        String s="ldkjfg";
+        if(state.equals("SUBMITTED")||state.equals("PENDING_APPROVAL")||state.equals("APPROVED")||state.equals("FAILED_APPROVAL")){
+            if(type.equals("offlineOrder")) {
+                s = "订单生成";
+            }else{
+                s="待支付";
+            }
+        }
+        else if(state.equals("DEPOSIT_CONFIRMED")){
+            s="支付保证金已冻结";
+        }else if(state.equals("QUOTED")){
+            if(shippingGroupState.equals("INITIAL")) {
+                s = "已支付";
+            }else{
+                s="已发货";
+            }
+        }else if (state.equals("NO_PENDING_ACTION")){
+            s="已完成";
+        }else if (state.equals("REMOVED")||state.equals("PENGDING_CANCEL")){
+            if(type.equals("fixedPricingOrder")||type.equals("traderFixedPricingOrder")){
+                s="已取消";
+            }else{
+                s="竞拍失败";
+            }
+        }else if (state.equals("CHANGED")){
+            s="已变更";
+        }else{
+            s="等待客服处理";
+        }
+        return s;
     }
 }

@@ -133,31 +133,7 @@ public class OrderDetailsHaveBeenPaid extends Activity implements View.OnClickLi
                         String shippingGroupState=job2.getString("shippingGroupState");
                         String state = job2.getString("state");//状态
                         Log.e("TAG","状态--"+state);
-                        String state1="";
-                        if(state.equals("SUBMITTED")||state.equals("PENDING_APPROVAL")||state.equals("APPROVED")||state.equals("FAILED_APPROVAL")){
-                            if(type.equals("offlineOrder")) {
-                                state1 = "订单生成";
-                            }else{
-                                state1="待支付";
-                            }
-                        }
-                        if(state.equals("DEPOSIT_CONFIRMED")){
-                            state1="支付保证金已冻结";
-                        }else if(state.equals("QUOTED")){
-                            if(shippingGroupState.equals("INITIAL")) {
-                                state1 = "已支付";
-                            }else{
-                                state1="已发货";
-                            }
-                        }else if(state.equals("PRESSING1")){
-                            state1="已发货";
-                        }else if (state.equals("NO_PENDING_ACTION")){
-                            state1="已完成";
-                        }else if (state.equals("REMOVED")){
-                            state1="已取消";
-                        }else if (state.equals("CHANGED")){
-                            state1="已变更";
-                        }
+                        String state1=getState(state,type,shippingGroupState);
                         number2.setText(state1);
 //                        String owner = job2.getString("owner");//采购员
                         String orderId = job2.getString("orderId");//订单编号
@@ -250,5 +226,37 @@ public class OrderDetailsHaveBeenPaid extends Activity implements View.OnClickLi
             str="客服订单";
         }
         return str;
+    }
+    private String getState(String state,String type,String shippingGroupState){
+        String s="ldkjfg";
+        if(state.equals("SUBMITTED")||state.equals("PENDING_APPROVAL")||state.equals("APPROVED")||state.equals("FAILED_APPROVAL")){
+            if(type.equals("offlineOrder")) {
+                s = "订单生成";
+            }else{
+                s="待支付";
+            }
+        }
+        else if(state.equals("DEPOSIT_CONFIRMED")){
+            s="支付保证金已冻结";
+        }else if(state.equals("QUOTED")){
+            if(shippingGroupState.equals("INITIAL")) {
+                s = "已支付";
+            }else{
+                s="已发货";
+            }
+        }else if (state.equals("NO_PENDING_ACTION")){
+            s="已完成";
+        }else if (state.equals("REMOVED")||state.equals("PENGDING_CANCEL")){
+            if(type.equals("fixedPricingOrder")||type.equals("traderFixedPricingOrder")){
+                s="已取消";
+            }else{
+                s="竞拍失败";
+            }
+        }else if (state.equals("CHANGED")){
+            s="已变更";
+        }else{
+            s="等待客服处理";
+        }
+        return s;
     }
 }

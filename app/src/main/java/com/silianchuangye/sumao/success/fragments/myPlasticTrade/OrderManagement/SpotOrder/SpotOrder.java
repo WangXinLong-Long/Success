@@ -96,6 +96,7 @@ public class SpotOrder extends Activity implements View.OnClickListener {
     private TextView tv_order_number1;
     String type,Id;//类型和ID-现货的
     private TextView the_order_price,type2,buyer2,state2,company2;
+    private TextView bottom_money2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,6 +106,7 @@ public class SpotOrder extends Activity implements View.OnClickListener {
         Log.e("TAG","Id=======type======="+Id+"---"+type);
         bt_copy= (Button) findViewById(R.id.bt_copy);
         the_order_number_number= (TextView) findViewById(R.id.the_order_number_number);
+        bottom_money2= (TextView) findViewById(R.id.bottom_money2);
         the_order_price= (TextView) findViewById(R.id.the_order_price);
         type2= (TextView) findViewById(R.id.type2);
         buyer2= (TextView) findViewById(R.id.buyer2);
@@ -339,32 +341,7 @@ public class SpotOrder extends Activity implements View.OnClickListener {
                             String shippingGroupState=j.getString("shippingGroupState");
                             String state = j.getString("state");//状态
                             Log.e("TAG","状态--"+state);
-                            String state1="";
-                            if(state.equals("SUBMITTED")||state.equals("PENDING_APPROVAL")||state.equals("APPROVED")||state.equals("FAILED_APPROVAL")){
-                                if(type.equals("offlineOrder")) {
-                                    state1 = "订单生成";
-                                }else{
-                                    state1="待支付";
-                                }
-                            }
-                            if(state.equals("DEPOSIT_CONFIRMED")){
-                                state1="支付保证金已冻结";
-                            }else if(state.equals("QUOTED")){
-                                if(shippingGroupState.equals("INITIAL")) {
-                                    state1 = "已支付";
-                                }else{
-                                    state1="已发货";
-                                }
-                            }else if(state.equals("PRESSING1")){
-                                state1="已发货";
-                            }else if (state.equals("NO_PENDING_ACTION")){
-                                state1="已完成";
-                            }else if (state.equals("REMOVED")){
-                                state1="已取消";
-                            }else if (state.equals("CHANGED")){
-                                state1="已变更";
-                            }
-                            Log.e("TAG","state1----"+state1);
+                            String state1=getState(state,type,shippingGroupState);
                             state2.setText(state1);
                             String owner = j.getString("owner");//采购员
                             Log.e("TAG","采购员-------"+owner);
@@ -388,6 +365,7 @@ public class SpotOrder extends Activity implements View.OnClickListener {
                                 cl_amount = job1.getString("cl_amount");//金额
                                 Log.e("TAG","金额二");
                                 the_order_price.setText(cl_amount);
+                                bottom_money2.setText(cl_amount);
                                 String cl_cangku=job1.getString("cl_cangku");//仓库
                                 Log.e("TAG","仓库");
                                 String cl_gongsi=job1.getString("cl_gongsi");//公司
@@ -460,5 +438,37 @@ public class SpotOrder extends Activity implements View.OnClickListener {
             str="客服订单";
         }
         return str;
+    }
+    private String getState(String state,String type,String shippingGroupState){
+        String s="ldkjfg";
+        if(state.equals("SUBMITTED")||state.equals("PENDING_APPROVAL")||state.equals("APPROVED")||state.equals("FAILED_APPROVAL")){
+            if(type.equals("offlineOrder")) {
+                s = "订单生成";
+            }else{
+                s="待支付";
+            }
+        }
+        else if(state.equals("DEPOSIT_CONFIRMED")){
+            s="支付保证金已冻结";
+        }else if(state.equals("QUOTED")){
+            if(shippingGroupState.equals("INITIAL")) {
+                s = "已支付";
+            }else{
+                s="已发货";
+            }
+        }else if (state.equals("NO_PENDING_ACTION")){
+            s="已完成";
+        }else if (state.equals("REMOVED")||state.equals("PENGDING_CANCEL")){
+            if(type.equals("fixedPricingOrder")||type.equals("traderFixedPricingOrder")){
+                s="已取消";
+            }else{
+                s="竞拍失败";
+            }
+        }else if (state.equals("CHANGED")){
+            s="已变更";
+        }else{
+            s="等待客服处理";
+        }
+        return s;
     }
 }

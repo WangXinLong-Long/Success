@@ -2,7 +2,10 @@ package com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagemen
 
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -38,7 +41,6 @@ public class OrderStaypayFragment extends Fragment {
     private ExpandableListView elvDemo;
     private List<Map<String,Object>> listparrent;
     private List<List<Map<String,Object>>> listitem;
-
 //    private List<Map<String,Object>> listparrent=new ArrayList<Map<String,Object>>();;
 //    private List<List<Map<String,Object>>> listitem=new ArrayList<List<Map<String,Object>>>();;
     MyAdapter adapter;
@@ -53,6 +55,7 @@ public class OrderStaypayFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        Log.e("TAG","待支付订单");
         View view=inflater.inflate(R.layout.fragment_order_staypay, container, false);
         //实例化
         elvDemo= (ExpandableListView) view.findViewById(R.id.elvDemo);
@@ -131,7 +134,7 @@ public class OrderStaypayFragment extends Fragment {
 
         return view;
     }
-    private void sendMy(){
+    public void sendMy(){
         listparrent=new ArrayList<Map<String,Object>>();;
         listitem=new ArrayList<List<Map<String,Object>>>();;
         RequestParams params=new RequestParams(SuMaoConstant.SUMAO_IP+"/rest/model/atg/userprofiling/ProfileActor/myOrders");
@@ -157,49 +160,29 @@ public class OrderStaypayFragment extends Fragment {
                         String cl= (String) j.getString("cl");
                         String state=j.getString("state");//状态
                         String shippingGroupState=j.getString("shippingGroupState");
-                       String  type=j.getString("type");
+                        String  type=j.getString("type");
                         String cl_amount="";
-                        if(state.equals("SUBMITTED")||state.equals("PENDING_APPROVAL")||state.equals("APPROVED")||state.equals("FAILED_APPROVAL")){
-                            if(type.equals("offlineOrder")) {
-                                state1 = "订单生成";
-                            }else{
-                                state1="待支付";
-                            }
-                        }
-                        if(state.equals("DEPOSIT_CONFIRMED")){
-                            state1="支付保证金已冻结";
-                        }else if(state.equals("QUOTED")){
-                            if(shippingGroupState.equals("INITIAL")) {
-                                state1 = "已支付";
-                            }else{
-                                state1="已发货";
-                            }
-                        }else if(state.equals("PRESSING1")){
-                            state1="已发货";
-                        }else if (state.equals("NO_PENDING_ACTION")){
-                            state1="已完成";
-                        }else if (state.equals("REMOVED")){
-                            state1="已取消";
-                        }else if (state.equals("CHANGED")){
-                            state1="已变更";
-                        }
+                        state1=getState(state,type,shippingGroupState);
                         String owner=j.getString("owner");//采购员
                         orderId=j.getString("orderId");//订单编号
                         Log.e("TAG","orderId网络====="+orderId);
                         JSONArray j1=new JSONArray(cl);
+                        List<Map<String,Object>> list1=new ArrayList<Map<String,Object>>();;
                         for(int k=0;k<j1.length();k++){
                             JSONObject job1= (JSONObject) j1.get(k);
                             cl_amount=job1.getString("cl_amount");//金额
                             String cl_mingcheng=job1.getString("cl_mingcheng");//产品名称
                             String cl_fenlei=job1.getString("cl_fenlei");
                             Log.e("TAG","mingc=="+cl_mingcheng);
-                            List<Map<String,Object>> list1=new ArrayList<Map<String,Object>>();
+
                             Map<String,Object> map=new Hashtable<String,Object>();
                             map.put("type",cl_fenlei);
                             map.put("name",cl_mingcheng);
                             list1.add(map);
                             listitem.add(list1);
+                            Log.e("TAG","list1-----"+list1.size());
                         }
+                        Log.e("TAG","listitem----"+listitem.size());
                         Map<String,Object> map1=new Hashtable<String,Object>();
                         map1.put("id",orderId);
                         map1.put("price",cl_amount);
@@ -207,6 +190,7 @@ public class OrderStaypayFragment extends Fragment {
                         map1.put("name",owner);
                         Log.e("TAG","map1-----"+map1);
                         listparrent.add(map1);
+                        Log.e("TAG","listparrent-----"+listparrent.size());
                     }
                     adapter=new MyAdapter(listparrent,listitem,getActivity());
                     elvDemo.setAdapter(adapter);
@@ -214,7 +198,6 @@ public class OrderStaypayFragment extends Fragment {
                         for (int i = 0; i < listparrent.size(); i++) {
                             elvDemo.expandGroup(i);
                         }}
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -237,4 +220,37 @@ public class OrderStaypayFragment extends Fragment {
             }
         });
     }
+    private String getState(String state,String type,String shippingGroupState){
+        String s="ldkjfg";
+        if(state.equals("SUBMITTED")||state.equals("PENDING_APPROVAL")||state.equals("APPROVED")||state.equals("FAILED_APPROVAL")){
+            if(type.equals("offlineOrder")) {
+                s = "订单生成";
+            }else{
+                s="待支付";
+            }
+        }
+        else if(state.equals("DEPOSIT_CONFIRMED")){
+            s="支付保证金已冻结";
+        }else if(state.equals("QUOTED")){
+            if(shippingGroupState.equals("INITIAL")) {
+                s = "已支付";
+            }else{
+                s="已发货";
+            }
+        }else if (state.equals("NO_PENDING_ACTION")){
+            s="已完成";
+        }else if (state.equals("REMOVED")||state.equals("PENGDING_CANCEL")){
+            if(type.equals("fixedPricingOrder")||type.equals("traderFixedPricingOrder")){
+                s="已取消";
+            }else{
+                s="竞拍失败";
+            }
+        }else if (state.equals("CHANGED")){
+            s="已变更";
+        }else{
+            s="等待客服处理";
+        }
+        return s;
+    }
+
 }

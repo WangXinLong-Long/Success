@@ -37,9 +37,6 @@ import java.util.Map;
  */
 public class OrderstayshipmentsFragment extends Fragment{
     private ExpandableListView elvDemo;
-    private List<Map<String,Object>> listparrent;
-    private List<List<Map<String,Object>>> listitem;
-
 //    private List<Map<String,Object>> listparrent=new ArrayList<Map<String,Object>>();;
 //    private List<List<Map<String,Object>>> listitem=new ArrayList<List<Map<String,Object>>>();;
     MyAdapter adapter;
@@ -144,9 +141,10 @@ public class OrderstayshipmentsFragment extends Fragment{
 
         return view;
     }
-    private void sendMy(){
-        listparrent=new ArrayList<Map<String,Object>>();;
-        listitem=new ArrayList<List<Map<String,Object>>>();;
+
+    List<Map<String,Object>> listparrent=new ArrayList<Map<String,Object>>();
+    List<List<Map<String,Object>>>  listitem=new ArrayList<List<Map<String,Object>>>();
+    public void sendMy(){
         RequestParams params=new RequestParams(SuMaoConstant.SUMAO_IP+"/rest/model/atg/userprofiling/ProfileActor/myOrders");
         params.addParameter("pageNum",1);
         params.addParameter("submitType",1);
@@ -173,30 +171,7 @@ public class OrderstayshipmentsFragment extends Fragment{
                         String shippingGroupState=j.getString("shippingGroupState");
                         type=j.getString("type");
                         String cl_amount="";
-                        if(state.equals("SUBMITTED")||state.equals("PENDING_APPROVAL")||state.equals("APPROVED")||state.equals("FAILED_APPROVAL")){
-                            if(type.equals("offlineOrder")) {
-                                state1 = "订单生成";
-                            }else{
-                                state1="待支付";
-                            }
-                        }
-                        if(state.equals("DEPOSIT_CONFIRMED")){
-                            state1="支付保证金已冻结";
-                        }else if(state.equals("QUOTED")){
-                            if(shippingGroupState.equals("INITIAL")) {
-                                state1 = "已支付";
-                            }else{
-                                state1="已发货";
-                            }
-                        }else if(state.equals("PRESSING1")){
-                            state1="已发货";
-                        }else if (state.equals("NO_PENDING_ACTION")){
-                            state1="已完成";
-                        }else if (state.equals("REMOVED")){
-                            state1="已取消";
-                        }else if (state.equals("CHANGED")){
-                            state1="已变更";
-                        }
+                        state1=getState(state,type,shippingGroupState);
                         String owner=j.getString("owner");//采购员
                         orderId=j.getString("orderId");//订单编号
 
@@ -251,5 +226,36 @@ public class OrderstayshipmentsFragment extends Fragment{
             }
         });
     }
-
+    private String getState(String state,String type,String shippingGroupState){
+        String s="ldkjfg";
+        if(state.equals("SUBMITTED")||state.equals("PENDING_APPROVAL")||state.equals("APPROVED")||state.equals("FAILED_APPROVAL")){
+            if(type.equals("offlineOrder")) {
+                s = "订单生成";
+            }else{
+                s="待支付";
+            }
+        }
+        else if(state.equals("DEPOSIT_CONFIRMED")){
+            s="支付保证金已冻结";
+        }else if(state.equals("QUOTED")){
+            if(shippingGroupState.equals("INITIAL")) {
+                s = "已支付";
+            }else{
+                s="已发货";
+            }
+        }else if (state.equals("NO_PENDING_ACTION")){
+            s="已完成";
+        }else if (state.equals("REMOVED")||state.equals("PENGDING_CANCEL")){
+            if(type.equals("fixedPricingOrder")||type.equals("traderFixedPricingOrder")){
+                s="已取消";
+            }else{
+                s="竞拍失败";
+            }
+        }else if (state.equals("CHANGED")){
+            s="已变更";
+        }else{
+            s="等待客服处理";
+        }
+        return s;
+    }
 }
