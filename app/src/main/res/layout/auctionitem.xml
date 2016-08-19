@@ -9,18 +9,18 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/x40">
         <ImageView
-            android:layout_width="@dimen/x30"
-            android:layout_height="@dimen/y25"
+            android:layout_width="@dimen/x40"
+            android:layout_height="@dimen/y35"
             android:id="@+id/iv_auction_icon"
-            android:src="@mipmap/underwey"
+
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tv_auction_name"
             android:textSize="16sp"
-            android:text="燕山石化"
-            android:layout_marginLeft="@dimen/x35"
+
+            android:layout_marginLeft="@dimen/x25"
             android:layout_marginTop="@dimen/x10"
             android:textStyle="bold"
             />
@@ -31,7 +31,7 @@
             android:id="@+id/tv_auction_time"
             android:layout_marginTop="@dimen/x13"
             android:textSize="14sp"
-            android:text="2016-12-12 12:00"
+
             android:textColor="#29ABE2"
             android:layout_marginRight="@dimen/x20"
             android:layout_alignParentRight="true"
@@ -39,7 +39,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="开始时间:"
+
            android:layout_toLeftOf="@+id/tv_auction_time"
             android:layout_marginRight="@dimen/x5"
             android:layout_marginTop="@dimen/x13"
@@ -95,9 +95,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tv_auction_number"
-            android:text="12345"
-            android:layout_toRightOf="@+id/tv_auction_price"
-            android:layout_marginLeft="@dimen/x40"
+
+
+            android:layout_marginLeft="@dimen/x120"
             android:layout_marginTop="@dimen/x10"
             android:textSize="16sp"
             android:textColor="#111"
@@ -118,7 +118,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/x60"
+            android:layout_marginLeft="@dimen/x33"
             android:text="起拍价"
             android:layout_below="@+id/tv_auction_price"
             android:layout_marginTop="@dimen/x1"
@@ -128,11 +128,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/tv_auction_startPrice"
+
             android:layout_below="@+id/tv_auction_number"
             android:text="总量"
             android:layout_marginTop="@dimen/x1"
-            android:layout_marginLeft="@dimen/x60"
+            android:layout_marginLeft="@dimen/x124"
             />
         <Button
             android:layout_width="@dimen/x80"
