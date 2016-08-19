@@ -2,6 +2,7 @@ package com.silianchuangye.sumao.success.fragments.type;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -20,6 +22,7 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.custom.customCalendar.CustomGridView;
@@ -41,6 +44,7 @@ public class TypeInfoActivity extends AppCompatActivity {
     private PopupWindow popupWindow;
     private RelativeLayout layout_Top_Type;
     private ImageView iv_Search;
+    private GridViewAdapter adpater3,adpater2,adpater1,adpater4;
     private String address,paihao,yingyong,fenlei;
     private RelativeLayout layout_type_list;
    // private List<String> list_String;
@@ -94,6 +98,7 @@ public class TypeInfoActivity extends AppCompatActivity {
                 if (popupWindow!=null){
                     popupWindow.dismiss();
                 }
+                lv_Type.setDivider(getResources().getDrawable(R.color.transparent));
                 layout_type_list.setBackgroundColor(getResources().getColor(R.color.transparent));
                 tv_apple_Type_for_Type.setTextColor(getResources().getColor(R.color.btn_blue_normal));
                 tv_pattern_Type.setTextColor(getResources().getColor(R.color.black_deep));
@@ -118,6 +123,7 @@ public class TypeInfoActivity extends AppCompatActivity {
                 if (popupWindow!=null){
                     popupWindow.dismiss();
                 }
+                lv_Type.setDivider(getResources().getDrawable(R.color.transparent));
                 layout_type_list.setBackgroundColor(getResources().getColor(R.color.transparent));
                 tv_apple_Type_for_Type.setTextColor(getResources().getColor(R.color.black_deep));
                 tv_pattern_Type.setTextColor(getResources().getColor(R.color.black_deep));
@@ -142,6 +148,7 @@ public class TypeInfoActivity extends AppCompatActivity {
                 if (popupWindow!=null){
                     popupWindow.dismiss();
                 }
+                lv_Type.setDivider(getResources().getDrawable(R.color.transparent));
                 layout_type_list.setBackgroundColor(getResources().getColor(R.color.transparent));
                 tv_apple_Type_for_Type.setTextColor(getResources().getColor(R.color.black_deep));
                 tv_pattern_Type.setTextColor(getResources().getColor(R.color.black_deep));
@@ -171,6 +178,7 @@ public class TypeInfoActivity extends AppCompatActivity {
                 tv_address_Type.setTextColor(getResources().getColor(R.color.black_deep));
                 tv_address_search.setTextColor(getResources().getColor(R.color.btn_blue_normal));
                 layout_type_list.setBackgroundColor(getResources().getColor(R.color.transparent));
+                lv_Type.setDivider(getResources().getDrawable(R.color.transparent));
                 popupwindow_shaixuan();
             }
         });
@@ -238,7 +246,10 @@ public class TypeInfoActivity extends AppCompatActivity {
     }
 
 
-
+    /**
+     * 普通的pupopWindow
+     * @param list
+     */
     public void Popupwindow(final List<String> list) {
         View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.item_popupwindow_for_type_fenlei, null);
          popupWindow = new PopupWindow(findViewById(R.id.layout_ff), ActionBarOverlayLayout.LayoutParams.MATCH_PARENT, ActionBarOverlayLayout.LayoutParams.WRAP_CONTENT);
@@ -300,6 +311,7 @@ public class TypeInfoActivity extends AppCompatActivity {
             @Override
             public void onDismiss() {
                 //popupWindow.dismiss();
+                lv_Type.setDivider(getResources().getDrawable(R.color.gray_pressed));
                 tv_type_Type .setTextColor(getResources().getColor(R.color.black_deep));
                 tv_apple_Type_for_Type  .setTextColor(getResources().getColor(R.color.black_deep));
                 tv_address_Type .setTextColor(getResources().getColor(R.color.black_deep));
@@ -311,6 +323,10 @@ public class TypeInfoActivity extends AppCompatActivity {
 
 
     }
+
+    /**
+     * 筛选的popupwindow
+     */
     public void popupwindow_shaixuan(){
         View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.item_shaixuan, null);
         popupWindow = new PopupWindow(findViewById(R.id.layout_ff), ActionBarOverlayLayout.LayoutParams.MATCH_PARENT, ActionBarOverlayLayout.LayoutParams.WRAP_CONTENT);
@@ -321,12 +337,14 @@ public class TypeInfoActivity extends AppCompatActivity {
         for (int i=0;i<=8;i++){
             list_gv_fenlei.add("HDFE");
         }
-        ArrayAdapter<String> adapter=new ArrayAdapter<String>(TypeInfoActivity.this,R.layout.layout,R.id.tv_Type,list_gv_fenlei);
-        gv_Apple_Type.setAdapter(adapter);
+        adpater4=new GridViewAdapter(list_gv_fenlei);
+//        final ArrayAdapter adapter=new ArrayAdapter(TypeInfoActivity.this,R.layout.layout,R.id.tv_Type,list_gv_fenlei);
+        gv_Apple_Type.setAdapter(adpater4);
         gv_Apple_Type.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                
+                adpater4.setSelectedPosition(position);
+                adpater4.notifyDataSetChanged();
             }
         });
         /**
@@ -337,8 +355,16 @@ public class TypeInfoActivity extends AppCompatActivity {
         for (int i=0;i<=8;i++){
             list_gv_paihao.add("FS8888");
         }
-        ArrayAdapter<String> adapter1=new ArrayAdapter<String>(TypeInfoActivity.this,R.layout.layout,R.id.tv_Type,list_gv_paihao);
-        gv_Number_Type.setAdapter(adapter1);
+        adpater1=new GridViewAdapter(list_gv_paihao);
+         //ArrayAdapter adapter1=new ArrayAdapter(TypeInfoActivity.this,R.layout.layout,R.id.tv_Type,list_gv_paihao);
+        gv_Number_Type.setAdapter(adpater1);
+        gv_Number_Type.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                adpater1.setSelectedPosition(position);
+                adpater1.notifyDataSetChanged();
+            }
+        });
         /**
          * 应用
          */
@@ -347,8 +373,16 @@ public class TypeInfoActivity extends AppCompatActivity {
         for (int i=0;i<=8;i++){
             list_gv_yingyong.add("拉丝料");
         }
-        ArrayAdapter<String> adapter2=new ArrayAdapter<String>(TypeInfoActivity.this,R.layout.item_type,R.id.tv_Type,list_gv_yingyong);
-        gv_Address_Type.setAdapter(adapter2);
+        adpater2=new GridViewAdapter(list_gv_yingyong);
+        //ArrayAdapter adapter2=new ArrayAdapter(TypeInfoActivity.this,R.layout.item_type,R.id.tv_Type,list_gv_yingyong);
+        gv_Address_Type.setAdapter(adpater2);
+        gv_Address_Type.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                adpater2.setSelectedPosition(position);
+                adpater2.notifyDataSetChanged();
+            }
+        });
         /**
          * 地区
          */
@@ -357,8 +391,18 @@ public class TypeInfoActivity extends AppCompatActivity {
         for (int i=0;i<=8;i++){
             list_gv_diqu.add("上海市");
         }
-        ArrayAdapter<String> adapter3=new ArrayAdapter<String>(TypeInfoActivity.this,R.layout.item_type,R.id.tv_Type,list_gv_diqu);
-        gv_Firm_Type.setAdapter(adapter3);
+        adpater3=new GridViewAdapter(list_gv_diqu);
+        //ArrayAdapter adapter3=new ArrayAdapter(TypeInfoActivity.this,R.layout.item_type,R.id.tv_Type,list_gv_diqu);
+        gv_Firm_Type.setAdapter(adpater3);
+        gv_Firm_Type.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //Toast.makeText(TypeInfoActivity.this, "dianjial", Toast.LENGTH_SHORT).show();
+                //view.findViewById(R.id.layout).setBackgroundColor(getResources().getColor(R.color.btn_register_pressed));
+                adpater3.setSelectedPosition(position);
+                adpater3.notifyDataSetInvalidated();
+            }
+        });
 
         /**
          * 重置按钮
@@ -404,6 +448,7 @@ public class TypeInfoActivity extends AppCompatActivity {
                 tv_address_search.setTextColor(getResources().getColor(R.color.black_deep));
                 tv_pattern_Type.setTextColor(getResources().getColor(R.color.black_deep));
                 layout_type_list.setBackgroundColor(getResources().getColor(R.color.white));
+                lv_Type.setDivider(getResources().getDrawable(R.color.gray_pressed));
             }
         });
 
@@ -457,6 +502,77 @@ public class TypeInfoActivity extends AppCompatActivity {
     }
     class ViewHolder{
         TextView text_Name;
+        RelativeLayout layout_Type;
 
     }
+    class GridViewAdapter extends BaseAdapter{
+        private List<String> list_String;
+        private int selectedPosition=-1;
+        LayoutInflater inflater;
+        View view;
+        ViewHolder Layoutholder;
+        RelativeLayout Layout;
+        TextView text = null;
+        public GridViewAdapter(List<String> list) {
+            // TODO Auto-generated constructor stub
+           this.list_String=list;
+        }
+        @Override
+        public int getCount() {
+            return list_String.size();
+        }
+
+        @Override
+        public String getItem(int position) {
+            return list_String.get(position);
+        }
+
+
+
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+        public void setSelectedPosition(int selectedPosition) {
+            this.selectedPosition = selectedPosition;
+        }
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            inflater = (LayoutInflater) getApplication().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            view=inflater.inflate(R.layout.item_type,parent,false);
+            Layoutholder= (ViewHolder) view.getTag();
+            if (Layoutholder==null){
+                Layoutholder=new ViewHolder();
+                Layoutholder.layout_Type= (RelativeLayout) view.findViewById(R.id.layout);
+                Layoutholder.text_Name= (TextView) view.findViewById(R.id.tv_Type);
+                view.setTag(Layoutholder);
+
+            }else{
+                Layoutholder= (ViewHolder) view.getTag();
+            }
+            Layout = Layoutholder.layout_Type;
+            text = Layoutholder.text_Name;
+            if (selectedPosition == position) {
+                text.setSelected(true);
+                text.setPressed(true);
+                Layout.setBackgroundColor(getResources().getColor(R.color.zixun_topbg));
+                text.setTextColor(Color.WHITE);
+            } else {
+                text.setSelected(false);
+                text.setPressed(false);
+                Layout.setBackgroundColor(Color.WHITE);
+                text.setTextColor(Color.BLACK);
+
+            }
+
+
+            text.setText(list_String.get(position).toString());
+
+            return view;
+        }
+    }
+
+
+
 }
