@@ -106,6 +106,7 @@ public class UserInformation extends Activity implements  View.OnClickListener{
                         intent.setClass(this,ModifyTelephone.class);
                          intent.putExtra("name",tv_loginName.getText().toString());
                          intent.putExtra("email",tv_loginEmail.getText().toString());
+                         intent.putExtra("phoneNum",tv_loginPhoneNum.getText().toString());
                         startActivityForResult(intent,0);
                         break;
 
