@@ -30,6 +30,7 @@ import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
@@ -90,9 +91,9 @@ public class MyOfferFragment extends Fragment {
         x.http().post(requestParams, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Log.d("实时行情的result",result);
+                Log.d("我的报价的result",result);
                 if (result.contains("auctionPricelist")) {
-                    layout.setVisibility(View.VISIBLE);
+                    //layout.setVisibility(View.VISIBLE);
                     try {
                         JSONObject obj_result = new JSONObject(result);
                         String info = obj_result.getString("auctionPricelist");
@@ -100,18 +101,21 @@ public class MyOfferFragment extends Fragment {
 
                         for (int i = 0; i < array.length(); i++) {
                             JSONObject obj_info = array.getJSONObject(i);
+                            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日 hh:mm:mm");
+                            String data=simpleDateFormat.format(Double.parseDouble(obj_info.getString("submitDate")));
+
                             Map<String,Object> map=new Hashtable<String, Object>();
 
                             map.put("bianhao",obj_info.getString("formatSequenceNum"));
                             map.put("danjia",obj_info.getString("bidPrice"));
                             map.put("shuliang",obj_info.getString("bidQut"));
                            // map.put("min_shuliang",obj_info.getString("buyerId"));
-                            map.put("time",obj_info.getString("submitDate"));
+                            map.put("time",data);
                             list.add(map);
 
                         }
                         Log.d("list的值",list.toString());
-                        GridAdpater adapter=new GridAdpater(getActivity(),list,R.layout.item_gridview_vessel_one,
+                        GridAdpater adapter=new GridAdpater(getActivity(),list,R.layout.listgridviewitem,
                                 new String[]{"bianhao","danjia","shuliang","time"},
                                 new int[]{
                                         R.id.tv_bianhao,
@@ -159,11 +163,11 @@ public class MyOfferFragment extends Fragment {
             ViewHolder viewHolder;
             if (convertView==null){
                 viewHolder=new ViewHolder();
-                convertView=getActivity().getLayoutInflater().inflate(R.layout.item_gridview_vessel_one,null);
+                convertView=getActivity().getLayoutInflater().inflate(R.layout.listgridviewitem,null);
                 viewHolder.tv_bianhao= (TextView) convertView.findViewById(R.id.tv_bianhao);
                 viewHolder.tv_danjia= (TextView) convertView.findViewById(R.id.tv_danjia);
                 viewHolder.tv_shuliang= (TextView) convertView.findViewById(R.id.tv_shuliang);
-                viewHolder.tv_min_shuliang= (TextView) convertView.findViewById(R.id.tv_min_shuliang);
+              //  viewHolder.tv_min_shuliang= (TextView) convertView.findViewById(R.id.tv_min_shuliang);
                 viewHolder.tv_time= (TextView) convertView.findViewById(R.id.tv_time);
                 viewHolder.layout= (LinearLayout) convertView.findViewById(R.id.layout_item_vessel_one);
                 convertView.setTag(viewHolder);
@@ -176,7 +180,7 @@ public class MyOfferFragment extends Fragment {
             viewHolder.tv_bianhao.setText(list.get(position).get("bianhao").toString());
             viewHolder.tv_danjia.setText(list.get(position).get("danjia").toString());
             viewHolder.tv_shuliang.setText(list.get(position).get("shuliang").toString());
-            viewHolder.tv_min_shuliang.setText(list.get(position).get("min_shuliang").toString());
+          //  viewHolder.tv_min_shuliang.setText(list.get(position).get("min_shuliang").toString());
             viewHolder.tv_time.setText(list.get(position).get("time").toString());
             if (position%2==0){
                 viewHolder.layout.setBackgroundColor(getResources().getColor(R.color.bottom_background));

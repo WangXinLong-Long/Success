@@ -25,6 +25,7 @@ import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -146,8 +147,12 @@ public class AuctionActivity extends AppCompatActivity {
 
                          namechuanpin=obj_info.getString("cl_mingcheng");
                         // startTime=obj_info.getString("startDate");
-                         startTime=obj_info.getString("cl_mingcheng");
-                         endTime=obj_info.getString("cl_mingcheng");
+                         startTime=obj_info.getString("startDate");
+                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat
+                                ("yyyy年MM月dd日 hh:mm:mm");
+                        String data=simpleDateFormat.format(Double.parseDouble(startTime));
+
+                        endTime=obj_info.getString("cl_mingcheng");
                          startPrice=obj_info.getString("cl_qipai");
                          count=obj_info.getString("cl_zongliang");
                          cangku=obj_info.getString("cl_cangku");
@@ -161,13 +166,13 @@ public class AuctionActivity extends AppCompatActivity {
                         if (state==null||state.equals("0")){
                             //竞拍未开始
                             map.put("kaishi","开始时间:");
-                            map.put("startTime",startTime);
+                            map.put("startTime",data);
                             map.put("icon","");
 
                         }else if (state.equals("1")){
                             //正在竞拍
                             map.put("kaishi","开始时间:");
-                            map.put("startTime",startTime);
+                            map.put("startTime",data );
                             map.put("icon","");
                         }else if (state.equals("2")){
                             //竞拍结束

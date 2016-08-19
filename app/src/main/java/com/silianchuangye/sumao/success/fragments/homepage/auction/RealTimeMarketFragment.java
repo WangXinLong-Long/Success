@@ -30,6 +30,7 @@ import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
@@ -86,7 +87,7 @@ public class RealTimeMarketFragment extends Fragment {
             public void onSuccess(String result) {
                 Log.d("实时行情的result",result);
                 if (result.contains("auctionPricelist")) {
-                    layout.setVisibility(View.VISIBLE);
+                    //layout.setVisibility(View.VISIBLE);
                     try {
                         JSONObject obj_result = new JSONObject(result);
                         String info = obj_result.getString("auctionPricelist");
@@ -94,20 +95,21 @@ public class RealTimeMarketFragment extends Fragment {
 
                         for (int i = 0; i < array.length(); i++) {
                             JSONObject obj_info = array.getJSONObject(i);
+                            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日 hh:mm:mm");
+                            String data=simpleDateFormat.format(obj_info.getString("submitDate"));
+
                             Map<String,Object> map=new Hashtable<String, Object>();
-//                            list.add(obj_info.getString("formatSequenceNum"));
-//                            list.add(obj_info.getString("bidPrice"));
-//                            list.add(obj_info.getString("bidQut"));
-//                            list.add(obj_info.getString("buyerId"));
-//                            list.add(obj_info.getString("submitDate"));
+//
                             map.put("bianhao",obj_info.getString("formatSequenceNum"));
                             map.put("danjia",obj_info.getString("bidPrice"));
                             map.put("shuliang",obj_info.getString("bidQut"));
                             map.put("min_shuliang",obj_info.getString("buyerId"));
-                            map.put("time",obj_info.getString("submitDate"));
+                            map.put("time",data);
                             list.add(map);
 
                         }
+
+
                         Log.d("list的值",list.toString());
                         GridAdpater adapter=new GridAdpater(getActivity(),list,R.layout.item_gridview_vessel_one,
                                 new String[]{"bianhao","danjia","shuliang","min_shuliang","time"},
@@ -125,9 +127,10 @@ public class RealTimeMarketFragment extends Fragment {
                         e.printStackTrace();
                     }
                 }else {
-                   // layout.setVisibility(View.GONE);
+                    layout.setVisibility(View.GONE);
                     Toast.makeText(getActivity(), "暂无人竞拍该商品", Toast.LENGTH_SHORT).show();
                 }
+
             }
 
             @Override
