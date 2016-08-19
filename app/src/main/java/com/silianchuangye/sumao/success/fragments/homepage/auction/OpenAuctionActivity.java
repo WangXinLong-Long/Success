@@ -31,6 +31,13 @@ import com.silianchuangye.sumao.success.adapter.PopupWindowAdaptrer;
 import com.silianchuangye.sumao.success.dialog.Ok_Dialog;
 import com.silianchuangye.sumao.success.fragments.bean.ChinaNorth_Margin_info;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -49,11 +56,14 @@ public class OpenAuctionActivity extends AppCompatActivity {
     int i,j,k;
     EditText ed_shuzhi_min,ed_shuzhi_price,ed_shuzhi;
     private PopupWindow popupWindow;
+    private String id_value,type_way;
 
     private boolean flag;
     private PopupWindowAdaptrer adapter;
     private RelativeLayout Layout_Button_Open,Layout_Button_close,layout_non;
     private PopupWindowAdaptrer adapter1;
+    private TextView tvRemark_auction;
+    private TextView namechanpin,price,sheng,type,qigou,cangku,bianjiadanwei,diqu,time,company,cangkuaddress,way;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +73,32 @@ public class OpenAuctionActivity extends AppCompatActivity {
         Layout_Button_Open= (RelativeLayout) findViewById(R.id.Layout_Button_Open);
         layout_non= (RelativeLayout) findViewById(R.id.layout_non);
         bt_jinpai= (Button) findViewById(R.id.bt_jinpai);
+        Bundle bundle=getIntent().getExtras();
+        String name=bundle.getString("name");
+        id_value=bundle.getString("id");
+        type_way=bundle.getString("type");
+        Log.d("id的值",id_value);
+        Log.d("type的值",type_way);
+        namechanpin= (TextView) findViewById(R.id.tvName_auction);
+        price= (TextView) findViewById(R.id.tvPrice_auction);
+        sheng= (TextView) findViewById(R.id.surplus_amount_et);
+        qigou= (TextView) findViewById(R.id.purchase_quantity_et);
+        bianjiadanwei= (TextView) findViewById(R.id.min_variable_et);
+        time= (TextView) findViewById(R.id.delivery_time_et);
+        cangkuaddress= (TextView) findViewById(R.id.warehouse_address_et);
+        way= (TextView) findViewById(R.id.delivery_mode_et);
+        type= (TextView) findViewById(R.id.classification_pre_sale_et);
+        cangku= (TextView) findViewById(R.id.warehouse_et);
+        diqu= (TextView) findViewById(R.id.region_et);
+        company= (TextView) findViewById(R.id.company_et);
+        tvRemark_auction= (TextView) findViewById(R.id.tvRemark_auction);
+        new Thread(){
+            @Override
+            public void run() {
+                super.run();
+                getAcution();
+            }
+        }.start();
         bt_jinpai.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,6 +125,7 @@ public class OpenAuctionActivity extends AppCompatActivity {
 //                OpenAuctionActivity.this.finish();
 //            }
 //        });
+
         bt_jinpai_colse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,8 +135,7 @@ public class OpenAuctionActivity extends AppCompatActivity {
         });
         tvTimeValue= (TextView) findViewById(R.id.tvTimeValue);
         tvTime= (TextView) findViewById(R.id.tvTime);
-        Bundle bundle=getIntent().getExtras();
-        String name=bundle.getString("name");
+
         if (name.equals("竞拍未开始")){
             Layout_Button_Open.setVisibility(View.GONE);
             Layout_Button_close.setVisibility(View.VISIBLE);
@@ -137,6 +173,8 @@ public class OpenAuctionActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if(position==0){
                     Intent intent=new Intent(OpenAuctionActivity.this,VesselOneActivity.class);
+                    intent.putExtra("id",id_value);
+                    intent.putExtra("type",type_way);
                     startActivity(intent);
                 }else if(position==1){
                     Intent intent=new Intent(OpenAuctionActivity.this,VesselTwoActivity.class);
@@ -401,6 +439,56 @@ public class OpenAuctionActivity extends AppCompatActivity {
         lp.alpha = bgAlpha; //0.0-1.0
         getWindow().setAttributes(lp);
     }
+    public void getAcution(){
+        String url="http://192.168.32.126:7023/rest/model/atg/commerce/catalog/ProductCatalogActor/auctionProduct";
+        RequestParams rp=new RequestParams(url);
+        Log.d("id的值",id_value);
+        rp.addParameter("productId",id_value);
+       // rp.addParameter("productId","");
+        Log.d("竞拍详情的rp",rp.toString());
+        x.http().post(rp, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.d("竞拍详情",result);
+                try {
+                    JSONObject obj_result = new JSONObject(result);
+
+                    namechanpin.setText(obj_result.getString("cl_mingcheng").toString());
+                    price.setText(obj_result.getString("cl_qipai"));
+                    sheng.setText(obj_result.getString("cl_zongliang")+"吨");
+                    type.setText(obj_result.getString("cl_fenlei"));
+                    qigou.setText(obj_result.getString("cl_qigou")+"吨");
+                    cangku.setText(obj_result.getString("cl_cangku"));
+                    bianjiadanwei.setText(obj_result.getString("cl_xbianliang")+"吨");
+                    diqu.setText(obj_result.getString("cl_diqu"));
+                    cangkuaddress.setText(obj_result.getString("cl_xbianjia").toString()+"元");
+                    Log.d("zuixia",obj_result.getString("cl_xbianjia").toString());
+                    company.setText(obj_result.getString("cl_gongsi"));
+                    way.setText(obj_result.getString("cl_fangshi"));
+
+
+                }catch (JSONException e){
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+    }
+
 
 
 

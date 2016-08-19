@@ -1,5 +1,7 @@
 package com.silianchuangye.sumao.success.fragments.homepage.auction;
 
+import android.app.Activity;
+import android.content.SharedPreferences;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -38,6 +40,9 @@ public class VesselOneActivity extends AppCompatActivity {
     private EditText et;
     private ListView lv;
     private PopupWindowAdaptrer adapter;
+    private String type;
+    private String id;
+
 
 
     @Override
@@ -58,10 +63,20 @@ public class VesselOneActivity extends AppCompatActivity {
                 //跳转购物车界面
             }
         });
-
+        Bundle bundle=getIntent().getExtras();
+        type=bundle.getString("type");
+        id=bundle.getString("id");
+        SharedPreferences sp=getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor=sp.edit();
+        editor.putString("id",id);
+        editor.putString("type",type);
+        editor.commit();
         list=new ArrayList<Fragment>();
         list.add(new RealTimeMarketFragment());
         list.add(new MyOfferFragment());
+//        if (type.equals("公开竞拍")){
+//
+//        }
         adapter1=new MyPageAdapter(getSupportFragmentManager());
         adapter1.setData(list);
 
@@ -159,4 +174,14 @@ public class VesselOneActivity extends AppCompatActivity {
         getWindow().setAttributes(lp);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        SharedPreferences sp=getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor=sp.edit();
+        editor.remove("id");
+        editor.remove("type");
+        editor.commit();
+
+    }
 }

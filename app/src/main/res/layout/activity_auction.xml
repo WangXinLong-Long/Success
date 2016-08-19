@@ -7,6 +7,7 @@
     android:paddingLeft="0dp"
     android:paddingRight="0dp"
     android:paddingTop="0dp"
+    android:background="#EEEEF3"
     tools:context=".fragments.homepage.auction.AuctionActivity">
     <RelativeLayout
         android:layout_width="match_parent"
@@ -45,9 +46,11 @@
         android:layout_below="@id/auction_layout_top"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
+        android:divider="#00000000"
+        android:dividerHeight="0dip"
         android:background="#EEEEF3"
         android:id="@+id/lvAuction_Auction_Layout"
+        android:layout_marginTop="@dimen/x5"
         ></ListView>
 
 </RelativeLayout>
