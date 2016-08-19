@@ -1,5 +1,7 @@
 package com.silianchuangye.sumao.success.fragments.SearchActivityMVP.model;
 
+import com.google.gson.Gson;
+import com.silianchuangye.sumao.success.fragments.SearchActivityMVP.bean.SearchActivityBean;
 import com.silianchuangye.sumao.success.model.DifferentTypes;
 import com.silianchuangye.sumao.success.model.EnterpriseInformation;
 import com.silianchuangye.sumao.success.utils.LogUtils;
@@ -39,6 +41,8 @@ public class SearchActivityModel implements ISearchActivityModel {
         try {
             x.http().request(HttpMethod.POST, requestParams, new Callback.CacheCallback<String>() {
 
+                private SearchActivityBean searchActivityBean;
+
                 @Override
                 public boolean onCache(String result) {
                     return false;
@@ -47,7 +51,9 @@ public class SearchActivityModel implements ISearchActivityModel {
                 @Override
                 public void onSuccess(String result) {
                     LogUtils.log("result--->" + result + "<---result");
-                    callback.callbackSearchActivity();
+                    Gson gson = new Gson();
+                    searchActivityBean = gson.fromJson(result, SearchActivityBean.class);
+                    callback.callbackSearchActivity(searchActivityBean);
                 }
 
                 @Override

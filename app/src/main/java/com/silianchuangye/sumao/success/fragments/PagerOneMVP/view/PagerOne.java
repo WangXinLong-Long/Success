@@ -13,13 +13,17 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
 import com.silianchuangye.sumao.success.activity.WelcomeActivity;
 import com.silianchuangye.sumao.success.fragments.BasePager;
+import com.silianchuangye.sumao.success.fragments.PagerOneMVP.bean.AnnounceBean;
+import com.silianchuangye.sumao.success.fragments.PagerOneMVP.bean.AnnouncementBean;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.bean.BannerBean;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.presenter.PagerOnePresenter;
+import com.silianchuangye.sumao.success.fragments.homepage.AnnouncementDetailMVP.view.AnnouncementDetailActivity;
 import com.silianchuangye.sumao.success.fragments.homepage.groupbuying.GroupBuyingActivity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.LoginUserActivity;
 import com.silianchuangye.sumao.success.fragments.SearchActivityMVP.view.SearchActivity;
@@ -30,6 +34,7 @@ import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInSt
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleMVP.view.PreSale;
 import com.silianchuangye.sumao.success.fragments.homepage.theprice.MidpointsListctivity;
 import com.silianchuangye.sumao.success.utils.LogUtils;
+import com.silianchuangye.sumao.success.utils.MarqueeView;
 import com.silianchuangye.sumao.success.utils.scrollviewAD.MyGallery;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.ImageAdapter;
@@ -56,6 +61,8 @@ public class PagerOne extends BasePager implements IPagerOneView {
     private RelativeLayout rlHorn;
     private PagerOnePresenter pagerOnePresenter;
     private List<String> banners;
+    private MarqueeView tvFragmentHord;
+    private List<AnnouncementBean> items;
 
     @Override
     public void myClickSearch() {
@@ -78,11 +85,15 @@ public class PagerOne extends BasePager implements IPagerOneView {
 
     private void initHorn() {
         rlHorn = (RelativeLayout) view.findViewById(R.id.rlFragmentGridView);
-        rlHorn.setOnClickListener(new View.OnClickListener() {
+        tvFragmentHord = ((MarqueeView) view.findViewById(R.id.tvFragmentHord));
+        pagerOnePresenter.getAnnouncementInfoToPagerOneFragment();
+        tvFragmentHord.setOnItemClickListener(new MarqueeView.OnItemClickListener(){
             @Override
-            public void onClick(View v) {
-                //小喇叭的点击事件，调到详情展示
-                Toast.makeText(mActivity, "这是详情展示", Toast.LENGTH_SHORT).show();
+            public void onItemClick(int position, TextView textView) {
+                Intent intent = new Intent();
+                intent.putExtra("id",items.get(position).getId());
+                intent.setClass(mActivity,AnnouncementDetailActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -317,7 +328,7 @@ public class PagerOne extends BasePager implements IPagerOneView {
         startActivity(intent);
 
     }
-
+//获取到图片存放的路径，分别进行网络请求
     @Override
     public void setPagerOneBannerDataInFragment(BannerBean bannerBean) {
         banners = new ArrayList<>();
@@ -333,8 +344,9 @@ public class PagerOne extends BasePager implements IPagerOneView {
 
     }
 
+//    测试添加了多少张图片，可忽略
     int i = 0;
-
+//把加载进来的图片添加到容器中
     @Override
     public void savePictureInPagerOneCollection(Drawable result) {
 
@@ -346,5 +358,18 @@ public class PagerOne extends BasePager implements IPagerOneView {
             //哪些点点的初始化
             InitFocusIndicatorContainer();
         }
+    }
+
+    @Override
+    public void saveAnnounceInAnnounceList(AnnounceBean announceBean) {
+        LogUtils.log("PagerOne------------>"+announceBean.toString());
+        items = new ArrayList<>();
+        items.addAll(announceBean.getArticles());
+        LogUtils.log("PagerOne------------>"+ items.toString());
+        List<String> strings = new ArrayList<>();
+        for (int i = 0; i < items.size(); i++) {
+            strings.add(items.get(i).getHeadline());
+        }
+        tvFragmentHord.startWithList(strings);
     }
 }

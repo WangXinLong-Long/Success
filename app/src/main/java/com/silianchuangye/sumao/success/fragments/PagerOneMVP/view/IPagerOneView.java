@@ -2,6 +2,7 @@ package com.silianchuangye.sumao.success.fragments.PagerOneMVP.view;
 
 import android.graphics.drawable.Drawable;
 
+import com.silianchuangye.sumao.success.fragments.PagerOneMVP.bean.AnnounceBean;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.bean.BannerBean;
 
 /**
@@ -12,4 +13,6 @@ public interface IPagerOneView {
     void setPagerOneBannerDataInFragment(BannerBean bannerBean);
 //    将获取到的图片，存在PagerOne的集合中
     void savePictureInPagerOneCollection(Drawable result);
+//    获取到公告栏的信息，并填充到数组中
+    void saveAnnounceInAnnounceList(AnnounceBean announceBean);
 }

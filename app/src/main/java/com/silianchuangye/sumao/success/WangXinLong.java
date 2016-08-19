@@ -61,6 +61,7 @@ public class WangXinLong extends Activity {
 //        8月11日  开票信息接口处理完毕
 //        8月13日  修改类名
 //        8月15日  预售界面接口已基本完成
+//        8月18日   滚动条数，即公告
         showPayDialog();
         ArrayList<String> arrayList = new ArrayList<>();
         LinkedList<String> linkedList = new LinkedList<>();

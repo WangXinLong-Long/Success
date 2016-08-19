@@ -23,6 +23,7 @@ import android.widget.TextView;
 
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.custom.customCalendar.CustomGridView;
+import com.silianchuangye.sumao.success.fragments.SearchActivityMVP.bean.SearchActivityBean;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockDetailActivityMVP.view.GoodsInStockDetailActivity;
 
 import java.util.ArrayList;
@@ -44,11 +45,14 @@ public class TypeInfoActivity extends AppCompatActivity {
     private RelativeLayout layout_type_list;
    // private List<String> list_String;
     private TextView tv_pattern_Type,tv_type_Type,tv_apple_Type_for_Type,tv_address_Type,tv_address_search;
+    private SearchActivityBean searchActivityBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_type_info);
+        Intent intent = getIntent();
+        searchActivityBean = (SearchActivityBean)intent.getSerializableExtra("searchActivityBean");
         layout_type_list= (RelativeLayout) findViewById(R.id.layout_type_list);
         layout_Top_Type= (RelativeLayout) findViewById(R.id.layout_Top_Type);
         iv_Search= (ImageView) findViewById(R.id.iv_search);
