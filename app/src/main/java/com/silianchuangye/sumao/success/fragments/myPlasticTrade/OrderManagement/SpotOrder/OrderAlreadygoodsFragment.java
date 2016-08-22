@@ -36,14 +36,14 @@ import java.util.Map;
  */
 public class OrderAlreadygoodsFragment extends Fragment {
     private ExpandableListView elvDemo;
-    private List<Map<String,Object>> listparrent;
-    private List<List<Map<String,Object>>> listitem;
-
-//    private List<Map<String,Object>> listparrent=new ArrayList<Map<String,Object>>();;
-//    private List<List<Map<String,Object>>> listitem=new ArrayList<List<Map<String,Object>>>();;
+    private List<Map<String,Object>> listparrent=new ArrayList<Map<String,Object>>();;
+    private List<List<Map<String,Object>>> listitem=new ArrayList<List<Map<String,Object>>>();;
+    SharedPreferences sp;
+    String unique123 ;
     MyAdapter adapter;
-    String state1;
-
+    String orderId,type;
+    int page=1;
+    String subType=null,Kpstate="",startDate="",endDate="",company="",OrderId="";
     public OrderAlreadygoodsFragment() {
         // Required empty public constructor
     }
@@ -52,6 +52,8 @@ public class OrderAlreadygoodsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        sp=getActivity().getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+        unique123= sp.getString("unique", "");
         // Inflate the layout for this fragment
         View view=inflater.inflate(R.layout.fragment_order_alreadygoods, container, false);
         //实例化
@@ -60,13 +62,7 @@ public class OrderAlreadygoodsFragment extends Fragment {
         elvDemo.setGroupIndicator(null);
         //去掉ListView之间的线
         elvDemo.setDivider(null);
-        new Thread(){
-            @Override
-            public void run() {
-                super.run();
-                sendMy();
-            }
-        }.start();
+
 //        listparrent=new ArrayList<Map<String,Object>>();
 //        Map<String,Object> map1=new Hashtable<String,Object>();
 //        map1.put("id","1000001");
@@ -130,38 +126,77 @@ public class OrderAlreadygoodsFragment extends Fragment {
 
         return view;
     }
-    private void sendMy(){
-        listparrent=new ArrayList<Map<String,Object>>();;
-        listitem=new ArrayList<List<Map<String,Object>>>();;
+    boolean Flag;
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        Log.e("TAG","Flag-----"+Flag);
+        if(isVisibleToUser){
+            if(Flag){
+                sendMy(subType,Kpstate,startDate,endDate,company,OrderId);
+            }
+        }else{
+            if(!Flag){
+                if(listitem!=null) {
+                    listitem.clear();
+                }
+                if(listparrent!=null){
+                    listparrent.clear();
+                }
+                subType=null;Kpstate="";startDate="";endDate="";company="";OrderId="";
+                sendMy(subType,Kpstate,startDate,endDate,company,OrderId);
+                if(adapter!=null) {
+                    adapter.notifyDataSetChanged();
+                }
+                Flag=false;
+            }
+        }
+    }
+    public  void sendMy(String subType,String KPstate,String startDate,String endDate,String company,String OrderId){
         RequestParams params=new RequestParams(SuMaoConstant.SUMAO_IP+"/rest/model/atg/userprofiling/ProfileActor/myOrders");
-        params.addParameter("pageNum",1);
-        params.addParameter("submitType",1);
+        params.setCharset("UTF-8");
+        params.setAsJsonContent(true);
+        JSONObject job=new JSONObject();
+        try {
+            job.put("searchCompanyName", company.trim());//公司
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        params.setBodyContent(job.toString());
         params.addParameter("searchOrderType","fixedPricingOrder");
         params.addParameter("searchOrderState","PRESSING1");
-//        params.addParameter("searchCompanyName",company);
-        final SharedPreferences sp = getActivity().getSharedPreferences("sumao", Activity.MODE_PRIVATE);
-        String unique123 = sp.getString("unique", "");
+        params.addParameter("pageNum",page);
+        params.addParameter("searchOrderId", OrderId);//订单
+        params.addParameter("startDate",startDate);//开始日期
+        params.addParameter("endDate", endDate);//结束日期
+        params.addParameter("submitType",subType);//查询类型
+        params.addParameter("searchCheckType",KPstate);//开票状态
         params.addParameter("_dynSessConf", unique123);
-        Log.e("TAG","parames======"+params);
+        Log.e("TAG", "parames======" + params);
         x.http().post(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
                 Log.e("TAG","result----"+result);
                 try {
                     JSONObject job=new JSONObject(result);
+                    String count=job.getString("count");
+                    Log.e("TAG","count----"+count);
+                    if(count.equals("0")){
+                        listparrent.clear();
+                        listitem.clear();
+                    }
                     String str=job.getString("order");
                     JSONArray jay=new JSONArray(str);
                     for(int i=0;i<jay.length();i++){
-                        Log.e("TAG","i=="+i);
                         JSONObject j= (JSONObject) jay.get(i);
                         String cl= (String) j.getString("cl");
                         String state=j.getString("state");//状态
                         String shippingGroupState=j.getString("shippingGroupState");
-                        String type=j.getString("type");
+                        type=j.getString("type");
                         String cl_amount="";
-                        state1=getState(state,type,shippingGroupState);
+                        String state1=getState(state,type,shippingGroupState);
                         String owner=j.getString("owner");//采购员
-                        String orderId=j.getString("orderId");//订单编号
+                        orderId=j.getString("orderId");//订单编号
 
                         JSONArray j1=new JSONArray(cl);
                         for(int k=0;k<j1.length();k++){
@@ -185,16 +220,17 @@ public class OrderAlreadygoodsFragment extends Fragment {
                         Log.e("TAG","map1-----"+map1);
                         listparrent.add(map1);
                     }
-                    adapter=new MyAdapter(listparrent,listitem,getActivity());
-                    elvDemo.setAdapter(adapter);
-                    if(adapter!=null && listparrent!=null){
-                        for (int i = 0; i < listparrent.size(); i++) {
-                            elvDemo.expandGroup(i);
-                        }}
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                adapter=new MyAdapter(listparrent,listitem,getActivity());
+                elvDemo.setAdapter(adapter);
+                if(adapter!=null && listparrent!=null){
+                    for (int i = 0; i < listparrent.size(); i++) {
+                        elvDemo.expandGroup(i);
+                    }
+                }
+                adapter.notifyDataSetChanged();
             }
 
             @Override

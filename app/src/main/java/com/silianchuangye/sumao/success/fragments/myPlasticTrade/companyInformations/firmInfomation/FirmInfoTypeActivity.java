@@ -230,6 +230,7 @@ public class FirmInfoTypeActivity extends AppCompatActivity implements IFirmInfo
     }
     void setValueName(){
         intent.putExtra("name", "");
+        intent.putExtra("level","");
         FirmInfoTypeActivity.this.setResult(RESULT_OK, intent);
     }
 }
