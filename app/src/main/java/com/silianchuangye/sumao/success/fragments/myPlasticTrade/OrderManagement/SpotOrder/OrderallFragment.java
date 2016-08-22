@@ -99,8 +99,17 @@ public class OrderallFragment extends Fragment {
             }
         }else{
             if(!Flag){
+                if(listitem!=null) {
+                    listitem.clear();
+                }
+                if(listparrent!=null){
+                    listparrent.clear();
+                }
                 subType=null;Kpstate="";startDate="";endDate="";company="";OrderId="";
                 sendMy(subType,Kpstate,startDate,endDate,company,OrderId);
+                if(adapter!=null) {
+                    adapter.notifyDataSetChanged();
+                }
                 Flag=false;
             }
         }

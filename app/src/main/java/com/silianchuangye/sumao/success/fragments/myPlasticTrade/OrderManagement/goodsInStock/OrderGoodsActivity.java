@@ -487,32 +487,32 @@ public class OrderGoodsActivity extends AppCompatActivity implements View.OnClic
             }else if(state.equals("1")){
                 cleanNull(i+"",CheckType);
                 OrderStaypayFragment f=(OrderStaypayFragment)adapter.getItem(1);
-//                f.sendMy(i+"",CheckType,startDate,endDate,company,OrderId);
+                f.sendMy(i+"",CheckType,startDate,endDate,company,OrderId);
                 vpDemo.setCurrentItem(1);
             }else if(state.equals("QUOTED")){//根据状态判断显示哪个界面-待发货界面-已支付
                 cleanNull(i+"",CheckType);
                 OrderstayshipmentsFragment f=(OrderstayshipmentsFragment)adapter.getItem(2);
-//                f.sendMy(i+"",CheckType,startDate,endDate,company,OrderId);
+                f.sendMy(i+"",CheckType,startDate,endDate,company,OrderId);
                 vpDemo.setCurrentItem(2);//显示待发货界面
             }else if(state.equals("PRESSING1")){//已发货
                 cleanNull(i+"",CheckType);
                 OrderAlreadygoodsFragment f=(OrderAlreadygoodsFragment)adapter.getItem(3);
-//                f.sendMy(i+"",CheckType,startDate,endDate,company,OrderId);
+                f.sendMy(i+"",CheckType,startDate,endDate,company,OrderId);
                 vpDemo.setCurrentItem(3);
             }else if(state.equals("NO_PENDING_ACTION")){
                 cleanNull(i+"",CheckType);
                 OrderAlreadyFinishFragment f=(OrderAlreadyFinishFragment)adapter.getItem(4);
-//                f.sendMy(i+"",CheckType,startDate,endDate,company,OrderId);
+                f.sendMy(i+"",CheckType,startDate,endDate,company,OrderId);
                 vpDemo.setCurrentItem(4);
             }else if(state.equals("CHANGED")){
                 cleanNull(i+"",CheckType);
                 OrderUpdateFragment f=(OrderUpdateFragment)adapter.getItem(5);
-//                f.sendMy(i+"",CheckType,startDate,endDate,company,OrderId);
+                f.sendMy(i+"",CheckType,startDate,endDate,company,OrderId);
                 vpDemo.setCurrentItem(5);
             }else if(state.equals("REMOVED")){
                 cleanNull(i+"",CheckType);
                 OrderCancelFragment f=(OrderCancelFragment)adapter.getItem(6);
-//                f.sendMy(i+"",CheckType,startDate,endDate,company,OrderId);
+                f.sendMy(i+"",CheckType,startDate,endDate,company,OrderId);
                 vpDemo.setCurrentItem(6);
             }
             Log.e("TAG","vpDemo----"+vpDemo.getCurrentItem());
