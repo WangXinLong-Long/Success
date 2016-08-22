@@ -4,6 +4,8 @@ import android.graphics.drawable.Drawable;
 
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.bean.AnnounceBean;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.bean.BannerBean;
+import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.bean.PreSaleDetailCalendarBean;
+import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleMVP.bean.PreSaleBean;
 
 /**
  * Created by Administrator on 2016/8/16 0016.
@@ -15,4 +17,7 @@ public interface IPagerOneView {
     void savePictureInPagerOneCollection(Drawable result);
 //    获取到公告栏的信息，并填充到数组中
     void saveAnnounceInAnnounceList(AnnounceBean announceBean);
+//    获取首页的预售列表
+    void saveHomeSaleInFragmentList(PreSaleBean preSaleBean);
+
 }

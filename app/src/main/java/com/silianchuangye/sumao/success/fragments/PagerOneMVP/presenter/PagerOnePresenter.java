@@ -10,11 +10,19 @@ import com.silianchuangye.sumao.success.fragments.PagerOneMVP.model.Announcement
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.model.GetPictureModel.GetPictureCallback;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.model.GetPictureModel.GetPictureModels;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.model.GetPictureModel.IGetPictureModel;
+import com.silianchuangye.sumao.success.fragments.PagerOneMVP.model.HomeSaleModel.HomeSaleCallback;
+import com.silianchuangye.sumao.success.fragments.PagerOneMVP.model.HomeSaleModel.HomeSaleModels;
+import com.silianchuangye.sumao.success.fragments.PagerOneMVP.model.HomeSaleModel.IHomeSaleModel;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.model.IPagerOneModel;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.model.PagerOneCallback;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.model.PagerOneModel;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.view.IPagerOneView;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.view.PagerOne;
+import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.bean.PreSaleDetailCalendarBean;
+import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.model.CalendarModel.CalendarCallback;
+import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.model.CalendarModel.CalendarModels;
+import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.model.CalendarModel.ICalendarModel;
+import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleMVP.bean.PreSaleBean;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 
 /**
@@ -51,10 +59,20 @@ public class PagerOnePresenter {
         announcementModel.getAnnouncementInfo(new AnnouncementCallback() {
             @Override
             public void callbackAnnouncement(AnnounceBean announceBean) {
-                LogUtils.log("PagerOnePresenter----->"+announceBean.toString());
-                LogUtils.log("PagerOnePresenter----->"+announceBean.toString());
                 pagerOne.saveAnnounceInAnnounceList(announceBean);
             }
         });
     }
+
+    public void getHomeSaleInfoToPagerOneFragment(){
+        IHomeSaleModel homeSaleModel = new HomeSaleModels();
+        homeSaleModel.getHomeSaleInfo(new HomeSaleCallback() {
+            @Override
+            public void callbackHomeSale(PreSaleBean preSaleBean) {
+                pagerOne.saveHomeSaleInFragmentList(preSaleBean);
+            }
+        });
+    }
+
+
 }

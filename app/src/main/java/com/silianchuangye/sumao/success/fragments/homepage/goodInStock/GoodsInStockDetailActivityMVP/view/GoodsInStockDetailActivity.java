@@ -30,6 +30,7 @@ import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.SeeProduc
 import com.silianchuangye.sumao.success.fragments.shoppingCart.dialog.Cart_MyDialog;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -281,14 +282,24 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
         surplus_amount_et.setText(goodsInStockDetailBean.getCl_shuliang());
 //        最小变量单位
         min_variable_et.setText(goodsInStockDetailBean.getCl_xiaobian());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日");
+//        release_date.setText(simpleDateFormat.format(Double.parseDouble(%获取到的数字%)));
 //        交货时间
-        delivery_time_et.setText(goodsInStockDetailBean.getCl_shijian());
+        delivery_time_et.setText(simpleDateFormat.format(Double.parseDouble(goodsInStockDetailBean.getCl_shijian())));
 //        交货结束时间
-        delivery_time_et_end.setText(goodsInStockDetailBean.getCl_shijianend());
+        delivery_time_et_end.setText("-"+simpleDateFormat.format(Double.parseDouble(goodsInStockDetailBean.getCl_shijianend())));
 //        仓库地址
         warehouse_address_et.setText(goodsInStockDetailBean.getCl_dizhi());
+        StringBuilder sb = new StringBuilder();
+        int jhfssize = goodsInStockDetailBean.getCl_jhfangshi().size();
+        for (int i = 0 ;i< jhfssize;i++){
+            sb.append(goodsInStockDetailBean.getCl_jhfangshi().get(i));
+            if (i != jhfssize-1 ){
+                sb.append("、");
+            }
+        }
 //        交货方式
-        delivery_mode_et.setText(goodsInStockDetailBean.getCl_jhfangshi());
+        delivery_mode_et.setText(sb.toString());
 //        分类
         classification_pre_sale_et.setText(goodsInStockDetailBean.getCl_fenlei());
 //        仓库

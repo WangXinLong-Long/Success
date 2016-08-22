@@ -96,7 +96,7 @@
 
                 android:id="@+id/rlFragmentAdwords"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/y140"
+                android:layout_height="@dimen/y138"
                 android:layout_below="@+id/rlFragmentGridView">
 
                 <RelativeLayout
@@ -145,7 +145,7 @@
             <RelativeLayout
                 android:id="@+id/rlFragmentGroupon"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/y140"
+                android:layout_height="@dimen/y138"
                 android:layout_below="@id/ivFragmentoneAds"
                 android:background="#fff123"
 
@@ -181,7 +181,9 @@
                     android:id="@+id/lvFragmentoneGroupon"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_toRightOf="@+id/two"></ListView>
+                    android:layout_toRightOf="@+id/two"
+
+                    android:scrollbars="none"></ListView>
             </RelativeLayout>
 
             <GridView
@@ -195,7 +197,7 @@
             <RelativeLayout
                 android:id="@+id/rlFragmentPresell"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/y140"
+                android:layout_height="@dimen/y138"
                 android:layout_below="@id/gvFragmentoneAd"
                 android:background="#eaabd2"
 
@@ -229,7 +231,8 @@
                     android:id="@+id/lvFragmentoneAD"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_toRightOf="@+id/three"></ListView>
+                    android:layout_toRightOf="@+id/three"
+                    android:scrollbars="none"></ListView>
             </RelativeLayout>
 
 

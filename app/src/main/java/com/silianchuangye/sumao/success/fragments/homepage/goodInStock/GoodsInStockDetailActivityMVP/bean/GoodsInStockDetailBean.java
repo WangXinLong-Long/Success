@@ -26,7 +26,8 @@ public class GoodsInStockDetailBean implements Serializable{
     private String cl_scqiye;
     private String cl_yingyong;
     private String cl_id;
-    private String cl_jhfangshi;
+//    TODO
+    private List<String> cl_jhfangshi;
     private String cl_shijian;
     private String cl_type;
     private String cl_shijianend;
@@ -37,6 +38,14 @@ public class GoodsInStockDetailBean implements Serializable{
     private String cl_diqu;
     private String cl_cangku;
     private String cl_guojia;
+
+    public List<String> getCl_jhfangshi() {
+        return cl_jhfangshi;
+    }
+
+    public void setCl_jhfangshi(List<String> cl_jhfangshi) {
+        this.cl_jhfangshi = cl_jhfangshi;
+    }
 
     public RelatedProduct getRelatedProducts() {
         return relatedProducts;
@@ -166,13 +175,6 @@ public class GoodsInStockDetailBean implements Serializable{
         this.cl_id = cl_id;
     }
 
-    public String getCl_jhfangshi() {
-        return cl_jhfangshi;
-    }
-
-    public void setCl_jhfangshi(String cl_jhfangshi) {
-        this.cl_jhfangshi = cl_jhfangshi;
-    }
 
     public String getCl_shijian() {
         return cl_shijian;
