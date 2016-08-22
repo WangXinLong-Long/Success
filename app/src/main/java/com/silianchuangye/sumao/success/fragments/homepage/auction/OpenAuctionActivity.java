@@ -464,7 +464,15 @@ public class OpenAuctionActivity extends AppCompatActivity {
                     cangkuaddress.setText(obj_result.getString("cl_xbianjia").toString()+"元");
                     Log.d("zuixia",obj_result.getString("cl_xbianjia").toString());
                     company.setText(obj_result.getString("cl_gongsi"));
-                    way.setText(obj_result.getString("cl_fangshi"));
+
+                    String peisong_way=obj_result.getString("cl_fangshi");
+                    int len=peisong_way.length()-2;
+                    String aa=peisong_way.substring(2,len);
+                    Log.d("配送方式",aa);
+
+                    way.setText(aa);
+
+
 
 
                 }catch (JSONException e){

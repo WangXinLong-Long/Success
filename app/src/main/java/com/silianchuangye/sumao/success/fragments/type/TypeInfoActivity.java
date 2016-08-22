@@ -50,6 +50,7 @@ public class TypeInfoActivity extends AppCompatActivity {
    // private List<String> list_String;
     private TextView tv_pattern_Type,tv_type_Type,tv_apple_Type_for_Type,tv_address_Type,tv_address_search;
     private SearchActivityBean searchActivityBean;
+    //private String fenlei,paihao,yingyong,diqu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -329,11 +330,11 @@ public class TypeInfoActivity extends AppCompatActivity {
      */
     public void popupwindow_shaixuan(){
         View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.item_shaixuan, null);
-        popupWindow = new PopupWindow(findViewById(R.id.layout_ff), ActionBarOverlayLayout.LayoutParams.MATCH_PARENT, ActionBarOverlayLayout.LayoutParams.WRAP_CONTENT);
+        popupWindow = new PopupWindow(findViewById(R.id.layout_ff), ActionBarOverlayLayout.LayoutParams.MATCH_PARENT, 1300);
         popupWindow.setContentView(view);
 
-        CustomGridView gv_Apple_Type= (CustomGridView) view.findViewById(R.id.gv_Apple_Type);
-        List<String> list_gv_fenlei=new ArrayList<String>();
+        final CustomGridView gv_Apple_Type= (CustomGridView) view.findViewById(R.id.gv_Apple_Type);
+        final List<String> list_gv_fenlei=new ArrayList<String>();
         for (int i=0;i<=8;i++){
             list_gv_fenlei.add("HDFE");
         }
@@ -345,13 +346,15 @@ public class TypeInfoActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 adpater4.setSelectedPosition(position);
                 adpater4.notifyDataSetChanged();
+                fenlei=list_gv_fenlei.get(position).toString();
+                Log.d("分类",fenlei);
             }
         });
         /**
          * 牌号
          */
-        CustomGridView gv_Number_Type= (CustomGridView) view.findViewById(R.id.gv_Number_Type);
-        List<String> list_gv_paihao=new ArrayList<String>();
+        final CustomGridView gv_Number_Type= (CustomGridView) view.findViewById(R.id.gv_Number_Type);
+        final List<String> list_gv_paihao=new ArrayList<String>();
         for (int i=0;i<=8;i++){
             list_gv_paihao.add("FS8888");
         }
@@ -363,13 +366,14 @@ public class TypeInfoActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 adpater1.setSelectedPosition(position);
                 adpater1.notifyDataSetChanged();
+                paihao=list_gv_paihao.get(position).toString();
             }
         });
         /**
          * 应用
          */
-        CustomGridView gv_Address_Type= (CustomGridView) view.findViewById(R.id.gv_Address_Type);
-        List<String> list_gv_yingyong=new ArrayList<String>();
+        final CustomGridView gv_Address_Type= (CustomGridView) view.findViewById(R.id.gv_Address_Type);
+        final List<String> list_gv_yingyong=new ArrayList<String>();
         for (int i=0;i<=8;i++){
             list_gv_yingyong.add("拉丝料");
         }
@@ -381,13 +385,14 @@ public class TypeInfoActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 adpater2.setSelectedPosition(position);
                 adpater2.notifyDataSetChanged();
+                yingyong=list_gv_yingyong.get(position).toString();
             }
         });
         /**
          * 地区
          */
-        CustomGridView gv_Firm_Type= (CustomGridView) view.findViewById(R.id.gv_Firm_Type);
-        List<String> list_gv_diqu=new ArrayList<String>();
+        final CustomGridView gv_Firm_Type= (CustomGridView) view.findViewById(R.id.gv_Firm_Type);
+        final List<String> list_gv_diqu=new ArrayList<String>();
         for (int i=0;i<=8;i++){
             list_gv_diqu.add("上海市");
         }
@@ -401,6 +406,8 @@ public class TypeInfoActivity extends AppCompatActivity {
                 //view.findViewById(R.id.layout).setBackgroundColor(getResources().getColor(R.color.btn_register_pressed));
                 adpater3.setSelectedPosition(position);
                 adpater3.notifyDataSetInvalidated();
+                address=list_gv_diqu.get(position).toString();
+
             }
         });
 
@@ -412,10 +419,19 @@ public class TypeInfoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.d("令所选的为空","null");
-                address="";
-                fenlei="";
-                yingyong="";
-                paihao="";
+                //gv_Apple_Type.OnItemSelectedListener
+//                gv_Apple_Type.setSelection(-1);
+//                gv_Address_Type.setSelection(-1);
+//                gv_Firm_Type.setSelection(-1);
+//                gv_Number_Type.setSelection(-1);
+                adpater1.setSelectedPosition(-1);
+                adpater1.notifyDataSetChanged();
+                adpater2.setSelectedPosition(-1);
+                adpater2.notifyDataSetChanged();
+                adpater3.setSelectedPosition(-1);
+                adpater3.notifyDataSetChanged();
+                adpater4.setSelectedPosition(-1);
+                adpater4.notifyDataSetChanged();
                 Log.d("令所选的为空",address+fenlei+yingyong+paihao);
             }
         });
@@ -427,6 +443,8 @@ public class TypeInfoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.d("根据所选的进行筛选","");
+                Log.d("参数",address+fenlei+yingyong+paihao);
+                popupWindow.dismiss();
             }
         });
 
@@ -556,8 +574,9 @@ public class TypeInfoActivity extends AppCompatActivity {
             if (selectedPosition == position) {
                 text.setSelected(true);
                 text.setPressed(true);
-                Layout.setBackgroundColor(getResources().getColor(R.color.zixun_topbg));
-                text.setTextColor(Color.WHITE);
+               // Layout.setBackgroundColor(getResources().getColor(R.color.zixun_topbg));
+                Layout.setBackgroundDrawable(getResources().getDrawable(R.drawable.text_corner));
+                text.setTextColor(Color.BLACK);
             } else {
                 text.setSelected(false);
                 text.setPressed(false);
