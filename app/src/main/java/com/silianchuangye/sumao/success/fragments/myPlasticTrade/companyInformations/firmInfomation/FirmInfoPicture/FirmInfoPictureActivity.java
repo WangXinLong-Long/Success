@@ -9,7 +9,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.media.ThumbnailUtils;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.Settings;
@@ -86,6 +88,8 @@ public class FirmInfoPictureActivity extends AppCompatActivity {
     public static final int PERMISSIONS_GRANTED = 0; // 权限授权
     public static final int PERMISSIONS_DENIED = 1; // 权限拒绝
     private static final String PACKAGE_URL_SCHEME = "package:"; // 方案
+    private String filePath = null;
+    private TextView prompt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,6 +120,7 @@ public class FirmInfoPictureActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         String name = bundle.getString("name");
         number1 = bundle.getInt("number");
+        LogUtils.log("number1----->"+number1);
         tvinfo_firm_info_pictrue.setText(name);
         bt_getNumber = (Button) findViewById(R.id.bt_getNumber);
         bt_getNumber.setText("获取" + name);
@@ -129,6 +134,7 @@ public class FirmInfoPictureActivity extends AppCompatActivity {
         btSave = (Button) findViewById(R.id.bt_save_register_value);
         layout = (RelativeLayout) findViewById(R.id.layout_a);
         ivPictrue = (ImageView) findViewById(R.id.iv_firm_info_pictrue);
+        prompt = ((TextView) findViewById(R.id.prompt));
         btSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -174,11 +180,16 @@ public class FirmInfoPictureActivity extends AppCompatActivity {
 //                    }
 //
 //                });
+                if (filePath == null||tvinfoValue_firm_info_pictrue.getText().toString()==null||tvinfoValue_firm_info_pictrue.getText().toString()=="") {
+                    prompt.setVisibility(View.VISIBLE);
+                } else {
+                    Intent intent = new Intent();
+                    intent.putExtra("value", tvinfoValue_firm_info_pictrue.getText().toString());
+                    intent.putExtra("picturePath", filePath);
+                    setResult(number1, intent);
+                    FirmInfoPictureActivity.this.finish();
+                }
 
-                Intent intent = new Intent();
-                intent.putExtra("value", tvinfoValue_firm_info_pictrue.getText().toString());
-                setResult(number1, intent);
-                FirmInfoPictureActivity.this.finish();
             }
         });
 
@@ -247,6 +258,7 @@ public class FirmInfoPictureActivity extends AppCompatActivity {
         startActivityForResult(intent, 0);
     }
 
+    //低于6.0直接使用Camera
     public void useCamera() {
         Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
 
@@ -272,7 +284,7 @@ public class FirmInfoPictureActivity extends AppCompatActivity {
         Log.d("imageUri", imageUri + "");
         intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
         startActivityForResult(intent, TAKE_PICTURE);
-    }//低于6.0直接使用Camera
+    }
 
     // 显示缺失权限提示
     public void showMissingPermissionDialog() {
@@ -355,6 +367,7 @@ public class FirmInfoPictureActivity extends AppCompatActivity {
         ContentResolver resolver = this.getContentResolver();
 
         if (requestCode == 0) {
+            prompt.setVisibility(View.INVISIBLE);
             if (data == null) {
                 return;
             } else {
@@ -363,23 +376,54 @@ public class FirmInfoPictureActivity extends AppCompatActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                //将字节数组转换为ImageView可调用的Bitmap对象
-                bitmap = getPicFromBytes(mcontent, null);
-                if (getUrl(data) != null && !getUrl(data).equals("")) {
-                    ivPictrue.setImageBitmap(bitmap);
-                    path = getUrl(data);
-                    Log.d("正确的存储路径", getUrl(data));
+//                因为在小米手机6.01的系统上不能将取到的图片展示出来，所以怀疑是手机版本API的问题，暂时的解决办法是这样，判断版本号
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    try {
+                        Uri originalUri = data.getData(); // 获得图片的uri
+                        bitmap = MediaStore.Images.Media.getBitmap(resolver, originalUri);
+                        int width = ivPictrue.getMeasuredWidth();
+                        int heigh = ivPictrue.getMeasuredHeight();
+                        LogUtils.log("width---->" + width + "heigh------->" + heigh);
+                        LogUtils.log("originalUri.toString()---->" + originalUri.toString());
+                        int picwidth = bitmap.getWidth();
+                        int pichigh = bitmap.getHeight();
+                        LogUtils.log("picwidth---->" + picwidth + "pichigh------->" + pichigh);
+                        double x = ((picwidth * 1.0) / width) > ((pichigh * 1.0) / heigh) ? ((picwidth * 1.0) / width) : ((pichigh * 1.0) / heigh);
+                        //使用系统的一个工具类，参数列表为 Bitmap Width,Height  这里使用压缩后显示，否则在华为手机上ImageView 没有显示
+                        ivPictrue.setImageBitmap(ThumbnailUtils.extractThumbnail(bitmap, (int) (picwidth / x), (int) (pichigh / x)));
+//                        这里这个路径，就是图片的路径，在上传服务器的时候需要用到
+                        filePath = originalUri.toString();
+                        LogUtils.log("filePath---->" + filePath);
+                    } catch (IOException e) {
+                        Log.e("TAG-->Error", e.toString());
+                    } finally {
+                        return;
+                    }
                 } else {
-                    ////把得到的图片绑定在控件上显示
-                    Log.d("错误的存储路径", getUrl(data));
+                    //将字节数组转换为ImageView可调用的Bitmap对象
+                    bitmap = getPicFromBytes(mcontent, null);
+                    if (getUrl(data) != null && !getUrl(data).equals("")) {
+                        ivPictrue.setImageBitmap(bitmap);
+                        path = getUrl(data);
+                        filePath = path.toString();
+                        LogUtils.log("filePath---->" + filePath);
+                        Log.d("正确的存储路径", getUrl(data));
+                    } else {
+                        ////把得到的图片绑定在控件上显示
+                        Log.d("错误的存储路径", getUrl(data));
+                    }
                 }
+
             }
 
         } else if (requestCode == TAKE_PICTURE) {
+            prompt.setVisibility(View.INVISIBLE);
             intent = data;
             MPermissions.requestPermissions(FirmInfoPictureActivity.this, REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE_CODE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
             File newFile = insertFileToSd(file);
             LogUtils.log("test------------->newFile:" + newFile.toString());
+            filePath = newFile.toString();
+            LogUtils.log("filePath---->" + filePath);
             Bitmap copyBitmap = getBitmapByBytes(newFile);
             LogUtils.log("得到copyBitmap:---->");
 //            bitmapCamera = BitmapFactory.decodeFile(newFile.toString());
@@ -387,6 +431,7 @@ public class FirmInfoPictureActivity extends AppCompatActivity {
 
             ivPictrue.setImageBitmap(copyBitmap);
         } else if (requestCode == 8) {
+            prompt.setVisibility(View.INVISIBLE);
             String result = data.getStringExtra("result");
             Log.d("条形码", result);
             tvinfoValue_firm_info_pictrue.setText(result);
@@ -578,15 +623,17 @@ public class FirmInfoPictureActivity extends AppCompatActivity {
             return responseEntity;
         }
     }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
 //			setResult(RESULT_CANCELED);
 //			finish();
 
-            Intent intent=new Intent();
+            Intent intent = new Intent();
             //Intent intent = new Intent();
-            intent.putExtra("value","");
+            intent.putExtra("value", "");
+            intent.putExtra("picturePath", "");
             setResult(number1, intent);
             finish();
             return true;

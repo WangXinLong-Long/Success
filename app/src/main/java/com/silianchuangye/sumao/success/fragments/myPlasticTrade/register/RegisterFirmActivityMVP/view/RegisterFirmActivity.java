@@ -37,9 +37,11 @@ import org.xutils.http.HttpMethod;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
@@ -79,7 +81,14 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
     private StringBuilder sb;
     private String leixingLevel;
     private String naShuiRenLevel;
-
+    private String picturePath;
+    private String value;
+    private String picturePath1;
+    private String picturePath2;
+    private String picturePath3;
+    private String zhuce_leixing;
+    private String zhuce_leixingLevel;
+    private Map<String,Object> map13,map14,map15,map12;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,6 +121,7 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
     }
 
     private void registerMethodW() {
+        rp.setMultipart(true);
         rp.addParameter("cl_mingcheng",mingcheng);//企业名称
         rp.addParameter("cl_yewu",yewu);//业务部门（可空）
         rp.addParameter("province",sb.substring(0,4));//省
@@ -120,15 +130,19 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
         rp.addParameter("cl_dizhi",list.get(5).get("right").toString().trim());//详细地址
         rp.addParameter("cl_chuanzhen",list.get(6).get("right").toString().trim());//传真
         rp.addParameter("cl_zhengjian","4");//企业注册证件
-        rp.addParameter("cl_zhizhao","0928201347189232203334");//企业营业执照
         rp.addParameter("cl_nashuiren",naShuiRenLevel);//纳税人类型
         rp.addParameter("cl_leixing",leixingLevel);//企业类型
-        rp.addParameter("cl_zhizhaoimage","/mnt/docs/100.jpg");//营业执照图片路劲
-        rp.addParameter("cl_zhizhaoimage","/mnt/docs/100.jpg");//组织机构代码图片路劲
-        rp.addParameter("cl_shuiwuimage","/mnt/docs/100.jpg");//税务登记号图片路劲
-        rp.addParameter("cl_nashuirenimage","/mnt/docs/100.jpg");//纳税人图片路劲
-        rp.addParameter("cl_jigou","0928201347189232203334");//纳税人图片路劲
-        rp.addParameter("cl_shuiwu","0928201347189232203334");//纳税人图片路劲
+        if (picturePath!=null){
+            rp.addParameter("cl_zhizhaoimage",new File(picturePath));//营业执照图片路劲
+        }else {
+            rp.addParameter("cl_zhizhaoimage",new File(picturePath1));
+        }
+        rp.addParameter("cl_zhizhaoimage",new File(picturePath2));//组织机构代码图片路劲
+        rp.addParameter("cl_jigou", list1.get(1).get("right").toString().trim());//组织机构代码
+        rp.addParameter("cl_shuiwuimage",new File(picturePath3));//税务登记号图片路劲
+        rp.addParameter("cl_shuiwu", list1.get(2).get("right").toString().trim());//税务登记号
+        rp.addParameter("cl_nashuirenimage",new File(picturePath1));//纳税人图片路劲
+        rp.addParameter("cl_zhizhao", list1.get(3).get("right").toString().trim());//企业营业执照
         rp.addParameter("cl_login",account);//登录账号
         rp.addParameter("cl_password",pass);//密码
         rp.addParameter("cl_confirmPassword",repass);//确认密码
@@ -408,6 +422,21 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
         map8.put("right", "");
         map8.put("icon", R.mipmap.my_sumao_iv_order);
         list.add(map8);
+        Map<String, Object> map10 = new Hashtable<String, Object>();
+        map10.put("left", "企业注册证件");
+        map10.put("right", "三证独立");
+        map10.put("icon", R.mipmap.my_sumao_iv_order);
+        list.add(map10);
+        map12 = new Hashtable<String, Object>();
+        map12.put("left", "统一社会信用代码");
+        map12.put("right", "");
+        map12.put("icon", R.mipmap.my_sumao_iv_order);
+        list.add(map12);
+        Map<String, Object> map11 = new Hashtable<String, Object>();
+        map11.put("left", "纳税人类型");
+        map11.put("right", "");
+        map11.put("icon", R.mipmap.my_sumao_iv_order);
+        list.add(map11);
 
         adapter = new SimpleAdapter(RegisterFirmActivity.this, list, R.layout.item_firm_info, new String[]{"left", "center", "right", "icon"}, new int[]{R.id.tv_firm_info, R.id.tvTitle_firm_info, R.id.tvValue_firm_info, R.id.ivMore_firm_info});
         lvupdate_firm_info.setAdapter(adapter);
@@ -416,16 +445,15 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
         lvupdate_firm_info.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 1) {
+                if (position == 1||position==9) {
                     Intent intent = new Intent(RegisterFirmActivity.this, FirmInfoTypeActivity.class);
                     intent.putExtra("title", list.get(position).get("left").toString());
                     intent.putExtra("number", position);
                     startActivityForResult(intent, position);
-                } else if (position == 3 || position == 2 || position == 5 || position == 6 || position == 7||position==8) {
-                    if (position == 5&& (list.get(4).get("right").toString().trim()==null||list.get(4).get("right").toString().trim().isEmpty()))
-                    {
-                        Toast.makeText(RegisterFirmActivity.this,"请填写办公地区",Toast.LENGTH_SHORT).show();
-                    }else{
+                } else if (position == 3 || position == 2 || position == 5 || position == 6 || position == 7 || position == 8) {
+                    if (position == 5 && (list.get(4).get("right").toString().trim() == null || list.get(4).get("right").toString().trim().isEmpty())) {
+                        Toast.makeText(RegisterFirmActivity.this, "请填写办公地区", Toast.LENGTH_SHORT).show();
+                    } else {
                         Intent intent = new Intent(RegisterFirmActivity.this, RegisterValueActivity.class);
                         intent.putExtra("title", list.get(position).get("left").toString());
                         intent.putExtra("content", list.get(position).get("right").toString());
@@ -434,161 +462,217 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
 
                 } else if (position == 4) {
                     Intent intent = new Intent();
-                    intent.putExtra("className","RegisterFirmActivity");
+                    intent.putExtra("className", "RegisterFirmActivity");
                     intent.setClass(RegisterFirmActivity.this, SelectProvinceArea.class);
-                    startActivityForResult(intent,position);
+                    startActivityForResult(intent, position);
 
-                }
-            }
-        });
-
-        lvupdate_firm_info_two = (ListView) findViewById(R.id.lvUpdate_firm_info_two);
-        list1 = new ArrayList<Map<String, Object>>();
-        sp_firm_info = (Spinner) findViewById(R.id.sp_firm_info);
-        Map<String, Object> map12 = new Hashtable<String, Object>();
-        map12.put("left", "统一社会信用代码");
-        map12.put("right", "");
-        map12.put("icon", R.mipmap.my_sumao_iv_order);
-        list1.add(map12);
-        Map<String, Object> map11 = new Hashtable<String, Object>();
-        map11.put("left", "纳税人类型");
-        map11.put("right", "");
-        map11.put("icon", R.mipmap.my_sumao_iv_order);
-        list1.add(map11);
-        adapter1 = new SimpleAdapter(this, list1, R.layout.item_firm_info, new String[]{"left", "center", "right", "icon"}, new int[]{R.id.tv_firm_info, R.id.tvTitle_firm_info, R.id.tvValue_firm_info, R.id.ivMore_firm_info});
-        lvupdate_firm_info_two.setAdapter(adapter1);
-
-        sp_firm_info.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (sp_firm_info.getItemAtPosition(position).toString().equals("三证独立")) {
-                    if (list1.size() == 2) {
-
-                        list1.remove(0);
-                        Map<String, Object> map8 = new Hashtable<String, Object>();
-                        map8.put("left", "企业执照号");
-                        map8.put("right", "");
-                        map8.put("icon", R.mipmap.my_sumao_iv_order);
-                        list1.add(map8);
-                        Map<String, Object> map9 = new Hashtable<String, Object>();
-                        map9.put("left", "组织机构代码");
-                        map9.put("right", "");
-                        map9.put("icon", R.mipmap.my_sumao_iv_order);
-                        list1.add(map9);
-                        Map<String, Object> map10 = new Hashtable<String, Object>();
-                        map10.put("left", "税务登记号");
-                        map10.put("right", "");
-                        map10.put("icon", R.mipmap.my_sumao_iv_order);
-                        list1.add(map10);
-
-                        adapter1 = new SimpleAdapter(RegisterFirmActivity.this, list1, R.layout.item_firm_info, new String[]{"left", "center", "right", "icon"}, new int[]{R.id.tv_firm_info, R.id.tvTitle_firm_info, R.id.tvValue_firm_info, R.id.ivMore_firm_info});
-                        lvupdate_firm_info_two.setAdapter(adapter1);
-                    }
-                    Toast.makeText(RegisterFirmActivity.this, "" + list1.size(), Toast.LENGTH_SHORT).show();
-                    //把三证合一传的参数删除掉
-                    rp.removeParameter("cl_zhengjian");
-                    rp.removeParameter("cl_zhizhao");
-                    rp.removeParameter("cl_nashuiren");
-                    //添加三证独立时需要的参数
-                    rp.addParameter("cl_zhengjian", 4);
-//                    rp.addParameter("cl_zhizhao",list1.get(1).get("right").toString());
-//                    rp.addParameter("cl_jigou",list1.get(2).get("right").toString());
-//                    rp.addParameter("cl_shuiwu",list1.get(3).get("right").toString());
-                    rp.addParameter("cl_zhizhao", "0928201347189232203334");
-                    rp.addParameter("cl_jigou", "0928201347189232203334");
-                    rp.addParameter("cl_shuiwu", "0928201347189232203334");
-                    if (list1.get(0).get("right").toString().equals("一般纳税人")) {
-                        rp.addParameter("cl_nashuiren", 6);
-                    } else {
-                        rp.addParameter("cl_nashuiren", 7);
-                    }
-                    Log.d("nihao", rp + "");
-                } else if (sp_firm_info.getItemAtPosition(position).toString().equals("三证合一")) {
-                    if (list1.size() > 2) {
-                        for (int i = 0; i < 4; i++) {
-                            list1.remove(0);
-                            //   list1.remove(1);
-                        }
-                        Map<String, Object> map12 = new Hashtable<String, Object>();
-                        map12.put("left", "统一社会信用代码");
-                        map12.put("right", "");
-                        map12.put("icon", R.mipmap.my_sumao_iv_order);
-                        list1.add(map12);
-                        Map<String, Object> map11 = new Hashtable<String, Object>();
-                        map11.put("left", "纳税人类型");
-                        map11.put("right", "");
-                        map11.put("icon", R.mipmap.my_sumao_iv_order);
-                        list1.add(map11);
-                        adapter1 = new SimpleAdapter(RegisterFirmActivity.this, list1, R.layout.item_firm_info, new String[]{"left", "center", "right", "icon"}, new int[]{R.id.tv_firm_info, R.id.tvTitle_firm_info, R.id.tvValue_firm_info, R.id.ivMore_firm_info});
-                        lvupdate_firm_info_two.setAdapter(adapter1);
-
-                    }
-                    if (rp.getUri().contains("cl_shuiwu")) {
-                        Toast.makeText(RegisterFirmActivity.this, "由三证独立变换而来", Toast.LENGTH_SHORT).show();
-                    }
-                    //三证合一
-                    rp.addParameter("cl_zhengjian", 5);
-                    rp.addParameter("cl_zhizhao", "0928201347189232203334");
-//                                       rp.addParameter("cl_zhizhao",list1.get(0).get("right").toString());
-                    if (list1.get(1).get("right").toString().equals("一般纳税人")) {
-                        rp.addParameter("cl_nashuiren", 6);
-                    } else {
-                        rp.addParameter("cl_nashuiren", 7);
-                    }
-                    Log.d("nihao", rp + "");
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                Toast.makeText(RegisterFirmActivity.this, "请选择", Toast.LENGTH_SHORT).show();
-            }
-        });
-        lvupdate_firm_info_two.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (list1.size() == 2) {
-                    if (position == 0) {
+                }else if (position==10) {
+                    if (list.get(position).get("left").toString().equals("统一社会信用代码")){
                         Intent intent = new Intent(RegisterFirmActivity.this, FirmInfoPictureActivity.class);
-                        intent.putExtra("name", list1.get(0).get("left").toString());
-                        intent.putExtra("number", 10);
-                        //startActivity(intent);
-                        startActivityForResult(intent, 10);
-                    } else if (position == 1) {
+                        intent.putExtra("name", list.get(position).get("left").toString());
+                        intent.putExtra("number", position);
+                        startActivityForResult(intent, position);
+                    }else if (list.get(position).get("left").toString().equals("纳税人类型")){
                         Intent intent = new Intent(RegisterFirmActivity.this, FirmInfoTypeActivity.class);
-                        intent.putExtra("title", list1.get(1).get("left").toString());
-                        //startActivity(intent);
-                        intent.putExtra("number", 21);
-                        startActivityForResult(intent, 21);
-                    }
-
-                } else if (list1.size() == 4) {
-                    if (position == 0) {
-                        Intent intent = new Intent(RegisterFirmActivity.this, FirmInfoTypeActivity.class);
-                        intent.putExtra("title", list1.get(0).get("left").toString());
-                        intent.putExtra("number", 20);
-
-                        startActivityForResult(intent, 20);
-                    } else if (position == 1) {
-                        Intent intent = new Intent(RegisterFirmActivity.this, FirmInfoPictureActivity.class);
-                        intent.putExtra("name", list1.get(0).get("left").toString());
+                        intent.putExtra("title", list.get(position).get("left").toString());
                         intent.putExtra("number", 11);
                         startActivityForResult(intent, 11);
-                    } else if (position == 2) {
+                    }
+                }else if (position==11&&list.get(position).get("left").toString().equals("纳税人类型")){
+                    Intent intent = new Intent(RegisterFirmActivity.this, FirmInfoTypeActivity.class);
+                    intent.putExtra("title", list.get(position).get("left").toString());
+                    intent.putExtra("number", 11);
+                    startActivityForResult(intent, 11);
+                }
+                if (list.size()>12){
+                    if (position==11&&list.get(position).get("left").toString().equals("企业执照号")){
                         Intent intent = new Intent(RegisterFirmActivity.this, FirmInfoPictureActivity.class);
-                        intent.putExtra("name", list1.get(0).get("left").toString());
+                        intent.putExtra("name", list.get(position).get("left").toString());
                         intent.putExtra("number", 12);
                         startActivityForResult(intent, 12);
-                    } else if (position == 3) {
+                    }else if (position==12){
                         Intent intent = new Intent(RegisterFirmActivity.this, FirmInfoPictureActivity.class);
-                        intent.putExtra("name", list1.get(0).get("left").toString());
+                        intent.putExtra("name", list.get(position).get("left").toString());
                         intent.putExtra("number", 13);
                         startActivityForResult(intent, 13);
+                    }else if (position==13){
+                        Intent intent = new Intent(RegisterFirmActivity.this, FirmInfoPictureActivity.class);
+                        intent.putExtra("name", list.get(position).get("left").toString());
+                        intent.putExtra("number", 14);
+                        startActivityForResult(intent, 14);
                     }
-
                 }
             }
         });
+        if (list.get(9).get("right").equals("三证独立")){
+            list.remove(map12);
+            map13 = new Hashtable<String, Object>();
+            map13.put("left", "企业执照号");
+            map13.put("right", "");
+            map13.put("icon", R.mipmap.my_sumao_iv_order);
+            list.add(map13);
+            map14 = new Hashtable<String, Object>();
+            map14.put("left", "组织机构代码");
+            map14.put("right", "");
+            map14.put("icon", R.mipmap.my_sumao_iv_order);
+            list.add(map14);
+            map15 = new Hashtable<String, Object>();
+            map15.put("left", "税务登记号");
+            map15.put("right", "");
+            map15.put("icon", R.mipmap.my_sumao_iv_order);
+            list.add(map15);
+            adapter = new SimpleAdapter(RegisterFirmActivity.this, list, R.layout.item_firm_info, new String[]{"left", "center", "right", "icon"}, new int[]{R.id.tv_firm_info, R.id.tvTitle_firm_info, R.id.tvValue_firm_info, R.id.ivMore_firm_info});
+            lvupdate_firm_info.setAdapter(adapter);
+        }else if (list.get(9).get("right").equals("三证合一")){
+            if (list.size()>11){
+                list.remove(map13);
+                list.remove(map14);
+                list.remove(map15);
+                adapter = new SimpleAdapter(RegisterFirmActivity.this, list, R.layout.item_firm_info, new String[]{"left", "center", "right", "icon"}, new int[]{R.id.tv_firm_info, R.id.tvTitle_firm_info, R.id.tvValue_firm_info, R.id.ivMore_firm_info});
+                lvupdate_firm_info.setAdapter(adapter);
+            }
+
+        }
+
+//        lvupdate_firm_info_two = (ListView) findViewById(R.id.lvUpdate_firm_info_two);
+//        list1 = new ArrayList<Map<String, Object>>();
+//        sp_firm_info = (Spinner) findViewById(R.id.sp_firm_info);
+//
+//        adapter1 = new SimpleAdapter(this, list1, R.layout.item_firm_info, new String[]{"left", "center", "right", "icon"}, new int[]{R.id.tv_firm_info, R.id.tvTitle_firm_info, R.id.tvValue_firm_info, R.id.ivMore_firm_info});
+//        lvupdate_firm_info_two.setAdapter(adapter1);
+//
+//        sp_firm_info.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                if (sp_firm_info.getItemAtPosition(position).toString().equals("三证独立")) {
+//                    if (list1.size() == 2) {
+//
+//                        list1.remove(0);
+//                        Map<String, Object> map8 = new Hashtable<String, Object>();
+//                        map8.put("left", "企业执照号");
+//                        map8.put("right", "");
+//                        map8.put("icon", R.mipmap.my_sumao_iv_order);
+//                        list1.add(map8);
+//                        Map<String, Object> map9 = new Hashtable<String, Object>();
+//                        map9.put("left", "组织机构代码");
+//                        map9.put("right", "");
+//                        map9.put("icon", R.mipmap.my_sumao_iv_order);
+//                        list1.add(map9);
+//                        Map<String, Object> map10 = new Hashtable<String, Object>();
+//                        map10.put("left", "税务登记号");
+//                        map10.put("right", "");
+//                        map10.put("icon", R.mipmap.my_sumao_iv_order);
+//                        list1.add(map10);
+//
+//                        adapter1 = new SimpleAdapter(RegisterFirmActivity.this, list1, R.layout.item_firm_info, new String[]{"left", "center", "right", "icon"}, new int[]{R.id.tv_firm_info, R.id.tvTitle_firm_info, R.id.tvValue_firm_info, R.id.ivMore_firm_info});
+//                        lvupdate_firm_info_two.setAdapter(adapter1);
+//                    }
+//                    Toast.makeText(RegisterFirmActivity.this, "" + list1.size(), Toast.LENGTH_SHORT).show();
+//                    //把三证合一传的参数删除掉
+//                    rp.removeParameter("cl_zhengjian");
+//                    rp.removeParameter("cl_zhizhao");
+//                    rp.removeParameter("cl_nashuiren");
+//                    //添加三证独立时需要的参数
+//                    rp.addParameter("cl_zhengjian", 4);
+////                    rp.addParameter("cl_zhizhao",list1.get(1).get("right").toString());
+////                    rp.addParameter("cl_jigou",list1.get(2).get("right").toString());
+////                    rp.addParameter("cl_shuiwu",list1.get(3).get("right").toString());
+//                    rp.addParameter("cl_zhizhao", "0928201347189232203334");
+//                    rp.addParameter("cl_jigou", "0928201347189232203334");
+//                    rp.addParameter("cl_shuiwu", "0928201347189232203334");
+//                    if (list1.get(0).get("right").toString().equals("一般纳税人")) {
+//                        rp.addParameter("cl_nashuiren", 6);
+//                    } else {
+//                        rp.addParameter("cl_nashuiren", 7);
+//                    }
+//                    Log.d("nihao", rp + "");
+//                } else if (sp_firm_info.getItemAtPosition(position).toString().equals("三证合一")) {
+//                    if (list1.size() > 2) {
+//                        for (int i = 0; i < 4; i++) {
+//                            list1.remove(0);
+//                            //   list1.remove(1);
+//                        }
+//                        Map<String, Object> map12 = new Hashtable<String, Object>();
+//                        map12.put("left", "统一社会信用代码");
+//                        map12.put("right", "");
+//                        map12.put("icon", R.mipmap.my_sumao_iv_order);
+//                        list1.add(map12);
+//                        Map<String, Object> map11 = new Hashtable<String, Object>();
+//                        map11.put("left", "纳税人类型");
+//                        map11.put("right", "");
+//                        map11.put("icon", R.mipmap.my_sumao_iv_order);
+//                        list1.add(map11);
+//                        adapter1 = new SimpleAdapter(RegisterFirmActivity.this, list1, R.layout.item_firm_info, new String[]{"left", "center", "right", "icon"}, new int[]{R.id.tv_firm_info, R.id.tvTitle_firm_info, R.id.tvValue_firm_info, R.id.ivMore_firm_info});
+//                        lvupdate_firm_info_two.setAdapter(adapter1);
+//
+//                    }
+//                    if (rp.getUri().contains("cl_shuiwu")) {
+//                        Toast.makeText(RegisterFirmActivity.this, "由三证独立变换而来", Toast.LENGTH_SHORT).show();
+//                    }
+//                    //三证合一
+//                    rp.addParameter("cl_zhengjian", 5);
+//                    rp.addParameter("cl_zhizhao", "0928201347189232203334");
+////                                       rp.addParameter("cl_zhizhao",list1.get(0).get("right").toString());
+//                    if (list1.get(1).get("right").toString().equals("一般纳税人")) {
+//                        rp.addParameter("cl_nashuiren", 6);
+//                    } else {
+//                        rp.addParameter("cl_nashuiren", 7);
+//                    }
+//                    Log.d("nihao", rp + "");
+//                }
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//                Toast.makeText(RegisterFirmActivity.this, "请选择", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+
+//        lvupdate_firm_info_two.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                if (list1.size() == 2) {
+//                    if (position == 0) {
+//                        Intent intent = new Intent(RegisterFirmActivity.this, FirmInfoPictureActivity.class);
+//                        intent.putExtra("name", list1.get(0).get("left").toString());
+//                        intent.putExtra("number", 10);
+//                        //startActivity(intent);
+//                        startActivityForResult(intent, 10);
+//                    } else if (position == 1) {
+//                        Intent intent = new Intent(RegisterFirmActivity.this, FirmInfoTypeActivity.class);
+//                        intent.putExtra("title", list1.get(1).get("left").toString());
+//                        //startActivity(intent);
+//                        intent.putExtra("number", 21);
+//                        startActivityForResult(intent, 21);
+//                    }
+//
+//                } else if (list1.size() == 4) {
+//                    if (position == 0) {
+//                        Intent intent = new Intent(RegisterFirmActivity.this, FirmInfoTypeActivity.class);
+//                        intent.putExtra("title", list1.get(0).get("left").toString());
+//                        intent.putExtra("number", 20);
+//
+//                        startActivityForResult(intent, 20);
+//                    } else if (position == 1) {
+//                        Intent intent = new Intent(RegisterFirmActivity.this, FirmInfoPictureActivity.class);
+//                        intent.putExtra("name", list1.get(0).get("left").toString());
+//                        intent.putExtra("number", 11);
+//                        startActivityForResult(intent, 11);
+//                    } else if (position == 2) {
+//                        Intent intent = new Intent(RegisterFirmActivity.this, FirmInfoPictureActivity.class);
+//                        intent.putExtra("name", list1.get(0).get("left").toString());
+//                        intent.putExtra("number", 12);
+//                        startActivityForResult(intent, 12);
+//                    } else if (position == 3) {
+//                        Intent intent = new Intent(RegisterFirmActivity.this, FirmInfoPictureActivity.class);
+//                        intent.putExtra("name", list1.get(0).get("left").toString());
+//                        intent.putExtra("number", 13);
+//                        startActivityForResult(intent, 13);
+//                    }
+//
+//                }
+//            }
+//        });
 
 
     }
@@ -642,41 +726,58 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
                 list.get(8).put("right", name8);
                 adapter.notifyDataSetChanged();
                 break;
-
+            case 9:
+                zhuce_leixing = data.getStringExtra("name");
+                Log.d("nameValue", name);
+                zhuce_leixingLevel = data.getStringExtra("level");
+                list.get(9).put("right", zhuce_leixing);
+                adapter.notifyDataSetChanged();
+                break;
+//            三证合一，统一社会信用代码
             case 10:
-                String value = data.getStringExtra("value");
-                list1.get(0).put("right", value);
-                adapter1.notifyDataSetChanged();
+                value = data.getStringExtra("value");
+                picturePath = data.getStringExtra("picturePath");
+                list.get(10).put("right", value);
+                adapter.notifyDataSetChanged();
                 break;
+//            三证独立，营业执照号
             case 11:
-                String value1 = data.getStringExtra("value");
-                list1.get(1).put("right", value1);
-                adapter1.notifyDataSetChanged();
-                break;
-            case 12:
-                String value2 = data.getStringExtra("value");
-                list1.get(2).put("right", value2);
-                adapter1.notifyDataSetChanged();
-                break;
-            case 13:
-                String value3 = data.getStringExtra("value");
-                list1.get(3).put("right", value3);
-                adapter1.notifyDataSetChanged();
-                break;
-            case 20:
-                String value4 = data.getStringExtra("name");
-                list1.get(0).put("right", value4);
-                adapter1.notifyDataSetChanged();
-                break;
-            case 21:
 //                纳税人类型
                 String value5 = data.getStringExtra("name");
                 naShuiRenLevel = data.getStringExtra("level");
                 LogUtils.log("naShuiRenLevel---------->"+naShuiRenLevel);
                 Log.d("nnnnnn", value5);
-                list1.get(1).put("right", value5);
-                adapter1.notifyDataSetChanged();
+                if (list.size()>11){
+                    list.get(10).put("right", value5);
+                    //Log.d("list的长度",list)
+                }else{
+                    list.get(11).put("right",value5);
+                }
+                adapter.notifyDataSetChanged();
                 break;
+
+            case 12:
+                String value1 = data.getStringExtra("value");
+                picturePath1 = data.getStringExtra("picturePath");
+                list.get(11).put("right", value1);
+                adapter.notifyDataSetChanged();
+                break;
+//            三证独立，组织机构代码
+            case 13:
+                String value2 = data.getStringExtra("value");
+                picturePath2 = data.getStringExtra("picturePath");
+                list.get(12).put("right", value2);
+                adapter.notifyDataSetChanged();
+                break;
+//            三证独立，税务登记号
+            case 14:
+                String value3 = data.getStringExtra("value");
+                picturePath3 = data.getStringExtra("picturePath");
+                list.get(13).put("right", value3);
+                adapter.notifyDataSetChanged();
+                break;
+
+
 
 
         }

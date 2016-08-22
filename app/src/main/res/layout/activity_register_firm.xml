@@ -26,59 +26,8 @@
         android:layout_marginTop="@dimen/x5"
 
         ></com.silianchuangye.sumao.success.custom.CustomListView>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/x1"
-        android:background="#EEEEF3"
-        android:orientation="horizontal"
-        android:layout_below="@+id/lvUpdate_firm_info"
-        android:id="@+id/layoutLine"
-        ></LinearLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/x40"
-        android:layout_below="@+id/layoutLine"
-        android:background="#fff"
-        android:id="@+id/layout"
-        >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/tv_firm_info"
-            android:text="企业注册证件"
-            android:layout_marginLeft="@dimen/x10"
-            android:layout_marginTop="@dimen/x13"
-            android:textSize="14sp"
-            />
-        <Spinner
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/sp_firm_info"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="@dimen/x10"
-            android:layout_marginRight="@dimen/x10"
-            android:entries="@array/name"
-            android:requiresFadingEdge="none"
-            android:spinnerMode="dropdown"
-            android:dropDownVerticalOffset="@dimen/x20"
-            ></Spinner>
 
 
-    </RelativeLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/x1"
-        android:layout_below="@+id/layout"
-        android:id="@+id/aaaa"
-        android:background="#EEEEF3"
-        android:orientation="horizontal"
-        ></LinearLayout>
-    <com.silianchuangye.sumao.success.custom.CustomListView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/lvUpdate_firm_info_two"
-
-        android:layout_below="@+id/aaaa"></com.silianchuangye.sumao.success.custom.CustomListView>
 
     <Button
         android:layout_width="match_parent"
@@ -91,7 +40,7 @@
         android:text="保存"
         android:textColor="#fff"
         android:textSize="16sp"
-        android:layout_below="@+id/lvUpdate_firm_info_two"
+        android:layout_below="@+id/lvUpdate_firm_info"
         />
     </RelativeLayout>
     </ScrollView>

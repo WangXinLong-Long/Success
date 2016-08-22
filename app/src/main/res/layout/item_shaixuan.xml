@@ -139,7 +139,9 @@
               android:layout_marginBottom="@dimen/x10"
               android:background="#F2F2F2"
               android:layout_below="@+id/layout_shang"
-              android:layout_height="@dimen/x35">
+              android:layout_height="@dimen/x35"
+              android:layout_marginTop="@dimen/x10"
+              >
     <Button
         android:layout_width="wrap_content"
         android:layout_height="@dimen/x28"
