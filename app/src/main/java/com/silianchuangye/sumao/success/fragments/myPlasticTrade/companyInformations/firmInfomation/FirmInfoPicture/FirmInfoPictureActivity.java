@@ -633,6 +633,7 @@ public class FirmInfoPictureActivity extends AppCompatActivity {
             Intent intent = new Intent();
             //Intent intent = new Intent();
             intent.putExtra("value", "");
+            intent.putExtra("picturePath", "");
             setResult(number1, intent);
             finish();
             return true;
