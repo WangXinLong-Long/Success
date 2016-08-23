@@ -37,14 +37,15 @@ import java.util.Map;
  */
 public class OrderstayshipmentsFragment extends Fragment{
     private ExpandableListView elvDemo;
-    private List<Map<String,Object>> listparrent=new ArrayList<Map<String,Object>>();;
-    private List<List<Map<String,Object>>> listitem=new ArrayList<List<Map<String,Object>>>();;
+    private List<Map<String,Object>> listparrent;
+    private List<List<Map<String,Object>>> listitem;
+    boolean ListFlag;
     SharedPreferences sp;
     String unique123 ;
     MyAdapter adapter;
     String orderId,type;
     int page=1;
-    String subType=null,Kpstate="",startDate="",endDate="",company="",OrderId="";
+    String OrderType="fixedPricingOrder",subType=null,Kpstate="",startDate="",endDate="",company="",OrderId="";
     public OrderstayshipmentsFragment() {
         // Required empty public constructor
     }
@@ -53,6 +54,8 @@ public class OrderstayshipmentsFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        listparrent=new ArrayList<Map<String,Object>>();
+        listitem=new ArrayList<List<Map<String,Object>>>();
         sp=getActivity().getSharedPreferences("sumao", Activity.MODE_PRIVATE);
         unique123= sp.getString("unique", "");
         // Inflate the layout for this fragment
@@ -118,6 +121,7 @@ public class OrderstayshipmentsFragment extends Fragment{
 //                Intent intent = new Intent();
 //                intent.setClass(getActivity(), SpotOrder.class);
 //                startActivity(intent);
+                Log.e("TAG","listparrent.get(groupPosition).get(\"id\").toString()----"+listparrent.get(groupPosition).get("id").toString());
                 if ("已支付".equals(listparrent.get(groupPosition).get("states"))){
                     Intent intent = new Intent();
                     intent.putExtra("ID",listparrent.get(groupPosition).get("id").toString());
@@ -147,7 +151,7 @@ public class OrderstayshipmentsFragment extends Fragment{
         Log.e("TAG","Flag-----"+Flag);
         if(isVisibleToUser){
             if(Flag){
-                sendMy(subType,Kpstate,startDate,endDate,company,OrderId);
+                sendMy(subType,Kpstate,startDate,endDate,company,OrderId,OrderType);
             }
         }else{
             if(!Flag){
@@ -157,8 +161,8 @@ public class OrderstayshipmentsFragment extends Fragment{
                 if(listparrent!=null){
                     listparrent.clear();
                 }
-                subType=null;Kpstate="";startDate="";endDate="";company="";OrderId="";
-                sendMy(subType,Kpstate,startDate,endDate,company,OrderId);
+                subType=null;Kpstate="";startDate="";endDate="";company="";OrderId="";OrderType="fixedPricingOrder";
+                sendMy(subType,Kpstate,startDate,endDate,company,OrderId,OrderType);
                 if(adapter!=null) {
                     adapter.notifyDataSetChanged();
                 }
@@ -166,7 +170,11 @@ public class OrderstayshipmentsFragment extends Fragment{
             }
         }
     }
-    public  void sendMy(String subType,String KPstate,String startDate,String endDate,String company,String OrderId){
+    public  void sendMy(String subType,String KPstate,String startDate,String endDate,String company,String OrderId,String OrderType){
+       if(!ListFlag){
+           listparrent=new ArrayList<Map<String,Object>>();
+           listitem=new ArrayList<List<Map<String,Object>>>();
+       }
         RequestParams params=new RequestParams(SuMaoConstant.SUMAO_IP+"/rest/model/atg/userprofiling/ProfileActor/myOrders");
         params.setCharset("UTF-8");
         params.setAsJsonContent(true);
@@ -177,7 +185,7 @@ public class OrderstayshipmentsFragment extends Fragment{
             e.printStackTrace();
         }
         params.setBodyContent(job.toString());
-        params.addParameter("searchOrderType","fixedPricingOrder");
+        params.addParameter("searchOrderType",OrderType);
         params.addParameter("searchOrderState","QUOTED");
         params.addParameter("pageNum",page);
         params.addParameter("searchOrderId", OrderId);//订单
@@ -213,7 +221,7 @@ public class OrderstayshipmentsFragment extends Fragment{
                         String state1=getState(state,type,shippingGroupState);
                         String owner=j.getString("owner");//采购员
                         orderId=j.getString("orderId");//订单编号
-
+                        List<Map<String,Object>> list1=new ArrayList<Map<String,Object>>();
                         JSONArray j1=new JSONArray(cl);
                         for(int k=0;k<j1.length();k++){
                             JSONObject job1= (JSONObject) j1.get(k);
@@ -221,7 +229,7 @@ public class OrderstayshipmentsFragment extends Fragment{
                             String cl_mingcheng=job1.getString("cl_mingcheng");//产品名称
                             String cl_fenlei=job1.getString("cl_fenlei");
                             Log.e("TAG","mingc=="+cl_mingcheng);
-                            List<Map<String,Object>> list1=new ArrayList<Map<String,Object>>();
+                           ;
                             Map<String,Object> map=new Hashtable<String,Object>();
                             map.put("type",cl_fenlei);
                             map.put("name",cl_mingcheng);

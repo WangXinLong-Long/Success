@@ -36,12 +36,11 @@ public class ServiceAllFragment extends Fragment {
     private ExpandableListView elvDemo;
     private List<Map<String,Object>> listparrent;
     private List<List<Map<String,Object>>> listitem;
-
-
-//    private List<Map<String,Object>> listparrent=new ArrayList<Map<String,Object>>();
-//    private List<List<Map<String,Object>>> listitem=new ArrayList<List<Map<String,Object>>>();
+    boolean ListFlag;
     MyAdapter adapter;
-    String state1;
+    String orderId,type;
+    int page=1;
+    String subType=null,Kpstate="",startDate="",endDate="",company="",OrderId="";
     public ServiceAllFragment() {
         // Required empty public constructor
     }
@@ -161,7 +160,7 @@ public class ServiceAllFragment extends Fragment {
                             String shippingGroupState = j.getString("shippingGroupState");
                             String type = j.getString("type");
                             String cl_amount = "";
-                           state1=getState(state,type,shippingGroupState);
+                          String  state1=getState(state,type,shippingGroupState);
 //                            String owner = j.getString("owner");//采购员
                             String orderId = j.getString("orderId");//订单编号
 
