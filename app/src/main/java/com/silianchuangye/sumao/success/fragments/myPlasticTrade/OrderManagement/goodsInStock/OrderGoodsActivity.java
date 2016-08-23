@@ -326,6 +326,7 @@ public class OrderGoodsActivity extends AppCompatActivity implements View.OnClic
             list.add("已发货");
             list.add("已完成");
             list.add("已变更");
+            Jylist.add("客服");
         }else {
             list.add("所有");
             list.add("待支付");
@@ -339,7 +340,7 @@ public class OrderGoodsActivity extends AppCompatActivity implements View.OnClic
                 Jylist.add("公开竞拍");
                 Jylist.add("密封竞拍");
                 Jylist.add("团购");
-            }else{
+            }else if(tv_title_name.getText().equals("预售订单")){
                 Jylist.add("预售");
             }
         }
@@ -588,37 +589,37 @@ public class OrderGoodsActivity extends AppCompatActivity implements View.OnClic
                 vpDemo.setCurrentItem(6);
             }
         }else if(OrderType.equals("offlineOrder")) {
-//            if (state.equals("0")) {
-//                cleanNull(i + "", CheckType);
-//                ServiceAllFragment f = (ServiceAllFragment) adapter.getItem(0);
-//                f.sendMy(i + "", CheckType, startDate, endDate, company, OrderId);
-//                vpDemo.setCurrentItem(0);//显示待发货界面
-//            } else if (state == null) {
-//                cleanNull(i + "", CheckType);
-//                ServiceAllFragment f = (ServiceAllFragment) adapter.getItem(0);
-//                f.sendMy(i + "", CheckType, startDate, endDate, company, OrderId);
-//                vpDemo.setCurrentItem(0);
-//            } else if (state.equals("APPROVED")) {
-//                cleanNull(i + "", CheckType);
-//                ServiceBornFragment f = (ServiceBornFragment) adapter.getItem(1);
-//                f.sendMy(i + "", CheckType, startDate, endDate, company, OrderId);
-//                vpDemo.setCurrentItem(1);
-//            } else if (state.equals("PRESSING1")) {//根据状态判断显示哪个界面-待发货界面-已支付
-//                cleanNull(i + "", CheckType);
-//                ServiceShipmentsFragment f = (ServiceShipmentsFragment) adapter.getItem(2);
-//                f.sendMy(i + "", CheckType, startDate, endDate, company, OrderId);
-//                vpDemo.setCurrentItem(2);
-//            } else if (state.equals("NO_PENDING_ACTION")) {//根据状态判断显示哪个界面-待发货界面-已支付
-//                cleanNull(i + "", CheckType);
-//                ServiceFinishFragment f = (ServiceFinishFragment) adapter.getItem(3);
-//                f.sendMy(i + "", CheckType, startDate, endDate, company, OrderId);
-//                vpDemo.setCurrentItem(3);
-//            } else if (state.equals("CHANGED")) {//根据状态判断显示哪个界面-待发货界面-已支付
-//                cleanNull(i + "", CheckType);
-//                ServiceChangeFragment f = (ServiceChangeFragment) adapter.getItem(4);
-//                f.sendMy(i + "", CheckType, startDate, endDate, company, OrderId);
-//                vpDemo.setCurrentItem(4);
-//            }
+            if (state.equals("0")) {
+                cleanNull(i + "", CheckType);
+                ServiceAllFragment f = (ServiceAllFragment) adapter.getItem(0);
+                f.sendMy(i + "", CheckType, startDate, endDate, company, OrderId);
+                vpDemo.setCurrentItem(0);//显示待发货界面
+            } else if (state == null) {
+                cleanNull(i + "", CheckType);
+                ServiceAllFragment f = (ServiceAllFragment) adapter.getItem(0);
+                f.sendMy(i + "", CheckType, startDate, endDate, company, OrderId);
+                vpDemo.setCurrentItem(0);
+            } else if (state.equals("APPROVED")) {
+                cleanNull(i + "", CheckType);
+                ServiceBornFragment f = (ServiceBornFragment) adapter.getItem(1);
+                f.sendMy(i + "", CheckType, startDate, endDate, company, OrderId);
+                vpDemo.setCurrentItem(1);
+            } else if (state.equals("PRESSING1")) {//根据状态判断显示哪个界面-待发货界面-已支付
+                cleanNull(i + "", CheckType);
+                ServiceShipmentsFragment f = (ServiceShipmentsFragment) adapter.getItem(2);
+                f.sendMy(i + "", CheckType, startDate, endDate, company, OrderId);
+                vpDemo.setCurrentItem(2);
+            } else if (state.equals("NO_PENDING_ACTION")) {//根据状态判断显示哪个界面-待发货界面-已支付
+                cleanNull(i + "", CheckType);
+                ServiceFinishFragment f = (ServiceFinishFragment) adapter.getItem(3);
+                f.sendMy(i + "", CheckType, startDate, endDate, company, OrderId);
+                vpDemo.setCurrentItem(3);
+            } else if (state.equals("CHANGED")) {//根据状态判断显示哪个界面-待发货界面-已支付
+                cleanNull(i + "", CheckType);
+                ServiceChangeFragment f = (ServiceChangeFragment) adapter.getItem(4);
+                f.sendMy(i + "", CheckType, startDate, endDate, company, OrderId);
+                vpDemo.setCurrentItem(4);
+            }
         }
     }
     private void cleanNull(String subType,String KPstate){

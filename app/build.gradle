@@ -48,4 +48,5 @@ dependencies {
     compile 'com.zhy:mpermission-api:1.0.0'
     compile 'com.google.code.gson:gson:2.7'
     compile project(':PullToRefresh')
+    compile project(':pullToRefreshlibrary')
 }

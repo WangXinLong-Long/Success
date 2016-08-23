@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 
+import com.jingchen.pulltorefresh.PullToRefreshLayout;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.MyAdapter;
 
@@ -64,7 +67,9 @@ public class OrderStaypayFragment extends Fragment {
         unique123= sp.getString("unique", "");
         View view=inflater.inflate(R.layout.fragment_order_staypay, container, false);
         //实例化
-        elvDemo= (ExpandableListView) view.findViewById(R.id.elvDemo);
+        PullToRefreshLayout ptr=(PullToRefreshLayout)view.findViewById(R.id.refresh_view);
+        elvDemo=(ExpandableListView)ptr.getPullableView();
+        ptr.setOnPullListener(new MyPullListener());
         //去掉expandListview的特别的下拉标志
         elvDemo.setGroupIndicator(null);
         //去掉ListView之间的线
@@ -151,7 +156,7 @@ public class OrderStaypayFragment extends Fragment {
                 if(listparrent!=null){
                     listparrent.clear();
                 }
-                subType=null;Kpstate="";startDate="";endDate="";company="";OrderId="";OrderType="fixedPricingOrder";
+               page=1; subType=null;Kpstate="";startDate="";endDate="";company="";OrderId="";OrderType="fixedPricingOrder";
                 sendMy(subType,Kpstate,startDate,endDate,company,OrderId,OrderType);
                 if(adapter!=null) {
                     adapter.notifyDataSetChanged();
@@ -295,5 +300,40 @@ public class OrderStaypayFragment extends Fragment {
         }
         return s;
     }
+    private  class MyPullListener implements PullToRefreshLayout.OnPullListener {
 
+        @Override
+        public void onRefresh(final PullToRefreshLayout pullToRefreshLayout) {
+            // 下拉刷新操作
+            new Handler() {
+                @Override
+                public void handleMessage(Message msg) {
+                    // 千万别忘了告诉控件刷新完毕了哦！
+                    pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
+                    Log.e("TAG","下拉刷子新");
+                    page++;
+                    ListFlag=true;
+                    sendMy(subType,Kpstate,startDate,endDate,company,OrderId,OrderType);
+//                    adapter.notifyDataSetChanged();
+                }
+            }.sendEmptyMessageDelayed(0,1000);
+        }
+
+        @Override
+        public void onLoadMore(final PullToRefreshLayout pullToRefreshLayout) {
+            // 加载操作
+            new Handler() {
+                @Override
+                public void handleMessage(Message msg) {
+                    // 千万别忘了告诉控件加载完毕了哦！
+                    pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
+                    Log.e("TAG","上拉加载");
+                    ListFlag=true;
+                    page+=1;
+                    sendMy(subType,Kpstate,startDate,endDate,company,OrderId,OrderType);
+                    adapter.notifyDataSetChanged();
+                }
+            }.sendEmptyMessageDelayed(0, 1000);
+        }
+    }
 }
