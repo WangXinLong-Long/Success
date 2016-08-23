@@ -380,7 +380,7 @@ public class MonthDateView extends View {
 	 * @param year
 	 * @param month
 	 */
-	private void setSelectYearMonth(int year,int month,int day){
+	public void setSelectYearMonth(int year,int month,int day){
 		if(year <=0 || month <=0 || day <= 0)return;
 		mSelYear = year;
 		mSelMonth = month;
@@ -499,7 +499,7 @@ public class MonthDateView extends View {
 	}
 	/**
 	 * 获取选择的日期
-	 * @param mSelDay
+	 * @ mSelDay
 	 */
 	public int getmSelDay() {
 		return this.mSelDay;

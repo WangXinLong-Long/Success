@@ -26,5 +26,6 @@
             android:layout_height="0dp"
             ></FrameLayout>
     </android.support.v4.app.FragmentTabHost>
+
 </LinearLayout>
 

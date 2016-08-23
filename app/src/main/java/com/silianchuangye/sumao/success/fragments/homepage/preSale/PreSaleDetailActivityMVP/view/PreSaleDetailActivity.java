@@ -2,6 +2,7 @@ package com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetai
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -14,11 +15,19 @@ import com.silianchuangye.sumao.success.MainActivity;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.custom.customCalendar.CalendarView;
 import com.silianchuangye.sumao.success.custom.customCalendar.DayAndPrice;
+import com.silianchuangye.sumao.success.custom.customCalendar.MonthDateView;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.VesselThreeActivity;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.bean.PreSaleDetailBean;
+import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.bean.PreSaleDetailCalendarBean;
+import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.bean.Sku;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.presenter.PreSaleDetailPresenter;
+import com.silianchuangye.sumao.success.utils.LogUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -50,29 +59,33 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
     private TextView margin_proportion_et;
     private TextView pre_sale_detail_remark;
     private TextView delivery_time_et_end;
+    private int year;
+    private int mounth;
+    private int day;
+    private List<DayAndPrice> calendarlist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+//
         setContentView(R.layout.activity_pre_sale_detail);
         Intent intent = getIntent();
+        calendarlist = new ArrayList<>();
         productId = intent.getStringExtra("productId");
         skuId = intent.getStringExtra("skuId");
+        LogUtils.log("productId:" + productId + "skuId:" + skuId);
 //        从服务器获取数据
         preSaleDetailPresenter = new PreSaleDetailPresenter(this);
         preSaleDetailPresenter.sendPreSaleDetailData(skuId, productId);
-//        获取日历数据
         preSaleDetailPresenter.sendPreSaleDetailCalendar(productId);
-//        日历
-        List<DayAndPrice> list = new ArrayList<DayAndPrice>();
-        DayAndPrice dAndPrice = new DayAndPrice("¥3900起", 2016, 2, 20);
-        DayAndPrice dAndPrice1 = new DayAndPrice("¥3900起", 2016, 7, 10);
-        DayAndPrice dAndPrice2 = new DayAndPrice("¥3900起", 2016, 10, 1);
-        list.add(dAndPrice);
-        list.add(dAndPrice1);
-        list.add(dAndPrice2);
         calendarView = (CalendarView) findViewById(R.id.calendarView);
-        calendarView.setListDayAndPrice(list);
+//        一定要在初始化控件以前把数据加载完毕了
+        calendarView.setListDayAndPrice(calendarlist);
+        calendarView.invalidate();
+
+//        calendarView.invalidate();
         calendarView.setDateViewClick(new CalendarView.DateViewClick() {
 
             @Override
@@ -172,7 +185,7 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
         //        剩余数量
         surplus_amount_et.setText(preSaleDetailBean.getCl_shuliang());
         //        起购量
-        purchase_quantity_et .setText(preSaleDetailBean.getCl_qigou());
+        purchase_quantity_et.setText(preSaleDetailBean.getCl_qigou());
         //        最小变量单位
         min_variable_et.setText(preSaleDetailBean.getCl_xiaobian());
         //       交货时间
@@ -195,5 +208,31 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
         //        产品备注
 //        pre_sale_detail_remark.setText(preSaleDetailBean.getch);
 
+    }
+
+    @Override
+    public void getPreSaleDetailCalendarData(PreSaleDetailCalendarBean preSaleDetailCalendarBean/*,int position*/) {
+        List<Sku> skus = preSaleDetailCalendarBean.getSku();
+        LogUtils.log("lists" + skus.toString());
+//        List<DayAndPrice> list = new ArrayList<DayAndPrice>();
+        for (int i = 0; i < skus.size(); i++) {
+            Sku sku = skus.get(i);
+            String[] data = sku.getCl_date().split("-");
+            LogUtils.log("sku.getCl_jiner()-->" + sku.getCl_jiner() + "<---new Integer(data[0]),new Integer(data[1]),new Integer(data[2])-->" + data[0] + "---" + data[1] + "---" + data[2]);
+
+            try {
+                year = Integer.parseInt(data[0]);
+                mounth = Integer.parseInt(data[1]);
+                day = Integer.parseInt(data[2]);
+            } catch (NumberFormatException e) {
+                throw new RuntimeException("没有转换成功");
+            }
+            LogUtils.log(year + "..." + mounth + "..." + day);
+            calendarlist.add(new DayAndPrice("￥"+sku.getCl_jiner(), year, mounth, day));
+        }
+        calendarView.setSelected(true);
+        for (int i = 0; i < calendarlist.size(); i++) {
+            LogUtils.log("我这没问题：" + calendarlist.get(i).toString());
+        }
     }
 }

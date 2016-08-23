@@ -2,6 +2,7 @@ package com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetai
 
 import com.google.gson.Gson;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.bean.PreSaleDetailBean;
+import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.bean.PreSaleDetailCalendarBean;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
@@ -15,9 +16,11 @@ import org.xutils.x;
  */
 public class CalendarModels implements ICalendarModel {
     String productId;
+//    int position;
 
-    public CalendarModels(String productId) {
+    public CalendarModels(String productId/*,int position*/) {
         this.productId = productId;
+//        this.position = position;
     }
 
     @Override
@@ -31,7 +34,7 @@ public class CalendarModels implements ICalendarModel {
         try {
             x.http().request(HttpMethod.POST, requestParams, new Callback.CacheCallback<String>() {
 
-                private PreSaleDetailBean preSaleDetailBean;
+                private PreSaleDetailCalendarBean preSaleDetailCalendarBean;
 
                 @Override
                 public boolean onCache(String result) {
@@ -42,13 +45,13 @@ public class CalendarModels implements ICalendarModel {
                 public void onSuccess(String result) {
                     LogUtils.log("预售日历--->" + result + "<---预售日历");
                     Gson gson = new Gson();
-//                    preSaleDetailBean = gson.fromJson(result,PreSaleDetailBean.class);
-                    callback.CalendarCallback();
+                    preSaleDetailCalendarBean = gson.fromJson(result,PreSaleDetailCalendarBean.class);
+                    callback.CalendarCallback(preSaleDetailCalendarBean/*, position*/);
                 }
 
                 @Override
                 public void onError(Throwable ex, boolean isOnCallback) {
-                    LogUtils.log("--------->" + "3.2+onError" + ex.toString() + "<-----------");
+                    LogUtils.log("--------->" + "预售日历--->3.2+onError" + ex.toString() + "<-----------");
                     ex.toString();
                 }
 
