@@ -167,7 +167,6 @@ public class AlreadyPaidActivity extends Activity implements View.OnClickListene
 
                             Long submittedDate=j.getLong("submittedDate");
                             String now = new SimpleDateFormat("yyyy-MM-dd").format(submittedDate);
-//                            enterprise2.setText(now);
                             JSONArray j1 = new JSONArray(cl);
                             for (int k = 0; k < j1.length(); k++) {
                                 JSONObject job1 = (JSONObject) j1.get(k);
@@ -181,20 +180,21 @@ public class AlreadyPaidActivity extends Activity implements View.OnClickListene
                                 String cl_cangku=job1.getString("cl_cangku");//仓库
                                 String cl_gongsi=job1.getString("cl_gongsi");//公司
                                 company2.setText(cl_gongsi);
-                                String cl_jituan=job1.getString("cl_jituan");//生产企业
-                                Log.e("TAG","生产企业");
+//                                String cl_jituan=job1.getString("cl_jituan");//生产企业
+//                                Log.e("TAG","生产企业");
                                 String cl_shuliang=job1.getString("cl_shuliang");//数量
                                 Log.e("TAG","数量");
                                 String cl_jine=job1.getString("cl_jine");
                                 Log.e("TAG","金额");
-                                model.setWarehouse(cl_cangku);
                                 model.setWarehouse(cl_cangku);
                                 model.setTotalMoney(Double.valueOf(cl_amount));
                                 model.setCompany(cl_gongsi);
                                 model.setNumber(Double.valueOf(cl_shuliang));
                                 model.setUnivalent(Double.valueOf(cl_jine));
                                 model.setProductModel(cl_mingcheng);
-                                model.setEnterprise(cl_jituan);
+                                model.setFenlei(fenlei);
+                                model.setDate(now);
+//                                model.setEnterprise(cl_jituan);
                                 list.add(model);
                                 Log.e("TAG","list.size()==="+list.size());
                             }

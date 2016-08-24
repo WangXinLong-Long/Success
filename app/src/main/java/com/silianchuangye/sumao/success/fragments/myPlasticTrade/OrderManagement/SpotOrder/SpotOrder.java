@@ -353,7 +353,6 @@ public class SpotOrder extends Activity implements View.OnClickListener {
                             Long submittedDate=j.getLong("submittedDate");
                             Log.e("TAG","sub日期=----"+submittedDate);
                             String now = new SimpleDateFormat("yyyy-MM-dd").format(submittedDate);
-//                            enterprise2.setText(now);
                             Log.e("TAG","日期---"+now);
                             JSONArray j1 = new JSONArray(cl);
                             for (int k = 0; k < j1.length(); k++) {
@@ -361,7 +360,7 @@ public class SpotOrder extends Activity implements View.OnClickListener {
                                 String cl_mingcheng = job1.getString("cl_mingcheng");//产品名称
                                 Log.e("TAG","名称");
                                 String fenlei = job1.getString("cl_fenlei");//分类
-                                Log.e("TAG","分类");
+                                Log.e("TAG","分类"+fenlei);
                                 cl_amount = job1.getString("cl_amount");//金额
                                 Log.e("TAG","金额二");
                                 the_order_price.setText(cl_amount);
@@ -391,7 +390,10 @@ public class SpotOrder extends Activity implements View.OnClickListener {
                                 Log.e("TAG","model名称"+model.getProductModel());
                                 model.setEnterprise(cl_jituan);
                                 Log.e("TAG","model集团"+model.getEnterprise());
+                                model.setDate(now);
+                                model.setFenlei(fenlei);
                                 list.add(model);
+
                                 Log.e("TAG","list.size()==="+list.size());
                             }
                             Log.e("TAG","list-----"+list.size());

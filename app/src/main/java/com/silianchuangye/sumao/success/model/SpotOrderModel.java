@@ -20,6 +20,34 @@ public class SpotOrderModel implements Serializable {
     private String company;
 //    产品型号
     private String productModel;
+    private String type;
+    private String date;
+    private String fenlei;
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public void setFenlei(String fenlei) {
+        this.fenlei = fenlei;
+    }
+
+    public String getType() {
+
+        return type;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public String getFenlei() {
+        return fenlei;
+    }
 
     public double getUnivalent() {
         return univalent;
