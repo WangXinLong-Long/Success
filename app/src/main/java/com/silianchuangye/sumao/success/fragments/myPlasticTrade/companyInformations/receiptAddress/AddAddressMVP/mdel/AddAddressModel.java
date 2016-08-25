@@ -54,10 +54,11 @@ public class AddAddressModel implements IAddAddressModel {
             jsonObject.put("_dynSessConf",sessionId.trim());
             jsonObject.put("mobile",mobile.trim());
             jsonObject.put("postcode",zip_code);
-            jsonObject.put("phone",phone);
+//            jsonObject.put("phone",phone);
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        requestParams.addParameter("phone",phone);
         requestParams.setBodyContent(jsonObject.toString());
         LogUtils.log("AddAddressMdel：url--->" + requestParams + "<---url：AddAddressMdel");
         try {
