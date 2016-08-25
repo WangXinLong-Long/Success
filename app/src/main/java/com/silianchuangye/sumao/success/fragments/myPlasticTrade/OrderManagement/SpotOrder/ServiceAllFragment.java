@@ -5,6 +5,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
 
+import com.jingchen.pulltorefresh.PullToRefreshLayout;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.MyAdapter;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
@@ -36,12 +39,13 @@ public class ServiceAllFragment extends Fragment {
     private ExpandableListView elvDemo;
     private List<Map<String,Object>> listparrent;
     private List<List<Map<String,Object>>> listitem;
-
-
-//    private List<Map<String,Object>> listparrent=new ArrayList<Map<String,Object>>();
-//    private List<List<Map<String,Object>>> listitem=new ArrayList<List<Map<String,Object>>>();
+    SharedPreferences sp;
+    String unique123;
+    private boolean ListFlag;
     MyAdapter adapter;
-    String state1;
+    String orderId,type;
+    int page=1;
+    String subType="2",Kpstate="",startDate="",endDate="",company="",OrderId="";
     public ServiceAllFragment() {
         // Required empty public constructor
     }
@@ -50,21 +54,20 @@ public class ServiceAllFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        listparrent=new ArrayList<Map<String,Object>>();
+        listitem=new ArrayList<List<Map<String,Object>>>();
+        sp=getActivity().getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+        unique123 = sp.getString("unique", "");
         // Inflate the layout for this fragment
         View view=inflater.inflate(R.layout.fragment_service_all, container, false);
         //实例化
-        elvDemo= (ExpandableListView) view.findViewById(R.id.elvDemo);
+        PullToRefreshLayout ptr=(PullToRefreshLayout)view.findViewById(R.id.refresh_view);
+        elvDemo=(ExpandableListView)ptr.getPullableView();
+        ptr.setOnPullListener(new MyPullListener());
         //去掉expandListview的特别的下拉标志
         elvDemo.setGroupIndicator(null);
         //去掉ListView之间的线
         elvDemo.setDivider(null);
-        new Thread(){
-            @Override
-            public void run() {
-                super.run();
-                sendMy();
-            }
-        }.start();
 //        listparrent=new ArrayList<Map<String,Object>>();
 //        Map<String,Object> map1=new Hashtable<String,Object>();
 //        map1.put("id","1000001");
@@ -126,21 +129,60 @@ public class ServiceAllFragment extends Fragment {
 
         return view;
     }
-    private void sendMy(){
-        listparrent=new ArrayList<Map<String,Object>>();;
-        listitem=new ArrayList<List<Map<String,Object>>>();;
-        RequestParams params=new RequestParams(SuMaoConstant.SUMAO_IP+"/rest/model/atg/userprofiling/ProfileActor/myOrders3");
-        params.addParameter("pageNum",1);
-        params.addParameter("submitType",2);
-        params.addParameter("searchOrderType","3");
+    boolean Flag;
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        Log.e("TAG","Flag-----"+Flag);
+        if(isVisibleToUser){
+            if(Flag){
+                sendMy(subType,Kpstate,startDate,endDate,company,OrderId);
+                adapter.notifyDataSetChanged();
+            }
+        }else{
+            if(!Flag){
+                if(listitem!=null) {
+                    listitem.clear();
+                }
+                if(listparrent!=null){
+                    listparrent.clear();
+                }
+               page=1;subType="2";Kpstate="";startDate="";endDate="";company="";OrderId="";
+                sendMy(subType,Kpstate,startDate,endDate,company,OrderId);
+                if(adapter!=null) {
+                    adapter.notifyDataSetChanged();
+                }
+                Flag=false;
+            }
+        }
+    }
 
-//        params.addParameter("searchOrderState",0);
-//        params.addParameter("searchCompanyName",company);
-        params.addParameter("searchTrateType","offlineOrder");
-        final SharedPreferences sp = getActivity().getSharedPreferences("sumao", Activity.MODE_PRIVATE);
-        String unique123 = sp.getString("unique", "");
+    public  void sendMy(String subType, String KPstate, String startDate, String endDate, final String company, String OrderId){
+        Log.e("TAG","listFlag------"+ListFlag);
+        if(!ListFlag) {
+            listparrent = new ArrayList<Map<String, Object>>();
+            listitem = new ArrayList<List<Map<String, Object>>>();
+        }
+        RequestParams params=new RequestParams(SuMaoConstant.SUMAO_IP+"/rest/model/atg/userprofiling/ProfileActor/myOrders3");
+        params.setCharset("UTF-8");
+        params.setAsJsonContent(true);
+        JSONObject job=new JSONObject();
+        try {
+            job.put("searchCompanyName", company.trim());//公司
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        params.setBodyContent(job.toString());
+        params.addParameter("searchOrderType","3");
+        params.addParameter("searchOrderState","0");
+        params.addParameter("pageNum", page);
+        params.addParameter("searchOrderId", OrderId);//订单
+        params.addParameter("startDate",startDate);//开始日期
+        params.addParameter("endDate", endDate);//结束日期
+        params.addParameter("submitType",subType);//查询类型
+        params.addParameter("searchCheckType",KPstate);//开票状态
         params.addParameter("_dynSessConf", unique123);
-        Log.e("TAG","parames======"+params);
+        Log.e("TAG", "parames======" + params);
         x.http().post(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
@@ -161,7 +203,7 @@ public class ServiceAllFragment extends Fragment {
                             String shippingGroupState = j.getString("shippingGroupState");
                             String type = j.getString("type");
                             String cl_amount = "";
-                           state1=getState(state,type,shippingGroupState);
+                            String state1=getState(state,type,shippingGroupState);
 //                            String owner = j.getString("owner");//采购员
                             String orderId = j.getString("orderId");//订单编号
 
@@ -213,7 +255,6 @@ public class ServiceAllFragment extends Fragment {
 
             @Override
             public void onFinished() {
-
             }
         });
     }
@@ -248,5 +289,41 @@ public class ServiceAllFragment extends Fragment {
             s="等待客服处理";
         }
         return s;
+    }
+    private  class MyPullListener implements PullToRefreshLayout.OnPullListener {
+
+        @Override
+        public void onRefresh(final PullToRefreshLayout pullToRefreshLayout) {
+            // 下拉刷新操作
+            new Handler() {
+                @Override
+                public void handleMessage(Message msg) {
+                    // 千万别忘了告诉控件刷新完毕了哦！
+                    pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
+                    Log.e("TAG","下拉刷子新");
+                    page++;
+                    ListFlag=true;
+                    sendMy(subType,Kpstate,startDate,endDate,company,OrderId);
+//                    adapter.notifyDataSetChanged();
+                }
+            }.sendEmptyMessageDelayed(0,1000);
+        }
+
+        @Override
+        public void onLoadMore(final PullToRefreshLayout pullToRefreshLayout) {
+            // 加载操作
+            new Handler() {
+                @Override
+                public void handleMessage(Message msg) {
+                    // 千万别忘了告诉控件加载完毕了哦！
+                    pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
+                    Log.e("TAG","上拉加载");
+                    ListFlag=true;
+                    page+=1;
+                    sendMy(subType,Kpstate,startDate,endDate,company,OrderId);
+                    adapter.notifyDataSetChanged();
+                }
+            }.sendEmptyMessageDelayed(0, 1000);
+        }
     }
 }

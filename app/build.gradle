@@ -51,4 +51,5 @@ dependencies {
     compile 'org.dspace.xmlui.jakarta:jakarta-bcel:5.1.20040329'
     compile 'org.apache.httpcomponents:jakarta-httpcore:4.0-alpha4'
     compile files('libs/commons-net-3.3.jar')
+    compile project(':pullToRefreshlibrary')
 }

@@ -8,7 +8,7 @@ import android.app.Activity;
 public class HeLinJian extends Activity {
     //这是没事
     //guangjiu123123123123
-    //29847g98437
+    //29847g984372342
     //dkghoeur
     //7-14
     //kjsdfhgggf
@@ -16,5 +16,5 @@ public class HeLinJian extends Activity {
     //7-19
     //8-5
     //8-8
-    //8-19//8-22342
+    //8-19//8-22342   8-232342
 }

@@ -27,29 +27,29 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/x1"
     android:background="@color/white"
-    android:padding="@dimen/x5"
-    >
+    android:padding="@dimen/x5">
     <TextView
-        android:id="@+id/univalent1"
+        android:id="@+id/fenlei"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/univalent"
+        android:text="分类 : "
         android:layout_marginLeft="@dimen/x5"
         />
     <TextView
-        android:id="@+id/univalent2"
+        android:id="@+id/fenlei2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="6100"
-        android:layout_toRightOf="@id/univalent1"
+        android:text="LL"
+        android:layout_toRightOf="@id/fenlei"
         />
+
     <TextView
         android:id="@+id/number1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/number"
-        android:layout_toRightOf="@id/univalent2"
-        android:layout_marginLeft="@dimen/x20"
+        android:text="数量 :"
+        android:layout_toRightOf="@id/fenlei"
+        android:layout_marginLeft="@dimen/x105"
         />
     <TextView
         android:id="@+id/number2"
@@ -58,33 +58,50 @@
         android:text="00"
         android:layout_toRightOf="@id/number1"
         />
-
     <TextView
-        android:id="@+id/enterprise1"
+        android:id="@+id/univalent1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/enterprise"
-        android:layout_below="@id/univalent1"
+        android:layout_below="@id/fenlei"
+        android:paddingTop="@dimen/x5"
+        android:text="产品单价 : "
         android:layout_marginLeft="@dimen/x5"
-        android:paddingTop="@dimen/x5"
         />
     <TextView
-        android:id="@+id/enterprise2"
+        android:id="@+id/univalent2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="中海油"
-        android:layout_toRightOf="@id/enterprise1"
-        android:layout_below="@id/univalent1"
+        android:text="6100"
+        android:layout_below="@id/fenlei"
         android:paddingTop="@dimen/x5"
+        android:layout_toRightOf="@id/univalent1"
         />
+    <!--<TextView-->
+        <!--android:id="@+id/enterprise1"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="@string/enterprise"-->
+        <!--android:layout_below="@id/univalent1"-->
+        <!--android:layout_marginLeft="@dimen/x5"-->
+        <!--android:paddingTop="@dimen/x5"-->
+        <!--/>-->
+    <!--<TextView-->
+        <!--android:id="@+id/enterprise2"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="中海油"-->
+        <!--android:layout_toRightOf="@id/enterprise1"-->
+        <!--android:layout_below="@id/univalent1"-->
+        <!--android:paddingTop="@dimen/x5"-->
+        <!--/>-->
     <TextView
         android:id="@+id/totalMoney1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/totalMoney"
-        android:layout_toRightOf="@id/univalent2"
-        android:layout_marginLeft="@dimen/x20"
-        android:layout_below="@id/univalent1"
+        android:layout_toRightOf="@id/univalent1"
+        android:layout_marginLeft="@dimen/x80"
+        android:layout_below="@id/fenlei"
         android:paddingTop="@dimen/x5"
         />
     <TextView
@@ -93,17 +110,54 @@
         android:layout_height="wrap_content"
         android:text="00"
         android:layout_toRightOf="@id/totalMoney1"
+        android:layout_below="@id/fenlei"
+        android:paddingTop="@dimen/x5"
+
+        />
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/x5"
+        android:paddingTop="@dimen/x5"
+        android:text="下单日期 : "
+        android:layout_below="@id/univalent1"/>
+    <TextView
+        android:id="@+id/date2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="23049"
+        android:layout_toRightOf="@id/date"
         android:layout_below="@id/univalent1"
         android:paddingTop="@dimen/x5"
 
         />
 
     <TextView
+        android:id="@+id/type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="订单类型 :"
+        android:layout_toRightOf="@id/date"
+        android:layout_marginLeft="@dimen/x80"
+        android:layout_below="@id/univalent1"
+        android:paddingTop="@dimen/x5"
+        />
+    <TextView
+        android:id="@+id/type2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="000"
+        android:layout_toRightOf="@id/type"
+        android:layout_below="@id/univalent1"
+        android:paddingTop="@dimen/x5"
+        />
+    <TextView
         android:id="@+id/warehouse1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/warehouse"
-        android:layout_below="@id/enterprise1"
+        android:layout_below="@id/date"
         android:layout_marginLeft="@dimen/x5"
         android:paddingTop="@dimen/x5"
         />
@@ -113,7 +167,7 @@
         android:layout_height="wrap_content"
         android:text="讯帮1库"
         android:layout_toRightOf="@id/warehouse1"
-        android:layout_below="@id/enterprise1"
+        android:layout_below="@id/date"
         android:paddingTop="@dimen/x5"
 
         />
@@ -122,9 +176,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/company"
-        android:layout_toRightOf="@id/univalent2"
-        android:layout_marginLeft="@dimen/x20"
-        android:layout_below="@id/enterprise1"
+        android:layout_marginLeft="@dimen/x5"
+        android:layout_below="@id/warehouse1"
         android:paddingTop="@dimen/x5"
 
         />
@@ -134,7 +187,7 @@
         android:layout_height="wrap_content"
         android:text="四联创业集团"
         android:layout_toRightOf="@id/company1"
-        android:layout_below="@id/enterprise1"
+        android:layout_below="@id/warehouse1"
         android:paddingTop="@dimen/x5"
         />
 </RelativeLayout>

@@ -5,6 +5,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
 
+import com.jingchen.pulltorefresh.PullToRefreshLayout;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.MyAdapter;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
@@ -36,12 +39,11 @@ public class PresellChangeFragment extends Fragment {
     private ExpandableListView elvDemo;
     private List<Map<String,Object>> listparrent;
     private List<List<Map<String,Object>>> listitem;
-
-//    private List<Map<String,Object>> listparrent=new ArrayList<Map<String,Object>>();
-//    private List<List<Map<String,Object>>> listitem=new ArrayList<List<Map<String,Object>>>();
     MyAdapter adapter;
-    String state1;
-    private String url= SuMaoConstant.SUMAO_IP+"/rest/model/atg/userprofiling/ProfileActor/myOrders";
+    String orderId,type;
+    int page=1;
+    boolean ListFlag;
+    String subType=null,Kpstate="",startDate="",endDate="",company="",OrderId="";
 
     public PresellChangeFragment() {
         // Required empty public constructor
@@ -51,22 +53,19 @@ public class PresellChangeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              final Bundle savedInstanceState) {
+        listparrent=new ArrayList<Map<String,Object>>();
+        listitem=new ArrayList<List<Map<String,Object>>>();
         // Inflate the layout for this fragment
         View view=inflater.inflate(R.layout.fragment_presell_change, container, false);
         //实例化
-        elvDemo= (ExpandableListView) view.findViewById(R.id.elvDemo);
+        PullToRefreshLayout ptr=(PullToRefreshLayout)view.findViewById(R.id.refresh_view);
+        elvDemo=(ExpandableListView)ptr.getPullableView();
+        ptr.setOnPullListener(new MyPullListener());
         //去掉expandListview的特别的下拉标志
         elvDemo.setGroupIndicator(null);
         //去掉ListView之间的线
         elvDemo.setDivider(null);
 
-        new Thread(){
-            @Override
-            public void run() {
-                super.run();
-                sendMy();
-            }
-        }.start();
 //        listparrent=new ArrayList<Map<String,Object>>();
 //        Map<String,Object> map1=new Hashtable<String,Object>();
 //        map1.put("id","1000001");
@@ -129,76 +128,119 @@ public class PresellChangeFragment extends Fragment {
 
         return view;
     }
-    private void sendMy(){
-        listparrent=new ArrayList<Map<String,Object>>();;
-        listitem=new ArrayList<List<Map<String,Object>>>();;
-        RequestParams params=new RequestParams(url);
-        params.addParameter("pageNum",1);
-        params.addParameter("submitType",1);
+    boolean Flag;
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        Log.e("TAG","Flag-----"+Flag);
+        listparrent=new ArrayList<Map<String,Object>>();
+        listitem=new ArrayList<List<Map<String,Object>>>();
+        if(isVisibleToUser){
+            if(Flag){
+                sendMy(subType,Kpstate,startDate,endDate,company,OrderId);
+                adapter.notifyDataSetChanged();
+            }
+        }else{
+            if(!Flag){
+                if(listitem!=null) {
+                    listitem.clear();
+                }
+                if(listparrent!=null){
+                    listparrent.clear();
+                }
+              page=1;  subType=null;Kpstate="";startDate="";endDate="";company="";OrderId="";
+                sendMy(subType,Kpstate,startDate,endDate,company,OrderId);
+                if(adapter!=null) {
+                    adapter.notifyDataSetChanged();
+                }
+                Flag=false;
+            }
+        }
+    }
+    public  void sendMy(String subType, String KPstate, String startDate, String endDate, final String company, String OrderId){
+        if(!ListFlag){
+            listparrent=new ArrayList<Map<String,Object>>();
+            listitem=new ArrayList<List<Map<String,Object>>>();
+        }
+        RequestParams params=new RequestParams(SuMaoConstant.SUMAO_IP+"/rest/model/atg/userprofiling/ProfileActor/myOrders");
+        params.setCharset("UTF-8");
+        params.setAsJsonContent(true);
+        JSONObject job=new JSONObject();
+        try {
+            job.put("searchCompanyName", company.trim());//公司
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        params.setBodyContent(job.toString());
         params.addParameter("searchOrderType","forwardPricingOrder");
         params.addParameter("searchOrderState","CHANGED");
-//        params.addParameter("searchCompanyName",company);
-        final SharedPreferences sp = getActivity().getSharedPreferences("sumao", Activity.MODE_PRIVATE);
-        String unique123 = sp.getString("unique", "");
-        params.addParameter("_dynSessConf", unique123);
-        Log.e("TAG","parames======"+params);
+        params.addParameter("pageNum", page);
+        params.addParameter("searchOrderId", OrderId);//订单
+        params.addParameter("startDate",startDate);//开始日期
+        params.addParameter("endDate", endDate);//结束日期
+        params.addParameter("submitType",subType);//查询类型
+        params.addParameter("searchCheckType",KPstate);//开票状态
+//        SharedPreferences sp =getActivity().getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+//        String unique123 = sp.getString("unique", "");
+//        params.addParameter("_dynSessConf", unique123);
+        Log.e("TAG", "parames======" + params);
         x.http().post(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
                 Log.e("TAG","result----"+result);
                 try {
-                    JSONObject job = new JSONObject(result);
-                    String info = job.getString("info");
-                    if (info.equals("fail")) {
-                        Toast.makeText(getActivity(), "获取数据失败", Toast.LENGTH_SHORT).show();
-                    } else {
-                        String str = job.getString("order");
-                        JSONArray jay = new JSONArray(str);
-                        for (int i = 0; i < jay.length(); i++) {
-                            Log.e("TAG", "i==" + i);
-                            JSONObject j = (JSONObject) jay.get(i);
-                            String cl = (String) j.getString("cl");
-                            String state = j.getString("state");//状态
-                            String shippingGroupState = j.getString("shippingGroupState");
-                            String type = j.getString("type");
-                            String cl_amount = "";
-                          state1=getState(state,type,shippingGroupState);
-                            String owner = j.getString("owner");//采购员
-                            String orderId = j.getString("orderId");//订单编号
-
-                            JSONArray j1 = new JSONArray(cl);
-                            for (int k = 0; k < j1.length(); k++) {
-                                JSONObject job1 = (JSONObject) j1.get(k);
-                                cl_amount = job1.getString("cl_amount");//金额
-                                String cl_mingcheng = job1.getString("cl_mingcheng");//产品名称
-                                String cl_fenlei = job1.getString("cl_fenlei");
-                                Log.e("TAG", "mingc==" + cl_mingcheng);
-                                List<Map<String, Object>> list1 = new ArrayList<Map<String, Object>>();
-                                Map<String, Object> map = new Hashtable<String, Object>();
-                                map.put("type", cl_fenlei);
-                                map.put("name", cl_mingcheng);
-                                list1.add(map);
-                                listitem.add(list1);
-                            }
-                            Map<String, Object> map1 = new Hashtable<String, Object>();
-                            map1.put("id", orderId);
-                            map1.put("price", cl_amount);
-                            map1.put("states", state1);
-                            map1.put("name", owner);
-                            Log.e("TAG", "map1-----" + map1);
-                            listparrent.add(map1);
-                        }
+                    JSONObject job=new JSONObject(result);
+                    String count=job.getString("count");
+                    Log.e("TAG","count----"+count);
+                    if(count.equals("0")){
+                        listparrent.clear();
+                        listitem.clear();
                     }
-                    adapter = new MyAdapter(listparrent, listitem, getActivity());
-                    elvDemo.setAdapter(adapter);
-                    if (adapter != null && listparrent != null) {
-                        for (int i = 0; i < listparrent.size(); i++) {
-                            elvDemo.expandGroup(i);
-                        }
-                    }
+                    String str=job.getString("order");
+                    JSONArray jay=new JSONArray(str);
+                    for(int i=0;i<jay.length();i++){
+                        JSONObject j= (JSONObject) jay.get(i);
+                        String cl= (String) j.getString("cl");
+                        String state=j.getString("state");//状态
+                        String shippingGroupState=j.getString("shippingGroupState");
+                        type=j.getString("type");
+                        String cl_amount="";
+                        String  state1=getState(state,type,shippingGroupState);
+                        String owner=j.getString("owner");//采购员
+                        orderId=j.getString("orderId");//订单编号
 
-                }catch(JSONException e){
+                        JSONArray j1=new JSONArray(cl);
+                        for(int k=0;k<j1.length();k++){
+                            JSONObject job1= (JSONObject) j1.get(k);
+                            cl_amount=job1.getString("cl_amount");//金额
+                            String cl_mingcheng=job1.getString("cl_mingcheng");//产品名称
+                            String cl_fenlei=job1.getString("cl_fenlei");
+                            Log.e("TAG","mingc=="+cl_mingcheng);
+                            List<Map<String,Object>> list1=new ArrayList<Map<String,Object>>();
+                            Map<String,Object> map=new Hashtable<String,Object>();
+                            map.put("type",cl_fenlei);
+                            map.put("name",cl_mingcheng);
+                            list1.add(map);
+                            listitem.add(list1);
+                        }
+                        Map<String,Object> map1=new Hashtable<String,Object>();
+                        map1.put("id",orderId);
+                        map1.put("price",cl_amount);
+                        map1.put("states",state1);
+                        map1.put("name",owner);
+                        Log.e("TAG","map1-----"+map1);
+                        listparrent.add(map1);
+                    }
+                } catch (JSONException e) {
                     e.printStackTrace();
+                }
+                adapter=new MyAdapter(listparrent,listitem,getActivity());
+                elvDemo.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+                if(adapter!=null && listparrent!=null){
+                    for (int i = 0; i < listparrent.size(); i++) {
+                        elvDemo.expandGroup(i);
+                    }
                 }
             }
             @Override
@@ -214,7 +256,6 @@ public class PresellChangeFragment extends Fragment {
 
             @Override
             public void onFinished() {
-
             }
         });
     }
@@ -249,5 +290,41 @@ public class PresellChangeFragment extends Fragment {
             s="等待客服处理";
         }
         return s;
+    }
+    private  class MyPullListener implements PullToRefreshLayout.OnPullListener {
+
+        @Override
+        public void onRefresh(final PullToRefreshLayout pullToRefreshLayout) {
+            // 下拉刷新操作
+            new Handler() {
+                @Override
+                public void handleMessage(Message msg) {
+                    // 千万别忘了告诉控件刷新完毕了哦！
+                    pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
+                    Log.e("TAG","下拉刷子新");
+                    page++;
+                    ListFlag=true;
+                    sendMy(subType,Kpstate,startDate,endDate,company,OrderId);
+//                    adapter.notifyDataSetChanged();
+                }
+            }.sendEmptyMessageDelayed(0,1000);
+        }
+
+        @Override
+        public void onLoadMore(final PullToRefreshLayout pullToRefreshLayout) {
+            // 加载操作
+            new Handler() {
+                @Override
+                public void handleMessage(Message msg) {
+                    // 千万别忘了告诉控件加载完毕了哦！
+                    pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
+                    Log.e("TAG","上拉加载");
+                    ListFlag=true;
+                    page+=1;
+                    sendMy(subType,Kpstate,startDate,endDate,company,OrderId);
+                    adapter.notifyDataSetChanged();
+                }
+            }.sendEmptyMessageDelayed(0, 1000);
+        }
     }
 }

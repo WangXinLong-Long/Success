@@ -159,7 +159,7 @@
                         android:layout_height="wrap_content"
                         android:layout_toRightOf="@id/type2"
                         android:paddingBottom="@dimen/x5"
-                        android:paddingLeft="@dimen/x5"
+                        android:paddingLeft="@dimen/x15"
                         android:paddingTop="@dimen/x5"
                         android:text="@string/buyer"
                         android:textSize="@dimen/x13" />
@@ -181,7 +181,7 @@
                         android:layout_height="wrap_content"
                         android:layout_toRightOf="@id/buyer2"
                         android:paddingBottom="@dimen/x5"
-                        android:paddingLeft="@dimen/x5"
+                        android:paddingLeft="@dimen/x15"
                         android:paddingTop="@dimen/x5"
                         android:text="@string/state"
                         android:textSize="@dimen/x13" />

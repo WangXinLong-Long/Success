@@ -57,9 +57,9 @@ public class ChinaNorthFragment extends Fragment implements View.OnClickListener
         list=new ArrayList<ChinaNorthInfo>();
         for(int i=0;i<3;i++){
             ChinaNorthInfo info=new ChinaNorthInfo();
-            info.title="油化工线性聚乙烯LLDPE-"+i;
-            info.name="张晓明-"+i;
-            info.telnum="1111111111111-"+i;
+            info.title="假数据-油化工线性聚乙烯LLDPE-"+i;
+            info.name="假-张晓明-"+i;
+            info.telnum="假电话-"+i;
             list.add(info);
         }
     }

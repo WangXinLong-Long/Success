@@ -58,10 +58,13 @@ public class SpotOrderAdapter extends BaseAdapter {
             holder.productModel = ((TextView) convertView.findViewById(R.id.productModel));
             holder.univalent = ((TextView) convertView.findViewById(R.id.univalent2));
             holder.number = ((TextView) convertView.findViewById(R.id.number2));
-            holder.enterprise = ((TextView) convertView.findViewById(R.id.enterprise2));
+//            holder.enterprise = ((TextView) convertView.findViewById(R.id.enterprise2));
             holder.totalMoney = ((TextView) convertView.findViewById(R.id.totalMoney2));
             holder.warehouse = ((TextView) convertView.findViewById(R.id.warehouse2));
             holder.company = ((TextView) convertView.findViewById(R.id.company2));
+            holder.type= (TextView) convertView.findViewById(R.id.type2);
+            holder.fenlei= (TextView) convertView.findViewById(R.id.fenlei2);
+            holder.date= (TextView) convertView.findViewById(R.id.date2);
             convertView.setTag(holder);
         }else {
             holder = ((ViewHolder) convertView.getTag());
@@ -70,10 +73,13 @@ public class SpotOrderAdapter extends BaseAdapter {
 
         holder.univalent.setText(list.get(position).getUnivalent()+"");
         holder.number.setText(list.get(position).getNumber()+"");
-        holder.enterprise.setText(list.get(position).getEnterprise()+"");
+//        holder.enterprise.setText(list.get(position).getEnterprise()+"");
         holder.totalMoney.setText(list.get(position).getTotalMoney()+"");
         holder.warehouse.setText(list.get(position).getWarehouse()+"");
         holder.company.setText(list.get(position).getCompany()+"");
+        holder.date.setText(list.get(position).getDate()+"");
+        holder.fenlei.setText(list.get(position).getFenlei()+"");
+        holder.type.setText(list.get(position).getType());
         return convertView;
     }
     class ViewHolder
@@ -85,5 +91,8 @@ public class SpotOrderAdapter extends BaseAdapter {
         TextView totalMoney;
         TextView warehouse;
         TextView company;
+        TextView type;
+        TextView date;
+        TextView fenlei;
     }
 }

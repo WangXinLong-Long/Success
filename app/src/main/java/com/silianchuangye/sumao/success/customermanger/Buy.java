@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Buy extends AppCompatActivity implements AdapterView.OnItemClickListener,View.OnClickListener {
-private ImageView img_back;
+    private ImageView img_back;
     private TextView tv_save,tv_center;
     private ListView lv_buy;
     private List<BuyInfo> list;
