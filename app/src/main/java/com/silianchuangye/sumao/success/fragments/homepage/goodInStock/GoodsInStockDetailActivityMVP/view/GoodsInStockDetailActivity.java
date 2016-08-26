@@ -358,7 +358,7 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
 //        仓库地址
         warehouse_address_et.setText(goodsInStockDetailBean.getCl_dizhi());
 //        交货方式
-        delivery_mode_et.setText(goodsInStockDetailBean.getCl_jhfangshi());
+        delivery_mode_et.setText((CharSequence) goodsInStockDetailBean.getCl_jhfangshi());
 //        分类
         classification_pre_sale_et.setText(goodsInStockDetailBean.getCl_fenlei());
 //        仓库
