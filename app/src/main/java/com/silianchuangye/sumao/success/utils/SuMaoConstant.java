@@ -19,4 +19,10 @@ public class SuMaoConstant {
 //   public static final String SUMAO_IP = "http://139.198.7.27:7003";
 //    测试使用
         public static final String SUMAO_IP = "http://192.168.32.126:7023";
+    public static final String hostname = "192.168.32.126";
+    public static final int port = 21;
+    public static final String username = "mobile";
+    public static final String password = "Mm123456";
+    public static final String pathname = "/docs/";
+
 }

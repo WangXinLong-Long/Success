@@ -282,7 +282,6 @@ public class PagerTwo extends BasePager {
                 Layout.setBackgroundColor(Color.WHITE);
 
             }
-
             text.setTextColor(Color.BLACK);
             text.setText(list.get(position).toString());
 

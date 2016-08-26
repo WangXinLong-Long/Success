@@ -102,6 +102,7 @@
             android:layout_below="@id/enterprise1"
             android:layout_marginLeft="@dimen/x5"
             android:paddingTop="@dimen/x5"
+            android:visibility="gone"
             />
         <TextView
             android:id="@+id/distributionMode2"
@@ -111,18 +112,19 @@
             android:layout_toRightOf="@id/distributionMode1"
             android:layout_below="@id/enterprise1"
             android:paddingTop="@dimen/x5"
-
+            android:visibility="gone"
             />
         <TextView
             android:id="@+id/delivery_time1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="交货时间:"
-            android:layout_alignLeft="@id/product_unit_price1"
+
             android:layout_below="@id/enterprise1"
             android:paddingTop="@dimen/x5"
-
+            android:layout_marginLeft="@dimen/x5"
             />
+        <!--android:layout_alignLeft="@id/product_unit_price1"-->
         <TextView
             android:id="@+id/delivery_time2"
             android:layout_width="wrap_content"
@@ -137,7 +139,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="仓库:"
-            android:layout_below="@id/distributionMode1"
+            android:layout_below="@id/delivery_time1"
             android:layout_marginLeft="@dimen/x5"
             android:paddingTop="@dimen/x5"
             />
@@ -147,7 +149,7 @@
             android:layout_height="wrap_content"
             android:text="北京讯帮1库"
             android:layout_toRightOf="@id/warehouse1"
-            android:layout_below="@id/distributionMode1"
+            android:layout_below="@id/delivery_time1"
             android:paddingTop="@dimen/x5"
             />
     </RelativeLayout>

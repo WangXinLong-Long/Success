@@ -18,6 +18,8 @@ import android.widget.Toast;
 
 
 import com.silianchuangye.sumao.success.activity.WelcomeActivity;
+import com.silianchuangye.sumao.success.adapter.LvFragmentoneGrouponAdapter;
+import com.silianchuangye.sumao.success.custom.customCalendar.DayAndPrice;
 import com.silianchuangye.sumao.success.fragments.BasePager;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.bean.AnnounceBean;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.bean.AnnouncementBean;
@@ -25,6 +27,11 @@ import com.silianchuangye.sumao.success.fragments.PagerOneMVP.bean.BannerBean;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.presenter.PagerOnePresenter;
 import com.silianchuangye.sumao.success.fragments.homepage.AnnouncementDetailMVP.view.AnnouncementDetailActivity;
 import com.silianchuangye.sumao.success.fragments.homepage.groupbuying.GroupBuyingActivity;
+import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.bean.PreSaleDetailCalendarBean;
+import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.bean.Sku;
+import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.view.PreSaleDetailActivity;
+import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleMVP.bean.Forward;
+import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleMVP.bean.PreSaleBean;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.LoginUserActivity;
 import com.silianchuangye.sumao.success.fragments.SearchActivityMVP.view.SearchActivity;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.AuctionActivity;
@@ -39,6 +46,7 @@ import com.silianchuangye.sumao.success.utils.scrollviewAD.MyGallery;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.ImageAdapter;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -63,6 +71,17 @@ public class PagerOne extends BasePager implements IPagerOneView {
     private List<String> banners;
     private MarqueeView tvFragmentHord;
     private List<AnnouncementBean> items;
+//    团购的listview还没有创建对象
+    private ListView lvFragmentoneGroupon;
+//    预售信息的listview【
+    private ListView lvFragmentoneAD;
+    private LvFragmentoneGrouponAdapter lvFragmentoneGrouponAdapter;
+    private List<Forward> forwards;
+    private int year;
+    private int mounth;
+    private int day;
+    private List<DayAndPrice> calendarlist;
+    private Intent calendarintent;
 
     @Override
     public void myClickSearch() {
@@ -81,6 +100,29 @@ public class PagerOne extends BasePager implements IPagerOneView {
         listString = new ArrayList<Map<String, Object>>();
         listAdwords();
         initHorn();
+        initlvFragmentoneGroupon();
+    }
+//     预售的listview
+    private void initlvFragmentoneGroupon() {
+        lvFragmentoneAD = ((ListView) view.findViewById(R.id.lvFragmentoneAD));
+        pagerOnePresenter.getHomeSaleInfoToPagerOneFragment();
+        lvFragmentoneAD.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                calendarlist  =new ArrayList<DayAndPrice>();
+                calendarintent = new Intent();
+
+
+                calendarintent.putExtra("calendarlist",(Serializable) calendarlist);
+                //        产品编号
+                calendarintent.putExtra("productId",forwards.get(position).getCl_id());
+                //        skuId
+                calendarintent.setClass(mActivity, PreSaleDetailActivity.class);
+
+                startActivity(calendarintent);
+
+            }
+        });
     }
 
     private void initHorn() {
@@ -128,7 +170,9 @@ public class PagerOne extends BasePager implements IPagerOneView {
         map3.put("com", "福建联合");
         map3.put("number", "8000");
         listString.add(map3);
-        SimpleAdapter adapter = new SimpleAdapter(mActivity, listString, R.layout.ragmentoneitemfordate, new String[]{"icon", "price", "city", "com", "number"}, new int[]{R.id.ivfragmenticon, R.id.tvfragmentfordate, R.id.tvfragmentforcity, R.id.tvFragmentforcom, R.id.tvfragmentfornumber});
+        SimpleAdapter adapter = new SimpleAdapter(mActivity, listString, R.layout.ragmentoneitemfordate,
+                new String[]{"icon", "price", "city", "com", "number"},
+                new int[]{R.id.ivfragmenticon, R.id.tvfragmentfordate, R.id.tvfragmentforcity, R.id.tvFragmentforcom, R.id.tvfragmentfornumber});
         lvFragmentAdwords.setAdapter(adapter);
 
 
@@ -372,4 +416,13 @@ public class PagerOne extends BasePager implements IPagerOneView {
         }
         tvFragmentHord.startWithList(strings);
     }
+
+    @Override
+    public void saveHomeSaleInFragmentList(PreSaleBean preSaleBean) {
+        forwards = preSaleBean.getForward();
+        lvFragmentoneGrouponAdapter = new LvFragmentoneGrouponAdapter(forwards,mActivity);
+        lvFragmentoneAD.setAdapter(lvFragmentoneGrouponAdapter);
+    }
+
+
 }

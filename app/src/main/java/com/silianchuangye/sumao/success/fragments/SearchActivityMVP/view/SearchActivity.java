@@ -31,7 +31,7 @@ public class SearchActivity extends AppCompatActivity implements ISearchActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-
+        searchActivityPresenter = new SearchActivityPresenter(SearchActivity.this);
         init_GridView();
         back= (ImageView) findViewById(R.id.iv_Back_Search);
         back.setOnClickListener(new View.OnClickListener() {
@@ -47,7 +47,7 @@ public class SearchActivity extends AppCompatActivity implements ISearchActivity
             @Override
             public void onClick(View v) {
                 //进行搜索功能,跳到现货界面
-                searchActivityPresenter = new SearchActivityPresenter(SearchActivity.this);
+
                 searchActivityPresenter.sendSearchActivityData(search_content.getText().toString().trim());
             }
         });

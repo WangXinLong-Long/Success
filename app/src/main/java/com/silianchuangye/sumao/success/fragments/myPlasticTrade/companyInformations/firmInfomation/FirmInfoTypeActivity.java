@@ -26,6 +26,7 @@ import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.FirmInfoTypeActivityMVP.presenter.GetEntInformationPresenter;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.FirmInfoTypeActivityMVP.view.IFirmInfoTypeActivity;
 import com.silianchuangye.sumao.success.model.EnterpriseInformation;
+import com.silianchuangye.sumao.success.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -69,11 +70,16 @@ public class FirmInfoTypeActivity extends AppCompatActivity implements IFirmInfo
         title = bundle.getString("title");
         number = bundle.getInt("number");
         Log.d("number", number + "");
-
+        LogUtils.log("title标题--->"+title);
+        LogUtils.log("number--->"+number);
         if (title.equals("企业类型")) {
             getEntInformation.setDataInView(1);
         } else if (title.equals("纳税人类型")) {
             getEntInformation.setDataInView(2);
+        }else if(title.equals("企业注册证件")){
+            getEntInformation.setDataInView(3);
+        }else if (title.equals("申请成为塑贸网")){
+            getEntInformation.setDataInView(4);
         }
 
 
@@ -100,7 +106,7 @@ public class FirmInfoTypeActivity extends AppCompatActivity implements IFirmInfo
                     Intent intent = new Intent();
                     intent.putExtra("name", name);
                     intent.putExtra("level",level);
-                    FirmInfoTypeActivity.this.setResult(number, intent);
+                    FirmInfoTypeActivity.this.setResult(RESULT_OK, intent);
                     FirmInfoTypeActivity.this.finish();
 
                 }

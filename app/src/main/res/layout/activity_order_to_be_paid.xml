@@ -177,10 +177,10 @@
                         android:id="@+id/buyer1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toRightOf="@id/type1"
+                        android:layout_toRightOf="@id/type2"
                         android:paddingBottom="@dimen/x5"
                         android:paddingTop="@dimen/x5"
-                        android:layout_marginLeft="@dimen/x110"
+                        android:layout_marginLeft="@dimen/x15"
                         android:text="@string/buyer"
                         android:textSize="@dimen/x13" />
 
@@ -195,10 +195,10 @@
                         android:text="张三"
                         android:textSize="@dimen/x13" />
 
-
                     <RelativeLayout
                         android:id="@+id/second_line_information"
-                        android:layout_below="@id/type1"
+                        android:layout_toRightOf="@id/buyer2"
+                        android:layout_marginLeft="@dimen/x12"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                         <TextView

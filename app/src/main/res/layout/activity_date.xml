@@ -96,8 +96,19 @@
               android:layout_centerVertical="true"
               android:textColor="#93C73C"
               android:textSize="17sp"
-              android:text="2月25日	周四" />
-
+              android:text="2月25日	周四"
+                android:visibility="invisible"/>
+            <TextView
+                android:id="@+id/selectDate_description"
+                style="@style/myschedule_current_month_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:textColor="#93C73C"
+                android:textSize="15sp"
+                android:text="有小绿点的均为预售日期" />
         </RelativeLayout>
         
    </LinearLayout>

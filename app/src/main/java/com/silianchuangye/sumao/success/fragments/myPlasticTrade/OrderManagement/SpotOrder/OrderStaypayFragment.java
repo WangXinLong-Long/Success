@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 
+import com.jingchen.pulltorefresh.PullToRefreshLayout;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.MyAdapter;
 
@@ -39,13 +42,15 @@ import java.util.Map;
  */
 public class OrderStaypayFragment extends Fragment {
     private ExpandableListView elvDemo;
-    private List<Map<String,Object>> listparrent;
+    private List<Map<String,Object>> listparrent;;
     private List<List<Map<String,Object>>> listitem;
-//    private List<Map<String,Object>> listparrent=new ArrayList<Map<String,Object>>();;
-//    private List<List<Map<String,Object>>> listitem=new ArrayList<List<Map<String,Object>>>();;
+    boolean ListFlag;
+    SharedPreferences sp;
+    String unique123 ;
     MyAdapter adapter;
-    String state1;
-    String orderId;
+    String orderId,type;
+    int page=1;
+    String subType=null,Kpstate="",startDate="",endDate="",company="",OrderId="",OrderType="fixedPricingOrder";
     public OrderStaypayFragment() {
         // Required empty public constructor
     }
@@ -56,20 +61,20 @@ public class OrderStaypayFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         Log.e("TAG","待支付订单");
+        listparrent=new ArrayList<Map<String,Object>>();
+        listitem=new ArrayList<List<Map<String,Object>>>();
+        sp=getActivity().getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+        unique123= sp.getString("unique", "");
         View view=inflater.inflate(R.layout.fragment_order_staypay, container, false);
         //实例化
-        elvDemo= (ExpandableListView) view.findViewById(R.id.elvDemo);
+        PullToRefreshLayout ptr=(PullToRefreshLayout)view.findViewById(R.id.refresh_view);
+        elvDemo=(ExpandableListView)ptr.getPullableView();
+        ptr.setOnPullListener(new MyPullListener());
         //去掉expandListview的特别的下拉标志
         elvDemo.setGroupIndicator(null);
         //去掉ListView之间的线
         elvDemo.setDivider(null);
-        new Thread(){
-            @Override
-            public void run() {
-                super.run();
-                sendMy();
-            }
-        }.start();
+
 //        listparrent=new ArrayList<Map<String,Object>>();
 //        Map<String,Object> map1=new Hashtable<String,Object>();
 //        map1.put("id","1000001");
@@ -121,9 +126,9 @@ public class OrderStaypayFragment extends Fragment {
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
 //                Toast.makeText(getContext(), "点击title", Toast.LENGTH_SHORT).show();
+               Log.e("TAG","listparrent.get(groupPosition).get(\"id\").toString()===="+listparrent.get(groupPosition).get("id").toString());
                 Intent intent = new Intent();
                 intent.putExtra("ID",listparrent.get(groupPosition).get("id").toString());
-                Log.e("TAG","orderId----------"+orderId);
                 intent.setClass(getActivity(), SpotOrder.class);
                 startActivity(intent);
                 return true;
@@ -134,25 +139,69 @@ public class OrderStaypayFragment extends Fragment {
 
         return view;
     }
-    public void sendMy(){
-        listparrent=new ArrayList<Map<String,Object>>();;
-        listitem=new ArrayList<List<Map<String,Object>>>();;
+    boolean Flag;
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        Log.e("TAG","Flag-----"+Flag);
+        if(isVisibleToUser){
+            if(Flag){
+                sendMy(subType,Kpstate,startDate,endDate,company,OrderId,OrderType);
+            }
+        }else{
+            if(!Flag){
+                if(listitem!=null) {
+                    listitem.clear();
+                }
+                if(listparrent!=null){
+                    listparrent.clear();
+                }
+               page=1; subType=null;Kpstate="";startDate="";endDate="";company="";OrderId="";OrderType="fixedPricingOrder";
+                sendMy(subType,Kpstate,startDate,endDate,company,OrderId,OrderType);
+                if(adapter!=null) {
+                    adapter.notifyDataSetChanged();
+                }
+                Flag=false;
+            }
+        }
+    }
+    public  void sendMy(String subType,String KPstate,String startDate,String endDate,String company,String OrderId,String OrderType){
+        if(!ListFlag){
+            listparrent=new ArrayList<Map<String,Object>>();
+            listitem=new ArrayList<List<Map<String,Object>>>();
+        }
         RequestParams params=new RequestParams(SuMaoConstant.SUMAO_IP+"/rest/model/atg/userprofiling/ProfileActor/myOrders");
-        params.addParameter("pageNum",1);
-        params.addParameter("submitType",1);
-        params.addParameter("searchOrderType","fixedPricingOrder");
+        params.setCharset("UTF-8");
+        params.setAsJsonContent(true);
+        JSONObject job=new JSONObject();
+        try {
+            job.put("searchCompanyName", company.trim());//公司
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        params.setBodyContent(job.toString());
+        params.addParameter("searchOrderType",OrderType);
         params.addParameter("searchOrderState","1");
-//        params.addParameter("searchCompanyName",company);
-        final SharedPreferences sp = getActivity().getSharedPreferences("sumao", Activity.MODE_PRIVATE);
-        String unique123 = sp.getString("unique", "");
+        params.addParameter("pageNum",page);
+        params.addParameter("searchOrderId", OrderId);//订单
+        params.addParameter("startDate",startDate);//开始日期
+        params.addParameter("endDate", endDate);//结束日期
+        params.addParameter("submitType",subType);//查询类型
+        params.addParameter("searchCheckType",KPstate);//开票状态
         params.addParameter("_dynSessConf", unique123);
-        Log.e("TAG","parames======"+params);
+        Log.e("TAG", "parames======" + params);
         x.http().post(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
                 Log.e("TAG","result----"+result);
                 try {
                     JSONObject job=new JSONObject(result);
+                    String count=job.getString("count");
+                    Log.e("TAG","count----"+count);
+                    if(count.equals("0")){
+                        listparrent.clear();
+                        listitem.clear();
+                    }
                     String str=job.getString("order");
                     JSONArray jay=new JSONArray(str);
                     for(int i=0;i<jay.length();i++){
@@ -160,14 +209,14 @@ public class OrderStaypayFragment extends Fragment {
                         String cl= (String) j.getString("cl");
                         String state=j.getString("state");//状态
                         String shippingGroupState=j.getString("shippingGroupState");
-                        String  type=j.getString("type");
+                        type=j.getString("type");
                         String cl_amount="";
-                        state1=getState(state,type,shippingGroupState);
+                        String state1=getState(state,type,shippingGroupState);
                         String owner=j.getString("owner");//采购员
                         orderId=j.getString("orderId");//订单编号
-                        Log.e("TAG","orderId网络====="+orderId);
+
                         JSONArray j1=new JSONArray(cl);
-                        List<Map<String,Object>> list1=new ArrayList<Map<String,Object>>();;
+                        List<Map<String,Object>> list1=new ArrayList<Map<String,Object>>();
                         for(int k=0;k<j1.length();k++){
                             JSONObject job1= (JSONObject) j1.get(k);
                             cl_amount=job1.getString("cl_amount");//金额
@@ -180,9 +229,7 @@ public class OrderStaypayFragment extends Fragment {
                             map.put("name",cl_mingcheng);
                             list1.add(map);
                             listitem.add(list1);
-                            Log.e("TAG","list1-----"+list1.size());
                         }
-                        Log.e("TAG","listitem----"+listitem.size());
                         Map<String,Object> map1=new Hashtable<String,Object>();
                         map1.put("id",orderId);
                         map1.put("price",cl_amount);
@@ -190,17 +237,18 @@ public class OrderStaypayFragment extends Fragment {
                         map1.put("name",owner);
                         Log.e("TAG","map1-----"+map1);
                         listparrent.add(map1);
-                        Log.e("TAG","listparrent-----"+listparrent.size());
                     }
-                    adapter=new MyAdapter(listparrent,listitem,getActivity());
-                    elvDemo.setAdapter(adapter);
-                    if(adapter!=null && listparrent!=null){
-                        for (int i = 0; i < listparrent.size(); i++) {
-                            elvDemo.expandGroup(i);
-                        }}
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                adapter=new MyAdapter(listparrent,listitem,getActivity());
+                elvDemo.setAdapter(adapter);
+                if(adapter!=null && listparrent!=null){
+                    for (int i = 0; i < listparrent.size(); i++) {
+                        elvDemo.expandGroup(i);
+                    }
+                }
+                adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -252,5 +300,40 @@ public class OrderStaypayFragment extends Fragment {
         }
         return s;
     }
+    private  class MyPullListener implements PullToRefreshLayout.OnPullListener {
 
+        @Override
+        public void onRefresh(final PullToRefreshLayout pullToRefreshLayout) {
+            // 下拉刷新操作
+            new Handler() {
+                @Override
+                public void handleMessage(Message msg) {
+                    // 千万别忘了告诉控件刷新完毕了哦！
+                    pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
+                    Log.e("TAG","下拉刷子新");
+                    page++;
+                    ListFlag=true;
+                    sendMy(subType,Kpstate,startDate,endDate,company,OrderId,OrderType);
+//                    adapter.notifyDataSetChanged();
+                }
+            }.sendEmptyMessageDelayed(0,1000);
+        }
+
+        @Override
+        public void onLoadMore(final PullToRefreshLayout pullToRefreshLayout) {
+            // 加载操作
+            new Handler() {
+                @Override
+                public void handleMessage(Message msg) {
+                    // 千万别忘了告诉控件加载完毕了哦！
+                    pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
+                    Log.e("TAG","上拉加载");
+                    ListFlag=true;
+                    page+=1;
+                    sendMy(subType,Kpstate,startDate,endDate,company,OrderId,OrderType);
+                    adapter.notifyDataSetChanged();
+                }
+            }.sendEmptyMessageDelayed(0, 1000);
+        }
+    }
 }

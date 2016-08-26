@@ -149,8 +149,8 @@ public class LoginUserActivity extends AppCompatActivity {
          password = et_pass_login.getText().toString().trim();
 
         RequestParams rp=new RequestParams(SuMaoConstant.SUMAO_IP+"/rest/model/atg/userprofiling/ProfileActor/login");
-        rp.addParameter("login",name);
-        rp.addParameter("password",password);
+        rp.addParameter("login",name.trim());
+        rp.addParameter("password",password.trim());
         x.http().post(rp, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {

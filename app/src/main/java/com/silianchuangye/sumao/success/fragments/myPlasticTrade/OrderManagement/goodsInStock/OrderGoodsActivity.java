@@ -315,17 +315,35 @@ public class OrderGoodsActivity extends AppCompatActivity implements View.OnClic
     }
 
     //给ListView添加虚假数据源
+
     private void initData() {
         List<String> list = new ArrayList<String>();
         List<String> Jylist = new ArrayList<String>();
         List<String> Kplist = new ArrayList<String>();
-        list.add("所有");
-        list.add("待支付");
-        list.add("已支付");
-        list.add("已发货");
-        list.add("已完成");
-        list.add("已取消");
-        list.add("已变更");
+        if(tv_title_name.getText().equals("客服订单")){
+            list.add("所有");
+            list.add("订单生成");
+            list.add("已发货");
+            list.add("已完成");
+            list.add("已变更");
+            Jylist.add("客服");
+        }else {
+            list.add("所有");
+            list.add("待支付");
+            list.add("已支付");
+            list.add("已发货");
+            list.add("已完成");
+            list.add("已取消");
+            list.add("已变更");
+            if(tv_title_name.getText().equals("现货订单")){
+                Jylist.add("现货");
+                Jylist.add("公开竞拍");
+                Jylist.add("密封竞拍");
+                Jylist.add("团购");
+            }else if(tv_title_name.getText().equals("预售订单")){
+                Jylist.add("预售");
+            }
+        }
         LvAdapter = new ArrayAdapter<String>(this,
                 R.layout.item_view,
                 R.id.tv_item, list);
@@ -334,11 +352,8 @@ public class OrderGoodsActivity extends AppCompatActivity implements View.OnClic
         Kplist.add("已开票");
         KpLvAdapter = new ArrayAdapter<String>(this, R.layout.item_view,
                 R.id.tv_item, Kplist);
-        Jylist.add("现货");
-        Jylist.add("公开竞拍");
-        Jylist.add("密封竞拍");
-        Jylist.add("团购");
-        Jylist.add("预售");
+
+
         JyLvAdapter = new ArrayAdapter<String>(this, R.layout.item_view,
                 R.id.tv_item, Jylist);
 
@@ -438,6 +453,8 @@ public class OrderGoodsActivity extends AppCompatActivity implements View.OnClic
                 OrderState = "CHANGED";
             } else if(Tv_dingdan.getText().equals("")){
                 OrderState="0";
+            }else if(Tv_dingdan.getText().equals("订单生成")){
+                OrderState="APPROVED";
             }
             Lv_dingdan.setVisibility(View.GONE);
         }
@@ -469,53 +486,140 @@ public class OrderGoodsActivity extends AppCompatActivity implements View.OnClic
 
     //获取订单状态
     private void showFrag(String OrderType,String state){
-        if(OrderType==null&&tv_title_name.getText().equals("现货订单")){
-            OrderType="fixedPricingOrder";
+        if(tv_title_name.getText().equals("现货订单")){
+            if(OrderType==null||OrderType.equals("")) {
+                Log.e("TAG", "进来了吗");
+                OrderType = "fixedPricingOrder";
+            }
         }
-        if(OrderType.equals("fixedPricingOrder")){
+        if(tv_title_name.getText().equals("预售订单")){
+            if(OrderType==null||OrderType.equals("")) {
+                Log.e("TAG", "进来了吗sad");
+                OrderType = "forwardPricingOrder";
+            }
+        }if(OrderType==null||OrderType.equals("")&&tv_title_name.getText().toString().equals("客服订单")){
+            OrderType="offlineOrder";
+        }
+        if(OrderType.equals("fixedPricingOrder")||OrderType.equals("openAuctionOrder")||OrderType.equals("sealedAuctionOrder")||OrderType.equals("integratePurchaseOrder")){
             Log.e("TAG","state=------"+state);
             if(state.equals("0")){
                 cleanNull(i+"",CheckType);
                 OrderallFragment f=(OrderallFragment)adapter.getItem(0);
-                f.sendMy(i+"",CheckType,startDate,endDate,company,OrderId);
+                f.sendMy(i+"",CheckType,startDate,endDate,company,OrderId,OrderType);
                 vpDemo.setCurrentItem(0);
             }else if(state==null){
                 cleanNull(i+"",CheckType);
                 OrderallFragment f=(OrderallFragment)adapter.getItem(1);
-                f.sendMy(i+"",CheckType,startDate,endDate,company,OrderId);
+                f.sendMy(i+"",CheckType,startDate,endDate,company,OrderId,OrderType);
                 vpDemo.setCurrentItem(0);
             }else if(state.equals("1")){
                 cleanNull(i+"",CheckType);
                 OrderStaypayFragment f=(OrderStaypayFragment)adapter.getItem(1);
-//                f.sendMy(i+"",CheckType,startDate,endDate,company,OrderId);
+                f.sendMy(i+"",CheckType,startDate,endDate,company,OrderId,OrderType);
                 vpDemo.setCurrentItem(1);
             }else if(state.equals("QUOTED")){//根据状态判断显示哪个界面-待发货界面-已支付
                 cleanNull(i+"",CheckType);
                 OrderstayshipmentsFragment f=(OrderstayshipmentsFragment)adapter.getItem(2);
-//                f.sendMy(i+"",CheckType,startDate,endDate,company,OrderId);
+                f.sendMy(i+"",CheckType,startDate,endDate,company,OrderId,OrderType);
                 vpDemo.setCurrentItem(2);//显示待发货界面
             }else if(state.equals("PRESSING1")){//已发货
                 cleanNull(i+"",CheckType);
                 OrderAlreadygoodsFragment f=(OrderAlreadygoodsFragment)adapter.getItem(3);
-//                f.sendMy(i+"",CheckType,startDate,endDate,company,OrderId);
+                f.sendMy(i+"",CheckType,startDate,endDate,company,OrderId,OrderType);
                 vpDemo.setCurrentItem(3);
             }else if(state.equals("NO_PENDING_ACTION")){
                 cleanNull(i+"",CheckType);
                 OrderAlreadyFinishFragment f=(OrderAlreadyFinishFragment)adapter.getItem(4);
-//                f.sendMy(i+"",CheckType,startDate,endDate,company,OrderId);
+                f.sendMy(i+"",CheckType,startDate,endDate,company,OrderId,OrderType);
                 vpDemo.setCurrentItem(4);
             }else if(state.equals("CHANGED")){
                 cleanNull(i+"",CheckType);
                 OrderUpdateFragment f=(OrderUpdateFragment)adapter.getItem(5);
-//                f.sendMy(i+"",CheckType,startDate,endDate,company,OrderId);
+                f.sendMy(i+"",CheckType,startDate,endDate,company,OrderId,OrderType);
                 vpDemo.setCurrentItem(5);
             }else if(state.equals("REMOVED")){
                 cleanNull(i+"",CheckType);
                 OrderCancelFragment f=(OrderCancelFragment)adapter.getItem(6);
-//                f.sendMy(i+"",CheckType,startDate,endDate,company,OrderId);
+                f.sendMy(i+"",CheckType,startDate,endDate,company,OrderId,OrderType);
                 vpDemo.setCurrentItem(6);
             }
             Log.e("TAG","vpDemo----"+vpDemo.getCurrentItem());
+        }else if(OrderType.equals("forwardPricingOrder")){
+            Log.e("TAG","state---"+state);
+            if(state.equals("0")){
+                cleanNull(i+"",CheckType);
+                PresellallFragment f=(PresellallFragment)adapter.getItem(0);
+                f.sendMy(i+"",CheckType,startDate,endDate,company,OrderId);
+                vpDemo.setCurrentItem(0);//显示待发货界面
+            }else if(state==null){
+                cleanNull(i+"",CheckType);
+                PresellallFragment f=(PresellallFragment)adapter.getItem(0);
+                f.sendMy(i+"",CheckType,startDate,endDate,company,OrderId);
+                vpDemo.setCurrentItem(0);
+            }else if(state.equals("1")){
+                cleanNull(i+"",CheckType);
+                PresellPayFragment f=(PresellPayFragment)adapter.getItem(1);
+                f.sendMy(i+"",CheckType,startDate,endDate,company,OrderId);
+                vpDemo.setCurrentItem(1);
+            }else if(state.equals("QUOTED")){//根据状态判断显示哪个界面-待发货界面-已支付
+                cleanNull(i+"",CheckType);
+                PresellShipmentsFragment f=(PresellShipmentsFragment)adapter.getItem(2);
+                f.sendMy(i+"",CheckType,startDate,endDate,company,OrderId);
+                vpDemo.setCurrentItem(2);
+                //显示待发货界面
+            }else if(state.equals("PRESSING1")){//已发货
+                cleanNull(i+"",CheckType);
+                PresellAreadyShipmentsFragment f=(PresellAreadyShipmentsFragment)adapter.getItem(3);
+                f.sendMy(i+"",CheckType,startDate,endDate,company,OrderId);
+                vpDemo.setCurrentItem(3);
+            }else if(state.equals("NO_PENDING_ACTION")){
+                cleanNull(i+"",CheckType);
+                PresellFinishFragment f=(PresellFinishFragment)adapter.getItem(4);
+                f.sendMy(i+"",CheckType,startDate,endDate,company,OrderId);
+                vpDemo.setCurrentItem(4);
+            }else if(state.equals("CHANGED")){
+                cleanNull(i+"",CheckType);
+                PresellChangeFragment f=(PresellChangeFragment)adapter.getItem(5);
+                f.sendMy(i+"",CheckType,startDate,endDate,company,OrderId);
+                vpDemo.setCurrentItem(5);
+            }else if(state.equals("REMOVED")){
+                cleanNull(i+"",CheckType);
+                PresellUpdateFragment f=(PresellUpdateFragment)adapter.getItem(6);
+                f.sendMy(i+"",CheckType,startDate,endDate,company,OrderId);
+                vpDemo.setCurrentItem(6);
+            }
+        }else if(OrderType.equals("offlineOrder")) {
+            if (state.equals("0")) {
+                cleanNull(i + "", CheckType);
+                ServiceAllFragment f = (ServiceAllFragment) adapter.getItem(0);
+                f.sendMy(i + "", CheckType, startDate, endDate, company, OrderId);
+                vpDemo.setCurrentItem(0);//显示待发货界面
+            } else if (state == null) {
+                cleanNull(i + "", CheckType);
+                ServiceAllFragment f = (ServiceAllFragment) adapter.getItem(0);
+                f.sendMy(i + "", CheckType, startDate, endDate, company, OrderId);
+                vpDemo.setCurrentItem(0);
+            } else if (state.equals("APPROVED")) {
+                cleanNull(i + "", CheckType);
+                ServiceBornFragment f = (ServiceBornFragment) adapter.getItem(1);
+                f.sendMy(i + "", CheckType, startDate, endDate, company, OrderId);
+                vpDemo.setCurrentItem(1);
+            } else if (state.equals("PRESSING1")) {//根据状态判断显示哪个界面-待发货界面-已支付
+                cleanNull(i + "", CheckType);
+                ServiceShipmentsFragment f = (ServiceShipmentsFragment) adapter.getItem(2);
+                f.sendMy(i + "", CheckType, startDate, endDate, company, OrderId);
+                vpDemo.setCurrentItem(2);
+            } else if (state.equals("NO_PENDING_ACTION")) {//根据状态判断显示哪个界面-待发货界面-已支付
+                cleanNull(i + "", CheckType);
+                ServiceFinishFragment f = (ServiceFinishFragment) adapter.getItem(3);
+                f.sendMy(i + "", CheckType, startDate, endDate, company, OrderId);
+                vpDemo.setCurrentItem(3);
+            } else if (state.equals("CHANGED")) {//根据状态判断显示哪个界面-待发货界面-已支付
+                cleanNull(i + "", CheckType);
+                ServiceChangeFragment f = (ServiceChangeFragment) adapter.getItem(4);
+                f.sendMy(i + "", CheckType, startDate, endDate, company, OrderId);
+                vpDemo.setCurrentItem(4);
+            }
         }
     }
     private void cleanNull(String subType,String KPstate){

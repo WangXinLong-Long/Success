@@ -149,6 +149,7 @@
         android:layout_below="@id/split_line"
         android:background="@color/white"
         ></com.handmark.pulltorefresh.library.PullToRefreshListView>
+
    <!-- <ListView
         android:id="@+id/pre_sale_listView"
         android:layout_width="match_parent"

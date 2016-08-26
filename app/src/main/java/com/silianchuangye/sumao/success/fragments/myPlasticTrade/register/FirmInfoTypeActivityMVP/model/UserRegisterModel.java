@@ -58,6 +58,11 @@ public class UserRegisterModel implements IUserRegisterModel {
                             types = differentTypes.getCl_nashuiren();
                             break;
                         case 3:
+                            types = differentTypes.getCl_zhengjian();
+                            break;
+                        case 4:
+                            types = differentTypes.getCl_applyType();
+                            break;
 
                     }
 

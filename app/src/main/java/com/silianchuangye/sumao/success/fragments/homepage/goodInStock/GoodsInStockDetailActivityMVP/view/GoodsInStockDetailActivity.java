@@ -38,6 +38,7 @@ import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -260,7 +261,6 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
                      * 在购物车创建订单的操作在这里执行
                      */
                     popupWindow.dismiss();
-//
                 }
             }
         });
