@@ -453,7 +453,7 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
                 } else if (position == 3 || position == 2 || position == 5 || position == 6 || position == 7 || position == 8) {
                     if (position == 5 && (list.get(4).get("right").toString().trim() == null || list.get(4).get("right").toString().trim().isEmpty())) {
                         Toast.makeText(RegisterFirmActivity.this, "请填写办公地区", Toast.LENGTH_SHORT).show();
-                    } else {
+                        } else {
                         Intent intent = new Intent(RegisterFirmActivity.this, RegisterValueActivity.class);
                         intent.putExtra("title", list.get(position).get("left").toString());
                         intent.putExtra("content", list.get(position).get("right").toString());

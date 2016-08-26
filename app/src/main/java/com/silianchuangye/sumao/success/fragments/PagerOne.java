@@ -14,6 +14,7 @@ import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 
+import com.silianchuangye.sumao.success.Activityguanjun;
 import com.silianchuangye.sumao.success.activity.WelcomeActivity;
 import com.silianchuangye.sumao.success.fragments.SearchActivityMVP.view.SearchActivity;
 import com.silianchuangye.sumao.success.fragments.homepage.groupbuying.GroupBuyingActivity;
@@ -53,7 +54,8 @@ public class PagerOne extends BasePager {
     public void myClickSearch() {
         //调到搜索页
         Log.d("点击搜索","点击搜素");
-        Intent intent=new Intent(mActivity,SearchActivity.class);
+       // Intent intent=new Intent(mActivity,SearchActivity.class);
+        Intent intent=new Intent(mActivity,Activityguanjun.class);
         startActivity(intent);
     }
 
@@ -178,6 +180,7 @@ public class PagerOne extends BasePager {
 //                }
               //   }else
                  if(list.get(position).get("icon").equals(R.mipmap.togther)){
+
                     Toast.makeText(mActivity, "点击了撮合按钮", Toast.LENGTH_SHORT).show();
                 }else if(list.get(position).get("icon").equals(R.mipmap.groupon)){
                      Intent intent=new Intent(mActivity, GroupBuyingActivity.class);
@@ -201,9 +204,11 @@ public class PagerOne extends BasePager {
                     Intent intent=new Intent(mActivity, MidpointsListctivity.class);
                     startActivity(intent);
                 }else if(list.get(position).get("icon").equals(R.mipmap.direct)){
-                    Toast.makeText(mActivity, "点击了上游直销按钮", Toast.LENGTH_SHORT).show();
+                     Intent intent=new Intent(mActivity, Activityguanjun.class);
+                     startActivity(intent);
+                  //   Toast.makeText(mActivity, "点击了上游直销按钮", Toast.LENGTH_SHORT).show();
                 }else if(list.get(position).get("icon").equals(R.mipmap.aa)){
-                    Toast.makeText(mActivity, "点击了物流按钮", Toast.LENGTH_SHORT).show();
+                     Toast.makeText(mActivity, "点击了物流按钮", Toast.LENGTH_SHORT).show();
                      Intent intent = new Intent();
                      intent.setClass(mActivity, LoginActivity.class);
                      intent.putExtra(Constant.MESSAGE_TO_INTENT_EXTRA, Constant.MESSAGE_TO_DEFAULT);

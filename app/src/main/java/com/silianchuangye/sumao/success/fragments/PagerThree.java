@@ -1,6 +1,7 @@
 package com.silianchuangye.sumao.success.fragments;
 
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -31,6 +32,13 @@ import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.PaymentsO
 import com.silianchuangye.sumao.success.fragments.homepage.theprice.MidpointsListctivity;
 import com.silianchuangye.sumao.success.fragments.shoppingCart.dialog.Cart_MyDialog;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,8 +59,13 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
     private MyReciver my;
     private Cart_MyDialog dialog;
     private RelativeLayout relative_cart_null,relative_cart_tishi,relative_activity_cart_bottom;
- private List<Integer>imgList=new ArrayList<Integer>();
+    private List<Integer>imgList=new ArrayList<Integer>();
     private List list1=new ArrayList();
+    private List<String> list_id=new ArrayList<String>();
+  //  private List<String> name=new ArrayList<String>();
+    private List<String> kucong=new ArrayList<String>();
+    private String name;
+    private String ku_cong_number;
     public class MyReciver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -77,10 +90,10 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
         initView();
     }
 
-    private void initView() {
+   private void initView() {
         initList();
         ctx=getActivity();
-        dialog=new Cart_MyDialog(ctx);
+        dialog=new Cart_MyDialog(ctx,name,ku_cong_number);
         my=new MyReciver();
         IntentFilter intent=new IntentFilter();
         intent.addAction("close_cart_dialog");
@@ -95,10 +108,12 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
         btn_Cart_Ok = (Button) v.findViewById(R.id.btn_activity_cart_ok);
         img_Cart_All_Select = (ImageView) v.findViewById(R.id.img_activity_cart_allselect);
         tv_Cart_All_Price = (TextView) v.findViewById(R.id.tv_activity_cart_all_price);
-        adapter = new CartAdapter(getActivity(),list,this,dialog);
-        lv_Cart.setAdapter(adapter);
+//        adapter = new CartAdapter(getActivity(),list,this,dialog,list_id,ku_cong_number);
+//       //adapter=new CartAdapter(getActivity(),list,list_id,ku_cong_number));
+//        lv_Cart.setAdapter(adapter);
 
-        lv_Cart.setOnItemClickListener(this);
+
+       lv_Cart.setOnItemClickListener(this);
         img_Cart_All_Select.setOnClickListener(this);
         btn_Cart_Ok.setOnClickListener(this);
 
@@ -144,6 +159,8 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
 //                    showPopWindow();
 //                    backgroundAlpha(0.5f);
 //                    Toast.makeText(getActivity(), "支付", Toast.LENGTH_SHORT).show();
+                    //提交订单
+                    commit_order();
                     Intent intent = new Intent();
                     intent.setClass(getActivity(), PaymentsOrder.class);
                     startActivity(intent);
@@ -170,39 +187,102 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
 
     private void initList() {
         list=new ArrayList<CartInfo>();
-        CartInfo info=new CartInfo();
-        info.name="兰州石化1111";
-        info.sort_name="LLDPE";
-        info.cangku_name="北京讯帮1库";
-        info.pai_num="7045";
-        info.price="1,222";
-        info.qiye="中海油";
-        info.company="四联创业集团";
-        info.buy_num="10";
-        info.all_price="1";
-        list.add(info);
-        CartInfo info2=new CartInfo();
-        info2.name="兰州石化1111";
-        info2.sort_name="LLDPE";
-        info2.cangku_name="北京讯帮1库";
-        info2.pai_num="7045";
-        info2.price="1,222";
-        info2.qiye="中海油";
-        info2.company="四联创业集团";
-        info2.buy_num="10";
-        info2.all_price="1";
-        list.add(info2);
-        CartInfo info3=new CartInfo();
-        info3.name="兰州石化1113";
-        info3.sort_name="LLDPE";
-        info3.cangku_name="北京讯帮1库";
-        info3.pai_num="7045";
-        info3.price="1,222";
-        info3.qiye="中海油";
-        info3.company="四联创业集团";
-        info3.buy_num="10";
-        info3.all_price="1";
-        list.add(info3);
+        new Thread(){
+            @Override
+            public void run() {
+                //super.run();
+                String url="http://192.168.32.126:7023/rest/model/atg/commerce/ShoppingCartActor/shoppingCartDetail";
+                RequestParams rp=new RequestParams(url);
+                SharedPreferences sp=getActivity().getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+                String unique_gouwuche=sp.getString("unique","");
+                Log.d("购物车的唯一标识",""+unique_gouwuche);
+                rp.addParameter("_dynSessConf",unique_gouwuche);
+                Log.d("购物车的rp的值",rp.toString());
+                x.http().post(rp, new Callback.CommonCallback<String>() {
+                    @Override
+                    public void onSuccess(String result) {
+                        Log.d("result的值",result);
+                        Log.d("购物车的返回结果",result);
+                        if (result.contains("commerceItem")){
+                            //购物车理由数据
+                            try {
+                                relative_activity_cart_bottom.setVisibility(View.VISIBLE);
+                                relative_cart_tishi.setVisibility(View.VISIBLE);
+                                relative_cart_null.setVisibility(View.GONE);
+                                JSONObject obj_result = new JSONObject(result);
+                                //总价
+                                String count_price=obj_result.getString("total");
+                                Log.d("total",count_price);
+                                tv_Cart_All_Price.setText(count_price+"元");
+                                Log.d("总价",tv_Cart_All_Price.getText().toString());
+                                String item_count=obj_result.getString("commerceItem");
+                                JSONArray array=new JSONArray(item_count);
+                                for (int i=0;i<array.length();i++){
+                                    JSONObject array_data=array.getJSONObject(i);
+                                    CartInfo info=new CartInfo();
+                                    info.name="兰州石化1111";
+                                    info.sort_name=array_data.getString("parentCategories");
+                                    Log.d("parentCategories",array_data.getString("parentCategories"));
+                                    info.cangku_name=array_data.getString("warehouse");
+                                    Log.d("warehouse",array_data.getString("warehouse"));
+                                    info.pai_num=array_data.getString("gradeNumber");
+                                    Log.d("pai_num",array_data.getString("gradeNumber"));
+                                    info.price=array_data.getString("salePrice");
+                                    Log.d("salePrice",array_data.getString("salePrice"));
+                                    info.qiye=array_data.getString("manufacturer");
+                                    Log.d("manufacturer",array_data.getString("manufacturer"));
+                                    info.company=array_data.getString("salesCompanyDisplayName");
+                                    Log.d("salesCompanyDisplayName",array_data.getString("salesCompanyDisplayName"));
+                                    info.buy_num=array_data.getString("minPurchaseQuantity");
+                                    Log.d("minPurchaseQuantity",array_data.getString("minPurchaseQuantity"));
+                                    info.all_price=array_data.getString("amount");
+                                    Log.d("amount",array_data.getString("amount"));
+                                    list.add(info);
+                                    Log.d("list的值",list.size()+"");
+                                    String aa=array_data.getString("surplus");
+                                    int len=array_data.getString("surplus").length()-1;
+                                    String bb=aa.substring(1,len);
+                                    kucong.add(bb);
+                                    Log.d("bb的值",""+bb);
+                                    Log.d("kucong的值",kucong.toString());
+
+                                    list_id.add(array_data.getString("commerceItemId").trim());
+                                    Log.d("list_id的值",array_data.getString("commerceItemId"));
+                                }
+
+                                adapter = new CartAdapter(getActivity(),list,PagerThree.this,dialog,list_id,kucong);
+                                lv_Cart.setAdapter(adapter);
+
+
+                            }catch (JSONException e){
+                                e.printStackTrace();
+                            }
+                        }else{
+                            relative_activity_cart_bottom.setVisibility(View.GONE);
+                            relative_cart_tishi.setVisibility(View.GONE);
+                            relative_cart_null.setVisibility(View.VISIBLE);
+                           // Toast.makeText(getActivity(), "购物车里暂无数据，请添加", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable ex, boolean isOnCallback) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(CancelledException cex) {
+
+                    }
+
+                    @Override
+                    public void onFinished() {
+
+                    }
+                });
+            }
+        }.start();
+
 
 ////popwindow的数据源
         CartItemInfo iteminfo1=new CartItemInfo();
@@ -232,6 +312,9 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if(parent.getId()==R.id.lv_activity_cart){
+            name=list.get(position).toString();
+            ku_cong_number=kucong.get(position).toString();
+            Log.d("kucong",ku_cong_number);
             Toast.makeText(getContext(),"点击了一条item",Toast.LENGTH_SHORT).show();
         }
         if (parent.getId() == R.id.pop_cart_price_lv) {
@@ -249,7 +332,7 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
     public void Call(int index) {
         list.get(index).Selsct_Flag=!list.get(index).Selsct_Flag;
         adapter.notifyDataSetChanged();
-        refrashPrice();
+      //  refrashPrice();
     }
 
     @Override
@@ -267,7 +350,7 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
     }
 
     //统计总价方法
-    private void refrashPrice(){
+   private void refrashPrice(){
         all_Price = 0f;
         int index = 0;
         for(CartInfo info : list){
@@ -314,6 +397,73 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
         WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
         lp.alpha = bgAlpha; //0.0-1.0
         getActivity().getWindow().setAttributes(lp);
+    }
+    public void commit_order(){
+        new Thread(){
+            @Override
+            public void run() {
+                //super.run();
+                String url="http://192.168.32.126:7023/rest/model/atg/commerce/ShoppingCartActor/cartExpressCheckout";
+                RequestParams rp=new RequestParams(url);
+                String a=list_id.toString();
+                int len=a.length()-1;
+                String id=a.substring(1,len).replaceAll(" ","");
+                Log.d("商品id",""+id);
+                rp.addParameter("strCommerceItemIds",id);
+                SharedPreferences sp=getActivity().getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+                String coummit_unique=sp.getString("unique","");
+                rp.addParameter("_dynSessConf",coummit_unique);
+                Log.d("rp的值",rp+"");
+                x.http().post(rp, new Callback.CommonCallback<String>() {
+                    @Override
+                    public void onSuccess(String result) {
+                        Log.d("提交订单的result",result);
+                        try {
+                            JSONObject object = new JSONObject(result);
+                            //支付总价
+                            String total=object.getString("total");
+                            Log.d("total",total);
+                            //订单编号
+                            String order_id=object.getString("orderid");
+                            Log.d("order_id",order_id);
+                            String message=object.getString("commerceItem");
+                            JSONArray array=new JSONArray(message);
+                            for (int i=0;i<array.length();i++){
+                                JSONObject obj_array=array.getJSONObject(i);
+                                String type=obj_array.getString("parentCategories");
+                                String price=obj_array.getString("salePrice");
+                                String paihao=obj_array.getString("gradeNumber");
+                                String qiye=obj_array.getString("manufacturer");
+                                String all_price=obj_array.getString("amount");
+                                String cangku=obj_array.getString("warehouse");
+                                String comm=obj_array.getString("salesCompanyDisplayName");
+
+
+
+                            }
+                        }catch (JSONException e){
+                            e.printStackTrace();
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Throwable ex, boolean isOnCallback) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(CancelledException cex) {
+
+                    }
+
+                    @Override
+                    public void onFinished() {
+
+                    }
+                });
+            }
+        }.start();
     }
 
 }

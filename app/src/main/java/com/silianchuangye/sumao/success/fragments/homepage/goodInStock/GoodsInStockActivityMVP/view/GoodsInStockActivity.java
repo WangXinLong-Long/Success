@@ -223,7 +223,6 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
         popup_window_back.setOnClickListener(this);
         mArrayList = new ArrayList<String>();
 //        为弹出的框添加数据   getData(s)
-
         final ArrayAdapter<String> popupWindowListViewAdpter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, getData(s));
 //        这句应该懂吧
         popupWindowListView.setAdapter(popupWindowListViewAdpter);

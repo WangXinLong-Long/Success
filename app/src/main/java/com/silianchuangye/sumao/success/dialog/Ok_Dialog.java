@@ -27,7 +27,11 @@ public class Ok_Dialog extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_ok);
         ImageView iv_cancel= (ImageView)findViewById(R.id.iv_dialog_ok_cancel);
+
         TextView tv_order_number= (TextView)findViewById(R.id.tv_order_number_ok);
+        Bundle bundle=getIntent().getExtras();
+        String order_id=bundle.getString("number");
+        tv_order_number.setText(order_id);
         Button bt_my_order= (Button)findViewById(R.id.bt_my_order);
         Button bt_wuliu= (Button) findViewById(R.id.bt_wulliu);
         tv_order_number.setText(order_number);
@@ -44,6 +48,7 @@ public class Ok_Dialog extends Activity {
                 Intent intent=new Intent(Ok_Dialog.this, OrderGoodsActivity.class);
                 intent.putExtra("title","现货订单");
                 startActivity(intent);
+                finish();
             }
         });
         bt_wuliu.setOnClickListener(new View.OnClickListener() {

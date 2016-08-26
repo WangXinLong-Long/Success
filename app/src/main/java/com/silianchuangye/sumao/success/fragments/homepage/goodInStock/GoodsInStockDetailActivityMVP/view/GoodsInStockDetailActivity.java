@@ -2,8 +2,10 @@ package com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInS
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -29,6 +31,12 @@ import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.PaymentsO
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.SeeProductMVP.view.SeeProduct;
 import com.silianchuangye.sumao.success.fragments.shoppingCart.dialog.Cart_MyDialog;
 import com.silianchuangye.sumao.success.utils.LogUtils;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,6 +80,8 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
     private ImageView image;
     private RelatedProduct relatedProduct;
     private ArrayList<CLAttribute> cl_attribute;
+    private String qigou;
+    private String sku_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -192,7 +202,14 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
                 Animation animation = AnimationUtils.loadAnimation(this, R.anim.joincartanim);
                 animation.setFillAfter(true);
                 image.startAnimation(animation);
-                Toast.makeText(this,"加入购物车成功",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this,"加入购物车成功",Toast.LENGTH_SHORT).show();
+                new Thread(){
+                        @Override
+                        public void run() {
+                           // super.run();
+                           join_gouwuche();
+                        }
+                    }.start();
 //
                 break;
             case R.id.img_item_cart_buy_sub:
@@ -243,6 +260,7 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
                      * 在购物车创建订单的操作在这里执行
                      */
                     popupWindow.dismiss();
+//
                 }
             }
         });
@@ -268,9 +286,60 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
         lp.alpha = bgAlpha; //0.0-1.0
         GoodsInStockDetailActivity.this.getWindow().setAttributes(lp);
     }
+    public void join_gouwuche(){
+        String url="http://192.168.32.126:7023/rest/model/atg/commerce/ShoppingCartActor/addItemToOrder";
+        RequestParams rp=new RequestParams(url);
+        rp.addParameter("productId",cl_id);
+        rp.addParameter("quantity","100");
+        rp.addParameter("skuId",sku_id);
+        Log.d("skuid的值",sku_id);
+        SharedPreferences sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+        String unique=sp.getString("unique","");
+        rp.addParameter("_dynSessConf",unique);
+        Log.d("添加到购物车的skuid",""+rp);
+        x.http().post(rp, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.d("result",result);
+                if (result.contains("commerceItem")){
+                    Toast.makeText(GoodsInStockDetailActivity.this,"加入购物车成功",Toast.LENGTH_SHORT).show();
+                }else{
+                    try {
+                        JSONObject obj_result = new JSONObject(result);
+                        String message=obj_result.getString("formExceptions");
+                        JSONArray array=new JSONArray(message);
+                        JSONObject obj_array=array.getJSONObject(0);
+                        String info=obj_array.getString("localizedMessage");
+                        Toast.makeText(GoodsInStockDetailActivity.this, ""+info, Toast.LENGTH_SHORT).show();
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+       // rp.addParameter("");
+    }
 
     @Override
     public void getGoodsInStockDetailData(GoodsInStockDetailBean goodsInStockDetailBean) {
+        //skuId
+         sku_id=goodsInStockDetailBean.getCl_cpid();
 //        兰州石化7042
         tvName_auction.setText(goodsInStockDetailBean.getCl_mingcheng());
 //        6000
@@ -281,6 +350,7 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
         surplus_amount_et.setText(goodsInStockDetailBean.getCl_shuliang());
 //        最小变量单位
         min_variable_et.setText(goodsInStockDetailBean.getCl_xiaobian());
+        qigou=goodsInStockDetailBean.getCl_xiaobian();
 //        交货时间
         delivery_time_et.setText(goodsInStockDetailBean.getCl_shijian());
 //        交货结束时间

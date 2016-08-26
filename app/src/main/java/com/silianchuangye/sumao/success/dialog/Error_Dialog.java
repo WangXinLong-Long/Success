@@ -40,7 +40,7 @@ public class Error_Dialog extends Activity {
         bt_reZhifu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //再次调到支付界面
+                Error_Dialog.this.finish();
             }
         });
 

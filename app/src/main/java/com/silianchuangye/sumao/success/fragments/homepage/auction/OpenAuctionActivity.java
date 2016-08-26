@@ -469,11 +469,7 @@ public class OpenAuctionActivity extends AppCompatActivity {
                     int len=peisong_way.length()-2;
                     String aa=peisong_way.substring(2,len);
                     Log.d("配送方式",aa);
-
                     way.setText(aa);
-
-
-
 
                 }catch (JSONException e){
                     e.printStackTrace();
