@@ -18,7 +18,7 @@ public class Error_Dialog extends Activity {
     private ImageView error_dialog_cancel;
     private TextView tv_order_number;
     private Button bt_reZhifu;
-    private Context context;
+    private Context context;////
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
