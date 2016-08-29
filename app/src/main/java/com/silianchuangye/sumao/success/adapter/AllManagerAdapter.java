@@ -64,7 +64,7 @@ public class AllManagerAdapter extends BaseAdapter{
             holder.address= (TextView) convertView.findViewById(R.id.tv_item_all_manager_address);
             holder.buy= (TextView) convertView.findViewById(R.id.tv_item_all_manager_buy);
             holder.person= (TextView) convertView.findViewById(R.id.tv_item_all_manager_person);
-            holder.zhuangtai= (TextView) convertView.findViewById(R.id.tv_item_all_manager_zhuangtai);
+//            holder.zhuangtai= (TextView) convertView.findViewById(R.id.tv_item_all_manager_zhuangtai);
             holder.relative= (RelativeLayout) convertView.findViewById(R.id.relative_item_all_manager);
             holder.relative_title= (RelativeLayout) convertView.findViewById(R.id.relative_item_all_manager_title);
             convertView.setTag(holder);
@@ -78,13 +78,13 @@ public class AllManagerAdapter extends BaseAdapter{
         holder.address.setText(list.get(position).address);
         holder.buy.setText(list.get(position).buy);
         holder.person.setText(list.get(position).person);
-        holder.zhuangtai.setText(list.get(position).zhuangtai);
-        holder.relative.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                call.call(position);
-            }
-        });
+//        holder.zhuangtai.setText(list.get(position).zhuangtai);
+//        holder.relative.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                call.call(position);
+//            }
+//        });
 
         holder.relative_title.setOnClickListener(new View.OnClickListener() {
             @Override
