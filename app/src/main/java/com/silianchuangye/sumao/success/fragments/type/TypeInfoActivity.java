@@ -330,7 +330,7 @@ public class TypeInfoActivity extends AppCompatActivity {
      */
     public void popupwindow_shaixuan(){
         View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.item_shaixuan, null);
-        popupWindow = new PopupWindow(findViewById(R.id.layout_ff), ActionBarOverlayLayout.LayoutParams.MATCH_PARENT, 1300);
+        popupWindow = new PopupWindow(findViewById(R.id.layout_ff), ActionBarOverlayLayout.LayoutParams.MATCH_PARENT, 1000);
         popupWindow.setContentView(view);
 
         final CustomGridView gv_Apple_Type= (CustomGridView) view.findViewById(R.id.gv_Apple_Type);
