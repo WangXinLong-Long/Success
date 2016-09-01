@@ -61,7 +61,7 @@ public class Valid_Manager extends Fragment implements AdapterView.OnItemClickLi
         info.title="北京四联京津冀";
         info.num="80";
         info.type="生产厂";
-        info.zhuangtai="有效";
+        info.state="待审批";
 
         AllCustomInfo info1=new AllCustomInfo();
         info1.address="河北省邢台市沙河市11";
@@ -71,7 +71,7 @@ public class Valid_Manager extends Fragment implements AdapterView.OnItemClickLi
         info1.title="北京四联京津冀234";
         info1.num="80234";
         info1.type="生产厂234";
-        info1.zhuangtai="有效243";
+        info1.state="待审批";
 
         list.add(info);
         list.add(info1);

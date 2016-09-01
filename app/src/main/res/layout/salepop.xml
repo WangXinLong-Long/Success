@@ -83,6 +83,45 @@
             android:layout_toLeftOf="@id/tv_salepop_cangku"
             android:text="仓库 : "/>
     </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x35">
+      <EditText
+          android:id="@+id/edt_num_end"
+          android:layout_width="@dimen/x100"
+          android:layout_height="@dimen/x30"
+          android:layout_centerVertical="true"
+          android:layout_marginRight="@dimen/x41"
+          android:background="@drawable/juxing"
+          android:gravity="center_vertical"
+          android:layout_alignParentRight="true"
+          android:paddingLeft="@dimen/x5" />
+        <TextView
+            android:id="@+id/tv_num_zhi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/edt_num_end"
+            android:text=" 至 "
+            />
+        <EditText
+            android:id="@+id/edt_num_start"
+            android:layout_width="@dimen/x100"
+            android:layout_height="@dimen/x30"
+            android:layout_centerVertical="true"
+            android:background="@drawable/juxing"
+            android:gravity="center_vertical"
+            android:layout_toLeftOf="@id/tv_num_zhi"
+            android:paddingLeft="@dimen/x5"/>
+        <TextView
+            android:id="@+id/tv_num_shuliang"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/edt_num_start"
+            android:text=" 数量 : "
+            />
+    </RelativeLayout>
     <View
         android:layout_marginTop="@dimen/x3"
         android:layout_width="match_parent"

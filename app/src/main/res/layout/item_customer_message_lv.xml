@@ -31,10 +31,19 @@
             android:textColor="@color/zixun_topbg"/>
         <TextView
             android:id="@+id/tv_item_customer_message_lv_right"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="180dp"
+            android:gravity="right"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/x2"
-            android:layout_toLeftOf="@id/tv_item_customer_message_lv_see"/>
+            android:layout_toLeftOf="@id/tv_item_customer_message_lv_see"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:ellipsize="marquee"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            />
     </RelativeLayout>
 </LinearLayout>

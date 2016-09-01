@@ -52,4 +52,25 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/x7"
         android:background="@color/selley_lv"></ListView>
+    <EditText
+        android:id="@+id/edt_buy_yuanyin"
+        android:layout_below="@id/lv_buy"
+        android:layout_width="match_parent"
+        android:gravity="top"
+        android:textSize="14sp"
+        android:layout_margin="10dp"
+        android:layout_height="120dp"
+        android:background="@drawable/whiteyuanjia"
+        android:hint="无购买资质原因:"
+        />
+    <Button
+        android:id="@+id/btn_buy_save"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/edt_buy_yuanyin"
+        android:gravity="center"
+        android:textColor="#ffffff"
+        android:background="@drawable/button_background_blue"
+        android:layout_margin="10dp"
+        android:text="保存"/>
 </RelativeLayout>

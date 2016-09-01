@@ -146,6 +146,7 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
         initList();
         Bundle bundle = getIntent().getExtras();
         account = bundle.getString("account");
+        Log.e("TAG","登陆---"+account);
         pass = bundle.getString("pass");
         repass = bundle.getString("repass");
         name = bundle.getString("name");
@@ -290,7 +291,6 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
             jsonObject.put("cl_shuiwuimage", picturePath3);//税号
             jsonObject.put("cl_nashuirenimage", picturePath4);//税号
 
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -301,11 +301,12 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
 //        LogUtils.log("json---------->"+jsonObject.toString()+"<-------json");
         LogUtils.log("picturePath1------->"+picturePath1);
 
-
+        Log.e("TAG","rp------"+rp);
         x.http().post(rp, new Callback.CacheCallback<String>() {
 
             @Override
             public void onSuccess(String result) {
+                Log.e("TAG","result------"+result);
                Intent intent = new Intent(RegisterFirmActivity.this, LoginUserActivity.class);
                 startActivity(intent);
             }

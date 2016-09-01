@@ -51,7 +51,7 @@
         android:id="@+id/edt_newprice_num"
         android:layout_width="match_parent"
         android:layout_height="@dimen/x38"
-        android:background="@drawable/yuanjiaojuxing"
+        android:background="@drawable/whiteyuanjia"
         android:layout_marginTop="@dimen/x18"
         android:layout_marginLeft="@dimen/x18"
         android:layout_marginRight="@dimen/x18"

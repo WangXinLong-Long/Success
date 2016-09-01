@@ -246,7 +246,6 @@ public class TypeInfoActivity extends AppCompatActivity {
 
     }
 
-
     /**
      * 普通的pupopWindow
      * @param list

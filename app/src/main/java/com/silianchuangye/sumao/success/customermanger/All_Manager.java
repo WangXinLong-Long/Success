@@ -62,7 +62,7 @@ public class All_Manager extends Fragment implements AdapterView.OnItemClickList
         info.title="北京四联京津冀";
         info.num="80";
         info.type="生产厂";
-        info.zhuangtai="有效";
+        info.state="待审批";
 
         AllCustomInfo info1=new AllCustomInfo();
         info1.address="河北省邢台市沙河市11";
@@ -72,10 +72,20 @@ public class All_Manager extends Fragment implements AdapterView.OnItemClickList
         info1.title="北京四联京津冀234";
         info1.num="80234";
         info1.type="生产厂234";
-        info1.zhuangtai="有效243";
+        info1.state="未通过";
+        AllCustomInfo info2=new AllCustomInfo();
+        info2.address="河北省邢台市沙河市2";
+        info2.buy="有22";
+        info2.name="四联创业化工集团22";
+        info2.person="张三22";
+        info2.title="北京四联京津冀22";
+        info2.num="80234";
+        info2.type="生产厂234";
+        info2.state="已通过";
 
         list.add(info);
         list.add(info1);
+        list.add(info2);
     }
 
     private void initView() {

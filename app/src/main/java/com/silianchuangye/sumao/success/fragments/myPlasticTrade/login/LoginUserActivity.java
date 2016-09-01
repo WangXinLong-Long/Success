@@ -53,7 +53,6 @@ public class LoginUserActivity extends AppCompatActivity {
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
     private String roles;
-
     int str;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -154,6 +153,7 @@ public class LoginUserActivity extends AppCompatActivity {
         x.http().post(rp, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
+                LogUtils.log("result---->"+result);
                 if (result.contains("formError")){
                     Toast.makeText(LoginUserActivity.this, "账号或密码错误请重新登录！", Toast.LENGTH_SHORT).show();
                 }else{
@@ -214,9 +214,6 @@ public class LoginUserActivity extends AppCompatActivity {
                     }catch (Exception e){
                         Log.d("exception","解析异常");
                     }
-
-
-
 
                     //接收mainactivity传递过来的参数
                     if(str==9){
