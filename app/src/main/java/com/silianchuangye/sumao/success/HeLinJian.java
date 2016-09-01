@@ -17,5 +17,5 @@ public class HeLinJian extends Activity {
     //8-5
     //8-8
     //8-19//8-22342   8-232342
-    //8-26 9-1
+    //8-26
 }
