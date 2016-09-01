@@ -10,9 +10,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.playlog.internal.LogEvent;
 import com.silianchuangye.sumao.success.R;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.SpotOrder.TiQu;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
 import org.json.JSONException;
@@ -121,6 +123,12 @@ public class UserInformation extends Activity implements  View.OnClickListener{
                     Log.e("TAG","result====="+result);
                     try {
                         JSONObject job=new JSONObject(result);
+                        String info=job.getString("info");
+                        if(info.equals("fail")){
+                            Toast.makeText(UserInformation.this,"请重新登陆",Toast.LENGTH_SHORT).show();
+                            new TiQu(UserInformation.this).showLogin();
+                            finish();
+                        }
                         tv_loginNum.setText(job.getString("U_userid"));
                         tv_loginPassword.setText("********");
                         tv_loginName.setText(job.getString("U_uname"));

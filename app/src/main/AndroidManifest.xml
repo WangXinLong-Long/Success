@@ -501,6 +501,9 @@
         <activity android:name=".customermanger.SaveCustomerMessage" />
         <activity android:name=".customermanger.Buy" />
         <activity android:name=".customermanger.ZhiPaiPerson" />
+        <activity android:name="com.silianchuangye.sumao.success.fragments.SellerManagementPlatform.SellerOrderManagement.ReNumAndPrice"/>
+        <activity android:name="com.silianchuangye.sumao.success.fragments.SellerManagementPlatform.SellerOrderManagement.NewPrice"/>
+        <activity android:name="com.silianchuangye.sumao.success.fragments.SellerManagementPlatform.SellerOrderManagement.Num"/>
         <activity
             android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.CaptureActivity"
             android:configChanges="orientation|keyboardHidden"
@@ -524,7 +527,7 @@
             android:name=".fragments.homepage.AnnouncementDetailMVP.view.AnnouncementDetailActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.CompanyUserValueActivity" />
-        <activity android:name=".fragments.myPlasticTrade.register.RegisterPicture"></activity>
+        <activity android:name=".fragments.myPlasticTrade.register.RegisterPicture" />
     </application>
 
 </manifest>

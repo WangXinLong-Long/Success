@@ -197,7 +197,7 @@ public class OrderGoodsActivity extends AppCompatActivity implements View.OnClic
         vpDemo = (ViewPager) findViewById(R.id.vpDemo);
         vpDemo.setAdapter(adapter);
         tlDemo.setupWithViewPager(vpDemo);
-        vpDemo.setOffscreenPageLimit(7);
+//        vpDemo.setOffscreenPageLimit(7);
         tlDemo.setTabMode(tlDemo.MODE_SCROLLABLE);
 
         back.setOnClickListener(new View.OnClickListener() {

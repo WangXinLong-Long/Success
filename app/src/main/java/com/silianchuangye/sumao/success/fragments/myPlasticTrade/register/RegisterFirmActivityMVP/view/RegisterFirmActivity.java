@@ -146,6 +146,7 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
         initList();
         Bundle bundle = getIntent().getExtras();
         account = bundle.getString("account");
+        Log.e("TAG","登陆---"+account);
         pass = bundle.getString("pass");
         repass = bundle.getString("repass");
         name = bundle.getString("name");
@@ -306,7 +307,6 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
 
             @Override
             public void onSuccess(String result) {
-                Log.d("ddddddddddd",""+result);
                Intent intent = new Intent(RegisterFirmActivity.this, LoginUserActivity.class);
                 startActivity(intent);
             }

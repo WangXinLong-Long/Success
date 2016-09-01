@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.support.v4.app.INotificationSideChannel;
 import android.util.Log;
 import android.view.View;
@@ -64,9 +65,10 @@ public class AllManagerAdapter extends BaseAdapter{
             holder.address= (TextView) convertView.findViewById(R.id.tv_item_all_manager_address);
             holder.buy= (TextView) convertView.findViewById(R.id.tv_item_all_manager_buy);
             holder.person= (TextView) convertView.findViewById(R.id.tv_item_all_manager_person);
-            holder.zhuangtai= (TextView) convertView.findViewById(R.id.tv_item_all_manager_zhuangtai);
+//            holder.zhuangtai= (TextView) convertView.findViewById(R.id.tv_item_all_manager_zhuangtai);
             holder.relative= (RelativeLayout) convertView.findViewById(R.id.relative_item_all_manager);
             holder.relative_title= (RelativeLayout) convertView.findViewById(R.id.relative_item_all_manager_title);
+            holder.state= (TextView) convertView.findViewById(R.id.tv_item_all_managet_state);
             convertView.setTag(holder);
         }else{
             holder= (ViewHolder) convertView.getTag();
@@ -78,13 +80,26 @@ public class AllManagerAdapter extends BaseAdapter{
         holder.address.setText(list.get(position).address);
         holder.buy.setText(list.get(position).buy);
         holder.person.setText(list.get(position).person);
-        holder.zhuangtai.setText(list.get(position).zhuangtai);
-        holder.relative.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                call.call(position);
-            }
-        });
+        holder.state.setText(list.get(position).state);
+        String str=holder.state.getText().toString();
+        if(str.equals("未通过")){
+            holder.state.setTextColor(ctx.getResources().getColor(R.color.red));
+            holder.relative.setVisibility(View.GONE);
+        }else if(str.equals("已通过")){
+            holder.state.setTextColor(ctx.getResources().getColor(R.color.green));
+            holder.relative.setVisibility(View.GONE);
+        }else if(str.equals("待审批")){
+            holder.state.setTextColor(ctx.getResources().getColor(R.color.orange));
+        }else{
+            holder.relative.setVisibility(View.GONE);
+        }
+//        holder.zhuangtai.setText(list.get(position).zhuangtai);
+//        holder.relative.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                call.call(position);
+//            }
+//        });
 
         holder.relative_title.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,7 +112,7 @@ public class AllManagerAdapter extends BaseAdapter{
         return convertView;
     }
     private class ViewHolder{
-        TextView title,num,name,type,address,buy,person,zhuangtai;
+        TextView title,num,name,type,address,buy,person,state;
         RelativeLayout relative,relative_title;
     }
 //    private class My extends BroadcastReceiver {

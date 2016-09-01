@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18sp"
-            android:text="改价改量"
+            android:text="订单改价"
             android:textColor="@color/selley_lv"
             android:layout_centerInParent="true"
             />

@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.Toast;
 
 import com.jingchen.pulltorefresh.PullToRefreshLayout;
 import com.silianchuangye.sumao.success.R;
@@ -196,6 +197,12 @@ public class OrderStaypayFragment extends Fragment {
                 Log.e("TAG","result----"+result);
                 try {
                     JSONObject job=new JSONObject(result);
+                    String info=job.getString("info");
+                    if(info.equals("fail")){
+                        Toast.makeText(getActivity(),"请重新登陆",Toast.LENGTH_SHORT).show();
+                        new TiQu(getActivity()).showLogin();
+                        getActivity().finish();
+                    }
                     String count=job.getString("count");
                     Log.e("TAG","count----"+count);
                     if(count.equals("0")){
