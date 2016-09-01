@@ -12,6 +12,7 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
@@ -83,6 +84,10 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
     private ArrayList<CLAttribute> cl_attribute;
     private String qigou;
     private String sku_id;
+    private TextView all_price;
+    private EditText et_number;
+    private TextView tv_jian;
+    private TextView tv_jia;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,10 +111,17 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
         pre_sale_sale_detail_detail.setOnClickListener(this);
         pre_sale_sale_detail_similar_product.setOnClickListener(this);
         pre_sale_sale_detail_similar_liulan.setOnClickListener(this);
+        tv_jia.setOnClickListener(this);
+        tv_jian.setOnClickListener(this);
         title_bar_white_title.setText("现货");
+
     }
 
     private void initView() {
+        all_price= (TextView) findViewById(R.id.tv_item_cart_all_price);
+        tv_jian= (TextView) findViewById(R.id.img_item_cart_buy_sub);
+        tv_jia= (TextView) findViewById(R.id.img_item_cart_buy_add);
+        et_number= (EditText) findViewById(R.id.tv_item_cart_buy_num);
         title_bar_white_back = ((ImageView) findViewById(R.id.title_bar_white_back));
         title_bar_white_title = ((TextView) findViewById(R.id.title_bar_white_title));
         title_bar_white_shopping_cart = ((ImageView) findViewById(R.id.title_bar_white_shopping_cart));
@@ -214,24 +226,27 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
 //
                 break;
             case R.id.img_item_cart_buy_sub:
-                String str = tv_item_cart_buy_num.getText().toString();
+                String str = et_number.getText().toString();
                 int num = Integer.valueOf(str);
                 num--;
                 if (num >= 1) {
-                    tv_item_cart_buy_num.setText("" + num);
+                    et_number.setText("" + num);
                 }
                 break;
             case R.id.img_item_cart_buy_add:
-                str = tv_item_cart_buy_num.getText().toString();
+                str = et_number.getText().toString();
                 num = Integer.valueOf(str);
                 num++;
-                if (num >= 15) {
-                    dialog.show();
-                }
-                if (num < 15 && num >= 0) {
-                    tv_item_cart_buy_num.setText("" + num);
-                }
+//                if (num >= Integer.valueOf(surplus_amount_et.getText().toString())) {
+//                    dialog.show();
+//                }
+              //  if (num < Integer.parseInt(surplus_amount_et.getText().toString()) && num >= 0) {
+                    et_number.setText("" + num);
+              //  }
                 break;
+
+
+
             default:
                 break;
         }
@@ -290,7 +305,7 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
         String url="http://192.168.32.126:7023/rest/model/atg/commerce/ShoppingCartActor/addItemToOrder";
         RequestParams rp=new RequestParams(url);
         rp.addParameter("productId",cl_id);
-        rp.addParameter("quantity","100");
+        rp.addParameter("quantity",(Integer.parseInt(et_number.getText().toString())*1000)+"");
         rp.addParameter("skuId",sku_id);
         Log.d("skuid的值",sku_id);
         SharedPreferences sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);

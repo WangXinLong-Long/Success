@@ -129,9 +129,9 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <RelativeLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="@dimen/x30"
-            android:layout_weight="3">
+           >
             <TextView
                 android:id="@+id/tv_item_cart_shengchan"
                 style="@style/tv_dingdan"
@@ -145,14 +145,21 @@
                 android:layout_toRightOf="@id/tv_item_cart_shengchan"
                 />
         </RelativeLayout>
+
+    </LinearLayout>
+    <LinearLayout
+        android:background="@color/selley_lv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
         <RelativeLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="@dimen/x30"
-            android:layout_weight="4">
+            >
             <TextView
                 style="@style/tv_dingdan"
                 android:text="公司 : "
                 android:id="@+id/tv_item_cart_company"
+                android:layout_marginLeft="@dimen/x10"
                 />
             <TextView
                 android:id="@+id/tv_item_cart_cangku_conmpany_name"
@@ -162,6 +169,7 @@
                 />
         </RelativeLayout>
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/x1"

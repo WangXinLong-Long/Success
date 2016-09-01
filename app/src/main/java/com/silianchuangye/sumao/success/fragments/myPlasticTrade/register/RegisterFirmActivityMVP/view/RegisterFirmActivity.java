@@ -306,6 +306,7 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
 
             @Override
             public void onSuccess(String result) {
+                Log.d("ddddddddddd",""+result);
                Intent intent = new Intent(RegisterFirmActivity.this, LoginUserActivity.class);
                 startActivity(intent);
             }

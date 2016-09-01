@@ -20,6 +20,7 @@ import com.silianchuangye.sumao.success.fragments.bean.CartInfo;
 import com.silianchuangye.sumao.success.fragments.shoppingCart.dialog.Cart_MyDialog;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
@@ -119,24 +120,19 @@ private List<CartInfo> list;
             }
         });
         //删除按钮
-        holder.Img_del.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//
-//                notifyDataSetChanged();
-//                if(list.size()==0){
-//                    call.CartNull(list);
-//                }
-                new Thread(){
-                    @Override
-                    public void run() {
-                        //super.run();
-                        delete_data(position);
-                        //notifyDataSetChanged();
-                    }
-                }.start();
-            }
-        });
+//        holder.Img_del.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                new Thread(){
+//                    @Override
+//                    public void run() {
+//                        //super.run();
+//                        delete_data(position);
+//                        //notifyDataSetChanged();
+//                    }
+//                }.start();
+//            }
+//        });
 
         //增加或减少购买数
         holder.Tv_buy_Sub.setOnClickListener(new View.OnClickListener() {
@@ -162,78 +158,78 @@ private List<CartInfo> list;
                 }
             }
         });
-        holder.Tv_buy_Add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String str=holder.Edt_buy_num.getText().toString();
-                if(str.equals("")){
-                    str="0";
-                }
-                int num=Integer.valueOf(str);
-                num++;
-                Log.d("库存的值",kucong.get(position));
-              //  Log.d("库存的数字",Integer.parseInt(kucong).get+"");
-                if(num>=new Double(kucong_value)){
-                    holder.relative_item_cart.setVisibility(View.VISIBLE);
-                    holder.Tv_no_much.setText("产品库存不足"+num+"吨");
-                    dialog.show();
-                }
-                if(num<new Double(kucong_value)&&num>=0) {
-                    holder.relative_item_cart.setVisibility(View.GONE);
-                    holder.Edt_buy_num.setText("" + num);
-                    number=num;
-//                   String number=num+"";
-//                    update_data(number);
-//                    holder.Tv_price.setText(price);
-//                    holder.Tv_all_price.setText(all_price);
-                    //notifyDataSetChanged();
-                }
-            }
-        });
-        holder.Edt_buy_num.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                temp=holder.Edt_buy_num.getText().toString();
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                temp=holder.Edt_buy_num.getText().toString();
-                if(temp.equals("")){
-                    Toast.makeText(ctx, "购买数量不能为空", Toast.LENGTH_SHORT).show();
-                }
-                //else{
+//        holder.Tv_buy_Add.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                String str=holder.Edt_buy_num.getText().toString();
+//                if(str.equals("")){
+//                    str="0";
+//                }
+//                int num=Integer.valueOf(str);
+//                num++;
+//                Log.d("库存的值",kucong.get(position));
+//              //  Log.d("库存的数字",Integer.parseInt(kucong).get+"");
+//                if(num>=new Double(kucong_value)){
+//                    holder.relative_item_cart.setVisibility(View.VISIBLE);
+//                    holder.Tv_no_much.setText("产品库存不足"+num+"吨");
+//                    dialog.show();
+//                }
+//                if(num<new Double(kucong_value)&&num>=0) {
+//                    holder.relative_item_cart.setVisibility(View.GONE);
+//                    holder.Edt_buy_num.setText("" + num);
+//                    number=num;
+////                   String number=num+"";
+////                    update_data(number);
+////                    holder.Tv_price.setText(price);
+////                    holder.Tv_all_price.setText(all_price);
+//                    //notifyDataSetChanged();
+//                }
+//            }
+//        });
+//        holder.Edt_buy_num.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//                temp=holder.Edt_buy_num.getText().toString();
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                temp=holder.Edt_buy_num.getText().toString();
+//                if(temp.equals("")){
+//                    Toast.makeText(ctx, "购买数量不能为空", Toast.LENGTH_SHORT).show();
+//                }
+//                //else{
+////                    update_data();
+////                    holder.Tv_price.setText(price);
+////                    holder.Tv_all_price.setText(all_price);
+////                    //notifyDataSetChanged();
+////                }
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//               temp=holder.Edt_buy_num.getText().toString();
+//                if(temp.equals("")){
+//                    temp="0";
+////                    holder.Edt_buy_num.setText(str);
+//                    Toast.makeText(ctx,"购买数量不能为零",Toast.LENGTH_SHORT).show();
+//                }
+//                int i=Integer.valueOf(temp);
+////                Log.d("edit的值", new Double(kucong_value)+"");
+//                if(i>= new Double(kucong_value)) {
+//                    holder.relative_item_cart.setVisibility(View.VISIBLE);
+//                    holder.Tv_no_much.setText("产品库存不足" + i + "吨");
+//                    dialog.show();
+//                }else{
+//
+//                    holder.relative_item_cart.setVisibility(View.GONE);
 //                    update_data();
 //                    holder.Tv_price.setText(price);
 //                    holder.Tv_all_price.setText(all_price);
-//                    //notifyDataSetChanged();
 //                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-               temp=holder.Edt_buy_num.getText().toString();
-                if(temp.equals("")){
-                    temp="0";
-//                    holder.Edt_buy_num.setText(str);
-                    Toast.makeText(ctx,"购买数量不能为零",Toast.LENGTH_SHORT).show();
-                }
-                int i=Integer.valueOf(temp);
-                Log.d("edit的值", new Double(kucong_value)+"");
-                if(i>= new Double(kucong_value)) {
-                    holder.relative_item_cart.setVisibility(View.VISIBLE);
-                    holder.Tv_no_much.setText("产品库存不足" + i + "吨");
-                    dialog.show();
-                }else{
-
-                    holder.relative_item_cart.setVisibility(View.GONE);
-                    update_data();
-                    holder.Tv_price.setText(price);
-                    holder.Tv_all_price.setText(all_price);
-                }
-
-           }
-        });
+//
+//           }
+//        });
         return convertView;
     }
     public void delete_data(final int position){
@@ -255,6 +251,7 @@ private List<CartInfo> list;
                     list.remove(list.get(position));
                     Toast.makeText(ctx, "删除成功", Toast.LENGTH_SHORT).show();
                     notifyDataSetChanged();
+
                 }else{
                     try {
                         JSONObject obj_result = new JSONObject(result);
@@ -336,6 +333,7 @@ private List<CartInfo> list;
             }
         });
     }
+
     public class ViewHolder{
         TextView Tv_name;
         TextView Tv_sort_name;
