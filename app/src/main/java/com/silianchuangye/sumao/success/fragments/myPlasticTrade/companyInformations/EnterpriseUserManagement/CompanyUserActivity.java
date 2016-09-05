@@ -91,13 +91,7 @@ public class CompanyUserActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        new Thread(){
-            @Override
-            public void run() {
-                super.run();
-                getAllUser();
-            }
-        }.start();
+
         /**
          * 修改用户
          */
@@ -128,8 +122,25 @@ public class CompanyUserActivity extends AppCompatActivity {
    @Override
     protected void onRestart() {
         super.onRestart();
-        Log.d("再次回到该界面","");
-        adapter.notifyDataSetChanged();
+        Log.d("再次回到该界面","aaa");
+        //adapter.notifyDataSetChanged();
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (listitem!=null){
+            listitem.clear();
+        }
+        new Thread(){
+            @Override
+            public void run() {
+                super.run();
+                getAllUser();
+            }
+        }.start();
     }
 
     /**

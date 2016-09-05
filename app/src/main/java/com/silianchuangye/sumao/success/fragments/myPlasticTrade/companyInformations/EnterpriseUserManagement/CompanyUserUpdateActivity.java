@@ -19,6 +19,8 @@ import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
@@ -237,8 +239,17 @@ public class CompanyUserUpdateActivity extends AppCompatActivity {
     public void updateUser(){
         String url="http://192.168.32.126:7023/rest/model/atg/userprofiling/ProfileActor/modifyUser";
         RequestParams rp=new RequestParams(url);
+        rp.setCharset("utf-8");
+        rp.setAsJsonContent(true);
+        JSONObject object=new JSONObject();
+        try {
+            object.put("cl_mingcheng",list.get(1).get("value").toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        rp.setBodyContent(object.toString());
         rp.addParameter("cl_yhid",user_id);
-        rp.addParameter("cl_mingcheng",list.get(1).get("value").toString());
+       // rp.addParameter("cl_mingcheng",list.get(1).get("value").toString());
         rp.addParameter("cl_jiner",list.get(2).get("value").toString());
         rp.addParameter("cl_shuliang",list.get(3).get("value").toString());
         Log.d("role修改的值",jiaose);

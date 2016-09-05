@@ -6,5 +6,6 @@ import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInSt
  * Created by Administrator on 2016/8/12 0012.
  */
 public interface GoodsInStockActivityCallback {
+
     void callbackInGoodsInStockActivity(GoodsInStockActivityBean goodsInStockActivityBean);
 }
