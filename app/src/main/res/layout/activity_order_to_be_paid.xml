@@ -236,7 +236,7 @@
 
                     <TextView
                         android:id="@+id/company2"
-                        android:layout_width="wrap_content"
+                        android:layout_width="@dimen/x210"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/second_line_information"
                         android:layout_toRightOf="@id/company1"

@@ -277,14 +277,15 @@ public class OrderCancelFragment extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                adapter=new MyAdapter(listparrent,listitem,getActivity());
-                elvDemo.setAdapter(adapter);
-                if(adapter!=null && listparrent!=null){
-                    for (int i = 0; i < listparrent.size(); i++) {
-                        elvDemo.expandGroup(i);
+                if(!ListFlag) {
+                    adapter = new MyAdapter(listparrent, listitem, getActivity());
+                    elvDemo.setAdapter(adapter);
+                    if (adapter != null && listparrent != null) {
+                        for (int i = 0; i < listparrent.size(); i++) {
+                            elvDemo.expandGroup(i);
+                        }
                     }
                 }
-                adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -315,7 +316,7 @@ public class OrderCancelFragment extends Fragment {
                     // 千万别忘了告诉控件刷新完毕了哦！
                     pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
                     Log.e("TAG","下拉刷子新");
-                    page++;
+                    page=1;
                     ListFlag=true;
                     sendMy(subType,Kpstate,startDate,endDate,company,OrderId,OrderType);
 //                    adapter.notifyDataSetChanged();

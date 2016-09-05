@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
@@ -35,6 +36,7 @@ public class CustomerMessage extends AppCompatActivity implements View.OnClickLi
     private SimpleAdapter adapter,adapter2,adapter3;
     private String str,str1;
     private TextView tv_title;
+    private Button btn_left_no,btn_right_ok;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +54,10 @@ public class CustomerMessage extends AppCompatActivity implements View.OnClickLi
         lv= (CustomListView) findViewById(R.id.lv_customer_message);
         lv2= (CustomListView) findViewById(R.id.lv_customer_message_three);
         lv3= (CustomListView) findViewById(R.id.lv_customer_message_four);
-
+        btn_left_no= (Button) findViewById(R.id.btn_left_no);
+        btn_right_ok= (Button) findViewById(R.id.btn_right_ok);
+        btn_left_no.setOnClickListener(this);
+        btn_right_ok.setOnClickListener(this);
         img_back.setOnClickListener(this);
         relative_editor.setOnClickListener(this);
         adapter=new SimpleAdapter(this,list,R.layout.item_customer_message_lv,
@@ -241,6 +246,12 @@ public class CustomerMessage extends AppCompatActivity implements View.OnClickLi
                 intent.putExtra("person",list.get(16).get("right").toString());
                 intent.putExtra("title","编辑信息");
                 startActivityForResult(intent,0);
+                break;
+            case R.id.btn_left_no:
+                Intent intent1=new Intent(this,NoAgree.class);
+                startActivity(intent1);
+                break;
+            case R.id.btn_right_ok:
                 break;
         }
     }
