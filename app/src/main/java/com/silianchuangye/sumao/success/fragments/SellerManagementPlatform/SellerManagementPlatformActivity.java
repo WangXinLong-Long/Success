@@ -65,12 +65,13 @@ public class SellerManagementPlatformActivity extends Activity implements View.O
             @Override
             public boolean onChildClick(ExpandableListView parent, View v,
                                         int groupPosition, int childPosition, long id) {
-                if (adapter.getChild(groupPosition, childPosition).toString().equals("报价查询"))
-                {
-                    Intent intent=new Intent(SellerManagementPlatformActivity.this, SearchPriceActivity.class);
-                    startActivity(intent);
-
-                }else if (adapter.getChild(groupPosition, childPosition).toString().equals("竞拍结果查看"))
+//                if (adapter.getChild(groupPosition, childPosition).toString().equals("报价查询"))
+//                {
+//                    Intent intent=new Intent(SellerManagementPlatformActivity.this, SearchPriceActivity.class);
+//                    startActivity(intent);
+//
+//                }else
+                if (adapter.getChild(groupPosition, childPosition).toString().equals("竞拍结果查看"))
                 {
                     Intent intent=new Intent(SellerManagementPlatformActivity.this, AcutionResultActivity.class);
                     startActivity(intent);

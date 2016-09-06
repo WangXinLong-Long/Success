@@ -12,6 +12,7 @@ public class CartInfo {
             qiye,
             company,
             buy_num,
-            all_price;
+            all_price,
+            id; ;
     public boolean Selsct_Flag,Del_Flag;
 }

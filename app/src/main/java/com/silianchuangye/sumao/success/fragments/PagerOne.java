@@ -54,8 +54,8 @@ public class PagerOne extends BasePager {
     public void myClickSearch() {
         //调到搜索页
         Log.d("点击搜索","点击搜素");
-       // Intent intent=new Intent(mActivity,SearchActivity.class);
-        Intent intent=new Intent(mActivity,Activityguanjun.class);
+       Intent intent=new Intent(mActivity,SearchActivity.class);
+        //Intent intent=new Intent(mActivity,Activityguanjun.class);
         startActivity(intent);
     }
 

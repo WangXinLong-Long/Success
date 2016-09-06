@@ -76,10 +76,12 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/x1"
             android:background="#EEEEF3"
+            android:id="@+id/layout_time_line_top"
             ></LinearLayout>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/x40"
+            android:id="@+id/layout_time"
             >
             <TextView
                 android:layout_width="wrap_content"
@@ -95,6 +97,8 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/x1"
             android:background="#EEEEF3"
+            android:id="@+id/layout_time_line_Bottom"
+            android:orientation="horizontal"
             ></LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -318,6 +322,7 @@
             android:layout_height="@dimen/x40"
             android:background="#fff"
             android:layout_marginTop="@dimen/x10"
+            android:id="@+id/layout_result"
             >
             <TextView
                 android:layout_width="wrap_content"
@@ -346,6 +351,7 @@
             android:layout_height="@dimen/x40"
             android:background="#fff"
             android:layout_marginTop="@dimen/x10"
+            android:id="@+id/layout_result_blue"
             >
             <TextView
                 android:layout_width="wrap_content"
@@ -371,7 +377,7 @@
         </RelativeLayout>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/x2"
+            android:layout_height="@dimen/x1"
             android:background="#29ABE2"
             ></LinearLayout>
         <ListView
@@ -380,6 +386,7 @@
             android:id="@+id/lv_auction_success"
             android:divider="@null"
             android:background="#fff"
+            android:layout_marginTop="@dimen/x5"
             ></ListView>
     </LinearLayout>
 
