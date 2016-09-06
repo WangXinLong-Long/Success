@@ -528,9 +528,8 @@
             android:screenOrientation="portrait" />
         <activity android:name=".fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.CompanyUserValueActivity" />
         <activity android:name=".fragments.myPlasticTrade.register.RegisterPicture" />
-        <activity android:name=".fragments.homepage.sumaoconsultMVP.SuMaoConsult"></activity>
-
-        <activity android:name=".customermanger.NoAgree"></activity>
+        <activity android:name=".fragments.homepage.sumaoconsultMVP.SuMaoConsult" />
+        <activity android:name=".customermanger.NoAgree" />
     </application>
 
 </manifest>

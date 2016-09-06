@@ -27,7 +27,6 @@ dependencies {
     //        compile 'org.xutils:xutils:3.3.32'
     //        compile files('libs/hyphenatechat_3.1.1.jar')
     //        compile project(':easeui')
-    provided fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile project(':easeui')
     compile project(path: ':easeui')
@@ -51,5 +50,5 @@ dependencies {
     compile 'org.apache.httpcomponents:jakarta-httpcore:4.0-alpha4'
     compile files('libs/commons-net-3.3.jar')
     compile project(':pullToRefreshlibrary')
-    compile project(':base_library_pullToRefresh_chenyoca')
+    compile project(':PullToRefresh')
 }

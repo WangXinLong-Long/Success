@@ -1,2 +1,2 @@
-include ':app', ':easeui', ':pullToRefreshlibrary'
-include ':base_library_pullToRefresh_chenyoca'
+include ':app', ':easeui', ':pullToRefreshlibrary', ':PullToRefresh'
+
