@@ -17,6 +17,7 @@ import org.xutils.x;
 public class GoodsInStockDetailModel implements IGoodsInStockDetailModel {
     String cl_id;
 
+
     public GoodsInStockDetailModel(String cl_id) {
         this.cl_id = cl_id;
     }

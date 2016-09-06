@@ -13,8 +13,10 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.SpotOrder.TiQu;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoPicture.FirmInfoPictureMVP.view.FirmInfoPictureActivity;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
@@ -158,6 +160,12 @@ public class FirmInfoActivity extends AppCompatActivity {
 
                 try {
                     JSONObject job=new JSONObject(result);
+                    String info=job.getString("info");
+                    if(info.equals("fail")){
+                        Toast.makeText(FirmInfoActivity.this,"请重新登陆",Toast.LENGTH_SHORT).show();
+                        new TiQu(FirmInfoActivity.this).showLogin();
+                        finish();
+                    }
                     String cl_mingcheng=job.getString("cl_mingcheng");
                     String cl_leixing=qiyeType(job.getString("cl_leixing"));
                     String cl_yewu=job.getString("cl_yewu");

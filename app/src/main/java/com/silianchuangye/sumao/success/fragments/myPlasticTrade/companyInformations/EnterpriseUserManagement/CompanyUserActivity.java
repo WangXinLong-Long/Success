@@ -50,7 +50,9 @@ public class CompanyUserActivity extends AppCompatActivity {
         setContentView(R.layout.activity_company_user);
         elistview= (ListView) findViewById(R.id.elvinfo_company_user);
         listitem=new ArrayList<Map<String,Object>>();
-
+//        if (adapter!=null){
+//            adapter.notifyDataSetChanged();
+//        }
         iv_title_bar_back = ((ImageView) findViewById(R.id.iv_title_bar_back));
         iv_title_bar_logo = ((ImageView) findViewById(R.id.iv_title_bar_logo));
         iv_title_bar_service = ((ImageView) findViewById(R.id.iv_title_bar_service));
@@ -89,13 +91,7 @@ public class CompanyUserActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        new Thread(){
-            @Override
-            public void run() {
-                super.run();
-                getAllUser();
-            }
-        }.start();
+
         /**
          * 修改用户
          */
@@ -126,8 +122,25 @@ public class CompanyUserActivity extends AppCompatActivity {
    @Override
     protected void onRestart() {
         super.onRestart();
-        if (adapter!=null)
-        adapter.notifyDataSetChanged();
+        Log.d("再次回到该界面","aaa");
+        //adapter.notifyDataSetChanged();
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (listitem!=null){
+            listitem.clear();
+        }
+        new Thread(){
+            @Override
+            public void run() {
+                super.run();
+                getAllUser();
+            }
+        }.start();
     }
 
     /**

@@ -24,6 +24,8 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoTypeActivity;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
@@ -131,7 +133,17 @@ public class CompanyUserAddActivity extends AppCompatActivity {
                         "http://192.168.32.126:7023/rest/model/atg/userprofiling/ProfileActor/addUser";
                 RequestParams rp=new RequestParams(url);
                 rp.addParameter("cl_cpid",account);
-                rp.addParameter("cl_mingcheng",name);
+                rp.setCharset("UTF-8");
+                rp.setAsJsonContent(true);
+                JSONObject object=new JSONObject();
+                try {
+
+                    object.put("cl_mingcheng","小红");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+               // rp.addParameter("cl_mingcheng",name);
+                rp.setBodyContent(object.toString());
                 rp.addParameter("cl_shuliang",email);
                 rp.addParameter("cl_jiner",phone);
                 String role_id="";

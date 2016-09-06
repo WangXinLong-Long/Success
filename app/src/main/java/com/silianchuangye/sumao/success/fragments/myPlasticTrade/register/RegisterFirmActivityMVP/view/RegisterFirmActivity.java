@@ -160,6 +160,7 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
         initList();
         Bundle bundle = getIntent().getExtras();
         account = bundle.getString("account");
+        Log.e("TAG","登陆---"+account);
         pass = bundle.getString("pass");
         repass = bundle.getString("repass");
         name = bundle.getString("name");

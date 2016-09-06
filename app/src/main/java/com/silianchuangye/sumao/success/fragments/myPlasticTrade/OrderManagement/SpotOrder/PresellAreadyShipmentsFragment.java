@@ -188,6 +188,12 @@ public class PresellAreadyShipmentsFragment extends Fragment {
                 Log.e("TAG","result----"+result);
                 try {
                     JSONObject job=new JSONObject(result);
+                    String info=job.getString("info");
+                    if(info.equals("fail")){
+                        Toast.makeText(getActivity(),"请重新登陆",Toast.LENGTH_SHORT).show();
+                        new TiQu(getActivity()).showLogin();
+                        getActivity().finish();
+                    }
                     String count=job.getString("count");
                     Log.e("TAG","count----"+count);
                     if(count.equals("0")){
@@ -232,12 +238,14 @@ public class PresellAreadyShipmentsFragment extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                adapter=new MyAdapter(listparrent,listitem,getActivity());
-                elvDemo.setAdapter(adapter);
-                adapter.notifyDataSetChanged();
-                if(adapter!=null && listparrent!=null){
-                    for (int i = 0; i < listparrent.size(); i++) {
-                        elvDemo.expandGroup(i);
+                if(!ListFlag) {
+                    adapter = new MyAdapter(listparrent, listitem, getActivity());
+                    elvDemo.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+                    if (adapter != null && listparrent != null) {
+                        for (int i = 0; i < listparrent.size(); i++) {
+                            elvDemo.expandGroup(i);
+                        }
                     }
                 }
             }
@@ -300,7 +308,7 @@ public class PresellAreadyShipmentsFragment extends Fragment {
                     // 千万别忘了告诉控件刷新完毕了哦！
                     pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
                     Log.e("TAG","下拉刷子新");
-                    page++;
+                    page=1;
                     ListFlag=true;
                     sendMy(subType,Kpstate,startDate,endDate,company,OrderId);
 //                    adapter.notifyDataSetChanged();

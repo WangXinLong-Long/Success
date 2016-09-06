@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -25,6 +27,8 @@ public class Buy extends AppCompatActivity implements AdapterView.OnItemClickLis
     private List<BuyInfo> list;
     private BuyAdapter adapter;
     private int i;
+    private EditText edt_buy_yuanyin;
+    private Button btn_buy_save;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,10 +57,14 @@ public class Buy extends AppCompatActivity implements AdapterView.OnItemClickLis
         lv_buy= (ListView) findViewById(R.id.lv_buy);
         tv_save= (TextView) findViewById(R.id.tv_customer_message_editor);
         img_back= (ImageView) findViewById(R.id.img_logistics_title_bar_back);
+        edt_buy_yuanyin= (EditText) findViewById(R.id.edt_buy_yuanyin);
+        btn_buy_save= (Button) findViewById(R.id.btn_buy_save);
         adapter=new BuyAdapter(list,this);
         lv_buy.setAdapter(adapter);
         tv_save.setOnClickListener(this);
         lv_buy.setOnItemClickListener(this);
+        btn_buy_save.setOnClickListener(this);
+        img_back.setOnClickListener(this);
     }
 
     @Override
@@ -90,6 +98,25 @@ public class Buy extends AppCompatActivity implements AdapterView.OnItemClickLis
                     Toast.makeText(this,"至少选择一项",Toast.LENGTH_SHORT).show();
                 }
 
+                break;
+            case R.id.btn_buy_save:
+                boolean Flag1=false;
+                for(BuyInfo info:list){
+                    if(info.flag){
+                        Flag1=true;
+                    }
+                }
+                if(Flag1) {
+                    Intent intent = new Intent();
+                    intent.putExtra("select",list.get(i).tv);
+                    setResult(1,intent);
+                    finish();
+                }else{
+                    Toast.makeText(this,"至少选择一项",Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case R.id.img_logistics_title_bar_back:
+                finish();
                 break;
         }
     }

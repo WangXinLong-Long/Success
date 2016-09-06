@@ -69,8 +69,8 @@ public class CustomerParent extends AppCompatActivity implements View.OnClickLis
         listFragment.add(inavild);
 
         listString.add("全部客户");
-        listString.add("有效客户");
-        listString.add("无效客户");
+        listString.add("待审批");
+        listString.add("已审批");
 
         popList=new ArrayList<String>();
         for(int i=0;i<5;i++){

@@ -119,9 +119,6 @@ public class ModifyName extends Activity implements View.OnClickListener{
             Log.e("TAG","修改用户名");
             RequestParams params=new RequestParams(SuMaoConstant.SUMAO_IP+"/rest/model/atg/store/profile/RegistrationActor/updateUser");
             if(receivingInformation.equals("修改姓名")) {
-//                params.addParameter("firstName", modify_information.getText().toString());
-//                params.addParameter("email",email);
-//                params.addParameter("phoneNumber",phoneNum);
                 params.setCharset("UTF-8");
                 JSONObject job=new JSONObject();
                 try {
@@ -133,8 +130,15 @@ public class ModifyName extends Activity implements View.OnClickListener{
                 }
                 params.setBodyContent(job.toString());
             }else if(receivingInformation.equals("修改邮箱")){
-                params.addParameter("email", modify_information.getText().toString());
-                params.addParameter("firstName",name);
+                params.setCharset("UTF-8");
+                JSONObject job1=new JSONObject();
+                try {
+                    job1.put("firstName",name);
+                    job1.put("email",modify_information.getText().toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                params.setBodyContent(job1.toString());
                 params.addParameter("phoneNumber",phoneNum);
             }
             SharedPreferences sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
@@ -144,11 +148,28 @@ public class ModifyName extends Activity implements View.OnClickListener{
             x.http().post(params, new Callback.CommonCallback<String>() {
                 @Override
                 public void onSuccess(String result) {
-                    Log.e("TAG","修改result------"+result);
-                    intent.putExtra(SuMaoConstant.MODIFY_INFORMATION,modify_information.getText().toString().trim());
-                    Log.e("TAG","RESULT_OK===="+RESULT_OK);
-                    setResult(RESULT_OK, intent);
-                    finish();
+                    if(!result.contains("changeResult")){
+                        if(receivingInformation.equals("修改姓名")) {
+                            Toast.makeText(ModifyName.this, "您输入的用户名不符合规则", Toast.LENGTH_SHORT).show();
+                        }else{
+                            Toast.makeText(ModifyName.this, "您输入的邮箱不符合规则", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    try {
+                        JSONObject job=new JSONObject(result);
+                        String changeResult=job.getString("changeResult");
+
+                        if(changeResult.equals("YES")){
+                            Toast.makeText(ModifyName.this,"修改成功",Toast.LENGTH_SHORT).show();
+                            intent.putExtra(SuMaoConstant.MODIFY_INFORMATION,modify_information.getText().toString().trim());
+                            Log.e("TAG","RESULT_OK===="+RESULT_OK);
+                            setResult(RESULT_OK, intent);
+                            finish();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
                 }
 
                 @Override

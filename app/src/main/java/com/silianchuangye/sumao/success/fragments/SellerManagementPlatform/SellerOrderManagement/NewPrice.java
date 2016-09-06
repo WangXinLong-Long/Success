@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.silianchuangye.sumao.success.R;
 
@@ -17,6 +18,7 @@ private ImageView img_back;
     private RelativeLayout relative_canler;
     private EditText edt_num;
     private Button btn_save;
+    private TextView tv_customer_manager_title;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +31,8 @@ private ImageView img_back;
         relative_canler= (RelativeLayout) findViewById(R.id.tv_logistics_title_bar_search);
         edt_num= (EditText) findViewById(R.id.edt_newprice_num);
         btn_save= (Button) findViewById(R.id.btn_newprivce_save);
+        tv_customer_manager_title= (TextView) findViewById(R.id.tv_customer_manager_title);
+        tv_customer_manager_title.setText("新单价(元/吨)");
         img_back.setOnClickListener(this);
         relative_canler.setOnClickListener(this);
         edt_num.setOnClickListener(this);

@@ -45,6 +45,7 @@
                 android:textSize="16sp"/>
         </RelativeLayout>
 </RelativeLayout>
+
     <ScrollView
         android:id="@+id/sc"
         android:layout_below="@id/relative_top"
@@ -124,6 +125,33 @@
                 android:layout_marginTop="1dp"
                 >
             </com.silianchuangye.sumao.success.custom.CustomListView>
+            <LinearLayout
+                android:layout_marginTop="@dimen/x10"
+                android:id="@+id/linear_bottem_customer"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/x40"
+                android:orientation="horizontal"
+                android:layout_below="@+id/lv_customer_message_four"
+                >
+                <Button
+                    android:id="@+id/btn_left_no"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="不能通过审批"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textColor="#ffffff"
+                    android:background="@color/orange"/>
+                <Button
+                    android:id="@+id/btn_right_ok"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="审批合格"
+                    android:textColor="#ffffff"
+                    android:layout_weight="1"
+                    android:background="@color/blue"/>
+            </LinearLayout>
         </RelativeLayout>
     </ScrollView>
+
 </RelativeLayout>

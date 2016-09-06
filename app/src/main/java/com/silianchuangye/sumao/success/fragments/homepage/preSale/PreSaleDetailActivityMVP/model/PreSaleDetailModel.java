@@ -1,5 +1,7 @@
 package com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.model;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockDetailActivityMVP.bean.GoodsInStockDetailBean;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.bean.PreSaleDetailBean;
@@ -44,6 +46,7 @@ public class PreSaleDetailModel implements IPreSaleDetailModel{
 
                 @Override
                 public void onSuccess(String result) {
+                    Log.d("预售result",result);
                     LogUtils.log("首页：预售详情--->" + result + "<---首页：预售详情");
                     Gson gson = new Gson();
                     preSaleDetailBean = gson.fromJson(result,PreSaleDetailBean.class);

@@ -50,7 +50,7 @@
             android:layout_below="@+id/iv_ok_icon"
             android:textColor="#8CC63F"
             android:textSize="14sp"
-            android:text="您订单支付失败"
+            android:text="您订单支付成功"
             android:layout_centerHorizontal="true"
 
             />
@@ -61,18 +61,13 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/x10"
             >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/tv_order"
-                android:text="订单编号:"
-                />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/tv_order_number_ok"
                 android:textColor="#29ABE2"
-                android:text="12345678901"
+
                 />
             <TextView
                 android:layout_width="wrap_content"

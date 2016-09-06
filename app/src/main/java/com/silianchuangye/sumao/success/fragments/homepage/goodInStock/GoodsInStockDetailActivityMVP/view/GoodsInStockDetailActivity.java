@@ -11,7 +11,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -32,6 +31,12 @@ import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.PaymentsO
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.SeeProductMVP.view.SeeProduct;
 import com.silianchuangye.sumao.success.fragments.shoppingCart.dialog.Cart_MyDialog;
 import com.silianchuangye.sumao.success.utils.LogUtils;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -79,6 +84,12 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
     private LinearLayout layoutContent_auction;
     private String cl_gongsiId;
     private String contractString;
+    private String qigou;
+    private String sku_id;
+    private TextView all_price;
+    private EditText et_number;
+    private TextView tv_jian;
+    private TextView tv_jia;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,10 +114,16 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
         pre_sale_sale_detail_similar_product.setOnClickListener(this);
         pre_sale_sale_detail_similar_liulan.setOnClickListener(this);
         layoutContent_auction.setOnClickListener(this);
+        tv_jia.setOnClickListener(this);
+        tv_jian.setOnClickListener(this);
         title_bar_white_title.setText("现货");
     }
 
     private void initView() {
+        all_price= (TextView) findViewById(R.id.tv_item_cart_all_price);
+        tv_jian= (TextView) findViewById(R.id.img_item_cart_buy_sub);
+        tv_jia= (TextView) findViewById(R.id.img_item_cart_buy_add);
+        et_number= (EditText) findViewById(R.id.tv_item_cart_buy_num);
         title_bar_white_back = ((ImageView) findViewById(R.id.title_bar_white_back));
         title_bar_white_title = ((TextView) findViewById(R.id.title_bar_white_title));
         title_bar_white_shopping_cart = ((ImageView) findViewById(R.id.title_bar_white_shopping_cart));
@@ -203,27 +220,34 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
                 Animation animation = AnimationUtils.loadAnimation(this, R.anim.joincartanim);
                 animation.setFillAfter(true);
                 image.startAnimation(animation);
-                Toast.makeText(this,"加入购物车成功",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this,"加入购物车成功",Toast.LENGTH_SHORT).show();
+                new Thread(){
+                        @Override
+                        public void run() {
+                           // super.run();
+                           join_gouwuche();
+                        }
+                    }.start();
 //
                 break;
             case R.id.img_item_cart_buy_sub:
-                String str = tv_item_cart_buy_num.getText().toString();
+                String str = et_number.getText().toString();
                 int num = Integer.valueOf(str);
                 num--;
                 if (num >= 1) {
-                    tv_item_cart_buy_num.setText("" + num);
+                    et_number.setText("" + num);
                 }
                 break;
             case R.id.img_item_cart_buy_add:
-                str = tv_item_cart_buy_num.getText().toString();
+                str = et_number.getText().toString();
                 num = Integer.valueOf(str);
                 num++;
-                if (num >= 15) {
-                    dialog.show();
-                }
-                if (num < 15 && num >= 0) {
-                    tv_item_cart_buy_num.setText("" + num);
-                }
+//                if (num >= Integer.valueOf(surplus_amount_et.getText().toString())) {
+//                    dialog.show();
+//                }
+              //  if (num < Integer.parseInt(surplus_amount_et.getText().toString()) && num >= 0) {
+                    et_number.setText("" + num);
+              //  }
                 break;
             case R.id.layoutContent_auction:
                 Intent intentHX = new Intent();
@@ -233,6 +257,9 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
                 intentHX.putExtra(Constant.IM_SERVICE_NUMBER, cl_gongsiId);
                 startActivity(intentHX);
                 break;
+
+
+
             default:
                 break;
         }
@@ -287,9 +314,60 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
         lp.alpha = bgAlpha; //0.0-1.0
         GoodsInStockDetailActivity.this.getWindow().setAttributes(lp);
     }
+    public void join_gouwuche(){
+        String url="http://192.168.32.126:7023/rest/model/atg/commerce/ShoppingCartActor/addItemToOrder";
+        RequestParams rp=new RequestParams(url);
+        rp.addParameter("productId",cl_id);
+        rp.addParameter("quantity",(Integer.parseInt(et_number.getText().toString())*1000)+"");
+        rp.addParameter("skuId",sku_id);
+        Log.d("skuid的值",sku_id);
+        SharedPreferences sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+        String unique=sp.getString("unique","");
+        rp.addParameter("_dynSessConf",unique);
+        Log.d("添加到购物车的skuid",""+rp);
+        x.http().post(rp, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.d("result",result);
+                if (result.contains("commerceItem")){
+                    Toast.makeText(GoodsInStockDetailActivity.this,"加入购物车成功",Toast.LENGTH_SHORT).show();
+                }else{
+                    try {
+                        JSONObject obj_result = new JSONObject(result);
+                        String message=obj_result.getString("formExceptions");
+                        JSONArray array=new JSONArray(message);
+                        JSONObject obj_array=array.getJSONObject(0);
+                        String info=obj_array.getString("localizedMessage");
+                        Toast.makeText(GoodsInStockDetailActivity.this, ""+info, Toast.LENGTH_SHORT).show();
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+       // rp.addParameter("");
+    }
 
     @Override
     public void getGoodsInStockDetailData(GoodsInStockDetailBean goodsInStockDetailBean) {
+        //skuId
+         sku_id=goodsInStockDetailBean.getCl_cpid();
 //        兰州石化7042
         tvName_auction.setText(goodsInStockDetailBean.getCl_mingcheng());
 //        6000

@@ -4,12 +4,12 @@
     android:layout_height="match_parent"
     android:background="@color/selley_lv"
     android:orientation="vertical">
-
         <RelativeLayout
             android:id="@+id/relative_top"
             android:layout_width="match_parent"
             android:layout_height="@dimen/title_height"
             android:background="@color/zixun_topbg"
+
             >
             <ImageView
                 android:id="@+id/img_pop_title_bar_back"
@@ -39,10 +39,45 @@
                 android:textSize="16sp"/>
         </RelativeLayout>
         <RelativeLayout
+        android:layout_marginTop="@dimen/x7"
+        android:id="@+id/relative_pop_customer_eight"
+        android:layout_below="@id/relative_top"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x30">
+        <LinearLayout
+            android:id="@+id/linear4"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/x7"
+            android:layout_width="@dimen/x240"
+            android:layout_height="@dimen/x30"
+            android:background="@drawable/juxing"
+            android:orientation="horizontal">
+            <TextView
+                android:paddingLeft="@dimen/x7"
+                android:text="   请选择卖方企业"
+                android:id="@+id/tv_pop_customer_maifang"
+                android:gravity="center_vertical"
+                android:layout_width="@dimen/x210"
+                android:layout_height="@dimen/x30"
+                android:layout_centerVertical="true"
+                />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/drop_down"/>
+        </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="卖方企业 : "
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/linear4"/>
+    </RelativeLayout>
+        <RelativeLayout
             android:layout_marginTop="@dimen/x7"
-            android:layout_below="@id/relative_top"
             android:id="@+id/relative_pop_customer_one"
             android:layout_width="match_parent"
+            android:layout_below="@id/relative_pop_customer_eight"
             android:layout_height="@dimen/x30">
             <LinearLayout
                 android:id="@+id/linear1"
@@ -298,43 +333,8 @@
         </RelativeLayout>
         <RelativeLayout
             android:layout_marginTop="@dimen/x7"
-            android:id="@+id/relative_pop_customer_eight"
-            android:layout_below="@id/relative_pop_customer_sever"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/x30">
-            <LinearLayout
-                android:id="@+id/linear4"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="@dimen/x7"
-                android:layout_width="@dimen/x240"
-                android:layout_height="@dimen/x30"
-                android:background="@drawable/juxing"
-                android:orientation="horizontal">
-                <TextView
-                    android:paddingLeft="@dimen/x7"
-                    android:text="   请选择卖方企业"
-                    android:id="@+id/tv_pop_customer_maifang"
-                    android:gravity="center_vertical"
-                    android:layout_width="@dimen/x210"
-                    android:layout_height="@dimen/x30"
-                    android:layout_centerVertical="true"
-                    />
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/drop_down"/>
-            </LinearLayout>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="卖方企业 : "
-                android:layout_centerVertical="true"
-                android:layout_toLeftOf="@id/linear4"/>
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_marginTop="@dimen/x7"
             android:id="@+id/relative_pop_customer_nine"
-            android:layout_below="@id/relative_pop_customer_eight"
+            android:layout_below="@id/relative_pop_customer_sever"
             android:layout_width="match_parent"
             android:layout_height="@dimen/x30">
             <LinearLayout
@@ -376,9 +376,13 @@
             android:layout_marginTop="@dimen/x3"
             android:layout_below="@id/relative_pop_customer_nine"
             />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/line_pop_customer"
+        >
         <Button
             android:layout_marginTop="@dimen/x3"
-            android:layout_below="@id/line_pop_customer"
             android:id="@+id/btn_pop_customer_search"
             android:layout_width="@dimen/x145"
             android:layout_height="@dimen/x35"
@@ -387,6 +391,8 @@
             android:textColor="@color/selley_lv"
             android:background="@drawable/button_background_blue"
             android:layout_marginBottom="@dimen/x7"/>
+    </RelativeLayout>
+
         <ListView
             android:layout_alignParentRight="true"
             android:visibility="gone"
@@ -463,4 +469,5 @@
             android:layout_marginRight="@dimen/x7"
             android:layout_alignParentRight="true"
             android:background="@drawable/juxing"/>
+
 </RelativeLayout>

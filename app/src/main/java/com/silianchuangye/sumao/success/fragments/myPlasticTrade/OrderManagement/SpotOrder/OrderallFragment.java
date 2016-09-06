@@ -20,6 +20,7 @@ import com.jingchen.pulltorefresh.PullToRefreshLayout;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.MyAdapter;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.OrderDetails.AlreadyPaidActivity;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.LoginUserActivity;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
 import org.json.JSONArray;
@@ -40,7 +41,8 @@ import java.util.Map;
  */
 public class OrderallFragment extends Fragment {
     private ExpandableListView elvDemo;
-
+            SharedPreferences sp ;
+        String unique123 ;
     private List<Map<String,Object>>listparrent;
     private List<List<Map<String,Object>>> listitem ;
     MyAdapter adapter;
@@ -56,6 +58,8 @@ public class OrderallFragment extends Fragment {
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+         sp=getActivity().getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+       unique123= sp.getString("unique", "");
         listparrent=new ArrayList<Map<String,Object>>();
         listitem=new ArrayList<List<Map<String,Object>>>();
         View view=inflater.inflate(R.layout.fragment_orderall, container, false);
@@ -143,9 +147,7 @@ public class OrderallFragment extends Fragment {
         params.addParameter("endDate", endDate);//结束日期
         params.addParameter("submitType",subType);//查询类型
         params.addParameter("searchCheckType",KPstate);//开票状态
-//        SharedPreferences sp =getActivity().getSharedPreferences("sumao", Activity.MODE_PRIVATE);
-//        String unique123 = sp.getString("unique", "");
-//        params.addParameter("_dynSessConf", unique123);
+        params.addParameter("_dynSessConf", unique123);
         Log.e("TAG", "parames======" + params);
         x.http().post(params, new Callback.CommonCallback<String>() {
             @Override
@@ -153,6 +155,12 @@ public class OrderallFragment extends Fragment {
                 Log.e("TAG","result----"+result);
                 try {
                     JSONObject job=new JSONObject(result);
+                    String info=job.getString("info");
+                    if(info.equals("fail")){
+                        Toast.makeText(getActivity(),"请重新登陆",Toast.LENGTH_SHORT).show();
+                        new TiQu(getActivity()).showLogin();
+                        getActivity().finish();
+                    }
                     String count=job.getString("count");
                     Log.e("TAG","count----"+count);
                     if(count.equals("0")){
@@ -198,14 +206,16 @@ public class OrderallFragment extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                adapter=new MyAdapter(listparrent,listitem,getActivity());
-                elvDemo.setAdapter(adapter);
-                if(adapter!=null && listparrent!=null){
-                    for (int i = 0; i < listparrent.size(); i++) {
-                        elvDemo.expandGroup(i);
+                if(!ListFlag) {
+                    adapter = new MyAdapter(listparrent, listitem, getActivity());
+                    elvDemo.setAdapter(adapter);
+                    if(adapter!=null && listparrent!=null){
+                        for (int i = 0; i < listparrent.size(); i++) {
+                            elvDemo.expandGroup(i);
+                        }
                     }
                 }
-                adapter.notifyDataSetChanged();
+
             }
 
             @Override
@@ -268,10 +278,10 @@ public class OrderallFragment extends Fragment {
                     // 千万别忘了告诉控件刷新完毕了哦！
                     pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
                     Log.e("TAG","下拉刷子新");
-                    page++;
+                    page=1;
                     ListFlag=true;
                     sendMy(subType,Kpstate,startDate,endDate,company,OrderId,OrderType);
-//                    adapter.notifyDataSetChanged();
+                    adapter.notifyDataSetChanged();
                 }
             }.sendEmptyMessageDelayed(0,1000);
         }

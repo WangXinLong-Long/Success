@@ -3,7 +3,7 @@ package com.silianchuangye.sumao.success.dialog;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
+
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -18,7 +18,7 @@ public class Error_Dialog extends Activity {
     private ImageView error_dialog_cancel;
     private TextView tv_order_number;
     private Button bt_reZhifu;
-    private Context context;
+    private Context context;////
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +40,7 @@ public class Error_Dialog extends Activity {
         bt_reZhifu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //再次调到支付界面
+                Error_Dialog.this.finish();
             }
         });
 

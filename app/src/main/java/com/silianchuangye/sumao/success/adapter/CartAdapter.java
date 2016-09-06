@@ -1,6 +1,8 @@
 package com.silianchuangye.sumao.success.adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -17,6 +19,13 @@ import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.bean.CartInfo;
 import com.silianchuangye.sumao.success.fragments.shoppingCart.dialog.Cart_MyDialog;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
+
 import java.util.List;
 
 /**
@@ -29,11 +38,21 @@ private List<CartInfo> list;
     private Cart_MyDialog dialog;
     private SelectCallBack call;
     private String temp;
-    public CartAdapter(Context ctx,List<CartInfo>list,SelectCallBack call,Cart_MyDialog dialog){
+    private String name_chanpin;
+    private List<String> kucong;
+    private List<String> list_id;
+    private String id;
+    private String kucong_value;
+    private String price;
+    private String all_price;
+    private int number;
+    public CartAdapter(Context ctx,List<CartInfo>list,SelectCallBack call,Cart_MyDialog dialog,List<String> list_id,List<String> kucong){
         this.ctx=ctx;
         this.list=list;
         this.call=call;
         this.dialog=dialog;
+        this.list_id=list_id;
+        this.kucong=kucong;
     }
     @Override
     public int getCount() {
@@ -74,6 +93,9 @@ private List<CartInfo> list;
         }else{
            holder= (ViewHolder) convertView.getTag();
         }
+        id=list_id.get(position).toString();
+        kucong_value=kucong.get(position).toString();
+        Log.d("库存的值",kucong_value);
         holder.Tv_name.setText(list.get(position).name);
         holder.Tv_sort_name.setText(list.get(position).sort_name);
         holder.Tv_cangku_name.setText(list.get(position).cangku_name);
@@ -82,6 +104,7 @@ private List<CartInfo> list;
         holder.Tv_qiye.setText(list.get(position).qiye);
         holder.Tv_company.setText(list.get(position).company);
         holder.Edt_buy_num.setText(list.get(position).buy_num);
+        Log.d("选择的值",list.get(position).buy_num);
         holder.Tv_all_price.setText(list.get(position).all_price+"元");
         //选中与不选中
         if(list.get(position).Selsct_Flag){
@@ -92,19 +115,24 @@ private List<CartInfo> list;
         holder.Img_select.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                call.Call(position);}
-        });
-        //删除按钮
-        holder.Img_del.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                list.remove(list.get(position));
-                notifyDataSetChanged();
-                if(list.size()==0){
-                    call.CartNull(list);
-                }
+                call.Call(position);
+
             }
         });
+        //删除按钮
+//        holder.Img_del.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                new Thread(){
+//                    @Override
+//                    public void run() {
+//                        //super.run();
+//                        delete_data(position);
+//                        //notifyDataSetChanged();
+//                    }
+//                }.start();
+//            }
+//        });
 
         //增加或减少购买数
         holder.Tv_buy_Sub.setOnClickListener(new View.OnClickListener() {
@@ -118,68 +146,194 @@ private List<CartInfo> list;
                 num--;
                 if(num>=0) {
                     holder.Edt_buy_num.setText("" + num);
+                    number=num;
                     holder.relative_item_cart.setVisibility(View.GONE);
+                   // update_data(number);
+//                    holder.Tv_price.setText(price);
+//                    holder.Tv_all_price.setText(all_price);
+                    //notifyDataSetChanged();
                 }
                 if(num==0){
                     Toast.makeText(ctx,"购买数量不能为零",Toast.LENGTH_SHORT).show();
                 }
             }
         });
-        holder.Tv_buy_Add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String str=holder.Edt_buy_num.getText().toString();
-                if(str.equals("")){
-                    str="0";
-                }
-                int num=Integer.valueOf(str);
-                num++;
-                if(num>=15){
-                    holder.relative_item_cart.setVisibility(View.VISIBLE);
-                    holder.Tv_no_much.setText("产品库存不足"+num+"吨");
-                    dialog.show();
-                }
-                if(num<15&&num>=0) {
-                    holder.relative_item_cart.setVisibility(View.GONE);
-                    holder.Edt_buy_num.setText("" + num);
-                }
-            }
-        });
-        holder.Edt_buy_num.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                temp=holder.Edt_buy_num.getText().toString();
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String str=holder.Edt_buy_num.getText().toString();
-                if(str.equals("")){
-                    Toast.makeText(ctx, "购买数量不能为空", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                String str=holder.Edt_buy_num.getText().toString();
-                if(str.equals("")){
-                    str="0";
-//                    holder.Edt_buy_num.setText(str);
-                    Toast.makeText(ctx,"购买数量不能为零",Toast.LENGTH_SHORT).show();
-                }
-                int i=Integer.valueOf(str);
-                if(i>=15) {
-                    holder.relative_item_cart.setVisibility(View.VISIBLE);
-                    holder.Tv_no_much.setText("产品库存不足" + i + "吨");
-                    dialog.show();
-                }else{
-                    holder.relative_item_cart.setVisibility(View.GONE);
-                }
-
-            }
-        });
+//        holder.Tv_buy_Add.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                String str=holder.Edt_buy_num.getText().toString();
+//                if(str.equals("")){
+//                    str="0";
+//                }
+//                int num=Integer.valueOf(str);
+//                num++;
+//                Log.d("库存的值",kucong.get(position));
+//              //  Log.d("库存的数字",Integer.parseInt(kucong).get+"");
+//                if(num>=new Double(kucong_value)){
+//                    holder.relative_item_cart.setVisibility(View.VISIBLE);
+//                    holder.Tv_no_much.setText("产品库存不足"+num+"吨");
+//                    dialog.show();
+//                }
+//                if(num<new Double(kucong_value)&&num>=0) {
+//                    holder.relative_item_cart.setVisibility(View.GONE);
+//                    holder.Edt_buy_num.setText("" + num);
+//                    number=num;
+////                   String number=num+"";
+////                    update_data(number);
+////                    holder.Tv_price.setText(price);
+////                    holder.Tv_all_price.setText(all_price);
+//                    //notifyDataSetChanged();
+//                }
+//            }
+//        });
+//        holder.Edt_buy_num.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//                temp=holder.Edt_buy_num.getText().toString();
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                temp=holder.Edt_buy_num.getText().toString();
+//                if(temp.equals("")){
+//                    Toast.makeText(ctx, "购买数量不能为空", Toast.LENGTH_SHORT).show();
+//                }
+//                //else{
+////                    update_data();
+////                    holder.Tv_price.setText(price);
+////                    holder.Tv_all_price.setText(all_price);
+////                    //notifyDataSetChanged();
+////                }
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//               temp=holder.Edt_buy_num.getText().toString();
+//                if(temp.equals("")){
+//                    temp="0";
+////                    holder.Edt_buy_num.setText(str);
+//                    Toast.makeText(ctx,"购买数量不能为零",Toast.LENGTH_SHORT).show();
+//                }
+//                int i=Integer.valueOf(temp);
+////                Log.d("edit的值", new Double(kucong_value)+"");
+//                if(i>= new Double(kucong_value)) {
+//                    holder.relative_item_cart.setVisibility(View.VISIBLE);
+//                    holder.Tv_no_much.setText("产品库存不足" + i + "吨");
+//                    dialog.show();
+//                }else{
+//
+//                    holder.relative_item_cart.setVisibility(View.GONE);
+//                    update_data();
+//                    holder.Tv_price.setText(price);
+//                    holder.Tv_all_price.setText(all_price);
+//                }
+//
+//           }
+//        });
         return convertView;
     }
+    public void delete_data(final int position){
+        String url="http://192.168.32.126:7023/rest/model/atg/commerce/ShoppingCartActor/removeItemFromOrder";
+        final RequestParams rp=new RequestParams(url);
+        SharedPreferences sp=ctx.getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+        String unique_delete=sp.getString("unique","");
+        Log.d("购物车删除时的唯一标识",unique_delete);
+        rp.addParameter("_dynSessConf",unique_delete);
+        rp.addParameter("commerceId",id);
+        Log.d("商品id",id);
+        Log.d("rp的值",rp +"");
+        x.http().post(rp, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+
+                Log.d("删除时的result",result);
+                if (result.contains("commerceItem")){
+                    list.remove(list.get(position));
+                    Toast.makeText(ctx, "删除成功", Toast.LENGTH_SHORT).show();
+                    notifyDataSetChanged();
+
+                }else{
+                    try {
+                        JSONObject obj_result = new JSONObject(result);
+                        String message=obj_result.getString("formExceptions");
+                        JSONArray array=new JSONArray(message);
+                        JSONObject obj_array=array.getJSONObject(0);
+                        String info=obj_array.getString("localizedMessage");
+                        Toast.makeText(ctx, ""+info, Toast.LENGTH_SHORT).show();
+                    }catch (Exception  e){
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+    }
+    public void update_data(){
+        String url="http://192.168.32.126:7023/rest/model/atg/commerce/ShoppingCartActor/shoppingCartDetail";
+        RequestParams rp=new RequestParams(url);
+        rp.addParameter("amountUnitScale","1000");
+        rp.addParameter("qty","3");
+      ///  Log.d("当前选择数量",number);
+        Log.d("number的值",""+number);
+        rp.addParameter("commerceId",id);
+        SharedPreferences sp=ctx.getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+        String unique_update=sp.getString("unique","");
+        Log.d("修改时的唯一标识",unique_update);
+        rp.addParameter("_dynSessConf",unique_update);
+        Log.d("rp的值",rp+"");
+        x.http().post(rp, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.d("修改时的result",result);
+                if (result.contains("commerceItem")){
+                    try{
+                        JSONObject obj_result=new JSONObject(result);
+                        String message=obj_result.getString("commerceItem");
+                        JSONArray array=new JSONArray(message);
+                        JSONObject onj_array=array.getJSONObject(0);
+                         price=onj_array.getString("salePrice");
+                        Log.d("单价",price);
+                         all_price=onj_array.getString("amount");
+                        Log.d("总价",all_price);
+                       // notifyDataSetChanged();
+
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+    }
+
     public class ViewHolder{
         TextView Tv_name;
         TextView Tv_sort_name;
@@ -199,4 +353,5 @@ private List<CartInfo> list;
         public void Call(int index);
         public void CartNull(List<CartInfo>list);
     }
+
 }

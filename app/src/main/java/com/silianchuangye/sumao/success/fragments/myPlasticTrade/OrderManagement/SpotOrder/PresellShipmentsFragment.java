@@ -38,26 +38,26 @@ import java.util.Map;
  */
 public class PresellShipmentsFragment extends Fragment {
     private ExpandableListView elvDemo;
-    private List<Map<String,Object>> listparrent;
+    private List<Map<String,Object>> listparrent;;
     private List<List<Map<String,Object>>> listitem;
+    boolean ListFlag;
+    SharedPreferences sp;
+    String unique123 ;
     MyAdapter adapter;
     String orderId,type;
     int page=1;
-    boolean ListFlag;
-    String subType=null,Kpstate="",startDate="",endDate="",company="",OrderId="";
-    public PresellShipmentsFragment() {
-        // Required empty public constructor
-    }
-
+    String subType=null,Kpstate="",startDate="",endDate="",company="",OrderId="",OrderType="fixedPricingOrder";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        Log.e("TAG","待支付订单");
         listparrent=new ArrayList<Map<String,Object>>();
         listitem=new ArrayList<List<Map<String,Object>>>();
-        // Inflate the layout for this fragment
-        View view=inflater.inflate(R.layout.fragment_presell_shipments, container, false);
-
+        sp=getActivity().getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+        unique123= sp.getString("unique", "");
+        View view=inflater.inflate(R.layout.fragment_order_staypay, container, false);
         //实例化
         PullToRefreshLayout ptr=(PullToRefreshLayout)view.findViewById(R.id.refresh_view);
         elvDemo=(ExpandableListView)ptr.getPullableView();
@@ -72,13 +72,13 @@ public class PresellShipmentsFragment extends Fragment {
 //        map1.put("id","1000001");
 //        map1.put("price","70000.0");
 //        map1.put("states","待支付");
-//        map1.put("name","张三");
+//        map1.put("name","李四");
 //        listparrent.add(map1);
 //        Map<String,Object> map2=new Hashtable<String,Object>();
 //        map2.put("id","1000001");
 //        map2.put("price","88888888");
-//        map2.put("states","待支付");
-//        map2.put("name","lisi");
+//        map2.put("states","已支付");
+//        map2.put("name","qqq");
 //        listparrent.add(map2);
 //
 //        listitem=new ArrayList<List<Map<String,Object>>>();
@@ -107,7 +107,8 @@ public class PresellShipmentsFragment extends Fragment {
 //        listitem.add(list1);
 //        listitem.add(list2);
 //
-//       MyAdapter adapter=new MyAdapter(listparrent,listitem,getActivity());
+//        MyAdapter adapter=new MyAdapter(listparrent,listitem,getActivity());
+//       // MyNameAdapter adapter=new MyNameAdapter(listparrent,listitem,"张三",getActivity());
 //        elvDemo.setAdapter(adapter);
 //        if(adapter!=null && listparrent!=null){
 //            for (int i = 0; i < listparrent.size(); i++) {
@@ -117,14 +118,16 @@ public class PresellShipmentsFragment extends Fragment {
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
 //                Toast.makeText(getContext(), "点击title", Toast.LENGTH_SHORT).show();
+                Log.e("TAG","listparrent.get(groupPosition).get(\"id\").toString()===="+listparrent.get(groupPosition).get("id").toString());
                 Intent intent = new Intent();
                 intent.putExtra("ID",listparrent.get(groupPosition).get("id").toString());
-                intent.setClass(getActivity(), AlreadyPaidActivity.class);
+                intent.setClass(getActivity(), SpotOrder.class);
                 startActivity(intent);
                 return true;
 
             }
         });
+
 
         return view;
     }
@@ -133,12 +136,9 @@ public class PresellShipmentsFragment extends Fragment {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         Log.e("TAG","Flag-----"+Flag);
-        listparrent=new ArrayList<Map<String,Object>>();
-        listitem=new ArrayList<List<Map<String,Object>>>();
         if(isVisibleToUser){
             if(Flag){
-                sendMy(subType,Kpstate,startDate,endDate,company,OrderId);
-                adapter.notifyDataSetChanged();
+                sendMy(Kpstate,startDate,endDate,company,OrderId,OrderType);
             }
         }else{
             if(!Flag){
@@ -148,8 +148,8 @@ public class PresellShipmentsFragment extends Fragment {
                 if(listparrent!=null){
                     listparrent.clear();
                 }
-                page=1;subType=null;Kpstate="";startDate="";endDate="";company="";OrderId="";
-                sendMy(subType,Kpstate,startDate,endDate,company,OrderId);
+                page=1; subType=null;Kpstate="";startDate="";endDate="";company="";OrderId="";OrderType="fixedPricingOrder";
+                sendMy(Kpstate,startDate,endDate,company,OrderId,OrderType);
                 if(adapter!=null) {
                     adapter.notifyDataSetChanged();
                 }
@@ -157,7 +157,7 @@ public class PresellShipmentsFragment extends Fragment {
             }
         }
     }
-    public  void sendMy(String subType, String KPstate, String startDate, String endDate, final String company, String OrderId){
+    public  void sendMy(String KPstate,String startDate,String endDate,String company,String OrderId,String OrderType){
         if(!ListFlag){
             listparrent=new ArrayList<Map<String,Object>>();
             listitem=new ArrayList<List<Map<String,Object>>>();
@@ -174,15 +174,13 @@ public class PresellShipmentsFragment extends Fragment {
         params.setBodyContent(job.toString());
         params.addParameter("searchOrderType","forwardPricingOrder");
         params.addParameter("searchOrderState","QUOTED");
-        params.addParameter("pageNum", page);
+        params.addParameter("pageNum",page);
         params.addParameter("searchOrderId", OrderId);//订单
         params.addParameter("startDate",startDate);//开始日期
         params.addParameter("endDate", endDate);//结束日期
         params.addParameter("submitType",subType);//查询类型
         params.addParameter("searchCheckType",KPstate);//开票状态
-//        SharedPreferences sp =getActivity().getSharedPreferences("sumao", Activity.MODE_PRIVATE);
-//        String unique123 = sp.getString("unique", "");
-//        params.addParameter("_dynSessConf", unique123);
+        params.addParameter("_dynSessConf", unique123);
         Log.e("TAG", "parames======" + params);
         x.http().post(params, new Callback.CommonCallback<String>() {
             @Override
@@ -190,6 +188,12 @@ public class PresellShipmentsFragment extends Fragment {
                 Log.e("TAG","result----"+result);
                 try {
                     JSONObject job=new JSONObject(result);
+                    String info=job.getString("info");
+                    if(info.equals("fail")){
+                        Toast.makeText(getActivity(),"请重新登陆",Toast.LENGTH_SHORT).show();
+                        new TiQu(getActivity()).showLogin();
+                        getActivity().finish();
+                    }
                     String count=job.getString("count");
                     Log.e("TAG","count----"+count);
                     if(count.equals("0")){
@@ -205,18 +209,19 @@ public class PresellShipmentsFragment extends Fragment {
                         String shippingGroupState=j.getString("shippingGroupState");
                         type=j.getString("type");
                         String cl_amount="";
-                        String  state1=getState(state,type,shippingGroupState);
+                        String state1=getState(state,type,shippingGroupState);
                         String owner=j.getString("owner");//采购员
                         orderId=j.getString("orderId");//订单编号
 
                         JSONArray j1=new JSONArray(cl);
+                        List<Map<String,Object>> list1=new ArrayList<Map<String,Object>>();
                         for(int k=0;k<j1.length();k++){
                             JSONObject job1= (JSONObject) j1.get(k);
                             cl_amount=job1.getString("cl_amount");//金额
                             String cl_mingcheng=job1.getString("cl_mingcheng");//产品名称
                             String cl_fenlei=job1.getString("cl_fenlei");
                             Log.e("TAG","mingc=="+cl_mingcheng);
-                            List<Map<String,Object>> list1=new ArrayList<Map<String,Object>>();
+
                             Map<String,Object> map=new Hashtable<String,Object>();
                             map.put("type",cl_fenlei);
                             map.put("name",cl_mingcheng);
@@ -234,15 +239,17 @@ public class PresellShipmentsFragment extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                adapter=new MyAdapter(listparrent,listitem,getActivity());
-                elvDemo.setAdapter(adapter);
-                adapter.notifyDataSetChanged();
-                if(adapter!=null && listparrent!=null){
-                    for (int i = 0; i < listparrent.size(); i++) {
-                        elvDemo.expandGroup(i);
+                if(!ListFlag) {
+                    adapter = new MyAdapter(listparrent, listitem, getActivity());
+                    elvDemo.setAdapter(adapter);
+                    if (adapter != null && listparrent != null) {
+                        for (int i = 0; i < listparrent.size(); i++) {
+                            elvDemo.expandGroup(i);
+                        }
                     }
                 }
             }
+
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
                 Log.e("TAG","ex==="+ex);
@@ -256,6 +263,7 @@ public class PresellShipmentsFragment extends Fragment {
 
             @Override
             public void onFinished() {
+
             }
         });
     }
@@ -302,9 +310,9 @@ public class PresellShipmentsFragment extends Fragment {
                     // 千万别忘了告诉控件刷新完毕了哦！
                     pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
                     Log.e("TAG","下拉刷子新");
-                    page++;
+                    page=1;
                     ListFlag=true;
-                    sendMy(subType,Kpstate,startDate,endDate,company,OrderId);
+                    sendMy(Kpstate,startDate,endDate,company,OrderId,OrderType);
 //                    adapter.notifyDataSetChanged();
                 }
             }.sendEmptyMessageDelayed(0,1000);
@@ -321,7 +329,7 @@ public class PresellShipmentsFragment extends Fragment {
                     Log.e("TAG","上拉加载");
                     ListFlag=true;
                     page+=1;
-                    sendMy(subType,Kpstate,startDate,endDate,company,OrderId);
+                    sendMy(Kpstate,startDate,endDate,company,OrderId,OrderType);
                     adapter.notifyDataSetChanged();
                 }
             }.sendEmptyMessageDelayed(0, 1000);

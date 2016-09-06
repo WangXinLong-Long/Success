@@ -21,6 +21,7 @@ public class PreSaleAdapter extends BaseAdapter {
     private  Context context;
     private  List<SMCl> preSaleModels;
     LayoutInflater inflater;
+
     public PreSaleAdapter(Context context,  List<SMCl> preSaleModels) {
 
         this.context = context;

@@ -2,6 +2,7 @@ package com.silianchuangye.sumao.success.fragments.homepage.goodInStock;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.ActionBarOverlayLayout;
@@ -18,11 +19,15 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.google.zxing.client.result.TextParsedResult;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.PopupWindowAdaptrer;
+import com.silianchuangye.sumao.success.dialog.Error_Dialog;
 import com.silianchuangye.sumao.success.dialog.Ok_Dialog;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.OpenAuction;
+
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -162,9 +167,11 @@ public class PaymentsOrder extends Activity implements View.OnClickListener{
             @Override
             public void onClick(View v) {
                 popupWindow.dismiss();
-                Intent intent=new Intent(PaymentsOrder.this,Ok_Dialog.class);
-                intent.putExtra("number",product_order_number.getText().toString());
-                startActivity(intent);
+
+                getPurchase("ci1331000125","sku2140306",product_order_number.getText().toString());
+//                Intent intent=new Intent(PaymentsOrder.this,Ok_Dialog.class);
+//                intent.putExtra("number",product_order_number.getText().toString());
+//                startActivity(intent);
 
             }
         });
@@ -190,4 +197,53 @@ public class PaymentsOrder extends Activity implements View.OnClickListener{
         lp.alpha = bgAlpha; //0.0-1.0
         getWindow().setAttributes(lp);
     }
+    public void getPurchase(String id, String sku_id, final String order_id){
+        String url="http://192.168.32.126:7023/rest/model/atg/commerce/ShoppingCartActor/go";
+        RequestParams requestParams=new RequestParams(url);
+        requestParams.addParameter("quantity","1");
+        SharedPreferences sp=getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+        String unique=sp.getString("unique","");
+//        SharedPreferences sp=getActivity().getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+        // String unique_gouwuche=sp.getString("unique","");
+        // Log.d("一键购得唯一标识",unique_gouwuche);
+        requestParams.addParameter("_dynSessConf",unique);
+        Log.d("一键购得唯一标识",unique);
+        requestParams.addParameter("productId",id);
+        Log.d("商品编号",id);
+        requestParams.addParameter("skuId",sku_id);
+        Log.d("Skuid",sku_id);
+        Log.d("rp的值",requestParams+"");
+        x.http().post(requestParams, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.d("购买时的result",""+result);
+                if (result.contains("commerceItem")){
+                    Intent intent=new Intent(PaymentsOrder.this, Ok_Dialog.class);
+                    intent.putExtra("number",order_id);
+                    startActivity(intent);
+                }else{
+                    Intent intent=new Intent(PaymentsOrder.this,Error_Dialog.class);
+                    intent.putExtra("number",order_id);
+                    startActivity(intent);
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+
+    }
+
 }
