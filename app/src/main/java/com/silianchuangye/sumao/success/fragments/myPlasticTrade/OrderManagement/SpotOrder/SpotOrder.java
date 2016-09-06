@@ -94,7 +94,7 @@ public class SpotOrder extends Activity implements View.OnClickListener {
     private GoogleApiClient client;
     private AlertDialog.Builder alert;
     private TextView tv_order_number1;
-    String type,Id;//类型和ID-现货的
+    String type1,Id,type;//类型和ID-现货的
     private TextView the_order_price,type2,buyer2,state2,company2;
     private TextView bottom_money2;
     @Override
@@ -281,6 +281,7 @@ public class SpotOrder extends Activity implements View.OnClickListener {
             popupWindow.dismiss();
                 Intent intent=new Intent(SpotOrder.this,Ok_Dialog.class);
                 intent.putExtra("number",tv_order_number1.getText().toString());
+                intent.putExtra("type",type1);
                 startActivity(intent);
 
             }
@@ -335,7 +336,7 @@ public class SpotOrder extends Activity implements View.OnClickListener {
                             JSONObject j = (JSONObject) jay.get(i);
                             String cl = (String) j.getString("cl");
                             String type=j.getString("type");//类型
-                            String type1=getType(type);
+                            type1=getType(type);
                             Log.e("TAG","类型-----"+type1);
                             type2.setText(type1);
                             String shippingGroupState=j.getString("shippingGroupState");

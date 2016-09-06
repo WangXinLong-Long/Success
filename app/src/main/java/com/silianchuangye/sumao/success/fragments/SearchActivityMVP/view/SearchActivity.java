@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.SearchActivityMVP.bean.SearchActivityBean;
 import com.silianchuangye.sumao.success.fragments.SearchActivityMVP.presenter.SearchActivityPresenter;
-import com.silianchuangye.sumao.success.fragments.type.TypeInfoActivity;
+import com.silianchuangye.sumao.success.fragments.type.view.TypeInfoActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,6 +75,7 @@ public class SearchActivity extends AppCompatActivity implements ISearchActivity
     public void getSearchActivityData(SearchActivityBean searchActivityBean) {
         Intent intent=new Intent(SearchActivity.this, TypeInfoActivity.class);
         intent.putExtra("searchActivityBean",searchActivityBean);
+        intent.putExtra("Ntt",search_content.getText().toString().trim());
         startActivity(intent);
     }
 }

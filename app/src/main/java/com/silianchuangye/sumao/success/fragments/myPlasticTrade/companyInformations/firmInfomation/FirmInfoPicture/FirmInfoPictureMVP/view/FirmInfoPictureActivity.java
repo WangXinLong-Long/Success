@@ -164,8 +164,9 @@ public class FirmInfoPictureActivity extends AppCompatActivity implements IFirmI
         bt_getNumber.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(FirmInfoPictureActivity.this, CaptureActivity.class);
-                startActivityForResult(intent, 8);
+                MPermissions.requestPermissions(FirmInfoPictureActivity.this, REQUEST_PERMISSION_CAMERA_QR_CODE, PERMISSIONS);
+//                Intent intent = new Intent(FirmInfoPictureActivity.this, CaptureActivity.class);
+//                startActivityForResult(intent, 8);
             }
         });
         btSave = (Button) findViewById(R.id.bt_save_register_value);

@@ -21,9 +21,13 @@ import java.util.List;
  */
 public class SearchActivityModel implements ISearchActivityModel {
     String Ntt;
+    int Nrpp;
+    int No;
 
-    public SearchActivityModel(String ntt) {
+    public SearchActivityModel(String ntt, int nrpp, int no) {
         Ntt = ntt;
+        Nrpp = nrpp;
+        No = no;
     }
 
     @Override
@@ -34,6 +38,8 @@ public class SearchActivityModel implements ISearchActivityModel {
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("Ntt", Ntt);
+            jsonObject.put("Nrpp",Nrpp+"");
+            jsonObject.put("No",No+"");
         } catch (JSONException e) {
             e.printStackTrace();
         }

@@ -18,11 +18,21 @@ import com.silianchuangye.sumao.success.fragments.PagerOneMVP.model.PagerOneCall
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.model.PagerOneModel;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.view.IPagerOneView;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.view.PagerOne;
+import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.bean.GoodsInStockActivityBean;
+import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.model.GoodsInStockActivityCallback;
+import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.model.GoodsInStockActivityModel;
+import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.model.IGoodsInStockActivityModel;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.bean.PreSaleDetailCalendarBean;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.model.CalendarModel.CalendarCallback;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.model.CalendarModel.CalendarModels;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.model.CalendarModel.ICalendarModel;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleMVP.bean.PreSaleBean;
+import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleMVP.model.IPreSaleModel;
+import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleMVP.model.PreSaleCallback;
+import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleMVP.model.PreSaleModel;
+import com.silianchuangye.sumao.success.fragments.homepage.sumaoconsultMVP.model.ISuMaoConsultModel;
+import com.silianchuangye.sumao.success.fragments.homepage.sumaoconsultMVP.model.SuMaoConsultCallback;
+import com.silianchuangye.sumao.success.fragments.homepage.sumaoconsultMVP.model.SuMaoConsultModel;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 
 /**
@@ -43,7 +53,7 @@ public class PagerOnePresenter {
             }
         });
     }
-
+//      滚动条
     public void getPictureFromServerToPagerOneFragment(String url){
         IGetPictureModel getPictureModel = new GetPictureModels(url);
         getPictureModel.getImageFromServer(new GetPictureCallback() {
@@ -54,6 +64,7 @@ public class PagerOnePresenter {
         });
 
     }
+//    公告
     public void getAnnouncementInfoToPagerOneFragment(){
         IAnnouncementModel announcementModel = new AnnouncementModel();
         announcementModel.getAnnouncementInfo(new AnnouncementCallback() {
@@ -63,7 +74,7 @@ public class PagerOnePresenter {
             }
         });
     }
-
+//      预售信息
     public void getHomeSaleInfoToPagerOneFragment(){
         IHomeSaleModel homeSaleModel = new HomeSaleModels();
         homeSaleModel.getHomeSaleInfo(new HomeSaleCallback() {
@@ -73,6 +84,34 @@ public class PagerOnePresenter {
             }
         });
     }
-
-
+//      现货
+    public   void getGoodsInStockInfo(String region2,String classification2,String application2,int Nrpp,int No){
+        IGoodsInStockActivityModel goodsInStockActivityModel = new GoodsInStockActivityModel(region2,classification2,application2,Nrpp,No);
+        goodsInStockActivityModel.getGoodsInStockActivityResult(new GoodsInStockActivityCallback() {
+            @Override
+            public void callbackInGoodsInStockActivity(GoodsInStockActivityBean goodsInStockActivityBean) {
+                pagerOne.setDataInActivity(goodsInStockActivityBean);
+            }
+        });
+    }
+//      预售
+    public   void getPreSaleInfo(String region2,String classification2,String application2,int Nrpp,int No){
+        IPreSaleModel preSaleModel = new PreSaleModel(region2,classification2,application2,Nrpp,No);
+        preSaleModel.getPreSaleResult(new PreSaleCallback() {
+            @Override
+            public void callbackPreSale(GoodsInStockActivityBean goodsInStockActivityBean) {
+                pagerOne.setPreSaleDataInActivity(goodsInStockActivityBean);
+            }
+        });
+    }
+//      塑贸资讯
+    public void getSuMaoConsultInfo(){
+        ISuMaoConsultModel suMaoConsultModel = new SuMaoConsultModel();
+        suMaoConsultModel.getSuMaoConsultInfo(new SuMaoConsultCallback() {
+            @Override
+            public void callbackSuMaoConsult(AnnounceBean announceBean) {
+                pagerOne.setSuMaoConsultInActivity(announceBean);
+            }
+        });
+    }
 }

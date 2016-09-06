@@ -22,7 +22,7 @@ public class HomeSaleModels implements IHomeSaleModel {
 
     @Override
     public void getHomeSaleInfo(final HomeSaleCallback callback) {
-        String url = SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/catalog/ProductCatalogActor/homeForwardProduct";
+        String url = SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/catalog/ProductCatalogActor/homeProducts";
         RequestParams requestParams = new RequestParams(url);
         try {
             x.http().request(HttpMethod.POST, requestParams, new Callback.CacheCallback<String>() {
@@ -36,7 +36,7 @@ public class HomeSaleModels implements IHomeSaleModel {
 
                 @Override
                 public void onSuccess(String result) {
-                    LogUtils.log("首页预售--->" + result + "<---首页预售");
+                    LogUtils.log("首页预售竞价团购--->" + result + "<---首页预售竞价团购");
                     Gson gson = new Gson();
                     preSaleBean = gson.fromJson(result, PreSaleBean.class);
                     callback.callbackHomeSale(preSaleBean);

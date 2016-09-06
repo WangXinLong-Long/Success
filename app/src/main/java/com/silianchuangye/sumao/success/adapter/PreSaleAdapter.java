@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.bean.SMCl;
 import com.silianchuangye.sumao.success.model.PreSaleModel;
+import com.silianchuangye.sumao.success.utils.LogUtils;
 
 import java.util.List;
 
@@ -22,6 +23,7 @@ public class PreSaleAdapter extends BaseAdapter {
     LayoutInflater inflater;
 
     public PreSaleAdapter(Context context,  List<SMCl> preSaleModels) {
+
         this.context = context;
         this.preSaleModels = preSaleModels;
         inflater = LayoutInflater.from(context);
@@ -29,6 +31,7 @@ public class PreSaleAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
+        LogUtils.log("Adapter中收到值-->"+preSaleModels.size() );
         return preSaleModels.size();
     }
 

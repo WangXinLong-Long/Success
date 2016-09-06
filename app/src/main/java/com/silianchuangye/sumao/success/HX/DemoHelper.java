@@ -323,7 +323,7 @@ public class DemoHelper {
 
                             @Override
                             public void onReceive(Context context, Intent intent) {
-                                // TODO Auto-generated method stub
+
                                 Toast.makeText(appContext, intent.getStringExtra("cmd_value"), Toast.LENGTH_SHORT).show();
                             }
                         };

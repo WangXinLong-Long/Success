@@ -443,7 +443,7 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".fragments.type.TypeInfoActivity"
+            android:name=".fragments.type.view.TypeInfoActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.CreateLogistics"
@@ -501,9 +501,9 @@
         <activity android:name=".customermanger.SaveCustomerMessage" />
         <activity android:name=".customermanger.Buy" />
         <activity android:name=".customermanger.ZhiPaiPerson" />
-        <activity android:name="com.silianchuangye.sumao.success.fragments.SellerManagementPlatform.SellerOrderManagement.ReNumAndPrice"/>
-        <activity android:name="com.silianchuangye.sumao.success.fragments.SellerManagementPlatform.SellerOrderManagement.NewPrice"/>
-        <activity android:name="com.silianchuangye.sumao.success.fragments.SellerManagementPlatform.SellerOrderManagement.Num"/>
+        <activity android:name=".fragments.SellerManagementPlatform.SellerOrderManagement.ReNumAndPrice" />
+        <activity android:name=".fragments.SellerManagementPlatform.SellerOrderManagement.NewPrice" />
+        <activity android:name=".fragments.SellerManagementPlatform.SellerOrderManagement.Num" />
         <activity
             android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.CaptureActivity"
             android:configChanges="orientation|keyboardHidden"
@@ -528,6 +528,9 @@
             android:screenOrientation="portrait" />
         <activity android:name=".fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.CompanyUserValueActivity" />
         <activity android:name=".fragments.myPlasticTrade.register.RegisterPicture" />
+        <activity android:name=".fragments.homepage.sumaoconsultMVP.SuMaoConsult"></activity>
+
+        <activity android:name=".customermanger.NoAgree"></activity>
     </application>
 
 </manifest>

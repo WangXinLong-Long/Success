@@ -21,7 +21,7 @@
             android:layout_marginTop="@dimen/x5"
             android:layout_marginBottom="@dimen/x2"
             android:orientation="horizontal"
-            android:weightSum="3"
+            android:weightSum="4"
             android:background="#fff"
             >
 
@@ -89,6 +89,29 @@
                     android:singleLine="true"
                     />
             </RelativeLayout>
+            <LinearLayout
+                android:layout_width="@dimen/x1"
+                android:layout_height="match_parent"
+                android:background="#E6E6E6"
+                ></LinearLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/screen1"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/screen"
+                    android:text="筛选"
+                    android:layout_centerInParent="true"
+                    android:textColor="#000"
+                    android:textSize="14sp"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    />
+            </RelativeLayout>
         </LinearLayout>
     </RelativeLayout>
 
@@ -142,13 +165,19 @@
     android:layout_height="@dimen/x1"
     android:background="@color/my_sumao_background"/>
 
-    <com.handmark.pulltorefresh.library.PullToRefreshListView
+    <com.jingchen.pulltorefresh.PullToRefreshLayout
+        android:id="@+id/refresh_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/split_line">
+    <com.jingchen.pulltorefresh.PullableListView
         android:id="@+id/pre_sale_listView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/split_line"
+
         android:background="@color/white"
-        ></com.handmark.pulltorefresh.library.PullToRefreshListView>
+        ></com.jingchen.pulltorefresh.PullableListView>
+    </com.jingchen.pulltorefresh.PullToRefreshLayout>
 
    <!-- <ListView
         android:id="@+id/pre_sale_listView"

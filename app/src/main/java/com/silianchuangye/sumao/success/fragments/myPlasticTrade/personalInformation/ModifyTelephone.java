@@ -91,7 +91,7 @@ String name,email,phone;
 //                    editor.commit();
                     Log.e("TAG","phone-----"+phone);
                     if(phone.equals(omp_number.getText().toString())){
-                        Intent intent =new Intent();
+
                         RequestParams params=new RequestParams(SuMaoConstant.SUMAO_IP+"/rest/model/atg/store/profile/RegistrationActor/updateUser");
                         params.setCharset("UTF-8");
                         JSONObject job=new JSONObject();
@@ -111,7 +111,14 @@ String name,email,phone;
                             @Override
                             public void onSuccess(String result) {
                                 Log.e("TAG","手机result-----"+result);
-                                Toast.makeText(ModifyTelephone.this,"修改了手机号",Toast.LENGTH_SHORT).show();
+                                if(!result.contains("changeResult")){
+                                  Toast.makeText(ModifyTelephone.this, "您输入的手机号不符合规则", Toast.LENGTH_SHORT).show();
+                                }else {
+                                    Toast.makeText(ModifyTelephone.this, "修改了手机号", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent();
+                                    setResult(0, intent);
+                                    finish();
+                                }
                             }
 
                             @Override
@@ -129,8 +136,7 @@ String name,email,phone;
 
                             }
                         });
-                        setResult(0,intent);
-                        finish();
+
                     }else{
                         Toast.makeText(ModifyTelephone.this,"与原手机号码不一致，修改失败",Toast.LENGTH_SHORT).show();
                     }

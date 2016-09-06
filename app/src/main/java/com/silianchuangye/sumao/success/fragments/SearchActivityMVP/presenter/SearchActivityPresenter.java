@@ -16,7 +16,7 @@ public class SearchActivityPresenter {
         this.searchActivityView = searchActivityView;
     }
     public void sendSearchActivityData(String Ntt){
-        ISearchActivityModel searchActivityModel = new SearchActivityModel(Ntt);
+        ISearchActivityModel searchActivityModel = new SearchActivityModel(Ntt,10,0);
         searchActivityModel.getSearchActivityInfo(new SearchActivityCallback() {
             @Override
             public void callbackSearchActivity(SearchActivityBean searchActivityBean) {
