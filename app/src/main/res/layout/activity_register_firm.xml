@@ -378,53 +378,17 @@
                 />
         </RelativeLayout>
 <!--                              -->
-        <RelativeLayout
+        <com.silianchuangye.sumao.success.custom.CustomListView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/business_license_number_rl"
             android:layout_below="@id/enterprise_registration_certificate_rl"
 
             >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/business_license_number_name"
-                android:text="营业执照号"
-                android:layout_marginLeft="@dimen/x10"
-                android:layout_marginTop="@dimen/x13"
-                android:layout_marginBottom="@dimen/x13"
 
-                android:textSize="14sp"
-                />
-            <ImageView
-                android:layout_width="@dimen/x15"
-                android:layout_height="@dimen/x15"
-                android:id="@+id/business_license_number_iv"
-                android:layout_marginTop="@dimen/x13"
-                android:layout_marginRight="@dimen/x5"
-                android:layout_alignParentRight="true"
-                android:src="@mipmap/my_sumao_iv_order"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/business_license_number_image"
-                android:layout_toLeftOf="@+id/business_license_number_iv"
-                android:layout_marginRight="@dimen/x5"
-                android:layout_marginTop="@dimen/x13"
-                android:textSize="14sp"
-                android:text=""
-                />
+        </com.silianchuangye.sumao.success.custom.CustomListView>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/x1"
-                android:background="@color/btn_gray_pressed_status"
-                android:layout_below="@id/business_license_number_name"
-                />
-        </RelativeLayout>
-
-        <RelativeLayout
+       <!-- <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/organization_code_rl"
@@ -514,14 +478,14 @@
                 android:background="@color/btn_gray_pressed_status"
                 android:layout_below="@id/tax_registration_number_name"
                 />
-        </RelativeLayout>
+        </RelativeLayout>-->
 <!--                            -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
             android:id="@+id/type_of_taxpayer_rl"
-            android:layout_below="@id/tax_registration_number_rl"
+            android:layout_below="@id/business_license_number_rl"
             >
             <TextView
                 android:layout_width="wrap_content"
@@ -654,7 +618,7 @@
                 />
         </RelativeLayout>
 
-        <RelativeLayout
+        <!--<RelativeLayout
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -699,7 +663,7 @@
                 android:background="@color/btn_gray_pressed_status"
                 android:layout_below="@id/unified_social_credit_code_name"
                 />
-        </RelativeLayout>
+        </RelativeLayout>-->
 
 
 

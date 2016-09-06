@@ -1,191 +1,200 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_ff"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/layout_ff"
-    tools:context="com.silianchuangye.sumao.success.fragments.type.TypeInfoActivity">
+
+    tools:context=".fragments.type.view.TypeInfoActivity">
 
     <RelativeLayout
+        android:id="@+id/layout_Top_Type"
         android:layout_width="match_parent"
         android:layout_height="@dimen/x43"
-        android:id="@+id/layout_Top_Type"
-        android:background="#fff"
-        >
+        android:background="#fff">
+
         <ImageView
+            android:id="@+id/iv_Back_Type"
             android:layout_width="@dimen/x20"
             android:layout_height="@dimen/x20"
-            android:id="@+id/iv_Back_Type"
-            android:src="@mipmap/my_sumao_back"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/x10"
-            />
+            android:src="@mipmap/my_sumao_back" />
+
         <TextView
+            android:id="@+id/tv_Info_Type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_Info_Type"
-            android:text="搜索"
+            android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/x10"
-            android:layout_alignParentRight="true"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            />
+            android:text="搜索" />
+
         <ImageView
+            android:id="@+id/iv_search"
             android:layout_width="@dimen/x15"
             android:layout_height="@dimen/x15"
-            android:src="@mipmap/search"
             android:layout_marginLeft="@dimen/x26"
             android:layout_marginTop="@dimen/x9"
-            android:id="@+id/iv_search"
+            android:src="@mipmap/search"
 
             />
 
         <EditText
+            android:id="@+id/et_Search_Type"
             android:layout_width="match_parent"
             android:layout_height="@dimen/x30"
-            android:layout_toLeftOf="@+id/tv_Info_Type"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/x10"
-            android:background="@drawable/edit_search"
             android:layout_marginRight="@dimen/x10"
-            android:hint="输入你要搜索的内容"
+            android:layout_toLeftOf="@+id/tv_Info_Type"
             android:layout_toRightOf="@+id/iv_Back_Type"
-            android:id="@+id/et_Search_Type"
+            android:background="@drawable/edit_search"
+            android:hint="输入你要搜索的内容"
 
             >
 
         </EditText>
     </RelativeLayout>
+
     <RelativeLayout
+        android:id="@+id/layout_center_Type"
         android:layout_width="match_parent"
         android:layout_height="@dimen/x40"
         android:layout_below="@id/layout_Top_Type"
-        android:background="#E6E6E6"
-        android:id="@+id/layout_center_Type"
-        >
+        android:background="#E6E6E6">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/x30"
-            android:layout_marginTop="@dimen/x5"
             android:layout_marginBottom="@dimen/x5"
-            android:orientation="horizontal"
-            android:weightSum="5"
+            android:layout_marginTop="@dimen/x5"
             android:background="#fff"
-            >
+            android:orientation="horizontal"
+            android:weightSum="5">
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                >
+                android:layout_weight="1">
+
                 <TextView
+                    android:id="@+id/tv_pattern_Type"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/tv_pattern_Type"
-                    android:text="分类"
                     android:layout_centerInParent="true"
+                    android:text="分类"
                     android:textColor="#000"
                     android:textSize="14sp"
 
                     />
             </RelativeLayout>
-             <LinearLayout
-                 android:layout_width="@dimen/x1"
-                 android:layout_height="match_parent"
-                 android:background="#E6E6E6"
-                 ></LinearLayout>
+
+            <LinearLayout
+                android:layout_width="@dimen/x1"
+                android:layout_height="match_parent"
+                android:background="#E6E6E6"></LinearLayout>
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                >
+                android:layout_weight="1">
+
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:id="@+id/tv_type_Type"
-                    android:text="牌号"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
+                    android:text="交易模式"
                     android:textColor="#000"
-                    android:textSize="14sp"
-                    />
+                    android:textSize="14sp" />
             </RelativeLayout>
+
             <LinearLayout
                 android:layout_width="@dimen/x1"
                 android:layout_height="match_parent"
-                android:background="#E6E6E6"
-                ></LinearLayout>
+                android:background="#E6E6E6"></LinearLayout>
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                >
+                android:layout_weight="1">
+
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:id="@+id/tv_apple_Type_for_Type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
                     android:text="应用"
-                    android:layout_centerInParent="true"
                     android:textColor="#000"
-                    android:textSize="14sp"
-                    />
+                    android:textSize="14sp" />
             </RelativeLayout>
+
             <LinearLayout
                 android:layout_width="@dimen/x1"
                 android:layout_height="match_parent"
-                android:background="#E6E6E6"
-                ></LinearLayout>
+                android:background="#E6E6E6"></LinearLayout>
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                >
+                android:layout_weight="1">
+
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:id="@+id/tv_address_Type"
-                    android:text="地区"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
+                    android:text="地区"
                     android:textColor="#000"
-                    android:textSize="14sp"
-                    />
+                    android:textSize="14sp" />
             </RelativeLayout>
+
             <LinearLayout
                 android:layout_width="@dimen/x1"
                 android:layout_height="match_parent"
-                android:background="#E6E6E6"
-                ></LinearLayout>
+                android:background="#E6E6E6"></LinearLayout>
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                >
+                android:layout_weight="1">
+
                 <TextView
+                    android:id="@+id/tv_address_search"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/tv_address_search"
-                    android:text="筛选"
                     android:layout_centerInParent="true"
+                    android:text="筛选"
                     android:textColor="#000"
-                    android:textSize="14sp"
-                    />
+                    android:textSize="14sp" />
             </RelativeLayout>
         </LinearLayout>
     </RelativeLayout>
+
     <RelativeLayout
+        android:id="@+id/layout_type_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/layout_center_Type"
-        android:background="#fff"
-        android:id="@+id/layout_type_list"
-        >
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/lv_Type"
-        android:divider="#EFEEF4"
-        android:dividerHeight="@dimen/x5"
+        android:background="#fff">
 
-        ></ListView>
+        <com.jingchen.pulltorefresh.PullToRefreshLayout
+            android:id="@+id/refresh_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+        <com.jingchen.pulltorefresh.PullableListView
+            android:id="@+id/lv_Type"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="#EFEEF4"
+            android:dividerHeight="@dimen/x5"
+
+            ></com.jingchen.pulltorefresh.PullableListView>
+        </com.jingchen.pulltorefresh.PullToRefreshLayout>
 
     </RelativeLayout>
 </RelativeLayout>

@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.HX.ui.LoginActivity;
+import com.silianchuangye.sumao.success.MainActivity;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.LoginUserActivity;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
@@ -87,9 +88,9 @@ public class SettingActivity extends AppCompatActivity {
                 alert.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        new Thread(){
-                            @Override
-                            public void run() {
+//                        new Thread(){
+//                            @Override
+//                            public void run() {
                                 RequestParams  rp=new RequestParams(SuMaoConstant.SUMAO_IP+"/rest/model/atg/userprofiling/ProfileActor/logout");
                                 SharedPreferences sp=getSharedPreferences("sumao",0);
                                 String unique=sp.getString("unique","默认值");
@@ -98,34 +99,29 @@ public class SettingActivity extends AppCompatActivity {
                                 x.http().post(rp, new Callback.CommonCallback<String>() {
                                     @Override
                                     public void onSuccess(String result) {
-                                        if (result.contains("messageCode")){
-
-                                            Toast.makeText(SettingActivity.this, "用户必须登录才能访问资源", Toast.LENGTH_SHORT).show();
-                                            Intent intent = new Intent(SettingActivity.this,LoginUserActivity.class);
-                                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                            intent.putExtra("roles","buyer");
-                                            startActivity(intent);
-                                        }else{
+//                                        if (result.contains("messageCode")){
+//
+//                                            Toast.makeText(SettingActivity.this, "用户必须登录才能访问资源", Toast.LENGTH_SHORT).show();
+//                                            Intent intent = new Intent(SettingActivity.this,LoginUserActivity.class);
+//                                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                                            intent.putExtra("roles","buyer");
+//                                            startActivity(intent);
+//                                            SettingActivity.this.finish();
+//                                            MainActivity.instancefinish.finish();
+//                                        }else{
                                             SharedPreferences sp=getSharedPreferences("sumao", Activity.MODE_PRIVATE);
                                             SharedPreferences.Editor editor=sp.edit();
-                                            editor.remove("name");
+                                            editor.clear();
                                       //      editor.clear();
                                             editor.commit();
                                             Toast.makeText(SettingActivity.this, "用户名称已删除", Toast.LENGTH_SHORT).show();
-//                                            File file = new File(DATA_URL + getPackageName().toString()
-//                                                    + "/shared_prefs",SHARED_MAIN_XML);
-//                                            if (file.exists()) {
-//                                                file.delete();
-//                                            }
-//                                            Toast.makeText(SettingActivity.this, "删除文件成功", Toast.LENGTH_SHORT).show();
-
-                                            Intent intent=new Intent(SettingActivity.this,LoginUserActivity.class);
+                                            Intent intent=new Intent(SettingActivity.this,MainActivity.class);
                                             intent.putExtra("roles","buyer");
                                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                             startActivity(intent);
-                                            SettingActivity.this.finish();
+//                                            SettingActivity.this.finish();
 
-                                        }
+//                                        }
                                     }
 
                                     @Override
@@ -143,8 +139,8 @@ public class SettingActivity extends AppCompatActivity {
 
                                     }
                                 });
-                            }
-                        }.start();
+//                            }
+//                        }.start();
 
                     }
                 });

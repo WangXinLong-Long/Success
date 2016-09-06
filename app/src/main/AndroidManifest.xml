@@ -443,7 +443,7 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".fragments.type.TypeInfoActivity"
+            android:name=".fragments.type.view.TypeInfoActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.CreateLogistics"
@@ -524,7 +524,8 @@
             android:name=".fragments.homepage.AnnouncementDetailMVP.view.AnnouncementDetailActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.CompanyUserValueActivity" />
-        <activity android:name=".fragments.myPlasticTrade.register.RegisterPicture"></activity>
+        <activity android:name=".fragments.myPlasticTrade.register.RegisterPicture" />
+        <activity android:name=".fragments.homepage.sumaoconsultMVP.SuMaoConsult"></activity>
     </application>
 
 </manifest>

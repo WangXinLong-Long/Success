@@ -28,7 +28,7 @@ public class DownloadTask extends AsyncTask<Integer, Integer, String> {
      */
     @Override
     protected void onPreExecute() {
-        // TODO Auto-generated method stub
+
         Log.d("sn", "00000");
         super.onPreExecute();
     }
@@ -40,7 +40,7 @@ public class DownloadTask extends AsyncTask<Integer, Integer, String> {
      */
     @Override
     protected String doInBackground(Integer... params) {
-        // TODO Auto-generated method stub
+
         Log.d("sn", "1111111");
         for(int i=0;i<=100;i++){
 //            mProgressBar.setProgress(i);
@@ -48,7 +48,7 @@ public class DownloadTask extends AsyncTask<Integer, Integer, String> {
             try {
                 Thread.sleep(params[0]);
             } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
+
                 e.printStackTrace();
             }
         }
@@ -62,7 +62,7 @@ public class DownloadTask extends AsyncTask<Integer, Integer, String> {
      */
     @Override
     protected void onProgressUpdate(Integer... values) {
-        // TODO Auto-generated method stub
+
         Log.d("sn", "2222222222");
         mTextView.setText(values[0]+"%");
         super.onProgressUpdate(values);
@@ -76,7 +76,7 @@ public class DownloadTask extends AsyncTask<Integer, Integer, String> {
      */
     @Override
     protected void onPostExecute(String result) {
-        // TODO Auto-generated method stub
+
         Log.d("sn", "3333333333");
 
         super.onPostExecute(result);

@@ -17,7 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-import com.silianchuangye.sumao.success.activity.WelcomeActivity;
+import com.silianchuangye.sumao.success.adapter.LvFragmentoneAuctionsAdapter;
 import com.silianchuangye.sumao.success.adapter.LvFragmentoneGrouponAdapter;
 import com.silianchuangye.sumao.success.custom.customCalendar.DayAndPrice;
 import com.silianchuangye.sumao.success.fragments.BasePager;
@@ -26,12 +26,15 @@ import com.silianchuangye.sumao.success.fragments.PagerOneMVP.bean.AnnouncementB
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.bean.BannerBean;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.presenter.PagerOnePresenter;
 import com.silianchuangye.sumao.success.fragments.homepage.AnnouncementDetailMVP.view.AnnouncementDetailActivity;
+import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.bean.GoodsInStockActivityBean;
 import com.silianchuangye.sumao.success.fragments.homepage.groupbuying.GroupBuyingActivity;
-import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.bean.PreSaleDetailCalendarBean;
-import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.bean.Sku;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.view.PreSaleDetailActivity;
+import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleMVP.bean.Auction;
+import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleMVP.bean.Cl;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleMVP.bean.Forward;
+import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleMVP.bean.Group;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleMVP.bean.PreSaleBean;
+import com.silianchuangye.sumao.success.fragments.homepage.sumaoconsultMVP.SuMaoConsult;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.LoginUserActivity;
 import com.silianchuangye.sumao.success.fragments.SearchActivityMVP.view.SearchActivity;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.AuctionActivity;
@@ -98,13 +101,16 @@ public class PagerOne extends BasePager implements IPagerOneView {
         gridview();
         vpad();
         listString = new ArrayList<Map<String, Object>>();
-        listAdwords();
+//        listAdwords();
         initHorn();
         initlvFragmentoneGroupon();
     }
 //     预售的listview
     private void initlvFragmentoneGroupon() {
         lvFragmentoneAD = ((ListView) view.findViewById(R.id.lvFragmentoneAD));
+        lvFragmentAdwords = (ListView) view.findViewById(R.id.lvFragmentAdwords);
+        lvFragmentoneGroupon = (ListView) view.findViewById(R.id.lvFragmentoneGroupon);
+
         pagerOnePresenter.getHomeSaleInfoToPagerOneFragment();
         lvFragmentoneAD.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -249,14 +255,12 @@ public class PagerOne extends BasePager implements IPagerOneView {
                     startActivity(intent);
                     //Toast.makeText(mActivity, "点击了团购按钮", Toast.LENGTH_SHORT).show();
                 } else if (list.get(position).get("icon").equals(R.mipmap.goods)) {
-                    Intent intent = new Intent(mActivity, GoodsInStockActivity.class);
-                    //Toast.makeText(mActivity, "点击了现货按钮", Toast.LENGTH_SHORT).show();
-                    startActivity(intent);
+                    pagerOnePresenter.getGoodsInStockInfo("","","",10,0);
+
                 } else if (list.get(position).get("icon").equals(R.mipmap.presell)) {
                     //Toast.makeText(mActivity, "点击了预售按钮", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent();
-                    intent.setClass(mActivity, PreSale.class);
-                    startActivity(intent);
+                    pagerOnePresenter.getPreSaleInfo("","","",10,0);
+
                 } else if (list.get(position).get("icon").equals(R.mipmap.adwords)) {
                     //Toast.makeText(mActivity, "点击了竞拍按钮", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(mActivity, AuctionActivity.class);
@@ -275,6 +279,7 @@ public class PagerOne extends BasePager implements IPagerOneView {
                     intent.putExtra(Constant.IM_SERVICE_NUMBER, "feisumaokefu1");
                     startActivity(intent);
                 } else if (list.get(position).get("icon").equals(R.mipmap.consult)) {
+                   pagerOnePresenter.getSuMaoConsultInfo();
                     Toast.makeText(mActivity, "点击了塑贸咨询按钮", Toast.LENGTH_SHORT).show();
                 } else if (list.get(position).get("icon").equals(R.mipmap.maifang)) {
 //                    Toast.makeText(mActivity, "点击了卖方中心按钮", Toast.LENGTH_SHORT).show();
@@ -419,10 +424,46 @@ public class PagerOne extends BasePager implements IPagerOneView {
 
     @Override
     public void saveHomeSaleInFragmentList(PreSaleBean preSaleBean) {
+//        预售信息
         forwards = preSaleBean.getForward();
         lvFragmentoneGrouponAdapter = new LvFragmentoneGrouponAdapter(forwards,mActivity);
         lvFragmentoneAD.setAdapter(lvFragmentoneGrouponAdapter);
-    }
+//      竞拍信息
+        List<Auction> auctions = preSaleBean.getAuction();
+        LvFragmentoneAuctionsAdapter lvFragmentoneAuctionsAdapter = new LvFragmentoneAuctionsAdapter(auctions,mActivity);
+        lvFragmentAdwords.setAdapter(lvFragmentoneAuctionsAdapter);
+//      现货信息    LvFragmentoneClsAdapter(界面上现在是团购！！！)
+         List<Group> cls = preSaleBean.getGroup();
+        LogUtils.log("现货信息cls.size()--->"+cls.size()+"");
+        LvFragmentoneClsAdapter lvFragmentoneClsAdapter = new LvFragmentoneClsAdapter(cls,mActivity);
+        lvFragmentoneGroupon.setAdapter(lvFragmentoneClsAdapter);
 
+    }
+    //把请求下的数据放置到现货界面
+    @Override
+    public void setDataInActivity(GoodsInStockActivityBean goodsInStockActivityBean) {
+        Intent intent = new Intent(mActivity, GoodsInStockActivity.class);
+        //Toast.makeText(mActivity, "点击了现货按钮", Toast.LENGTH_SHORT).show();
+        intent.putExtra("goodsInStockActivityBean",goodsInStockActivityBean);
+        startActivity(intent);
+    }
+//把请求下的数据放置到预售界面
+
+    @Override
+    public void setPreSaleDataInActivity(GoodsInStockActivityBean goodsInStockActivityBean) {
+        Intent intent = new Intent();
+        intent.setClass(mActivity, PreSale.class);
+        intent.putExtra("preSaleActivityBean",goodsInStockActivityBean);
+        startActivity(intent);
+    }
+//    点击塑贸资讯
+    @Override
+    public void setSuMaoConsultInActivity(AnnounceBean announceBean) {
+        Intent intent = new Intent();
+        intent.setClass(mActivity,SuMaoConsult.class);
+        intent.putExtra("announceBean",announceBean);
+        startActivity(intent);
+
+    }
 
 }

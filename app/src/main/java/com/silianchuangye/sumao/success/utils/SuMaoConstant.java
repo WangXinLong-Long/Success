@@ -15,14 +15,21 @@ public class SuMaoConstant {
     public static final int CHANGE_POSITION_EIGHT = 8;
     public static final int CHANGE_POSITION_NINE = 9;
     public static final int CHANGE_POSITION_TEN = 10;
-//    演示使用
-//   public static final String SUMAO_IP = "http://139.198.7.27:7003";
-//    测试使用
-        public static final String SUMAO_IP = "http://192.168.32.126:7023";
+    //    演示使用
+    //   public static final String SUMAO_IP = "http://139.198.7.27:7003";
+    //    测试使用
+             public static final String SUMAO_IP = "http://192.168.32.126:7023";
+//    获取文件：存放文件的服务器地址
+public static final String SUMAO_FILE_IP = "http://192.168.32.126:7003/crsdocroot";
+    //    上传文件：存放图片服务器IP
     public static final String hostname = "192.168.32.126";
+    //    存放图片服务端口
     public static final int port = 21;
+    //    FTP 用户名
     public static final String username = "mobile";
+    //    FTP 密码
     public static final String password = "Mm123456";
+    //    存放目录
     public static final String pathname = "/docs/";
 
 }

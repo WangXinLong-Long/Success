@@ -154,6 +154,7 @@ public class LoginUserActivity extends AppCompatActivity {
         x.http().post(rp, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
+                LogUtils.log("登录返回的值：----->"+result);
                 if (result.contains("formError")){
                     Toast.makeText(LoginUserActivity.this, "账号或密码错误请重新登录！", Toast.LENGTH_SHORT).show();
                 }else{

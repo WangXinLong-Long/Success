@@ -19,7 +19,7 @@ import com.silianchuangye.sumao.success.HX.Constant;
 import com.silianchuangye.sumao.success.HX.ui.LoginActivity;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.SearchActivityMVP.view.SearchActivity;
-import com.silianchuangye.sumao.success.fragments.type.TypeInfoActivity;
+import com.silianchuangye.sumao.success.fragments.type.view.TypeInfoActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,7 +72,7 @@ public class PagerTwo extends BasePager {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
                                     long arg3) {
-                // TODO Auto-generated method stub
+
                 adapter1.setSelectedPosition(arg2);
                 adapter1.notifyDataSetInvalidated();
 
@@ -234,7 +234,7 @@ public class PagerTwo extends BasePager {
 
 
         public ListAdapter(List<String> List) {
-            // TODO Auto-generated constructor stub
+
             list = List;
         }
 

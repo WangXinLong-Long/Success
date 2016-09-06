@@ -62,15 +62,17 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
     private MyConnectionListener connectionListener = null;
     boolean flag = false;
     int id;
-    String username;
+    String username = "";
     SharedPreferences sp;
     private SharedPreferences.Editor editor;
     private String unique;
+    public static MainActivity instancefinish;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         sp=getSharedPreferences("sumao",Context.MODE_PRIVATE);
+        instancefinish = this;
 //      初始化数据
         initData();
 //      初始化组件
