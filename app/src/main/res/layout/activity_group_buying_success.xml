@@ -188,14 +188,14 @@
             <!--下划线-->
             <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/x1"
+            android:layout_height="@dimen/x30"
             android:orientation="vertical"
             android:background="#fff"
             >
              <!--产品价钱-->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/x30"
+                android:layout_height="match_parent"
                 android:orientation="horizontal"
                 >
                 <TextView
@@ -218,8 +218,11 @@
                     />
 
             </LinearLayout>
-
-
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/x1"
+                    android:background="#EEEEF3"
+            ></LinearLayout>
         </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -286,7 +289,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/x5"
-
                 android:background="@color/white">
                 <TextView
                     android:id="@+id/surplus_amount_tv"
@@ -294,7 +296,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/x5"
                     android:textSize="@dimen/x10"
-                    android:text="剩余数量："/>
+                    android:text="团购总量:"/>
                 <TextView
                     android:id="@+id/surplus_amount_et"
                     android:layout_width="wrap_content"
@@ -334,10 +336,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/x5"
                     android:layout_toRightOf="@id/min_variable_tv"
-                    android:text="1吨"
                     android:textSize="@dimen/x10"
                     android:layout_below="@id/purchase_quantity_tv"/>
-                <TextView
+              <!--  <TextView
                     android:id="@+id/delivery_time_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -353,24 +354,24 @@
                     android:layout_toRightOf="@id/delivery_time_tv"
                     android:text="2016-3-3至2016-4-4"
                     android:textSize="@dimen/x10"
-                    android:layout_below="@id/min_variable_tv"/>
+                    android:layout_below="@id/min_variable_tv"/>-->
                 <TextView
                     android:id="@+id/warehouse_address_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/x5"
-                    android:text="仓库地址："
+                    android:text="仓库:"
                     android:textSize="@dimen/x10"
-                    android:layout_below="@id/delivery_time_tv"/>
+                    android:layout_below="@id/min_variable_tv"/>
                 <TextView
                     android:id="@+id/warehouse_address_et"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/x5"
                     android:layout_toRightOf="@id/warehouse_address_tv"
-                    android:text="上海市红桥区哈哈哈哈库房"
+                    android:text="讯帮1号仓库"
                     android:textSize="@dimen/x10"
-                    android:layout_below="@id/delivery_time_tv"/>
+                    android:layout_below="@id/min_variable_tv"/>
                 <TextView
                     android:id="@+id/delivery_mode_tv"
                     android:layout_width="wrap_content"
@@ -384,7 +385,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/x5"
-                    android:layout_toRightOf="@id/warehouse_address_tv"
+                    android:layout_toRightOf="@id/delivery_mode_tv"
                     android:text="塑料配送、卖家配送、自提"
                     android:textSize="@dimen/x10"
                     android:layout_below="@id/warehouse_address_tv"/>
@@ -396,7 +397,7 @@
                     android:textSize="@dimen/x10"
                     android:layout_toRightOf="@id/delivery_mode_et"
                     android:layout_marginBottom="@dimen/x5"
-                    android:layout_marginLeft="@dimen/x5"
+                    android:layout_marginLeft="@dimen/x150"
                     />
                 <TextView
                     android:id="@+id/classification_pre_sale_et"
@@ -411,12 +412,12 @@
                     android:id="@+id/warehouse_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="仓库："
+                    android:text="最小变价单位:"
                     android:textSize="@dimen/x10"
                     android:layout_toRightOf="@id/delivery_mode_et"
                     android:layout_marginBottom="@dimen/x5"
                     android:layout_below="@id/classification_pre_sale_tv"
-                    android:layout_marginLeft="@dimen/x5"
+                    android:layout_marginLeft="@dimen/x150"
                     />
                 <TextView
                     android:id="@+id/warehouse_et"
@@ -432,12 +433,12 @@
                     android:id="@+id/region_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="地区："
+                    android:text="地区:"
                     android:textSize="@dimen/x10"
                     android:layout_toRightOf="@id/delivery_mode_et"
                     android:layout_marginBottom="@dimen/x5"
                     android:layout_below="@id/warehouse_tv"
-                    android:layout_marginLeft="@dimen/x5"
+                    android:layout_marginLeft="@dimen/x150"
                     />
                 <TextView
                     android:id="@+id/region_et"
@@ -445,7 +446,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/x10"
                     android:text="北京"
-                    android:layout_toRightOf="@id/warehouse_tv"
+                    android:layout_toRightOf="@id/region_tv"
                     android:layout_marginBottom="@dimen/x5"
                     android:layout_below="@id/warehouse_tv"
                     />
@@ -453,12 +454,12 @@
                     android:id="@+id/company_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="公司："
+                    android:text="公司:"
                     android:textSize="@dimen/x10"
-                    android:layout_toRightOf="@id/delivery_mode_et"
+
                     android:layout_marginBottom="@dimen/x5"
-                    android:layout_below="@id/region_tv"
-                    android:layout_marginLeft="@dimen/x5"
+                    android:layout_below="@id/delivery_mode_tv"
+
                     />
                 <TextView
                     android:id="@+id/company_et"
@@ -466,9 +467,9 @@
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/x10"
                     android:text="四联创业化工集团"
-                    android:layout_toRightOf="@id/warehouse_tv"
+                    android:layout_toRightOf="@id/company_tv"
                     android:layout_marginBottom="@dimen/x5"
-                    android:layout_below="@id/region_tv"
+                    android:layout_below="@id/delivery_mode_tv"
                     />
 
             </RelativeLayout>
@@ -547,6 +548,7 @@
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@+id/layout_bb"
                     android:id="@+id/ed_shuzhi_number"
+                    android:text="1"
                     />
                 <RelativeLayout
                     android:layout_width="@dimen/x25"
@@ -580,7 +582,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/tv_count_value"
-                    android:text="12345元"
+                    android:text="0元"
                     android:layout_toRightOf="@+id/tv_Count"
                     android:layout_marginLeft="@dimen/x3"
                     android:textColor="@color/red"
@@ -592,12 +594,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/x5"
                 android:background="#EDEDF1"></LinearLayout>
-            <com.silianchuangye.sumao.success.custom.customCalendar.CustomListView
+            <com.silianchuangye.sumao.success.custom.CustomListView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/lv_demo"
 
-                ></com.silianchuangye.sumao.success.custom.customCalendar.CustomListView>
+                ></com.silianchuangye.sumao.success.custom.CustomListView>
+            <!--customCalendar-->
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

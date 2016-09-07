@@ -4,122 +4,195 @@ import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 
 public class JoinActivity extends AppCompatActivity {
-    private GridView gvDemo;
-    private List<String> list;
+   // private GridView gvDemo;
+    private List<Map<String,Object>> list;
     private ImageView ivBack,ivSearch;
+    private ListView lvDemo;
+    private String shangpinId;
+    private LinearLayout layout;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_join);
+        init();
+        event();
 
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_join);
-//        init();
-//        event();
-//        adddata();
-//    }
-//    public void init(){
-//        gvDemo= (GridView) findViewById(R.id.gvDemo);
-//        ivBack= (ImageView) findViewById(R.id.ivBack);
-//
-//
-//    }
-//    public void event(){
-//        /**
-//         *
-//         */
-//        ivBack.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                JoinActivity.this.finish();
-//            }
-//        });
-//
-//    }
-//    public void adddata(){
-//        list=new ArrayList<String>();
-//        for (int i=0;i<=20;i++){
-//
-//            if (i%3==0){
-//                list.add("报价编号");
-//            }else if (i%3==1){
-//                list.add("金牌数量(吨)");
-//            }else if (i%3==2){
-//                list.add("提交数量");
-//
-//            }
-//            //list.add("aaaa");
-//        }
-//       // ArrayAdapter<String> adapter=new ArrayAdapter<String>(JoinActivity.this,R.layout.item_gridview_vessel_one,R.id.tv_item_vessel_one,list);
-//        GridViewAdapter adapter=new GridViewAdapter(JoinActivity.this,R.layout.item_gridview_vessel_one,R.id.tv_item_vessel_one,list);
-//        gvDemo.setAdapter(adapter);
-//
-//    }
-//    class GridViewAdapter extends ArrayAdapter {
-//
-//
-//        public GridViewAdapter(Context context, int resource, int textViewResourceId, List objects) {
-//            super(context, resource, textViewResourceId, objects);
-//        }
-//
-//        @Override
-//        public View getView(int position, View convertView, ViewGroup parent) {
-//            ViewHolder viewHolder;
-//            if (convertView==null){
-//                viewHolder=new ViewHolder();
-//                convertView=getLayoutInflater().inflate(R.layout.item_gridview_vessel_one,null);
-//                viewHolder.tv= (TextView) convertView.findViewById(R.id.tv_item_vessel_one);
-//                viewHolder.layout= (RelativeLayout) convertView.findViewById(R.id.layout_item_vessel_one);
-//               // AbsListView.LayoutParams params;
-//
-////                if(gvDemo.getChildCount()/3==0){
-////                    params=new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,200);
-////                }else{
-////                    params=new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,100);
-////                }
-////                viewHolder.layout.setLayoutParams(params);
-//                convertView.setTag(viewHolder);
-//            }else{
-//                viewHolder= (ViewHolder) convertView.getTag();
-//            }
-//            if (position%3==0 &&position!=0){
-//                viewHolder.tv.setText("0007");
-//            }else if(position%3==1 &&position!=1){
-//                viewHolder.tv.setText("40");
-//            }else if(position%3==2&&position!=2){
-//                viewHolder.tv.setText("10:22:44");
-//
-//            }else {
-//                viewHolder.tv.setText(list.get(position));
-//            }
-//            if (gvDemo.getChildCount()/3==0){
-//                viewHolder.layout.setBackgroundColor(getResources().getColor(R.color.white));
-//            }else if((gvDemo.getChildCount()/3)%2==0 &&gvDemo.getChildCount()/3!=0){
-//                viewHolder.layout.setBackgroundColor(getResources().getColor(R.color.colorGreen));
-//            }else{
-//                viewHolder.layout.setBackgroundColor(Color.WHITE);
-//            }
-//            return convertView;
-//
-//        }
-//        class ViewHolder{
-//            RelativeLayout layout;
-//            TextView tv;
-//        }
-//
-//    }
+    }
+    public void init(){
+        Bundle bundle=getIntent().getExtras();
+        shangpinId=bundle.getString("id");
+        Log.d("商品的编号",shangpinId);
+        lvDemo= (ListView)findViewById(R.id.lvDemo);
+        layout= (LinearLayout) findViewById(R.id.layout_center);
+        list=new ArrayList<Map<String,Object>>();
+        ivBack= (ImageView) findViewById(R.id.ivBack);
+        new Thread(){
+            @Override
+            public void run() {
 
+                getData();
+            }
+        }.start();
+
+    }
+    public void getData(){
+        String url="http://192.168.32.126:7023/rest/model/atg/commerce/catalog/ProductCatalogActor/groupHistory";
+        RequestParams requestParams=new RequestParams(url);
+        requestParams.addParameter("productId",shangpinId);
+        x.http().post(requestParams, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.d("实时行情的result",result);
+                if (result.contains("createDate")) {
+                    layout.setVisibility(View.VISIBLE);
+                    try {
+                        JSONObject obj_result = new JSONObject(result);
+                        String info = obj_result.getString("history");
+                        JSONArray array = new JSONArray(info);
+
+                        for (int i = 0; i < array.length(); i++) {
+                            JSONObject obj_info = array.getJSONObject(i);
+                            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日 hh:mm:mm");
+                            String data=simpleDateFormat.format(obj_info.getString("createDate"));
+
+                            Map<String,Object> map=new Hashtable<String, Object>();
+//
+                            map.put("bianhao",obj_info.getString("index"));
+
+                            map.put("shuliang",obj_info.getString("addQty"));
+
+                            map.put("time",data);
+                            list.add(map);
+
+                        }
+
+
+                        Log.d("list的值",list.toString());
+                        GridAdpater adapter=new GridAdpater(JoinActivity.this,list,R.layout.itemtuangou,
+                                new String[]{"bianhao","shuliang","time"},
+                                new int[]{
+                                        R.id.tv_bianhao,
+
+                                        R.id.tv_shuliang,
+
+                                        R.id.tv_time
+                                });
+                        lvDemo.setAdapter(adapter);
+
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }else {
+                    layout.setVisibility(View.GONE);
+                    Toast.makeText(JoinActivity.this, "暂无人竞拍该商品", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+    }
+
+    public void event(){
+        /**
+         *
+         */
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                JoinActivity.this.finish();
+            }
+        });
+
+    }
+
+    class GridAdpater extends SimpleAdapter {
+
+
+        public GridAdpater(Context context, List<? extends Map<String, ?>> data, int resource, String[] from, int[] to) {
+            super(context, data, resource, from, to);
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            ViewHolder viewHolder;
+            if (convertView==null){
+                viewHolder=new ViewHolder();
+                convertView=getLayoutInflater().inflate(R.layout.itemtuangou,null);
+                viewHolder.tv_bianhao= (TextView) convertView.findViewById(R.id.tv_bianhao);
+                viewHolder.tv_shuliang= (TextView) convertView.findViewById(R.id.tv_shuliang);
+                viewHolder.tv_time= (TextView) convertView.findViewById(R.id.tv_time);
+                viewHolder.layout= (LinearLayout) convertView.findViewById(R.id.layout_item_vessel_one);
+                convertView.setTag(viewHolder);
+            }else{
+                viewHolder= (ViewHolder) convertView.getTag();
+            }
+
+            //viewHolder.tv_bianhao.setText(list.get(position).get("bianhao").toString());
+            Log.d("nihao",list.get(position).get("bianhao").toString());
+            viewHolder.tv_bianhao.setText(list.get(position).get("bianhao").toString());
+
+            viewHolder.tv_shuliang.setText(list.get(position).get("shuliang").toString());
+
+            viewHolder.tv_time.setText(list.get(position).get("time").toString());
+            if (position%2==0){
+                viewHolder.layout.setBackgroundColor(getResources().getColor(R.color.bottom_background));
+            }else{
+                viewHolder.layout.setBackgroundColor(getResources().getColor(R.color.colorGreen));
+            }
+
+            return convertView;
+
+        }
+        class ViewHolder{
+            LinearLayout layout;
+            TextView tv_bianhao,tv_shuliang,tv_time;
+
+        }
+
+    }
 }

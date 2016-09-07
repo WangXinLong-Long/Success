@@ -1,5 +1,6 @@
 package com.silianchuangye.sumao.success.customermanger;
 
+import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.v4.app.Fragment;
 import android.support.design.widget.TabLayout;
@@ -22,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
+import com.silianchuangye.sumao.success.ShangYou.CaiGou;
 import com.silianchuangye.sumao.success.adapter.MyPageAdapter;
 
 import java.util.ArrayList;
@@ -155,6 +157,8 @@ public class CustomerParent extends AppCompatActivity implements View.OnClickLis
                 Toast.makeText(this,"pop",Toast.LENGTH_SHORT).show();
                 showPop();
                 backgroundAlpha(0.5f);
+//                Intent intent=new Intent(this, CaiGou.class);
+//                startActivity(intent);
                 break;
             case R.id.img_pop_title_bar_back:
                 popupWindow.dismiss();

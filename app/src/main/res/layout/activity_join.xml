@@ -71,7 +71,7 @@
                 />
         </LinearLayout>
     </RelativeLayout>
-    <GridView
+    <!--<GridView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/layout_Bottom"
@@ -82,5 +82,79 @@
         android:verticalSpacing="@dimen/x1"
         android:stretchMode="columnWidth"
         android:layout_marginTop="@dimen/x5"
-        ></GridView>
+        ></GridView>-->
+
+    <LinearLayout
+
+        android:layout_below="@+id/layoutTop_auction"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:weightSum="3"
+        android:id="@+id/layout_center"
+        android:visibility="gone"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="报价编号"
+                android:layout_centerInParent="true"
+                />
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#dcdcdc"></LinearLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="竞拍数量(吨)"
+                android:layout_centerInParent="true"
+                />
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#dcdcdc"></LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="提交时间"
+                android:layout_centerInParent="true"
+                />
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#dcdcdc"></LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#dcdcdc"
+        ></LinearLayout>
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lvDemo"
+        android:divider="#00000000"
+        android:dividerHeight="0dip"
+        android:layout_above="@+id/layout_Bottom"
+        ></ListView>
 </RelativeLayout>

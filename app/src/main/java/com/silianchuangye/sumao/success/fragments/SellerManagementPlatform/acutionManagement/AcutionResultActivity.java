@@ -1,6 +1,7 @@
 package com.silianchuangye.sumao.success.fragments.SellerManagementPlatform.acutionManagement;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.provider.ContactsContract;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -39,7 +41,7 @@ public class AcutionResultActivity extends AppCompatActivity {
     private ImageView iv_Back,iv_Search,iv_way,iv_riqi,iv_zhuangtai,iv_fabufang;
     private ListView lv_acution_result,lv_way,lv_zhuangtai,lv_fabufang;
     private List<Map<String,Object>> list;
-    private SimpleAdapter adapter;
+    private ListViewAdapter adapter;
     private boolean isGone;
   //  private EditText ed_fenlei,ed_paihao,ed_name;
     private TextView tv_way,tv_riqi,tv_zhuangtai,tv_fabufangmingcheng;
@@ -363,17 +365,22 @@ public class AcutionResultActivity extends AppCompatActivity {
         lv_acution_result.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (list.get(position).get("isok").toString().equals("竞拍成功")){
+                if (list.get(position).get("isok").toString().equals("进行中")){
                     /**
                      * 跳转到竞拍成功界面
                      */
                     Intent intent=new Intent(AcutionResultActivity.this,AuctionSuccessActivity.class);
+                    intent.putExtra("state","进行中");
                     startActivity(intent);
-                }else if (list.get(position).get("isok").toString().equals("竞拍失败")){
+                }else if (list.get(position).get("isok").toString().equals("已结束")){
                     /**
                      * 跳转到竞拍失败的界面
                      */
                     Intent intent=new Intent(AcutionResultActivity.this,AcutionFailActivity.class);
+                    startActivity(intent);
+                }else if (list.get(position).get("isok").toString().equals("竞拍成功")){
+                    Intent intent=new Intent(AcutionResultActivity.this,AuctionSuccessActivity.class);
+                    intent.putExtra("state","竞拍成功");
                     startActivity(intent);
                 }
             }
@@ -392,37 +399,27 @@ public class AcutionResultActivity extends AppCompatActivity {
         for (int i=0;i<=5;i++){
             Map<String,Object> map=new HashMap<String,Object>();
             map.put("name","兰州石化6038");
-            if (i%2==0){
-              map.put("isok","竞拍成功");
+            if (i%3==0){
+              map.put("isok","已结束");
 
+            }else if (i%3==1){
+              map.put("isok","进行中");
             }else{
-              map.put("isok","竞拍失败");
+                map.put("isok","竞拍成功");
             }
-            map.put("firm_name","燕山石化7032");
+
             map.put("state","公开竞拍");
-            map.put("price","10000元");
-            map.put("number","200吨");
-            map.put("min","1吨");
-            map.put("max","1吨");
-            map.put("way","自提");
-            map.put("address","河南安阳");
+            map.put("time","结束时间:2015-12-12");
             map.put("cangku","迅邦物流1号库");
             list.add(map);
         }
-        adapter=new SimpleAdapter(AcutionResultActivity.this,list,R.layout.item_auction_result,
-                 new String[]{"name","isok","firm_name","state","price","number",
-                              "min","max","way","address","cangku"
+        adapter=new ListViewAdapter(AcutionResultActivity.this,list,R.layout.item_auction_result,
+                 new String[]{"name","isok","state","time","cangku"
                  },new int[]{
                 R.id.tv_price_search_item,
                 R.id.tv_isok,
-                R.id.tv_price_search_name_firm,
                 R.id.tv_price_search_type_firm,
-                R.id.tv_price_search_number,
-                R.id.tv_price_search_count,
-                R.id.tv_price_search_min,
-                R.id.tv_price_search_max,
-                R.id.tv_price_search_way,
-                R.id.tv_price_search_address,
+                R.id.tv_time_price_search,
                 R.id.tv_price_search_cangku
 
         }
@@ -430,5 +427,55 @@ public class AcutionResultActivity extends AppCompatActivity {
         lv_acution_result.setAdapter(adapter);
 
 
+    }
+    class ListViewAdapter extends SimpleAdapter{
+
+
+        public ListViewAdapter(Context context, List<? extends Map<String, ?>> data, int resource, String[] from, int[] to) {
+            super(context, data, resource, from, to);
+        }
+
+        @Override
+        public int getCount() {
+            return list.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return position;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            //return super.getView(position, convertView, parent);
+            View view=getLayoutInflater().inflate(R.layout.item_auction_result,null);
+            TextView tv_name= (TextView) view.findViewById(R.id.tv_price_search_item);
+            TextView tv_type= (TextView) view.findViewById(R.id.tv_isok);
+            TextView tv_time= (TextView) view.findViewById(R.id.tv_time_price_search);
+            TextView tv_type_acution= (TextView) view.findViewById(R.id.tv_price_search_type_firm);
+            TextView tv_cangku= (TextView) view.findViewById(R.id.tv_price_search_cangku);
+
+            tv_name.setText(list.get(position).get("name").toString());
+            tv_type.setText(list.get(position).get("isok").toString());
+            tv_time.setText(list.get(position).get("time").toString());
+            tv_type_acution.setText(list.get(position).get("state").toString());
+            tv_cangku.setText(list.get(position).get("cangku").toString());
+
+            if (tv_type.getText().toString().equals("进行中")){
+                tv_type.setTextColor(getResources().getColor(R.color.btn_blue_normal));
+            }else if (tv_type.getText().toString().equals("竞拍成功")){
+                tv_type.setTextColor(getResources().getColor(R.color.green_black));
+            }else if (tv_type.getText().toString().equals("已结束")){
+                tv_type.setTextColor(getResources().getColor(R.color.gray));
+            }
+
+
+            return view;
+        }
     }
 }

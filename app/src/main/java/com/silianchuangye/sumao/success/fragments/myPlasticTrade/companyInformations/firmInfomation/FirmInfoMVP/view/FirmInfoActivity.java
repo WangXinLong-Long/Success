@@ -35,6 +35,7 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class FirmInfoActivity extends AppCompatActivity implements IFirmInfoView {
     ImageView iv_title_bar_logo,
@@ -179,7 +180,10 @@ public class FirmInfoActivity extends AppCompatActivity implements IFirmInfoView
 //                {"cl_stat":"27","cl_mingcheng":"四联创业深圳分公司","cl_yewu":"销售部1hao ",
 // "U_province":"1315","cl_zhengjian":"5","info":"sucess","cl_id":"161","U_city":"131509",
 // "U_county":"13150981","cl_dizhi":"倒档到","cl_zhizhao":"91120116724472468Y","cl_leixing":"3"}
-
+//                {"cl_stat":"27","cl_mingcheng":"北京义广达商贸有限公司","cl_corporation":"段绍昌",
+// "U_province":"1311","cl_yewu":"市场部","cl_zhengjian":"4","cl_jigou":"74672227-X","cl_id":"1000009",
+// "info":"sucess","U_city":"131101","cl_dizhi":"燕房路113号\n","U_county":"13110111","cl_shuiwu":"11019174672227X",
+// "cl_zhizhao":"110304005278473","cl_leixing":"1","cl_nashuiren":"一般纳税人"}
                 try {
                     JSONObject job=new JSONObject(result);
                     String info=job.getString("info");
@@ -195,24 +199,22 @@ public class FirmInfoActivity extends AppCompatActivity implements IFirmInfoView
                     String cl_state = job.getString("cl_stat");
                     String enterpriseInfoReview = job.getString("enterpriseInfoReview");
                     String cl_zhengjian=zhengjianType(job.getString("cl_zhengjian"));
-                    Log.e("TAG","job.getString(\"cl_zhengjian\")===="+job.getString("cl_zhengjian"));
+                    String nashuipeople=job.getString("cl_nashuiren");
+                    String xinyong=job.getString("cl_jigou");
                     String chuanzhen="";
-                    String xinyong="";
-                    String nashuipeople="";
-                    Log.e("TAG","cl_zhengjian-------"+cl_zhengjian);
-                    if(cl_zhengjian.equals("三证合一")){
-                        chuanzhen="";
-                        xinyong="";
-                        nashuipeople="";
+                    String zhizhao="";
+                    String cl_shuiwu="";
+                    if(result.contains("cl_chuanzhen")){
+                        chuanzhen=job.getString("cl_chuanzhen");
                     }else{
+                        chuanzhen="";
+                    }
 
-                        if(result.contains("cl_chuanzhen")){
-                            chuanzhen=job.getString("cl_chuanzhen");
-                        }else{
-                            chuanzhen="";
-                        }
-                        xinyong=job.getString("cl_jigou");
-                        nashuipeople=job.getString("cl_nashuiren");
+                    if(cl_zhengjian.equals("三证合一")){
+
+                    }else{
+                        zhizhao=job.getString("cl_zhizhao");
+                        cl_shuiwu=job.getString("cl_shuiwu");
                     }
 
                     //这里判断是新增还是修改，如果新增则没有后面的值
@@ -272,25 +274,41 @@ public class FirmInfoActivity extends AppCompatActivity implements IFirmInfoView
                     map7.put("left","企业注册证件");
                     map7.put("right",cl_zhengjian);
                     list.add(map7);
-                    Map<String,Object> map8=new Hashtable<String,Object>();
-                    map8.put("left","统一社会信用代码");
-                    map8.put("right",xinyong);
+                    Map<String,Object>map8=new HashMap<String, Object>();
+                    map8.put("left","营业执照号");
+                    map8.put("right",zhizhao);
                     map8.put("icon",R.mipmap.my_sumao_iv_order);
+                    Map<String,Object> map9=new Hashtable<String,Object>();
+                    map9.put("right",xinyong);
+                    map9.put("icon",R.mipmap.my_sumao_iv_order);
+
+                    Map<String,Object>map10=new HashMap<String, Object>();
+                    map10.put("left","税务登记号");
+                    map10.put("right",cl_shuiwu);
+                    map10.put("icon",R.mipmap.my_sumao_iv_order);
                     Log.e("TAG","xinyong======"+xinyong);
+                    if(cl_zhengjian.equals("三证合一")){
+                        map9.put("left","统一社会信用代码");
+                    }else{
+                        map9.put("left","组织机构代码");
+                        list.add(map8);
+                        list.add(map10);
+                    }
                     if(xinyong.equals("")){
 
                     }else{
-                        list.add(map8);
+                        list.add(map9);
                     }
-                    Map<String,Object> map9=new Hashtable<String,Object>();
-                    map9.put("left","纳税人类型");
-                    map9.put("right",nashuipeople);
-                    map9.put("icon",R.mipmap.my_sumao_iv_order);
+
+                    Map<String,Object> map11=new Hashtable<String,Object>();
+                    map11.put("left","纳税人类型");
+                    map11.put("right",nashuipeople);
+                    map11.put("icon",R.mipmap.my_sumao_iv_order);
                     Log.e("TAG","nashuipeople======"+nashuipeople);
                     if(nashuipeople.equals("")){
 
                     }else{
-                        list.add(map9);
+                        list.add(map11);
                     }
                     Log.e("TAG","list.size()====="+list.size());
                     adapter=new SimpleAdapter(FirmInfoActivity.this,list,R.layout.item_firm_info,new String[]{"left","center","right","icon"},new int[]{R.id.tv_firm_info,R.id.tvTitle_firm_info,R.id.tvValue_firm_info,R.id.ivMore_firm_info});

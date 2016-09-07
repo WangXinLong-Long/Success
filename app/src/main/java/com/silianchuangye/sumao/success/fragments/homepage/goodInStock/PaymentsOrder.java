@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.silianchuangye.sumao.success.R;
@@ -30,7 +31,9 @@ import org.xutils.http.RequestParams;
 import org.xutils.x;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2016/7/4 0004.
@@ -58,10 +61,17 @@ public class PaymentsOrder extends Activity implements View.OnClickListener{
     private EditText et;
     private PopupWindowAdaptrer adapter1;
     private PopupWindow popupWindow;
+    private ListView lvdemo;
+    private List<Map<String,Object>> list;
+    private SimpleAdapter list_adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.payments_order_activity);
+
+        lvdemo= (ListView) findViewById(R.id.lbDem);
+        addData();
         //页面标题 “支付订单”
         title_bar_white_title = (TextView)findViewById(R.id.title_bar_white_title);
 //        设置时：   产品订单号：+number
@@ -70,21 +80,21 @@ public class PaymentsOrder extends Activity implements View.OnClickListener{
         money_number = (TextView)findViewById(R.id.money_number);
 //        设置时： 提示：剩余时间+num+分
         residual_time = (TextView)findViewById(R.id.residual_time);
-//        品种
-        surplus_amount_et = (TextView)findViewById(R.id.surplus_amount_et);
-//        产品编号
-        purchase_quantity_et = (TextView)findViewById(R.id.purchase_quantity_et);
-//        生产企业
-        min_variable_et = (TextView)findViewById(R.id.min_variable_et);
-//        仓库
-        delivery_time_et = (TextView)findViewById(R.id.delivery_time_et);
-//        产品单价
-        classification_pre_sale_et = (TextView)findViewById(R.id.classification_pre_sale_et);
-//        数量
-        warehouse_et = (TextView)findViewById(R.id.warehouse_et);
-//        产品总价
-        region_et = (TextView)findViewById(R.id.region_et);
-//        公司
+////        品种
+//        surplus_amount_et = (TextView)findViewById(R.id.surplus_amount_et);
+////        产品编号
+//        purchase_quantity_et = (TextView)findViewById(R.id.purchase_quantity_et);
+////        生产企业
+//        min_variable_et = (TextView)findViewById(R.id.min_variable_et);
+////        仓库
+//        delivery_time_et = (TextView)findViewById(R.id.delivery_time_et);
+////        产品单价
+//        classification_pre_sale_et = (TextView)findViewById(R.id.classification_pre_sale_et);
+////        数量
+//        warehouse_et = (TextView)findViewById(R.id.warehouse_et);
+////        产品总价
+//        region_et = (TextView)findViewById(R.id.region_et);
+////        公司
         company_et = (TextView)findViewById(R.id.company_et);
 //        总金额
         total_money = (TextView)findViewById(R.id.total_money);
@@ -101,6 +111,34 @@ public class PaymentsOrder extends Activity implements View.OnClickListener{
         buy_immediately.setOnClickListener(this);
 //          设置标题 支付订单
         title_bar_white_title.setText("支付订单");
+
+    }
+    public void addData(){
+        list=new ArrayList<Map<String,Object>>();
+        for (int i=0;i<=3;i++){
+            Map<String,Object> map=new Hashtable<String,Object>();
+            map.put("type","PHEL");
+            map.put("paihao","7045");
+            map.put("qiye","中石油");
+            map.put("cangku","北京讯邦1库");
+            map.put("price","500");
+            map.put("number","200");
+            map.put("zongjia","10000");
+            map.put("gongsi","北京四联创业集团");
+            list.add(map);
+        }
+        list_adapter=new SimpleAdapter(PaymentsOrder.this,list,R.layout.order_item,
+                new String[]{"type","paihao","qiye","cangku","price","number","zongjia","gongsi"},
+                new int[]{R.id.surplus_amount_et,
+                        R.id.purchase_quantity_et,
+                        R.id.min_variable_et,
+                        R.id.delivery_time_et,
+                        R.id.classification_pre_sale_et,
+                        R.id.warehouse_et,
+                        R.id.region_et,
+                        R.id.company_et
+                });
+        lvdemo.setAdapter(list_adapter);
 
     }
 
