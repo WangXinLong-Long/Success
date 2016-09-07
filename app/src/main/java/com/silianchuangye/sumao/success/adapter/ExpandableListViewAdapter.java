@@ -36,6 +36,7 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter {
                     };
 
         /*
+        *
         *               {"现货订单", "预售订单", "点价意向单"},
                         {"采购需求", "供应资源", "撮合单信息"},
                         {"用户信息", "密码修改", "资讯订阅"},

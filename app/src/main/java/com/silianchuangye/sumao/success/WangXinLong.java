@@ -65,6 +65,12 @@ public class WangXinLong extends Activity {
 //        8月19日     修改获取相册相片的6.0问题
 //        8月22日   预售日历
 //        8月25日  注册上传文件
+//        9月6日    搜索页面刷新
+//                  筛选处理
+//                  现货页面修改
+//                  SessionId过期处理，塑贸资讯
+//                  卖家客服，合同处理
+
         showPayDialog();
         ArrayList<String> arrayList = new ArrayList<>();
         LinkedList<String> linkedList = new LinkedList<>();

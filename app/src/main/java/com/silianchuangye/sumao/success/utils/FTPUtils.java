@@ -123,7 +123,7 @@ public class FTPUtils {
             ftpClient.disconnect();
 
         } catch (IOException e) {
-            // TODO Auto-generated catch block
+
             e.printStackTrace();
             return false;
         }
@@ -176,7 +176,7 @@ public class FTPUtils {
 
 
         } catch (IOException e) {
-            // TODO Auto-generated catch block
+
             e.printStackTrace();
         }
 

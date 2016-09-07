@@ -3,11 +3,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="#fff"
     >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x25"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="@color/btn_blue_normal"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/x10"
+            android:id="@+id/com"
+            />
+
+    </RelativeLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/x1"
-        android:background="#29ABE2"
+        android:background="@color/gray_type"
         ></LinearLayout>
     <RelativeLayout
         android:layout_width="match_parent"
@@ -18,10 +34,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16sp"
-            android:textColor="#000"
+            android:text="竞拍时间:"
+            android:id="@+id/tv_aucton_time"
+            android:layout_centerVertical="true"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
             android:id="@+id/tv_aucton_success"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/x10"
+            android:layout_toRightOf="@+id/tv_aucton_time"
             />
         <TextView
             android:layout_width="wrap_content"
@@ -40,17 +63,12 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/x3"
             android:layout_toLeftOf="@+id/tv_aucton_success_price"
-            android:text="竞拍总单价"
+            android:text="竞拍单价:"
 
             />
 
 
     </RelativeLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/x1"
-        android:background="#EEEEF3"
-        ></LinearLayout>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/x30">
@@ -62,7 +80,7 @@
             android:id="@+id/tv_aucton_price"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/x10"
-            android:text="竞拍单价:"
+            android:text="竞拍数量:"
             />
         <TextView
             android:layout_width="wrap_content"
@@ -91,12 +109,57 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/x3"
             android:layout_toLeftOf="@+id/tv_aucton_success_number"
-            android:text="竞拍数量:"
+            android:text="竞拍总价:"
 
 
             />
 
 
     </RelativeLayout>
+     <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="@dimen/x1"
+         android:background="@color/gray_type"
+         ></LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x30">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:id="@+id/tv_aucton_id"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/x10"
+            android:text="订单号:"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:id="@+id/tv_aucton_id_value"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/tv_aucton_id"
+            android:layout_marginLeft="@dimen/x2"
 
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:id="@+id/tv_aucton_copy"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/x10"
+            android:textColor="#59BEE9"
+            android:background="@drawable/text_corner"
+            android:text="复制"
+            />
+
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x5"
+        android:background="@color/gray_type"
+        ></LinearLayout>
 </LinearLayout>

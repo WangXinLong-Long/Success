@@ -14,11 +14,14 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.silianchuangye.sumao.success.HX.Constant;
+import com.silianchuangye.sumao.success.HX.ui.LoginActivity;
 import com.silianchuangye.sumao.success.MainActivity;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.custom.customCalendar.CalendarView;
@@ -82,6 +85,9 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
     private ImageView image;
     private RelatedProduct relatedProduct;
     private ArrayList<CLAttribute> cl_attribute;
+    private LinearLayout layoutContent_auction;
+    private String cl_gongsiId;
+    private String contractString;
     private String qigou;
     private String sku_id;
     private TextView all_price;
@@ -111,10 +117,10 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
         pre_sale_sale_detail_detail.setOnClickListener(this);
         pre_sale_sale_detail_similar_product.setOnClickListener(this);
         pre_sale_sale_detail_similar_liulan.setOnClickListener(this);
+        layoutContent_auction.setOnClickListener(this);
         tv_jia.setOnClickListener(this);
         tv_jian.setOnClickListener(this);
         title_bar_white_title.setText("现货");
-
     }
 
     private void initView() {
@@ -160,7 +166,8 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
         company_et = ((TextView) findViewById(R.id.company_et));
 //        产品备注
         tvRemark_auction = ((TextView) findViewById(R.id.tvRemark_auction));
-
+//        联系客服
+        layoutContent_auction = ((LinearLayout) findViewById(R.id.layoutContent_auction));
 
     }
 
@@ -181,6 +188,8 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
                 LogUtils.log("GoodsInStockDetailActivity---->cl_attribute:"+cl_attribute);
                 intent.putExtra("cl_attribute",cl_attribute);
                 intent.setClass(GoodsInStockDetailActivity.this, VesselThreeActivity.class);
+                intent.putExtra("title","现货");
+                intent.putExtra("contract",contractString);
                 startActivity(intent);
                 break;
             case R.id.pre_sale_sale_detail_similar_product:
@@ -243,6 +252,14 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
               //  if (num < Integer.parseInt(surplus_amount_et.getText().toString()) && num >= 0) {
                     et_number.setText("" + num);
               //  }
+                break;
+            case R.id.layoutContent_auction:
+                Intent intentHX = new Intent();
+                intentHX.setClass(GoodsInStockDetailActivity.this, LoginActivity.class);
+                intentHX.putExtra(Constant.MESSAGE_TO_INTENT_EXTRA, Constant.MESSAGE_TO_DEFAULT);
+//                传入卖家id
+                intentHX.putExtra(Constant.IM_SERVICE_NUMBER, cl_gongsiId);
+                startActivity(intentHX);
                 break;
 
 
@@ -365,15 +382,24 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
         surplus_amount_et.setText(goodsInStockDetailBean.getCl_shuliang());
 //        最小变量单位
         min_variable_et.setText(goodsInStockDetailBean.getCl_xiaobian());
-        qigou=goodsInStockDetailBean.getCl_xiaobian();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日");
+//        release_date.setText(simpleDateFormat.format(Double.parseDouble(%获取到的数字%)));
 //        交货时间
-        delivery_time_et.setText(goodsInStockDetailBean.getCl_shijian());
+        delivery_time_et.setText(simpleDateFormat.format(Double.parseDouble(goodsInStockDetailBean.getCl_shijian())));
 //        交货结束时间
-        delivery_time_et_end.setText(goodsInStockDetailBean.getCl_shijianend());
+        delivery_time_et_end.setText("-"+simpleDateFormat.format(Double.parseDouble(goodsInStockDetailBean.getCl_shijianend())));
 //        仓库地址
         warehouse_address_et.setText(goodsInStockDetailBean.getCl_dizhi());
+        StringBuilder sb = new StringBuilder();
+        int jhfssize = goodsInStockDetailBean.getCl_jhfangshi().size();
+        for (int i = 0 ;i< jhfssize;i++){
+            sb.append(goodsInStockDetailBean.getCl_jhfangshi().get(i));
+            if (i != jhfssize-1 ){
+                sb.append("、");
+            }
+        }
 //        交货方式
-        delivery_mode_et.setText((CharSequence) goodsInStockDetailBean.getCl_jhfangshi());
+        delivery_mode_et.setText(sb.toString());
 //        分类
         classification_pre_sale_et.setText(goodsInStockDetailBean.getCl_fenlei());
 //        仓库
@@ -389,6 +415,10 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
 //        获取产品参数
         cl_attribute = goodsInStockDetailBean.getCl_attribute();
         LogUtils.log("GoodsInStockDetailActivity---->cl_attribute:"+cl_attribute);
+//        卖家id
+        cl_gongsiId = goodsInStockDetailBean.getCl_gongsiId();
+//        合同
+        contractString = goodsInStockDetailBean.getContract();
 
     }
 

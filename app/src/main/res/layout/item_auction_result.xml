@@ -17,6 +17,15 @@
             android:id="@+id/tv_price_search_item"
             android:textColor="#000"
             />
+        <ImageView
+            android:layout_width="@dimen/x15"
+            android:layout_height="@dimen/x15"
+            android:id="@+id/ivMore"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/x5"
+            android:src="@mipmap/my_sumao_iv_order"
+            />
 
         <TextView
             android:layout_width="wrap_content"
@@ -24,62 +33,31 @@
             android:textSize="14sp"
             android:layout_centerVertical="true"
             android:id="@+id/tv_isok"
-            android:layout_marginRight="@dimen/x10"
+            android:layout_marginRight="@dimen/x1"
             android:text="竞拍方式:"
-            android:layout_alignParentRight="true"
+            android:layout_toLeftOf="@id/ivMore"
+
             />
+
     </RelativeLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/x1"
         android:background="#EEEEF3"
+        android:layout_marginTop="@dimen/x5"
+        android:layout_marginBottom="@dimen/x5"
         ></LinearLayout>
 
-    <LinearLayout
+<!--    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:weightSum="5"
         android:layout_marginBottom="@dimen/x3"
         android:layout_marginTop="@dimen/x5"
         >
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
 
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="14sp"
-                android:text="产品名称:"
-                android:layout_marginLeft="@dimen/x10"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="14sp"
-                android:id="@+id/tv_price_search_name_firm"
-                /></LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="3"
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="14sp"
-                android:text="竞拍类型:"
 
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="14sp"
-                android:id="@+id/tv_price_search_type_firm"
-                /></LinearLayout>
+
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -213,27 +191,73 @@
                 android:textSize="14sp"
                 android:id="@+id/tv_price_search_address"
                 /></LinearLayout>
-    </LinearLayout>
-    <LinearLayout
+    </LinearLayout>-->
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="@dimen/x5"
+        android:layout_height="@dimen/x30"
         >
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:text="仓库:"
+            android:textColor="#FBC88E"
+            android:textSize="16sp"
+            android:text="结束时间:"
+            android:id="@+id/tv_time_price_search"
             android:layout_marginLeft="@dimen/x10"
+            android:layout_centerVertical="true"
             />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:id="@+id/tv_price_search_cangku"
-            />
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x1"
+        android:background="#EEEEF3"
+        ></LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/x8"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:text="竞拍类型:"
+                android:layout_marginLeft="@dimen/x10"
 
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:id="@+id/tv_price_search_type_firm"
+                /></LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="@dimen/x5"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:text="仓库:"
+                android:layout_marginLeft="@dimen/x10"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:id="@+id/tv_price_search_cangku"
+                />
+
+        </LinearLayout>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"

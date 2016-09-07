@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/business_license_number_name"
+        android:text="营业执照号"
+        android:layout_marginLeft="@dimen/x10"
+        android:layout_marginTop="@dimen/x13"
+        android:layout_marginBottom="@dimen/x13"
+
+        android:textSize="14sp"
+        />
+    <ImageView
+        android:layout_width="@dimen/x15"
+        android:layout_height="@dimen/x15"
+        android:id="@+id/business_license_number_iv"
+        android:layout_marginTop="@dimen/x13"
+        android:layout_marginRight="@dimen/x5"
+        android:layout_alignParentRight="true"
+        android:src="@mipmap/my_sumao_iv_order"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/business_license_number_image"
+        android:layout_toLeftOf="@+id/business_license_number_iv"
+        android:layout_marginRight="@dimen/x5"
+        android:layout_marginTop="@dimen/x13"
+        android:textSize="14sp"
+        android:text=""
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x1"
+        android:background="@color/btn_gray_pressed_status"
+        android:layout_below="@id/business_license_number_name"
+        />
+</RelativeLayout>

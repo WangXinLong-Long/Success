@@ -7,6 +7,8 @@ import com.silianchuangye.sumao.success.fragments.PagerOneMVP.bean.BannerBean;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.xutils.common.Callback;
 import org.xutils.http.HttpMethod;
 import org.xutils.http.RequestParams;
@@ -18,8 +20,16 @@ import org.xutils.x;
 public class AnnouncementModel implements IAnnouncementModel {
     @Override
     public void getAnnouncementInfo(final AnnouncementCallback callback) {
-        String url = SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/catalog/ProductCatalogActor/articles";
+        String url = SuMaoConstant.SUMAO_IP + "/rest/model/atg/commerce/catalog/ProductCatalogActor/articles";
         RequestParams requestParams = new RequestParams(url);
+        requestParams.setAsJsonContent(true);
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("type", "塑贸公告");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        requestParams.setBodyContent(jsonObject.toString());
         try {
             x.http().request(HttpMethod.POST, requestParams, new Callback.CacheCallback<String>() {
 
@@ -36,12 +46,12 @@ public class AnnouncementModel implements IAnnouncementModel {
                     Gson gson = new Gson();
                     announceBean = gson.fromJson(result, AnnounceBean.class);
                     LogUtils.log("公告公告--->" + announceBean.getArticles().get(1).getHeadline() + "<---公告公告");
-                    callback.callbackAnnouncement( announceBean);
+                    callback.callbackAnnouncement(announceBean);
                 }
 
                 @Override
                 public void onError(Throwable ex, boolean isOnCallback) {
-                    LogUtils.log("--------->PagerOneModel" + "3.2+onError" +ex.toString()+ "<-----------");
+                    LogUtils.log("--------->PagerOneModel" + "3.2+onError" + ex.toString() + "<-----------");
                 }
 
                 @Override
@@ -56,7 +66,7 @@ public class AnnouncementModel implements IAnnouncementModel {
             });
         } catch (Exception e) {
             e.printStackTrace();
-            LogUtils.log("--------->PagerOneModel" + "3.2+printStackTrace"+e.toString() + "<-----------");
+            LogUtils.log("--------->PagerOneModel" + "3.2+printStackTrace" + e.toString() + "<-----------");
         }
     }
 }

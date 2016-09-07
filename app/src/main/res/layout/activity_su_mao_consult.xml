@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.silianchuangye.sumao.success.fragments.homepage.sumaoconsultMVP.SuMaoConsult">
+    <include
+        android:id="@+id/su_mao_consult"
+        layout="@layout/child_title_bar"/>
+    <ListView
+        android:layout_below="@id/su_mao_consult"
+        android:id="@+id/cousult_listview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></ListView>
+</RelativeLayout>

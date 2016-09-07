@@ -490,7 +490,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="合同详情、产品参数、量价图"
+                    android:text="合同详情、产品参数"
                     android:layout_marginLeft="@dimen/x5"
                     android:layout_marginBottom="@dimen/x7"
                     android:layout_marginTop="@dimen/x7"

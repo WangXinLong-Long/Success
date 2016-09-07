@@ -78,9 +78,9 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
     public class MyReciver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals("close_cart_dialog")) {
-                dialog.dismiss();
-            }
+//            if (intent.getAction().equals("close_cart_dialog")) {
+//                dialog.dismiss();
+//            }
         }
     }
 
@@ -100,7 +100,7 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
         initView();
     }
     private void initView() {
-        initList();
+        //initList();
         ctx = getActivity();
 
         my = new MyReciver();
@@ -194,6 +194,12 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        initList();
+    }
+
     private void initList() {
         list = new ArrayList<CartInfo>();
         new Thread() {
@@ -256,7 +262,7 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
                             info.pai_num = array_data.getString("gradeNumber");
                             Log.d("pai_num", array_data.getString("gradeNumber"));
                             info.price = array_data.getString("salePrice");
-                            Log.d("salePrice", array_data.getString("salePrice"));
+                            Log.d("产品单价",info.price.toString()+"hhhhh"+info.pai_num);
                             info.qiye = array_data.getString("manufacturer");
                             Log.d("manufacturer", array_data.getString("manufacturer"));
                             info.company = array_data.getString("salesCompanyDisplayName");
@@ -264,22 +270,23 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
                             info.buy_num = array_data.getString("quantity");
                             Log.d("minPurchaseQuantity", array_data.getString("quantity"));
                             info.all_price = array_data.getString("amount");
+                            info.id=array_data.getString("commerceItemId");
+                            Log.d("商品的id",array_data.getString("commerceItemId"));
                             Log.d("amount", array_data.getString("amount"));
                             list.add(info);
                             Log.d("list的值", list.size() + "");
                             String aa = array_data.getString("surplus");
-//                            int len = array_data.getString("surplus").length() - 1;
-//                            String bb = aa.substring(1, len);
                             kucong.add(aa);
                             Log.d("bb的值", "" + aa);
                             Log.d("kucong的值", kucong.toString());
+                            list_id.add(array_data.getString("commerceItemId"));
 
-                            list_id.add(array_data.getString("commerceItemId").trim());
-                            Log.d("list_id的值", array_data.getString("commerceItemId"));
                         }
+                       // Log.d("list的值","list-----"+list.);
                         Log.d("list的值","list-----"+list.size());
-                        adapter = new CartAdapter(getActivity(),PagerThree.this,list,  list_id, kucong);
+                        adapter = new CartAdapter(getActivity(),PagerThree.this,list, kucong);
                         lv_Cart.setAdapter(adapter);
+                        adapter.notifyDataSetChanged();
 
 
                     } catch (JSONException e) {
@@ -441,41 +448,42 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
                 String a = list_id.toString();
                 int len = a.length() - 1;
                 String id = a.substring(1, len).replaceAll(" ", "");
-                Log.d("商品id", "" + id);
-                rp.addParameter("strCommerceItemIds","ci93000019");
+                Log.d("商品id", ""+id);
+                rp.addParameter("strCommerceItemIds","ci93000166");
                 SharedPreferences sp = getActivity().getSharedPreferences("sumao", Activity.MODE_PRIVATE);
                 String coummit_unique = sp.getString("unique", "");
                 rp.addParameter("_dynSessConf",coummit_unique);
+                Log.d("提交订单的唯一标识",coummit_unique);
                 Log.d("rp的值", rp + "");
                 x.http().post(rp, new Callback.CommonCallback<String>() {
                     @Override
                     public void onSuccess(String result) {
                         Log.d("提交订单的result", result);
-                        try {
-                            JSONObject object = new JSONObject(result);
-                            //支付总价
-                            String total = object.getString("total");
-                            Log.d("total", total);
-                            //订单编号
-                            String order_id = object.getString("orderid");
-                            Log.d("order_id", order_id);
-                            String message = object.getString("commerceItem");
-                            JSONArray array = new JSONArray(message);
-                            for (int i = 0; i < array.length(); i++) {
-                                JSONObject obj_array = array.getJSONObject(i);
-                                String type = obj_array.getString("parentCategories");
-                                String price = obj_array.getString("salePrice");
-                                String paihao = obj_array.getString("gradeNumber");
-                                String qiye = obj_array.getString("manufacturer");
-                                String all_price = obj_array.getString("amount");
-                                String cangku = obj_array.getString("warehouse");
-                                String comm = obj_array.getString("salesCompanyDisplayName");
-
-
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+//                        try {
+//                            JSONObject object = new JSONObject(result);
+//                            //支付总价
+//                            String total = object.getString("total");
+//                            Log.d("total", total);
+//                            //订单编号
+//                            String order_id = object.getString("orderid");
+//                            Log.d("order_id", order_id);
+//                            String message = object.getString("commerceItem");
+//                            JSONArray array = new JSONArray(message);
+//                            for (int i = 0; i < array.length(); i++) {
+//                                JSONObject obj_array = array.getJSONObject(i);
+//                                String type = obj_array.getString("parentCategories");
+//                                String price = obj_array.getString("salePrice");
+//                                String paihao = obj_array.getString("gradeNumber");
+//                                String qiye = obj_array.getString("manufacturer");
+//                                String all_price = obj_array.getString("amount");
+//                                String cangku = obj_array.getString("warehouse");
+//                                String comm = obj_array.getString("salesCompanyDisplayName");
+//
+//
+//                            }
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
 
                     }
 
@@ -513,12 +521,12 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
         private String all_price;
         private float number;
 
-        public CartAdapter(Context ctx,SelectCallBack call, List<CartInfo> list, List<String> list_id, List<String> kucong) {
+        public CartAdapter(Context ctx,SelectCallBack call, List<CartInfo> list, List<String> kucong) {
             this.ctx = ctx;
             this.list = list;
             this.call = call;
           //  this.dialog = dialog;
-            this.list_id = list_id;
+          //  this.id = id;
             this.kucong = kucong;
         }
 
@@ -562,18 +570,19 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
-            id = list_id.get(position).toString();
+            id = list.get(position).id.toString();
+            Log.d("商品的--id",id);
             kucong_value = kucong.get(position).toString();
             Log.d("库存的值", kucong_value);
             holder.Tv_name.setText(list.get(position).name);
             holder.Tv_sort_name.setText(list.get(position).sort_name);
             holder.Tv_cangku_name.setText(list.get(position).cangku_name);
             holder.Tv_pai_num.setText(list.get(position).pai_num);
-            holder.Tv_price.setText(list.get(position).price);
+            holder.Tv_price.setText(list.get(position).price.toString());
             holder.Tv_qiye.setText(list.get(position).qiye);
             holder.Tv_company.setText(list.get(position).company);
             holder.Edt_buy_num.setText(list.get(position).buy_num);
-            Log.d("选择的值", list.get(position).buy_num);
+            Log.d("选择的值", list.get(position).price.toString());
             holder.Tv_all_price.setText(list.get(position).all_price + "元");
             dialog=new Cart_MyDialog(ctx,holder.Tv_name.getText().toString(),kucong_value);
             //选中与不选中
@@ -595,12 +604,13 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
         holder.Img_del.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("删除","删除");
+
                 new Thread(){
                     @Override
                     public void run() {
                         //super.run();
-                        delete_data(position);
+                        Log.d("商品的id",list.get(position).id.toString());
+                        delete_data(list.get(position).id.toString());
                         //notifyDataSetChanged();
                     }
                 }.start();
@@ -620,7 +630,15 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
                     if (num >= 0) {
                         holder.Edt_buy_num.setText("" + num);
                         number = num;
-                        update_data();
+                       new Thread(){
+                           @Override
+                           public void run() {
+                               super.run();
+                               Log.d("商品的--id",list.get(position).id.toString());
+                               //update_data(list.get(position).id.toString());
+                               updataView(position,lv_Cart,list.get(position).id.toString());
+                           }
+                       }.start();
                         holder.relative_item_cart.setVisibility(View.GONE);
                         // update_data(number);
 //                    holder.Tv_price.setText(price);
@@ -652,7 +670,16 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
                     holder.relative_item_cart.setVisibility(View.GONE);
                     holder.Edt_buy_num.setText("" + num);
                     number=num;
-                    update_data();
+                    new Thread(){
+                        @Override
+                        public void run() {
+                            super.run();
+                            //list.get(position).id.toString()
+                            Log.d("商品的--id",id);
+                           // update_data(list.get(position).id.toString());
+                           // updataView(position,lv_Cart,list.get(position).id.toString());
+                        }
+                    }.start();
 //                   String number=num+"";
 //                    update_data(number);
 //                    holder.Tv_price.setText(price);
@@ -695,8 +722,8 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
 
                     holder.relative_item_cart.setVisibility(View.GONE);
 
-                    holder.Tv_price.setText(price);
-                    holder.Tv_all_price.setText(all_price);
+//                    holder.Tv_price.setText(price);
+//                    holder.Tv_all_price.setText(all_price);
                 }
 
            }
@@ -704,15 +731,15 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
             return convertView;
         }
 
-        public void delete_data(final int position) {
+        public void delete_data(String commerceId) {
             String url = "http://192.168.32.126:7023/rest/model/atg/commerce/ShoppingCartActor/removeItemFromOrder";
             final RequestParams rp = new RequestParams(url);
             SharedPreferences sp = ctx.getSharedPreferences("sumao", Activity.MODE_PRIVATE);
             String unique_delete = sp.getString("unique", "");
             Log.d("购物车删除时的唯一标识", unique_delete);
             rp.addParameter("_dynSessConf", unique_delete);
-            rp.addParameter("commerceId", id);
-            Log.d("商品id", id);
+            rp.addParameter("commerceId", commerceId);
+            Log.d("商品的值", commerceId);
             Log.d("rp的值", rp + "");
             x.http().post(rp, new Callback.CommonCallback<String>() {
                 @Override
@@ -760,7 +787,7 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
             });
         }
 
-        public void update_data() {
+        public void update_data(String commerceId ) {
             //String url = "http://192.168.32.126:7023/rest/model/atg/commerce/ShoppingCartActor/shoppingCartDetail";
             String url = "http://192.168.32.126:7023/rest/model/atg/commerce/ShoppingCartActor/commerceItemUpdate";
             RequestParams rp = new RequestParams(url);
@@ -768,7 +795,8 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
             rp.addParameter("qty", number);
             ///  Log.d("当前选择数量",number);
             Log.d("number的值", "" + number);
-            rp.addParameter("commerceId", id);
+            rp.addParameter("commerceId", commerceId);
+            Log.d("商品id的值", commerceId);
             SharedPreferences sp = ctx.getSharedPreferences("sumao", Activity.MODE_PRIVATE);
             String unique_update = sp.getString("unique", "");
             Log.d("修改时的唯一标识", unique_update);
@@ -780,29 +808,6 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
                     Log.d("修改时的result", result);
                     if (result.contains("commerceItem")) {
 
-//                        try {
-//                            JSONObject obj_result = new JSONObject(result);
-//                            String message = obj_result.getString("commerceItem");
-//                            JSONArray array = new JSONArray(message);
-//                            JSONObject onj_array = array.getJSONObject(0);
-//                            price = onj_array.getString("salePrice");
-//                            Log.d("单价", price);
-//                            all_price = onj_array.getString("amount");
-//                            Log.d("总价", all_price);
-//                            // notifyDataSetChanged();
-//
-//                        } catch (Exception e) {
-//                            e.printStackTrace();
-//                        }
-                        list.clear();
-                        new Thread(){
-                            @Override
-                            public void run() {
-
-                                super.run();
-                                showGouwuche();
-                            }
-                        }.start();
                     }
                 }
 
@@ -823,17 +828,96 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
             });
         }
 
-//        private void updateView(int itemIndex) {
-//                    //得到第一个可显示控件的位置，
-//                     int visiblePosition = lv_Cart.getFirstVisiblePosition();
-//                     //只有当要更新的view在可见的位置时才更新，不可见时，跳过不更新
-//                     if (itemIndex - visiblePosition >= 0) {
-//                           //得到要更新的item的view
-//                             View view = lv_Cart.getChildAt(itemIndex - visiblePosition);
-//                             //调用adapter更新界面
-//                             adapter.updateView(itemIndex);
-//                         }
-//              }
+
+        public void updataView(final int posi, final ListView listView, String commerceId ) {
+            int visibleFirstPosi = listView.getFirstVisiblePosition();
+            int visibleLastPosi = listView.getLastVisiblePosition();
+            if (posi >= visibleFirstPosi && posi <= visibleLastPosi) {
+                View view = listView.getChildAt(posi - visibleFirstPosi);
+                final ViewHolder viewHolder = (ViewHolder) view.getTag();
+
+//                String txt = holder.strText.getText().toString();
+//                txt = txt + "++;";
+//                holder.strText.setText(txt);
+//                strList.set(posi, txt);
+                String url = "http://192.168.32.126:7023/rest/model/atg/commerce/ShoppingCartActor/commerceItemUpdate";
+                RequestParams rp = new RequestParams(url);
+                rp.addParameter("amountUnitScale", "1000");
+                rp.addParameter("qty", number);
+                ///  Log.d("当前选择数量",number);
+                Log.d("number的值", "" + number);
+                rp.addParameter("commerceId", commerceId);
+                Log.d("商品id的值", commerceId);
+                SharedPreferences sp = ctx.getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+                String unique_update = sp.getString("unique", "");
+                Log.d("修改时的唯一标识", unique_update);
+                rp.addParameter("_dynSessConf", unique_update);
+                Log.d("rp的值", rp + "");
+                x.http().post(rp, new Callback.CommonCallback<String>() {
+                    @Override
+                    public void onSuccess(String result) {
+                        Log.d("修改的返回值",result);
+                        try {
+                            JSONObject object = new JSONObject(result);
+                            String item_count = object.getString("commerceItem");
+                            JSONArray array = new JSONArray(item_count);
+                            for (int i = 0; i < array.length(); i++) {
+                                JSONObject array_data = array.getJSONObject(i);
+                                CartInfo info = new CartInfo();
+
+                                info.name = array_data.getString("manufacturer");
+                                info.sort_name = array_data.getString("parentCategories");
+                                Log.d("parentCategories", array_data.getString("parentCategories"));
+                                info.cangku_name = array_data.getString("warehouse");
+                                Log.d("warehouse", array_data.getString("warehouse"));
+                                info.pai_num = array_data.getString("gradeNumber");
+                                Log.d("pai_num", array_data.getString("gradeNumber"));
+                                info.price = array_data.getString("salePrice");
+                                Log.d("产品单价", info.price.toString() + "hhhhh" + info.pai_num);
+                                info.qiye = array_data.getString("manufacturer");
+                                Log.d("manufacturer", array_data.getString("manufacturer"));
+                                info.company = array_data.getString("salesCompanyDisplayName");
+                                Log.d("salesCompanyDisplayName", array_data.getString("salesCompanyDisplayName"));
+                                info.buy_num = array_data.getString("quantity");
+                                Log.d("minPurchaseQuantity", array_data.getString("quantity"));
+                                info.all_price = array_data.getString("amount");
+                                info.id = array_data.getString("commerceItemId");
+                                Log.d("商品的id", array_data.getString("commerceItemId"));
+                                Log.d("amount", array_data.getString("amount"));
+                                list.set(posi,info);
+                                adapter.notifyDataSetChanged();
+                            }
+
+                        }catch (JSONException e){
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable ex, boolean isOnCallback) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(CancelledException cex) {
+
+                    }
+
+                    @Override
+                    public void onFinished() {
+
+                    }
+                });
+
+            } else {
+//                String txt = strList.get(posi);
+//                txt = txt + "++;";
+//                strList.set(posi, txt);
+
+            }
+        }
+
+
 
 
         public class ViewHolder {
