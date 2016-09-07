@@ -7,5 +7,5 @@ public interface IUserRegisterModel {
 
    void getEntInfo(int position,IEnterpriseInformationCallback callback);
 
-   //void getEntInfo(IEnterpriseInformationCallback callback_User);
+   //void getEntInfo(ValueCallback callback_User);
 }

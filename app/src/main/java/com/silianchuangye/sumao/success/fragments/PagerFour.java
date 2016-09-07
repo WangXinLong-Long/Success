@@ -24,7 +24,7 @@ import com.silianchuangye.sumao.success.adapter.ExpandableListViewAdapter;
 import com.silianchuangye.sumao.success.custom.CustomExpandableListView;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.CompanyUserActivity;
 
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoActivity;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoMVP.view.FirmInfoActivity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.personalInformation.InformationSubscription;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.personalInformation.PasswordUpdate;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.personalInformation.UserInformation;

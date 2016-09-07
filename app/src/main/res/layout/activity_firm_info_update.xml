@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#EEEEF3"
-    tools:context=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoUpdateActivity">
+    tools:context=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoUpdateMVP.view.FirmInfoUpdateActivity">
   <include
       android:id="@+id/layoutTop_firm_info_update"
       layout="@layout/title_bar"></include>
