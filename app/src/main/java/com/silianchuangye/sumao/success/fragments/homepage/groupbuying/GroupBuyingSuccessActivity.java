@@ -54,7 +54,7 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
     private RelativeLayout jia;
     private EditText number;
     private TextView count_price;
-
+    private String small,Sprice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,10 +99,6 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
         number= (EditText) findViewById(R.id.ed_shuzhi_number);
         count_price= (TextView) findViewById(R.id.tv_count_value);
 
-
-
-
-
     }
     public void event(){
         lvDemo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -125,29 +121,34 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String str=number.getText().toString();
+                if(str.equals("")){
+                    str="0";
+                }
                 Log.d("number的值",str+"");
-                String bb=bianliang.getText().toString();
+//                String bb=bianliang.getText().toString();
                 int aa=Integer.parseInt(str);
-                int cc=Integer.parseInt(bb);
+                int cc=Integer.parseInt(small);
                 aa=aa+cc;
-                number.setText(aa);
-                count_price.setText(Integer.parseInt(number.getText().toString())*Integer.parseInt(price.getText().toString()));
+                number.setText(aa+"");
+                count_price.setText(""+Integer.parseInt(number.getText().toString())*Integer.parseInt(Sprice.toString()));
             }
         });
         jian.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String str=number.getText().toString();
-                String bb=bianliang.getText().toString();
+                if(str.equals("")){
+                    str="0";
+                }
+//                String bb=bianliang.getText().toString();
                 int aa=Integer.parseInt(str);
-                int cc=Integer.parseInt(bb);
+                int cc=Integer.parseInt(small);
                 aa=aa-cc;
+                number.setText(aa+"");
                 if (aa<=0){
                     number.setText("1");
-                    count_price.setText(price.getText());
                 }
-                number.setText(aa);
-                count_price.setText(Integer.parseInt(number.getText().toString())*Integer.parseInt(price.getText().toString()));
+                count_price.setText(""+Integer.parseInt(number.getText().toString())*Integer.parseInt(Sprice.toString()));
             }
         });
 
@@ -188,9 +189,11 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
                             JSONObject obj=new JSONObject(result);
                             tv_success.setText("剩余团购时间:"+obj.getString("utilDate"));
                             name.setText(obj.getString("cl_mingcheng"));
+                            Sprice=obj.getString("cl_jine");
                             price.setText(obj.getString("cl_jine")+"元");
                             count.setText(obj.getString("cl_zongliang")+"吨");
                             qigou.setText(obj.getString("cl_qigou")+"吨");
+                            small=obj.getString("cl_xbianliang");
                             bianliang.setText(obj.getString("cl_xbianliang")+"吨");
                             cangku.setText(obj.getString("cl_cangku"));
                             way.setText(obj.getString("cl_fangshi"));
@@ -199,7 +202,10 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
                             add.setText(obj.getString("cl_diqu"));
                             comm.setText(obj.getString("cl_gongsi"));
 
-
+                            String str=number.getText().toString();
+                            int aa=Integer.parseInt(str);
+                            number.setText(aa+"");
+                            count_price.setText(""+Integer.parseInt(number.getText().toString())*Integer.parseInt(Sprice.toString()));
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

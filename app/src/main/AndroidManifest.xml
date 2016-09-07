@@ -530,7 +530,7 @@
         <activity android:name=".fragments.myPlasticTrade.register.RegisterPicture" />
         <activity android:name=".fragments.homepage.sumaoconsultMVP.SuMaoConsult" />
         <activity android:name=".customermanger.NoAgree" />
-        <activity android:name=".customermanger.NoAgree" />
+        <activity android:name=".fragments.type.view.TypeInfoActivity"/>
         <activity android:name=".ShangYou.CaiGou" />
         <activity android:name=".ShangYou.SearchSeePlan"></activity>
     </application>
