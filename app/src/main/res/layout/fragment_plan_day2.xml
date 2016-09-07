@@ -1,0 +1,44 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/selley_bg"
+    tools:context="com.silianchuangye.sumao.success.ShangYou.PlanDay">
+    <LinearLayout
+        android:layout_alignParentBottom="true"
+        android:id="@+id/linear_day_plan"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_height"
+        android:orientation="horizontal">
+        >
+        <Button
+            android:id="@+id/btn_day_plan_add"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="添加计划"
+            android:gravity="center"
+            android:textColor="@color/selley_lv"
+            android:background="@drawable/greenjuxing"
+            android:layout_height="match_parent" />
+        <Button
+            android:id="@+id/btn_day_plan_tijiao"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="立即提交"
+            android:textColor="@color/selley_lv"
+            android:background="@drawable/chinanorth"
+            android:gravity="center"
+            />
+    </LinearLayout>
+    <ListView
+        android:layout_above="@id/linear_day_plan"
+        android:id="@+id/lv_day_plan"
+        android:layout_marginTop="@dimen/x10"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@null">
+
+    </ListView>
+
+</RelativeLayout>

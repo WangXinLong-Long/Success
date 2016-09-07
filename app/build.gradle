@@ -40,6 +40,9 @@ dependencies {
     apt 'com.zhy:mpermission-compiler:1.0.0'
     compile files('libs/mpermissions.jar')
     compile files('libs/core.jar')
+    compile project(':PullToRefresh')
+    compile files('libs/commons-net-3.3.jar')
+    compile project(':pullToRefreshlibrary')
     compile 'com.android.support:appcompat-v7:23.3.0'
     compile 'org.xutils:xutils:3.3.32'
     compile 'com.android.support:design:23.3.0'
@@ -47,9 +50,6 @@ dependencies {
     compile 'com.google.android.gms:play-services-appindexing:8.1.0'
     compile 'com.zhy:mpermission-api:1.0.0'
     compile 'com.google.code.gson:gson:2.7'
-    compile project(':PullToRefresh')
     compile 'org.dspace.xmlui.jakarta:jakarta-bcel:5.1.20040329'
     compile 'org.apache.httpcomponents:jakarta-httpcore:4.0-alpha4'
-    compile files('libs/commons-net-3.3.jar')
-    compile project(':pullToRefreshlibrary')
 }

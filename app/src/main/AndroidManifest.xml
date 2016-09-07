@@ -528,7 +528,9 @@
             android:screenOrientation="portrait" />
         <activity android:name=".fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.CompanyUserValueActivity" />
         <activity android:name=".fragments.myPlasticTrade.register.RegisterPicture" />
-        <activity android:name=".customermanger.NoAgree"></activity>
+        <activity android:name=".customermanger.NoAgree" />
+        <activity android:name=".ShangYou.CaiGou" />
+        <activity android:name=".ShangYou.SearchSeePlan"></activity>
     </application>
 
 </manifest>

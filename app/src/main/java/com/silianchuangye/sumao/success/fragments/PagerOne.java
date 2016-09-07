@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 
 import com.silianchuangye.sumao.success.Activityguanjun;
+import com.silianchuangye.sumao.success.ShangYou.CaiGou;
 import com.silianchuangye.sumao.success.activity.WelcomeActivity;
 import com.silianchuangye.sumao.success.fragments.SearchActivityMVP.view.SearchActivity;
 import com.silianchuangye.sumao.success.fragments.homepage.groupbuying.GroupBuyingActivity;
@@ -222,7 +223,9 @@ public class PagerOne extends BasePager {
                      intent.setClass(mActivity,LoginUserActivity.class);
                      intent.putExtra("roles","seller");
                      startActivity(intent);
-                 }
+                 }else if(list.get(position).get("icon").equals(R.mipmap.more)){
+                     Toast.makeText(mActivity,"更多",Toast.LENGTH_SHORT).show();
+                 };
             }
         });
     }
