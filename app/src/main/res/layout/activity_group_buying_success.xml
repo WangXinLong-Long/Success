@@ -595,12 +595,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/x5"
                 android:background="#EDEDF1"></LinearLayout>
-            <com.silianchuangye.sumao.success.custom.customCalendar.CustomListView
+            <com.silianchuangye.sumao.success.custom.CustomListView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/lv_demo"
 
-                ></com.silianchuangye.sumao.success.custom.customCalendar.CustomListView>
+                ></com.silianchuangye.sumao.success.custom.CustomListView>
+            <!--customCalendar-->
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>
