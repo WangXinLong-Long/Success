@@ -3,25 +3,43 @@ package com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetai
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Paint;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.support.v7.widget.ActionBarOverlayLayout;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.MainActivity;
 import com.silianchuangye.sumao.success.R;
+import com.silianchuangye.sumao.success.adapter.PopupWindowAdaptrer;
 import com.silianchuangye.sumao.success.custom.customCalendar.CalendarView;
 import com.silianchuangye.sumao.success.custom.customCalendar.DayAndPrice;
 import com.silianchuangye.sumao.success.custom.customCalendar.MonthDateView;
+import com.silianchuangye.sumao.success.fragments.homepage.auction.OpenAuction;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.VesselThreeActivity;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.bean.PreSaleDetailBean;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.bean.PreSaleDetailCalendarBean;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.bean.Sku;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.presenter.PreSaleDetailPresenter;
 import com.silianchuangye.sumao.success.utils.LogUtils;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -38,8 +56,8 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
     ImageView title_bar_white_back;
     TextView title_bar_white_title;
     ImageView title_bar_white_shopping_cart;
-    RelativeLayout pre_sale_sale_detail_detail;
-    Button payment_security;
+
+
     private String productId;
     private String skuId;
     private PreSaleDetailPresenter preSaleDetailPresenter;
@@ -63,6 +81,13 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
     private int mounth;
     private int day;
     private List<DayAndPrice> calendarlist;
+    private Button payment_security;
+    private EditText et;
+    private ListView lv;
+    private PopupWindowAdaptrer adapter;
+    private List<OpenAuction> list1;
+    private TextView tv;
+    private RelativeLayout pre_sale_sale_detail_detail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,11 +131,13 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
     }
 
     private void initView() {
+        pre_sale_sale_detail_detail= (RelativeLayout) findViewById(R.id.pre_sale_sale_detail_detail);
+        payment_security= (Button) findViewById(R.id.payment_security);
         title_bar_white_back = ((ImageView) findViewById(R.id.title_bar_white_back));
         title_bar_white_title = ((TextView) findViewById(R.id.title_bar_white_title));
         title_bar_white_shopping_cart = ((ImageView) findViewById(R.id.title_bar_white_shopping_cart));
         pre_sale_sale_detail_detail = ((RelativeLayout) findViewById(R.id.pre_sale_sale_detail_detail));
-        payment_security = ((Button) findViewById(R.id.payment_security));
+       // payment_security = ((Button) findViewById(R.id.payment_security));
         //        兰州石化7042
         tvName_auction = ((TextView) findViewById(R.id.tvName_auction));
         //        6000
@@ -169,10 +196,140 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
                 /**
                  * 这里需要弹出popupWindow，即支付的弹出窗
                  */
+                Popupwindow();
+                backgroundAlpha(0.5f);
+
                 break;
 
         }
     }
+    //设置背景透明
+    public void backgroundAlpha(float bgAlpha)
+    {
+        WindowManager.LayoutParams lp = getWindow().getAttributes();
+        lp.alpha = bgAlpha; //0.0-1.0
+        getWindow().setAttributes(lp);
+    }
+    public void Popupwindow(){
+        View view=getLayoutInflater().inflate(R.layout.item_popupwindow_auction,null);
+        PopupWindow popupWindow=new PopupWindow(findViewById(R.id.Layout_c), ActionBarOverlayLayout.LayoutParams.MATCH_PARENT, ActionBarOverlayLayout.LayoutParams.WRAP_CONTENT);
+        popupWindow.setContentView(view);
+        tv= (TextView) view.findViewById(R.id.tvPrice_popupwindow_auction);
+        et= (EditText) view.findViewById(R.id.etZhifu_auction);
+        lv= (ListView) view.findViewById(R.id.lv_popupwindow_auction);
+        getinfo_Bank();
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if(parent.getId()==lv.getId()){
+                    for(int i=0;i<list1.size();i++){
+                        Log.d("Listview的item",position+"");
+                        if(i!=position){
+
+                            list1.get(i).Flag=false;
+
+                        }
+                    }
+                    list1.get(position).Flag=!list1.get(position).Flag;
+                    adapter.notifyDataSetChanged();
+                }
+            }
+        });
+        Button bt= (Button) view.findViewById(R.id.btZhifu);
+        bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tv.setText(et.getText().toString());
+                et.setText("");
+            }
+        });
+        popupWindow.setTouchable(true);
+        popupWindow.setBackgroundDrawable(new BitmapDrawable());
+        popupWindow.setOutsideTouchable(true);
+        popupWindow.setFocusable(true);
+
+        popupWindow.showAtLocation(pre_sale_sale_detail_detail, Gravity.BOTTOM,0,0);
+
+        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                //popupWindow.dismiss();
+                backgroundAlpha(1f);
+            }
+        });
+
+    }
+    public void getinfo_Bank(){
+        new Thread(){
+            @Override
+            public void run() {
+                // super.run();
+                String url="http://192.168.32.126:7023/rest/model/atg/commerce/catalog/ProductCatalogActor/availableBank";
+                RequestParams rp=new RequestParams(url);
+                rp.addParameter("productId",productId);
+                Log.d("银行列表的rp",""+rp);
+                x.http().post(rp, new Callback.CommonCallback<String>() {
+                    @Override
+                    public void onSuccess(String result) {
+                        Log.d("银行的列表",result);
+                        if (result.contains("amount")){
+                            try {
+                                list1=new ArrayList<OpenAuction>();
+                                JSONObject obj=new JSONObject(result);
+                                String message=obj.getString("bankList");
+                                JSONArray array=new JSONArray(message);
+                                for (int i=0;i<array.length();i++){
+                                    JSONObject obj_array=array.getJSONObject(i);
+                                    OpenAuction auction=new OpenAuction();
+                                    auction.tv_money=obj_array.getString("balance");
+                                    String type=obj_array.getString("bankType");
+                                    if (type.equals("1")){
+                                        //平安
+                                        auction.iv_icon=R.mipmap.pingan;
+                                        auction.tv_Name="平安银行";
+
+                                    }else if (type.equals("2")){
+                                        //昆仑
+                                        auction.iv_icon=R.mipmap.kunlun;
+                                        auction.tv_Name="昆仑银行";
+                                    }else if (type.equals("3")){
+                                        //建行
+                                        auction.iv_icon=R.mipmap.jianshe;
+                                        auction.tv_Name="中国建设银行";
+                                    }
+                                    list1.add(auction);
+
+                                }
+                                adapter=new PopupWindowAdaptrer(list1,PreSaleDetailActivity.this);
+                                lv.setAdapter(adapter);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }else {
+                            Toast.makeText(PreSaleDetailActivity.this, "该用户没有登录,无法获取可支付银行!", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable ex, boolean isOnCallback) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(CancelledException cex) {
+
+                    }
+
+                    @Override
+                    public void onFinished() {
+
+                    }
+                });
+
+            }
+        }.start();
+    }
+
 
     @Override
     public void getPreSaleDetailData(PreSaleDetailBean preSaleDetailBean) {

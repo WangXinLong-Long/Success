@@ -16,6 +16,8 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.silianchuangye.sumao.success.R;
 
 import org.json.JSONArray;
@@ -34,30 +36,39 @@ import java.util.Map;
 
 public class AuctionActivity extends AppCompatActivity {
     private ImageView imageback;
-    private ListView lvAuction;
-    private List<Map<String,Object>> list;
+    private PullToRefreshListView lvAuction;
     private String name;
     private List<String> order_id;
     private List<String> SKUID;
 
     private Button bu;
-    private String id,namechuanpin,startTime,endTime,startPrice,count,cangku,company,state,type;
 
+    private String id,namechuanpin,startTime,endTime,startPrice,count,cangku,company,state,type;
+    private int currentPage = 1;
+    // 默认每页条数
+    private int pageSize = 10;
+    // 如果已取得所有为true
+    private boolean isAllGot = false;
+    private MyAdapter adapter;
+    private List<Map<String,Object>> list=new ArrayList<Map<String,Object>>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auction);
+        getParme();
         init();
+        getAddData();
         event();
-        new Thread(){
-            @Override
-            public void run() {
-              //  super.run();
-                getInfo();
-            }
-        }.start();
+//        new Thread(){
+//            @Override
+//            public void run() {
+//              //  super.run();
+//                getInfo();
+//            }
+//        }.start();
     }
     public void init(){
+        list.clear();
         imageback= (ImageView) findViewById(R.id.ivBack_auction_layout_top);
         imageback.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,14 +76,48 @@ public class AuctionActivity extends AppCompatActivity {
                 AuctionActivity.this.finish();
             }
         });
-        lvAuction= (ListView) findViewById(R.id.lvAuction_Auction_Layout);
-        list=new ArrayList<Map<String,Object>>();
-//        Map<String,Object> map=new Hashtable<String,Object>();
-//        map.put("name","福建联合");
-//        list.add(map);
-//        Map<String,Object> map1=new Hashtable<String,Object>();
-//        map1.put("name","福建联合");
-//        list.add(map1);
+        lvAuction= (PullToRefreshListView) findViewById(R.id.lvAuction_Auction_Layout);
+        adapter=new MyAdapter(AuctionActivity.this,
+                list,
+                R.layout.auctionitem,
+                new String[]{"name","kaishi","startTime","icon","price","count","cangku","company","way"},
+                new int[]{R.id.tv_auction_name,
+                        R.id.tv_auction_start,
+                        R.id.tv_auction_time,
+                        R.id.iv_auction_end,
+                        R.id.tv_auction_price,
+                        R.id.tv_auction_number,
+                        R.id.tv_auction_acdress,
+                        R.id.tv_auction_commAdress,
+                        R.id.iv_auction_icon
+
+                });
+        lvAuction.setAdapter(adapter);
+        lvAuction.getLoadingLayoutProxy().setLoadingDrawable(null);
+        lvAuction.setDividerDrawable(null);
+        lvAuction.setMode(PullToRefreshBase.Mode.BOTH);
+        setPullrefreshLable(lvAuction, isAllGot);
+        lvAuction.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
+            @Override
+            public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+                currentPage = 1;// 刷新 当前页改成1
+                isAllGot = false;
+                getInfo();
+
+            }
+
+            @Override
+            public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+                if (isAllGot) {
+                    lvAuction.onRefreshComplete();
+                } else {
+                    getInfo();
+                }
+
+            }
+        });
+
+
         order_id=new ArrayList<String>();
         SKUID=new ArrayList<String>();
 
@@ -126,6 +171,25 @@ public class AuctionActivity extends AppCompatActivity {
 
 
     }
+    public void getAddData(){
+        getInfo();
+    }
+    public void setPullrefreshLable(@SuppressWarnings("rawtypes") PullToRefreshBase p, boolean isAll) {
+        if (isAll) {
+            p.getLoadingLayoutProxy(false, true).setPullLabel("已显示全部内容");
+            p.getLoadingLayoutProxy(false, true).setRefreshingLabel("已显示全部内容");
+            p.getLoadingLayoutProxy(false, true).setReleaseLabel("已显示全部内容");
+            p.getLoadingLayoutProxy(true, false).setPullLabel("下拉刷新");
+            p.getLoadingLayoutProxy(true, false).setRefreshingLabel("数据加载中...");
+            p.getLoadingLayoutProxy(true, false).setReleaseLabel("放开刷新");
+        } else {
+            p.getLoadingLayoutProxy(false, true).setPullLabel("向上滑动加载更多");
+            p.getLoadingLayoutProxy(false, true).setRefreshingLabel("数据加载中...");
+            p.getLoadingLayoutProxy(false, true).setReleaseLabel("放开加载更多");
+            p.getLoadingLayoutProxy(true, false).setPullLabel("下拉刷新");
+            p.getLoadingLayoutProxy(true, false).setRefreshingLabel("数据加载中...");
+        }
+    }
     public void event(){
 
 
@@ -133,6 +197,7 @@ public class AuctionActivity extends AppCompatActivity {
     public void getInfo(){
         String url="http://192.168.32.126:7023/rest/model/atg/commerce/catalog/ProductCatalogActor/auctionProductlist";
         RequestParams rp=new RequestParams(url);
+        rp.addParameter("pageNum",currentPage+"");
         x.http().post(rp, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
@@ -141,6 +206,7 @@ public class AuctionActivity extends AppCompatActivity {
                     JSONObject obj_result = new JSONObject(result);
                     String info=obj_result.getString("prod");
                     JSONArray array=new JSONArray(info);
+                    List<Map<String,Object>> list_info=new ArrayList<Map<String, Object>>();
                     for (int i=0;i<array.length();i++){
                         JSONObject obj_info=array.getJSONObject(i);
                          id=obj_info.getString("id");
@@ -193,26 +259,26 @@ public class AuctionActivity extends AppCompatActivity {
                             //密封竞拍
                             map.put("way",R.mipmap.mifengauction);
                         }
-                        list.add(map);
+                        list_info.add(map);
 
                     }
-                    MyAdapter adapter=new MyAdapter(AuctionActivity.this,
-                            list,
-                            R.layout.auctionitem,
-                            new String[]{"name","kaishi","startTime","icon","price","count","cangku","company","way"},
-                            new int[]{R.id.tv_auction_name,
-                                    R.id.tv_auction_start,
-                                    R.id.tv_auction_time,
-                                    R.id.iv_auction_end,
-                                    R.id.tv_auction_price,
-                                    R.id.tv_auction_number,
-                                    R.id.tv_auction_acdress,
-                                    R.id.tv_auction_commAdress,
-                                    R.id.iv_auction_icon
 
-                                        });
-                    lvAuction.setAdapter(adapter);
+                    if (currentPage==1){
+                        if (list_info.size()!=0){
+                            list.clear();
+                        }
+                    }
+                    list.addAll(list_info);
+                    if (array.length()<=pageSize){
+                        isAllGot=true;
+                    }else {
+                        isAllGot=false;
+                    }
+                    currentPage++;
+                    // videoListView.getLoadingLayoutProxy().setLastUpdatedLabel(sf.format(new Date()));
+                    setPullrefreshLable(lvAuction, isAllGot);
                     adapter.notifyDataSetChanged();
+                    lvAuction.onRefreshComplete();
 
                 }catch (JSONException e){
                     e.printStackTrace();
@@ -235,6 +301,11 @@ public class AuctionActivity extends AppCompatActivity {
 
             }
         });
+    }
+    public void getParme(){
+        isAllGot=false;
+        currentPage=1;
+
     }
     class MyAdapter extends SimpleAdapter{
 

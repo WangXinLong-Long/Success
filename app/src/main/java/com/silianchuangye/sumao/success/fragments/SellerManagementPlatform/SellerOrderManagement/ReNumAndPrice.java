@@ -69,11 +69,16 @@ private int i;
         Map<String,Object>map7=new HashMap<String,Object>();
         map7.put("left","仓库");
         map7.put("right",cangku);
+        Map<String,Object>map8=new HashMap<String,Object>();
+        map8.put("left","所含运费(元)");
+        map8.put("right","10");
+        map8.put("img",R.mipmap.my_sumao_iv_order);
         list.add(map1);
         list.add(map2);
         list.add(map3);
         list.add(map4);
         list.add(map5);
+        list.add(map8);
         list.add(map6);
         list.add(map7);
     }

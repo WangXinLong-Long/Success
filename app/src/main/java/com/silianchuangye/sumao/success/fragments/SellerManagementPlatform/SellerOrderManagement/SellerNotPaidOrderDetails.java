@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.SellerItemAdapter;
 import com.silianchuangye.sumao.success.custom.CustomListView;
+import com.silianchuangye.sumao.success.fragments.SellerManagementPlatform.SellerOrderManagement.Fragments.FaPiaoMessage;
 import com.silianchuangye.sumao.success.fragments.bean.SellerItemInfo;
 
 import java.text.SimpleDateFormat;
@@ -146,9 +147,13 @@ public class SellerNotPaidOrderDetails extends Activity implements View.OnClickL
                 break;
             case R.id.relative_pay_message:
                 Toast.makeText(this,"支付信息",Toast.LENGTH_SHORT).show();
+                Intent intent1=new Intent(this,PayMessage.class);
+                startActivity(intent1);
                 break;
             case R.id.relative_fapiao_message:
                 Toast.makeText(this,"发票信息",Toast.LENGTH_SHORT).show();
+                Intent intent2=new Intent(this, FaPiaoMessage.class);
+                startActivity(intent2);
                 break;
             case R.id.relative_logistics_message:
                 Toast.makeText(this,"物流信息",Toast.LENGTH_SHORT).show();

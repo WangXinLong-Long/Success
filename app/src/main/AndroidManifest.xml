@@ -372,7 +372,7 @@
             android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoMVP.view.FirmInfoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoUpdateMVP.view.FirmInfoUpdateActivity"
+            android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoUpdateActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
@@ -443,6 +443,9 @@
         <activity
             android:name=".fragments.myPlasticTrade.login.LoginUserActivity"
             android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".fragments.type.TypeInfoActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.CreateLogistics"

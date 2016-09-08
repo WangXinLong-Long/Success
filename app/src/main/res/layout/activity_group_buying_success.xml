@@ -39,6 +39,7 @@
             android:id="@+id/gouwuche"
             android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/x10"
+            android:visibility="gone"
             />
 
     </RelativeLayout>
@@ -513,6 +514,8 @@
             <RelativeLayout
                 android:id="@+id/layout_number"
                 android:layout_width="match_parent"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:layout_height="@dimen/x40">
                 <TextView
                     android:layout_width="wrap_content"
@@ -530,6 +533,7 @@
                     android:layout_toRightOf="@+id/tv_count"
                     android:layout_marginLeft="@dimen/x3"
                     android:id="@+id/layout_bb"
+
                     >
                     <TextView
                         android:layout_width="wrap_content"
