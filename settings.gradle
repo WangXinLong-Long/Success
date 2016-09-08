@@ -1,2 +1,2 @@
-include ':app', ':easeui', ':pullToRefreshlibrary'
+include ':app', ':easeui', ':pullToRefreshlibrary',':PullToRefresh'
 
