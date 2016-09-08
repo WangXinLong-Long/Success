@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -44,8 +45,10 @@ public class VesselThreeActivity extends AppCompatActivity {
 
         Bundle bundle = new Bundle();
         bundle.putSerializable("cl_attribute",cl_attribute);
-       ParameterFragment pf =  new ParameterFragment();
+        Log.d("bundl的值",bundle.toString());
+        ParameterFragment pf =  new ParameterFragment();
         pf.setArguments(bundle);
+        Log.d("bundl的值",pf+"");
 
         ivBack_vessel_three= (ImageView) findViewById(R.id.ivBack_vessel_three);
         ivBack_vessel_three.setOnClickListener(new View.OnClickListener() {
@@ -67,7 +70,7 @@ public class VesselThreeActivity extends AppCompatActivity {
         list=new ArrayList<Fragment>();
         list.add(contractFragment);
         list.add(pf);
-//        list.add(new PhotographFragment());
+       // list.add(new PhotographFragment());
         adapter=new MyPageAdapter(getSupportFragmentManager());
         adapter.setData(list);
 

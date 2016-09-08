@@ -26,6 +26,7 @@ import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -103,14 +104,20 @@ public class GroupBuyingActivity extends AppCompatActivity{
                                     map.put("id",obj_array.getString("id"));
                                     map.put("state",obj_array.getString("runing"));
                                     map.put("name",obj_array.getString("cl_mingcheng"));
-                                    map.put("startTime","2016-08-03 18:00");
+                                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat
+                                            ("yyyy年MM月dd日 hh:mm:mm");
+                                    String Start_data=simpleDateFormat.format(Double.parseDouble(obj_array.getString("groupStartDate")));
+                                    map.put("startTime",Start_data);
                                     map.put("price",obj_array.getString("cl_jine"));
                                     map.put("number",obj_array.getString("cl_zongliang"));
                                     map.put("chengtuan",obj_array.getString("cl_groupQuantity"));
                                     map.put("way","自提");
                                     map.put("cangku",obj_array.getString("cl_cangku"));
                                     map.put("comm",obj_array.getString("cl_gongsi"));
-                                    map.put("endTime","2018-09-09 12:00");
+//                                    SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat
+//                                            ("yyyy年MM月dd日 hh:mm:mm");
+                                    String end_data=simpleDateFormat.format(Double.parseDouble(obj_array.getString("groupEndDate")));
+                                    map.put("endTime",end_data);
                                     list.add(map);
                                 }
                                 adapter=new MyAdapter(GroupBuyingActivity.this,list,R.layout.layout_for_group_buying,

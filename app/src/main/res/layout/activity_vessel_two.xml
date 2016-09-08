@@ -37,6 +37,7 @@
             android:layout_marginRight="@dimen/x10"
             android:layout_marginTop="@dimen/x10"
             android:src="@mipmap/gouwuche"
+            android:visibility="gone"
             />
     </RelativeLayout>
 

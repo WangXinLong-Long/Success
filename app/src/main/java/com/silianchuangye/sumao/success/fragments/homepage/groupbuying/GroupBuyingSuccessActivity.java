@@ -16,7 +16,10 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.silianchuangye.sumao.success.R;
+import com.silianchuangye.sumao.success.fragments.homepage.auction.VesselThreeActivity;
+import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockDetailActivityMVP.bean.CLAttribute;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.xutils.common.Callback;
@@ -54,6 +57,9 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
     private RelativeLayout jia;
     private EditText number;
     private TextView count_price;
+    private String path;
+    private ArrayList<CLAttribute> cl_attribute=new ArrayList<CLAttribute>();
+    private String bili,jiezhishijian,can_gku,xiangxi,kaishishijian,jieshushijian,tuan_start,tuan_end;
 
 
     @Override
@@ -110,6 +116,14 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (position==0){
                     Intent intent=new Intent(GroupBuyingSuccessActivity.this,RuleActivity.class);
+                    intent.putExtra("bili",bili);
+                    intent.putExtra("jiezhi",jiezhishijian);
+                    intent.putExtra("cangku",can_gku);
+                    intent.putExtra("xiangxi",xiangxi);
+                    intent.putExtra("kaishi",kaishishijian);
+                    intent.putExtra("jieshu",jieshushijian);
+                    intent.putExtra("tuan_start",tuan_start);
+                    intent.putExtra("tuan_end",tuan_end);
                     startActivity(intent);
                 }else if (position==1){
                     Intent intent=new Intent(GroupBuyingSuccessActivity.this,JoinActivity.class);
@@ -117,7 +131,11 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
                     startActivity(intent);
 
                 }else if (position==2){
-
+                    Intent intent=new Intent(GroupBuyingSuccessActivity.this, VesselThreeActivity.class);
+                    intent.putExtra("title","团购");
+                    intent.putExtra("cl_attribute",cl_attribute);
+                    intent.putExtra("contract",path);
+                    startActivity(intent);
                 }
             }
         });
@@ -161,7 +179,7 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
         map1.put("name","我的参团记录");
         list.add(map1);
         Map<String,Object> map2=new HashMap<String,Object>();
-        map2.put("name","合同详情、产品参数、量价图");
+        map2.put("name","合同详情、产品参数");
         list.add(map2);
 
         adapter=new SimpleAdapter(this,list,R.layout.item_open_auction,
@@ -198,6 +216,26 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
                             bianjia.setText(obj.getString("cl_xbianjia"));
                             add.setText(obj.getString("cl_diqu"));
                             comm.setText(obj.getString("cl_gongsi"));
+                            String shuxing=obj.getString("cl_attribute");
+                            Log.d("刷新",shuxing+"aaaaaaaaaa");
+                            JSONArray array=new JSONArray(shuxing);
+                            for (int i=0;i<array.length();i++){
+                                JSONObject obj_array=array.getJSONObject(i);
+                                CLAttribute attribute=new CLAttribute();
+                                attribute.setAttrName(obj_array.getString("attrName"));
+                                attribute.setAttrValue(obj_array.getString("attrValue"));
+                                cl_attribute.add(attribute);
+                            }
+                            path=obj.getString("contract");
+                            bili=obj.getString("cl_baozhj");
+                           // jiezhishijian=obj.getString("");
+                            jiezhishijian="2016-09-09 12:00";
+                            can_gku=obj.getString("cl_cangku");
+                            xiangxi=obj.getString("addressDetail");
+                            kaishishijian=obj.getString("cl_shijian");
+                            jieshushijian=obj.getString("cl_shijianend");
+                            tuan_start=obj.getString("groupStartDate");
+                            tuan_end=obj.getString("groupEndDate");
 
 
                         } catch (JSONException e) {
