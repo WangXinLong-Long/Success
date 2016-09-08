@@ -252,94 +252,193 @@
                 android:layout_height="@dimen/x5"
                 android:layout_below="@id/seller_already_paid_order_details_list_view"
                 android:background="@color/my_sumao_background" />
-            <RelativeLayout
-                android:id="@+id/seller_already_paid_order_details_contract_details"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/selley_bg"
+                android:layout_below="@id/seller_already_paid_order_details_split_line5">
+                <RelativeLayout
+                    android:background="@color/selley_lv"
+                    android:id="@+id/relative_hetong_message"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/x38">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="合同信息"
+                        android:textColor="@color/zixun_topbg"
+                        android:layout_marginLeft="@dimen/x10"/>
+                    <ImageView
+                        android:layout_width="@dimen/x18"
+                        android:layout_height="@dimen/x18"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="@dimen/x10"
+                        android:src="@mipmap/my_sumao_iv_order"
+                        android:layout_centerVertical="true"/>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_marginTop="@dimen/x1"
+                    android:background="@color/selley_lv"
+                    android:id="@+id/relative_pay_message"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/x38">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="支付信息"
+                        android:textColor="@color/zixun_topbg"
+                        android:layout_marginLeft="@dimen/x10"/>
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="10dp"
+                        android:src="@mipmap/my_sumao_iv_order"
+                        android:layout_centerVertical="true"/>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:background="@color/selley_lv"
+                    android:layout_marginTop="@dimen/x1"
+                    android:id="@+id/relative_fapiao_message"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/x38">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="发票信息"
+                        android:textColor="@color/zixun_topbg"
+                        android:layout_marginLeft="@dimen/x10"/>
+                    <ImageView
+                        android:layout_width="@dimen/x18"
+                        android:layout_height="@dimen/x18"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="@dimen/x10"
+                        android:src="@mipmap/my_sumao_iv_order"
+                        android:layout_centerVertical="true"/>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:background="@color/selley_lv"
+                    android:layout_marginTop="@dimen/x1"
+                    android:id="@+id/relative_logistics_message"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/x38">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="物流信息"
+                        android:textColor="@color/zixun_topbg"
+                        android:layout_marginLeft="@dimen/x10"/>
+                    <ImageView
+                        android:layout_width="@dimen/x18"
+                        android:layout_height="@dimen/x18"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="@dimen/x10"
+                        android:src="@mipmap/my_sumao_iv_order"
+                        android:layout_centerVertical="true"/>
+                </RelativeLayout>
+            </LinearLayout>
+            <!--<RelativeLayout-->
+                <!--android:id="@+id/seller_already_paid_order_details_contract_details"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="@dimen/x38"-->
+                <!--android:layout_below="@+id/seller_already_paid_order_details_split_line5">-->
 
-                android:layout_below="@+id/seller_already_paid_order_details_split_line5">
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:textColor="@color/zixun_topbg"-->
+                    <!--android:layout_marginLeft="@dimen/x10"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:text="合同信息" />-->
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="合同信息" />
+                <!--<ImageView-->
+                    <!--android:layout_width="@dimen/x15"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignParentRight="true"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:paddingRight="@dimen/x10"-->
+                    <!--android:src="@mipmap/my_sumao_iv_order"-->
 
-                <ImageView
-                    android:layout_width="@dimen/x15"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:paddingRight="@dimen/x10"
-                    android:src="@mipmap/my_sumao_iv_order"
+                    <!--/>-->
+            <!--</RelativeLayout>-->
+            <!--<RelativeLayout-->
+                <!--android:id="@+id/seller_already_paid_order_details_payment_information"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="@dimen/x38"-->
 
-                    />
-            </RelativeLayout>
+                <!--android:layout_below="@+id/seller_already_paid_order_details_contract_details">-->
 
-            <RelativeLayout
-                android:id="@+id/seller_already_paid_order_details_payment_information"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/seller_already_paid_order_details_contract_details">
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:textColor="@color/zixun_topbg"-->
+                    <!--android:layout_marginLeft="@dimen/x10"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:text="支付信息" />-->
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="支付信息" />
+                <!--<ImageView-->
+                    <!--android:layout_width="@dimen/x15"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignParentRight="true"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:paddingRight="@dimen/x10"-->
+                    <!--android:src="@mipmap/my_sumao_iv_order"-->
 
-                <ImageView
-                    android:layout_width="@dimen/x15"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:paddingRight="@dimen/x10"
-                    android:src="@mipmap/my_sumao_iv_order"
+                    <!--/>-->
+            <!--</RelativeLayout>-->
+            <!--<RelativeLayout-->
+                <!--android:id="@+id/seller_already_paid_order_details_invoice_information"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="@dimen/x38"-->
+                <!--android:layout_below="@+id/seller_already_paid_order_details_payment_information">-->
 
-                    />
-            </RelativeLayout>
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:textColor="@color/zixun_topbg"-->
+                    <!--android:layout_marginLeft="@dimen/x10"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:text="发票信息" />-->
 
-            <RelativeLayout
-                android:id="@+id/seller_already_paid_order_details_invoice_information"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/seller_already_paid_order_details_payment_information">
+                <!--<ImageView-->
+                    <!--android:layout_width="@dimen/x15"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignParentRight="true"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:paddingRight="@dimen/x10"-->
+                    <!--android:src="@mipmap/my_sumao_iv_order"-->
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="发票信息" />
+                    <!--/>-->
+            <!--</RelativeLayout>-->
+            <!--<RelativeLayout-->
+                <!--android:id="@+id/seller_already_paid_order_details_oogistics_information"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="@dimen/x38"-->
+                <!--android:layout_below="@+id/seller_already_paid_order_details_invoice_information">-->
 
-                <ImageView
-                    android:layout_width="@dimen/x15"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:paddingRight="@dimen/x10"
-                    android:src="@mipmap/my_sumao_iv_order"
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:textColor="@color/zixun_topbg"-->
+                    <!--android:layout_marginLeft="@dimen/x10"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:text="物流信息" />-->
 
-                    />
-            </RelativeLayout>
+                <!--<ImageView-->
+                    <!--android:layout_width="@dimen/x15"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignParentRight="true"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:paddingRight="@dimen/x10"-->
+                    <!--android:src="@mipmap/my_sumao_iv_order"-->
 
-            <RelativeLayout
-                android:id="@+id/seller_already_paid_order_details_oogistics_information"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/seller_already_paid_order_details_invoice_information">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="物流信息" />
-
-                <ImageView
-                    android:layout_width="@dimen/x15"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:paddingRight="@dimen/x10"
-                    android:src="@mipmap/my_sumao_iv_order"
-
-                    />
-            </RelativeLayout>
+                    <!--/>-->
+            <!--</RelativeLayout>-->
         </RelativeLayout>
     </ScrollView>
 </RelativeLayout>
