@@ -1,5 +1,7 @@
 package com.silianchuangye.sumao.success.fragments.SearchActivityMVP.model;
 
+import android.widget.Toast;
+
 import com.google.gson.Gson;
 import com.silianchuangye.sumao.success.fragments.SearchActivityMVP.bean.SearchActivityBean;
 import com.silianchuangye.sumao.success.model.DifferentTypes;
@@ -57,8 +59,10 @@ public class SearchActivityModel implements ISearchActivityModel {
                 @Override
                 public void onSuccess(String result) {
                     LogUtils.log("result--->" + result + "<---result");
+
                     Gson gson = new Gson();
                     searchActivityBean = gson.fromJson(result, SearchActivityBean.class);
+
                     callback.callbackSearchActivity(searchActivityBean);
                 }
 
