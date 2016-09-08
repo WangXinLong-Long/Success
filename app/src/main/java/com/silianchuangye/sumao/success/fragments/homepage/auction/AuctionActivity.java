@@ -269,7 +269,7 @@ public class AuctionActivity extends AppCompatActivity {
                         }
                     }
                     list.addAll(list_info);
-                    if (array.length()<=pageSize){
+                    if (array.length()<pageSize){
                         isAllGot=true;
                     }else {
                         isAllGot=false;

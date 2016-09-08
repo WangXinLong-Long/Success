@@ -64,6 +64,7 @@ public class PaymentsOrder extends Activity implements View.OnClickListener{
     private ListView lvdemo;
     private List<Map<String,Object>> list;
     private SimpleAdapter list_adapter;
+    private List<String> list_id=new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,6 +141,74 @@ public class PaymentsOrder extends Activity implements View.OnClickListener{
                 });
         lvdemo.setAdapter(list_adapter);
 
+    }
+
+    public void commit_order() {
+        new Thread() {
+            @Override
+            public void run() {
+                //super.run();
+                String url = "http://192.168.32.126:7023/rest/model/atg/commerce/ShoppingCartActor/cartExpressCheckout";
+                RequestParams rp = new RequestParams(url);
+                String a = list_id.toString();
+                int len = a.length() - 1;
+                String id = a.substring(1, len).replaceAll(" ", "");
+                Log.d("商品id", ""+id);
+                rp.addParameter("strCommerceItemIds","ci93000166");
+                SharedPreferences sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+                String coummit_unique = sp.getString("unique", "");
+                rp.addParameter("_dynSessConf",coummit_unique);
+                Log.d("提交订单的唯一标识",coummit_unique);
+                Log.d("rp的值", rp + "");
+                x.http().post(rp, new Callback.CommonCallback<String>() {
+                    @Override
+                    public void onSuccess(String result) {
+                        Log.d("提交订单的result", result);
+//                        try {
+//                            JSONObject object = new JSONObject(result);
+//                            //支付总价
+//                            String total = object.getString("total");
+//                            Log.d("total", total);
+//                            //订单编号
+//                            String order_id = object.getString("orderid");
+//                            Log.d("order_id", order_id);
+//                            String message = object.getString("commerceItem");
+//                            JSONArray array = new JSONArray(message);
+//                            for (int i = 0; i < array.length(); i++) {
+//                                JSONObject obj_array = array.getJSONObject(i);
+//                                String type = obj_array.getString("parentCategories");
+//                                String price = obj_array.getString("salePrice");
+//                                String paihao = obj_array.getString("gradeNumber");
+//                                String qiye = obj_array.getString("manufacturer");
+//                                String all_price = obj_array.getString("amount");
+//                                String cangku = obj_array.getString("warehouse");
+//                                String comm = obj_array.getString("salesCompanyDisplayName");
+//
+//
+//                            }
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+
+                    }
+
+                    @Override
+                    public void onError(Throwable ex, boolean isOnCallback) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(CancelledException cex) {
+
+                    }
+
+                    @Override
+                    public void onFinished() {
+
+                    }
+                });
+            }
+        }.start();
     }
 
     @Override
