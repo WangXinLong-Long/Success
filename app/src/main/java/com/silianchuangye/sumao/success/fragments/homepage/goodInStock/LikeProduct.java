@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.LikeProductAdapter;
@@ -29,7 +28,7 @@ import java.util.List;
  */
 public class LikeProduct extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
     private ImageView img_like_product_back;
-    private PullToRefreshListView lv_like_product;
+    private ListView lv_like_product;
     private List<String> list = new ArrayList<String>();
     LikeProductAdapter adapter;
     List<SimilarProduct> lists;
@@ -64,7 +63,7 @@ public class LikeProduct extends AppCompatActivity implements View.OnClickListen
     private void initView() {
         img_like_product_back = (ImageView) findViewById(R.id.img_activity_like_product_back);
         img_like_product_back.setOnClickListener(this);
-        lv_like_product = (PullToRefreshListView) findViewById(R.id.lv_activity_like_priduct);
+        lv_like_product = (ListView) findViewById(R.id.lv_activity_like_priduct);
         lv_like_product.setAdapter(adapter);
 
         lv_like_product.setOnItemClickListener(this);

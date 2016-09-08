@@ -18,6 +18,9 @@ import android.widget.TextView;
 import com.silianchuangye.sumao.success.HX.Constant;
 import com.silianchuangye.sumao.success.HX.ui.LoginActivity;
 import com.silianchuangye.sumao.success.R;
+import com.silianchuangye.sumao.success.fragments.SearchActivityMVP.bean.SearchActivityBean;
+import com.silianchuangye.sumao.success.fragments.SearchActivityMVP.presenter.SearchActivityPresenter;
+import com.silianchuangye.sumao.success.fragments.SearchActivityMVP.view.ISearchActivityView;
 import com.silianchuangye.sumao.success.fragments.SearchActivityMVP.view.SearchActivity;
 import com.silianchuangye.sumao.success.fragments.type.view.TypeInfoActivity;
 
@@ -27,7 +30,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2016/4/20 0020.
  */
-public class PagerTwo extends BasePager {
+public class PagerTwo extends BasePager implements ISearchActivityView {
      private RelativeLayout view;
      private ListView lv_Show_Type;
      private List<String> list;
@@ -42,7 +45,9 @@ public class PagerTwo extends BasePager {
      private RelativeLayout layout_Firm;
      private ListAdapter adapter1;
 
-
+    SearchActivityPresenter searchActivityPresenter;
+    List<String> list_Number;
+    String str;
     @Override
     public void myClickSearch() {
         //调到搜索页
@@ -53,6 +58,7 @@ public class PagerTwo extends BasePager {
     @Override
     public void initDate() {
       view= (RelativeLayout) View.inflate(mActivity,R.layout.fragmenttwo,null);
+        searchActivityPresenter = new SearchActivityPresenter(this);
       fl_content.addView(view);
         lv_Show_Type= (ListView) view.findViewById(R.id.lv_Show_Type);
         list=new ArrayList<String>();
@@ -96,8 +102,8 @@ public class PagerTwo extends BasePager {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Log.d("点击","gridview的item");
-                    Intent intent = new Intent(getActivity(), TypeInfoActivity.class);
-                    startActivity(intent);
+                    str=list_Number.get(position).toString().trim();
+                    searchActivityPresenter.sendSearchActivityData("");
                 }
             });
         if (list_Apple.size()<=0){
@@ -110,7 +116,7 @@ public class PagerTwo extends BasePager {
     }
     public void number_Type(){
         gv_Numebr_Type= (GridView) view.findViewById(R.id.gv_Number_Type);
-        List<String> list_Number=new ArrayList<String>();
+        list_Number=new ArrayList<String>();
         list_Number.add("8305");
         list_Number.add("Ncbc-8320");
         list_Number.add("L5e89");
@@ -128,8 +134,10 @@ public class PagerTwo extends BasePager {
         gv_Numebr_Type.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent=new Intent(getActivity(),TypeInfoActivity.class);
-                startActivity(intent);
+//                Intent intent=new Intent(getActivity(),TypeInfoActivity.class);
+//                startActivity(intent);
+                str=list_Number.get(position).toString().trim();
+                searchActivityPresenter.sendSearchActivityData("");
             }
         });
 
@@ -223,6 +231,17 @@ public class PagerTwo extends BasePager {
         intent.putExtra(Constant.MESSAGE_TO_INTENT_EXTRA, Constant.MESSAGE_TO_DEFAULT);
         startActivity(intent);
     }
+
+    @Override
+    public void getSearchActivityData(SearchActivityBean searchActivityBean) {
+        Intent intent=new Intent(getActivity(), TypeInfoActivity.class);
+        Log.e("TAG","searchActivityBean====="+searchActivityBean);
+        intent.putExtra("searchActivityBean",searchActivityBean);
+        Log.e("TAG","str------"+str);
+        intent.putExtra("Ntt","");
+        startActivity(intent);
+    }
+
     class ListAdapter extends BaseAdapter{
         List<String> list = null;
         LayoutInflater inflater;

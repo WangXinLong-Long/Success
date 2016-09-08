@@ -12,7 +12,7 @@ import java.util.List;
  * Created by Administrator on 2016/7/26 0026.
  */
 public class GetEntInformationPresenter {
-    IUserRegisterModel userRegisterModel = new UserRegisterModel();
+
     IFirmInfoTypeActivity firmInfoTypeActivity;
 
     public GetEntInformationPresenter(IFirmInfoTypeActivity firmInfoTypeActivity) {
@@ -20,7 +20,7 @@ public class GetEntInformationPresenter {
     }
 
     public void setDataInView(int i) {
-
+        IUserRegisterModel userRegisterModel = new UserRegisterModel();
         userRegisterModel.getEntInfo(i,new IEnterpriseInformationCallback() {
             @Override
             public void setData(List<EnterpriseInformation> informations) {

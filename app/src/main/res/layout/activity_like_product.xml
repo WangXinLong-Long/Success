@@ -27,11 +27,11 @@
             android:textSize="18sp"
             />
     </RelativeLayout>
-    <com.handmark.pulltorefresh.library.PullToRefreshListView
+    <ListView
         android:layout_marginTop="@dimen/x5"
         android:id="@+id/lv_activity_like_priduct"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/selley_lv"
-        ></com.handmark.pulltorefresh.library.PullToRefreshListView>
+        ></ListView>
 </LinearLayout>

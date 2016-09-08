@@ -4,19 +4,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#EEEEF3"
-    tools:context=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoActivity">
+    tools:context=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoMVP.view.FirmInfoActivity">
 
     <include
         android:id="@+id/layoutTop_firm_info"
         layout="@layout/title_bar"></include>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/firm_info_title"
+        android:layout_marginTop="@dimen/x10"
+        android:layout_below="@+id/layoutTop_firm_info"
+        android:background="@color/white"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/common_top_bar_blue"
+        />
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/lvShow_firm_info"
-        android:layout_marginTop="@dimen/x10"
+        android:layout_marginTop="@dimen/x1"
 
-        android:layout_below="@+id/layoutTop_firm_info"
+        android:layout_below="@+id/firm_info_title"
         ></ListView>
 
 </RelativeLayout>

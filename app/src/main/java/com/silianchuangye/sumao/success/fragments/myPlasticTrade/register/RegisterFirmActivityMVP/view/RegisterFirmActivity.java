@@ -147,12 +147,15 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
     private String value2 = "123654";
     private String value3 = "123654";
 
+    /**
+     *
+     * 谁都不要动！！！
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_firm);
-        sp_firm_info = (Spinner) findViewById(R.id.sp_firm_info);
 
         title = "注册账户";
         String add = "新建";

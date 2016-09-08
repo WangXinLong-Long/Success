@@ -75,9 +75,14 @@ public class SeeProduct extends Activity implements AdapterView.OnItemClickListe
 
     @Override
     public void setDataInSeeProductActiity(SeeProductBean seeProductBean) {
-        lists.addAll(seeProductBean.getRecentlyViewedProduct());
-        adapter = new SeeProductAdapter(this,lists);
-        lv_like_product.setAdapter(adapter);
+        if (null == seeProductBean.getRecentlyViewedProduct()){
+            Toast.makeText(this,"暂时无浏览记录",Toast.LENGTH_SHORT).show();
+        }else{
+            lists.addAll(seeProductBean.getRecentlyViewedProduct());
+            adapter = new SeeProductAdapter(this,lists);
+            lv_like_product.setAdapter(adapter);
+        }
+
 
     }
 }

@@ -16,10 +16,7 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.silianchuangye.sumao.success.R;
-import com.silianchuangye.sumao.success.fragments.homepage.auction.VesselThreeActivity;
-import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockDetailActivityMVP.bean.CLAttribute;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.xutils.common.Callback;
@@ -131,11 +128,7 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
                     startActivity(intent);
 
                 }else if (position==2){
-                    Intent intent=new Intent(GroupBuyingSuccessActivity.this, VesselThreeActivity.class);
-                    intent.putExtra("title","团购");
-                    intent.putExtra("cl_attribute",cl_attribute);
-                    intent.putExtra("contract",path);
-                    startActivity(intent);
+
                 }
             }
         });

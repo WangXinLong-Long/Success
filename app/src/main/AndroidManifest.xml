@@ -369,10 +369,11 @@
             android:name=".fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.CompanyUserStateActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoActivity"
+            android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoMVP.view.FirmInfoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoUpdateActivity"
+            android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoUpdateMVP.view.FirmInfoUpdateActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoTypeActivity"
@@ -431,6 +432,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".fragments.homepage.goodInStock.GoodsInStockDetailActivityMVP.view.GoodsInStockDetailActivity"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
             android:name=".fragments.homepage.goodInStock.LikeProduct"
@@ -441,9 +443,6 @@
         <activity
             android:name=".fragments.myPlasticTrade.login.LoginUserActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".fragments.type.view.TypeInfoActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.CreateLogistics"
@@ -530,6 +529,10 @@
         <activity android:name=".fragments.myPlasticTrade.register.RegisterPicture" />
         <activity android:name=".fragments.homepage.sumaoconsultMVP.SuMaoConsult" />
         <activity android:name=".customermanger.NoAgree" />
+        <activity android:name=".fragments.type.view.TypeInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ShangYou.CaiGou" />
+        <activity android:name=".ShangYou.SearchSeePlan"></activity>
     </application>
 
 </manifest>

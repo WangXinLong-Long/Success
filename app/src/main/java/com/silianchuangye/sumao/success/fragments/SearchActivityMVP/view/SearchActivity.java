@@ -3,12 +3,14 @@ package com.silianchuangye.sumao.success.fragments.SearchActivityMVP.view;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.SearchActivityMVP.bean.SearchActivityBean;
@@ -73,9 +75,14 @@ public class SearchActivity extends AppCompatActivity implements ISearchActivity
 
     @Override
     public void getSearchActivityData(SearchActivityBean searchActivityBean) {
-        Intent intent=new Intent(SearchActivity.this, TypeInfoActivity.class);
-        intent.putExtra("searchActivityBean",searchActivityBean);
-        intent.putExtra("Ntt",search_content.getText().toString().trim());
-        startActivity(intent);
+        if (searchActivityBean.getTotal().equals("0")){
+            Toast.makeText(this,"没有找到相关商品，请重新搜索",Toast.LENGTH_SHORT).show();
+        }else {
+            Intent intent=new Intent(SearchActivity.this, TypeInfoActivity.class);
+            intent.putExtra("searchActivityBean",searchActivityBean);
+            intent.putExtra("Ntt",search_content.getText().toString().trim());
+            startActivity(intent);
+        }
+
     }
 }

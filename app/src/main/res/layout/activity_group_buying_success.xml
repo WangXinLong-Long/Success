@@ -337,7 +337,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/x5"
                     android:layout_toRightOf="@id/min_variable_tv"
-                    android:text="1吨"
                     android:textSize="@dimen/x10"
                     android:layout_below="@id/purchase_quantity_tv"/>
               <!--  <TextView
@@ -550,7 +549,7 @@
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@+id/layout_bb"
                     android:id="@+id/ed_shuzhi_number"
-                    android:hint="1"
+                    android:text="1"
                     />
                 <RelativeLayout
                     android:layout_width="@dimen/x25"
@@ -596,12 +595,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/x5"
                 android:background="#EDEDF1"></LinearLayout>
-            <com.silianchuangye.sumao.success.custom.customCalendar.CustomListView
+            <com.silianchuangye.sumao.success.custom.CustomListView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/lv_demo"
 
-                ></com.silianchuangye.sumao.success.custom.customCalendar.CustomListView>
+                ></com.silianchuangye.sumao.success.custom.CustomListView>
+            <!--customCalendar-->
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>
