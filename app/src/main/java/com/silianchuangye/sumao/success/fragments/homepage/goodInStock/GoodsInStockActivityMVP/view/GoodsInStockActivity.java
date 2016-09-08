@@ -440,7 +440,7 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
                 public void handleMessage(Message msg) {
                     super.handleMessage(msg);
                     if (smClList != null) {
-
+                        sList.clear();
                         smClList.clear();
                     }
 
