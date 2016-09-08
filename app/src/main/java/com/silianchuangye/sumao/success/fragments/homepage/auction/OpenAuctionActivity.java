@@ -30,6 +30,7 @@ import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.PopupWindowAdaptrer;
 import com.silianchuangye.sumao.success.dialog.Ok_Dialog;
 import com.silianchuangye.sumao.success.fragments.bean.ChinaNorth_Margin_info;
+import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockDetailActivityMVP.bean.CLAttribute;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -63,6 +64,9 @@ public class OpenAuctionActivity extends AppCompatActivity {
     private RelativeLayout Layout_Button_Open,Layout_Button_close,layout_non;
     private PopupWindowAdaptrer adapter1;
     private TextView tvRemark_auction;
+    private List<OpenAuction> list1;
+    private String path;
+    private ArrayList<CLAttribute> cl_attribute=new ArrayList<CLAttribute>();
     private TextView namechanpin,price,sheng,type,qigou,cangku,bianjiadanwei,diqu,time,company,cangkuaddress,way;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +103,7 @@ public class OpenAuctionActivity extends AppCompatActivity {
                 getAcution();
             }
         }.start();
+        getinfo_Bank();
         bt_jinpai.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -155,7 +160,7 @@ public class OpenAuctionActivity extends AppCompatActivity {
         map2.put("text","交易规则");
         list.add(map2);
         Map<String,Object> map3=new Hashtable<String,Object>();
-        map3.put("text","合同详情、产品参数、量价图");
+        map3.put("text","合同详情、产品参数");
         list.add(map3);
         SimpleAdapter adapter=new SimpleAdapter(this,list,R.layout.item_open_auction,new String[]{"text"},new int[]{R.id.tvRule_auction});
 
@@ -178,9 +183,13 @@ public class OpenAuctionActivity extends AppCompatActivity {
                     startActivity(intent);
                 }else if(position==1){
                     Intent intent=new Intent(OpenAuctionActivity.this,VesselTwoActivity.class);
+                    intent.putExtra("id",id_value);
                     startActivity(intent);
                 }else if(position==2){
                     Intent intent=new Intent(OpenAuctionActivity.this,VesselThreeActivity.class);
+                    intent.putExtra("title","团购");
+                    intent.putExtra("cl_attribute",cl_attribute);
+                    intent.putExtra("contract",path);
                     startActivity(intent);
                 }
             }
@@ -194,20 +203,7 @@ public class OpenAuctionActivity extends AppCompatActivity {
          tv= (TextView) view.findViewById(R.id.tvPrice_popupwindow_auction);
          et= (EditText) view.findViewById(R.id.etZhifu_auction);
          lv= (ListView) view.findViewById(R.id.lv_popupwindow_auction);
-        final List<OpenAuction> list1=new ArrayList<OpenAuction>();
-        OpenAuction openauction1=new OpenAuction();
-        openauction1.iv_icon=R.mipmap.direct;
-        openauction1.tv_Name="北京工商银行";
-        openauction1.tv_money="1234";
-        list1.add(openauction1);
-        OpenAuction openauction2=new OpenAuction();
-        openauction2.iv_icon=R.mipmap.vertet;
-        openauction2.tv_Name="北京建设银行";
-        openauction2.tv_money="1234";
-        list1.add(openauction2);
-
-    adapter=new PopupWindowAdaptrer(list1,this);
-        lv.setAdapter(adapter);
+        getinfo_Bank();
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -363,6 +359,7 @@ public class OpenAuctionActivity extends AppCompatActivity {
     //支付时的popupwindow
     public void ZhifuPopupwindow(){
         View view=getLayoutInflater().inflate(R.layout.item_popupwindow_auction,null);
+
         popupWindow=new PopupWindow(findViewById(R.id.Layout_c), ActionBarOverlayLayout.LayoutParams.MATCH_PARENT, ActionBarOverlayLayout.LayoutParams.WRAP_CONTENT);
         popupWindow.setContentView(view);
         LinearLayout layout_one= (LinearLayout) view.findViewById(R.id.layout_one);
@@ -374,33 +371,21 @@ public class OpenAuctionActivity extends AppCompatActivity {
         tv= (TextView) view.findViewById(R.id.tvPrice_popupwindow_auction);
         et= (EditText) view.findViewById(R.id.etZhifu_auction);
         lv= (ListView) view.findViewById(R.id.lv_popupwindow_auction);
-        final List<OpenAuction> list_pop=new ArrayList<OpenAuction>();
-        OpenAuction openauction1=new OpenAuction();
-        openauction1.iv_icon=R.mipmap.direct;
-        openauction1.tv_Name="北京工商银行";
-        openauction1.tv_money="1234";
-        list_pop.add(openauction1);
-        OpenAuction openauction2=new OpenAuction();
-        openauction2.iv_icon=R.mipmap.vertet;
-        openauction2.tv_Name="北京建设银行";
-        openauction2.tv_money="1234";
-        list_pop.add(openauction2);
-        Log.d("changdu",list_pop.size()+"");
-        adapter1=new PopupWindowAdaptrer(list_pop,OpenAuctionActivity.this);
-        lv.setAdapter(adapter1);
+
+        getinfo_Bank();
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if(parent.getId()==lv.getId()){
-                    for(int i=0;i<list_pop.size();i++){
+                    for(int i=0;i<list1.size();i++){
                         Log.d("Listview的item",position+"");
                         if(i!=position){
 
-                            list_pop.get(i).Flag=false;
+                            list1.get(i).Flag=false;
 
                         }
                     }
-                    list_pop.get(position).Flag=!list_pop.get(position).Flag;
+                    list1.get(position).Flag=!list1.get(position).Flag;
                     adapter1.notifyDataSetChanged();
                 }
             }
@@ -470,6 +455,21 @@ public class OpenAuctionActivity extends AppCompatActivity {
                     String aa=peisong_way.substring(2,len);
                     Log.d("配送方式",aa);
                     way.setText(aa);
+                    String shuxing=obj_result.getString("cl_attribute");
+                    Log.d("属性",shuxing+"aaaaaaaaaaaaaaaaaaaaaa");
+                    JSONArray jay=new JSONArray(shuxing);
+                    for(int i=0;i<jay.length();i++){
+                        JSONObject jsonObject=jay.getJSONObject(i);
+                        CLAttribute attribute=new CLAttribute();
+                        attribute.setAttrName(jsonObject.getString("attrName"));
+                        attribute.setAttrValue(jsonObject.getString("attrValue"));
+                        cl_attribute.add(attribute);
+
+                    }
+                    Log.d("属性的条目",cl_attribute.size()+"");
+                    path=obj_result.getString("contract");
+
+                    //cl_attribute.addAll();
 
                 }catch (JSONException e){
                     e.printStackTrace();
@@ -491,6 +491,76 @@ public class OpenAuctionActivity extends AppCompatActivity {
 
             }
         });
+    }
+    public void getinfo_Bank(){
+        new Thread(){
+            @Override
+            public void run() {
+               // super.run();
+                String url="http://192.168.32.126:7023/rest/model/atg/commerce/catalog/ProductCatalogActor/availableBank";
+                RequestParams rp=new RequestParams(url);
+                rp.addParameter("productId",id_value);
+                Log.d("银行列表的rp",""+rp);
+                x.http().post(rp, new Callback.CommonCallback<String>() {
+                    @Override
+                    public void onSuccess(String result) {
+                        Log.d("银行的列表",result);
+                        if (result.contains("amount")){
+                            try {
+                                list1=new ArrayList<OpenAuction>();
+                                JSONObject obj=new JSONObject(result);
+                                String message=obj.getString("bankList");
+                                JSONArray array=new JSONArray(message);
+                                for (int i=0;i<array.length();i++){
+                                    JSONObject obj_array=array.getJSONObject(i);
+                                    OpenAuction auction=new OpenAuction();
+                                    auction.tv_money=obj_array.getString("balance");
+                                    String type=obj_array.getString("bankType");
+                                    if (type.equals("1")){
+                                        //平安
+                                        auction.iv_icon=R.mipmap.pingan;
+                                        auction.tv_Name="平安银行";
+
+                                    }else if (type.equals("2")){
+                                        //昆仑
+                                        auction.iv_icon=R.mipmap.kunlun;
+                                        auction.tv_Name="昆仑银行";
+                                    }else if (type.equals("3")){
+                                        //建行
+                                        auction.iv_icon=R.mipmap.jianshe;
+                                        auction.tv_Name="中国建设银行";
+                                    }
+                                    list1.add(auction);
+
+                                }
+                                adapter1=new PopupWindowAdaptrer(list1,OpenAuctionActivity.this);
+                                lv.setAdapter(adapter1);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }else {
+                            Toast.makeText(OpenAuctionActivity.this, "该用户没有登录,无法获取可支付银行列表!", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable ex, boolean isOnCallback) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(CancelledException cex) {
+
+                    }
+
+                    @Override
+                    public void onFinished() {
+
+                    }
+                });
+
+            }
+        }.start();
     }
 
 

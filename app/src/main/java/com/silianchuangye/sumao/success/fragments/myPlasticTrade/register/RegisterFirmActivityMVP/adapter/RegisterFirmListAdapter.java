@@ -21,7 +21,7 @@ public class RegisterFirmListAdapter extends BaseAdapter{
     Context context;
     List<RegisterFirmList> registerFirmLists;
     LayoutInflater inflater;
-    public RegisterFirmListAdapter(RegisterFirmActivity registerFirmActivity, List<RegisterFirmList> registerFirmLists) {
+    public RegisterFirmListAdapter(Context registerFirmActivity, List<RegisterFirmList> registerFirmLists) {
         context = registerFirmActivity;
         this.registerFirmLists = registerFirmLists;
         inflater = LayoutInflater.from(context);

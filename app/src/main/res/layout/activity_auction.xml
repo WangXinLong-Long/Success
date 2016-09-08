@@ -40,9 +40,10 @@
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
             android:src="@drawable/search"
+            android:visibility="gone"
             />
     </RelativeLayout>
-    <ListView
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
         android:layout_below="@id/auction_layout_top"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -51,6 +52,6 @@
         android:background="#EEEEF3"
         android:id="@+id/lvAuction_Auction_Layout"
         android:layout_marginTop="@dimen/x5"
-        ></ListView>
+        ></com.handmark.pulltorefresh.library.PullToRefreshListView>
 
 </RelativeLayout>

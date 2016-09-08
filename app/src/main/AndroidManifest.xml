@@ -369,7 +369,7 @@
             android:name=".fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.CompanyUserStateActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoActivity"
+            android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoMVP.view.FirmInfoActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoUpdateActivity"
@@ -530,11 +530,9 @@
         <activity android:name=".fragments.myPlasticTrade.register.RegisterPicture" />
         <activity android:name=".fragments.homepage.sumaoconsultMVP.SuMaoConsult" />
         <activity android:name=".customermanger.NoAgree" />
-        <activity android:name=".fragments.type.view.TypeInfoActivity" />
+        <activity android:name=".fragments.type.view.TypeInfoActivity"/>
         <activity android:name=".ShangYou.CaiGou" />
-        <activity android:name=".ShangYou.SearchSeePlan" />
-        <activity android:name=".fragments.SellerManagementPlatform.SellerOrderManagement.Fragments.FaPiaoMessage" />
-        <activity android:name=".fragments.SellerManagementPlatform.SellerOrderManagement.PayMessage"></activity>
+        <activity android:name=".ShangYou.SearchSeePlan"></activity>
     </application>
 
 </manifest>

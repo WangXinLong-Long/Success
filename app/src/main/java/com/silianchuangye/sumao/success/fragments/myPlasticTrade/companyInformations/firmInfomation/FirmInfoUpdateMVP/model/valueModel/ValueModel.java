@@ -1,16 +1,11 @@
-package com.silianchuangye.sumao.success.fragments.SearchActivityMVP.model;
-
-import android.widget.Toast;
+package com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoUpdateMVP.model.valueModel;
 
 import com.google.gson.Gson;
-import com.silianchuangye.sumao.success.fragments.SearchActivityMVP.bean.SearchActivityBean;
 import com.silianchuangye.sumao.success.model.DifferentTypes;
 import com.silianchuangye.sumao.success.model.EnterpriseInformation;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.xutils.common.Callback;
 import org.xutils.http.HttpMethod;
 import org.xutils.http.RequestParams;
@@ -19,37 +14,29 @@ import org.xutils.x;
 import java.util.List;
 
 /**
- * Created by Administrator on 2016/8/15 0015.
+ * Created by Administrator on 2016/7/26 0026.
  */
-public class SearchActivityModel implements ISearchActivityModel {
-    String Ntt;
-    int Nrpp;
-    int No;
-
-    public SearchActivityModel(String ntt, int nrpp, int no) {
-        Ntt = ntt;
-        Nrpp = nrpp;
-        No = no;
-    }
+public class ValueModel implements IValueModel {
+    Gson gson = new Gson();
+    DifferentTypes types;
+    String result;
 
     @Override
-    public void getSearchActivityInfo(final SearchActivityCallback callback) {
-        String url = SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/catalog/ProductCatalogActor/researchProduct";
+    public void getEntInfo(ValueCallback callback) {
+        getStringFromURL(callback);
+    }
+
+
+
+
+
+    public  void  getStringFromURL( final ValueCallback callback){
+        String url = SuMaoConstant.SUMAO_IP+"/rest/model/atg/store/profile/RegistrationActor/userVerify/getEntInfo";
         RequestParams requestParams = new RequestParams(url);
-       requestParams.setAsJsonContent(true);
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("Ntt", Ntt);
-            jsonObject.put("Nrpp",Nrpp+"");
-            jsonObject.put("No",No+"");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        requestParams.setBodyContent(jsonObject.toString());
         try {
             x.http().request(HttpMethod.POST, requestParams, new Callback.CacheCallback<String>() {
-
-                private SearchActivityBean searchActivityBean;
+                private List<EnterpriseInformation> types;
+                private DifferentTypes differentTypes;
 
                 @Override
                 public boolean onCache(String result) {
@@ -59,11 +46,8 @@ public class SearchActivityModel implements ISearchActivityModel {
                 @Override
                 public void onSuccess(String result) {
                     LogUtils.log("result--->" + result + "<---result");
-
-                    Gson gson = new Gson();
-                    searchActivityBean = gson.fromJson(result, SearchActivityBean.class);
-
-                    callback.callbackSearchActivity(searchActivityBean);
+                    differentTypes = gson.fromJson(result,DifferentTypes.class);
+                    callback.setData(differentTypes);
                 }
 
                 @Override
@@ -87,4 +71,6 @@ public class SearchActivityModel implements ISearchActivityModel {
         }
 
     }
+
+
 }

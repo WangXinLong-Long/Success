@@ -1,5 +1,7 @@
 package com.silianchuangye.sumao.success.fragments.SearchActivityMVP.presenter;
 
+import android.widget.Toast;
+
 import com.silianchuangye.sumao.success.fragments.SearchActivityMVP.bean.SearchActivityBean;
 import com.silianchuangye.sumao.success.fragments.SearchActivityMVP.model.ISearchActivityModel;
 import com.silianchuangye.sumao.success.fragments.SearchActivityMVP.model.SearchActivityCallback;
@@ -21,6 +23,7 @@ public class SearchActivityPresenter {
             @Override
             public void callbackSearchActivity(SearchActivityBean searchActivityBean) {
                 searchActivityView.getSearchActivityData(searchActivityBean);
+
             }
         });
     }

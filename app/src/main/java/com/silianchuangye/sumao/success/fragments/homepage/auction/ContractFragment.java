@@ -36,8 +36,8 @@ public class ContractFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_contract, container, false);
         contract_web_view = ((WebView) view.findViewById(R.id.contract_web_view));
-        bundle = getArguments();
-        contract = bundle.getString("contract");
+       // bundle = getArguments();
+//        contract = bundle.getString("contract");
         settings = contract_web_view.getSettings();
         settings.setJavaScriptEnabled(true);
         settings.setBuiltInZoomControls(true);

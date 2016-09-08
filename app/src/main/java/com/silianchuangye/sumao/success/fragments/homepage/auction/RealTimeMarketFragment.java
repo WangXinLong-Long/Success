@@ -68,8 +68,8 @@ public class RealTimeMarketFragment extends Fragment {
         new Thread(){
             @Override
             public void run() {
-               // super.run();
-                getData();
+
+                getData();///////////////////////
             }
         }.start();
 
