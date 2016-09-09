@@ -1,7 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:orientation="vertical"
     android:layout_height="match_parent">
+  <!--  <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x5"
+        android:background="@color/my_sumao_background"
+        />-->
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="@dimen/x5"
+       android:background="@color/gray_type"
+       ></LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textColor="#000"
+        android:id="@+id/tv_name"
+        android:layout_marginLeft="@dimen/x5"
+        android:layout_marginTop="@dimen/x5"
+        android:layout_marginBottom="@dimen/x5"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x1"
+        android:background="@color/gray_type"
+        ></LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingBottom="@dimen/x5"
+        android:paddingTop="@dimen/x5"
+        android:paddingLeft="@dimen/x5"
+        >
+
+        <TextView
+            android:id="@+id/product_order_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="订单编号: 123456789"
+            android:textColor="@color/btn_blue_normal"
+
+            />
+    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x1"
+        android:layout_marginLeft="@dimen/x5"
+        android:layout_marginRight="@dimen/x5"
+        android:layout_marginTop="@dimen/x5"
+        android:background="@color/my_sumao_background"
+        />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x30"
+        android:background="@color/white">
+        <TextView
+            android:id="@+id/money_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="支付总金额："
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="@dimen/x5"
+            />
+        <TextView
+            android:id="@+id/money_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="61000"
+            android:textColor="@color/red"
+            android:textSize="@dimen/x20"
+            android:layout_toRightOf="@id/money_tv"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="@dimen/x5"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/red"
+            android:layout_toRightOf="@id/money_number"
+            android:text="元"
+            android:layout_alignParentBottom="true"
+            />
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/residual_time"
+        android:background="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="提示：剩余时间19分"
+        android:textColor="@color/red"
+        android:layout_marginBottom="@dimen/x5"
+        android:layout_marginTop="@dimen/x5"
+        android:layout_marginLeft="@dimen/x5"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x1"
+        android:layout_marginLeft="@dimen/x5"
+        android:layout_marginRight="@dimen/x5"
+        android:layout_marginTop="@dimen/x5"
+        android:background="@color/my_sumao_background"/>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

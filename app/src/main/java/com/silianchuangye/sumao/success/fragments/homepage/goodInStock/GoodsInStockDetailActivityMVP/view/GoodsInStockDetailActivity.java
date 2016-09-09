@@ -332,7 +332,7 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
         x.http().post(rp, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Log.d("result",result);
+                Log.d("添加到购物车result",result);
                 if (result.contains("commerceItem")){
                     Toast.makeText(GoodsInStockDetailActivity.this,"加入购物车成功",Toast.LENGTH_SHORT).show();
                 }else{
