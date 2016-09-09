@@ -1,13 +1,11 @@
 package com.silianchuangye.sumao.success.ShangYou;
 
-import android.content.SharedPreferences;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -23,12 +21,8 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.silianchuangye.sumao.success.R;
+import com.silianchuangye.sumao.success.ShangYou.PlanDayMVP.view.PlanDay;
 import com.silianchuangye.sumao.success.adapter.MyPageAdapter;
-import com.silianchuangye.sumao.success.fragments.homepage.theprice.ChinaCenterFragment;
-import com.silianchuangye.sumao.success.fragments.homepage.theprice.ChinaEastFragment;
-import com.silianchuangye.sumao.success.fragments.homepage.theprice.ChinaNorthFragment;
-import com.silianchuangye.sumao.success.fragments.homepage.theprice.ChinaSouthFragment;
-import com.silianchuangye.sumao.success.fragments.homepage.theprice.ChinaWestFragment;
 
 import java.util.ArrayList;
 import java.util.List;

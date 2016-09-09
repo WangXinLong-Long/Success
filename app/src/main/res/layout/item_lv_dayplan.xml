@@ -6,6 +6,7 @@
     android:background="@color/selley_lv"
    >
     <RelativeLayout
+        android:id="@+id/dayplan_date_rl"
         android:layout_width="match_parent"
         android:layout_height="@dimen/x40">
         <TextView
@@ -31,190 +32,23 @@
             android:layout_centerVertical="true"
             android:text="sfd"
             android:layout_toLeftOf="@id/img_lv_dayplan_date"/>
-    </RelativeLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/selley_bg"/>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/x40">
         <TextView
-            android:id="@+id/tv_lv_dayplan_name"
+            android:id="@+id/tv_delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/x10"
-            android:text="产品名称"
+            android:text="删除计划"
+            android:textColor="#ff0000"
+            android:layout_centerInParent="true"
+            android:visibility="gone"
             />
-        <ImageView
-            android:id="@+id/img_lv_dayplan_name"
-            android:layout_width="@dimen/x17"
-            android:layout_height="@dimen/x17"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/x10"
-            android:layout_centerVertical="true"
-            android:src="@mipmap/my_sumao_iv_order"/>
-        <TextView
-            android:id="@+id/tv_lv_dayplan_name_right"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:text="sfd"
-            android:layout_toLeftOf="@id/img_lv_dayplan_name"/>
-    </RelativeLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/selley_bg"/>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/x40">
-        <TextView
-            android:id="@+id/tv_lv_dayplan_num"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/x10"
-            android:text="数量(吨)"
-            />
-        <ImageView
-            android:id="@+id/img_lv_dayplan_num"
-            android:layout_width="@dimen/x17"
-            android:layout_height="@dimen/x17"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/x10"
-            android:layout_centerVertical="true"
-            android:src="@mipmap/my_sumao_iv_order"/>
-        <TextView
-            android:id="@+id/tv_lv_dayplan_num_right"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:text="sfd"
-            android:layout_toLeftOf="@id/img_lv_dayplan_num"/>
-    </RelativeLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/selley_bg"/>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/x40">
-        <TextView
-            android:id="@+id/tv_lv_dayplan_cangku"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/x10"
-            android:text="仓库"
-            />
-        <ImageView
-            android:id="@+id/img_lv_dayplan_cangku"
-            android:layout_width="@dimen/x17"
-            android:layout_height="@dimen/x17"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/x10"
-            android:layout_centerVertical="true"
-            android:src="@mipmap/my_sumao_iv_order"/>
-        <TextView
-            android:id="@+id/tv_lv_dayplan_cangku_right"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:text="sfd"
-            android:layout_toLeftOf="@id/img_lv_dayplan_cangku"/>
-    </RelativeLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/selley_bg"/>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/x40">
-        <TextView
-            android:id="@+id/tv_lv_dayplan_peisong"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/x10"
-            android:text="配送方式"
-            />
-        <ImageView
-            android:id="@+id/img_lv_dayplan_peisong"
-            android:layout_width="@dimen/x17"
-            android:layout_height="@dimen/x17"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/x10"
-            android:layout_centerVertical="true"
-            android:src="@mipmap/my_sumao_iv_order"/>
-        <TextView
-            android:id="@+id/tv_lv_dayplan_peisong_right"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:text="sfd"
-            android:layout_toLeftOf="@id/img_lv_dayplan_peisong"/>
-    </RelativeLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/selley_bg"/>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/x40">
-        <TextView
-            android:id="@+id/tv_lv_dayplan_beizhu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:text="备注"
-            />
-        <ImageView
-            android:id="@+id/img_lv_dayplan_beizhu"
-            android:layout_width="@dimen/x17"
-            android:layout_height="@dimen/x17"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/x10"
-            android:layout_centerVertical="true"
-            android:src="@mipmap/my_sumao_iv_order"/>
-        <TextView
-            android:id="@+id/tv_lv_dayplan_beizhu_right"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:text="sfd"
-            android:layout_toLeftOf="@id/img_lv_dayplan_beizhu"/>
-    </RelativeLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/x1"
-        android:background="#ff0000"/>
-    <RelativeLayout
-        android:id="@+id/relative_delete"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/x40"
-        >
-        <TextView
-        android:id="@+id/tv_delete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="删除计划"
-        android:textColor="#ff0000"
-        android:layout_centerInParent="true"
-        />
         <ImageView
             android:layout_toLeftOf="@id/tv_delete"
             android:layout_width="@dimen/x17"
             android:layout_height="@dimen/x17"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/x5"
+            android:visibility="gone"
             android:src="@mipmap/shangyoudelete"/>
-
     </RelativeLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/x10"
-        android:background="@color/selley_bg"/>
+
 </LinearLayout>

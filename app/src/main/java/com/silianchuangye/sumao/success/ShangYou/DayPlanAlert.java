@@ -17,7 +17,7 @@ public class DayPlanAlert extends AlertDialog implements View.OnClickListener{
     private ImageView img;
     private Button btn_canle;
     private Button btn_tijiao;
-    protected DayPlanAlert(Context context) {
+    public DayPlanAlert(Context context) {
         super(context);
     }
 
