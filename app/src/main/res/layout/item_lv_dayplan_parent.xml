@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="12dp"
+
+    android:background="@color/my_sumao_background"
+    >
+
+    <TextView
+        android:id="@+id/tv_my_sumao_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="We will rock you"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="28dp"
+android:textSize="@dimen/x5"
+        />
+</RelativeLayout>

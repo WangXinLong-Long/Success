@@ -81,7 +81,7 @@ public class AllManagerAdapter extends BaseAdapter{
         holder.buy.setText(list.get(position).buy);
         holder.person.setText(list.get(position).person);
         holder.state.setText(list.get(position).state);
-        String str=holder.state.getText().toString();
+        final String str=holder.state.getText().toString();
         if(str.equals("未通过")){
             holder.state.setTextColor(ctx.getResources().getColor(R.color.red));
             holder.relative.setVisibility(View.GONE);
@@ -104,9 +104,11 @@ public class AllManagerAdapter extends BaseAdapter{
         holder.relative_title.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(ctx, CustomerMessage.class);
-                intent.putExtra("title",list.get(position).title);
-                ctx.startActivity(intent);
+                if(str.equals("已通过")) {
+                    Intent intent = new Intent(ctx, CustomerMessage.class);
+                    intent.putExtra("title", list.get(position).title);
+                    ctx.startActivity(intent);
+                }
             }
         });
         return convertView;

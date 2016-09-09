@@ -111,6 +111,8 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
         tv_screen_title_bar_title = ((TextView) findViewById(R.id.tv_screen_title_bar_title));
         tv_screen_title_bar_title.setText("现货");
         iv_screen_title_bar_search = ((ImageView) findViewById(R.id.iv_screen_title_bar_search));
+//        现在先屏蔽掉，
+        iv_screen_title_bar_search.setVisibility(View.GONE);
         iv_screen_title_bar_back = ((ImageView) findViewById(R.id.iv_screen_title_bar_back));
         iv_screen_title_bar_search.setOnClickListener(this);
         iv_screen_title_bar_back.setOnClickListener(this);

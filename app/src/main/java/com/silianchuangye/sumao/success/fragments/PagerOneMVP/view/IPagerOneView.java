@@ -26,5 +26,7 @@ void setDataInActivity(GoodsInStockActivityBean goodsInStockActivityBean);
 void setPreSaleDataInActivity(GoodsInStockActivityBean goodsInStockActivityBean);
 //    点击塑贸资讯按钮后，进行网络请求
     void setSuMaoConsultInActivity(AnnounceBean announceBean);
+//    点击上游直销，进行网络请求
+    void setUpstreamDirectSellingInActivity();
 
 }

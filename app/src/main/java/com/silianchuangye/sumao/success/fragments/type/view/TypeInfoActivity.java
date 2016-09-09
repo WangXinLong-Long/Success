@@ -233,6 +233,7 @@ public class TypeInfoActivity extends AppCompatActivity implements OnClickListen
         types.put("group-sku", "团购");
 
         cl = searchActivityBean.getCl();
+        Log.e("TAG","cl------"+cl);
         for (int i = 0; i < cl.size(); i++) {
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("name", cl.get(i).getCl_mingcheng());
