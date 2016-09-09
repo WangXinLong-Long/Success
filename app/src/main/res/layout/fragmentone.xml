@@ -17,7 +17,7 @@
                 android:id="@+id/fragemnet_a"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/y100"
-                android:background="#1111bb">
+                android:background="@mipmap/spannerbackground">
 
                 <com.silianchuangye.sumao.success.utils.scrollviewAD.MyGallery
                     android:id="@+id/fragment_gallery"

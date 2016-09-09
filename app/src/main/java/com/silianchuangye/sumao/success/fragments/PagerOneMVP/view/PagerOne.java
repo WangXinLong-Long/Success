@@ -26,6 +26,7 @@ import com.silianchuangye.sumao.success.fragments.PagerOneMVP.bean.AnnouncementB
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.bean.BannerBean;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.presenter.PagerOnePresenter;
 import com.silianchuangye.sumao.success.fragments.homepage.AnnouncementDetailMVP.view.AnnouncementDetailActivity;
+import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.view.UpstreamDirectSellingActivity;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.bean.GoodsInStockActivityBean;
 import com.silianchuangye.sumao.success.fragments.homepage.groupbuying.GroupBuyingActivity;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.view.PreSaleDetailActivity;
@@ -270,7 +271,9 @@ public class PagerOne extends BasePager implements IPagerOneView {
                     Intent intent = new Intent(mActivity, MidpointsListctivity.class);
                     startActivity(intent);
                 } else if (list.get(position).get("icon").equals(R.mipmap.direct)) {
-                    Toast.makeText(mActivity, "点击了上游直销按钮", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(mActivity, "点击了上游直销按钮", Toast.LENGTH_SHORT).show();
+                    pagerOnePresenter.getUpstreamDirectSellingInfo();
+
                 } else if (list.get(position).get("icon").equals(R.mipmap.aa)) {
                     Toast.makeText(mActivity, "点击了物流按钮", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent();
@@ -464,6 +467,13 @@ public class PagerOne extends BasePager implements IPagerOneView {
         intent.putExtra("announceBean",announceBean);
         startActivity(intent);
 
+    }
+
+    @Override
+    public void setUpstreamDirectSellingInActivity() {
+        Intent intent = new Intent();
+        intent.setClass(mActivity,UpstreamDirectSellingActivity.class);
+        startActivity(intent);
     }
 
 }

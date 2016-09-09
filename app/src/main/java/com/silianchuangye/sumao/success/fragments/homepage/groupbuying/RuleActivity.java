@@ -91,7 +91,7 @@ public class RuleActivity extends AppCompatActivity {
         map7.put("left","团购时间");
         map7.put("right",tuan_kaishi+"至"+tuan_jieshu);
         list.add(map7);
-
+        //////////////////////
         adapter=new SimpleAdapter(RuleActivity.this,list,R.layout.item_firm_info,
                 new String[]{"left","right"},
                 new int[]{R.id.tv_firm_info,R.id.tvValue_firm_info});

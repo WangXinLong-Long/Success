@@ -70,6 +70,7 @@ public class WangXinLong extends Activity {
 //                  现货页面修改
 //                  SessionId过期处理，塑贸资讯
 //                  卖家客服，合同处理
+//        上游直销
 
         showPayDialog();
         ArrayList<String> arrayList = new ArrayList<>();
