@@ -1,7 +1,9 @@
 package com.silianchuangye.sumao.success.fragments.homepage.auction;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -59,13 +61,6 @@ public class AuctionActivity extends AppCompatActivity {
         init();
         getAddData();
         event();
-//        new Thread(){
-//            @Override
-//            public void run() {
-//              //  super.run();
-//                getInfo();
-//            }
-//        }.start();
     }
     public void init(){
         list.clear();
@@ -193,6 +188,7 @@ public class AuctionActivity extends AppCompatActivity {
     public void event(){
 
 
+
     }
     public void getInfo(){
         String url="http://192.168.32.126:7023/rest/model/atg/commerce/catalog/ProductCatalogActor/auctionProductlist";
@@ -269,7 +265,7 @@ public class AuctionActivity extends AppCompatActivity {
                         }
                     }
                     list.addAll(list_info);
-                    if (array.length()<=pageSize){
+                    if (array.length()<pageSize){
                         isAllGot=true;
                     }else {
                         isAllGot=false;
