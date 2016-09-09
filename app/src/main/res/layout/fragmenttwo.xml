@@ -61,7 +61,7 @@
           <com.silianchuangye.sumao.success.custom.customCalendar.CustomGridView
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:numColumns="3"
+              android:numColumns="2"
               android:descendantFocusability="blocksDescendants"
               android:focusable="true"
               android:horizontalSpacing="@dimen/x10"
@@ -119,7 +119,7 @@
             <com.silianchuangye.sumao.success.custom.customCalendar.CustomGridView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:numColumns="3"
+                android:numColumns="2"
                 android:horizontalSpacing="@dimen/x10"
                 android:verticalSpacing="@dimen/x10"
                 android:id="@+id/gv_Address_Type"
