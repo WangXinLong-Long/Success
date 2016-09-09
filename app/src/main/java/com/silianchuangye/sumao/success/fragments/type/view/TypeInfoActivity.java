@@ -38,6 +38,7 @@ import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInSt
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.bean.SMCl;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockDetailActivityMVP.view.GoodsInStockDetailActivity;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.view.PreSaleDetailActivity;
+import com.silianchuangye.sumao.success.fragments.type.TypeInfoActivityAdapter;
 import com.silianchuangye.sumao.success.fragments.type.presenter.TypeInfoPresenter;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 
@@ -49,8 +50,8 @@ import java.util.Map;
 
 public class TypeInfoActivity extends AppCompatActivity implements OnClickListener, ITypeInfoView {
     private ListView lv_Type;
-    private List<Map<String, Object>> list;
-    private SimpleAdapter adapter;
+    private List<Cls> list;
+    private TypeInfoActivityAdapter adapter;
     private ImageView iv_Back;
     private TextView tv_Search;
     private EditText Search;
@@ -98,7 +99,7 @@ public class TypeInfoActivity extends AppCompatActivity implements OnClickListen
     private String application = "";
     private String tradingmethod = "";
     private List<Cls> cl;
-    private List<Map<String, Object>> lists = new ArrayList<>();
+    private List<Cls> lists = new ArrayList<>();
     private String Ntt;
 
     private PullToRefreshLayout ptrl;
@@ -224,7 +225,7 @@ public class TypeInfoActivity extends AppCompatActivity implements OnClickListen
     public void init_listView() {
         lv_Type = (ListView) findViewById(R.id.lv_Type);
 
-        list = new ArrayList<Map<String, Object>>();
+        list = new ArrayList<Cls>();
         types = new HashMap<>();
         types.put("forward-pricing-sku", "预售");
         types.put("sealed-auction-sku", "密封竞拍");
@@ -234,61 +235,50 @@ public class TypeInfoActivity extends AppCompatActivity implements OnClickListen
 
         cl = searchActivityBean.getCl();
         Log.e("TAG","cl------"+cl);
-        for (int i = 0; i < cl.size(); i++) {
-            Map<String, Object> map = new HashMap<String, Object>();
-            map.put("name", cl.get(i).getCl_mingcheng());
-            map.put("number", cl.get(i).getCl_shuliang());
-            map.put("price", cl.get(i).getCl_jine());
-            map.put("address", cl.get(i).getCl_qiye());
-            map.put("cangku", cl.get(i).getCl_cangku());
-            map.put("state", cl.get(i).getCl_type());
-            list.add(map);
-
-        }
-        adapter = new SimpleAdapter(this, list, R.layout.item_type_two,
-                new String[]
-                        {"name", "number", "price", "address", "cangku", "state"},
-                new int[]
-                        {R.id.tv_name_type_two, R.id.tv_number_type_two,
-                                R.id.tv_price_type_two, R.id.tv_address_type_two,
-                                R.id.tv_cangku_type_two, R.id.tv_state_type_two
-                        });
+        lists.addAll(cl);
+        list.addAll(lists);
+        adapter = new TypeInfoActivityAdapter(this,list);
         LogUtils.log("设置适配器----> ");
         lv_Type.setAdapter(adapter);
         lv_Type.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String type =(String) list.get(position).get("state");
+                String type =(String) list.get(position).getCl_type();
                 LogUtils.log("type-->"+type);
                 if (type .equals("englishAuctionProduct")){//公开竞拍
+                    Toast.makeText(TypeInfoActivity.this,"管俊需要写跳转->公开竞拍",Toast.LENGTH_SHORT).show();
                     // TODO
                     /*
                     管俊需要写跳转
                      */
                 }else if(type .equals("fixedProduct")){//现货
                     Intent intent = new Intent();
-                    intent.putExtra("cl_id", cl.get(position).getCl_id());
+                    intent.putExtra("cl_id", list.get(position).getCl_id());
                     intent.setClass(TypeInfoActivity.this, GoodsInStockDetailActivity.class);
                     startActivity(intent);
                 }else if(type .equals("forward-pricing-product")){//预售
                     Intent intent = new Intent();
                     //        产品编号
-                    intent.putExtra("productId",cl.get(position).getCl_id());
+                    intent.putExtra("productId",list.get(position).getCl_id());
                     //        skuId
-                    intent.putExtra("skuId",cl.get(position-1).getCl_cpid());
+                    intent.putExtra("skuId",list.get(position).getCl_cpid());
                     intent.setClass(TypeInfoActivity.this, PreSaleDetailActivity.class);
                     startActivity(intent);
                 }else if(type .equals("sealedAuctionProduct")){//密封竞拍
+                    Toast.makeText(TypeInfoActivity.this,"管俊需要写跳转->密封竞拍",Toast.LENGTH_SHORT).show();
                     // TODO
                     /*
                     管俊需要写跳转
                      */
                 }else if(type .equals("groupProduct")){//团购
+                    Toast.makeText(TypeInfoActivity.this,"管俊需要写跳转->团购",Toast.LENGTH_SHORT).show();
                     // TODO
                     /*
                     管俊需要写跳转
                      */
                 }
+//                demandScheduleProduct--->段少昌
+//                forward-pricing-product
             }
         });
 
@@ -577,12 +567,14 @@ public class TypeInfoActivity extends AppCompatActivity implements OnClickListen
     @Override
     public void getTypeInfoInActivity(SearchActivityBean searchActivityBean) {
         total = searchActivityBean.getTotal();
+        lists.clear();
         if (total.equals("0")) {
             Toast.makeText(this, "抱歉暂时没有搜索到您需要的产品", Toast.LENGTH_LONG).show();
             lists.clear();
             list.clear();
             adapter.notifyDataSetChanged();
         } else {
+
 //        分类列表
             classificationMap = searchActivityBean.getSort();
 //        应用列表
@@ -593,24 +585,17 @@ public class TypeInfoActivity extends AppCompatActivity implements OnClickListen
             tradingPatternsMap = searchActivityBean.getType();
             cl = searchActivityBean.getCl();
             LogUtils.log("获取到cl的值----> " + cl.get(0).getCl_mingcheng());
-            if (cl == null || cl.size() == 0) {
+            if ( null== cl || cl.size() == 0) {
                 Toast.makeText(TypeInfoActivity.this, "没有更多内容", Toast.LENGTH_LONG).show();
             } else {
                 LogUtils.log("为list添加数据----> ");
-                for (int i = 0; i < cl.size(); i++) {
-                    Map<String, Object> map = new HashMap<String, Object>();
-                    map.put("name", cl.get(i).getCl_mingcheng());
-                    map.put("number", cl.get(i).getCl_shuliang());
-                    map.put("price", cl.get(i).getCl_jine());
-                    map.put("address", cl.get(i).getCl_qiye());
-                    map.put("cangku", cl.get(i).getCl_cangku());
-                    map.put("state", types.get(cl.get(i).getCl_type()));
-                    list.add(map);
-                }
-                LogUtils.log("为list添加数据完成----> " + list.size());
-                lists.addAll(list);
+
+                    lists.addAll(cl);
+
                 list.addAll(lists);
+                LogUtils.log(list.size()+"<--list.size()");
                 adapter.notifyDataSetChanged();
+
             }
         }
     }
@@ -667,6 +652,7 @@ public class TypeInfoActivity extends AppCompatActivity implements OnClickListen
 
         @Override
         public int getCount() {
+            LogUtils.log("list.size()"+list.size());
             return list.size();
         }
 
