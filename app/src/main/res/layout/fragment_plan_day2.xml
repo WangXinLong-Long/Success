@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/selley_bg"
-    tools:context="com.silianchuangye.sumao.success.ShangYou.PlanDay">
+    tools:context=".ShangYou.PlanDayMVP.view.PlanDay">
     <LinearLayout
         android:layout_alignParentBottom="true"
         android:id="@+id/linear_day_plan"
@@ -31,14 +31,15 @@
             android:gravity="center"
             />
     </LinearLayout>
-    <ListView
+    <ExpandableListView
         android:layout_above="@id/linear_day_plan"
         android:id="@+id/lv_day_plan"
         android:layout_marginTop="@dimen/x10"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="@null">
 
-    </ListView>
+       >
+
+    </ExpandableListView>
 
 </RelativeLayout>

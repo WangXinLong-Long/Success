@@ -276,11 +276,12 @@ public class PagerOne extends BasePager implements IPagerOneView {
 
                 } else if (list.get(position).get("icon").equals(R.mipmap.aa)) {
                     Toast.makeText(mActivity, "点击了物流按钮", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent();
+//                    联系客服跳转示例
+                   /* Intent intent = new Intent();
                     intent.setClass(mActivity, LoginActivity.class);
                     intent.putExtra(Constant.MESSAGE_TO_INTENT_EXTRA, Constant.MESSAGE_TO_DEFAULT);
                     intent.putExtra(Constant.IM_SERVICE_NUMBER, "feisumaokefu1");
-                    startActivity(intent);
+                    startActivity(intent);*/
                 } else if (list.get(position).get("icon").equals(R.mipmap.consult)) {
                    pagerOnePresenter.getSuMaoConsultInfo();
                     Toast.makeText(mActivity, "点击了塑贸咨询按钮", Toast.LENGTH_SHORT).show();
