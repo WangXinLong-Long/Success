@@ -235,7 +235,7 @@ public class PaymentsOrder extends Activity implements View.OnClickListener{
 
 
                                     });
-                            lvdemo.setAdapter(list_adapter);
+                            lvdemo.setAdapter(list_adapter);/////////////
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
