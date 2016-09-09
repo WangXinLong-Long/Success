@@ -37,13 +37,11 @@ public class DayPlanAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getGroupCount() {
-        LogUtils.log("得到group的数量"+group.size());
         return group.size();
     }
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        LogUtils.log("得到child的数量"+list.get(groupPosition).size());
         return list.get(groupPosition).size();
     }
 
@@ -98,13 +96,25 @@ public class DayPlanAdapter extends BaseExpandableListAdapter {
             convertView = LayoutInflater.from(ctx).inflate(R.layout.item_lv_dayplan,null);
             holder.level = ((TextView) convertView.findViewById(R.id.tv_lv_dayplan_date));
             holder.name = ((TextView) convertView.findViewById(R.id.tv_lv_dayplan_date_right));
+            holder.delte = ((TextView) convertView.findViewById(R.id.tv_delete));
+            holder.detail = (ImageView) convertView.findViewById(R.id.img_lv_dayplan_date);
+            holder.delete_iv = (ImageView) convertView.findViewById(R.id.delete_iv);
             convertView.setTag(holder);
             LogUtils.log("进入getChildView，并且加载完控件");
         }else {
             holder = ((ViewHolder) convertView.getTag());
         }
         holder.level.setText(getChild(groupPosition,childPosition).getLevel());
-        holder.name.setText(getChild(groupPosition,childPosition).getName());
+        holder.name.setText(getChild(groupPosition,childPosition).getDelete());
+        holder.delte.setText(getChild(groupPosition,childPosition).getName());
+        if (holder.delte.getText().toString().equals("")||holder.delte.getText().toString().isEmpty())
+        {
+            holder.detail.setVisibility(View.VISIBLE);
+            holder.delete_iv.setVisibility(View.INVISIBLE);
+        }else {
+            holder.detail.setVisibility(View.INVISIBLE);
+            holder.delete_iv.setVisibility(View.VISIBLE);
+        }
         LogUtils.log("进入getChildView，为控件设置值");
         return convertView;
     }
@@ -115,7 +125,9 @@ public class DayPlanAdapter extends BaseExpandableListAdapter {
     }
 
     private class ViewHolder {
-        TextView level,name;
+        TextView level,name,delte;
+        ImageView detail;
+        ImageView delete_iv;
     }
     class ItemHolder{
         TextView group;

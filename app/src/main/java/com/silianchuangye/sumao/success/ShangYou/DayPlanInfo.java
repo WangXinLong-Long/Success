@@ -8,11 +8,13 @@ public class DayPlanInfo {
     String level;
 //    名称
     String name;
+//     是否删除
+    String delete;
 
-
-    public DayPlanInfo(String level, String name) {
+    public DayPlanInfo(String level, String name,String delete) {
         this.level = level;
         this.name = name;
+        this.delete = delete;
     }
 
     public String getLevel() {
@@ -29,5 +31,13 @@ public class DayPlanInfo {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDelete() {
+        return delete;
+    }
+
+    public void setDelete(String delete) {
+        this.delete = delete;
     }
 }

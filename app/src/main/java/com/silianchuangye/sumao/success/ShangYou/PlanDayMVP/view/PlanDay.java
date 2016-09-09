@@ -51,6 +51,8 @@ public class PlanDay extends Fragment implements OnClickListener {
         btn_day_plan_tijiao = (Button) v.findViewById(R.id.btn_day_plan_tijiao);
         btn_day_plan_tijiao.setOnClickListener(this);
         btn_day_plan_add.setOnClickListener(this);
+        group = new ArrayList<>();
+        list = new ArrayList<List<DayPlanInfo>>();
         initDate();
         adapter = new DayPlanAdapter(list, getActivity(),group);
 
@@ -69,22 +71,24 @@ public class PlanDay extends Fragment implements OnClickListener {
         lv_day_plan.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-//                if (adapter.getChild(groupPosition, childPosition).getLevel().equals("计划日期")) {
-//                  Toast.makeText(getActivity(),"计划日期",Toast.LENGTH_SHORT).show();
-//                } else if (adapter.getChild(groupPosition, childPosition).getLevel().equals("产品名称")) {
-//                    Toast.makeText(getActivity(),"产品名称",Toast.LENGTH_SHORT).show();
-//                } else if (adapter.getChild(groupPosition, childPosition).getLevel().equals("数量（吨）")) {
-//                    Toast.makeText(getActivity(),"数量（吨）",Toast.LENGTH_SHORT).show();
-//                } else if (adapter.getChild(groupPosition, childPosition).getLevel().equals("仓库")) {
-//                    Toast.makeText(getActivity(),"仓库",Toast.LENGTH_SHORT).show();
-//                } else if (adapter.getChild(groupPosition, childPosition).getLevel().equals("配送方式")) {
-//                    Toast.makeText(getActivity(),"配送方式",Toast.LENGTH_SHORT).show();
-//                } else if (adapter.getChild(groupPosition, childPosition).getLevel().equals("备注")) {
-//                    Toast.makeText(getActivity(),"备注",Toast.LENGTH_SHORT).show();
-//                } else if (adapter.getChild(groupPosition, childPosition).getLevel().equals("")) {
-//                    list.remove(groupPosition);
-//                    adapter.notifyDataSetChanged();
-//                }
+                if (adapter.getChild(groupPosition, childPosition).getLevel().equals("计划日期")) {
+                  Toast.makeText(getActivity(),"计划日期--"+groupPosition+"--childPosition"+childPosition,Toast.LENGTH_SHORT).show();
+                } else if (adapter.getChild(groupPosition, childPosition).getLevel().equals("产品名称")) {
+                    Toast.makeText(getActivity(),"产品名称"+groupPosition+"--childPosition"+childPosition,Toast.LENGTH_SHORT).show();
+                } else if (adapter.getChild(groupPosition, childPosition).getLevel().equals("数量（吨）")) {
+                    Toast.makeText(getActivity(),"数量（吨）"+groupPosition+"--childPosition"+childPosition,Toast.LENGTH_SHORT).show();
+                } else if (adapter.getChild(groupPosition, childPosition).getLevel().equals("仓库")) {
+                    Toast.makeText(getActivity(),"仓库"+groupPosition+"--childPosition"+childPosition,Toast.LENGTH_SHORT).show();
+                } else if (adapter.getChild(groupPosition, childPosition).getLevel().equals("配送方式")) {
+                    Toast.makeText(getActivity(),"配送方式"+groupPosition+"--childPosition"+childPosition,Toast.LENGTH_SHORT).show();
+                } else if (adapter.getChild(groupPosition, childPosition).getLevel().equals("备注")) {
+                    Toast.makeText(getActivity(),"备注"+groupPosition+"--childPosition"+childPosition,Toast.LENGTH_SHORT).show();
+                } else if (adapter.getChild(groupPosition, childPosition).getLevel().equals("")) {
+                    Toast.makeText(getActivity(),"删除的是："+groupPosition+"组。"+"--childPosition"+childPosition+"位置",Toast.LENGTH_SHORT).show();
+                    list.remove(groupPosition);
+                    group.remove(groupPosition);
+                    adapter.notifyDataSetChanged();
+                }
 
                 return true;
             }
@@ -95,19 +99,19 @@ public class PlanDay extends Fragment implements OnClickListener {
 
     private void initDate() {
         LogUtils.log("将要进行ExpandableListView的初始化");
-        group = new ArrayList<>();
-        list = new ArrayList<List<DayPlanInfo>>();
+
         for (int i = 0; i < 2; i++) {
             lists = new ArrayList<DayPlanInfo>();
-            lists.add(new DayPlanInfo("计划日期", "名称"));
-            lists.add(new DayPlanInfo("产品名称", "名称"));
-            lists.add(new DayPlanInfo("数量（吨）", "名称"));
-            lists.add(new DayPlanInfo("仓库", "名称"));
-            lists.add(new DayPlanInfo("配送方式", "名称"));
-            lists.add(new DayPlanInfo("备注", "名称"));
-            lists.add(new DayPlanInfo("", ""));
+            lists.add(new DayPlanInfo("计划日期","", "名称"));
+            lists.add(new DayPlanInfo("产品名称","", "名称"));
+            lists.add(new DayPlanInfo("数量（吨）","", "名称"));
+            lists.add(new DayPlanInfo("仓库","", "名称"));
+            lists.add(new DayPlanInfo("配送方式","", "名称"));
+            lists.add(new DayPlanInfo("备注", "","名称"));
+            lists.add(new DayPlanInfo("", "删除计划",""));
             list.add(lists);
             group.add("");
+
         }
         LogUtils.log("进行ExpandableListView的初始化完毕");
     }
@@ -116,17 +120,19 @@ public class PlanDay extends Fragment implements OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_day_plan_add:
+
                 lists = new ArrayList<DayPlanInfo>();
-                lists.add(new DayPlanInfo("计划日期", "名称"));
-                lists.add(new DayPlanInfo("产品名称", "名称"));
-                lists.add(new DayPlanInfo("数量（吨）", "名称"));
-                lists.add(new DayPlanInfo("仓库", "名称"));
-                lists.add(new DayPlanInfo("配送方式", "名称"));
-                lists.add(new DayPlanInfo("备注", "名称"));
-                lists.add(new DayPlanInfo("", ""));
+                lists.add(new DayPlanInfo("计划日期","", "名称"));
+                lists.add(new DayPlanInfo("产品名称","", "名称"));
+                lists.add(new DayPlanInfo("数量（吨）","", "名称"));
+                lists.add(new DayPlanInfo("仓库", "","名称"));
+                lists.add(new DayPlanInfo("配送方式","", "名称"));
+                lists.add(new DayPlanInfo("备注","", "名称"));
+                lists.add(new DayPlanInfo("", "删除计划", ""));
                 list.add(lists);
                 group.add("");
                 adapter.notifyDataSetChanged();
+
                 for (int i = 0; i < group.size(); i++) {
                     lv_day_plan.expandGroup(i);
                 }
