@@ -1,5 +1,6 @@
 package com.silianchuangye.sumao.success.fragments.SearchActivityMVP.model;
 
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -46,6 +47,7 @@ public class SearchActivityModel implements ISearchActivityModel {
             e.printStackTrace();
         }
         requestParams.setBodyContent(jsonObject.toString());
+        Log.e("TAG","requestParams---------"+requestParams);
         try {
             x.http().request(HttpMethod.POST, requestParams, new Callback.CacheCallback<String>() {
 

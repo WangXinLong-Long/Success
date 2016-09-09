@@ -243,15 +243,15 @@ public class PagerTwo extends BasePager implements ISearchActivityView,AdapterVi
         }
 
     }
-
+    String caidan;
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         adapter1.setSelectedPosition(position);
         adapter1.notifyDataSetInvalidated();
         String str=listId.get(position).toString();
-        String caidan=list.get(position).toString();
+        caidan=list.get(position).toString();
         Log.e("TAG","caidna-------"+caidan);
-        ShowRight(str);
+        ShowRight(caidan,str);
 //        Log.e("TAG","str-----"+str);
     }
 
@@ -326,7 +326,7 @@ public class PagerTwo extends BasePager implements ISearchActivityView,AdapterVi
         TextView tv_item;
     }
     //右边二级菜单
-    private void ShowRight(String id){
+    private void ShowRight(final String caidan,String id){
         RequestParams params=new RequestParams(SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/catalog/ProductCatalogActor/homePanel2");
         params.addParameter("parentId",id);
         x.http().post(params, new Callback.CommonCallback<String>() {
@@ -355,7 +355,8 @@ public class PagerTwo extends BasePager implements ISearchActivityView,AdapterVi
                                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                         Log.d("点击", "gridview的item");
                                         str = list_Apple.get(position).toString().trim();
-                                        searchActivityPresenter.sendSearchActivityData(str);
+                                        Log.e("TAG","str+caidna====="+str+caidan);
+                                        searchActivityPresenter.sendSearchActivityData(caidan+"+"+str);
                                     }
                                 });
                                 if (list_Apple.size() <= 0) {
@@ -372,7 +373,7 @@ public class PagerTwo extends BasePager implements ISearchActivityView,AdapterVi
                                     @Override
                                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                         str = list_Number.get(position).toString().trim();
-                                        searchActivityPresenter.sendSearchActivityData(str);
+                                        searchActivityPresenter.sendSearchActivityData(caidan+"+"+str);
                                     }
                                 });
 
@@ -385,7 +386,7 @@ public class PagerTwo extends BasePager implements ISearchActivityView,AdapterVi
                                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                         Log.d("点击", "gridview的item");
                                         str = list.get(position).toString().trim();
-                                        searchActivityPresenter.sendSearchActivityData(str);
+                                        searchActivityPresenter.sendSearchActivityData(caidan+"+"+str);
                                     }
                                 });
 
@@ -400,7 +401,7 @@ public class PagerTwo extends BasePager implements ISearchActivityView,AdapterVi
                                     @Override
                                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                         str = list_Firm.get(position).toString().trim();
-                                        searchActivityPresenter.sendSearchActivityData(str);
+                                        searchActivityPresenter.sendSearchActivityData(caidan+"+"+str);
                                     }
                                 });
 
@@ -472,7 +473,7 @@ public class PagerTwo extends BasePager implements ISearchActivityView,AdapterVi
                 adapter1=new ListAdapter(list);
                 lv_Show_Type.setAdapter(adapter1);
                 adapter1.setSelectedPosition(0);
-                ShowRight(listId.get(0));
+                ShowRight(list.get(0),"");
                 adapter1.notifyDataSetInvalidated();
             }
 
