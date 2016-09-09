@@ -1,7 +1,9 @@
 package com.silianchuangye.sumao.success.fragments.homepage.auction;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -25,12 +27,16 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.silianchuangye.sumao.success.HX.Constant;
 import com.silianchuangye.sumao.success.MainActivity;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.PopupWindowAdaptrer;
 import com.silianchuangye.sumao.success.dialog.Ok_Dialog;
 import com.silianchuangye.sumao.success.fragments.bean.ChinaNorth_Margin_info;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockDetailActivityMVP.bean.CLAttribute;
+import com.silianchuangye.sumao.success.fragments.homepage.sumaoconsultMVP.SuMaoConsult;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.LoginUserActivity;
+import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -101,9 +107,10 @@ public class OpenAuctionActivity extends AppCompatActivity {
             public void run() {
                 super.run();
                 getAcution();
+                isSuccessorFail();
             }
         }.start();
-        getinfo_Bank();
+
         bt_jinpai.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -177,14 +184,28 @@ public class OpenAuctionActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if(position==0){
-                    Intent intent=new Intent(OpenAuctionActivity.this,VesselOneActivity.class);
-                    intent.putExtra("id",id_value);
-                    intent.putExtra("type",type_way);
-                    startActivity(intent);
+                    SharedPreferences sp=getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+                    String name=sp.getString("name","");
+                    Log.d("是否登录判断",name);
+                    if (name==""){
+                        //没有登录状态
+                        Intent intent=new Intent(OpenAuctionActivity.this, LoginUserActivity.class);
+                        startActivity(intent);
+                    }else {
+                        //登录状态
+                        Intent intent=new Intent(OpenAuctionActivity.this,VesselOneActivity.class);
+                        intent.putExtra("id",id_value);
+                        intent.putExtra("type",type_way);
+                        startActivity(intent);
+                    }
+
                 }else if(position==1){
-                    Intent intent=new Intent(OpenAuctionActivity.this,VesselTwoActivity.class);
-                    intent.putExtra("id",id_value);
-                    startActivity(intent);
+                        Intent intent=new Intent(OpenAuctionActivity.this,VesselTwoActivity.class);
+                        intent.putExtra("id",id_value);
+                        startActivity(intent);
+
+
+
                 }else if(position==2){
                     Intent intent=new Intent(OpenAuctionActivity.this,VesselThreeActivity.class);
                     intent.putExtra("title","团购");
@@ -561,6 +582,45 @@ public class OpenAuctionActivity extends AppCompatActivity {
 
             }
         }.start();
+    }
+    public void isSuccessorFail(){
+        String url= SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/catalog/ProductCatalogActor/depositState";
+        RequestParams rp=new RequestParams(url);
+        rp.addParameter("productId",id_value);
+        x.http().post(rp, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                if (result.contains("deposit_state")){
+                    try {
+                        JSONObject obj=new JSONObject(result);
+                        String shifou=obj.getString("deposit_state");
+                        String Message=obj.getString("msg");
+                        String Success=obj.getString("flag");
+                        Log.d("aaaaaa状态",shifou);
+                        Log.d("aaaaaa信息",Message);
+                        Log.d("aaaaaa是否成功",Success);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
     }
 
 

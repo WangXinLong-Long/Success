@@ -47,6 +47,7 @@ import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadFactory;
@@ -175,6 +176,7 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
 
                     Intent intent = new Intent();
                     intent.setClass(getActivity(), PaymentsOrder.class);
+                    intent.putExtra("id", (Serializable) list_id);
                     startActivity(intent);
                 } else {
                     Toast.makeText(getActivity(), "请选择要购买的商品", Toast.LENGTH_SHORT).show();
@@ -480,7 +482,7 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
                 refrashPrice();
             } else {
                 holder.Img_select.setImageResource(R.mipmap.cart_select_null);
-                tv_Cart_All_Price.setText("0.0元");
+               // tv_Cart_All_Price.setText("0.0元");
             }
             holder.Img_select.setOnClickListener(new View.OnClickListener() {
                 @Override
