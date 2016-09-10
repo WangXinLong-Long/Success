@@ -1,6 +1,10 @@
 package com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.bean;
 
+        import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockDetailActivityMVP.bean.CLAttribute;
+
         import java.io.Serializable;
+        import java.util.ArrayList;
+        import java.util.List;
 
 /**
  * Created by Administrator on 2016/8/15 0015.
@@ -14,12 +18,48 @@ public class PreSaleDetailBean implements Serializable{
     private String cl_qigou;
     private String cl_id;
     private String cl_qiye;
+    private List<String> cl_jhfangshi;
     private String deliveryPeriodStart;
     private String manufacturer;
+    private String cl_fenlei;
+    private ArrayList<CLAttribute> cl_attribute;
     private String cl_diqu;
     private String cl_cangku;
+    private String cl_qiyeId;
     private String cl_shuliang;
     private String cl_xiaobian;
+
+    public List<String> getCl_jhfangshi() {
+        return cl_jhfangshi;
+    }
+
+    public void setCl_jhfangshi(List<String> cl_jhfangshi) {
+        this.cl_jhfangshi = cl_jhfangshi;
+    }
+
+    public String getCl_fenlei() {
+        return cl_fenlei;
+    }
+
+    public void setCl_fenlei(String cl_fenlei) {
+        this.cl_fenlei = cl_fenlei;
+    }
+
+    public ArrayList<CLAttribute> getCl_attribute() {
+        return cl_attribute;
+    }
+
+    public void setCl_attribute(ArrayList<CLAttribute> cl_attribute) {
+        this.cl_attribute = cl_attribute;
+    }
+
+    public String getCl_qiyeId() {
+        return cl_qiyeId;
+    }
+
+    public void setCl_qiyeId(String cl_qiyeId) {
+        this.cl_qiyeId = cl_qiyeId;
+    }
 
     public String getDeliveryPeriodEnd() {
         return deliveryPeriodEnd;

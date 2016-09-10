@@ -2,6 +2,7 @@ package com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetai
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -28,10 +29,12 @@ import com.silianchuangye.sumao.success.custom.customCalendar.DayAndPrice;
 import com.silianchuangye.sumao.success.custom.customCalendar.MonthDateView;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.OpenAuction;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.VesselThreeActivity;
+import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockDetailActivityMVP.bean.CLAttribute;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.bean.PreSaleDetailBean;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.bean.PreSaleDetailCalendarBean;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.bean.Sku;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.presenter.PreSaleDetailPresenter;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.LoginUserActivity;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 
 import org.json.JSONArray;
@@ -88,6 +91,8 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
     private List<OpenAuction> list1;
     private TextView tv;
     private RelativeLayout pre_sale_sale_detail_detail;
+    private ArrayList<CLAttribute> cl_attribute;
+    private String newSkuId = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +102,7 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
 //
         setContentView(R.layout.activity_pre_sale_detail);
         Intent intent = getIntent();
+        Calendar calendar = Calendar.getInstance();
         calendarlist = new ArrayList<>();
         productId = intent.getStringExtra("productId");
         skuId = intent.getStringExtra("skuId");
@@ -115,7 +121,25 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
 
             @Override
             public void dateClick() {
-                Toast.makeText(getApplication(), "点击了：" + calendarView.getSelectMonth(), Toast.LENGTH_SHORT).show();
+                Integer selectday = calendarView.getSelectDay();
+                Integer selectmonth = calendarView.getSelectMonth()+1;
+                Integer selectyear = calendarView.getSelectYear();
+                LogUtils.log("选择的日期为："+selectyear+"年"+selectmonth+"月"+selectday+"日");
+                for (int i = 0; i < calendarlist.size(); i++) {
+                    Integer day = calendarlist.get(i).getDay();
+                    Integer month = calendarlist.get(i).getMonth();
+                    Integer year = calendarlist.get(i).getYear();
+                    LogUtils.log("List的日期为："+year+"年"+month+"月"+day+"日");
+                    if (selectday.equals(day)&&selectmonth.equals(month)&&selectyear.equals(year)){
+                        newSkuId = calendarlist.get(i).getSkuId();
+                    }
+                }
+                if (newSkuId.equals("")||newSkuId.isEmpty()){
+                    Toast.makeText(PreSaleDetailActivity.this,"应该是出错了",Toast.LENGTH_SHORT).show();
+                }else {
+                    preSaleDetailPresenter.sendPreSaleDetailData(newSkuId, productId);
+                }
+
             }
         });
         initView();
@@ -137,7 +161,7 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
         title_bar_white_title = ((TextView) findViewById(R.id.title_bar_white_title));
         title_bar_white_shopping_cart = ((ImageView) findViewById(R.id.title_bar_white_shopping_cart));
         pre_sale_sale_detail_detail = ((RelativeLayout) findViewById(R.id.pre_sale_sale_detail_detail));
-       // payment_security = ((Button) findViewById(R.id.payment_security));
+//        payment_security = ((Button) findViewById(R.id.payment_security));
         //        兰州石化7042
         tvName_auction = ((TextView) findViewById(R.id.tvName_auction));
         //        6000
@@ -151,6 +175,7 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
         //        最小变量单位
         min_variable_et = ((TextView) findViewById(R.id.min_variable_et));
         //       交货时间
+
         delivery_time_et = ((TextView) findViewById(R.id.delivery_time_et));
         delivery_time_et_end = ((TextView) findViewById(R.id.delivery_time_et_end));
         //       仓库地址
@@ -188,6 +213,9 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
                 break;
             case R.id.pre_sale_sale_detail_detail:
                 intent.setClass(PreSaleDetailActivity.this, VesselThreeActivity.class);
+                intent.putExtra("title","预售");
+                intent.putExtra("contract","www.baidu.com");
+                intent.putExtra("cl_attribute",cl_attribute);
                 startActivity(intent);
                 break;
 
@@ -196,9 +224,20 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
                 /**
                  * 这里需要弹出popupWindow，即支付的弹出窗
                  */
+                SharedPreferences sp = getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+                String name = sp.getString("name","");
+                if (name.equals("")|| name.isEmpty()){
+                    //TODO 跳转登录界面
+                    Toast.makeText(PreSaleDetailActivity.this,"跳转登录界面",Toast.LENGTH_SHORT).show();
+                    Intent intent1 = new Intent(PreSaleDetailActivity.this, LoginUserActivity.class);
+                    intent1.putExtra("roles","buyer");
+//
+                    startActivityForResult(intent1,0);
+                }else {
                 Popupwindow();
                 backgroundAlpha(0.5f);
 
+                }
                 break;
 
         }
@@ -260,75 +299,79 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
 
     }
     public void getinfo_Bank(){
-        new Thread(){
-            @Override
-            public void run() {
-                // super.run();
-                String url="http://192.168.32.126:7023/rest/model/atg/commerce/catalog/ProductCatalogActor/availableBank";
-                RequestParams rp=new RequestParams(url);
-                rp.addParameter("productId",productId);
-                Log.d("银行列表的rp",""+rp);
-                x.http().post(rp, new Callback.CommonCallback<String>() {
-                    @Override
-                    public void onSuccess(String result) {
-                        Log.d("银行的列表",result);
-                        if (result.contains("amount")){
-                            try {
-                                list1=new ArrayList<OpenAuction>();
-                                JSONObject obj=new JSONObject(result);
-                                String message=obj.getString("bankList");
-                                JSONArray array=new JSONArray(message);
-                                for (int i=0;i<array.length();i++){
-                                    JSONObject obj_array=array.getJSONObject(i);
-                                    OpenAuction auction=new OpenAuction();
-                                    auction.tv_money=obj_array.getString("balance");
-                                    String type=obj_array.getString("bankType");
-                                    if (type.equals("1")){
-                                        //平安
-                                        auction.iv_icon=R.mipmap.pingan;
-                                        auction.tv_Name="平安银行";
 
-                                    }else if (type.equals("2")){
-                                        //昆仑
-                                        auction.iv_icon=R.mipmap.kunlun;
-                                        auction.tv_Name="昆仑银行";
-                                    }else if (type.equals("3")){
-                                        //建行
-                                        auction.iv_icon=R.mipmap.jianshe;
-                                        auction.tv_Name="中国建设银行";
+            new Thread(){
+                @Override
+                public void run() {
+                    // super.run();
+
+
+                    String url="http://192.168.32.126:7023/rest/model/atg/commerce/catalog/ProductCatalogActor/availableBank";
+                    RequestParams rp=new RequestParams(url);
+                    rp.addParameter("productId",productId);
+                    Log.d("银行列表的rp",""+rp);
+                    x.http().post(rp, new Callback.CommonCallback<String>() {
+                        @Override
+                        public void onSuccess(String result) {
+                            Log.d("银行的列表",result);
+                            if (result.contains("amount")){
+                                try {
+                                    list1=new ArrayList<OpenAuction>();
+                                    JSONObject obj=new JSONObject(result);
+                                    String message=obj.getString("bankList");
+                                    JSONArray array=new JSONArray(message);
+                                    for (int i=0;i<array.length();i++){
+                                        JSONObject obj_array=array.getJSONObject(i);
+                                        OpenAuction auction=new OpenAuction();
+                                        auction.tv_money=obj_array.getString("balance");
+                                        String type=obj_array.getString("bankType");
+                                        if (type.equals("1")){
+                                            //平安
+                                            auction.iv_icon=R.mipmap.pingan;
+                                            auction.tv_Name="平安银行";
+
+                                        }else if (type.equals("2")){
+                                            //昆仑
+                                            auction.iv_icon=R.mipmap.kunlun;
+                                            auction.tv_Name="昆仑银行";
+                                        }else if (type.equals("3")){
+                                            //建行
+                                            auction.iv_icon=R.mipmap.jianshe;
+                                            auction.tv_Name="中国建设银行";
+                                        }
+                                        list1.add(auction);
+
                                     }
-                                    list1.add(auction);
-
+                                    adapter=new PopupWindowAdaptrer(list1,PreSaleDetailActivity.this);
+                                    lv.setAdapter(adapter);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
                                 }
-                                adapter=new PopupWindowAdaptrer(list1,PreSaleDetailActivity.this);
-                                lv.setAdapter(adapter);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
+                            }else {
+                                Toast.makeText(PreSaleDetailActivity.this, "该用户没有登录,无法获取可支付银行!", Toast.LENGTH_SHORT).show();
                             }
-                        }else {
-                            Toast.makeText(PreSaleDetailActivity.this, "该用户没有登录,无法获取可支付银行!", Toast.LENGTH_SHORT).show();
                         }
-                    }
 
-                    @Override
-                    public void onError(Throwable ex, boolean isOnCallback) {
+                        @Override
+                        public void onError(Throwable ex, boolean isOnCallback) {
 
-                    }
+                        }
 
-                    @Override
-                    public void onCancelled(CancelledException cex) {
+                        @Override
+                        public void onCancelled(CancelledException cex) {
 
-                    }
+                        }
 
-                    @Override
-                    public void onFinished() {
+                        @Override
+                        public void onFinished() {
 
-                    }
-                });
+                        }
+                    });
 
-            }
-        }.start();
-    }
+                }
+            }.start();
+        }
+
 
 
     @Override
@@ -336,9 +379,9 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
         //        兰州石化7042
         tvName_auction.setText(preSaleDetailBean.getCl_mingcheng());
         //        6000
-//        tvPrice_auction.setText(preSaleDetailBean.getj);
+//        tvPrice_auction.setText(preSaleDetailBean.get);
         //        积分规则:每吨商品积一分
-        pre_sale_detail_integral_rule.setText(preSaleDetailBean.getCl_jifen());
+//        pre_sale_detail_integral_rule.setText(preSaleDetailBean.getCl_jifen());
         //        剩余数量
         surplus_amount_et.setText(preSaleDetailBean.getCl_shuliang());
         //        起购量
@@ -346,14 +389,23 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
         //        最小变量单位
         min_variable_et.setText(preSaleDetailBean.getCl_xiaobian());
         //       交货时间
-        delivery_time_et.setText(preSaleDetailBean.getDeliveryPeriodStart());
-        delivery_time_et_end.setText(preSaleDetailBean.getDeliveryPeriodEnd());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日 ");
+        delivery_time_et.setText(simpleDateFormat.format(Double.parseDouble(preSaleDetailBean.getDeliveryPeriodStart())));
+        delivery_time_et_end.setText(simpleDateFormat.format(Double.parseDouble(preSaleDetailBean.getDeliveryPeriodEnd())));
         //       仓库地址
         warehouse_address_et.setText(preSaleDetailBean.getCl_ckdizhi());
         //       交货方式
-//        delivery_mode_et.setText(preSaleDetailBean.getj);
+        StringBuilder sb = new StringBuilder();
+        int jhfssize = preSaleDetailBean.getCl_jhfangshi().size();
+        for (int i = 0 ;i< jhfssize;i++){
+            sb.append(preSaleDetailBean.getCl_jhfangshi().get(i));
+            if (i != jhfssize-1 ){
+                sb.append("、");
+            }
+        }
+        delivery_mode_et.setText(sb.toString());
         //       分类
-//        classification_pre_sale_et.setText(preSaleDetailBean.getf);
+        classification_pre_sale_et.setText(preSaleDetailBean.getCl_fenlei());
         //      仓库
         warehouse_et.setText(preSaleDetailBean.getCl_cangku());
         //      地区
@@ -363,8 +415,11 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
         //      保证金比例
         margin_proportion_et.setText(preSaleDetailBean.getCl_baozhj());
         //        产品备注
-//        pre_sale_detail_remark.setText(preSaleDetailBean.getch);
-
+//        pre_sale_detail_remark.setText(preSaleDetailBean.get);
+//TODO 合同
+//        contractString = preSaleDetailBean.get();
+        //        获取产品参数
+        cl_attribute = preSaleDetailBean.getCl_attribute();
     }
 
     @Override
@@ -376,7 +431,7 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
             Sku sku = skus.get(i);
             String[] data = sku.getCl_date().split("-");
             LogUtils.log("sku.getCl_jiner()-->" + sku.getCl_jiner() + "<---new Integer(data[0]),new Integer(data[1]),new Integer(data[2])-->" + data[0] + "---" + data[1] + "---" + data[2]);
-
+            String skuId = sku.getSkuId();
             try {
                 year = Integer.parseInt(data[0]);
                 mounth = Integer.parseInt(data[1]);
@@ -385,7 +440,7 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
                 throw new RuntimeException("没有转换成功");
             }
             LogUtils.log(year + "..." + mounth + "..." + day);
-            calendarlist.add(new DayAndPrice("￥"+sku.getCl_jiner(), year, mounth, day));
+            calendarlist.add(new DayAndPrice("￥"+sku.getCl_jiner(), year, mounth, day,skuId));
         }
         calendarView.setSelected(true);
         for (int i = 0; i < calendarlist.size(); i++) {
