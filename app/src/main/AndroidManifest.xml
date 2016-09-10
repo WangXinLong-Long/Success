@@ -541,6 +541,10 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".fragments.homepage.UpstreamDirectSellingMVP.UpstreamDirectSellingDetailMVP.UpstreamDirectSellingDetailsActivity"
             android:screenOrientation="portrait"></activity>
+        <activity android:name=".fragments.SellerManagementPlatform.SellerOrderManagement.PayMessage"
+            android:screenOrientation="portrait" />
+        <activity android:name=".fragments.SellerManagementPlatform.SellerOrderManagement.Fragments.FaPiaoMessage"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
