@@ -2,6 +2,7 @@ package com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetai
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -33,6 +34,7 @@ import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetail
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.bean.PreSaleDetailCalendarBean;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.bean.Sku;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.presenter.PreSaleDetailPresenter;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.LoginUserActivity;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 
 import org.json.JSONArray;
@@ -222,9 +224,20 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
                 /**
                  * 这里需要弹出popupWindow，即支付的弹出窗
                  */
+                SharedPreferences sp = getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+                String name = sp.getString("name","");
+                if (name.equals("")|| name.isEmpty()){
+                    //TODO 跳转登录界面
+                    Toast.makeText(PreSaleDetailActivity.this,"跳转登录界面",Toast.LENGTH_SHORT).show();
+                    Intent intent1 = new Intent(PreSaleDetailActivity.this, LoginUserActivity.class);
+                    intent1.putExtra("roles","buyer");
+//
+                    startActivityForResult(intent1,0);
+                }else {
                 Popupwindow();
                 backgroundAlpha(0.5f);
 
+                }
                 break;
 
         }
@@ -286,76 +299,79 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
 
     }
     public void getinfo_Bank(){
-        new Thread(){
-            @Override
-            public void run() {
-                // super.run();
 
-                String url="http://192.168.32.126:7023/rest/model/atg/commerce/catalog/ProductCatalogActor/availableBank";
-                RequestParams rp=new RequestParams(url);
-                rp.addParameter("productId",productId);
-                Log.d("银行列表的rp",""+rp);
-                x.http().post(rp, new Callback.CommonCallback<String>() {
-                    @Override
-                    public void onSuccess(String result) {
-                        Log.d("银行的列表",result);
-                        if (result.contains("amount")){
-                            try {
-                                list1=new ArrayList<OpenAuction>();
-                                JSONObject obj=new JSONObject(result);
-                                String message=obj.getString("bankList");
-                                JSONArray array=new JSONArray(message);
-                                for (int i=0;i<array.length();i++){
-                                    JSONObject obj_array=array.getJSONObject(i);
-                                    OpenAuction auction=new OpenAuction();
-                                    auction.tv_money=obj_array.getString("balance");
-                                    String type=obj_array.getString("bankType");
-                                    if (type.equals("1")){
-                                        //平安
-                                        auction.iv_icon=R.mipmap.pingan;
-                                        auction.tv_Name="平安银行";
+            new Thread(){
+                @Override
+                public void run() {
+                    // super.run();
 
-                                    }else if (type.equals("2")){
-                                        //昆仑
-                                        auction.iv_icon=R.mipmap.kunlun;
-                                        auction.tv_Name="昆仑银行";
-                                    }else if (type.equals("3")){
-                                        //建行
-                                        auction.iv_icon=R.mipmap.jianshe;
-                                        auction.tv_Name="中国建设银行";
+
+                    String url="http://192.168.32.126:7023/rest/model/atg/commerce/catalog/ProductCatalogActor/availableBank";
+                    RequestParams rp=new RequestParams(url);
+                    rp.addParameter("productId",productId);
+                    Log.d("银行列表的rp",""+rp);
+                    x.http().post(rp, new Callback.CommonCallback<String>() {
+                        @Override
+                        public void onSuccess(String result) {
+                            Log.d("银行的列表",result);
+                            if (result.contains("amount")){
+                                try {
+                                    list1=new ArrayList<OpenAuction>();
+                                    JSONObject obj=new JSONObject(result);
+                                    String message=obj.getString("bankList");
+                                    JSONArray array=new JSONArray(message);
+                                    for (int i=0;i<array.length();i++){
+                                        JSONObject obj_array=array.getJSONObject(i);
+                                        OpenAuction auction=new OpenAuction();
+                                        auction.tv_money=obj_array.getString("balance");
+                                        String type=obj_array.getString("bankType");
+                                        if (type.equals("1")){
+                                            //平安
+                                            auction.iv_icon=R.mipmap.pingan;
+                                            auction.tv_Name="平安银行";
+
+                                        }else if (type.equals("2")){
+                                            //昆仑
+                                            auction.iv_icon=R.mipmap.kunlun;
+                                            auction.tv_Name="昆仑银行";
+                                        }else if (type.equals("3")){
+                                            //建行
+                                            auction.iv_icon=R.mipmap.jianshe;
+                                            auction.tv_Name="中国建设银行";
+                                        }
+                                        list1.add(auction);
+
                                     }
-                                    list1.add(auction);
-
+                                    adapter=new PopupWindowAdaptrer(list1,PreSaleDetailActivity.this);
+                                    lv.setAdapter(adapter);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
                                 }
-                                adapter=new PopupWindowAdaptrer(list1,PreSaleDetailActivity.this);
-                                lv.setAdapter(adapter);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
+                            }else {
+                                Toast.makeText(PreSaleDetailActivity.this, "该用户没有登录,无法获取可支付银行!", Toast.LENGTH_SHORT).show();
                             }
-                        }else {
-                            Toast.makeText(PreSaleDetailActivity.this, "该用户没有登录,无法获取可支付银行!", Toast.LENGTH_SHORT).show();
                         }
-                    }
 
-                    @Override
-                    public void onError(Throwable ex, boolean isOnCallback) {
+                        @Override
+                        public void onError(Throwable ex, boolean isOnCallback) {
 
-                    }
+                        }
 
-                    @Override
-                    public void onCancelled(CancelledException cex) {
+                        @Override
+                        public void onCancelled(CancelledException cex) {
 
-                    }
+                        }
 
-                    @Override
-                    public void onFinished() {
+                        @Override
+                        public void onFinished() {
 
-                    }
-                });
+                        }
+                    });
 
-            }
-        }.start();
-    }
+                }
+            }.start();
+        }
+
 
 
     @Override

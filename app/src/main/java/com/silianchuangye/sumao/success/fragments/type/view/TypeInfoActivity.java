@@ -247,7 +247,7 @@ public class TypeInfoActivity extends AppCompatActivity implements OnClickListen
                 LogUtils.log("type-->"+type);
                 if (type .equals("englishAuctionProduct")){//公开竞拍
                     Toast.makeText(TypeInfoActivity.this,"管俊需要写跳转->公开竞拍",Toast.LENGTH_SHORT).show();
-                    // TODO
+                    // TODO 管俊需要写跳转
                     /*
                     管俊需要写跳转
                      */
@@ -266,13 +266,13 @@ public class TypeInfoActivity extends AppCompatActivity implements OnClickListen
                     startActivity(intent);
                 }else if(type .equals("sealedAuctionProduct")){//密封竞拍
                     Toast.makeText(TypeInfoActivity.this,"管俊需要写跳转->密封竞拍",Toast.LENGTH_SHORT).show();
-                    // TODO
+                    // TODO 管俊需要写跳转
                     /*
                     管俊需要写跳转
                      */
                 }else if(type .equals("groupProduct")){//团购
                     Toast.makeText(TypeInfoActivity.this,"管俊需要写跳转->团购",Toast.LENGTH_SHORT).show();
-                    // TODO
+                    // TODO 管俊需要写跳转
                     /*
                     管俊需要写跳转
                      */
@@ -299,7 +299,7 @@ public class TypeInfoActivity extends AppCompatActivity implements OnClickListen
      * 筛选的popupwindow
      */
     public void popupwindow_shaixuan() {
-//        TODO
+
         view = View.inflate(this, R.layout.item_shaixuan, null);
 
         final CustomGridView gv_Apple_Type = (CustomGridView) view.findViewById(R.id.gv_Apple_Type);

@@ -44,7 +44,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:id="@+id/layoutService"
+            android:id="@+id/layoutContent_auction"
             android:orientation="horizontal"
             android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/x10"
