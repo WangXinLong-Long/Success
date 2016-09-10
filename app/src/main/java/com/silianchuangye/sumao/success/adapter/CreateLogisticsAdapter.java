@@ -130,6 +130,19 @@ public class CreateLogisticsAdapter extends BaseExpandableListAdapter{
         holder.tv_child_can_num.setText(expandList.get(groupPosition).list.get(childPosition).can_num+"吨");
         holder.tv_child_date.setText(expandList.get(groupPosition).list.get(childPosition).date);
         holder.tv_child_cangku.setText(expandList.get(groupPosition).list.get(childPosition).cangku_name);
+        holder.tv_child_logistics.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(showFlag) {
+                    holder.liear_child_message.setVisibility(View.VISIBLE);
+                    holder.img_child_logistics_top_in.setImageResource(R.mipmap.my_sumao_iv_order_down);
+                }else{
+                    holder.liear_child_message.setVisibility(View.GONE);
+                    holder.img_child_logistics_top_in.setImageResource(R.mipmap.my_sumao_iv_order);
+                }
+                showFlag=!showFlag;
+            }
+        });
         holder.img_child_logistics_top_in.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

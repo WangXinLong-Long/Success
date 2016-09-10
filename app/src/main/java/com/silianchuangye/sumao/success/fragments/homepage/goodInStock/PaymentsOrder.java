@@ -69,7 +69,7 @@ public class PaymentsOrder extends Activity implements View.OnClickListener{
     private SimpleAdapter list_adapter;
     private List<String> list_id;
     private String name,type,price,number,qiye,all_price,cangku,comm,paihao;
-
+    private TextView tv_payments_order_money;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,7 +116,7 @@ public class PaymentsOrder extends Activity implements View.OnClickListener{
         buy_immediately.setOnClickListener(this);
 //          设置标题 支付订单
         title_bar_white_title.setText("支付订单");
-
+        tv_payments_order_money= (TextView) findViewById(R.id.tv_payments_order_money);
     }
     public void addData(){
 
@@ -233,9 +233,14 @@ public class PaymentsOrder extends Activity implements View.OnClickListener{
                                             R.id.region_et,
                                             R.id.company_et
 
-
                                     });
                             lvdemo.setAdapter(list_adapter);/////////////
+                            Double sum=0.0;
+                            for(int i=0;i<list.size();i++){
+                                Double d=Double.valueOf(list.get(i).get("total").toString());
+                                sum+=d;
+                            }
+                            tv_payments_order_money.setText(sum+"元");
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

@@ -31,7 +31,7 @@
             android:layout_marginRight="@dimen/x10"
             android:layout_alignParentRight="true"
             android:src="@mipmap/my_sumao_iv_order"
-            android:layout_marginLeft="@dimen/x10"
+            android:layout_marginLeft="@dimen/x5"
             android:layout_centerVertical="true"/>
         <TextView
             android:id="@+id/tv_item_create_logistics_logistica_top_type"
