@@ -250,7 +250,6 @@ public class PagerTwo extends BasePager implements ISearchActivityView,AdapterVi
         adapter1.notifyDataSetInvalidated();
         String str=listId.get(position).toString();
         caidan=list.get(position).toString();
-        Log.e("TAG","caidna-------"+caidan);
         ShowRight(caidan,str);
 //        Log.e("TAG","str-----"+str);
     }

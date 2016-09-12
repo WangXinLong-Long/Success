@@ -250,11 +250,11 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
         getWindow().setAttributes(lp);
     }
     public void Popupwindow(){
-        View view=getLayoutInflater().inflate(R.layout.item_popupwindow_auction,null);
+        View view=getLayoutInflater().inflate(R.layout.pop_yushou,null);
         PopupWindow popupWindow=new PopupWindow(findViewById(R.id.Layout_c), ActionBarOverlayLayout.LayoutParams.MATCH_PARENT, ActionBarOverlayLayout.LayoutParams.WRAP_CONTENT);
         popupWindow.setContentView(view);
-        tv= (TextView) view.findViewById(R.id.tvPrice_popupwindow_auction);
-        et= (EditText) view.findViewById(R.id.etZhifu_auction);
+        tv= (TextView) view.findViewById(R.id.tv_pay);
+//        et= (EditText) view.findViewById(R.id.etZhifu_auction);
         lv= (ListView) view.findViewById(R.id.lv_popupwindow_auction);
         getinfo_Bank();
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -275,11 +275,11 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
             }
         });
         Button bt= (Button) view.findViewById(R.id.btZhifu);
+        //支付
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tv.setText(et.getText().toString());
-                et.setText("");
+
             }
         });
         popupWindow.setTouchable(true);
@@ -314,8 +314,9 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
                         @Override
                         public void onSuccess(String result) {
                             Log.d("银行的列表",result);
+                            Log.e("TAG","result-----"+result);
                             if (result.contains("amount")){
-                                try {
+                                try{
                                     list1=new ArrayList<OpenAuction>();
                                     JSONObject obj=new JSONObject(result);
                                     String message=obj.getString("bankList");
