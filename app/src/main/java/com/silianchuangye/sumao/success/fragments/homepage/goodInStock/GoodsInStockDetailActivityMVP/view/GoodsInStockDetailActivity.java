@@ -25,6 +25,8 @@ import com.silianchuangye.sumao.success.HX.ui.LoginActivity;
 import com.silianchuangye.sumao.success.MainActivity;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.custom.customCalendar.CalendarView;
+import com.silianchuangye.sumao.success.dialog.Error_Dialog;
+import com.silianchuangye.sumao.success.dialog.Ok_Dialog;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.VesselThreeActivity;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockDetailActivityMVP.bean.CLAttribute;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockDetailActivityMVP.bean.GoodsInStockDetailBean;
@@ -107,6 +109,7 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
         initListener();
         goodsInStockDetailPresenter = new GoodsInStockDetailPresenter(this);
         goodsInStockDetailPresenter.GoodsInStockDetailSendData(cl_id);
+
     }
 
     private void initListener() {
@@ -168,7 +171,7 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
         tvRemark_auction = ((TextView) findViewById(R.id.tvRemark_auction));
 //        联系客服
         layoutContent_auction = ((LinearLayout) findViewById(R.id.layoutContent_auction));
-
+//        getPurchase();
     }
 
     @Override
@@ -271,6 +274,13 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
 
     private void showPopupWindow(final int num) {
         popupWindowView = View.inflate(this, R.layout.buy_immediately_popup_window, null);
+        new Thread(){
+            @Override
+            public void run() {
+                super.run();
+                getPurchase();
+            }
+        }.start();
         img_item_cart_buy_sub = ((TextView) popupWindowView.findViewById(R.id.img_item_cart_buy_sub));
         img_item_cart_buy_add = ((TextView) popupWindowView.findViewById(R.id.img_item_cart_buy_add));
         tv_item_cart_buy_num = ((TextView) popupWindowView.findViewById(R.id.tv_item_cart_buy_num));
@@ -292,6 +302,8 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
                     /**
                      * 在购物车创建订单的操作在这里执行
                      */
+
+
                     popupWindow.dismiss();
                 }
             }
@@ -317,55 +329,6 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
         WindowManager.LayoutParams lp = GoodsInStockDetailActivity.this.getWindow().getAttributes();
         lp.alpha = bgAlpha; //0.0-1.0
         GoodsInStockDetailActivity.this.getWindow().setAttributes(lp);
-    }
-    public void join_gouwuche(){
-        String url="http://192.168.32.126:7023/rest/model/atg/commerce/ShoppingCartActor/addItemToOrder";
-        RequestParams rp=new RequestParams(url);
-        rp.addParameter("productId",cl_id);
-        rp.addParameter("quantity",(Integer.parseInt(et_number.getText().toString())*1000)+"");
-        rp.addParameter("skuId",sku_id);
-        Log.d("skuid的值",sku_id);
-        SharedPreferences sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
-        String unique=sp.getString("unique","");
-        rp.addParameter("_dynSessConf",unique);
-        Log.d("添加到购物车的skuid",""+rp);
-        x.http().post(rp, new Callback.CommonCallback<String>() {
-            @Override
-            public void onSuccess(String result) {
-                Log.d("添加到购物车result",result);
-                if (result.contains("commerceItem")){
-                    Toast.makeText(GoodsInStockDetailActivity.this,"加入购物车成功",Toast.LENGTH_SHORT).show();
-                }else{
-                    try {
-                        JSONObject obj_result = new JSONObject(result);
-                        String message=obj_result.getString("formExceptions");
-                        JSONArray array=new JSONArray(message);
-                        JSONObject obj_array=array.getJSONObject(0);
-                        String info=obj_array.getString("localizedMessage");
-                        Toast.makeText(GoodsInStockDetailActivity.this, ""+info, Toast.LENGTH_SHORT).show();
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }
-
-                }
-            }
-
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-
-            }
-
-            @Override
-            public void onCancelled(CancelledException cex) {
-
-            }
-
-            @Override
-            public void onFinished() {
-
-            }
-        });
-       // rp.addParameter("");
     }
 
     @Override
@@ -419,6 +382,95 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
         cl_gongsiId = goodsInStockDetailBean.getCl_gongsiId();
 //        合同
         contractString = goodsInStockDetailBean.getContract();
+
+    }
+    public void join_gouwuche(){
+        String url="http://192.168.32.126:7023/rest/model/atg/commerce/ShoppingCartActor/addItemToOrder";
+        RequestParams rp=new RequestParams(url);
+        rp.addParameter("productId",cl_id);
+        rp.addParameter("quantity",(Integer.parseInt(et_number.getText().toString())*1000)+"");
+        rp.addParameter("skuId",sku_id);
+        Log.d("skuid的值",sku_id);
+        SharedPreferences sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+        String unique=sp.getString("unique","");
+        rp.addParameter("_dynSessConf",unique);
+        Log.d("添加到购物车的skuid",""+rp);
+        x.http().post(rp, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.d("添加到购物车result",result);
+                if (result.contains("commerceItem")){
+                    Toast.makeText(GoodsInStockDetailActivity.this,"加入购物车成功",Toast.LENGTH_SHORT).show();
+                }else{
+                    try {
+                        JSONObject obj_result = new JSONObject(result);
+                        String message=obj_result.getString("formExceptions");
+                        JSONArray array=new JSONArray(message);
+                        JSONObject obj_array=array.getJSONObject(0);
+                        String info=obj_array.getString("localizedMessage");
+                        Toast.makeText(GoodsInStockDetailActivity.this, ""+info, Toast.LENGTH_SHORT).show();
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+        // rp.addParameter("");
+    }
+    public void getPurchase(){
+        String url="http://192.168.32.126:7023/rest/model/atg/commerce/ShoppingCartActor/go";
+        RequestParams requestParams=new RequestParams(url);
+        requestParams.addParameter("quantity",(Integer.parseInt(et_number.getText().toString())*1000)+"");
+        SharedPreferences sp=getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+        String unique=sp.getString("unique","");
+//        SharedPreferences sp=getActivity().getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+        // String unique_gouwuche=sp.getString("unique","");
+        // Log.d("一键购得唯一标识",unique_gouwuche);
+        requestParams.addParameter("_dynSessConf",unique);
+        Log.d("一键购得唯一标识",unique);
+        requestParams.addParameter("productId",cl_id);
+        Log.d("商品编号",cl_id);
+        requestParams.addParameter("skuId",sku_id);
+        Log.d("Skuid",sku_id);
+        Log.d("rp的值",requestParams+"");
+        x.http().post(requestParams, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.d("购买时的result",""+result);
+
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
 
     }
 
