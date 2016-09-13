@@ -10,4 +10,6 @@ public class OpenAuction{
     public ImageView iv_select_null;
     public String tv_Name,tv_money;
     public boolean Flag;
+    public String message;
+
 }
