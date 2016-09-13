@@ -2,10 +2,37 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="你好"
-        />
+    android:orientation="vertical"
+    android:background="@color/selley_bg"
+    >
+    <RelativeLayout
+        android:id="@+id/relative_create_logistics_top"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_height"
+        android:background="@color/zixun_topbg">
+        <ImageView
+            android:id="@+id/img_create_logistics_back"
+            android:layout_width="@dimen/x17"
+            android:layout_height="@dimen/x17"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/x10"
+            android:src="@mipmap/back"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="跟踪配送详情"
+            android:layout_centerInParent="true"
+            android:textColor="@color/selley_lv"
+            android:textSize="18sp"
+            />
+
+    </RelativeLayout>
+    <ListView
+        android:background="@color/selley_bg"
+        android:id="@+id/lv_details"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@null"
+        ></ListView>
 </LinearLayout>

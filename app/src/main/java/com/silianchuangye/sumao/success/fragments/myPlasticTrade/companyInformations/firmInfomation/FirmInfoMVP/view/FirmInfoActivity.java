@@ -160,7 +160,7 @@ public class FirmInfoActivity extends AppCompatActivity implements IFirmInfoView
                 FirmInfoActivity.this.finish();
             }
         });
-//        TODO
+
         tvUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -48,7 +48,6 @@ public class SearchActivity extends AppCompatActivity implements ISearchActivity
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //进行搜索功能,跳到现货界面
 
                 searchActivityPresenter.sendSearchActivityData(search_content.getText().toString().trim());
             }

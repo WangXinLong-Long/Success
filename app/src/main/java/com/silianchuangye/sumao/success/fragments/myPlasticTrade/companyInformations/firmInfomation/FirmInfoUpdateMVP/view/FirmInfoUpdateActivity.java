@@ -170,7 +170,7 @@ public class FirmInfoUpdateActivity extends AppCompatActivity implements View.On
         firmInfoUpdatePresenter = new FirmInfoUpdatePresenter(this);
         Intent intent = getIntent();
         firmInfoUpdateActivityBean = (FirmInfoUpdateActivityBean) intent.getSerializableExtra("firmInfoUpdateActivityBean");
-//        TODO
+
         addressnumber = intent.getStringExtra("addressnumber");
         address = intent.getStringExtra("address");
         leixing = intent.getStringExtra("leixing");
@@ -535,7 +535,7 @@ public class FirmInfoUpdateActivity extends AppCompatActivity implements View.On
                 }
 
                 break;
-//            TODO
+
             case 12://                纳税人类型
                 String oldnashuiren = type_of_taxpayer_image.getText().toString();
                 nashuiren = data.getStringExtra("name");
@@ -628,7 +628,7 @@ public class FirmInfoUpdateActivity extends AppCompatActivity implements View.On
        sb.delete(0,sb.length());
         sb.append(address);
         LogUtils.log("StringBuilder------->RegisterFirmActivity:" + sb.toString());
-//        TODO
+
 //        presenter = new RegisterFirmActivityPresenter(this);
         firmInfoUpdatePresenter.setDetailAddress(sb.substring(0, 4), sb.substring(0, 6), sb.toString());
         LogUtils.log("StringBuilder------->RegisterFirmActivity:" + sb.substring(0, 4) + "+" + sb.substring(0, 6) + "+" + sb.toString());
@@ -761,7 +761,7 @@ public class FirmInfoUpdateActivity extends AppCompatActivity implements View.On
             registerFirmLists.add(new RegisterFirmList("统一社会信用代码",  firmInfoUpdateActivityBean.getCl_zhizhao()));
             registerFirmListAdapter.notifyDataSetChanged();
         }
-//        TODO  明天接着干干干
+
 //        纳税人类型
         type_of_taxpayer_image.setText(nashuiren);
 //
