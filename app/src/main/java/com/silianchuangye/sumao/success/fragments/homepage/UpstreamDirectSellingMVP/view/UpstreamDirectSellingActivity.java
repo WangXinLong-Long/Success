@@ -12,10 +12,15 @@ import android.widget.TextView;
 
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.UpstreamDirectSellingDetailMVP.UpstreamDirectSellingDetailsActivity;
+import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.bean.EnterprisesItem;
+import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.bean.UpstreamDirectorySellingBean;
+import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.bean.vipProductBean.VipProductBean;
 import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.presenter.UpstreamDirectSellingPresenter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class UpstreamDirectSellingActivity extends AppCompatActivity implements IUpstreamDirectSellingView ,View.OnClickListener{
 
@@ -23,34 +28,48 @@ public class UpstreamDirectSellingActivity extends AppCompatActivity implements 
     private UpstreamDirectSellingPresenter upstreamDirectSellingPresenter;
     private TextView tv_child_title_bar_title;
     private ImageView iv_child_title_bar_back;
+    private UpstreamDirectorySellingBean upstreamDirectorySellingBean;
+    private List<EnterprisesItem> enterprisesItem;
+    private List<String> idList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upstream_direct_selling);
+        //从首页接收到的值
+        Intent intent = getIntent();
+        upstreamDirectorySellingBean = ((UpstreamDirectorySellingBean) intent.getSerializableExtra("upstreamDirectorySellingBean"));
+        enterprisesItem = upstreamDirectorySellingBean.getEnterprisesItem();
+//        初始化控件
         tv_child_title_bar_title = ((TextView) findViewById(R.id.tv_child_title_bar_title));
         tv_child_title_bar_title.setText("上游直销");
         upstreamDirectSellingPresenter = new UpstreamDirectSellingPresenter(this);
         upstream_listview = ((ListView) findViewById(R.id.upstream_listview));
         iv_child_title_bar_back = ((ImageView) findViewById(R.id.iv_child_title_bar_back));
         iv_child_title_bar_back.setOnClickListener(this);
-        List<String> heh = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            heh.add("上游直销"+i);
+//        添加加载数据
+        List<String> nameList = new ArrayList<>();
+        idList = new ArrayList<>();
+        for (int i = 0; i < enterprisesItem.size(); i++) {
+            nameList.add(enterprisesItem.get(i).getSellerCompanyName());
+            idList.add(enterprisesItem.get(i).getSellerCompanyId());
         }
-        ArrayAdapter<String> upstreamadapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,heh);
+        ArrayAdapter<String> upstreamadapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,nameList);
         upstream_listview.setAdapter(upstreamadapter);
         upstream_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                upstreamDirectSellingPresenter.getUpstreamDirectSellingDetail();
+                upstreamDirectSellingPresenter.getUpstreamDirectSellingDetail(getSharedPreferences("sumao",MODE_PRIVATE).getString("unique",""),idList.get(position));
             }
         });
     }
 
     @Override
-    public void getUpstreamDirectSellingDetailInfo() {
+    public void getUpstreamDirectSellingDetailInfo(VipProductBean vipProductBean) {
+
         Intent intent = new Intent();
         intent.setClass(this,UpstreamDirectSellingDetailsActivity.class);
+        intent.putExtra("vipProductBean",vipProductBean);
         startActivity(intent);
     }
 

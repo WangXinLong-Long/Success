@@ -372,7 +372,7 @@
             android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoMVP.view.FirmInfoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoUpdateActivity"
+            android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoUpdateMVP.view.FirmInfoUpdateActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
@@ -445,7 +445,7 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".fragments.type.TypeInfoActivity"
+            android:name=".fragments.type.view.TypeInfoActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.CreateLogistics"
@@ -532,15 +532,18 @@
         <activity android:name=".fragments.myPlasticTrade.register.RegisterPicture" />
         <activity android:name=".fragments.homepage.sumaoconsultMVP.SuMaoConsult" />
         <activity android:name=".customermanger.NoAgree" />
-        <activity
-            android:name=".fragments.type.view.TypeInfoActivity"
-            android:screenOrientation="portrait" />
         <activity android:name=".ShangYou.CaiGou" />
         <activity android:name=".ShangYou.SearchSeePlan" />
-        <activity android:name=".fragments.homepage.UpstreamDirectSellingMVP.view.UpstreamDirectSellingActivity"
+        <activity
+            android:name=".fragments.homepage.UpstreamDirectSellingMVP.view.UpstreamDirectSellingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".fragments.homepage.UpstreamDirectSellingMVP.UpstreamDirectSellingDetailMVP.UpstreamDirectSellingDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".fragments.homepage.UpstreamDirectSellingMVP.UpstreamDirectSellingDetailMVP.VipProductList"
             android:screenOrientation="portrait"/>
-        <activity android:name=".fragments.homepage.UpstreamDirectSellingMVP.UpstreamDirectSellingDetailMVP.UpstreamDirectSellingDetailsActivity"
-            android:screenOrientation="portrait"></activity>
+        <activity android:name=".ShangYou.ShangYouSelectNumber" />
+        <activity android:name=".ShangYou.PlanDayMVP.ShangYouRemarks"></activity>
     </application>
 
 </manifest>

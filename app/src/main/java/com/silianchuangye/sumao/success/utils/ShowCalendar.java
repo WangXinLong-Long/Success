@@ -27,15 +27,15 @@ public class ShowCalendar {
                                           int year, int monthOfYear,
                                           int dayOfMonth) {
                         Toast.makeText(context,
-                                "" + year + "年" + (monthOfYear + 1)
-                                        + "月" + dayOfMonth + "日", Toast.LENGTH_LONG).show();
+                                "" + year + "-" + (monthOfYear + 1)
+                                        + "-" + dayOfMonth + "", Toast.LENGTH_LONG).show();
                         if (flag)
                         {
-                            Tv.setText(year + "年" + (monthOfYear + 1)
-                                    + "月\n" + dayOfMonth + "日");
+                            Tv.setText(year + "-" + (monthOfYear + 1)
+                                    + "-\n" + dayOfMonth + "");
                         }else {
                             Tv.setText(year + "年" + (monthOfYear + 1)
-                                    + "月" + dayOfMonth + "日");
+                                    + "-" + dayOfMonth + "");
                         }
                     }
                 }, year, month, day);

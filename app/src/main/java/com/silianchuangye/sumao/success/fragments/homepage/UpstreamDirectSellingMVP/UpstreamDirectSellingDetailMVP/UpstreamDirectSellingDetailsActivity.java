@@ -10,6 +10,9 @@ import android.widget.TextView;
 
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.ShangYou.CaiGou;
+import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.bean.vipProductBean.VipProductBean;
+
+import java.io.Serializable;
 
 public class UpstreamDirectSellingDetailsActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -18,10 +21,13 @@ public class UpstreamDirectSellingDetailsActivity extends AppCompatActivity impl
     private RelativeLayout auction_session_rl;
     private RelativeLayout direct_selling_rl;
     private RelativeLayout procurement_planning_rl;
+    private VipProductBean vipProductBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
+        vipProductBean = (VipProductBean)intent.getSerializableExtra("vipProductBean");
         setContentView(R.layout.activity_upstream_direct_selling_details);
         tv_child_title_bar_title = ((TextView) findViewById(R.id.tv_child_title_bar_title));
         iv_child_title_bar_back = ((ImageView) findViewById(R.id.iv_child_title_bar_back));
@@ -48,6 +54,7 @@ public class UpstreamDirectSellingDetailsActivity extends AppCompatActivity impl
                 break;
             case R.id.procurement_planning_rl://        采购计划
                 Intent intent=new Intent(this,CaiGou.class);
+                intent.putExtra("vipProductBean",vipProductBean);
                 startActivity(intent);
                 break;
             case R.id.direct_selling_rl://        现货直销

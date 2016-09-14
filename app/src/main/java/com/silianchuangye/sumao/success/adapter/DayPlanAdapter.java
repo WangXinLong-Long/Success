@@ -79,7 +79,6 @@ public class DayPlanAdapter extends BaseExpandableListAdapter {
             convertView = LayoutInflater.from(ctx).inflate(R.layout.item_lv_dayplan_parent,null);
             itemHolder.group = ((TextView) convertView.findViewById(R.id.tv_my_sumao_parent));
             convertView.setTag(itemHolder);
-            LogUtils.log("进入getGroupView，并且加载完控件");
         }else {
             itemHolder = ((ItemHolder) convertView.getTag());
         }
@@ -89,7 +88,6 @@ public class DayPlanAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        LogUtils.log("进入getChildView");
         ViewHolder holder;
         if (convertView == null){
             holder = new ViewHolder();
@@ -100,7 +98,6 @@ public class DayPlanAdapter extends BaseExpandableListAdapter {
             holder.detail = (ImageView) convertView.findViewById(R.id.img_lv_dayplan_date);
             holder.delete_iv = (ImageView) convertView.findViewById(R.id.delete_iv);
             convertView.setTag(holder);
-            LogUtils.log("进入getChildView，并且加载完控件");
         }else {
             holder = ((ViewHolder) convertView.getTag());
         }
@@ -115,7 +112,6 @@ public class DayPlanAdapter extends BaseExpandableListAdapter {
             holder.detail.setVisibility(View.INVISIBLE);
             holder.delete_iv.setVisibility(View.VISIBLE);
         }
-        LogUtils.log("进入getChildView，为控件设置值");
         return convertView;
     }
 

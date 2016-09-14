@@ -58,6 +58,7 @@ public class GoodsInStockActivityModel implements IGoodsInStockActivityModel {
         RequestParams requestParams = new RequestParams(url);
         requestParams.addParameter("Nrpp",Nrpp+"");
         requestParams.addParameter("No",No+"");
+        LogUtils.log("首页：现货requestParams--->" + requestParams + "<---首页：现货requestParams");
         try {
             x.http().request(HttpMethod.POST, requestParams, new Callback.CacheCallback<String>() {
 

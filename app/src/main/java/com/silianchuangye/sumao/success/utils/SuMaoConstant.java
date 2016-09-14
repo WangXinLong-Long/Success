@@ -15,6 +15,12 @@ public class SuMaoConstant {
     public static final int CHANGE_POSITION_EIGHT = 8;
     public static final int CHANGE_POSITION_NINE = 9;
     public static final int CHANGE_POSITION_TEN = 10;
+    public static final int VIP_PRODUCT_ID = 1;
+    public static final int VIP_SELECTNUMBER_ID = 2;
+    public static final int VIP_WAREHOUSE_ID = 3;
+    public static final int VIP_DELIVERYMETHOD_ID = 4;
+    public static final int VIP_REMARKS_ID = 5;
+
     //    演示使用
     //   public static final String SUMAO_IP = "http://139.198.7.27:7003";
     //    测试使用

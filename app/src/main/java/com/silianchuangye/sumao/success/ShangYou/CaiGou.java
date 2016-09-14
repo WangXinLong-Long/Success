@@ -1,5 +1,6 @@
 package com.silianchuangye.sumao.success.ShangYou;
 
+import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -23,7 +24,9 @@ import android.widget.TextView;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.ShangYou.PlanDayMVP.view.PlanDay;
 import com.silianchuangye.sumao.success.adapter.MyPageAdapter;
+import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.bean.vipProductBean.VipProductBean;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,10 +48,14 @@ public class CaiGou extends AppCompatActivity implements OnClickListener,Adapter
     private Button btn_pop_customer_search;
     private List<String> popList;
     private ArrayAdapter pop_adapter;
+    private VipProductBean vipProductBean;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cai_gou);
+        Intent intent = getIntent();
+        vipProductBean =(VipProductBean)  intent.getSerializableExtra("vipProductBean");
         initDate();
         initView();
     }
@@ -68,6 +75,9 @@ public class CaiGou extends AppCompatActivity implements OnClickListener,Adapter
 
         listFragment=new ArrayList<Fragment>();
         PlanDay plan=new PlanDay();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("vipProductBean",vipProductBean);
+        plan.setArguments(bundle);
         listFragment.add(plan);
         SeePlan see=new SeePlan();
         listFragment.add(see);
