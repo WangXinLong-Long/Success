@@ -498,14 +498,22 @@
         <activity
             android:name=".fragments.SellerManagementPlatform.SellerOrderManagement.SellerAlreadyPaidOrderDetails"
             android:screenOrientation="portrait" />
-        <activity android:name=".customermanger.CustomerType" />
-        <activity android:name=".customermanger.CustomerMessage" />
-        <activity android:name=".customermanger.SaveCustomerMessage" />
-        <activity android:name=".customermanger.Buy" />
-        <activity android:name=".customermanger.ZhiPaiPerson" />
-        <activity android:name=".fragments.SellerManagementPlatform.SellerOrderManagement.ReNumAndPrice" />
-        <activity android:name=".fragments.SellerManagementPlatform.SellerOrderManagement.NewPrice" />
-        <activity android:name=".fragments.SellerManagementPlatform.SellerOrderManagement.Num" />
+        <activity android:name=".customermanger.CustomerType"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".customermanger.CustomerMessage"
+            android:screenOrientation="portrait" />
+        <activity android:name=".customermanger.SaveCustomerMessage"
+            android:screenOrientation="portrait" />
+        <activity android:name=".customermanger.Buy"
+            android:screenOrientation="portrait" />
+        <activity android:name=".customermanger.ZhiPaiPerson"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".fragments.SellerManagementPlatform.SellerOrderManagement.ReNumAndPrice"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".fragments.SellerManagementPlatform.SellerOrderManagement.NewPrice"
+            android:screenOrientation="portrait" />
+        <activity android:name=".fragments.SellerManagementPlatform.SellerOrderManagement.Num"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.CaptureActivity"
             android:configChanges="orientation|keyboardHidden"
@@ -515,8 +523,10 @@
         <activity android:name=".fragments.SellerManagementPlatform.acutionManagement.AcutionResultActivity" />
         <activity android:name=".fragments.SellerManagementPlatform.acutionManagement.AuctionSuccessActivity" />
         <activity android:name=".fragments.SellerManagementPlatform.acutionManagement.AcutionFailActivity" />
-        <activity android:name=".salesearch.SaleSearch" />
-        <activity android:name=".customermanger.CustomerParent" />
+        <activity android:name=".salesearch.SaleSearch"
+            android:screenOrientation="portrait" />
+        <activity android:name=".customermanger.CustomerParent"
+            android:screenOrientation="portrait"/>
         <activity android:name=".fragments.myPlasticTrade.register.RegisterPhoneActivity" />
         <activity android:name=".fragments.homepage.groupbuying.GroupBuyingActivity" />
         <activity android:name=".fragments.homepage.groupbuying.GroupBuyingSuccessActivity" />
@@ -531,17 +541,23 @@
         <activity android:name=".fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.CompanyUserValueActivity" />
         <activity android:name=".fragments.myPlasticTrade.register.RegisterPicture" />
         <activity android:name=".fragments.homepage.sumaoconsultMVP.SuMaoConsult" />
-        <activity android:name=".customermanger.NoAgree" />
-        <activity android:name=".ShangYou.CaiGou" />
-        <activity android:name=".ShangYou.SearchSeePlan" />
+        <activity android:name=".customermanger.NoAgree"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ShangYou.CaiGou"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ShangYou.SearchSeePlan"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".fragments.homepage.UpstreamDirectSellingMVP.view.UpstreamDirectSellingActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".fragments.homepage.UpstreamDirectSellingMVP.UpstreamDirectSellingDetailMVP.UpstreamDirectSellingDetailsActivity"
-            android:screenOrientation="portrait" />
         <activity android:name=".fragments.homepage.UpstreamDirectSellingMVP.UpstreamDirectSellingDetailMVP.VipProductList"
             android:screenOrientation="portrait"/>
+        <activity android:name=".fragments.homepage.UpstreamDirectSellingMVP.UpstreamDirectSellingDetailMVP.UpstreamDirectSellingDetailsActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".fragments.SellerManagementPlatform.SellerOrderManagement.PayMessage"
+            android:screenOrientation="portrait" />
+        <activity android:name=".fragments.SellerManagementPlatform.SellerOrderManagement.Fragments.FaPiaoMessage"
+            android:screenOrientation="portrait" />
         <activity android:name=".ShangYou.ShangYouSelectNumber" />
         <activity android:name=".ShangYou.PlanDayMVP.ShangYouRemarks"></activity>
     </application>

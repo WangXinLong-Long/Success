@@ -238,7 +238,7 @@ public class OpenAuctionActivity extends AppCompatActivity {
                         }
                     }
                     list1.get(position).Flag=!list1.get(position).Flag;
-                    adapter.notifyDataSetChanged();
+                    adapter1.notifyDataSetChanged();
                 }
            }
         });

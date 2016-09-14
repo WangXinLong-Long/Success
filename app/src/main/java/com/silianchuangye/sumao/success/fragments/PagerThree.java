@@ -77,6 +77,7 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
     private String name;
     private String ku_cong_number;
     private Context context;
+    private List<String> id_String=new ArrayList<String>();
 
     public class MyReciver extends BroadcastReceiver {
         @Override
@@ -167,16 +168,13 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
                 for (CartInfo info : list) {
                     if (info.Selsct_Flag)
                         flag = true;
+
                 }
                 if (flag) {
-//                    showPopWindow();
-//                    backgroundAlpha(0.5f);
-//                    Toast.makeText(getActivity(), "支付", Toast.LENGTH_SHORT).show();
-                    //提交订单
 
                     Intent intent = new Intent();
                     intent.setClass(getActivity(), PaymentsOrder.class);
-                    intent.putExtra("id", (Serializable) list_id);
+                    intent.putExtra("id", (Serializable) id_String);
                     startActivity(intent);
                 } else {
                     Toast.makeText(getActivity(), "请选择要购买的商品", Toast.LENGTH_SHORT).show();
@@ -271,6 +269,7 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
                             Log.d("bb的值", "" + aa);
                             Log.d("kucong的值", kucong.toString());
                             list_id.add(array_data.getString("commerceItemId"));
+                            Log.d("list_id的值",list_id.toString());
 
                         }
                        // Log.d("list的值","list-----"+list.);
@@ -325,9 +324,13 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
     public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
         if (parent.getId() == R.id.lv_activity_cart) {
             name = list.get(position).toString();
+            Log.d("name的值",name);
             ku_cong_number = kucong.get(position).toString();
             Log.d("kucong", ku_cong_number);
+            Log.d("商品id的值",list_id.get(position).toString());
+
             Toast.makeText(getContext(), "点击了一条item", Toast.LENGTH_SHORT).show();
+
         }
         if (parent.getId() == R.id.pop_cart_price_lv) {
             for (int i = 0; i < item_list.size(); i++) {
@@ -480,6 +483,9 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
             if (list.get(position).Selsct_Flag) {
                 holder.Img_select.setImageResource(R.mipmap.cart_select);
                 refrashPrice();
+                id = list.get(position).id.toString();
+                Log.d("选中时的产品","ssssssssssss"+id);
+                id_String.add(id);
             } else {
                 holder.Img_select.setImageResource(R.mipmap.cart_select_null);
                // tv_Cart_All_Price.setText("0.0元");
@@ -489,6 +495,7 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
                 public void onClick(View v) {
                     call.Call(position);
                     //这里改变金嗯
+
                 }
             });
             //删除按钮

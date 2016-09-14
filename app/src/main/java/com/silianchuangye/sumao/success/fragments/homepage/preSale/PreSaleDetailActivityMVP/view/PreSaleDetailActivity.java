@@ -36,12 +36,14 @@ import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetail
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.presenter.PreSaleDetailPresenter;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.LoginUserActivity;
 import com.silianchuangye.sumao.success.utils.LogUtils;
+import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
+import org.xutils.http.annotation.HttpRequest;
 import org.xutils.x;
 
 import java.text.SimpleDateFormat;
@@ -250,11 +252,11 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
         getWindow().setAttributes(lp);
     }
     public void Popupwindow(){
-        View view=getLayoutInflater().inflate(R.layout.item_popupwindow_auction,null);
+        View view=getLayoutInflater().inflate(R.layout.pop_yushou,null);
         PopupWindow popupWindow=new PopupWindow(findViewById(R.id.Layout_c), ActionBarOverlayLayout.LayoutParams.MATCH_PARENT, ActionBarOverlayLayout.LayoutParams.WRAP_CONTENT);
         popupWindow.setContentView(view);
-        tv= (TextView) view.findViewById(R.id.tvPrice_popupwindow_auction);
-        et= (EditText) view.findViewById(R.id.etZhifu_auction);
+        tv= (TextView) view.findViewById(R.id.tv_pay);
+//        et= (EditText) view.findViewById(R.id.etZhifu_auction);
         lv= (ListView) view.findViewById(R.id.lv_popupwindow_auction);
         getinfo_Bank();
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -275,11 +277,11 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
             }
         });
         Button bt= (Button) view.findViewById(R.id.btZhifu);
+        //支付
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tv.setText(et.getText().toString());
-                et.setText("");
+                payMoney();
             }
         });
         popupWindow.setTouchable(true);
@@ -304,18 +306,18 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
                 @Override
                 public void run() {
                     // super.run();
-
-
                     String url="http://192.168.32.126:7023/rest/model/atg/commerce/catalog/ProductCatalogActor/availableBank";
                     RequestParams rp=new RequestParams(url);
                     rp.addParameter("productId",productId);
                     Log.d("银行列表的rp",""+rp);
+                    Log.e("TAG","rp------"+rp);
                     x.http().post(rp, new Callback.CommonCallback<String>() {
                         @Override
                         public void onSuccess(String result) {
                             Log.d("银行的列表",result);
+                            Log.e("TAG","result-----"+result);
                             if (result.contains("amount")){
-                                try {
+                                try{
                                     list1=new ArrayList<OpenAuction>();
                                     JSONObject obj=new JSONObject(result);
                                     String message=obj.getString("bankList");
@@ -372,7 +374,59 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
             }.start();
         }
 
+//预售支付保证金
+    private void payMoney(){
+        RequestParams params=new RequestParams(SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/payment/OrderPayment/auctionDeposit");
+        params.addParameter("skuId",skuId);
+        params.addParameter("productId",productId);
+        params.addParameter("presalePrice",1);//保证金
+        String str,blankname="";
+        if (list1!=null){
+            for(int i=0;i<list1.size();i++) {
+                if (list1.get(i).Flag) {
+                    str = list1.get(i).tv_Name;
+                    Log.e("TAG","str----"+str);
+                    if (str.equals("平安银行")) {
+                        //平安
+                        blankname = "1";
+                    } else if (str.equals("昆仑银行")) {
+                        //昆仑
+                        blankname = "2";
+                    } else if (str.equals("中国建设银行")) {
+                        //建行
+                        blankname = "3";
+                    }
+                }
+            }
+        }
+       SharedPreferences sp=this.getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+        String unique123= sp.getString("unique", "");
+        params.addParameter("_dynSessConf",unique123);
+        Log.e("TAG","blankName------"+blankname);
+        params.addParameter("paymentPlatform",blankname);
+        Log.e("TAG","params=-----------"+params);
+        x.http().post(params, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.e("TAG","result-----"+result);
+            }
 
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                Log.e("TAG","ex----"+ex.toString());
+                Log.e("TAG","ex-----"+ex.getMessage().toString());
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+            }
+        });
+    }
 
     @Override
     public void getPreSaleDetailData(PreSaleDetailBean preSaleDetailBean) {

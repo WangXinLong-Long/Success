@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.OpenAuction;
@@ -70,8 +71,13 @@ public class PopupWindowAdaptrer extends BaseAdapter{
         viewHolder.iv_icon.setImageResource(data.get(position).iv_icon);
         viewHolder.tv_Name.setText(data.get(position).tv_Name);
         viewHolder.tv_money.setText(data.get(position).tv_money);
+        String message=data.get(position).message;
         if (data.get(position).Flag){
             viewHolder.iv_select_null.setImageResource(R.mipmap.cart_select);
+            if (message!=null){
+                Toast.makeText(context, ""+message, Toast.LENGTH_LONG).show();
+            }
+
         }else{
             viewHolder.iv_select_null.setImageResource(R.mipmap.cart_select_null);
         }

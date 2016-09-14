@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class TypeInfoActivityAdapter extends BaseAdapter {
     private Context context;
-    private List<Cls> cl;
+    private List<Cls> cl;////////////////
     private LayoutInflater inflater;
 
     public TypeInfoActivityAdapter(Context context, List<Cls> cl) {
