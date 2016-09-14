@@ -14,7 +14,7 @@
             android:gravity="center_vertical"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="10dp"
-            android:text="您应支付的保证金额为 : "/>
+            android:text="保证金金额 : "/>
         <TextView
             android:id="@+id/tv_pay"
             android:layout_gravity="center_vertical"

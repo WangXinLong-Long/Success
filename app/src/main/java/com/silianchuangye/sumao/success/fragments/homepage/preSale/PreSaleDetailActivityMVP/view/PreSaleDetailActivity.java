@@ -374,7 +374,7 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
             }.start();
         }
 
-//预售支付保证金
+//预售支付保证金--没写完
     private void payMoney(){
         RequestParams params=new RequestParams(SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/payment/OrderPayment/auctionDeposit");
         params.addParameter("skuId",skuId);
