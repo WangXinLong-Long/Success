@@ -1,6 +1,8 @@
 package com.silianchuangye.sumao.success.fragments.PagerOneMVP.view;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -26,6 +28,7 @@ import com.silianchuangye.sumao.success.fragments.PagerOneMVP.bean.AnnouncementB
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.bean.BannerBean;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.presenter.PagerOnePresenter;
 import com.silianchuangye.sumao.success.fragments.homepage.AnnouncementDetailMVP.view.AnnouncementDetailActivity;
+import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.bean.UpstreamDirectorySellingBean;
 import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.view.UpstreamDirectSellingActivity;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.bean.GoodsInStockActivityBean;
 import com.silianchuangye.sumao.success.fragments.homepage.groupbuying.GroupBuyingActivity;
@@ -272,7 +275,10 @@ public class PagerOne extends BasePager implements IPagerOneView {
                     startActivity(intent);
                 } else if (list.get(position).get("icon").equals(R.mipmap.direct)) {
 //                    Toast.makeText(mActivity, "点击了上游直销按钮", Toast.LENGTH_SHORT).show();
-                    pagerOnePresenter.getUpstreamDirectSellingInfo();
+                   SharedPreferences sp = mActivity.getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+                    String uniqued = sp.getString("unique","");
+//                    unique
+                    pagerOnePresenter.getUpstreamDirectSellingInfo(uniqued);
 
                 } else if (list.get(position).get("icon").equals(R.mipmap.aa)) {
                     Toast.makeText(mActivity, "点击了物流按钮", Toast.LENGTH_SHORT).show();
@@ -469,11 +475,13 @@ public class PagerOne extends BasePager implements IPagerOneView {
         startActivity(intent);
 
     }
-
+//上游直销
     @Override
-    public void setUpstreamDirectSellingInActivity() {
+    public void setUpstreamDirectSellingInActivity(UpstreamDirectorySellingBean upstreamDirectorySellingBean) {
         Intent intent = new Intent();
         intent.setClass(mActivity,UpstreamDirectSellingActivity.class);
+        intent.putExtra("upstreamDirectorySellingBean",upstreamDirectorySellingBean);
+        LogUtils.log("upstreamDirectorySellingBean"+upstreamDirectorySellingBean.getInfo());
         startActivity(intent);
     }
 

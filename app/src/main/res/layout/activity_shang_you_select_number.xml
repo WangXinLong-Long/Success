@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@color/my_sumao_background"
-    >
-<include
-    android:id="@+id/modify_title"
-    layout="@layout/title_bar"></include>
+    tools:context="com.silianchuangye.sumao.success.ShangYou.ShangYouSelectNumber">
+    <include layout="@layout/child_title_bar"/>
     <EditText
         android:id="@+id/modify_information"
         android:layout_width="match_parent"
@@ -15,6 +15,7 @@
         android:layout_marginLeft="@dimen/x15"
         android:layout_marginRight="@dimen/x15"
         android:layout_marginBottom="@dimen/x5"
+
         android:background="@drawable/edit_background"
         />
     <TextView
@@ -26,14 +27,6 @@
         android:layout_marginLeft="@dimen/x15"
         android:textColor="@color/red"
         android:visibility="invisible"
-
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/modify_condition"
-        android:textSize="@dimen/x10"
-        android:layout_marginLeft="@dimen/x15"
         />
     <Button
         android:layout_margin="@dimen/x15"

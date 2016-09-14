@@ -18,6 +18,7 @@ import com.silianchuangye.sumao.success.fragments.PagerOneMVP.model.PagerOneCall
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.model.PagerOneModel;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.view.IPagerOneView;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.view.PagerOne;
+import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.bean.UpstreamDirectorySellingBean;
 import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.model.IUpstreamDirectSellingModel;
 import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.model.UpstreamDirectSellingCallback;
 import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.model.UpstreamDirectSellingModel;
@@ -118,12 +119,12 @@ public class PagerOnePresenter {
         });
     }
 //      上游直销
-    public void getUpstreamDirectSellingInfo(){
-        IUpstreamDirectSellingModel upstreamDirectSellingModel = new UpstreamDirectSellingModel();
+    public void getUpstreamDirectSellingInfo(String sessionId){
+        IUpstreamDirectSellingModel upstreamDirectSellingModel = new UpstreamDirectSellingModel(sessionId);
         upstreamDirectSellingModel.getUpstreamDirectSellingInfo(new UpstreamDirectSellingCallback() {
             @Override
-            public void callbackUpstreamDirectSelling() {
-                pagerOne.setUpstreamDirectSellingInActivity();
+            public void callbackUpstreamDirectSelling(UpstreamDirectorySellingBean upstreamDirectorySellingBean) {
+                pagerOne.setUpstreamDirectSellingInActivity(upstreamDirectorySellingBean);
             }
         });
     }
