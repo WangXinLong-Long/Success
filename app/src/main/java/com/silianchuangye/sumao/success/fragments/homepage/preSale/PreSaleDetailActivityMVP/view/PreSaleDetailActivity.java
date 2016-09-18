@@ -95,7 +95,8 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
     private RelativeLayout pre_sale_sale_detail_detail;
     private ArrayList<CLAttribute> cl_attribute;
     private String newSkuId = "";
-
+    private double BZprice;
+    private EditText edt_num;//购买数量
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -196,8 +197,8 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
         margin_proportion_et = ((TextView) findViewById(R.id.margin_proportion_et));
         //        产品备注
         pre_sale_detail_remark = ((TextView) findViewById(R.id.pre_sale_detail_remark));
-
-
+        //购买数量
+        edt_num= (EditText) findViewById(R.id.tv_item_cart_buy_num);
     }
 
     @Override
@@ -376,10 +377,10 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
 
 //预售支付保证金--没写完
     private void payMoney(){
-        RequestParams params=new RequestParams(SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/payment/OrderPayment/auctionDeposit");
+        RequestParams params=new RequestParams(SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/payment/OrderPayment/goPresale");
         params.addParameter("skuId",skuId);
         params.addParameter("productId",productId);
-        params.addParameter("presalePrice",1);//保证金
+        params.addParameter("quantity",BZprice);//保证金
         String str,blankname="";
         if (list1!=null){
             for(int i=0;i<list1.size();i++) {
@@ -474,6 +475,20 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
 //        contractString = preSaleDetailBean.get();
         //        获取产品参数
         cl_attribute = preSaleDetailBean.getCl_attribute();
+        //计算保证金
+        String bilistr=margin_proportion_et.getText().toString();
+        Log.e("TAG","bilistr------"+bilistr);
+        String newStr = bilistr.replaceAll("%","");
+        double bili=Double.valueOf(newStr)/100;
+        Log.e("TAG","bibi---"+bili);
+        Log.e("TAG","edt_num.getText().toString()====="+edt_num.getText().toString());
+        int num=Integer.valueOf(edt_num.getText().toString());
+        Log.e("TAG","num----"+num);
+        Log.e("TAG","tvPrice_auction.getText().toString()="+tvPrice_auction.getText().toString());
+        double price=Double.valueOf(tvPrice_auction.getText().toString());
+        Log.e("TAG","price-----"+price);
+        BZprice=bili*num*price;//保证金=价格*数量*保证金比例
+        Log.e("TAG","保证金-----"+BZprice);
     }
 
     @Override
