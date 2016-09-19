@@ -84,7 +84,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/x10"
-            android:text="        仓库 : "/>
+            android:text="仓库 : "/>
         <TextView
             android:id="@+id/tv_seeplan_right_cangku"
             android:layout_width="wrap_content"
@@ -129,7 +129,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:text="        状态 : "
+            android:text="状态 : "
             android:layout_marginLeft="@dimen/x160"/>
         <TextView
             android:id="@+id/tv_seeplan_right_state"

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.silianchuangye.sumao.success.ShangYou.CaiGou">
+    tools:context=".ShangYou.CaiGouMVP.view.CaiGou">
     <RelativeLayout
         android:id="@+id/relative_create_logistics_top"
         android:layout_width="match_parent"

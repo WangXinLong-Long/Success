@@ -6,5 +6,5 @@ import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSelling
  * Created by Administrator on 2016/9/8 0008.
  */
 public interface IUpstreamDirectSellingView {
-    void getUpstreamDirectSellingDetailInfo(VipProductBean vipProductBean);
+    void getUpstreamDirectSellingDetailInfo(VipProductBean vipProductBean,String sellerCompanyId);
 }

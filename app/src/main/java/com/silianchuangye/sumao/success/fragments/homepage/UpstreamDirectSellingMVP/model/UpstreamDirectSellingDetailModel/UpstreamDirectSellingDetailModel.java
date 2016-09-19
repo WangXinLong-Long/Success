@@ -45,7 +45,7 @@ public class UpstreamDirectSellingDetailModel implements IUpstreamDirectSellingD
                 LogUtils.log("上游直销-->产品名称-->"+result);
                 Gson gson = new Gson();
                 vipProductBean = gson.fromJson(result,VipProductBean.class);
-                callback.callbackIUpstreamDirectSellingDetail( vipProductBean);
+                callback.callbackIUpstreamDirectSellingDetail( vipProductBean,sellerCompanyId);
             }
 
             @Override

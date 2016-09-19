@@ -34,7 +34,7 @@ public class ShowCalendar {
                             Tv.setText(year + "-" + (monthOfYear + 1)
                                     + "-\n" + dayOfMonth + "");
                         }else {
-                            Tv.setText(year + "年" + (monthOfYear + 1)
+                            Tv.setText(year + "-" + (monthOfYear + 1)
                                     + "-" + dayOfMonth + "");
                         }
                     }

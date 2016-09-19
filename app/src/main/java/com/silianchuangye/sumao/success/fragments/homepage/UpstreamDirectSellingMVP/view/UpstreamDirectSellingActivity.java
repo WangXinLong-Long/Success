@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.UpstreamDirectSellingDetailMVP.UpstreamDirectSellingDetailsActivity;
@@ -59,17 +60,24 @@ public class UpstreamDirectSellingActivity extends AppCompatActivity implements 
         upstream_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                upstreamDirectSellingPresenter.getUpstreamDirectSellingDetail(getSharedPreferences("sumao",MODE_PRIVATE).getString("unique",""),idList.get(position));
+                String sessionId = getSharedPreferences("sumao",MODE_PRIVATE).getString("unique","");
+                if(sessionId.equals("false")){
+                    Toast.makeText(UpstreamDirectSellingActivity.this,"请登录后进行操作",Toast.LENGTH_LONG).show();
+                }else {
+
+                    upstreamDirectSellingPresenter.getUpstreamDirectSellingDetail(sessionId,idList.get(position));
+                }
             }
         });
     }
 
     @Override
-    public void getUpstreamDirectSellingDetailInfo(VipProductBean vipProductBean) {
+    public void getUpstreamDirectSellingDetailInfo(VipProductBean vipProductBean,String sellerCompanyId) {
 
         Intent intent = new Intent();
         intent.setClass(this,UpstreamDirectSellingDetailsActivity.class);
         intent.putExtra("vipProductBean",vipProductBean);
+        intent.putExtra("sellerCompanyId",sellerCompanyId);
         startActivity(intent);
     }
 

@@ -442,7 +442,7 @@ public class PagerOne extends BasePager implements IPagerOneView {
         List<Auction> auctions = preSaleBean.getAuction();
         LvFragmentoneAuctionsAdapter lvFragmentoneAuctionsAdapter = new LvFragmentoneAuctionsAdapter(auctions,mActivity);
         lvFragmentAdwords.setAdapter(lvFragmentoneAuctionsAdapter);
-//      现货信息    LvFragmentoneClsAdapter(界面上现在是团购！！！)
+//      现货信息
          List<Group> cls = preSaleBean.getGroup();
         LogUtils.log("现货信息cls.size()--->"+cls.size()+"");
         LvFragmentoneClsAdapter lvFragmentoneClsAdapter = new LvFragmentoneClsAdapter(cls,mActivity);

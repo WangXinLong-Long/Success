@@ -543,7 +543,7 @@
         <activity android:name=".fragments.homepage.sumaoconsultMVP.SuMaoConsult" />
         <activity android:name=".customermanger.NoAgree"
             android:screenOrientation="portrait"/>
-        <activity android:name=".ShangYou.CaiGou"
+        <activity android:name=".ShangYou.CaiGouMVP.view.CaiGou"
             android:screenOrientation="portrait"/>
         <activity android:name=".ShangYou.SearchSeePlan"
             android:screenOrientation="portrait" />

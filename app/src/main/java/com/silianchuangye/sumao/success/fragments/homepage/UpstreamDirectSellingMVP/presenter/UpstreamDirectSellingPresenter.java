@@ -21,8 +21,8 @@ IUpstreamDirectSellingView upstreamDirectSellingView ;
         IUpstreamDirectSellingDetailModel upstreamDirectSellingDetailModel = new UpstreamDirectSellingDetailModel( id,  sellerCompanyId);
         upstreamDirectSellingDetailModel.getUpstreamDirectSellingDetailInfo(new UpstreamDirectSellingDetailCallback() {
             @Override
-            public void callbackIUpstreamDirectSellingDetail(VipProductBean vipProductBean) {
-                upstreamDirectSellingView.getUpstreamDirectSellingDetailInfo( vipProductBean);
+            public void callbackIUpstreamDirectSellingDetail(VipProductBean vipProductBean,String sellerCompanyId) {
+                upstreamDirectSellingView.getUpstreamDirectSellingDetailInfo( vipProductBean,sellerCompanyId);
             }
         });
     }
