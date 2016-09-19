@@ -97,6 +97,8 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
     private String newSkuId = "";
     private double BZprice;
     private EditText edt_num;//购买数量
+    private String cl_jiner;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,6 +111,7 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
         calendarlist = new ArrayList<>();
         productId = intent.getStringExtra("productId");
         skuId = intent.getStringExtra("skuId");
+        cl_jiner = intent.getStringExtra("cl_jiner");
         LogUtils.log("productId:" + productId + "skuId:" + skuId);
 //        从服务器获取数据
         preSaleDetailPresenter = new PreSaleDetailPresenter(this);
@@ -135,10 +138,11 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
                     LogUtils.log("List的日期为："+year+"年"+month+"月"+day+"日");
                     if (selectday.equals(day)&&selectmonth.equals(month)&&selectyear.equals(year)){
                         newSkuId = calendarlist.get(i).getSkuId();
+                        cl_jiner = calendarlist.get(i).getPrice().substring(1,calendarlist.get(i).getPrice().length());
                     }
                 }
                 if (newSkuId.equals("")||newSkuId.isEmpty()){
-                    Toast.makeText(PreSaleDetailActivity.this,"应该是出错了",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PreSaleDetailActivity.this,"出错了",Toast.LENGTH_SHORT).show();
                 }else {
                     preSaleDetailPresenter.sendPreSaleDetailData(newSkuId, productId);
                 }
@@ -169,6 +173,7 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
         tvName_auction = ((TextView) findViewById(R.id.tvName_auction));
         //        6000
         tvPrice_auction = ((TextView) findViewById(R.id.tvPrice_auction));
+        tvPrice_auction.setText(cl_jiner);
         //        积分规则:每吨商品积一分
         pre_sale_detail_integral_rule = ((TextView) findViewById(R.id.pre_sale_detail_integral_rule));
         //        剩余数量
@@ -217,6 +222,7 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
             case R.id.pre_sale_sale_detail_detail:
                 intent.setClass(PreSaleDetailActivity.this, VesselThreeActivity.class);
                 intent.putExtra("title","预售");
+//                TODO 预售合同
                 intent.putExtra("contract","www.baidu.com");
                 intent.putExtra("cl_attribute",cl_attribute);
                 startActivity(intent);
@@ -434,7 +440,7 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
         //        兰州石化7042
         tvName_auction.setText(preSaleDetailBean.getCl_mingcheng());
         //        6000
-//        tvPrice_auction.setText(preSaleDetailBean.get);
+        tvPrice_auction.setText(cl_jiner);
         //        积分规则:每吨商品积一分
 //        pre_sale_detail_integral_rule.setText(preSaleDetailBean.getCl_jifen());
         //        剩余数量

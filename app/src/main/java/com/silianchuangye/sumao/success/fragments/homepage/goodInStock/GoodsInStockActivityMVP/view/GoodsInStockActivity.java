@@ -112,7 +112,7 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
         tv_screen_title_bar_title.setText("现货");
         iv_screen_title_bar_search = ((ImageView) findViewById(R.id.iv_screen_title_bar_search));
 //        现在先屏蔽掉，
-        iv_screen_title_bar_search.setVisibility(View.GONE);
+        iv_screen_title_bar_search.setVisibility(View.INVISIBLE);
         iv_screen_title_bar_back = ((ImageView) findViewById(R.id.iv_screen_title_bar_back));
         iv_screen_title_bar_search.setOnClickListener(this);
         iv_screen_title_bar_back.setOnClickListener(this);
@@ -422,8 +422,6 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
             if (smClList == null||smClList.size() == 0) {
                 Toast.makeText(GoodsInStockActivity.this, "已经到底了", Toast.LENGTH_SHORT).show();
             } else {
-                sList.addAll(smClList);
-                smClList.addAll(sList);
                 LogUtils.log("smClList.size()---->"+smClList.size());
 
                 adapter.notifyDataSetChanged();
@@ -441,10 +439,10 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
                 @Override
                 public void handleMessage(Message msg) {
                     super.handleMessage(msg);
-                    if (smClList != null) {
+
                         sList.clear();
                         smClList.clear();
-                    }
+
 
                     goodsInStockActivityPresenter.getGoodsInStockInfo(region2, classification2, application2, 10, 0);
                     pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
