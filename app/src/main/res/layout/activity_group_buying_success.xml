@@ -44,12 +44,27 @@
 
     </RelativeLayout>
     <RelativeLayout
+        android:id="@+id/relative_tuangou_end"
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:background="#fff"
+        android:layout_height="@dimen/x38"
+        android:visibility="gone">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="团购结束"
+            android:textSize="18sp"
+            android:textColor="#fff"
+            android:gravity="center"
+            android:background="@drawable/juxing_gary"/>
+    </RelativeLayout>
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/x40"
         android:layout_alignParentBottom="true"
         android:id="@+id/layout_Bottom"
         android:background="#fff"
-
         >
         <LinearLayout
             android:layout_width="match_parent"
@@ -61,6 +76,7 @@
                 android:layout_weight="1">
             </LinearLayout>
             <Button
+                android:id="@+id/btn_tuangou_add"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -68,15 +84,24 @@
                 android:textSize="16sp"
                 android:background="#116CB0"
                 android:textColor="#fff"
-
                 />
+
         </LinearLayout>
     </RelativeLayout>
+    <LinearLayout
+        android:id="@+id/linear_tuagou_line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x10"
+        android:background="#EEEEF3"
+        android:orientation="horizontal"
+       android:layout_above="@id/layout_Bottom"
+        ></LinearLayout>
     <ScrollView
+        android:id="@+id/sc_tuangou"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/layoutTop_auction"
-        android:layout_above="@+id/layout_Bottom"
+        android:layout_above="@+id/linear_tuagou_line"
         android:background="#fff"
         android:layout_marginTop="@dimen/x5"
         >
@@ -84,8 +109,9 @@
             android:layout_width="match_parent"
             android:orientation="vertical"
             android:layout_height="match_parent">
-            <!--是否成团 -->
+            <!--是否成团 ->目前都隐藏团购时间和未成团提示-->
             <RelativeLayout
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/x40">
                 <TextView
@@ -143,7 +169,7 @@
                     android:layout_height="@dimen/x20"
                     android:id="@+id/ivContent"
                     android:layout_marginTop="@dimen/x13"
-                    android:src="@mipmap/phone"
+                    android:src="@mipmap/service"
                     />
                 <TextView
                     android:layout_width="wrap_content"
@@ -168,7 +194,7 @@
                     android:layout_height="@dimen/x20"
                     android:id="@+id/ivService"
                     android:layout_marginTop="@dimen/x13"
-                    android:src="@mipmap/service"
+                    android:src="@mipmap/phone"
                     />
                 <TextView
                     android:layout_width="wrap_content"
@@ -226,50 +252,69 @@
             ></LinearLayout>
         </LinearLayout>
             <LinearLayout
+                android:id="@+id/linear_tuangou_time"
                 android:layout_width="match_parent"
                 android:orientation="vertical"
                 android:layout_height="@dimen/x60">
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     >
+                    <!--<TextView-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:text="成团进度:"-->
+                        <!--android:layout_marginLeft="@dimen/x10"-->
+                        <!--android:layout_marginTop="@dimen/x20"-->
+                        <!--android:id="@+id/tv_progress"-->
+                        <!--/>-->
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="成团进度:"
+                        android:text="距离团剩余时间 :"
                         android:layout_marginLeft="@dimen/x10"
-                        android:layout_marginTop="@dimen/x20"
                         android:id="@+id/tv_progress"
+                        android:layout_centerVertical="true"
+                        android:textColor="@color/zixun_topbg"
                         />
-                    <ProgressBar
+                    <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/x10"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="1天 01:00:00"
                         android:layout_toRightOf="@+id/tv_progress"
                         android:layout_marginLeft="@dimen/x5"
-                        android:id="@+id/pbDemo"
-                        style="@android:style/Widget.ProgressBar.Horizontal"
-                        android:progress="50"
-                        android:progressDrawable="@drawable/progressdrawable"
-                        android:layout_marginTop="@dimen/x25"
-                        android:layout_marginRight="@dimen/x10"
+                        android:textColor="@color/zixun_topbg"
+                        />
+                    <!--<ProgressBar-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="@dimen/x10"-->
+                        <!--android:layout_toRightOf="@+id/tv_progress"-->
+                        <!--android:layout_marginLeft="@dimen/x5"-->
+                        <!--android:id="@+id/pbDemo"-->
+                        <!--style="@android:style/Widget.ProgressBar.Horizontal"-->
+                        <!--android:progress="50"-->
+                        <!--android:progressDrawable="@drawable/progressdrawable"-->
+                        <!--android:layout_marginTop="@dimen/x25"-->
+                        <!--android:layout_marginRight="@dimen/x10"-->
 
-                        />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="0t"
-                        android:layout_below="@id/pbDemo"
-                        android:layout_toRightOf="@+id/tv_progress"
-                        android:layout_marginLeft="@dimen/x5"
-                        />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="@dimen/x10"
-                        android:text="100t"
-                        android:layout_below="@+id/pbDemo"
-                        />
+                        <!--/>-->
+                    <!--<TextView-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:text="0t"-->
+                        <!--android:layout_below="@id/pbDemo"-->
+                        <!--android:layout_toRightOf="@+id/tv_progress"-->
+                        <!--android:layout_marginLeft="@dimen/x5"-->
+                        <!--/>-->
+                    <!--<TextView-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_alignParentRight="true"-->
+                        <!--android:layout_marginRight="@dimen/x10"-->
+                        <!--android:text="100t"-->
+                        <!--android:layout_below="@+id/pbDemo"-->
+                        <!--/>-->
                 </RelativeLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -605,6 +650,8 @@
 
                 ></com.silianchuangye.sumao.success.custom.CustomListView>
             <!--customCalendar-->
+
         </LinearLayout>
     </ScrollView>
+
 </RelativeLayout>

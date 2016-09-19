@@ -57,10 +57,6 @@ public class GroupBuyingActivity extends AppCompatActivity{
         back= (ImageView) findViewById(R.id.ivBack_group_layout_top);
         search= (ImageView) findViewById(R.id.ivSearch_group_layout_top);
         lv_group_buying= (ListView) findViewById(R.id.lvAuction_Auction_Layout);
-
-
-
-
     }
 
     /**
@@ -190,6 +186,7 @@ public class GroupBuyingActivity extends AppCompatActivity{
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                  if (position%2==0){
+//                     if (!list.get(position).get("state").equals("end")){
                      Intent intent=new Intent(GroupBuyingActivity.this,GroupBuyingSuccessActivity.class);
                      intent.putExtra("state","ok");
                      intent.putExtra("id",shangpinId);
@@ -197,7 +194,6 @@ public class GroupBuyingActivity extends AppCompatActivity{
                      startActivity(intent);
 
                  }else{
-
                      Intent intent=new Intent(GroupBuyingActivity.this,GroupBuyingSuccessActivity.class);
                      intent.putExtra("state","no");
                      intent.putExtra("id",shangpinId);
