@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.ShangYou.CaiGouMVP.view.CaiGou;
 import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.bean.vipProductBean.VipProductBean;
+import com.silianchuangye.sumao.success.utils.LogUtils;
 
 public class UpstreamDirectSellingDetailsActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -28,8 +29,11 @@ public class UpstreamDirectSellingDetailsActivity extends AppCompatActivity impl
         Intent intent = getIntent();
         vipProductBean = (VipProductBean)intent.getSerializableExtra("vipProductBean");
         sellerCompanyId = intent.getStringExtra("sellerCompanyId");
+        String title = intent.getStringExtra("title");
         setContentView(R.layout.activity_upstream_direct_selling_details);
         tv_child_title_bar_title = ((TextView) findViewById(R.id.tv_child_title_bar_title));
+        LogUtils.log("title--->"+title);
+        tv_child_title_bar_title.setText(title);
         iv_child_title_bar_back = ((ImageView) findViewById(R.id.iv_child_title_bar_back));
 //        竞拍专场
         auction_session_rl = ((RelativeLayout) findViewById(R.id.auction_session_rl));
@@ -41,8 +45,7 @@ public class UpstreamDirectSellingDetailsActivity extends AppCompatActivity impl
         procurement_planning_rl.setOnClickListener(this);
         direct_selling_rl.setOnClickListener(this);
         iv_child_title_bar_back.setOnClickListener(this);
-//        修改标题文字
-        tv_child_title_bar_title.setText("");
+
 
     }
 

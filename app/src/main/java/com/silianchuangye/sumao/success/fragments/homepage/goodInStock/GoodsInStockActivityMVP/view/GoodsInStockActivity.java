@@ -174,12 +174,12 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
 //            取消   汉字的点击事件
             case R.id.cancel_tv:
                 cancel_tv.setVisibility(View.INVISIBLE);
-                iv_screen_title_bar_search.setVisibility(View.VISIBLE);
+                iv_screen_title_bar_search.setVisibility(View.INVISIBLE);
                 break;
 //            和点击  取消 的点击事件是相同的
             case R.id.pre_sale_title:
                 cancel_tv.setVisibility(View.INVISIBLE);
-                iv_screen_title_bar_search.setVisibility(View.VISIBLE);
+                iv_screen_title_bar_search.setVisibility(View.INVISIBLE);
                 break;
 
 //            点击地区的点击事件
@@ -230,7 +230,7 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
 //              点击透明区域
             case R.id.bottom_pre_sale_search:
                 cancel_tv.setVisibility(View.INVISIBLE);
-                iv_screen_title_bar_search.setVisibility(View.VISIBLE);
+                iv_screen_title_bar_search.setVisibility(View.INVISIBLE);
                 popupWindow.dismiss();
                 break;
 //            返回键的点击事件
@@ -253,7 +253,7 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
         super.onWindowFocusChanged(hasFocus);
         if (!flag) {
             cancel_tv.setVisibility(View.INVISIBLE);
-            iv_screen_title_bar_search.setVisibility(View.VISIBLE);
+            iv_screen_title_bar_search.setVisibility(View.INVISIBLE);
 
         }
         flag = false;

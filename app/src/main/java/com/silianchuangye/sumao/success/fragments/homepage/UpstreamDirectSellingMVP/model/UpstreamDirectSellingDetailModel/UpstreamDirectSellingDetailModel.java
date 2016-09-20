@@ -20,9 +20,11 @@ public class UpstreamDirectSellingDetailModel implements IUpstreamDirectSellingD
     String sessionId;
     String sellerCompanyId;
     String url = SuMaoConstant.SUMAO_IP+"/rest/model/com/sumao/mobile/order/purchase/PlanOrderActor/vipProductSearch";
-    public UpstreamDirectSellingDetailModel(String id, String sellerCompanyId) {
+    String title ;
+    public UpstreamDirectSellingDetailModel(String id, String sellerCompanyId,String title) {
         this.sessionId = id;
         this.sellerCompanyId = sellerCompanyId;
+        this.title = title;
     }
 
     @Override
@@ -45,7 +47,7 @@ public class UpstreamDirectSellingDetailModel implements IUpstreamDirectSellingD
                 LogUtils.log("上游直销-->产品名称-->"+result);
                 Gson gson = new Gson();
                 vipProductBean = gson.fromJson(result,VipProductBean.class);
-                callback.callbackIUpstreamDirectSellingDetail( vipProductBean,sellerCompanyId);
+                callback.callbackIUpstreamDirectSellingDetail( vipProductBean,sellerCompanyId,title);
             }
 
             @Override

@@ -16,7 +16,7 @@ public class ShowCalendar {
         Calendar calend1 = Calendar.getInstance();
         calend1.setTimeInMillis(System.currentTimeMillis());
         int year = calend1.get(Calendar.YEAR);
-        int month = calend1.get(Calendar.MONTH) + 1;
+        int month = calend1.get(Calendar.MONTH) ;
         int day = calend1.get(Calendar.DAY_OF_MONTH);
         DatePickerDialog dialog3 = new DatePickerDialog(
                 context,
