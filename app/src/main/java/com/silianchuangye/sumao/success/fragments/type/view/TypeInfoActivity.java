@@ -196,18 +196,25 @@ public class TypeInfoActivity extends AppCompatActivity implements OnClickListen
             @Override
             public void onClick(View v) {
                 //进行搜索功能
+
                 Ntt = Search.getText().toString();
-                list.clear();
-                lists.clear();
-                Nrpp = 10;
-                No = 0;
-                region = "";
-                classification = "";
-                application = "";
-                tradingmethod = "";
-                typeInfoPresenter.getSearchFromSever(region, classification, application, tradingmethod, Nrpp, No, Ntt);
-                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.toggleSoftInput(0,InputMethodManager.HIDE_NOT_ALWAYS);
+                if (Ntt.equals("")||Ntt.isEmpty())
+                {
+                    Toast.makeText(TypeInfoActivity.this,"请输入内容",Toast.LENGTH_SHORT).show();
+                }else {
+                    list.clear();
+                    lists.clear();
+                    Nrpp = 10;
+                    No = 0;
+                    region = "";
+                    classification = "";
+                    application = "";
+                    tradingmethod = "";
+                    typeInfoPresenter.getSearchFromSever(region, classification, application, tradingmethod, Nrpp, No, Ntt);
+                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.toggleSoftInput(0,InputMethodManager.HIDE_NOT_ALWAYS);
+                }
+
             }
         });
 
