@@ -52,4 +52,6 @@ dependencies {
     compile 'org.dspace.xmlui.jakarta:jakarta-bcel:5.1.20040329'
     compile 'org.apache.httpcomponents:jakarta-httpcore:4.0-alpha4'
     compile project(':PullToRefresh')
+    compile files('libs/CCP_REST_SDK_JAVA_v2.7r.jar')
+    compile files('libs/CCP_REST_SMS_SDK_JAVA_v2.6.3r.jar')
 }
