@@ -221,8 +221,15 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
                 if (unique.equals("false")){
                     Toast.makeText(GoodsInStockDetailActivity.this,"请登录后进行操作",Toast.LENGTH_SHORT).show();
                 }else {
-                    showPopupWindow(type);
-                    backgroundAlpha(0.5f);
+//                    showPopupWindow(type);
+//                    backgroundAlpha(0.5f);
+                    new Thread(){
+                        @Override
+                        public void run() {
+                            super.run();
+                            getPurchase(unique);
+                        }
+                    }.start();
                 }
 
                 break;
@@ -285,13 +292,7 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
 
 
         popupWindowView = View.inflate(this, R.layout.buy_immediately_popup_window, null);
-        new Thread(){
-            @Override
-            public void run() {
-                super.run();
-                getPurchase(unique);
-            }
-        }.start();
+
         img_item_cart_buy_sub = ((TextView) popupWindowView.findViewById(R.id.img_item_cart_buy_sub));
         img_item_cart_buy_add = ((TextView) popupWindowView.findViewById(R.id.img_item_cart_buy_add));
         tv_item_cart_buy_num = ((TextView) popupWindowView.findViewById(R.id.tv_item_cart_buy_num));
@@ -304,9 +305,7 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
             public void onClick(View v) {
 //                当立即购买时：
                 if (num == 1) {
-                    Intent intent = new Intent();
-                    intent.setClass(GoodsInStockDetailActivity.this, PaymentsOrder.class);
-                    startActivity(intent);
+
                     popupWindow.dismiss();
                 } else if (num == 2)//当加入购物车时
                 {
@@ -463,7 +462,9 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
             @Override
             public void onSuccess(String result) {
                 Log.d("购买时的result",""+result);
-
+                Intent intent = new Intent();
+                intent.setClass(GoodsInStockDetailActivity.this, PaymentsOrder.class);
+                startActivity(intent);
             }
 
             @Override
