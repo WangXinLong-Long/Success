@@ -96,6 +96,7 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
     private EditText et_number;
     private TextView tv_jian;
     private TextView tv_jia;
+    private String unique;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -215,8 +216,15 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
 //            立即购买：
             case R.id.buy_immediately:
                 int type = 1;
-                showPopupWindow(type);
-                backgroundAlpha(0.5f);
+                SharedPreferences sp=getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+                unique = sp.getString("unique","");
+                if (unique.equals("false")){
+                    Toast.makeText(GoodsInStockDetailActivity.this,"请登录后进行操作",Toast.LENGTH_SHORT).show();
+                }else {
+                    showPopupWindow(type);
+                    backgroundAlpha(0.5f);
+                }
+
                 break;
 //             加入购物车：
             case R.id.join_shopping_cart:
@@ -273,12 +281,15 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
     }
 
     private void showPopupWindow(final int num) {
+
+
+
         popupWindowView = View.inflate(this, R.layout.buy_immediately_popup_window, null);
         new Thread(){
             @Override
             public void run() {
                 super.run();
-                getPurchase();
+                getPurchase(unique);
             }
         }.start();
         img_item_cart_buy_sub = ((TextView) popupWindowView.findViewById(R.id.img_item_cart_buy_sub));
@@ -433,12 +444,11 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
         });
         // rp.addParameter("");
     }
-    public void getPurchase(){
+    public void getPurchase(String unique){
         String url="http://192.168.32.126:7023/rest/model/atg/commerce/ShoppingCartActor/go";
         RequestParams requestParams=new RequestParams(url);
         requestParams.addParameter("quantity",(Integer.parseInt(et_number.getText().toString())*1000)+"");
-        SharedPreferences sp=getSharedPreferences("sumao", Activity.MODE_PRIVATE);
-        String unique=sp.getString("unique","");
+
 //        SharedPreferences sp=getActivity().getSharedPreferences("sumao", Activity.MODE_PRIVATE);
         // String unique_gouwuche=sp.getString("unique","");
         // Log.d("一键购得唯一标识",unique_gouwuche);
