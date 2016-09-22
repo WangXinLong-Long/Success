@@ -28,7 +28,7 @@ public class LvFragmentoneGrouponAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return forwards.size();
+        return forwards.size();/////
     }
 
     @Override
