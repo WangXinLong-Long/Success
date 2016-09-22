@@ -27,7 +27,8 @@ import com.silianchuangye.sumao.success.adapter.PopupWindowAdaptrer;
 import com.silianchuangye.sumao.success.dialog.Error_Dialog;
 import com.silianchuangye.sumao.success.dialog.Ok_Dialog;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.OpenAuction;
-import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockDetailActivityMVP.bean.OrderIdList;
+import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockDetailActivityMVP.bean.orderIdList;
+
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -244,15 +245,15 @@ public class PaymentsOrder extends Activity implements View.OnClickListener{
             Log.d("Skuid",infos[3]);
             Log.d("rp的值",requestParams+"");
             x.http().post(requestParams, new Callback.CommonCallback<String>() {
-                private OrderIdList orderIdList;
+                private orderIdList orderIdLists;
 
                 @Override
                 public void onSuccess(String result) {
                     Log.d("购买时的result",""+result);
                     List<String> id_String=new ArrayList<String>();
                     Gson gson = new Gson();
-                    orderIdList = gson.fromJson(result, OrderIdList.class);
-                    id_String.add(orderIdList.getOrderIdList().get(0).getOrderId());
+                    orderIdLists = gson.fromJson(result, orderIdList.class);
+                    id_String.add(orderIdLists.getOrderIdList().get(0).getOrderId());
 
                 }
 

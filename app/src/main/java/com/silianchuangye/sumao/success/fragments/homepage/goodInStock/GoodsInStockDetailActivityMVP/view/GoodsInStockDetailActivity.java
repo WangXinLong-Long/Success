@@ -31,7 +31,7 @@ import com.silianchuangye.sumao.success.dialog.Ok_Dialog;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.VesselThreeActivity;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockDetailActivityMVP.bean.CLAttribute;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockDetailActivityMVP.bean.GoodsInStockDetailBean;
-import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockDetailActivityMVP.bean.OrderIdList;
+
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockDetailActivityMVP.bean.RelatedProduct;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockDetailActivityMVP.presenter.GoodsInStockDetailPresenter;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.LikeProduct;
@@ -280,7 +280,9 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
             @Override
             public void run() {
                 super.run();
-                getPurchase();
+                SharedPreferences sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+                String unique=sp.getString("unique","");
+                getPurchase(unique);//你改
             }
         }.start();
         img_item_cart_buy_sub = ((TextView) popupWindowView.findViewById(R.id.img_item_cart_buy_sub));
