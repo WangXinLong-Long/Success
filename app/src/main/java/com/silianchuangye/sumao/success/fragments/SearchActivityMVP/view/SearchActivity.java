@@ -48,8 +48,13 @@ public class SearchActivity extends AppCompatActivity implements ISearchActivity
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+if(search_content.getText().toString().trim().equals("")||search_content.getText().toString().trim().isEmpty())
+{
+    Toast.makeText(SearchActivity.this,"请输入内容",Toast.LENGTH_SHORT).show();
+}else {
 
-                searchActivityPresenter.sendSearchActivityData(search_content.getText().toString().trim());
+    searchActivityPresenter.sendSearchActivityData(search_content.getText().toString().trim());
+}
             }
         });
 

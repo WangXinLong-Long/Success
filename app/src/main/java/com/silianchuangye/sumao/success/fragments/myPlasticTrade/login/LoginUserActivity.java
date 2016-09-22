@@ -1,11 +1,8 @@
 package com.silianchuangye.sumao.success.fragments.myPlasticTrade.login;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.VoiceInteractor;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
@@ -19,20 +16,16 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.request.Request;
-import com.google.android.gms.appdatasearch.GetRecentContextCall;
 import com.silianchuangye.sumao.success.MainActivity;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.SellerManagementPlatform.SellerManagementPlatformActivity;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.RegisterActivity;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.RegisterPhoneActivity;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.RegisterPhoneMVP.RegisterPhoneView.RegisterPhoneActivity;
 import com.silianchuangye.sumao.success.utils.GlobalVariable;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
 import org.json.JSONObject;
 import org.xutils.common.Callback;
-import org.xutils.http.HttpMethod;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 

@@ -49,7 +49,7 @@ public class UpstreamDirectSellingActivity extends AppCompatActivity implements 
         iv_child_title_bar_back = ((ImageView) findViewById(R.id.iv_child_title_bar_back));
         iv_child_title_bar_back.setOnClickListener(this);
 //        添加加载数据
-        List<String> nameList = new ArrayList<>();
+        final List<String> nameList = new ArrayList<>();
         idList = new ArrayList<>();
         for (int i = 0; i < enterprisesItem.size(); i++) {
             nameList.add(enterprisesItem.get(i).getSellerCompanyName());
@@ -65,19 +65,20 @@ public class UpstreamDirectSellingActivity extends AppCompatActivity implements 
                     Toast.makeText(UpstreamDirectSellingActivity.this,"请登录后进行操作",Toast.LENGTH_LONG).show();
                 }else {
 
-                    upstreamDirectSellingPresenter.getUpstreamDirectSellingDetail(sessionId,idList.get(position));
+                    upstreamDirectSellingPresenter.getUpstreamDirectSellingDetail(sessionId,idList.get(position),nameList.get(position));
                 }
             }
         });
     }
 
     @Override
-    public void getUpstreamDirectSellingDetailInfo(VipProductBean vipProductBean,String sellerCompanyId) {
+    public void getUpstreamDirectSellingDetailInfo(VipProductBean vipProductBean,String sellerCompanyId,String title) {
 
         Intent intent = new Intent();
         intent.setClass(this,UpstreamDirectSellingDetailsActivity.class);
         intent.putExtra("vipProductBean",vipProductBean);
         intent.putExtra("sellerCompanyId",sellerCompanyId);
+        intent.putExtra("title",title);
         startActivity(intent);
     }
 

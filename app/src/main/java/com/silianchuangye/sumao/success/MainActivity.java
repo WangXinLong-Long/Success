@@ -98,16 +98,34 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
         mTabHost.getTabWidget().getChildTabViewAt(3).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                username=sp.getString("name","");
-                if (username!=""){
-                    mTabHost.setCurrentTab(3);
-                }else {
+                String unique = getUnique();
+                if (unique.equals("false")){
+                    Toast.makeText(MainActivity.this,"请登录",Toast.LENGTH_SHORT).show();
+                    SharedPreferences.Editor editor=sp.edit();
+                    editor.clear();
+                    //      editor.clear();
+                    editor.commit();
                     Intent intent = new Intent();
                     intent.putExtra("roles","buyer");
                     intent.setClass(MainActivity.this, LoginUserActivity.class);
                     startActivity(intent);
+                }else {
+                    username=sp.getString("name","");
+                    if (username!=""){
+                        mTabHost.setCurrentTab(3);
+                    }else {
+                        SharedPreferences.Editor editor=sp.edit();
+                        editor.clear();
+                        //      editor.clear();
+                        editor.commit();
+                        Intent intent = new Intent();
+                        intent.putExtra("roles","buyer");
+                        intent.setClass(MainActivity.this, LoginUserActivity.class);
+                        startActivity(intent);
+                    }
                 }
+
+
             }
         });
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);

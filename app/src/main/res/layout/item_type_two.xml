@@ -71,22 +71,30 @@
         android:layout_toRightOf="@+id/tv_address_type_name"
         android:layout_below="@+id/type_line"
         />
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/x10"
-        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/x3"
+        android:id="@+id/tv_jiaoyi_name"
+        android:layout_below="@+id/tv_address_type_two"
+        android:layout_marginLeft="@dimen/x10"
+        android:text="交易模式:"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/x3"
         android:layout_marginRight="@dimen/x10"
+        android:layout_toRightOf="@id/tv_jiaoyi_name"
         android:id="@+id/tv_state_type_two"
-        android:layout_below="@+id/type_line"
+        android:layout_below="@+id/tv_address_type_two"
         />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/x3"
         android:id="@+id/tv_cangku_name"
-        android:layout_below="@+id/tv_address_type_two"
+        android:layout_below="@+id/tv_jiaoyi_name"
         android:layout_marginLeft="@dimen/x10"
         android:text="仓库:"
         />
@@ -95,7 +103,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/x3"
         android:id="@+id/tv_cangku_type_two"
-        android:layout_below="@+id/tv_address_type_two"
+        android:layout_below="@+id/tv_jiaoyi_name"
         android:layout_marginLeft="@dimen/x3"
         android:layout_toRightOf="@+id/tv_cangku_name"
         android:layout_marginBottom="@dimen/x10"

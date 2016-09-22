@@ -17,12 +17,12 @@ IUpstreamDirectSellingView upstreamDirectSellingView ;
         this.upstreamDirectSellingView = upstreamDirectSellingView;
     }
 
-    public void getUpstreamDirectSellingDetail(String id, String sellerCompanyId){
-        IUpstreamDirectSellingDetailModel upstreamDirectSellingDetailModel = new UpstreamDirectSellingDetailModel( id,  sellerCompanyId);
+    public void getUpstreamDirectSellingDetail(String id, String sellerCompanyId,String title){
+        IUpstreamDirectSellingDetailModel upstreamDirectSellingDetailModel = new UpstreamDirectSellingDetailModel( id,  sellerCompanyId,title);
         upstreamDirectSellingDetailModel.getUpstreamDirectSellingDetailInfo(new UpstreamDirectSellingDetailCallback() {
             @Override
-            public void callbackIUpstreamDirectSellingDetail(VipProductBean vipProductBean,String sellerCompanyId) {
-                upstreamDirectSellingView.getUpstreamDirectSellingDetailInfo( vipProductBean,sellerCompanyId);
+            public void callbackIUpstreamDirectSellingDetail(VipProductBean vipProductBean,String sellerCompanyId,String title) {
+                upstreamDirectSellingView.getUpstreamDirectSellingDetailInfo( vipProductBean,sellerCompanyId,title);
             }
         });
     }

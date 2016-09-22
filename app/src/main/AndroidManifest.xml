@@ -354,6 +354,8 @@
         <activity
             android:name=".fragments.myPlasticTrade.EnterpriseCapitalAccountManagement.SearchMoney"
             android:screenOrientation="portrait" />
+        <activity android:name=".fragments.myPlasticTrade.register.RegisterPhoneMVP.RegisterPhoneView.RegisterPhoneActivity"
+            ></activity>
         <!-- <activity android:name=".fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.InvoiceInformation -->
         <meta-data
             android:name="com.google.android.gms.version"
@@ -527,7 +529,7 @@
             android:screenOrientation="portrait" />
         <activity android:name=".customermanger.CustomerParent"
             android:screenOrientation="portrait"/>
-        <activity android:name=".fragments.myPlasticTrade.register.RegisterPhoneActivity" />
+        <activity android:name=".fragments.myPlasticTrade.register.RegisterPhoneMVP.RegisterPhoneView.RegisterPhoneActivity" />
         <activity android:name=".fragments.homepage.groupbuying.GroupBuyingActivity" />
         <activity android:name=".fragments.homepage.groupbuying.GroupBuyingSuccessActivity" />
         <activity android:name=".fragments.homepage.groupbuying.RuleActivity" />

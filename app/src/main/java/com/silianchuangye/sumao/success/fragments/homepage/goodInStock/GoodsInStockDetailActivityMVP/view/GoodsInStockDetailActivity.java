@@ -20,6 +20,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.silianchuangye.sumao.success.HX.Constant;
 import com.silianchuangye.sumao.success.HX.ui.LoginActivity;
 import com.silianchuangye.sumao.success.MainActivity;
@@ -30,6 +31,7 @@ import com.silianchuangye.sumao.success.dialog.Ok_Dialog;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.VesselThreeActivity;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockDetailActivityMVP.bean.CLAttribute;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockDetailActivityMVP.bean.GoodsInStockDetailBean;
+
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockDetailActivityMVP.bean.RelatedProduct;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockDetailActivityMVP.presenter.GoodsInStockDetailPresenter;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.LikeProduct;
@@ -274,6 +276,8 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
 
     private void showPopupWindow(final int num) {
         popupWindowView = View.inflate(this, R.layout.buy_immediately_popup_window, null);
+        SharedPreferences sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+        String unique=sp.getString("unique","");
         new Thread(){
             @Override
             public void run() {
@@ -293,9 +297,7 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
             public void onClick(View v) {
 //                当立即购买时：
                 if (num == 1) {
-                    Intent intent = new Intent();
-                    intent.setClass(GoodsInStockDetailActivity.this, PaymentsOrder.class);
-                    startActivity(intent);
+
                     popupWindow.dismiss();
                 } else if (num == 2)//当加入购物车时
                 {
@@ -433,44 +435,20 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
         });
         // rp.addParameter("");
     }
-    public void getPurchase(){
-        String url="http://192.168.32.126:7023/rest/model/atg/commerce/ShoppingCartActor/go";
-        RequestParams requestParams=new RequestParams(url);
-        requestParams.addParameter("quantity",(Integer.parseInt(et_number.getText().toString())*1000)+"");
-        SharedPreferences sp=getSharedPreferences("sumao", Activity.MODE_PRIVATE);
-        String unique=sp.getString("unique","");
-//        SharedPreferences sp=getActivity().getSharedPreferences("sumao", Activity.MODE_PRIVATE);
-        // String unique_gouwuche=sp.getString("unique","");
-        // Log.d("一键购得唯一标识",unique_gouwuche);
-        requestParams.addParameter("_dynSessConf",unique);
-        Log.d("一键购得唯一标识",unique);
-        requestParams.addParameter("productId",cl_id);
-        Log.d("商品编号",cl_id);
-        requestParams.addParameter("skuId",sku_id);
-        Log.d("Skuid",sku_id);
-        Log.d("rp的值",requestParams+"");
-        x.http().post(requestParams, new Callback.CommonCallback<String>() {
-            @Override
-            public void onSuccess(String result) {
-                Log.d("购买时的result",""+result);
-
-            }
-
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-
-            }
-
-            @Override
-            public void onCancelled(CancelledException cex) {
-
-            }
-
-            @Override
-            public void onFinished() {
-
-            }
-        });
+    public void getPurchase(String unique){
+        Intent intent = new Intent();
+        StringBuilder sb = new StringBuilder();
+        sb.append((Integer.parseInt(et_number.getText().toString())*1000)+",");
+        sb.append(unique+",");
+        sb.append(cl_id+",");
+        sb.append(sku_id);
+        String string = sb.toString();
+//        List<String> list_id = new ArrayList<>();
+//        list_id.add(string);
+        intent.putExtra("type","fix");
+        intent.putExtra("fix",string);
+        intent.setClass(GoodsInStockDetailActivity.this, PaymentsOrder.class);
+        startActivity(intent);
 
     }
 

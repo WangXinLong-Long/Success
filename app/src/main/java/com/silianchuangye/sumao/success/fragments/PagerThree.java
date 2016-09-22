@@ -29,6 +29,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.silianchuangye.sumao.success.MainActivity;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.CartAdapter;
 import com.silianchuangye.sumao.success.adapter.CartItemAdapter;
@@ -174,6 +175,7 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
 
                     Intent intent = new Intent();
                     intent.setClass(getActivity(), PaymentsOrder.class);
+                    intent.putExtra("type","cart");
                     intent.putExtra("id", (Serializable) id_String);
                     startActivity(intent);
                 } else {
@@ -283,7 +285,16 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
                         e.printStackTrace();
                     }
                 } else if (result.contains("fail")) {
-                    Toast.makeText(ctx, "您的唯一标识已失效,请重新登录", Toast.LENGTH_SHORT).show();
+                    SharedPreferences sp=mActivity.getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+                    SharedPreferences.Editor editor=sp.edit();
+                    editor.clear();
+                    //      editor.clear();
+                    editor.commit();
+                    Toast.makeText(ctx, "登录已超时，请重新登录", Toast.LENGTH_SHORT).show();
+                    Intent intent=new Intent(mActivity,MainActivity.class);
+                    intent.putExtra("roles","buyer");
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
                 } else {
                     relative_activity_cart_bottom.setVisibility(View.GONE);
                     relative_cart_tishi.setVisibility(View.GONE);

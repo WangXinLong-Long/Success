@@ -123,6 +123,7 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
         calendarView.setListDayAndPrice(calendarlist);
         calendarView.invalidate();
 
+
 //        calendarView.invalidate();
         calendarView.setDateViewClick(new CalendarView.DateViewClick() {
 
@@ -517,7 +518,13 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
             }
             LogUtils.log(year + "..." + mounth + "..." + day);
             calendarlist.add(new DayAndPrice("￥"+sku.getCl_jiner(), year, mounth, day,skuId));
+            if (i == 0)
+            {
+                //设置进来就显示到预售日期的第一个
+                calendarView.monthDateView.setSelectYearMonth( year, mounth-1,day);
+            }
         }
+
         calendarView.setSelected(true);
         for (int i = 0; i < calendarlist.size(); i++) {
             LogUtils.log("我这没问题：" + calendarlist.get(i).toString());
