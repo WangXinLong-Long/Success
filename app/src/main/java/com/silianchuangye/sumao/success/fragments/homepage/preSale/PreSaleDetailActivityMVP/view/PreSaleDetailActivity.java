@@ -112,6 +112,7 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
         productId = intent.getStringExtra("productId");
         skuId = intent.getStringExtra("skuId");
         cl_jiner = intent.getStringExtra("cl_jiner");
+        Log.e("TAG","productId:" + productId + "skuId:" + skuId);
         LogUtils.log("productId:" + productId + "skuId:" + skuId);
 //        从服务器获取数据
         preSaleDetailPresenter = new PreSaleDetailPresenter(this);
@@ -416,7 +417,7 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
         x.http().post(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Log.e("TAG","result-----"+result);
+                Log.e("TAG","支付保证金result-----"+result);
             }
 
             @Override

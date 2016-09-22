@@ -339,6 +339,8 @@ public class PreSale extends Activity implements View.OnClickListener, AdapterVi
 //        skuId
             intent.putExtra("skuId",smClList.get(position).getCl_cpid());
             intent.putExtra("cl_jiner",smClList.get(position).getCl_jine());
+        Log.e("TAG","上级skuId---------"+smClList.get(position).getCl_id());
+        Log.e("TAG","上级cl_jiner---------"+smClList.get(position).getCl_cpid());
             intent.setClass(this, PreSaleDetailActivity.class);
             startActivity(intent);
     }

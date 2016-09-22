@@ -111,6 +111,7 @@
             android:layout_height="match_parent">
             <!--是否成团 ->目前都隐藏团购时间和未成团提示-->
             <RelativeLayout
+                android:id="@+id/relative_tuangou"
                 android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/x40">
@@ -120,9 +121,9 @@
                     android:id="@+id/tv_success"
                     android:textColor="@color/green_black"
                     android:layout_centerInParent="true"
-
+                    android:text="剩余团购时间 12:00:00"
+                    android:layout_marginLeft="@dimen/x10"
                     />
-                <!-- android:text="剩余团购时间 12:00:00"-->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -246,6 +247,22 @@
                     />
 
             </LinearLayout>
+                <TextView
+                    android:id="@+id/tv_tuangou_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/selley_bg"/>
+                <TextView
+                    android:id="@+id/tv_tuangou_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="距离开团剩余时间 : 2:12:#"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/blue"
+                    android:gravity="center"
+                    android:layout_marginTop="@dimen/x10"
+                    android:layout_marginBottom="@dimen/x15"
+                    />
             <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/x1"
@@ -256,10 +273,19 @@
                 android:id="@+id/linear_tuangou_time"
                 android:layout_width="match_parent"
                 android:orientation="vertical"
-                android:layout_height="@dimen/x60">
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textSize="@dimen/x10"
+                    android:id="@+id/tv_pro_now"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="当前进度为 : 10%"
+                    android:layout_marginTop="@dimen/x15"
+                    android:layout_marginLeft="@dimen/x70"
+                    />
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     >
                     <!--<TextView-->
                         <!--android:layout_width="wrap_content"-->
@@ -272,50 +298,58 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="距离团剩余时间 :"
+                        android:text="成团进度:"
                         android:layout_marginLeft="@dimen/x10"
                         android:id="@+id/tv_progress"
                         android:layout_centerVertical="true"
                         android:textColor="@color/zixun_topbg"
                         />
-                    <TextView
+                    <ProgressBar
                         android:layout_width="match_parent"
+                        android:layout_height="@dimen/x10"
+                        android:layout_toRightOf="@+id/tv_progress"
+                        android:layout_marginLeft="@dimen/x5"
+                        android:id="@+id/pbDemo"
+                        style="@android:style/Widget.ProgressBar.Horizontal"
+                        android:progress="50"
+                        android:progressDrawable="@drawable/progressdrawable"
+                        android:layout_marginTop="@dimen/x5"
+                        android:layout_marginRight="@dimen/x10"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:text="1天 01:00:00"
+                        android:text="0t"
+                        android:layout_below="@id/pbDemo"
                         android:layout_toRightOf="@+id/tv_progress"
                         android:layout_marginLeft="@dimen/x5"
                         android:textColor="@color/zixun_topbg"
                         />
-                    <!--<ProgressBar-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="@dimen/x10"-->
-                        <!--android:layout_toRightOf="@+id/tv_progress"-->
-                        <!--android:layout_marginLeft="@dimen/x5"-->
-                        <!--android:id="@+id/pbDemo"-->
-                        <!--style="@android:style/Widget.ProgressBar.Horizontal"-->
-                        <!--android:progress="50"-->
-                        <!--android:progressDrawable="@drawable/progressdrawable"-->
-                        <!--android:layout_marginTop="@dimen/x25"-->
-                        <!--android:layout_marginRight="@dimen/x10"-->
-
-                        <!--/>-->
-                    <!--<TextView-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:text="0t"-->
-                        <!--android:layout_below="@id/pbDemo"-->
-                        <!--android:layout_toRightOf="@+id/tv_progress"-->
-                        <!--android:layout_marginLeft="@dimen/x5"-->
-                        <!--/>-->
-                    <!--<TextView-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_alignParentRight="true"-->
-                        <!--android:layout_marginRight="@dimen/x10"-->
-                        <!--android:text="100t"-->
-                        <!--android:layout_below="@+id/pbDemo"-->
-                        <!--/>-->
+                    <TextView
+                        android:id="@+id/tv_all_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="@dimen/x10"
+                        android:text="100t"
+                        android:layout_below="@+id/pbDemo"
+                        />
+                    <ImageView
+                        android:textSize="@dimen/x10"
+                        android:id="@+id/img_sanjiao"
+                        android:layout_width="@dimen/x10"
+                        android:layout_height="@dimen/x10"
+                        android:src="@mipmap/ic_launcher"
+                        android:layout_below="@id/pbDemo"
+                        android:layout_marginLeft="@dimen/x140"/>
+                    <TextView
+                        android:textSize="@dimen/x10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/img_sanjiao"
+                        android:text="成团量"
+                        android:layout_marginLeft="@dimen/x130"/>
                 </RelativeLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -419,32 +453,16 @@
                     android:text="讯帮1号仓库"
                     android:textSize="@dimen/x10"
                     android:layout_below="@id/min_variable_tv"/>
-                <TextView
-                    android:id="@+id/delivery_mode_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/x5"
-                    android:text="交货方式："
-                    android:textSize="@dimen/x10"
-                    android:layout_below="@id/warehouse_address_tv"/>
-                <TextView
-                    android:id="@+id/delivery_mode_et"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/x5"
-                    android:layout_toRightOf="@id/delivery_mode_tv"
-                    android:text="塑料配送、卖家配送、自提"
-                    android:textSize="@dimen/x10"
-                    android:layout_below="@id/warehouse_address_tv"/>
+
                 <TextView
                     android:id="@+id/classification_pre_sale_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="分类："
                     android:textSize="@dimen/x10"
-                    android:layout_toRightOf="@id/delivery_mode_et"
+                    android:layout_toRightOf="@id/warehouse_address_et"
                     android:layout_marginBottom="@dimen/x5"
-                    android:layout_marginLeft="@dimen/x150"
+                    android:layout_marginLeft="@dimen/x100"
                     />
                 <TextView
                     android:id="@+id/classification_pre_sale_et"
@@ -456,26 +474,24 @@
                     android:layout_marginBottom="@dimen/x5"
                     />
                 <TextView
-                    android:id="@+id/warehouse_tv"
+                    android:id="@+id/delivery_mode_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="最小变价单位:"
-                    android:textSize="@dimen/x10"
-                    android:layout_toRightOf="@id/delivery_mode_et"
                     android:layout_marginBottom="@dimen/x5"
-                    android:layout_below="@id/classification_pre_sale_tv"
-                    android:layout_marginLeft="@dimen/x150"
-                    />
+                    android:text="交货方式："
+                    android:layout_marginLeft="@dimen/x100"
+                    android:textSize="@dimen/x10"
+                    android:layout_toRightOf="@id/warehouse_address_et"
+                    android:layout_below="@id/classification_pre_sale_tv"/>
                 <TextView
-                    android:id="@+id/warehouse_et"
+                    android:id="@+id/delivery_mode_et"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/x10"
-                    android:text="讯帮1号仓库"
-                    android:layout_toRightOf="@id/warehouse_tv"
                     android:layout_marginBottom="@dimen/x5"
-                    android:layout_below="@id/classification_pre_sale_tv"
-                    />
+                    android:layout_toRightOf="@id/delivery_mode_tv"
+                    android:text="塑料配送、卖家配送、自提"
+                    android:textSize="@dimen/x10"
+                    android:layout_below="@id/classification_pre_sale_tv"/>
                 <TextView
                     android:id="@+id/region_tv"
                     android:layout_width="wrap_content"

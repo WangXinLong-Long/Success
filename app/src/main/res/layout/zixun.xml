@@ -47,7 +47,6 @@
             <ImageView
                 android:id="@+id/img_zixun_top"
                 style="@style/Img_zixun"
-               android:src="@mipmap/zixun_select_null"
                 />
         </RelativeLayout>
         <RelativeLayout
@@ -64,7 +63,6 @@
             <ImageView
                 android:id="@+id/img_zixun_second"
                 style="@style/Img_zixun"
-                android:src="@mipmap/zixun_select_null"
                 />
         </RelativeLayout>
         <!--<LinearLayout-->
