@@ -255,7 +255,62 @@ public class PaymentsOrder extends Activity implements View.OnClickListener {
                     LogUtils.log("result-->" + result);
                     Gson gson = new Gson();
                     orderList = gson.fromJson(result, OrderList.class);
-                    LogUtils.log("可以获取到的数据-->getQuantity" + orderList.getOrderIdList().get(0).getCommerceItem().get(0).getQuantity());
+                    LogUtils.log("可以获取到的数据-->getQuantity" + orderList.getOrderIdList().get(0).getCommerceItem().get(0).getQuantity());//这里可以获取到数据么？
+                    list=new ArrayList<Map<String,Object>>();
+                    order_id = orderList.getOrderIdList().get(0).getOrderId();
+                    type = orderList.getOrderIdList().get(0).getCommerceItem().get(0).getParentCategories();
+                    price = orderList.getOrderIdList().get(0).getCommerceItem().get(0).getSalePrice() + "";
+                    paihao = orderList.getOrderIdList().get(0).getCommerceItem().get(0).getGradeNumber();
+                    number = orderList.getOrderIdList().get(0).getCommerceItem().get(0).getQuantity() + "";
+                    qiye = orderList.getOrderIdList().get(0).getCommerceItem().get(0).getManufacturer();
+                    all_price = orderList.getOrderIdList().get(0).getCommerceItem().get(0).getAmount() + "";
+                    cangku = orderList.getOrderIdList().get(0).getCommerceItem().get(0).getWarehouse();
+                    comm = orderList.getOrderIdList().get(0).getCommerceItem().get(0).getSalesCompanyDisplayName();
+                    name = orderList.getOrderIdList().get(0).getCommerceItem().get(0).getProductName();
+                    String total = orderList.getOrderIdList().get(0).getTotal() + "";
+                    String time = orderList.getOrderIdList().get(0).getRemainingTime() + "";
+                    Log.d("企业名称","企业名称"+order_id);
+                    Log.d("企业名称","企业名称"+qiye);
+                    Map<String, Object> map = new Hashtable<String, Object>();
+                    map.put("order_id", "订单编号:" + order_id);
+                    map.put("total", total);
+                    map.put("time", time);
+                    map.put("name", name);
+                    map.put("type", type);
+                    map.put("paihao", paihao);
+                    map.put("qiye", qiye);
+                    map.put("cangku", cangku);
+                    map.put("price", price);
+                    map.put("number", number);
+                    map.put("all_price", all_price);
+                    map.put("comm", comm);
+                    Log.d("企业名称",map.toString());
+                    list.add(map);
+                    list_order.add(order_id);
+                    Log.d("企业名称",list.toString());
+                    Log.d("企业名称",list.size()+"");
+
+
+                    list_adapter = new SimpleAdapter(PaymentsOrder.this, list, R.layout.order_item,
+                            new String[]{"order_id", "total", "time", "name", "type", "paihao", "qiye",
+                                    "cangku", "price", "number", "all_price", "comm"},
+                            new int[]{
+                                    R.id.product_order_number,
+                                    R.id.money_number,
+                                    R.id.residual_time,
+                                    R.id.tv_name,
+                                    R.id.surplus_amount_et,
+                                    R.id.purchase_quantity_et,
+                                    R.id.min_variable_et,
+                                    R.id.delivery_time_et,
+                                    R.id.classification_pre_sale_et,
+                                    R.id.warehouse_et,
+                                    R.id.region_et,
+                                    R.id.company_et
+
+
+                            });
+                    lvdemo.setAdapter(list_adapter);
 
                 }
 
