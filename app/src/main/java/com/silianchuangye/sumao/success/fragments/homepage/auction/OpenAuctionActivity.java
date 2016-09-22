@@ -37,7 +37,8 @@ import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInSt
 import com.silianchuangye.sumao.success.fragments.homepage.sumaoconsultMVP.SuMaoConsult;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoMVP.view.FirmInfoActivity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.LoginUserActivity;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.RegisterPhoneActivity;
+
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.RegisterPhoneMVP.RegisterPhoneView.RegisterPhoneActivity;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
 import org.json.JSONArray;
@@ -153,7 +154,7 @@ public class OpenAuctionActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //显示popupwindow
                 showPopupWindow();
-                backgroundAlpha(0.5f);
+                backgroundAlpha(0.5f);/////
             }
         });
        // bt_non_jingpai= (Button) findViewById(R.id.bt_non_jingpai);
