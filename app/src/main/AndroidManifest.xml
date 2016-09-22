@@ -577,7 +577,7 @@
             android:screenOrientation="portrait" />
         <activity android:name=".ShangYou.ShangYouSelectNumber" />
         <activity android:name=".ShangYou.PlanDayMVP.ShangYouRemarks" />
-        <activity android:name=".fragments.myPlasticTrade.setting.FunctionIntroduction.FunctionIntroductionActivity"></activity>
+        <activity android:name=".fragments.myPlasticTrade.setting.FunctionIntroduction.FunctionIntroductionMVP.view.FunctionIntroductionActivity"></activity>
     </application>
 
 </manifest>
