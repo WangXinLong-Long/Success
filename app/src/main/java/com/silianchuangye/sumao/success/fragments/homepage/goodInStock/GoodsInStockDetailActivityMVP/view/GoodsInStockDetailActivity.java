@@ -286,7 +286,7 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
         new Thread(){
             @Override
             public void run() {
-                super.run();
+                super.run();///
 //                getPurchase();
             }
         }.start();
