@@ -143,7 +143,7 @@ public class PaymentsOrder extends Activity implements View.OnClickListener{
                             Log.d("提交订单的result", result);
                             try {
                                 JSONObject obj_result=new JSONObject(result);
-                                String Message=obj_result.getString("OrderIdList");
+                                String Message=obj_result.getString("orderIdList");
                                 JSONArray array=new JSONArray(Message);
                                 list=new ArrayList<Map<String,Object>>();
                                 for (int i=0;i<array.length();i++){
@@ -249,13 +249,70 @@ public class PaymentsOrder extends Activity implements View.OnClickListener{
 
                 @Override
                 public void onSuccess(String result) {
-                    Log.d("购买时的result",""+result);
-                    List<String> id_String=new ArrayList<String>();
+                    Log.d("购买时的result", "" + result);
+                    List<String> id_String = new ArrayList<String>();
                     Gson gson = new Gson();
                     orderIdLists = gson.fromJson(result, orderIdList.class);
-                    id_String.add(orderIdLists.getOrderIdList().get(0).getOrderId());
+                    list=new ArrayList<Map<String,Object>>();
+                    order_id = orderIdLists.getOrderIdList().get(0).getOrderId();
+                    type = orderIdLists.getOrderIdList().get(0).getCommerceItem().get(0).getParentCategories();
+                    price = orderIdLists.getOrderIdList().get(0).getCommerceItem().get(0).getSalePrice() + "";
+                    paihao = orderIdLists.getOrderIdList().get(0).getCommerceItem().get(0).getGradeNumber();
+                    number = orderIdLists.getOrderIdList().get(0).getCommerceItem().get(0).getQuantity() + "";
+                    qiye = orderIdLists.getOrderIdList().get(0).getCommerceItem().get(0).getManufacturer();
+                    all_price = orderIdLists.getOrderIdList().get(0).getCommerceItem().get(0).getAmount() + "";
+                    cangku = orderIdLists.getOrderIdList().get(0).getCommerceItem().get(0).getWarehouse();
+                    comm = orderIdLists.getOrderIdList().get(0).getCommerceItem().get(0).getSalesCompanyDisplayName();
+                    name = orderIdLists.getOrderIdList().get(0).getCommerceItem().get(0).getProductName();
+                    String total = orderIdLists.getOrderIdList().get(0).getTotal() + "";
+                    String time = orderIdLists.getOrderIdList().get(0).getRemainingTime() + "";
+                    Log.d("企业名称","企业名称"+time);
+                    Log.d("企业名称","企业名称"+qiye);
+                    Map<String, Object> map = new Hashtable<String, Object>();
+                    map.put("order_id", "订单编号:" + order_id);
+                    map.put("total", total);
+                    map.put("time", time);
+                    map.put("name", name);
+                    map.put("type", type);
+                    map.put("paihao", paihao);
+                    map.put("qiye", qiye);
+                    map.put("cangku", cangku);
+                    map.put("price", price);
+                    map.put("number", number);
+                    map.put("all_price", all_price);
+                    map.put("comm", comm);
+                    Log.d("企业名称",map.toString());
+                    list.add(map);
+                    list_order.add(order_id);
+                    Log.d("企业名称",list.toString());
+                    Log.d("企业名称",list.size()+"");
+
+
+                    list_adapter = new SimpleAdapter(PaymentsOrder.this, list, R.layout.order_item,
+                            new String[]{"order_id", "total", "time", "name", "type", "paihao", "qiye",
+                                    "cangku", "price", "number", "all_price", "comm"},
+                            new int[]{
+                                    R.id.product_order_number,
+                                    R.id.money_number,
+                                    R.id.residual_time,
+                                    R.id.tv_name,
+                                    R.id.surplus_amount_et,
+                                    R.id.purchase_quantity_et,
+                                    R.id.min_variable_et,
+                                    R.id.delivery_time_et,
+                                    R.id.classification_pre_sale_et,
+                                    R.id.warehouse_et,
+                                    R.id.region_et,
+                                    R.id.company_et
+
+
+                            });
+                    lvdemo.setAdapter(list_adapter);
 
                 }
+//
+
+               // }
 
                 @Override
                 public void onError(Throwable ex, boolean isOnCallback) {
