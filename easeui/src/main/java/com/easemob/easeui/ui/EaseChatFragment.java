@@ -8,6 +8,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -54,6 +55,7 @@ import com.easemob.easeui.widget.EaseChatExtendMenu;
 import com.easemob.easeui.widget.EaseChatInputMenu;
 import com.easemob.easeui.widget.EaseChatInputMenu.ChatInputMenuListener;
 import com.easemob.easeui.widget.EaseChatMessageList;
+import com.easemob.easeui.widget.EaseTitleBar;
 import com.easemob.easeui.widget.EaseVoiceRecorderView;
 import com.easemob.easeui.widget.EaseVoiceRecorderView.EaseVoiceRecorderCallback;
 import com.easemob.easeui.widget.chatrow.EaseCustomChatRowProvider;
@@ -116,7 +118,10 @@ public class EaseChatFragment extends EaseBaseFragment implements EMEventListene
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.ease_fragment_chat, container, false);
+        View view = inflater.inflate(R.layout.ease_fragment_chat, container, false);
+        EaseTitleBar bar = ((EaseTitleBar) view.findViewById(R.id.title_bar));
+        bar.setBackgroundColor(Color.parseColor("#1FC2F3"));
+        return view;
     }
 
     @Override
