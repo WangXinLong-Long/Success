@@ -20,7 +20,7 @@ public class CalendarView extends LinearLayout {
 	private TextView tv_date;
 	private TextView tv_week;
 	private TextView tv_today;
-	private MonthDateView monthDateView;
+	public MonthDateView monthDateView;
 	private DateViewClick dateViewClick;
 	private List<DayAndPrice> listDayAndPrice = new ArrayList<DayAndPrice>();
 	private List<WorkOrRelax> listWorkOrRelax = new ArrayList<WorkOrRelax>();

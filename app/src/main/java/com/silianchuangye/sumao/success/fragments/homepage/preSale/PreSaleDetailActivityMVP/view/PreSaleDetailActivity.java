@@ -36,12 +36,14 @@ import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetail
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.presenter.PreSaleDetailPresenter;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.LoginUserActivity;
 import com.silianchuangye.sumao.success.utils.LogUtils;
+import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
+import org.xutils.http.annotation.HttpRequest;
 import org.xutils.x;
 
 import java.text.SimpleDateFormat;
@@ -93,6 +95,9 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
     private RelativeLayout pre_sale_sale_detail_detail;
     private ArrayList<CLAttribute> cl_attribute;
     private String newSkuId = "";
+    private double BZprice;
+    private EditText edt_num;//购买数量
+    private String cl_jiner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +111,7 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
         calendarlist = new ArrayList<>();
         productId = intent.getStringExtra("productId");
         skuId = intent.getStringExtra("skuId");
+        cl_jiner = intent.getStringExtra("cl_jiner");
         LogUtils.log("productId:" + productId + "skuId:" + skuId);
 //        从服务器获取数据
         preSaleDetailPresenter = new PreSaleDetailPresenter(this);
@@ -115,6 +121,7 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
 //        一定要在初始化控件以前把数据加载完毕了
         calendarView.setListDayAndPrice(calendarlist);
         calendarView.invalidate();
+
 
 //        calendarView.invalidate();
         calendarView.setDateViewClick(new CalendarView.DateViewClick() {
@@ -132,10 +139,11 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
                     LogUtils.log("List的日期为："+year+"年"+month+"月"+day+"日");
                     if (selectday.equals(day)&&selectmonth.equals(month)&&selectyear.equals(year)){
                         newSkuId = calendarlist.get(i).getSkuId();
+                        cl_jiner = calendarlist.get(i).getPrice().substring(1,calendarlist.get(i).getPrice().length());
                     }
                 }
                 if (newSkuId.equals("")||newSkuId.isEmpty()){
-                    Toast.makeText(PreSaleDetailActivity.this,"应该是出错了",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PreSaleDetailActivity.this,"出错了",Toast.LENGTH_SHORT).show();
                 }else {
                     preSaleDetailPresenter.sendPreSaleDetailData(newSkuId, productId);
                 }
@@ -166,6 +174,7 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
         tvName_auction = ((TextView) findViewById(R.id.tvName_auction));
         //        6000
         tvPrice_auction = ((TextView) findViewById(R.id.tvPrice_auction));
+        tvPrice_auction.setText(cl_jiner);
         //        积分规则:每吨商品积一分
         pre_sale_detail_integral_rule = ((TextView) findViewById(R.id.pre_sale_detail_integral_rule));
         //        剩余数量
@@ -194,8 +203,8 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
         margin_proportion_et = ((TextView) findViewById(R.id.margin_proportion_et));
         //        产品备注
         pre_sale_detail_remark = ((TextView) findViewById(R.id.pre_sale_detail_remark));
-
-
+        //购买数量
+        edt_num= (EditText) findViewById(R.id.tv_item_cart_buy_num);
     }
 
     @Override
@@ -214,6 +223,7 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
             case R.id.pre_sale_sale_detail_detail:
                 intent.setClass(PreSaleDetailActivity.this, VesselThreeActivity.class);
                 intent.putExtra("title","预售");
+//                TODO 预售合同
                 intent.putExtra("contract","www.baidu.com");
                 intent.putExtra("cl_attribute",cl_attribute);
                 startActivity(intent);
@@ -279,7 +289,7 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                payMoney();
             }
         });
         popupWindow.setTouchable(true);
@@ -304,12 +314,11 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
                 @Override
                 public void run() {
                     // super.run();
-
-
                     String url="http://192.168.32.126:7023/rest/model/atg/commerce/catalog/ProductCatalogActor/availableBank";
                     RequestParams rp=new RequestParams(url);
                     rp.addParameter("productId",productId);
                     Log.d("银行列表的rp",""+rp);
+                    Log.e("TAG","rp------"+rp);
                     x.http().post(rp, new Callback.CommonCallback<String>() {
                         @Override
                         public void onSuccess(String result) {
@@ -373,14 +382,66 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
             }.start();
         }
 
+//预售支付保证金--没写完
+    private void payMoney(){
+        RequestParams params=new RequestParams(SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/payment/OrderPayment/goPresale");
+        params.addParameter("skuId",skuId);
+        params.addParameter("productId",productId);
+        params.addParameter("quantity",BZprice);//保证金
+        String str,blankname="";
+        if (list1!=null){
+            for(int i=0;i<list1.size();i++) {
+                if (list1.get(i).Flag) {
+                    str = list1.get(i).tv_Name;
+                    Log.e("TAG","str----"+str);
+                    if (str.equals("平安银行")) {
+                        //平安
+                        blankname = "1";
+                    } else if (str.equals("昆仑银行")) {
+                        //昆仑
+                        blankname = "2";
+                    } else if (str.equals("中国建设银行")) {
+                        //建行
+                        blankname = "3";
+                    }
+                }
+            }
+        }
+       SharedPreferences sp=this.getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+        String unique123= sp.getString("unique", "");
+        params.addParameter("_dynSessConf",unique123);
+        Log.e("TAG","blankName------"+blankname);
+        params.addParameter("paymentPlatform",blankname);
+        Log.e("TAG","params=-----------"+params);
+        x.http().post(params, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.e("TAG","result-----"+result);
+            }
 
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                Log.e("TAG","ex----"+ex.toString());
+                Log.e("TAG","ex-----"+ex.getMessage().toString());
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+            }
+        });
+    }
 
     @Override
     public void getPreSaleDetailData(PreSaleDetailBean preSaleDetailBean) {
         //        兰州石化7042
         tvName_auction.setText(preSaleDetailBean.getCl_mingcheng());
         //        6000
-//        tvPrice_auction.setText(preSaleDetailBean.get);
+        tvPrice_auction.setText(cl_jiner);
         //        积分规则:每吨商品积一分
 //        pre_sale_detail_integral_rule.setText(preSaleDetailBean.getCl_jifen());
         //        剩余数量
@@ -421,6 +482,20 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
 //        contractString = preSaleDetailBean.get();
         //        获取产品参数
         cl_attribute = preSaleDetailBean.getCl_attribute();
+        //计算保证金
+        String bilistr=margin_proportion_et.getText().toString();
+        Log.e("TAG","bilistr------"+bilistr);
+        String newStr = bilistr.replaceAll("%","");
+        double bili=Double.valueOf(newStr)/100;
+        Log.e("TAG","bibi---"+bili);
+        Log.e("TAG","edt_num.getText().toString()====="+edt_num.getText().toString());
+        int num=Integer.valueOf(edt_num.getText().toString());
+        Log.e("TAG","num----"+num);
+        Log.e("TAG","tvPrice_auction.getText().toString()="+tvPrice_auction.getText().toString());
+        double price=Double.valueOf(tvPrice_auction.getText().toString());
+        Log.e("TAG","price-----"+price);
+        BZprice=bili*num*price;//保证金=价格*数量*保证金比例
+        Log.e("TAG","保证金-----"+BZprice);
     }
 
     @Override
@@ -442,7 +517,13 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
             }
             LogUtils.log(year + "..." + mounth + "..." + day);
             calendarlist.add(new DayAndPrice("￥"+sku.getCl_jiner(), year, mounth, day,skuId));
+            if (i == 0)
+            {
+                //设置进来就显示到预售日期的第一个
+                calendarView.monthDateView.setSelectYearMonth( year, mounth-1,day);
+            }
         }
+
         calendarView.setSelected(true);
         for (int i = 0; i < calendarlist.size(); i++) {
             LogUtils.log("我这没问题：" + calendarlist.get(i).toString());

@@ -10,7 +10,9 @@ import android.widget.TextView;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.SearchActivityMVP.bean.Cls;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2016/9/9 0009.
@@ -19,11 +21,19 @@ public class TypeInfoActivityAdapter extends BaseAdapter {
     private Context context;
     private List<Cls> cl;////////////////
     private LayoutInflater inflater;
+    private final Map<String, String> hashMap;
 
     public TypeInfoActivityAdapter(Context context, List<Cls> cl) {
         this.context = context;
         this.cl = cl;
         inflater = LayoutInflater.from(context);
+        hashMap = new HashMap<>();
+        hashMap.put("englishAuctionProduct","公开竞拍");
+        hashMap.put("fixedProduct","现货");
+        hashMap.put("forward-pricing-product","预售");
+        hashMap.put("demandScheduleProduct","计划订单");
+        hashMap.put("sealedAuctionProduct","密封竞拍");
+        hashMap.put("groupProdut","团购");
     }
 
     @Override
@@ -63,7 +73,7 @@ public class TypeInfoActivityAdapter extends BaseAdapter {
         holder.tv_price_type_two .setText(cl.get(position).getCl_jine());
         holder.tv_address_type_two.setText(cl.get(position).getCl_qiye());
         holder.tv_cangku_type_two.setText(cl.get(position).getCl_cangku());
-        holder.tv_state_type_two.setText(cl.get(position).getCl_type());
+        holder.tv_state_type_two.setText(hashMap.get(cl.get(position).getCl_type()));
         return convertView;
     }
 

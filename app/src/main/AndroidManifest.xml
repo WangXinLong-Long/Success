@@ -372,7 +372,7 @@
             android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoMVP.view.FirmInfoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoUpdateActivity"
+            android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoUpdateMVP.view.FirmInfoUpdateActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
@@ -443,6 +443,9 @@
         <activity
             android:name=".fragments.myPlasticTrade.login.LoginUserActivity"
             android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".fragments.type.view.TypeInfoActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.CreateLogistics"
@@ -524,7 +527,7 @@
             android:screenOrientation="portrait" />
         <activity android:name=".customermanger.CustomerParent"
             android:screenOrientation="portrait"/>
-        <activity android:name=".fragments.myPlasticTrade.register.RegisterPhoneActivity" />
+        <activity android:name=".fragments.myPlasticTrade.register.RegisterPhoneMVP.RegisterPhoneView.RegisterPhoneActivity" />
         <activity android:name=".fragments.homepage.groupbuying.GroupBuyingActivity" />
         <activity android:name=".fragments.homepage.groupbuying.GroupBuyingSuccessActivity" />
         <activity android:name=".fragments.homepage.groupbuying.RuleActivity" />
@@ -540,14 +543,14 @@
         <activity android:name=".fragments.homepage.sumaoconsultMVP.SuMaoConsult" />
         <activity android:name=".customermanger.NoAgree"
             android:screenOrientation="portrait"/>
-        <activity
-            android:name=".fragments.type.view.TypeInfoActivity"
-            android:screenOrientation="portrait" />
-        <activity android:name=".ShangYou.CaiGou"
+        <activity android:name=".ShangYou.CaiGouMVP.view.CaiGou"
             android:screenOrientation="portrait"/>
         <activity android:name=".ShangYou.SearchSeePlan"
             android:screenOrientation="portrait" />
-        <activity android:name=".fragments.homepage.UpstreamDirectSellingMVP.view.UpstreamDirectSellingActivity"
+        <activity
+            android:name=".fragments.homepage.UpstreamDirectSellingMVP.view.UpstreamDirectSellingActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".fragments.homepage.UpstreamDirectSellingMVP.UpstreamDirectSellingDetailMVP.VipProductList"
             android:screenOrientation="portrait"/>
         <activity android:name=".fragments.homepage.UpstreamDirectSellingMVP.UpstreamDirectSellingDetailMVP.UpstreamDirectSellingDetailsActivity"
             android:screenOrientation="portrait"></activity>
@@ -555,6 +558,8 @@
             android:screenOrientation="portrait" />
         <activity android:name=".fragments.SellerManagementPlatform.SellerOrderManagement.Fragments.FaPiaoMessage"
             android:screenOrientation="portrait" />
+        <activity android:name=".ShangYou.ShangYouSelectNumber" />
+        <activity android:name=".ShangYou.PlanDayMVP.ShangYouRemarks"></activity>
     </application>
 
 </manifest>

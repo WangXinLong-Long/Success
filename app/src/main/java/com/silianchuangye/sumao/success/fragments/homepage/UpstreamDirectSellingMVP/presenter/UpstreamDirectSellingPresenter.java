@@ -1,5 +1,6 @@
 package com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.presenter;
 
+import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.bean.vipProductBean.VipProductBean;
 import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.model.UpstreamDirectSellingDetailModel.IUpstreamDirectSellingDetailModel;
 import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.model.UpstreamDirectSellingDetailModel.UpstreamDirectSellingDetailCallback;
 import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.model.UpstreamDirectSellingDetailModel.UpstreamDirectSellingDetailModel;
@@ -16,12 +17,12 @@ IUpstreamDirectSellingView upstreamDirectSellingView ;
         this.upstreamDirectSellingView = upstreamDirectSellingView;
     }
 
-    public void getUpstreamDirectSellingDetail(){
-        IUpstreamDirectSellingDetailModel upstreamDirectSellingDetailModel = new UpstreamDirectSellingDetailModel();
+    public void getUpstreamDirectSellingDetail(String id, String sellerCompanyId,String title){
+        IUpstreamDirectSellingDetailModel upstreamDirectSellingDetailModel = new UpstreamDirectSellingDetailModel( id,  sellerCompanyId,title);
         upstreamDirectSellingDetailModel.getUpstreamDirectSellingDetailInfo(new UpstreamDirectSellingDetailCallback() {
             @Override
-            public void callbackIUpstreamDirectSellingDetail() {
-                upstreamDirectSellingView.getUpstreamDirectSellingDetailInfo();
+            public void callbackIUpstreamDirectSellingDetail(VipProductBean vipProductBean,String sellerCompanyId,String title) {
+                upstreamDirectSellingView.getUpstreamDirectSellingDetailInfo( vipProductBean,sellerCompanyId,title);
             }
         });
     }

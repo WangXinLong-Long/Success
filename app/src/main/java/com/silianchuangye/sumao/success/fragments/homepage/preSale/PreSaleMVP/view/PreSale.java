@@ -338,6 +338,7 @@ public class PreSale extends Activity implements View.OnClickListener, AdapterVi
              intent.putExtra("productId",smClList.get(position).getCl_id());
 //        skuId
             intent.putExtra("skuId",smClList.get(position).getCl_cpid());
+            intent.putExtra("cl_jiner",smClList.get(position).getCl_jine());
             intent.setClass(this, PreSaleDetailActivity.class);
             startActivity(intent);
     }
@@ -360,10 +361,6 @@ public class PreSale extends Activity implements View.OnClickListener, AdapterVi
             if (smClList == null || smClList.size() == 0) {
                 Toast.makeText(PreSale.this, "已经到底了", Toast.LENGTH_SHORT).show();
             } else {
-                sList.addAll(smClList);
-                smClList.addAll(sList);
-                LogUtils.log("smClList.size()---->" + smClList.size());
-
                 adapter.notifyDataSetChanged();
             }
         }
@@ -378,9 +375,9 @@ public class PreSale extends Activity implements View.OnClickListener, AdapterVi
                 @Override
                 public void handleMessage(Message msg) {
                     super.handleMessage(msg);
-                    if (smClList!=null){
+
                         smClList.clear();
-                    }
+
                     preSalePresenter.getPreSaleInfo(region2, classification2, application2, 10, 0);
                     pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
                     adapter.notifyDataSetChanged();

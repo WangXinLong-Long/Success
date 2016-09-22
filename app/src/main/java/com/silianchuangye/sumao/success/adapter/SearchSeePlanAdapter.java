@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.silianchuangye.sumao.success.R;
+import com.silianchuangye.sumao.success.ShangYou.CaiGouMVP.bean.PlanOrderList;
 import com.silianchuangye.sumao.success.ShangYou.SearchSeePlanInfo;
 
 import java.util.List;
@@ -20,8 +21,8 @@ import java.util.List;
  */
 public class SearchSeePlanAdapter extends BaseAdapter{
     private Context ctx;
-    private List<SearchSeePlanInfo>list;
-    public SearchSeePlanAdapter(Context ctx,List<SearchSeePlanInfo>list){
+    private List<PlanOrderList>list;
+    public SearchSeePlanAdapter(Context ctx,List<PlanOrderList>list){
         this.ctx=ctx;
         this.list=list;
     }
@@ -62,24 +63,11 @@ public class SearchSeePlanAdapter extends BaseAdapter{
         }else{
             holder= (ViewHolder) convertView.getTag();
         }
-        holder.tv_date.setText(list.get(position).date);
-        holder.tv_name.setText(list.get(position).name);
-        holder.tv_cangku.setText(list.get(position).cangku);
-        holder.tv_num.setText(list.get(position).num);
-        holder.tv_peisong.setText(list.get(position).peisong);
-        holder.tv_state.setText(list.get(position).state);
-        holder.tv_dingdannum.setText(list.get(position).dingdannum);
-        holder.img.setImageResource(list.get(position).img_plan);
-        if(list.get(position).img_plan==R.mipmap.shangyouplan1){
-            //原计划
-            holder.line_searchseeplan.setVisibility(View.GONE);
-            holder.relative.setVisibility(View.GONE);
-            holder.tv_state.setVisibility(View.GONE);
-            holder.tv_leftstate.setVisibility(View.GONE);
-        }else{
-            holder.tv_name.setTextColor(ctx.getResources().getColor(R.color.red));
-            holder.tv_num.setTextColor(ctx.getResources().getColor(R.color.red));
-        }
+
+        if (null == list)
+        holder.tv_date.setText(list.get(position).getScheduleDate());
+        holder.tv_name.setText(list.get(position).getProductName());
+
         //复制按钮
         holder.btn_copy.setOnClickListener(new View.OnClickListener() {
             @Override

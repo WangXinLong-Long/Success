@@ -4,6 +4,7 @@ import android.graphics.drawable.Drawable;
 
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.bean.AnnounceBean;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.bean.BannerBean;
+import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.bean.UpstreamDirectorySellingBean;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.bean.GoodsInStockActivityBean;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.bean.PreSaleDetailCalendarBean;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleMVP.bean.PreSaleBean;
@@ -27,6 +28,6 @@ void setPreSaleDataInActivity(GoodsInStockActivityBean goodsInStockActivityBean)
 //    点击塑贸资讯按钮后，进行网络请求
     void setSuMaoConsultInActivity(AnnounceBean announceBean);
 //    点击上游直销，进行网络请求
-    void setUpstreamDirectSellingInActivity();
+    void setUpstreamDirectSellingInActivity(UpstreamDirectorySellingBean upstreamDirectorySellingBean);
 
 }

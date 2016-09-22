@@ -472,7 +472,8 @@ public class PagerTwo extends BasePager implements ISearchActivityView,AdapterVi
                 adapter1=new ListAdapter(list);
                 lv_Show_Type.setAdapter(adapter1);
                 adapter1.setSelectedPosition(0);
-                ShowRight(list.get(0),"");
+                Log.e("TAG","list.get(0)===="+listId.get(0));
+                ShowRight(list.get(0),listId.get(0));
                 adapter1.notifyDataSetInvalidated();
             }
 

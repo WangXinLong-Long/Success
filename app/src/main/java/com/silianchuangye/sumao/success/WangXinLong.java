@@ -71,6 +71,9 @@ public class WangXinLong extends Activity {
 //                  SessionId过期处理，塑贸资讯
 //                  卖家客服，合同处理
 //        上游直销
+//        9月14日上有直销、日计划
+//        9月19日  查看计划
+//        9月19日  查看计划
 
         showPayDialog();
         ArrayList<String> arrayList = new ArrayList<>();

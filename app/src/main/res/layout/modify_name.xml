@@ -26,6 +26,7 @@
         android:layout_marginLeft="@dimen/x15"
         android:textColor="@color/red"
         android:visibility="invisible"
+
         />
     <TextView
         android:layout_width="wrap_content"

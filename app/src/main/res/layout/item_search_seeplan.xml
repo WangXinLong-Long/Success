@@ -16,6 +16,7 @@
             android:id="@+id/img_item_search_seeplan"
             android:layout_width="@dimen/x30"
             android:layout_height="@dimen/x35"
+            android:src="@mipmap/shangyouplan1"
             />
         <TextView
             android:id="@+id/tv_seeplan_left_date"
@@ -93,14 +94,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:text="2016-1-23"
+            android:text=""
             android:layout_toRightOf="@id/tv_seeplan_left_peisong"/>
         <TextView
             android:id="@+id/tv_seeplan_left_state"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:text="        状态 : "
+            android:text="状态 : "
             android:layout_marginLeft="@dimen/x160"/>
         <TextView
             android:id="@+id/tv_seeplan_right_state"

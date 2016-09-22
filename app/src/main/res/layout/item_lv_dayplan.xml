@@ -31,6 +31,9 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="sfd"
+            android:maxEms="16"
+            android:singleLine="true"
+            android:ellipsize="end"
             android:layout_toLeftOf="@id/img_lv_dayplan_date"/>
         <TextView
             android:id="@+id/tv_delete"

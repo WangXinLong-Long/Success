@@ -16,7 +16,7 @@ public class ShowCalendar {
         Calendar calend1 = Calendar.getInstance();
         calend1.setTimeInMillis(System.currentTimeMillis());
         int year = calend1.get(Calendar.YEAR);
-        int month = calend1.get(Calendar.MONTH) + 1;
+        int month = calend1.get(Calendar.MONTH) ;
         int day = calend1.get(Calendar.DAY_OF_MONTH);
         DatePickerDialog dialog3 = new DatePickerDialog(
                 context,
@@ -27,15 +27,15 @@ public class ShowCalendar {
                                           int year, int monthOfYear,
                                           int dayOfMonth) {
                         Toast.makeText(context,
-                                "" + year + "年" + (monthOfYear + 1)
-                                        + "月" + dayOfMonth + "日", Toast.LENGTH_LONG).show();
+                                "" + year + "-" + (monthOfYear + 1)
+                                        + "-" + dayOfMonth + "", Toast.LENGTH_LONG).show();
                         if (flag)
                         {
-                            Tv.setText(year + "年" + (monthOfYear + 1)
-                                    + "月\n" + dayOfMonth + "日");
+                            Tv.setText(year + "-" + (monthOfYear + 1)
+                                    + "-\n" + dayOfMonth + "");
                         }else {
-                            Tv.setText(year + "年" + (monthOfYear + 1)
-                                    + "月" + dayOfMonth + "日");
+                            Tv.setText(year + "-" + (monthOfYear + 1)
+                                    + "-" + dayOfMonth + "");
                         }
                     }
                 }, year, month, day);
