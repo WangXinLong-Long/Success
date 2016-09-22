@@ -7,16 +7,17 @@ import java.util.List;
  * Created by Administrator on 2016/9/21 0021.
  */
 public class Orders implements Serializable{
-    int total;
+    String total;
+                      //commerceItem
     List<CommerceItems> commerceItem;
-    int remainingTime;
+    String remainingTime;
     String orderId;
 
-    public int getTotal() {
+    public String getTotal() {
         return total;
     }
 
-    public void setTotal(int total) {
+    public void setTotal(String total) {
         this.total = total;
     }
 
@@ -28,11 +29,11 @@ public class Orders implements Serializable{
         this.commerceItem = commerceItem;
     }
 
-    public int getRemainingTime() {
+    public String getRemainingTime() {
         return remainingTime;
     }
 
-    public void setRemainingTime(int remainingTime) {
+    public void setRemainingTime(String remainingTime) {
         this.remainingTime = remainingTime;
     }
 
