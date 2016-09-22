@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2016/9/21 0021.
  */
-public class OrderIdList implements Serializable{
+public class orderIdList implements Serializable{
     List<Orders> orderIdList;
 
     public List<Orders> getOrderIdList() {

@@ -354,6 +354,8 @@
         <activity
             android:name=".fragments.myPlasticTrade.EnterpriseCapitalAccountManagement.SearchMoney"
             android:screenOrientation="portrait" />
+        <activity android:name=".fragments.myPlasticTrade.register.RegisterPhoneMVP.RegisterPhoneView.RegisterPhoneActivity"
+            ></activity>
         <!-- <activity android:name=".fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.InvoiceInformation -->
         <meta-data
             android:name="com.google.android.gms.version"

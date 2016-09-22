@@ -120,8 +120,9 @@
                     android:id="@+id/tv_success"
                     android:textColor="@color/green_black"
                     android:layout_centerInParent="true"
-                    android:text="剩余团购时间 12:00:00"
+
                     />
+                <!-- android:text="剩余团购时间 12:00:00"-->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

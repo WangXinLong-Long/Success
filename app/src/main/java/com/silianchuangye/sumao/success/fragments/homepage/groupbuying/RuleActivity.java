@@ -2,6 +2,7 @@ package com.silianchuangye.sumao.success.fragments.homepage.groupbuying;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -42,6 +43,7 @@ public class RuleActivity extends AppCompatActivity {
         can_gku=bundle.getString("cangku");
         xiangxi=bundle.getString("xiangxi");
         kaishishijian=bundle.getString("kaishi");
+        Log.d("开始时间",kaishishijian);
         jieshushijian=bundle.getString("jieshu");
         tuan_start=bundle.getString("tuan_start");
         tuan_end=bundle.getString("tuan_end");

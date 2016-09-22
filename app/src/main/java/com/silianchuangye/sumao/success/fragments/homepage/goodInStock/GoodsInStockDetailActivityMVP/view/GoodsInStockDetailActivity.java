@@ -98,7 +98,6 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
     private EditText et_number;
     private TextView tv_jian;
     private TextView tv_jia;
-    private String unique;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -218,22 +217,8 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
 //            立即购买：
             case R.id.buy_immediately:
                 int type = 1;
-                SharedPreferences sp=getSharedPreferences("sumao", Activity.MODE_PRIVATE);
-                unique = sp.getString("unique","");
-                if (unique.equals("false")){
-                    Toast.makeText(GoodsInStockDetailActivity.this,"请登录后进行操作",Toast.LENGTH_SHORT).show();
-                }else {
-//                    showPopupWindow(type);
-//                    backgroundAlpha(0.5f);
-                    new Thread(){
-                        @Override
-                        public void run() {
-                            super.run();
-                            getPurchase(unique);
-                        }
-                    }.start();
-                }
-
+                showPopupWindow(type);
+                backgroundAlpha(0.5f);
                 break;
 //             加入购物车：
             case R.id.join_shopping_cart:
@@ -290,11 +275,14 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
     }
 
     private void showPopupWindow(final int num) {
-
-
-
         popupWindowView = View.inflate(this, R.layout.buy_immediately_popup_window, null);
-
+        new Thread(){
+            @Override
+            public void run() {
+                super.run();
+                getPurchase();
+            }
+        }.start();
         img_item_cart_buy_sub = ((TextView) popupWindowView.findViewById(R.id.img_item_cart_buy_sub));
         img_item_cart_buy_add = ((TextView) popupWindowView.findViewById(R.id.img_item_cart_buy_add));
         tv_item_cart_buy_num = ((TextView) popupWindowView.findViewById(R.id.tv_item_cart_buy_num));
