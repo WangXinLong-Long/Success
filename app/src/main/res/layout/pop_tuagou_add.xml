@@ -152,8 +152,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/x5"
-                android:layout_marginLeft="@dimen/x5"
-                android:layout_toRightOf="@id/warehouse_address_et"
+                android:layout_marginLeft="@dimen/x15"
+                android:layout_toRightOf="@id/delivery_time_et"
                 android:text="分类："
                 android:textSize="@dimen/x10" />
 
@@ -172,8 +172,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/classification_pre_sale_tv"
                 android:layout_marginBottom="@dimen/x5"
-                android:layout_marginLeft="@dimen/x5"
-                android:layout_toRightOf="@id/warehouse_address_et"
+                android:layout_marginLeft="@dimen/x15"
+                android:layout_toRightOf="@id/delivery_time_et"
                 android:text="交易方式："
                 android:textSize="@dimen/x10" />
 
@@ -193,8 +193,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/warehouse_tv"
                 android:layout_marginBottom="@dimen/x5"
-                android:layout_marginLeft="@dimen/x5"
-                android:layout_toRightOf="@id/warehouse_address_et"
+                android:layout_marginLeft="@dimen/x15"
+                android:layout_toRightOf="@id/delivery_time_et"
                 android:text="地区："
                 android:textSize="@dimen/x10" />
 

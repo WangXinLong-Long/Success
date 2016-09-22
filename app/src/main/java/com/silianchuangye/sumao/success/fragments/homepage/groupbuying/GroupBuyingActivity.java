@@ -12,12 +12,14 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.silianchuangye.sumao.success.R;
+import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockDetailActivityMVP.bean.CLAttribute;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -114,11 +116,14 @@ public class GroupBuyingActivity extends AppCompatActivity{
 //                                            ("yyyy年MM月dd日 hh:mm:mm");
                                     String end_data=simpleDateFormat.format(Double.parseDouble(obj_array.getString("groupEndDate")));
                                     map.put("endTime",end_data);
+                                    Log.e("TAG","endDate====+"+obj_array.getString("groupEndDate")+"-----"+end_data);
+                                    String cl_groupQuantity=obj_array.getString("cl_groupQuantity");
+                                    map.put("cl_groupQuantity",cl_groupQuantity);
                                     list.add(map);
                                 }
                                 adapter=new MyAdapter(GroupBuyingActivity.this,list,R.layout.layout_for_group_buying,
                                         new String[]{"state","name","startTime","price","number",
-                                                "chengtuan","way","cangku","comm","endTime"},
+                                                "chengtuan","way","cangku","comm","endTime","cl_groupQuantity"},
                                         new int[]{
                                                 R.id.iv_auction_icon,
                                                 R.id.tv_auction_name,
@@ -129,7 +134,8 @@ public class GroupBuyingActivity extends AppCompatActivity{
                                                 R.id.tv_group_way_value,
                                                 R.id.tv_auction_acdress,
                                                 R.id.tv_auction_commAdress,
-                                                R.id.tv_time_end
+                                                R.id.tv_time_end,
+                                                R.id.tv_final_num
                                         });
                                 lv_group_buying.setAdapter(adapter);
 
@@ -185,18 +191,25 @@ public class GroupBuyingActivity extends AppCompatActivity{
         lv_group_buying.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                 if (position%2==0){
-//                     if (!list.get(position).get("state").equals("end")){
-                     Intent intent=new Intent(GroupBuyingActivity.this,GroupBuyingSuccessActivity.class);
-                     intent.putExtra("state","ok");
-                     intent.putExtra("id",shangpinId);
-                     Log.d("商品id的值",shangpinId);
-                     startActivity(intent);
-
+//                 if (position%2==0){
+                if (!list.get(position).get("state").equals("end")){
+                    if(list.get(position).get("state").equals("true")) {
+                        Intent intent = new Intent(GroupBuyingActivity.this, GroupBuyingSuccessActivity.class);
+                        intent.putExtra("state", "ok1");
+                        intent.putExtra("id", list.get(position).get("id").toString());
+                        Log.d("商品id的值", shangpinId);
+                        startActivity(intent);
+                    }else if(list.get(position).get("state").equals("false")){
+                        Intent intent = new Intent(GroupBuyingActivity.this, GroupBuyingSuccessActivity.class);
+                        intent.putExtra("state", "ok2");
+                        intent.putExtra("id", list.get(position).get("id").toString());
+                        Log.d("商品id的值", shangpinId);
+                        startActivity(intent);
+                    }
                  }else{
                      Intent intent=new Intent(GroupBuyingActivity.this,GroupBuyingSuccessActivity.class);
                      intent.putExtra("state","no");
-                     intent.putExtra("id",shangpinId);
+                     intent.putExtra("id",list.get(position).get("id").toString());
                      Log.d("商品id",shangpinId);
                      startActivity(intent);
 
@@ -227,7 +240,10 @@ public class GroupBuyingActivity extends AppCompatActivity{
             TextView tv_way= (TextView) convertView.findViewById(R.id.tv_group_way_value);
             TextView tv_cangku= (TextView) convertView.findViewById(R.id.tv_auction_acdress);
             TextView tv_comm= (TextView) convertView.findViewById(R.id.tv_auction_commAdress);
-            TextView tv_endTime= (TextView) convertView.findViewById(R.id.tv_group_end_time);
+            TextView tv_endTime= (TextView) convertView.findViewById(R.id.tv_time_end);
+            TextView tv_auction_start= (TextView) convertView.findViewById(R.id.tv_auction_start);
+            TextView tv_final_num= (TextView) convertView.findViewById(R.id.tv_final_num);
+            RelativeLayout relative_endtime= (RelativeLayout) convertView.findViewById(R.id.relative_endtime);
             shangpinId=list.get(position).get("id").toString();
             tv_name.setText(list.get(position).get("name").toString());
             tv_StartTime.setText(list.get(position).get("startTime").toString());
@@ -238,22 +254,50 @@ public class GroupBuyingActivity extends AppCompatActivity{
             tv_cangku.setText(list.get(position).get("cangku").toString());
             tv_comm.setText(list.get(position).get("comm").toString());
             tv_endTime.setText(list.get(position).get("endTime").toString());
+            tv_final_num.setText("最终成团量 : "+list.get(position).get("cl_groupQuantity").toString()+"T");
             if (list.get(position).get("state").equals("true")){//正在团购
                 iv_icon.setImageResource(R.mipmap.underwey);
+                tv_StartTime.setVisibility(View.VISIBLE);
+                tv_final_num.setVisibility(View.GONE);
+                relative_endtime.setVisibility(View.VISIBLE);
+                tv_auction_start.setVisibility(View.VISIBLE);
                 bt_join.setBackgroundColor(getResources().getColor(R.color.btn_blue_normal));
             }else if (list.get(position).get("state").equals("false")){//团购没开始
                  iv_icon.setImageResource(R.mipmap.tuangouselect);
+                tv_StartTime.setVisibility(View.VISIBLE);
+                tv_final_num.setVisibility(View.GONE);
+                relative_endtime.setVisibility(View.VISIBLE);
+                tv_auction_start.setVisibility(View.VISIBLE);
                 bt_join.setBackgroundColor(getResources().getColor(R.color.btn_blue_normal));
             }else if (list.get(position).get("state").equals("end")){//团购已结束
+                relative_endtime.setVisibility(View.GONE);
                 iv_icon.setImageResource(R.mipmap.tuangou);
                 bt_join.setBackgroundColor(getResources().getColor(R.color.gray));
-
+                tv_auction_start.setVisibility(View.GONE);
+                tv_StartTime.setVisibility(View.GONE);
+                tv_final_num.setVisibility(View.VISIBLE);
+                bt_join.setText("团购结束");
             }
 
             return convertView;
         }
     }
-
+//    private class Viewholder{
+//        TextView iv_icon;
+//        TextView tv_name;
+//        TextView tv_StartTime;
+//        TextView tv_price;
+//        TextView tv_count;
+//        Button bt_join;
+//        TextView tv_chengtuan;
+//        TextView tv_way;
+//        TextView tv_cangku;
+//        TextView tv_comm;
+//        TextView tv_endTime;
+//        TextView tv_auction_start;
+//        TextView tv_final_num;
+//        RelativeLayout relative_endtime;
+//    }
 
 
 }

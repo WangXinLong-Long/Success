@@ -3,6 +3,8 @@ package com.silianchuangye.sumao.success.fragments.homepage.groupbuying;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.CountDownTimer;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.ActionBarOverlayLayout;
@@ -14,18 +16,25 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
+import com.silianchuangye.sumao.success.adapter.MyPageAdapter;
 import com.silianchuangye.sumao.success.adapter.PopupWindowAdaptrer;
+import com.silianchuangye.sumao.success.dialog.Error_Dialog;
+import com.silianchuangye.sumao.success.dialog.Ok_Dialog;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.OpenAuction;
+import com.silianchuangye.sumao.success.fragments.homepage.auction.VesselThreeActivity;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockDetailActivityMVP.bean.CLAttribute;
+import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleMVP.bean.Group;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,16 +43,19 @@ import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 
 public class GroupBuyingSuccessActivity extends AppCompatActivity {
     private ListView lvDemo;
     private SimpleAdapter adapter;
     private List<Map<String,Object>> list;
-
     private TextView tv_success;
     private TextView tv_failed;
     private LinearLayout aaa;
@@ -81,6 +93,11 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
     private List<OpenAuction> list1;
     private PopupWindowAdaptrer popAdapter;
     private String strbianliang,strprice;//
+    private ImageView img;
+    private TextView tv_pro_now;
+    private ProgressBar pbDemo;
+    private MyCount mc;
+    TextView tv_all_num,tv_tuangou_time;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,6 +108,15 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
         addData();
     }
     public void init(){
+        pbDemo= (ProgressBar) findViewById(R.id.pbDemo);
+        pbDemo.setMax(100);
+        img= (ImageView) findViewById(R.id.ivBack);
+        img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         Bundle bundle=getIntent().getExtras();
         String state=bundle.getString("state");
         Shangpinid=bundle.getString("id");
@@ -105,17 +131,51 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
         linear_tuangou_time= (LinearLayout) findViewById(R.id.linear_tuangou_time);
         layoutService= (LinearLayout) findViewById(R.id.layoutService);
         linear_tuagou_line= (LinearLayout) findViewById(R.id.linear_tuagou_line);
+        tv_pro_now= (TextView) findViewById(R.id.tv_pro_now);//当前显示的进度
+        tv_all_num= (TextView) findViewById(R.id.tv_all_num);
+        tv_tuangou_time= (TextView) findViewById(R.id.tv_tuangou_time);
+        btn_tuangou_add= (Button) findViewById(R.id.btn_tuangou_add);
+        RelativeLayout relative_tuangou= (RelativeLayout) findViewById(R.id.relative_tuangou);
+        TextView tv_tuangou_line= (TextView) findViewById(R.id.tv_tuangou_line);
         if (state.equals("no")){
+            tv_tuangou_line.setVisibility(View.VISIBLE);
+            relative_tuangou.setVisibility(View.GONE);
             tv_success.setVisibility(View.GONE);
-            tv_failed.setVisibility(View.VISIBLE);
+            tv_failed.setVisibility(View.GONE);
             aaa.setVisibility(View.GONE);
             layout_number.setVisibility(View.GONE);
             layout_Bottom.setVisibility(View.INVISIBLE);
             relative_tuangou_end.setVisibility(View.VISIBLE);
             linear_tuangou_time.setVisibility(View.GONE);
-            layoutService.setVisibility(View.GONE);
+            layoutService.setVisibility(View.VISIBLE);
             linear_tuagou_line.setVisibility(View.GONE);
+            tv_tuangou_line.setVisibility(View.GONE);
+            tv_tuangou_time.setVisibility(View.GONE);
         }
+        if(state.equals("ok1")){
+            tv_tuangou_time.setVisibility(View.GONE);
+            layoutService.setVisibility(View.GONE);
+            tv_tuangou_line.setVisibility(View.GONE);
+        }if(state.equals("ok2")){//未开始
+//            tv_tuangou_time.setVisibility(View.VISIBLE);
+//            layoutService.setVisibility(View.VISIBLE);
+////            layout_Bottom.setVisibility(View.GONE);
+//            btn_tuangou_add.setVisibility(View.GONE);
+            tv_tuangou_line.setVisibility(View.VISIBLE);
+            relative_tuangou.setVisibility(View.GONE);
+//            tv_success.setVisibility(View.GONE);
+//            tv_failed.setVisibility(View.GONE);
+            aaa.setVisibility(View.GONE);
+            layout_number.setVisibility(View.GONE);
+            layout_Bottom.setVisibility(View.GONE);
+            relative_tuangou_end.setVisibility(View.VISIBLE);
+            linear_tuangou_time.setVisibility(View.GONE);
+            layoutService.setVisibility(View.VISIBLE);
+            linear_tuagou_line.setVisibility(View.GONE);
+
+            tv_tuangou_time.setVisibility(View.VISIBLE);
+        }
+
         name= (TextView) findViewById(R.id.tvName_auction);
         price= (TextView) findViewById(R.id.tvPrice_auction);
         count= (TextView) findViewById(R.id.surplus_amount_et);
@@ -124,14 +184,14 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
         cangku= (TextView) findViewById(R.id.warehouse_address_et);
         way= (TextView) findViewById(R.id.delivery_mode_et);
         type= (TextView) findViewById(R.id.classification_pre_sale_et);
-        bianjia= (TextView) findViewById(R.id.warehouse_et);
+//        bianjia= (TextView) findViewById(R.id.warehouse_et);
         add= (TextView) findViewById(R.id.region_et);
         comm= (TextView) findViewById(R.id.company_et);
         jian= (RelativeLayout) findViewById(R.id.layout_bb);
         jia= (RelativeLayout) findViewById(R.id.sa);
         number= (EditText) findViewById(R.id.ed_shuzhi_number);
         count_price= (TextView) findViewById(R.id.tv_count_value);
-        btn_tuangou_add= (Button) findViewById(R.id.btn_tuangou_add);
+
         btn_tuangou_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -140,7 +200,6 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
                 backgroundAlpha(0.5f);
             }
         });
-        count_price.setText(10+"");
     }
     public void event(){
         lvDemo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -163,6 +222,12 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
                     startActivity(intent);
 
                 }else if (position==2){
+                    Intent intent=new Intent(GroupBuyingSuccessActivity.this,VesselThreeActivity.class);
+                    intent.putExtra("title","竞拍");
+                    intent.putExtra("cl_attribute",cl_attribute);
+                    intent.putExtra("contract",path);
+                    Log.e("TAG","path----"+path);
+                    startActivity(intent);
 
                 }
             }
@@ -227,6 +292,7 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
                 String url="http://192.168.32.126:7023/rest/model/atg/commerce/catalog/ProductCatalogActor/groupProduct";
                 RequestParams rp=new RequestParams(url);
                 rp.addParameter("productId",Shangpinid);
+                Log.e("TAG",Shangpinid);
                 Log.d("rp的值",rp+"");
                 x.http().post(rp, new Callback.CommonCallback<String>() {
                     @Override
@@ -234,7 +300,42 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
                         Log.d("团购商品的详情页",result);
                         try {
                             JSONObject obj=new JSONObject(result);
-                            tv_success.setText("剩余团购时间:"+obj.getString("utilDate"));
+                            String utilDate=obj.getString("utilDate");
+                            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                            Log.e("TAG","utilDate-----"+utilDate);
+                            long time=0l;
+                            try {
+                                long strdate=dateFormat.parse(utilDate).getTime();
+                                Log.e("TAG","strdate-----"+strdate);
+                                long nowTime=System.currentTimeMillis();
+                                time=strdate-nowTime;
+                                Log.e("TAG","time----"+time);
+                                mc=new MyCount(time,1000);
+                                mc.start();
+//                                Log.e("TAG","time------"+time);
+//                                long mSec = time % 1000;
+//                                time /= 1000;
+//                                long year = time/(365*24*3600);
+//                                time = time%(365*24*3600);
+//                                long month = time/(30*24*3600);
+//                                time = time % (30*24*3600);
+//                                long day = time/(24*3600);
+//                                time = time % (24*3600);
+//                                long hour = time/3600;
+//                                time = time % 3600;
+//                                long min = time/60;
+//                                time = time % 60;
+//                                long sec = time;
+//                                Log.e("TAG","day-"+day);
+//                                Log.e("TAG","hour--"+hour);
+//                                Log.e("TAG","daojishi------"+day+"天"+hour+"小时"+min+"分"+sec+"秒");
+//                                finaltime=day+"天"+hour+"小时"+min+"分"+sec+"秒";
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+
+//                            tv_success.setText(finaltime);
+//                            tv_success.setText("剩余团购时间:"+obj.getString("utilDate"));
                             name.setText(obj.getString("cl_mingcheng"));
                             strprice=obj.getString("cl_jine");
                             price.setText(obj.getString("cl_jine")+"元");
@@ -243,11 +344,15 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
                             strbianliang=obj.getString("cl_xbianliang");
                             bianliang.setText(obj.getString("cl_xbianliang")+"吨");
                             cangku.setText(obj.getString("cl_cangku"));
-                            way.setText(obj.getString("cl_fangshi"));
+                            String fangshi=obj.getString("cl_fangshi");
+                            String str=fangshi.substring(2,fangshi.length()-2);
+                            way.setText(str);
                             type.setText(obj.getString("cl_fenlei"));
-                            bianjia.setText(obj.getString("cl_xbianjia"));
+//                            String bian=obj.getString("cl_xbianjia");
+//                            bianjia.setText(obj.getString("cl_xbianjia"));//最小变价
                             add.setText(obj.getString("cl_diqu"));
                             comm.setText(obj.getString("cl_gongsi"));
+//
                             String shuxing=obj.getString("cl_attribute");
                             Log.d("刷新",shuxing+"aaaaaaaaaa");
                             JSONArray array=new JSONArray(shuxing);
@@ -268,7 +373,15 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
                             jieshushijian=obj.getString("cl_shijianend");
                             tuan_start=obj.getString("groupStartDate");
                             tuan_end=obj.getString("groupEndDate");
+                            String sumAddQty=obj.getString("sumAddQty");//数量
+                            String groupPercent=obj.getString("groupPercent");//比例
 
+                            int i= (int) (Double.valueOf(groupPercent)*100);
+                            tv_pro_now.setText("当前成团量为 : "+i+"%");
+                            tv_all_num.setText(obj.getString("cl_zongliang")+"t");
+                            pbDemo.setProgress(i);
+                            Log.e("TAG","Integer.valueOf(number.getText().toString()======"+Integer.valueOf(number.getText().toString()));
+                            count_price.setText(Integer.valueOf(number.getText().toString())*Integer.valueOf(strprice)+"");
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -307,6 +420,7 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
         tv_pop_add= (TextView) popView.findViewById(R.id.img_item_cart_buy_add);//加号
         tv_pop_sub= (TextView) popView.findViewById(R.id.img_item_cart_buy_sub);//减号
         edt_pop_num= (EditText)popView.findViewById(R.id.tv_item_cart_buy_num);//中间变化的数量
+        edt_pop_num.setText(number.getText().toString());
         btn_pop_ok= (Button) popView.findViewById(R.id.determine_buy_immediately_button);//确定
         popView.measure(0, 0);
         int w = getWindowManager().getDefaultDisplay().getWidth();
@@ -327,6 +441,10 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
                 int num=Integer.valueOf(str);
                 num++;
                 edt_pop_num.setText(num+"");
+                tv_pop_price.setText(Integer.valueOf(edt_pop_num.getText().toString())*Integer.valueOf(strprice)+"");
+                //
+                number.setText(edt_pop_num.getText().toString());
+                count_price.setText(Integer.valueOf(number.getText().toString())*Integer.valueOf(strprice)+"");
             }
         });
         tv_pop_sub.setOnClickListener(new View.OnClickListener() {
@@ -339,6 +457,10 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
                     num=0;
                 }
                 edt_pop_num.setText(num+"");
+                tv_pop_price.setText(Integer.valueOf(edt_pop_num.getText().toString())*Integer.valueOf(strprice)+"");
+                //
+                number.setText(edt_pop_num.getText().toString());
+                count_price.setText(Integer.valueOf(number.getText().toString())*Integer.valueOf(strprice)+"");
             }
         });
 
@@ -352,6 +474,7 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
 
             }
         });
+        popDate();
     }
     public void backgroundAlpha(float bgAlpha) {
         WindowManager.LayoutParams lp = this.getWindow().getAttributes();
@@ -362,7 +485,7 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
     //支付保证金popwindow
     private void showpop(){
         View view=getLayoutInflater().inflate(R.layout.pop_yushou,null);
-        PopupWindow popupWindow=new PopupWindow(findViewById(R.id.Layout_c), ActionBarOverlayLayout.LayoutParams.MATCH_PARENT, ActionBarOverlayLayout.LayoutParams.WRAP_CONTENT);
+        final PopupWindow popupWindow=new PopupWindow(findViewById(R.id.Layout_c), ActionBarOverlayLayout.LayoutParams.MATCH_PARENT, ActionBarOverlayLayout.LayoutParams.WRAP_CONTENT);
         popupWindow.setContentView(view);
        TextView tv= (TextView) view.findViewById(R.id.tv_pay);
 //        et= (EditText) view.findViewById(R.id.etZhifu_auction);
@@ -390,7 +513,20 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                //TODO 这里应该是支付保证金金额的网络请求
+                //先假写一下供测试
+                int i=0;
+                if(i==0){
+                    Intent intent =new Intent(GroupBuyingSuccessActivity.this, Ok_Dialog.class);
+                    intent.putExtra("number",1324);
+                    intent.putExtra("type","");
+                    startActivity(intent);
+                    popupWindow.dismiss();
+                }else{
+                    Intent intent=new Intent(GroupBuyingSuccessActivity.this, Error_Dialog.class);
+                    intent.putExtra("number",1324);
+                    startActivity(intent);
+                }
             }
         });
         popupWindow.setTouchable(true);
@@ -483,4 +619,57 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
             }
         }.start();
     }
+
+    private void popDate(){
+        edt_pop_num.setText(number.getText().toString());
+        tv_pop_price.setText(Integer.valueOf(edt_pop_num.getText().toString())*Integer.valueOf(strprice)+"");
+       //TODO
+        tv_pop_num.setText("");//剩余数量
+        tv_pop_fenlei.setText(type.getText().toString());
+        tv_pop_start_num.setText(qigou.getText().toString());
+        //TODO
+        tv_pop_type.setText("");//交易方式
+        tv_pop_small_null.setText(bianliang.getText().toString());
+        tv_pop_diqu.setText(add.getText().toString());
+        tv_pop_cangku.setText(cangku.getText().toString());
+        tv_pop_gongsi.setText(comm.getText().toString());
+        //
+        Log.e("TAG","tv_pop_num.getText().toString()---"+edt_pop_num.getText().toString());
+        Log.e("TAG","Integer.valueOf(strprice)---"+Integer.valueOf(strprice));
+
+    }
+    class MyCount extends CountDownTimer {
+        public MyCount(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+        }
+        @Override
+        public void onFinish() {
+            tv_success.setText("finish");
+        }
+        @Override
+        public void onTick(long millisUntilFinished) {
+            SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+            long time=millisUntilFinished;
+//            long time=millisUntilFinished- TimeZone.getDefault().getRawOffset();
+            long mSec = time % 1000;
+            time /= 1000;
+            long year = time/(365*24*3600);
+            time = time%(365*24*3600);
+            long month = time/(30*24*3600);
+            time = time % (30*24*3600);
+            long day = time/(24*3600);
+            time = time % (24*3600);
+            long hour = time/3600;
+            time = time % 3600;
+            long min = time/60;
+            time = time % 60;
+            long sec = time;
+//            Log.e("TAG","daojishi------"+day+"天"+hour+"小时"+min+"分"+sec+"秒");
+            String finaltime=day+"天"+hour+"小时"+min+"分"+sec+"秒";
+            Log.e("TAG","finaltime------"+finaltime);
+            tv_success.setText(finaltime);
+            tv_tuangou_time.setText("距离开团时间剩余："+finaltime);
+        }
+    }
+
 }
