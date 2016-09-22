@@ -17,7 +17,7 @@
     <string-array name="child1_buyer">
         <item>现货订单</item>
         <item>预售订单</item>
-        <item>客服订单</item>
+       <!-- <item>客服订单</item>-->
     </string-array>
 
     <string-array name="child2_buyer">
@@ -41,7 +41,8 @@
 
     <string-array name="child5_buyer">
         <item>资金账户信息</item>
-        <item>账户金额明细</item>
+
+       <!--TODO <item>账户金额明细</item>-->
     </string-array>
 
     <string-array name="child1_seller">
