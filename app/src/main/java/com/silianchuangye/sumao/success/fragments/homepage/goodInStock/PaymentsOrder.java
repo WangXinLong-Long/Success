@@ -246,18 +246,11 @@ public class PaymentsOrder extends Activity implements View.OnClickListener{
             Log.d("Skuid",infos[3]);
             Log.d("rp的值",requestParams+"");
             x.http().post(requestParams, new Callback.CommonCallback<String>() {
-                private OrderList orderLists;
+                private orderIdList orderIdLists;
 
                 @Override
                 public void onSuccess(String result) {
-                    Log.d("购买时的result",""+result);
-                    LogUtils.log("购买时的result"+result);
-                    Gson gson = new Gson();
-                    orderLists = gson.fromJson(result, OrderList.class);
-//                    id_String.add(orderLists.getOrderIdList().get(0).getOrderId());
-                    LogUtils.log("管俊说获取不到的数据---》"+ orderLists.getOrderIdList());
-                    LogUtils.log("管俊说获取不到的数据getQuantity---》"+ orderLists.getOrderIdList().get(0).getCommerceItem().get(0).getQuantity());
-                    LogUtils.log("管俊说获取不到的数据getProductName---》"+ orderLists.getOrderIdList().get(0).getCommerceItem().get(0).getProductName());
+
 
                 }
 
