@@ -276,13 +276,14 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
 
     private void showPopupWindow(final int num) {
         popupWindowView = View.inflate(this, R.layout.buy_immediately_popup_window, null);
-        SharedPreferences sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
-        String unique=sp.getString("unique","");
+
         new Thread(){
             @Override
             public void run() {
                 super.run();
-                getPurchase();
+                SharedPreferences sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+                String unique=sp.getString("unique","");
+                getPurchase(unique);
             }
         }.start();
         img_item_cart_buy_sub = ((TextView) popupWindowView.findViewById(R.id.img_item_cart_buy_sub));
