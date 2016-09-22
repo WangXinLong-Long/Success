@@ -21,11 +21,13 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.PopupWindowAdaptrer;
 import com.silianchuangye.sumao.success.dialog.Error_Dialog;
 import com.silianchuangye.sumao.success.dialog.Ok_Dialog;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.OpenAuction;
+import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockDetailActivityMVP.bean.OrderIdList;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -113,116 +115,165 @@ public class PaymentsOrder extends Activity implements View.OnClickListener{
     }
 
     public void commit_order() {
-        Bundle bundle=getIntent().getExtras();
-        list_id=bundle.getStringArrayList("id");
-        Log.d("商品id的集合",list_id+"ssssssssssssssssssssssss");
-        new Thread() {
-            @Override
-            public void run() {
-                //super.run();
-                String url = "http://192.168.32.126:7023/rest/model/atg/commerce/ShoppingCartActor/cartExpressCheckout";
-                RequestParams rp = new RequestParams(url);
-                String a = list_id.toString();
-                Log.d("商品id",a+"ssssssssssss");
-                int len = a.length() - 1;
-                String id = a.substring(1, len).replaceAll(" ", "");
-                Log.d("商品id", ""+id);
-                rp.addParameter("strCommerceItemIds",id);
-                SharedPreferences sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
-                String coummit_unique = sp.getString("unique", "");
-                rp.addParameter("_dynSessConf",coummit_unique);
-                Log.d("提交订单的唯一标识",coummit_unique);
-                Log.d("rp的值", rp + "");
-                x.http().post(rp, new Callback.CommonCallback<String>() {
-                    @Override
-                    public void onSuccess(String result) {
-                        Log.d("提交订单的result", result);
-                        try {
-                            JSONObject obj_result=new JSONObject(result);
-                            String Message=obj_result.getString("orderIdList");
-                            JSONArray array=new JSONArray(Message);
-                            list=new ArrayList<Map<String,Object>>();
-                            for (int i=0;i<array.length();i++){
-                                JSONObject obj_array=array.getJSONObject(i);
-                                //Map<String,Object> map=new Hashtable<String, Object>();
-                                String info=obj_array.getString("commerceItem");
-                                String time=obj_array.getString("remainingTime");
-                                order_id=obj_array.getString("orderId");
-                                String total=obj_array.getString("total");
-                                JSONArray array_obj=new JSONArray(info);
-                                for (int j=0;j<array_obj.length();j++){
-                                    JSONObject gouwuche_info=array_obj.getJSONObject(j);
-                                     type=gouwuche_info.getString("parentCategories");
-                                     price=gouwuche_info.getString("salePrice");
-                                     paihao=gouwuche_info.getString("gradeNumber");
-                                     number=gouwuche_info.getString("quantity");
-                                     qiye=gouwuche_info.getString("manufacturer");
-                                     all_price=gouwuche_info.getString("amount");
-                                     cangku=gouwuche_info.getString("warehouse");
-                                     comm=gouwuche_info.getString("salesCompanyDisplayName");
-                                     name=gouwuche_info.getString("productName");
+        String fixOrCart=getIntent().getStringExtra("type");
+        if (fixOrCart.equals("cart")){
+            list_id=getIntent().getExtras().getStringArrayList("id");
+            Log.d("商品id的集合",list_id+"ssssssssssssssssssssssss");
+            new Thread() {
+                @Override
+                public void run() {
+                    //super.run();
+                    String url = "http://192.168.32.126:7023/rest/model/atg/commerce/ShoppingCartActor/cartExpressCheckout";
+                    RequestParams rp = new RequestParams(url);
+                    String a = list_id.toString();
+                    Log.d("商品id",a+"ssssssssssss");
+                    int len = a.length() - 1;
+                    String id = a.substring(1, len).replaceAll(" ", "");
+                    Log.d("商品id", ""+id);
+                    rp.addParameter("strCommerceItemIds",id);
+                    SharedPreferences sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+                    String coummit_unique = sp.getString("unique", "");
+                    rp.addParameter("_dynSessConf",coummit_unique);
+                    Log.d("提交订单的唯一标识",coummit_unique);
+                    Log.d("rp的值", rp + "");
+                    x.http().post(rp, new Callback.CommonCallback<String>() {
+                        @Override
+                        public void onSuccess(String result) {
+                            Log.d("提交订单的result", result);
+                            try {
+                                JSONObject obj_result=new JSONObject(result);
+                                String Message=obj_result.getString("OrderIdList");
+                                JSONArray array=new JSONArray(Message);
+                                list=new ArrayList<Map<String,Object>>();
+                                for (int i=0;i<array.length();i++){
+                                    JSONObject obj_array=array.getJSONObject(i);
+                                    //Map<String,Object> map=new Hashtable<String, Object>();
+                                    String info=obj_array.getString("commerceItem");
+                                    String time=obj_array.getString("remainingTime");
+                                    order_id=obj_array.getString("orderId");
+                                    String total=obj_array.getString("total");
+                                    JSONArray array_obj=new JSONArray(info);
+                                    for (int j=0;j<array_obj.length();j++){
+                                        JSONObject gouwuche_info=array_obj.getJSONObject(j);
+                                        type=gouwuche_info.getString("parentCategories");
+                                        price=gouwuche_info.getString("salePrice");
+                                        paihao=gouwuche_info.getString("gradeNumber");
+                                        number=gouwuche_info.getString("quantity");
+                                        qiye=gouwuche_info.getString("manufacturer");
+                                        all_price=gouwuche_info.getString("amount");
+                                        cangku=gouwuche_info.getString("warehouse");
+                                        comm=gouwuche_info.getString("salesCompanyDisplayName");
+                                        name=gouwuche_info.getString("productName");
+
+                                    }
+                                    Map<String,Object> map=new Hashtable<String, Object>();
+                                    map.put("order_id","订单编号:"+order_id);
+                                    map.put("total",total);
+                                    map.put("time",time);
+                                    map.put("name",name);
+                                    map.put("type",type);
+                                    map.put("paihao",paihao);
+                                    map.put("qiye",qiye);
+                                    map.put("cangku",cangku);
+                                    map.put("price",price);
+                                    map.put("number",number);
+                                    map.put("all_price",all_price);
+                                    map.put("comm",comm);
+                                    list.add(map);
+                                    list_order.add(order_id);
 
                                 }
-                                Map<String,Object> map=new Hashtable<String, Object>();
-                                map.put("order_id","订单编号:"+order_id);
-                                map.put("total",total);
-                                map.put("time",time);
-                                map.put("name",name);
-                                map.put("type",type);
-                                map.put("paihao",paihao);
-                                map.put("qiye",qiye);
-                                map.put("cangku",cangku);
-                                map.put("price",price);
-                                map.put("number",number);
-                                map.put("all_price",all_price);
-                                map.put("comm",comm);
-                                list.add(map);
-                                list_order.add(order_id);
+                                list_adapter=new SimpleAdapter(PaymentsOrder.this,list,R.layout.order_item,
+                                        new String[]{"order_id","total","time","name","type","paihao","qiye",
+                                                "cangku","price","number","all_price","comm"},
+                                        new int[]{
+                                                R.id.product_order_number,
+                                                R.id.money_number,
+                                                R.id.residual_time,
+                                                R.id.tv_name,
+                                                R.id.surplus_amount_et,
+                                                R.id.purchase_quantity_et,
+                                                R.id.min_variable_et,
+                                                R.id.delivery_time_et,
+                                                R.id.classification_pre_sale_et,
+                                                R.id.warehouse_et,
+                                                R.id.region_et,
+                                                R.id.company_et
 
+
+                                        });
+                                lvdemo.setAdapter(list_adapter);/////////////
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
-                            list_adapter=new SimpleAdapter(PaymentsOrder.this,list,R.layout.order_item,
-                                    new String[]{"order_id","total","time","name","type","paihao","qiye",
-                                            "cangku","price","number","all_price","comm"},
-                                    new int[]{
-                                            R.id.product_order_number,
-                                            R.id.money_number,
-                                            R.id.residual_time,
-                                            R.id.tv_name,
-                                            R.id.surplus_amount_et,
-                                            R.id.purchase_quantity_et,
-                                            R.id.min_variable_et,
-                                            R.id.delivery_time_et,
-                                            R.id.classification_pre_sale_et,
-                                            R.id.warehouse_et,
-                                            R.id.region_et,
-                                            R.id.company_et
 
-
-                                    });
-                            lvdemo.setAdapter(list_adapter);/////////////
-                        } catch (JSONException e) {
-                            e.printStackTrace();
                         }
 
-                    }
+                        @Override
+                        public void onError(Throwable ex, boolean isOnCallback) {
 
-                    @Override
-                    public void onError(Throwable ex, boolean isOnCallback) {
+                        }
 
-                    }
+                        @Override
+                        public void onCancelled(CancelledException cex) {
 
-                    @Override
-                    public void onCancelled(CancelledException cex) {
+                        }
 
-                    }
+                        @Override
+                        public void onFinished() {
 
-                    @Override
-                    public void onFinished() {
+                        }
+                    });
+                }
+            }.start();
+        }else {
+            String info = getIntent().getStringExtra("fix");
+            String[] infos = info.split(",");
+            String url="http://192.168.32.126:7023/rest/model/atg/commerce/ShoppingCartActor/go";
+            RequestParams requestParams=new RequestParams(url);
+            requestParams.addParameter("quantity",infos[0]);
 
-                    }
-                });
-            }
-        }.start();
+//        SharedPreferences sp=getActivity().getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+            // String unique_gouwuche=sp.getString("unique","");
+            // Log.d("一键购得唯一标识",unique_gouwuche);
+            requestParams.addParameter("_dynSessConf",infos[1]);
+            Log.d("一键购得唯一标识",infos[1]);
+            requestParams.addParameter("productId",infos[2]);
+            Log.d("商品编号",infos[2]);
+            requestParams.addParameter("skuId",infos[3]);
+            Log.d("Skuid",infos[3]);
+            Log.d("rp的值",requestParams+"");
+            x.http().post(requestParams, new Callback.CommonCallback<String>() {
+                private OrderIdList orderIdList;
+
+                @Override
+                public void onSuccess(String result) {
+                    Log.d("购买时的result",""+result);
+                    List<String> id_String=new ArrayList<String>();
+                    Gson gson = new Gson();
+                    orderIdList = gson.fromJson(result, OrderIdList.class);
+                    id_String.add(orderIdList.getOrderIdList().get(0).getOrderId());
+
+                }
+
+                @Override
+                public void onError(Throwable ex, boolean isOnCallback) {
+
+                }
+
+                @Override
+                public void onCancelled(CancelledException cex) {
+
+                }
+
+                @Override
+                public void onFinished() {
+
+                }
+            });
+
+        }
+
     }
 
     @Override

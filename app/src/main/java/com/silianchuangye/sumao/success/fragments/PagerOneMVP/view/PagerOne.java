@@ -90,6 +90,7 @@ public class PagerOne extends BasePager implements IPagerOneView {
     private List<DayAndPrice> calendarlist;
     private Intent calendarintent;
 
+
     @Override
     public void myClickSearch() {
         //调到搜索页

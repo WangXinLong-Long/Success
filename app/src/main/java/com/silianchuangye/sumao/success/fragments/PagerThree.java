@@ -175,6 +175,7 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
 
                     Intent intent = new Intent();
                     intent.setClass(getActivity(), PaymentsOrder.class);
+                    intent.putExtra("type","cart");
                     intent.putExtra("id", (Serializable) id_String);
                     startActivity(intent);
                 } else {
