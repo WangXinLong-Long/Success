@@ -1,5 +1,7 @@
 package com.silianchuangye.sumao.success.fragments.type.model;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.silianchuangye.sumao.success.fragments.SearchActivityMVP.bean.SearchActivityBean;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.bean.GoodsInStockActivityBean;
@@ -80,6 +82,7 @@ public class TypeInfoModel implements ITypeInfoModel {
         RequestParams requestParams = new RequestParams(url);
         requestParams.addParameter("Nrpp",Nrpp+"");
         requestParams.addParameter("No",No+"");
+        Log.e("TAG","request-------"+requestParams);
         try {
             x.http().request(HttpMethod.POST, requestParams, new Callback.CacheCallback<String>() {
 

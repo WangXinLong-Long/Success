@@ -265,6 +265,7 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
         PopupWindow popupWindow=new PopupWindow(findViewById(R.id.Layout_c), ActionBarOverlayLayout.LayoutParams.MATCH_PARENT, ActionBarOverlayLayout.LayoutParams.WRAP_CONTENT);
         popupWindow.setContentView(view);
         tv= (TextView) view.findViewById(R.id.tv_pay);
+        tv.setText(BZprice+"");
 //        et= (EditText) view.findViewById(R.id.etZhifu_auction);
         lv= (ListView) view.findViewById(R.id.lv_popupwindow_auction);
         getinfo_Bank();
@@ -275,9 +276,7 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
                     for(int i=0;i<list1.size();i++){
                         Log.d("Listview的item",position+"");
                         if(i!=position){
-
                             list1.get(i).Flag=false;
-
                         }
                     }
                     list1.get(position).Flag=!list1.get(position).Flag;
@@ -408,33 +407,39 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
                 }
             }
         }
-       SharedPreferences sp=this.getSharedPreferences("sumao", Activity.MODE_PRIVATE);
-        String unique123= sp.getString("unique", "");
-        params.addParameter("_dynSessConf",unique123);
-        Log.e("TAG","blankName------"+blankname);
-        params.addParameter("paymentPlatform",blankname);
-        Log.e("TAG","params=-----------"+params);
-        x.http().post(params, new Callback.CommonCallback<String>() {
-            @Override
-            public void onSuccess(String result) {
-                Log.e("TAG","支付保证金result-----"+result);
-            }
+        if(blankname.equals("")){
+            Toast.makeText(PreSaleDetailActivity.this,"请选择支付银行",Toast.LENGTH_SHORT).show();
 
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-                Log.e("TAG","ex----"+ex.toString());
-                Log.e("TAG","ex-----"+ex.getMessage().toString());
-            }
+        }else {
+            SharedPreferences sp = this.getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+            String unique123 = sp.getString("unique", "");
+            params.addParameter("_dynSessConf", unique123);
+            Log.e("TAG", "blankName------" + blankname);
+            params.addParameter("paymentPlatform", blankname);
+            Log.e("TAG", "params=-----------" + params);
 
-            @Override
-            public void onCancelled(CancelledException cex) {
+            x.http().post(params, new Callback.CommonCallback<String>() {
+                @Override
+                public void onSuccess(String result) {
+                    Log.e("TAG", "支付保证金result-----" + result);
+                }
 
-            }
+                @Override
+                public void onError(Throwable ex, boolean isOnCallback) {
+                    Log.e("TAG", "ex----" + ex.toString());
+                    Log.e("TAG", "ex-----" + ex.getMessage().toString());
+                }
 
-            @Override
-            public void onFinished() {
-            }
-        });
+                @Override
+                public void onCancelled(CancelledException cex) {
+
+                }
+
+                @Override
+                public void onFinished() {
+                }
+            });
+        }
     }
 
     @Override
@@ -516,6 +521,7 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
             } catch (NumberFormatException e) {
                 throw new RuntimeException("没有转换成功");
             }
+            Log.e("TAG","sfd--"+year + "..." + mounth + "..." + day);
             LogUtils.log(year + "..." + mounth + "..." + day);
             calendarlist.add(new DayAndPrice("￥"+sku.getCl_jiner(), year, mounth, day,skuId));
             if (i == 0)
