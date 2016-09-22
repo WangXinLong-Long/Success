@@ -220,7 +220,11 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
 //                backgroundAlpha(0.5f);
                 SharedPreferences sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
                 String unique=sp.getString("unique","");
-                getPurchase(unique);
+                if (unique.equals("false")){
+                    Toast.makeText(GoodsInStockDetailActivity.this,"请登录后进行操作",Toast.LENGTH_SHORT).show();
+                }else {
+                    getPurchase(unique);
+                }
                 break;
 //             加入购物车：
             case R.id.join_shopping_cart:
