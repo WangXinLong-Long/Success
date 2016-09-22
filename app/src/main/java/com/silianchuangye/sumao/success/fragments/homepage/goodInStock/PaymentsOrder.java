@@ -253,7 +253,7 @@ public class PaymentsOrder extends Activity implements View.OnClickListener{
                     List<String> id_String=new ArrayList<String>();
                     Gson gson = new Gson();
                     orderIdLists = gson.fromJson(result, orderIdList.class);
-//                    id_String.add(orderIdList.getOrderIdList().get(0).getOrderId());
+                    id_String.add(orderIdLists.getOrderIdList().get(0).getOrderId());
 
                 }
 
