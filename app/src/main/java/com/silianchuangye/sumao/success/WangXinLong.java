@@ -73,7 +73,6 @@ public class WangXinLong extends Activity {
 //        上游直销
 //        9月14日上有直销、日计划
 //        9月19日  查看计划
-//        9月19日  查看计划
 //        9月22日 修改现货订单bean类
 
         showPayDialog();
