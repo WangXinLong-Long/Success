@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.silianchuangye.sumao.success.R;
+import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,6 +30,7 @@ import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
+import java.sql.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,6 +44,7 @@ public class AuctionActivity extends AppCompatActivity {
     private String name;
     private List<String> order_id;
     private List<String> SKUID;
+    private ArrayList<Map<String,Object>> list_message;
 
     private Button bu;
 
@@ -60,6 +63,7 @@ public class AuctionActivity extends AppCompatActivity {
         getParme();
         init();
         getAddData();
+
         event();
     }
     public void init(){
@@ -119,49 +123,89 @@ public class AuctionActivity extends AppCompatActivity {
         lvAuction.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                if (list.get(position).get("kaishi").toString().equals("开始时间:")){
+                Log.d("商品的position",position+"hhhhhhh");
+                String max=list_message.get(position).get("max").toString();
+                String min=list_message.get(position).get("min").toString();
+                String people_Number=list_message.get(position).get("pNumber").toString();
+                String quty=list_message.get(position).get("quty").toString();
+                Log.d("最高竞标价",max+"sasasa");
+                Log.d("最高竞标价",min+"sasasasa");
+                Log.d("最高竞标价",people_Number+"sasasasa");
+                Log.d("最高竞标价",quty+"sasasaas");
+                SharedPreferences sp=getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+                String name=sp.getString("name","");
+                Log.d("用户名称",name);
+                //Log.d("竞拍时name的值",name+"asasasasasasasasaasasasasasasasasasasasasssssssssssss");
+                String state;
+                //Log.d("竞拍时name的值",name+"aa");
+                if (name!=""){
+                    state="yes";
+                }else{
+                    state="no";
+                }
+                Log.d("登录状态的值",state);
+                Log.d("position的值",position+"");
+                if (list.get(position-1).get("kaishi").toString().equals("开始时间:")){
                     //竞拍未开始
                     Intent intent=new Intent(AuctionActivity.this,OpenAuctionActivity.class);
                     intent.putExtra("name","竞拍未开始");
-                    intent.putExtra("id",order_id.get(position).toString());
-                    if (list.get(position).get("way").equals(R.mipmap.publicauction)){
+                    intent.putExtra("id",order_id.get(position-1).toString());
+                    //intent.putCharSequenceArrayListExtra("list",list_message);
+                    intent.putExtra("max",max);
+                    intent.putExtra("min",min);
+                    intent.putExtra("people_Number",people_Number);
+                    intent.putExtra("quty",quty);
+                    intent.putExtra("state",state);
+                    if (list.get(position-1).get("way").equals(R.mipmap.publicauction)){
                         intent.putExtra("type","公开竞拍");
-                    }else if (list.get(position).get("way").equals(R.mipmap.mifengauction)){
+                    }else if (list.get(position-1).get("way").equals(R.mipmap.mifengauction)){
                         intent.putExtra("type","密封报价");
                     }
                     Log.d("id",order_id.get(position).toString());
                     startActivity(intent);
 
-                }else if (list.get(position).get("kaishi").toString().equals("距离结束时间还剩:")){
+                }else if (list.get(position-1).get("kaishi").toString().equals("正在竞拍:")){
                     //竞拍已开始
                     Intent intent=new Intent(AuctionActivity.this,OpenAuctionActivity.class);
                     intent.putExtra("name","竞拍已开始");
-                    intent.putExtra("id",order_id.get(position).toString());
+                    intent.putExtra("id",order_id.get(position-1).toString());
+                    intent.putExtra("state",state);
+                    intent.putExtra("max",max);
+                    intent.putExtra("min",min);
+                    intent.putExtra("people_Number",people_Number);
+                    intent.putExtra("quty",quty);
                     Log.d("id",order_id.get(position).toString());
-                    if (list.get(position).get("way").equals(R.mipmap.publicauction)){
+                    if (list.get(position-1).get("way").equals(R.mipmap.publicauction)){
                         intent.putExtra("type","公开竞拍");
-                    }else if (list.get(position).get("way").equals(R.mipmap.mifengauction)){
+                    }else if (list.get(position-1).get("way").equals(R.mipmap.mifengauction)){
                         intent.putExtra("type","密封报价");
                     }
                     startActivity(intent);
-                }else if (list.get(position).get("kaishi").toString().equals("")){
+                }else if (list.get(position-1).get("kaishi").toString().equals("")){
+                    Log.d("仓库名称",list.get(position-1).get("cangku").toString()+"aaassssasasas");
+
                     //竞拍已结束
                     Intent intent=new Intent(AuctionActivity.this,OpenAuctionActivity.class);
                     intent.putExtra("name","竞拍已结束");
-                    intent.putExtra("id",order_id.get(position).toString());
-                    Log.d("id",order_id.get(position).toString());
-                    if (list.get(position).get("way").equals(R.mipmap.publicauction)){
+                    intent.putExtra("id",order_id.get(position-1).toString());
+                    intent.putExtra("max",max);
+                    intent.putExtra("min",min);
+                    intent.putExtra("people_Number",people_Number);
+                    intent.putExtra("quty",quty);
+                    Log.d("商品详情的id",order_id.get(position-1).toString());
+                    intent.putExtra("state",state);
+                    Log.d("id",order_id.get(position-1).toString());
+                    if (list.get(position-1).get("way").equals(R.mipmap.publicauction)){
                         intent.putExtra("type","公开竞拍");
-                    }else if (list.get(position).get("way").equals(R.mipmap.mifengauction)){
+                    }else if (list.get(position-1).get("way").equals(R.mipmap.mifengauction)){
                         intent.putExtra("type","密封报价");
                     }
                     startActivity(intent);
-                    //Toast.makeText(AuctionActivity.this, "竞拍已结束,不能参与", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AuctionActivity.this, "竞拍已结束,不能参与", Toast.LENGTH_SHORT).show();
                 }
 
 
-            }
+           }
         });
 
 
@@ -186,6 +230,7 @@ public class AuctionActivity extends AppCompatActivity {
         }
     }
     public void event(){
+        //isSuccessorFail();
 
 
 
@@ -197,19 +242,21 @@ public class AuctionActivity extends AppCompatActivity {
         x.http().post(rp, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Log.d("result",result);
+                Log.d("竞拍列表的result",result);
                 try {
                     JSONObject obj_result = new JSONObject(result);
                     String info=obj_result.getString("prod");
                     JSONArray array=new JSONArray(info);
                     List<Map<String,Object>> list_info=new ArrayList<Map<String, Object>>();
+                    list_message=new ArrayList<Map<String, Object>>();
                     for (int i=0;i<array.length();i++){
                         JSONObject obj_info=array.getJSONObject(i);
                          id=obj_info.getString("id");
-
+                         Log.d("竞拍时id的值",id);
                          namechuanpin=obj_info.getString("cl_mingcheng");
                         // startTime=obj_info.getString("startDate");
-                         startTime=obj_info.getString("startDate");
+                        // startTime=obj_info.getString("startDate");
+                        startTime="1122243223";
                         SimpleDateFormat simpleDateFormat = new SimpleDateFormat
                                 ("yyyy年MM月dd日 hh:mm:mm");
                         String data=simpleDateFormat.format(Double.parseDouble(startTime));
@@ -222,6 +269,8 @@ public class AuctionActivity extends AppCompatActivity {
                          state=obj_info.getString("status");
                          type=obj_info.getString("type");
                          order_id.add(id);
+
+                        Log.d("竞拍时id的值",order_id.size()+"");
                          Map<String,Object> map=new HashMap<String, Object>();
                          map.put("name",namechuanpin);
 
@@ -233,7 +282,7 @@ public class AuctionActivity extends AppCompatActivity {
 
                         }else if (state.equals("1")){
                             //正在竞拍
-                            map.put("kaishi","开始时间:");
+                            map.put("kaishi","正在竞拍:");
                             map.put("startTime",data );
                             map.put("icon","");
                         }else if (state.equals("2")){
@@ -256,9 +305,32 @@ public class AuctionActivity extends AppCompatActivity {
                             map.put("way",R.mipmap.mifengauction);
                         }
                         list_info.add(map);
-
+                        String message=obj_info.getString("List");
+                        JSONArray array_message=new JSONArray(message);
+                        Map<String,Object> map_message;
+                        if (message.contains("max")){
+                            for (int j=0;j<array_message.length();j++){
+                                JSONObject obj_message=array_message.getJSONObject(j);
+                                map_message=new Hashtable<String, Object>();
+                                map_message.put("classname",obj_message.getString("@class"));
+                                map_message.put("max",obj_message.getString("max"));
+                                map_message.put("min",obj_message.getString("min"));
+                                map_message.put("pNumber",obj_message.getString("pNumber"));
+                                map_message.put("quty",obj_message.getString("quty"));
+                                list_message.add(map_message);
+                            }
+                            //  Log.d("长度",list_message.size()+"");
+                        }else{
+                            map_message=new Hashtable<String, Object>();
+                            map_message.put("classname","最高竞拍价");
+                            map_message.put("max","最高竞拍价");
+                            map_message.put("min","最高竞拍价");
+                            map_message.put("pNumber","最高竞拍价");
+                            map_message.put("quty","最高竞拍价");
+                            list_message.add(map_message);
+                        }
                     }
-
+                    Log.d("长度",list_message.size()+"");
                     if (currentPage==1){
                         if (list_info.size()!=0){
                             list.clear();
@@ -303,6 +375,8 @@ public class AuctionActivity extends AppCompatActivity {
         currentPage=1;
 
     }
+
+
     class MyAdapter extends SimpleAdapter{
 
 

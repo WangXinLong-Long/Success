@@ -75,9 +75,11 @@ public class LoginUserActivity extends AppCompatActivity {
                 {
                     //卖家登录
                     sellerlogin();
+
                 }else if (roles.equals("buyer")){
                     //买家登录功能
                     buyerlogin();
+
                 }
 
 

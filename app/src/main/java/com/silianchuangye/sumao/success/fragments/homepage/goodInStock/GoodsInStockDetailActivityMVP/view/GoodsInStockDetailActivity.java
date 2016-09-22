@@ -278,6 +278,7 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
             @Override
             public void run() {
                 super.run();
+                Log.d("进来了","竟来了");
                 getPurchase();
             }
         }.start();
@@ -302,8 +303,6 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
                     /**
                      * 在购物车创建订单的操作在这里执行
                      */
-
-
                     popupWindow.dismiss();
                 }
             }
@@ -448,7 +447,9 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
         Log.d("商品编号",cl_id);
         requestParams.addParameter("skuId",sku_id);
         Log.d("Skuid",sku_id);
-        Log.d("rp的值",requestParams+"");
+        //sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+       // requestParams.addParameter("_dynSessConf",);
+        Log.d("购买时的rp的值",requestParams+"");
         x.http().post(requestParams, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
