@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.silianchuangye.sumao.success.R;
@@ -21,18 +22,35 @@ public class Ok_Dialog extends Activity {
    private Context context;
     private String order_number;
     String type;
-
+    private Button btn_ok_dialog;
+    private LinearLayout linear;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_ok);
         type=getIntent().getStringExtra("type");
+        btn_ok_dialog= (Button) findViewById(R.id.btn_ok_dialog);
+        linear= (LinearLayout) findViewById(R.id.linear_bottem_ok);
+        if(type.equals("")){
+            linear.setVisibility(View.GONE);
+        }else{
+            btn_ok_dialog.setVisibility(View.GONE);
+        }
         ImageView iv_cancel= (ImageView)findViewById(R.id.iv_dialog_ok_cancel);
 
         TextView tv_order_number= (TextView)findViewById(R.id.tv_order_number_ok);
         Bundle bundle=getIntent().getExtras();
         String order_id=bundle.getString("number");
         tv_order_number.setText(order_id);
+
+        btn_ok_dialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("TAG","sfddsfsdf");
+                finish();
+            }
+        });
+
         Button bt_my_order= (Button)findViewById(R.id.bt_my_order);
         Button bt_wuliu= (Button) findViewById(R.id.bt_wulliu);
         tv_order_number.setText(order_number);

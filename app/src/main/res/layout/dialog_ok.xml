@@ -90,7 +90,17 @@
         android:layout_marginBottom="@dimen/x10"
         android:layout_marginTop="@dimen/x10"
         >
+        <Button
+            android:id="@+id/btn_ok_dialog"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/x30"
+            android:text="确定"
+            android:textColor="@color/selley_lv"
+            android:background="@drawable/button_background_blue"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"/>
 <LinearLayout
+    android:id="@+id/linear_bottem_ok"
     android:layout_width="wrap_content"
     android:layout_height="@dimen/x30"
     android:layout_centerHorizontal="true"

@@ -6,31 +6,31 @@ import java.io.Serializable;
  * Created by Administrator on 2016/9/21 0021.
  */
 public class CommerceItems implements Serializable {
-    int amount;
-    int amountUnitScale;
+    String amount;
+    String amountUnitScale;
     String manufacturer;
     String commerceItemId;
     String gradeNumber;
-    int salePrice;
-    int quantity;
+    String salePrice;
+    String quantity;
     String parentCategories;
     String salesCompanyDisplayName;
     String warehouse;
     String productName;
 
-    public int getAmount() {
+    public String getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(String amount) {
         this.amount = amount;
     }
 
-    public int getAmountUnitScale() {
+    public String getAmountUnitScale() {
         return amountUnitScale;
     }
 
-    public void setAmountUnitScale(int amountUnitScale) {
+    public void setAmountUnitScale(String amountUnitScale) {
         this.amountUnitScale = amountUnitScale;
     }
 
@@ -58,19 +58,19 @@ public class CommerceItems implements Serializable {
         this.gradeNumber = gradeNumber;
     }
 
-    public int getSalePrice() {
+    public String getSalePrice() {
         return salePrice;
     }
 
-    public void setSalePrice(int salePrice) {
+    public void setSalePrice(String salePrice) {
         this.salePrice = salePrice;
     }
 
-    public int getQuantity() {
+    public String getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(String quantity) {
         this.quantity = quantity;
     }
 

@@ -27,7 +27,8 @@ import com.silianchuangye.sumao.success.adapter.PopupWindowAdaptrer;
 import com.silianchuangye.sumao.success.dialog.Error_Dialog;
 import com.silianchuangye.sumao.success.dialog.Ok_Dialog;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.OpenAuction;
-import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockDetailActivityMVP.bean.orderIdList;
+import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockDetailActivityMVP.bean.OrderList;
+import com.silianchuangye.sumao.success.utils.LogUtils;
 //import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockDetailActivityMVP.bean.OrderIdList;
 
 import org.json.JSONArray;
@@ -143,7 +144,7 @@ public class PaymentsOrder extends Activity implements View.OnClickListener{
                             Log.d("提交订单的result", result);
                             try {
                                 JSONObject obj_result=new JSONObject(result);
-                                String Message=obj_result.getString("orderIdList");
+                                String Message=obj_result.getString("OrderIdList");
                                 JSONArray array=new JSONArray(Message);
                                 list=new ArrayList<Map<String,Object>>();
                                 for (int i=0;i<array.length();i++){
@@ -310,9 +311,6 @@ public class PaymentsOrder extends Activity implements View.OnClickListener{
                     lvdemo.setAdapter(list_adapter);
 
                 }
-//
-
-               // }
 
                 @Override
                 public void onError(Throwable ex, boolean isOnCallback) {
