@@ -521,7 +521,7 @@
                     android:textSize="@dimen/x10"
 
                     android:layout_marginBottom="@dimen/x5"
-                    android:layout_below="@id/delivery_mode_tv"
+                    android:layout_below="@id/warehouse_address_tv"
 
                     />
                 <TextView
@@ -532,7 +532,7 @@
                     android:text="四联创业化工集团"
                     android:layout_toRightOf="@id/company_tv"
                     android:layout_marginBottom="@dimen/x5"
-                    android:layout_below="@id/delivery_mode_tv"
+                    android:layout_below="@id/warehouse_address_tv"
                     />
 
             </RelativeLayout>

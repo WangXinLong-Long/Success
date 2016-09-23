@@ -355,7 +355,8 @@ public class PagerTwo extends BasePager implements ISearchActivityView,AdapterVi
                                         Log.d("点击", "gridview的item");
                                         str = list_Apple.get(position).toString().trim();
                                         Log.e("TAG","str+caidna====="+str+caidan);
-                                        searchActivityPresenter.sendSearchActivityData(caidan+"+"+str);
+                                        //3983992725+3288900396
+                                        searchActivityPresenter.sendSearchActivityData(str+"+"+caidan);
                                     }
                                 });
                                 if (list_Apple.size() <= 0) {
