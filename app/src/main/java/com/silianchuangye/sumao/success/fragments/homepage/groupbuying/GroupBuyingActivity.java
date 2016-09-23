@@ -116,7 +116,6 @@ public class GroupBuyingActivity extends AppCompatActivity{
 //                                            ("yyyy年MM月dd日 hh:mm:mm");
                                     String end_data=simpleDateFormat.format(Double.parseDouble(obj_array.getString("groupEndDate")));
                                     map.put("endTime",end_data);
-                                    Log.e("TAG","endDate====+"+obj_array.getString("groupEndDate")+"-----"+end_data);
                                     String cl_groupQuantity=obj_array.getString("cl_groupQuantity");
                                     map.put("cl_groupQuantity",cl_groupQuantity);
                                     list.add(map);
@@ -195,20 +194,20 @@ public class GroupBuyingActivity extends AppCompatActivity{
                 if (!list.get(position).get("state").equals("end")){
                     if(list.get(position).get("state").equals("true")) {
                         Intent intent = new Intent(GroupBuyingActivity.this, GroupBuyingSuccessActivity.class);
-                        intent.putExtra("state", "ok1");
+//                        intent.putExtra("state", "ok1");
                         intent.putExtra("id", list.get(position).get("id").toString());
                         Log.d("商品id的值", shangpinId);
                         startActivity(intent);
                     }else if(list.get(position).get("state").equals("false")){
                         Intent intent = new Intent(GroupBuyingActivity.this, GroupBuyingSuccessActivity.class);
-                        intent.putExtra("state", "ok2");
+//                        intent.putExtra("state", "ok2");
                         intent.putExtra("id", list.get(position).get("id").toString());
                         Log.d("商品id的值", shangpinId);
                         startActivity(intent);
                     }
                  }else{
                      Intent intent=new Intent(GroupBuyingActivity.this,GroupBuyingSuccessActivity.class);
-                     intent.putExtra("state","no");
+//                     intent.putExtra("state","no");
                      intent.putExtra("id",list.get(position).get("id").toString());
                      Log.d("商品id",shangpinId);
                      startActivity(intent);

@@ -92,12 +92,13 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
     private Button btn_pop_ok;
     private List<OpenAuction> list1;
     private PopupWindowAdaptrer popAdapter;
-    private String strbianliang,strprice;//
+    private String strbianliang,strprice="";//
     private ImageView img;
     private TextView tv_pro_now;
     private ProgressBar pbDemo;
     private MyCount mc;
-    TextView tv_all_num,tv_tuangou_time;
+    TextView tv_all_num,tv_tuangou_time,tv_tuangou_line;
+    RelativeLayout relative_tuangou;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -118,8 +119,9 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
             }
         });
         Bundle bundle=getIntent().getExtras();
-        String state=bundle.getString("state");
+//        String state=bundle.getString("state");
         Shangpinid=bundle.getString("id");
+        Log.e("TAG","shangp----"+Shangpinid);
         lvDemo= (ListView) findViewById(R.id.lv_demo);
         list=new ArrayList<Map<String,Object>>();
         tv_failed= (TextView) findViewById(R.id.tv_failed);
@@ -135,46 +137,40 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
         tv_all_num= (TextView) findViewById(R.id.tv_all_num);
         tv_tuangou_time= (TextView) findViewById(R.id.tv_tuangou_time);
         btn_tuangou_add= (Button) findViewById(R.id.btn_tuangou_add);
-        RelativeLayout relative_tuangou= (RelativeLayout) findViewById(R.id.relative_tuangou);
-        TextView tv_tuangou_line= (TextView) findViewById(R.id.tv_tuangou_line);
-        if (state.equals("no")){
-            tv_tuangou_line.setVisibility(View.VISIBLE);
-            relative_tuangou.setVisibility(View.GONE);
-            tv_success.setVisibility(View.GONE);
-            tv_failed.setVisibility(View.GONE);
-            aaa.setVisibility(View.GONE);
-            layout_number.setVisibility(View.GONE);
-            layout_Bottom.setVisibility(View.INVISIBLE);
-            relative_tuangou_end.setVisibility(View.VISIBLE);
-            linear_tuangou_time.setVisibility(View.GONE);
-            layoutService.setVisibility(View.VISIBLE);
-            linear_tuagou_line.setVisibility(View.GONE);
-            tv_tuangou_line.setVisibility(View.GONE);
-            tv_tuangou_time.setVisibility(View.GONE);
-        }
-        if(state.equals("ok1")){
-            tv_tuangou_time.setVisibility(View.GONE);
-            layoutService.setVisibility(View.GONE);
-            tv_tuangou_line.setVisibility(View.GONE);
-        }if(state.equals("ok2")){//未开始
-//            tv_tuangou_time.setVisibility(View.VISIBLE);
-//            layoutService.setVisibility(View.VISIBLE);
-////            layout_Bottom.setVisibility(View.GONE);
-//            btn_tuangou_add.setVisibility(View.GONE);
-            tv_tuangou_line.setVisibility(View.VISIBLE);
-            relative_tuangou.setVisibility(View.GONE);
+        relative_tuangou= (RelativeLayout) findViewById(R.id.relative_tuangou);
+         tv_tuangou_line= (TextView) findViewById(R.id.tv_tuangou_line);
+//        if (state.equals("no")){
+//            tv_tuangou_line.setVisibility(View.VISIBLE);
+//            relative_tuangou.setVisibility(View.GONE);
 //            tv_success.setVisibility(View.GONE);
 //            tv_failed.setVisibility(View.GONE);
-            aaa.setVisibility(View.GONE);
-            layout_number.setVisibility(View.GONE);
-            layout_Bottom.setVisibility(View.GONE);
-            relative_tuangou_end.setVisibility(View.VISIBLE);
-            linear_tuangou_time.setVisibility(View.GONE);
-            layoutService.setVisibility(View.VISIBLE);
-            linear_tuagou_line.setVisibility(View.GONE);
-
-            tv_tuangou_time.setVisibility(View.VISIBLE);
-        }
+//            aaa.setVisibility(View.GONE);
+//            layout_number.setVisibility(View.GONE);
+//            layout_Bottom.setVisibility(View.INVISIBLE);
+//            relative_tuangou_end.setVisibility(View.VISIBLE);
+//            linear_tuangou_time.setVisibility(View.GONE);
+//            layoutService.setVisibility(View.VISIBLE);
+//            linear_tuagou_line.setVisibility(View.GONE);
+//            tv_tuangou_line.setVisibility(View.GONE);
+//            tv_tuangou_time.setVisibility(View.GONE);
+//        }
+//        if(state.equals("ok1")){
+//            relative_tuangou.setVisibility(View.VISIBLE);
+//            tv_tuangou_time.setVisibility(View.GONE);
+//            layoutService.setVisibility(View.GONE);
+//            tv_tuangou_line.setVisibility(View.GONE);
+//        }if(state.equals("ok2")){//未开始
+//            tv_tuangou_line.setVisibility(View.VISIBLE);
+//            relative_tuangou.setVisibility(View.GONE);
+//            aaa.setVisibility(View.GONE);
+//            layout_number.setVisibility(View.GONE);
+//            layout_Bottom.setVisibility(View.GONE);
+//            relative_tuangou_end.setVisibility(View.VISIBLE);
+//            linear_tuangou_time.setVisibility(View.GONE);
+//            layoutService.setVisibility(View.VISIBLE);
+//            linear_tuagou_line.setVisibility(View.GONE);
+//            tv_tuangou_time.setVisibility(View.VISIBLE);
+//        }
 
         name= (TextView) findViewById(R.id.tvName_auction);
         price= (TextView) findViewById(R.id.tvPrice_auction);
@@ -226,7 +222,6 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
                     intent.putExtra("title","竞拍");
                     intent.putExtra("cl_attribute",cl_attribute);
                     intent.putExtra("contract",path);
-                    Log.e("TAG","path----"+path);
                     startActivity(intent);
 
                 }
@@ -239,7 +234,6 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
                 Log.d("number的值",str+"");
 //                String bb=bianliang.getText().toString();
                 int aa=Integer.parseInt(str);
-                Log.e("TAG","strbinaliang=------"+strbianliang);
                 int cc=Integer.parseInt(strbianliang);
                 aa=aa+cc;
                 number.setText(aa+"");
@@ -302,40 +296,19 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
                             JSONObject obj=new JSONObject(result);
                             String utilDate=obj.getString("utilDate");
                             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                            Log.e("TAG","utilDate-----"+utilDate);
                             long time=0l;
                             try {
                                 long strdate=dateFormat.parse(utilDate).getTime();
-                                Log.e("TAG","strdate-----"+strdate);
                                 long nowTime=System.currentTimeMillis();
                                 time=strdate-nowTime;
-                                Log.e("TAG","time----"+time);
                                 mc=new MyCount(time,1000);
                                 mc.start();
-//                                Log.e("TAG","time------"+time);
-//                                long mSec = time % 1000;
-//                                time /= 1000;
-//                                long year = time/(365*24*3600);
-//                                time = time%(365*24*3600);
-//                                long month = time/(30*24*3600);
-//                                time = time % (30*24*3600);
-//                                long day = time/(24*3600);
-//                                time = time % (24*3600);
-//                                long hour = time/3600;
-//                                time = time % 3600;
-//                                long min = time/60;
-//                                time = time % 60;
-//                                long sec = time;
-//                                Log.e("TAG","day-"+day);
-//                                Log.e("TAG","hour--"+hour);
-//                                Log.e("TAG","daojishi------"+day+"天"+hour+"小时"+min+"分"+sec+"秒");
-//                                finaltime=day+"天"+hour+"小时"+min+"分"+sec+"秒";
                             } catch (ParseException e) {
                                 e.printStackTrace();
                             }
-
 //                            tv_success.setText(finaltime);
 //                            tv_success.setText("剩余团购时间:"+obj.getString("utilDate"));
+
                             name.setText(obj.getString("cl_mingcheng"));
                             strprice=obj.getString("cl_jine");
                             price.setText(obj.getString("cl_jine")+"元");
@@ -380,8 +353,41 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
                             tv_pro_now.setText("当前成团量为 : "+i+"%");
                             tv_all_num.setText(obj.getString("cl_zongliang")+"t");
                             pbDemo.setProgress(i);
-                            Log.e("TAG","Integer.valueOf(number.getText().toString()======"+Integer.valueOf(number.getText().toString()));
                             count_price.setText(Integer.valueOf(number.getText().toString())*Integer.valueOf(strprice)+"");
+                            String state=obj.getString("section");
+                            if (state.equals("2")){
+                                tv_tuangou_line.setVisibility(View.VISIBLE);
+                                relative_tuangou.setVisibility(View.GONE);
+                                tv_success.setVisibility(View.GONE);
+                                tv_failed.setVisibility(View.GONE);
+                                aaa.setVisibility(View.GONE);
+                                layout_number.setVisibility(View.GONE);
+                                layout_Bottom.setVisibility(View.INVISIBLE);
+                                relative_tuangou_end.setVisibility(View.VISIBLE);
+                                linear_tuangou_time.setVisibility(View.GONE);
+                                layoutService.setVisibility(View.VISIBLE);
+                                linear_tuagou_line.setVisibility(View.GONE);
+                                tv_tuangou_line.setVisibility(View.GONE);
+                                tv_tuangou_time.setVisibility(View.GONE);
+                            }
+                            if(state.equals("1")){
+                                relative_tuangou.setVisibility(View.VISIBLE);
+                                tv_tuangou_time.setVisibility(View.GONE);
+                                layoutService.setVisibility(View.GONE);
+                                tv_tuangou_line.setVisibility(View.GONE);
+                            }if(state.equals("0")){//未开始
+                                tv_tuangou_line.setVisibility(View.VISIBLE);
+                                relative_tuangou.setVisibility(View.GONE);
+                                aaa.setVisibility(View.GONE);
+                                layout_number.setVisibility(View.GONE);
+                                layout_Bottom.setVisibility(View.GONE);
+                                relative_tuangou_end.setVisibility(View.VISIBLE);
+                                linear_tuangou_time.setVisibility(View.GONE);
+                                layoutService.setVisibility(View.VISIBLE);
+                                linear_tuagou_line.setVisibility(View.GONE);
+                                tv_tuangou_time.setVisibility(View.VISIBLE);
+                            }
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -490,21 +496,19 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
        TextView tv= (TextView) view.findViewById(R.id.tv_pay);
 //        et= (EditText) view.findViewById(R.id.etZhifu_auction);
         lv= (ListView) view.findViewById(R.id.lv_popupwindow_auction);
+        list1=new ArrayList<OpenAuction>();
         getinfo_Bank();
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if(parent.getId()==lv.getId()){
                     for(int i=0;i<list1.size();i++){
-                        Log.d("Listview的item",position+"");
                         if(i!=position){
-
                             list1.get(i).Flag=false;
-
                         }
                     }
                     list1.get(position).Flag=!list1.get(position).Flag;
-                    adapter.notifyDataSetChanged();
+                    popAdapter.notifyDataSetChanged();
                 }
             }
         });
@@ -515,17 +519,25 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //TODO 这里应该是支付保证金金额的网络请求
                 //先假写一下供测试
-                int i=0;
-                if(i==0){
-                    Intent intent =new Intent(GroupBuyingSuccessActivity.this, Ok_Dialog.class);
-                    intent.putExtra("number",1324);
-                    intent.putExtra("type","");
-                    startActivity(intent);
-                    popupWindow.dismiss();
-                }else{
-                    Intent intent=new Intent(GroupBuyingSuccessActivity.this, Error_Dialog.class);
-                    intent.putExtra("number",1324);
-                    startActivity(intent);
+                if(list1.size()!=0) {
+                    for (int i = 0; i < list1.size(); i++) {
+                        if (list1.get(i).Flag) {
+                            int j = 0;
+                            if (j == 0) {
+                                Intent intent = new Intent(GroupBuyingSuccessActivity.this, Ok_Dialog.class);
+                                intent.putExtra("number", 1324);
+                                intent.putExtra("type", "");
+                                startActivity(intent);
+                                popupWindow.dismiss();
+                            } else {
+                                Intent intent = new Intent(GroupBuyingSuccessActivity.this, Error_Dialog.class);
+                                intent.putExtra("number", 1324);
+                                startActivity(intent);
+                            }
+                        }else {
+                            Toast.makeText(GroupBuyingSuccessActivity.this, "请选择支付银行", Toast.LENGTH_SHORT).show();
+                        }
+                    }
                 }
             }
         });
@@ -556,15 +568,26 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
                 RequestParams rp=new RequestParams(url);
                 rp.addParameter("productId",Shangpinid);
                 Log.d("银行列表的rp",""+rp);
-                Log.e("TAG","rp------"+rp);
                 x.http().post(rp, new Callback.CommonCallback<String>() {
                     @Override
                     public void onSuccess(String result) {
                         Log.d("银行的列表",result);
                         Log.e("TAG","result-----"+result);
+
+                        try {
+                            JSONObject obj = new JSONObject(result);
+                            String info=obj.getString("info");
+                            if(info.equals("fail")){
+                                Toast.makeText(GroupBuyingSuccessActivity.this, "该用户没有登录,无法获取可支付银行!", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
                         if (result.contains("amount")){
                             try{
-                                list1=new ArrayList<OpenAuction>();
+
                                 JSONObject obj=new JSONObject(result);
                                 String message=obj.getString("bankList");
                                 JSONArray array=new JSONArray(message);
@@ -591,12 +614,12 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
 
                                 }
                                 popAdapter=new PopupWindowAdaptrer(list1,GroupBuyingSuccessActivity.this);
-                                lv.setAdapter(adapter);
+                                lv.setAdapter(popAdapter);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
                         }else {
-                            Toast.makeText(GroupBuyingSuccessActivity.this, "该用户没有登录,无法获取可支付银行!", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(GroupBuyingSuccessActivity.this, "该用户没有登录,无法获取可支付银行!", Toast.LENGTH_SHORT).show();
                         }
                     }
 
@@ -622,7 +645,18 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
 
     private void popDate(){
         edt_pop_num.setText(number.getText().toString());
-        tv_pop_price.setText(Integer.valueOf(edt_pop_num.getText().toString())*Integer.valueOf(strprice)+"");
+        String str,str2;
+        if(edt_pop_num.getText().toString().equals("")){
+            str=0+"";
+        }else{
+            str=edt_pop_num.getText().toString();
+        }
+        if(strprice.equals("")){
+            str2="0";
+        }else{
+            str2=strprice;
+        }
+        tv_pop_price.setText(Integer.valueOf(str)*Integer.valueOf(str2)+"");
        //TODO
         tv_pop_num.setText("");//剩余数量
         tv_pop_fenlei.setText(type.getText().toString());
@@ -634,9 +668,6 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
         tv_pop_cangku.setText(cangku.getText().toString());
         tv_pop_gongsi.setText(comm.getText().toString());
         //
-        Log.e("TAG","tv_pop_num.getText().toString()---"+edt_pop_num.getText().toString());
-        Log.e("TAG","Integer.valueOf(strprice)---"+Integer.valueOf(strprice));
-
     }
     class MyCount extends CountDownTimer {
         public MyCount(long millisInFuture, long countDownInterval) {
@@ -666,7 +697,7 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
             long sec = time;
 //            Log.e("TAG","daojishi------"+day+"天"+hour+"小时"+min+"分"+sec+"秒");
             String finaltime=day+"天"+hour+"小时"+min+"分"+sec+"秒";
-            Log.e("TAG","finaltime------"+finaltime);
+            Log.e("TAG","final-------"+finaltime);
             tv_success.setText(finaltime);
             tv_tuangou_time.setText("距离开团时间剩余："+finaltime);
         }
