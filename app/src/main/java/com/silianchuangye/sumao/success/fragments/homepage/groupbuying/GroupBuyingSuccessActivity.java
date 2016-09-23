@@ -697,7 +697,6 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
             long sec = time;
 //            Log.e("TAG","daojishi------"+day+"天"+hour+"小时"+min+"分"+sec+"秒");
             String finaltime=day+"天"+hour+"小时"+min+"分"+sec+"秒";
-            Log.e("TAG","final-------"+finaltime);
             tv_success.setText(finaltime);
             tv_tuangou_time.setText("距离开团时间剩余："+finaltime);
         }
