@@ -58,7 +58,9 @@ public class TypeInfoActivity extends AppCompatActivity implements OnClickListen
     private RelativeLayout layout_Top_Type;
     private ImageView iv_Search;
     private GridViewAdapter adpater3, adpater2, adpater1, adpater4;
-    private String address, paihao, yingyong, fenlei;
+    private String address = "";
+    String  paihao = "";
+    String yingyong = "", fenlei = "";
     private RelativeLayout layout_type_list;
     // private List<String> list_String;
     private TextView tv_pattern_Type, tv_type_Type, tv_apple_Type_for_Type, tv_address_Type, tv_address_search;
@@ -306,9 +308,14 @@ public class TypeInfoActivity extends AppCompatActivity implements OnClickListen
      * 筛选的popupwindow
      */
     public void popupwindow_shaixuan() {
-
+        paihao = "";
+        address = "";
+        fenlei= "";
+        yingyong= "";
         view = View.inflate(this, R.layout.item_shaixuan, null);
-
+/**
+ * 分类
+ */
         final CustomGridView gv_Apple_Type = (CustomGridView) view.findViewById(R.id.gv_Apple_Type);
         if (classificationMap != null) {
             number1.clear();
@@ -336,7 +343,7 @@ public class TypeInfoActivity extends AppCompatActivity implements OnClickListen
                 adpater4.setSelectedPosition(position);
                 adpater4.notifyDataSetChanged();
                 fenlei = name1.get(position).toString();
-                Log.d("分类", fenlei);
+                LogUtils.log("分类-->"+fenlei);
             }
         });
 
@@ -368,6 +375,7 @@ public class TypeInfoActivity extends AppCompatActivity implements OnClickListen
                 adpater1.setSelectedPosition(position);
                 adpater1.notifyDataSetChanged();
                 paihao = name4.get(position).toString();
+                LogUtils.log("交易模式-->"+paihao);
             }
         });
 
@@ -399,6 +407,7 @@ public class TypeInfoActivity extends AppCompatActivity implements OnClickListen
                 adpater2.setSelectedPosition(position);
                 adpater2.notifyDataSetChanged();
                 yingyong = name2.get(position).toString();
+                LogUtils.log("应用-->"+yingyong);
             }
         });
         /**
@@ -429,7 +438,7 @@ public class TypeInfoActivity extends AppCompatActivity implements OnClickListen
                 adpater3.setSelectedPosition(position);
                 adpater3.notifyDataSetInvalidated();
                 address = name3.get(position).toString();
-
+                LogUtils.log("地区-->"+address);
             }
         });
 
@@ -463,22 +472,25 @@ public class TypeInfoActivity extends AppCompatActivity implements OnClickListen
 
                 Log.d("根据所选的进行筛选", "");
 //                地区、分类、应用、交易模式
-                if (address == null || address.isEmpty()) {
+                if (address.equals("") || address.isEmpty()) {
                     region = "";
                 } else {
                     region = regionMap.get(address);
                 }
-                if (fenlei == null || fenlei.isEmpty()) {
+
+                if (fenlei .equals("") || fenlei.isEmpty()) {
                     classification = "";
                 } else {
                     classification = classificationMap.get(fenlei);
                 }
-                if (yingyong == null || yingyong.isEmpty()) {
+
+                if (yingyong .equals("") || yingyong.isEmpty()) {
                     application = "";
                 } else {
                     application = applicationMap.get(yingyong);
                 }
-                if (paihao == null || paihao.isEmpty()) {
+
+                if (paihao.equals("")  || paihao.isEmpty()) {
                     tradingmethod = "";
                 } else {
                     tradingmethod = number4.get(name4.indexOf(paihao));
