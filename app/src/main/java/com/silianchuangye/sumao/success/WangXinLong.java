@@ -74,6 +74,7 @@ public class WangXinLong extends Activity {
 //        9月14日上有直销、日计划
 //        9月19日  查看计划
 //        9月22日 修改现货订单bean类
+//        9月26日 网络加载时，显示的dialog
 
         showPayDialog();
         ArrayList<String> arrayList = new ArrayList<>();
