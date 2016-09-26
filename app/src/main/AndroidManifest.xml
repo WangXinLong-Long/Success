@@ -422,7 +422,7 @@
             android:name=".fragments.homepage.auction.VlaueActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".fragments.myPlasticTrade.setting.SettingActivity"
+            android:name=".fragments.myPlasticTrade.setting.SettingMVP.view.SettingActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".fragments.myPlasticTrade.register.RegisterActivity"
@@ -577,7 +577,10 @@
             android:screenOrientation="portrait" />
         <activity android:name=".ShangYou.ShangYouSelectNumber" />
         <activity android:name=".ShangYou.PlanDayMVP.ShangYouRemarks" />
-        <activity android:name=".fragments.myPlasticTrade.setting.FunctionIntroduction.FunctionIntroductionMVP.view.FunctionIntroductionActivity"></activity>
+        <activity android:name=".fragments.myPlasticTrade.setting.FunctionIntroduction.FunctionIntroductionMVP.view.FunctionIntroductionActivity" />
+        <activity android:name=".fragments.myPlasticTrade.setting.FunctionIntroductionDetailActivity" />
+        <activity android:name=".fragments.myPlasticTrade.setting.HelpAndFeedbackMVP.view.HelpAndFeedbackActivity" />
+        <activity android:name=".fragments.myPlasticTrade.setting.ScoreActivity"></activity>
     </application>
 
 </manifest>

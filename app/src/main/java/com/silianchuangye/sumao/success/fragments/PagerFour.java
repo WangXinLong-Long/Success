@@ -28,7 +28,7 @@ import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformat
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.personalInformation.InformationSubscription;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.personalInformation.PasswordUpdate;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.personalInformation.UserInformation;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.setting.SettingActivity;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.setting.SettingMVP.view.SettingActivity;
 
 /**
  * Created by Administrator on 2016/4/20 0020.
@@ -70,6 +70,7 @@ public class PagerFour extends BasePager {
         expandableListView = (CustomExpandableListView) view.findViewById(R.id.expandable_listView);
         sela = new ExpandableListViewAdapter(context,"buyer");
         expandableListView.setAdapter(sela);
+//        设置箭头图标消失
         expandableListView.setGroupIndicator(null);
 //        默认列表展开
         for(int i = 0; i < sela.getGroupCount(); i++){

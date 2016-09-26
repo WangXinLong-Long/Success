@@ -21,6 +21,7 @@ import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.SellerManagementPlatform.SellerManagementPlatformActivity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.RegisterPhoneMVP.RegisterPhoneView.RegisterPhoneActivity;
 import com.silianchuangye.sumao.success.utils.GlobalVariable;
+import com.silianchuangye.sumao.success.utils.Loding;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
@@ -139,6 +140,7 @@ public class LoginUserActivity extends AppCompatActivity {
     }
 
     private void buyerlogin() {
+        Loding.show(this,"登录中...",false,null);
         sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
         editor = sp.edit();
         name = et_account_login.getText().toString().trim();
@@ -212,7 +214,7 @@ public class LoginUserActivity extends AppCompatActivity {
                     Log.d("exception", "解析异常");
                 }
 
-
+                Loding.dis();
                     //接收mainactivity传递过来的参数
                     if (str == 9) {
                         Intent intent = new Intent();

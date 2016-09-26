@@ -308,6 +308,8 @@ public class TypeInfoActivity extends AppCompatActivity implements OnClickListen
      * 筛选的popupwindow
      */
     public void popupwindow_shaixuan() {
+        //点击完一遍筛选后，在进行点击，就会导致角标越界异常，497行，--》tradingmethod = number4.get(name4.indexOf(paihao));
+//      需要重置对应的选中文字
         paihao = "";
         address = "";
         fenlei= "";

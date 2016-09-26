@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.myPlasticTrade.setting.HelpAndFeedbackMVP.view.HelpAndFeedbackActivity">
+
+    <include
+        android:id="@+id/title_help_and_feedback"
+        layout="@layout/child_title_bar" />
+
+    <RelativeLayout
+        android:id="@+id/content_function_introduction_detail"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y150"
+        android:layout_below="@+id/title_help_and_feedback"
+        android:layout_marginLeft="@dimen/x10"
+        android:layout_marginRight="@dimen/x10"
+        android:layout_marginTop="@dimen/x10"
+        android:background="@drawable/passwordcolre"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/a"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y35"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x5"
+                android:layout_marginTop="@dimen/x10"
+                android:text="请输入手机号"
+
+                />
+
+            <EditText
+                android:id="@+id/etold_password_update"
+                android:layout_width="@dimen/x130"
+                android:layout_height="@dimen/y24"
+                android:layout_marginLeft="@dimen/x5"
+                android:layout_marginTop="@dimen/y6"
+                android:background="@drawable/edittext_backgroup"
+                android:password="true" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/b"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/a"
+            android:background="@drawable/password_backgroud_center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/aa"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x5"
+                android:layout_marginTop="@dimen/x5"
+                android:text="反馈意见" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/x1"
+                android:layout_marginTop="@dimen/x5"
+                android:background="@color/my_sumao_background" />
+
+            <EditText
+                android:id="@+id/etnew_password_update"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:gravity="top"
+                />
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/btSave_password_update"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/content_function_introduction_detail"
+        android:layout_marginLeft="@dimen/x10"
+        android:layout_marginRight="@dimen/x10"
+        android:layout_marginTop="@dimen/x10"
+        android:background="@drawable/button_backgroup_save"
+        android:text="保存"
+        android:textColor="#fff"
+        android:textSize="16sp" />
+</RelativeLayout>

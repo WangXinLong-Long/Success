@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="#EEEEF3"
     android:orientation="vertical"
-    tools:context=".fragments.myPlasticTrade.setting.SettingActivity">
+    tools:context=".fragments.myPlasticTrade.setting.SettingMVP.view.SettingActivity">
     <include
         android:id="@+id/layoutTop_setting"
         layout="@layout/title_bar"></include>
