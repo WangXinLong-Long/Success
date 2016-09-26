@@ -240,6 +240,7 @@ public class LoginUserActivity extends AppCompatActivity {
             public void onError(Throwable ex, boolean isOnCallback) {
                 LogUtils.log("LoginUserActivity-->onError--->" + ex);
                 Toast.makeText(LoginUserActivity.this, "请检查网络设置！", Toast.LENGTH_SHORT).show();
+
             }
 
             @Override
@@ -249,7 +250,7 @@ public class LoginUserActivity extends AppCompatActivity {
 
             @Override
             public void onFinished() {
-
+                Loding.dis();
             }
         });
 
