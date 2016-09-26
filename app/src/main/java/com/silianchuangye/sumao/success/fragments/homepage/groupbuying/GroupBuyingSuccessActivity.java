@@ -375,6 +375,7 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
                                 tv_tuangou_time.setVisibility(View.GONE);
                                 layoutService.setVisibility(View.GONE);
                                 tv_tuangou_line.setVisibility(View.GONE);
+                                linear_tuangou_time.setVisibility(View.VISIBLE);
                             }if(state.equals("0")){//未开始
                                 tv_tuangou_line.setVisibility(View.VISIBLE);
                                 relative_tuangou.setVisibility(View.GONE);

@@ -268,14 +268,15 @@
                     android:gravity="center"
                     android:layout_marginTop="@dimen/x10"
                     android:layout_marginBottom="@dimen/x15"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     />
         </LinearLayout>
             <LinearLayout
                 android:id="@+id/linear_tuangou_time"
                 android:layout_width="match_parent"
                 android:orientation="vertical"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:visibility="gone">
                 <TextView
                     android:textSize="@dimen/x10"
                     android:id="@+id/tv_pro_now"
