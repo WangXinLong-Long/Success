@@ -34,6 +34,7 @@ import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetail
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.bean.PreSaleDetailCalendarBean;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.bean.Sku;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.presenter.PreSaleDetailPresenter;
+import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleMVP.view.PreSale;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.LoginUserActivity;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
@@ -245,9 +246,13 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
 //
                     startActivityForResult(intent1,0);
                 }else {
-                Popupwindow();
-                backgroundAlpha(0.5f);
-
+                    Log.e("TAG","riliDate----"+riliDate);
+                    if(riliDate!=null) {
+                        Popupwindow();
+                        backgroundAlpha(0.5f);
+                    }else{
+                        Toast.makeText(PreSaleDetailActivity.this,"该产品暂无预售日期",Toast.LENGTH_SHORT).show();
+                    }
                 }
                 break;
 
@@ -260,9 +265,10 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
         lp.alpha = bgAlpha; //0.0-1.0
         getWindow().setAttributes(lp);
     }
+    PopupWindow popupWindow;
     public void Popupwindow(){
         View view=getLayoutInflater().inflate(R.layout.pop_yushou,null);
-        PopupWindow popupWindow=new PopupWindow(findViewById(R.id.Layout_c), ActionBarOverlayLayout.LayoutParams.MATCH_PARENT, ActionBarOverlayLayout.LayoutParams.WRAP_CONTENT);
+       popupWindow=new PopupWindow(findViewById(R.id.Layout_c), ActionBarOverlayLayout.LayoutParams.MATCH_PARENT, ActionBarOverlayLayout.LayoutParams.WRAP_CONTENT);
         popupWindow.setContentView(view);
         tv= (TextView) view.findViewById(R.id.tv_pay);
         tv.setText(BZprice+"");
@@ -324,6 +330,16 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
                         public void onSuccess(String result) {
                             Log.d("银行的列表",result);
                             Log.e("TAG","result-----"+result);
+                            //{"bankList":[{"amount":"21417.51","balance":"19752.69","accountNumber":"11014970585008","bankType":"1","bankName":"???????"}],"info":"sucess"}
+                            try {
+                                JSONObject job=new JSONObject(result);
+                                String info=job.getString("info");
+                                if(!info.equals("sucess")){
+                                    Toast.makeText(PreSaleDetailActivity.this, "该用户没有登录,无法获取可支付银行!", Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                             if (result.contains("amount")){
                                 try{
                                     list1=new ArrayList<OpenAuction>();
@@ -357,8 +373,6 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
-                            }else {
-                                Toast.makeText(PreSaleDetailActivity.this, "该用户没有登录,无法获取可支付银行!", Toast.LENGTH_SHORT).show();
                             }
                         }
 
@@ -422,6 +436,19 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
                 @Override
                 public void onSuccess(String result) {
                     Log.e("TAG", "支付保证金result-----" + result);
+                    //: 支付保证金result-----{"status":"YES","info":"sucess"}
+                    try {
+                        JSONObject job=new JSONObject(result);
+                        String status=job.getString("status");
+                        if(status.equals("YES")){
+                            Toast.makeText(PreSaleDetailActivity.this,"支付成功",Toast.LENGTH_SHORT).show();
+                            popupWindow.dismiss();
+                        }else{
+                            Toast.makeText(PreSaleDetailActivity.this,"支付失败",Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
 
                 @Override
@@ -503,7 +530,7 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
         BZprice=bili*num*price;//保证金=价格*数量*保证金比例
         Log.e("TAG","保证金-----"+BZprice);
     }
-
+String riliDate;
     @Override
     public void getPreSaleDetailCalendarData(PreSaleDetailCalendarBean preSaleDetailCalendarBean/*,int position*/) {
         List<Sku> skus = preSaleDetailCalendarBean.getSku();
@@ -521,6 +548,7 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
             } catch (NumberFormatException e) {
                 throw new RuntimeException("没有转换成功");
             }
+            riliDate=year + "..." + mounth + "..." + day;
             Log.e("TAG","sfd--"+year + "..." + mounth + "..." + day);
             LogUtils.log(year + "..." + mounth + "..." + day);
             calendarlist.add(new DayAndPrice("￥"+sku.getCl_jiner(), year, mounth, day,skuId));

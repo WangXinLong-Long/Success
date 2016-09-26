@@ -32,6 +32,7 @@ import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSelling
 import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.view.UpstreamDirectSellingActivity;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.bean.GoodsInStockActivityBean;
 import com.silianchuangye.sumao.success.fragments.homepage.groupbuying.GroupBuyingActivity;
+import com.silianchuangye.sumao.success.fragments.homepage.groupbuying.GroupBuyingSuccessActivity;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.view.PreSaleDetailActivity;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleMVP.bean.Auction;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleMVP.bean.Cl;
@@ -90,7 +91,7 @@ public class PagerOne extends BasePager implements IPagerOneView {
     private int day;
     private List<DayAndPrice> calendarlist;
     private Intent calendarintent;
-
+    List<Group> cls;
 
     @Override
     public void myClickSearch() {
@@ -116,6 +117,16 @@ public class PagerOne extends BasePager implements IPagerOneView {
         lvFragmentoneAD = ((ListView) view.findViewById(R.id.lvFragmentoneAD));
         lvFragmentAdwords = (ListView) view.findViewById(R.id.lvFragmentAdwords);
         lvFragmentoneGroupon = (ListView) view.findViewById(R.id.lvFragmentoneGroupon);
+
+        lvFragmentoneGroupon.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //跳转到预售详情界面
+                Intent intent=new Intent(getActivity(), GroupBuyingSuccessActivity.class);
+                intent.putExtra("id",cls.get(position).getCl_id());
+                startActivity(intent);
+            }
+        });
 
         pagerOnePresenter.getHomeSaleInfoToPagerOneFragment();
         lvFragmentoneAD.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -449,7 +460,7 @@ public class PagerOne extends BasePager implements IPagerOneView {
         LvFragmentoneAuctionsAdapter lvFragmentoneAuctionsAdapter = new LvFragmentoneAuctionsAdapter(auctions,mActivity);
         lvFragmentAdwords.setAdapter(lvFragmentoneAuctionsAdapter);
 //      现货信息
-         List<Group> cls = preSaleBean.getGroup();
+         cls= preSaleBean.getGroup();
         LogUtils.log("现货信息cls.size()--->"+cls.size()+"");
         LvFragmentoneClsAdapter lvFragmentoneClsAdapter = new LvFragmentoneClsAdapter(cls,mActivity);
         lvFragmentoneGroupon.setAdapter(lvFragmentoneClsAdapter);

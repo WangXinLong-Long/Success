@@ -217,14 +217,14 @@
             <!--下划线-->
             <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/x30"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:background="#fff"
             >
              <!--产品价钱-->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 >
                 <TextView
@@ -247,6 +247,12 @@
                     />
 
             </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/x1"
+                    android:background="#EEEEF3"
+            ></LinearLayout>
                 <TextView
                     android:id="@+id/tv_tuangou_line"
                     android:layout_width="match_parent"
@@ -262,25 +268,22 @@
                     android:gravity="center"
                     android:layout_marginTop="@dimen/x10"
                     android:layout_marginBottom="@dimen/x15"
+                    android:visibility="gone"
                     />
-            <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/x1"
-                    android:background="#EEEEF3"
-            ></LinearLayout>
         </LinearLayout>
             <LinearLayout
                 android:id="@+id/linear_tuangou_time"
                 android:layout_width="match_parent"
                 android:orientation="vertical"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:visibility="gone">
                 <TextView
                     android:textSize="@dimen/x10"
                     android:id="@+id/tv_pro_now"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="当前进度为 : 10%"
-                    android:layout_marginTop="@dimen/x15"
+                    android:layout_marginTop="@dimen/x10"
                     android:layout_marginLeft="@dimen/x70"
                     />
                 <RelativeLayout
@@ -299,9 +302,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="成团进度:"
+                        android:layout_marginTop="@dimen/x2"
                         android:layout_marginLeft="@dimen/x10"
                         android:id="@+id/tv_progress"
-                        android:layout_centerVertical="true"
                         android:textColor="@color/zixun_topbg"
                         />
                     <ProgressBar
