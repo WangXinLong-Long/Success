@@ -569,10 +569,18 @@ public class OpenAuctionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 popupWindow.dismiss();
-                Intent intent=new Intent(OpenAuctionActivity.this,Ok_Dialog.class);
-              //  intent.putExtra("number",tv_order_number1.getText().toString());
-                intent.putExtra("number","123");
-                startActivity(intent);
+//                Intent intent=new Intent(OpenAuctionActivity.this,Ok_Dialog.class);
+//                //  intent.putExtra("number",tv_order_number1.getText().toString());
+//                intent.putExtra("number","123");
+//                startActivity(intent);
+                new Thread(){
+                    @Override
+                    public void run() {
+                        super.run();
+                        zhifu_naozhengjin();
+                    }
+                }.start();
+
 
             }
         });
@@ -974,6 +982,38 @@ public class OpenAuctionActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    /**
+     * 支付保证金
+     */
+    public void zhifu_naozhengjin(){
+        String url="http://192.168.32.126:7023rest/model/atg/commerce/payment/OrderPayment/auctionDeposit";
+        RequestParams rp=new RequestParams(url);
+        rp.addParameter("presalePrice","1");
+        rp.addParameter("productId",id_value);
+        rp.addParameter("paymentPlatform",1);
+        x.http().post(rp, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.d("支付保证金的返回值",result);
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
     }
 
 

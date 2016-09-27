@@ -173,6 +173,7 @@ public class LoginUserActivity extends AppCompatActivity {
                                      */
 
                                     editor.putString("unique", unique);
+                                    editor.putString("zhanghao",name.trim());
                                     editor.commit();
                                     Log.d("唯一标识----------->", unique);
                                 } catch (Exception e) {
