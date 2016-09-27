@@ -67,7 +67,10 @@ public class RegisterPhoneActivity extends AppCompatActivity implements IRegiste
         tv_next_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (yanzhen.equals(editText.getText().toString())){
+                if (editText.getText().toString() == null||editText.getText().toString().equals("")
+                        ||editText.getText().toString().isEmpty()){
+                    Toast.makeText(RegisterPhoneActivity.this,"请输入验证码",Toast.LENGTH_SHORT).show();
+                }else if (yanzhen.equals(editText.getText().toString())){
                     Intent intent=new Intent(RegisterPhoneActivity.this,RegisterActivity.class);
                     intent.putExtra("phone",et_phone_register.getText().toString());
                     startActivity(intent);

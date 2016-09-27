@@ -32,6 +32,7 @@ import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSelling
 import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.view.UpstreamDirectSellingActivity;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.bean.GoodsInStockActivityBean;
 import com.silianchuangye.sumao.success.fragments.homepage.groupbuying.GroupBuyingActivity;
+import com.silianchuangye.sumao.success.fragments.homepage.groupbuying.GroupBuyingSuccessActivity;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.view.PreSaleDetailActivity;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleMVP.bean.Auction;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleMVP.bean.Cl;
@@ -47,6 +48,7 @@ import com.silianchuangye.sumao.success.HX.ui.LoginActivity;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.view.GoodsInStockActivity;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleMVP.view.PreSale;
 import com.silianchuangye.sumao.success.fragments.homepage.theprice.MidpointsListctivity;
+import com.silianchuangye.sumao.success.utils.Loding;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.MarqueeView;
 import com.silianchuangye.sumao.success.utils.scrollviewAD.MyGallery;
@@ -89,7 +91,7 @@ public class PagerOne extends BasePager implements IPagerOneView {
     private int day;
     private List<DayAndPrice> calendarlist;
     private Intent calendarintent;
-
+    List<Group> cls;
 
     @Override
     public void myClickSearch() {
@@ -115,6 +117,16 @@ public class PagerOne extends BasePager implements IPagerOneView {
         lvFragmentoneAD = ((ListView) view.findViewById(R.id.lvFragmentoneAD));
         lvFragmentAdwords = (ListView) view.findViewById(R.id.lvFragmentAdwords);
         lvFragmentoneGroupon = (ListView) view.findViewById(R.id.lvFragmentoneGroupon);
+
+        lvFragmentoneGroupon.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //跳转到预售详情界面
+                Intent intent=new Intent(getActivity(), GroupBuyingSuccessActivity.class);
+                intent.putExtra("id",cls.get(position).getCl_id());
+                startActivity(intent);
+            }
+        });
 
         pagerOnePresenter.getHomeSaleInfoToPagerOneFragment();
         lvFragmentoneAD.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -260,10 +272,12 @@ public class PagerOne extends BasePager implements IPagerOneView {
                     startActivity(intent);
                     //Toast.makeText(mActivity, "点击了团购按钮", Toast.LENGTH_SHORT).show();
                 } else if (list.get(position).get("icon").equals(R.mipmap.goods)) {
+                    Loding.show(mActivity,"加载中...",false,null);
                     pagerOnePresenter.getGoodsInStockInfo("","","",10,0);
 
                 } else if (list.get(position).get("icon").equals(R.mipmap.presell)) {
                     //Toast.makeText(mActivity, "点击了预售按钮", Toast.LENGTH_SHORT).show();
+                    Loding.show(mActivity,"加载中...",false,null);
                     pagerOnePresenter.getPreSaleInfo("","","",10,0);
 
                 } else if (list.get(position).get("icon").equals(R.mipmap.adwords)) {
@@ -279,6 +293,7 @@ public class PagerOne extends BasePager implements IPagerOneView {
                    SharedPreferences sp = mActivity.getSharedPreferences("sumao", Activity.MODE_PRIVATE);
                     String uniqued = sp.getString("unique","");
 //                    unique
+                    Loding.show(mActivity,"加载中...",false,null);
                     pagerOnePresenter.getUpstreamDirectSellingInfo(uniqued);
 
                 } else if (list.get(position).get("icon").equals(R.mipmap.aa)) {
@@ -290,6 +305,7 @@ public class PagerOne extends BasePager implements IPagerOneView {
                     intent.putExtra(Constant.IM_SERVICE_NUMBER, "feisumaokefu1");
                     startActivity(intent);*/
                 } else if (list.get(position).get("icon").equals(R.mipmap.consult)) {
+                    Loding.show(mActivity,"加载中...",false,null);
                    pagerOnePresenter.getSuMaoConsultInfo();
                     Toast.makeText(mActivity, "点击了塑贸咨询按钮", Toast.LENGTH_SHORT).show();
                 } else if (list.get(position).get("icon").equals(R.mipmap.maifang)) {
@@ -444,7 +460,7 @@ public class PagerOne extends BasePager implements IPagerOneView {
         LvFragmentoneAuctionsAdapter lvFragmentoneAuctionsAdapter = new LvFragmentoneAuctionsAdapter(auctions,mActivity);
         lvFragmentAdwords.setAdapter(lvFragmentoneAuctionsAdapter);
 //      现货信息
-         List<Group> cls = preSaleBean.getGroup();
+         cls= preSaleBean.getGroup();
         LogUtils.log("现货信息cls.size()--->"+cls.size()+"");
         LvFragmentoneClsAdapter lvFragmentoneClsAdapter = new LvFragmentoneClsAdapter(cls,mActivity);
         lvFragmentoneGroupon.setAdapter(lvFragmentoneClsAdapter);
@@ -453,6 +469,7 @@ public class PagerOne extends BasePager implements IPagerOneView {
     //把请求下的数据放置到现货界面
     @Override
     public void setDataInActivity(GoodsInStockActivityBean goodsInStockActivityBean) {
+        Loding.dis();
         Intent intent = new Intent(mActivity, GoodsInStockActivity.class);
         //Toast.makeText(mActivity, "点击了现货按钮", Toast.LENGTH_SHORT).show();
         intent.putExtra("goodsInStockActivityBean",goodsInStockActivityBean);
@@ -462,6 +479,7 @@ public class PagerOne extends BasePager implements IPagerOneView {
 
     @Override
     public void setPreSaleDataInActivity(GoodsInStockActivityBean goodsInStockActivityBean) {
+        Loding.dis();
         Intent intent = new Intent();
         intent.setClass(mActivity, PreSale.class);
         intent.putExtra("preSaleActivityBean",goodsInStockActivityBean);
@@ -470,6 +488,7 @@ public class PagerOne extends BasePager implements IPagerOneView {
 //    点击塑贸资讯
     @Override
     public void setSuMaoConsultInActivity(AnnounceBean announceBean) {
+        Loding.dis();
         Intent intent = new Intent();
         intent.setClass(mActivity,SuMaoConsult.class);
         intent.putExtra("announceBean",announceBean);
@@ -479,6 +498,7 @@ public class PagerOne extends BasePager implements IPagerOneView {
 //上游直销
     @Override
     public void setUpstreamDirectSellingInActivity(UpstreamDirectorySellingBean upstreamDirectorySellingBean) {
+        Loding.dis();
         Intent intent = new Intent();
         intent.setClass(mActivity,UpstreamDirectSellingActivity.class);
         intent.putExtra("upstreamDirectorySellingBean",upstreamDirectorySellingBean);

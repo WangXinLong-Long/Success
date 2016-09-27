@@ -1,4 +1,4 @@
-package com.silianchuangye.sumao.success.fragments.myPlasticTrade.setting;
+package com.silianchuangye.sumao.success.fragments.myPlasticTrade.setting.SettingMVP.view;
 
 import android.app.Activity;
 import android.content.DialogInterface;
@@ -16,19 +16,20 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.silianchuangye.sumao.success.HX.ui.LoginActivity;
 import com.silianchuangye.sumao.success.MainActivity;
 import com.silianchuangye.sumao.success.R;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.LoginUserActivity;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.setting.FunctionIntroduction.FunctionIntroductionMVP.view.FunctionIntroductionActivity;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.setting.HelpAndFeedbackMVP.view.HelpAndFeedbackActivity;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.setting.ScoreMVP.view.ScoreActivity;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.setting.SettingMVP.bean.FunctionIntroductionBean;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.setting.SettingMVP.presenter.SettingPresenter;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
-import java.io.File;
-
-public class SettingActivity extends AppCompatActivity {
+public class SettingActivity extends AppCompatActivity implements ISettingView{
     ImageView iv_title_bar_logo,
             iv_title_bar_back,
             iv_title_bar_service,
@@ -44,11 +45,13 @@ public class SettingActivity extends AppCompatActivity {
     private Button btEdit;
     public final static String DATA_URL = "/data/data/";
     public final static String SHARED_MAIN_XML = "sumao.xml";
+    private SettingPresenter settingPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
+        settingPresenter = new SettingPresenter(this);
         title_Bar();
         layouthelp= (RelativeLayout) findViewById(R.id.layout_help_setting);
         layoutgrade= (RelativeLayout) findViewById(R.id.layout_grade_setting);
@@ -58,20 +61,24 @@ public class SettingActivity extends AppCompatActivity {
         layoutintroduction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                settingPresenter.getFunctionIntroduction();
 
             }
         });
         layouthelp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+//Help and feedback
+                Intent intent = new Intent(SettingActivity.this,HelpAndFeedbackActivity.class);
+//                intent.putExtra("FunctionIntroductionBean",functionIntroductionBean);
+                startActivity(intent);
             }
         });
         layoutgrade.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(SettingActivity.this,ScoreActivity.class);
+                startActivity(intent);
             }
         });
         btEdit.setOnClickListener(new View.OnClickListener() {
@@ -187,5 +194,14 @@ public class SettingActivity extends AppCompatActivity {
 //                startActivity(intent);
 //            }
 //        });
+    }
+//功能介绍
+    @Override
+    public void sendInfoInFunctionIntroduction(FunctionIntroductionBean functionIntroductionBean) {
+
+//        LogUtils
+        Intent intent = new Intent(this,FunctionIntroductionActivity.class);
+        intent.putExtra("FunctionIntroductionBean",functionIntroductionBean);
+        startActivity(intent);
     }
 }

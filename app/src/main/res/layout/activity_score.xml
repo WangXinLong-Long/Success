@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.myPlasticTrade.setting.ScoreMVP.view.ScoreActivity">
+
+    <include
+        android:id="@+id/title_score"
+        layout="@layout/child_title_bar"/>
+    <RatingBar
+        android:id="@+id/ratingbar"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:numStars="5"
+        android:rating="0"
+        android:stepSize="1"
+        android:layout_below="@id/title_score"
+        android:progressTint="@color/countdown_textview_yellow"
+
+        />
+    <TextView
+        android:id="@+id/state"
+        android:layout_centerHorizontal="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/countdown_textview_yellow"
+        android:layout_below="@id/ratingbar"
+        android:layout_marginTop="@dimen/x5"
+        android:gravity="center"
+        />
+
+    <Button
+        android:id="@+id/btSave_password_update"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/state"
+        android:layout_marginLeft="@dimen/x10"
+        android:layout_marginRight="@dimen/x10"
+        android:layout_marginTop="@dimen/x10"
+        android:background="@drawable/button_backgroup_save"
+        android:text="保存"
+        android:textColor="#fff"
+        android:textSize="16sp" />
+</RelativeLayout>

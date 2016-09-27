@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/my_sumao_background"
+    tools:context="com.silianchuangye.sumao.success.fragments.myPlasticTrade.setting.FunctionIntroductionDetailActivity">
+    <include
+        android:id="@+id/title_function_introduction_detail"
+        layout="@layout/child_title_bar"/>
+
+
+</RelativeLayout>

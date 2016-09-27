@@ -33,6 +33,8 @@ public class PreSaleDetailModel implements IPreSaleDetailModel{
         LogUtils.log("URL----->"+url+"<-----URL");
         RequestParams requestParams = new RequestParams(url);
         requestParams.addParameter("skuId",skuId+"");
+        LogUtils.log("skuId-->"+skuId);
+        LogUtils.log("productId--->"+productId);
         requestParams.addParameter("productId",productId+"");
         try {
             x.http().request(HttpMethod.POST, requestParams, new Callback.CacheCallback<String>() {
