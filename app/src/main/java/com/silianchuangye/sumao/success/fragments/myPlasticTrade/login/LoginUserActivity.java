@@ -158,6 +158,10 @@ public class LoginUserActivity extends AppCompatActivity {
                 } else {
 //                    Log.d("object",result);
                     sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+                    editor=sp.edit();
+                    Log.d("账号的值",name.trim());
+                    editor.putString("zhanghao",name.trim());
+                    editor.commit();
                     String unique = sp.getString("unique", "");
                     Log.d("唯一标识", unique);
                     if (unique.equals("") || unique == null) {
@@ -175,7 +179,7 @@ public class LoginUserActivity extends AppCompatActivity {
                                      */
 
                                     editor.putString("unique", unique);
-                                    editor.putString("zhanghao",name.trim());
+
                                     editor.commit();
                                     Log.d("唯一标识----------->", unique);
                                 } catch (Exception e) {
