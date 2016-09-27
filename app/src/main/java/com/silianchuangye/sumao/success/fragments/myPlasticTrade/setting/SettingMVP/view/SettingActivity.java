@@ -20,10 +20,9 @@ import com.silianchuangye.sumao.success.MainActivity;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.setting.FunctionIntroduction.FunctionIntroductionMVP.view.FunctionIntroductionActivity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.setting.HelpAndFeedbackMVP.view.HelpAndFeedbackActivity;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.setting.ScoreActivity;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.setting.ScoreMVP.view.ScoreActivity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.setting.SettingMVP.bean.FunctionIntroductionBean;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.setting.SettingMVP.presenter.SettingPresenter;
-import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
 import org.xutils.common.Callback;

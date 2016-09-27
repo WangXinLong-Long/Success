@@ -580,7 +580,7 @@
         <activity android:name=".fragments.myPlasticTrade.setting.FunctionIntroduction.FunctionIntroductionMVP.view.FunctionIntroductionActivity" />
         <activity android:name=".fragments.myPlasticTrade.setting.FunctionIntroductionDetailActivity" />
         <activity android:name=".fragments.myPlasticTrade.setting.HelpAndFeedbackMVP.view.HelpAndFeedbackActivity" />
-        <activity android:name=".fragments.myPlasticTrade.setting.ScoreActivity"></activity>
+        <activity android:name=".fragments.myPlasticTrade.setting.ScoreMVP.view.ScoreActivity"></activity>
     </application>
 
 </manifest>
