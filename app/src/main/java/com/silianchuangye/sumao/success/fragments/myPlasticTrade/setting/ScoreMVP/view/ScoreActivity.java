@@ -1,5 +1,6 @@
 package com.silianchuangye.sumao.success.fragments.myPlasticTrade.setting.ScoreMVP.view;
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.LayerDrawable;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.setting.ScoreMVP.presenter.ScorePresenter;
+import com.silianchuangye.sumao.success.utils.LogUtils;
 
 public class ScoreActivity extends AppCompatActivity implements View.OnClickListener,IScoreView{
 
@@ -80,7 +82,14 @@ public class ScoreActivity extends AppCompatActivity implements View.OnClickList
                 break;
             case R.id.btSave_password_update:
 //                TODO 账号
-                scorePresenter.sendScoreToServer(rat+"","账号");
+                if (rat == 0){
+                    Toast.makeText(this,"请选择满意程度",Toast.LENGTH_SHORT).show();
+                }else {
+
+                    String userName = getSharedPreferences("sumao", Activity.MODE_PRIVATE).getString("zhanghao","");
+                    LogUtils.log("userName"+userName);
+                    scorePresenter.sendScoreToServer(rat+"",userName);
+                }
                 break;
         }
     }
