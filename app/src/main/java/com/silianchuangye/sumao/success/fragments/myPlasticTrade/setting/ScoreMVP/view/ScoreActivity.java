@@ -1,30 +1,39 @@
-package com.silianchuangye.sumao.success.fragments.myPlasticTrade.setting;
+package com.silianchuangye.sumao.success.fragments.myPlasticTrade.setting.ScoreMVP.view;
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.LayerDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.setting.ScoreMVP.presenter.ScorePresenter;
+import com.silianchuangye.sumao.success.utils.LogUtils;
 
-public class ScoreActivity extends AppCompatActivity implements View.OnClickListener{
+public class ScoreActivity extends AppCompatActivity implements View.OnClickListener,IScoreView{
 
     private RatingBar mRatingBar;
     private TextView state;
+    private ScorePresenter scorePresenter;
+    private int rat;
+    private Button btSave_password_update;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_score);
+        scorePresenter = new ScorePresenter(this);
         mRatingBar = (RatingBar) findViewById(R.id.ratingbar);
         TextView title = (TextView) findViewById(R.id.tv_child_title_bar_title);
         title.setText("评分");
+        //返回
         ImageView back = (ImageView) findViewById(R.id.iv_child_title_bar_back);
         back.setOnClickListener(this);
         state = (TextView) findViewById(R.id.state);
@@ -34,7 +43,7 @@ public class ScoreActivity extends AppCompatActivity implements View.OnClickList
 
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-                int rat = ((int) rating);
+                rat = ((int) rating);
                 switch (rat)
                 {
                     case 1:
@@ -59,6 +68,9 @@ public class ScoreActivity extends AppCompatActivity implements View.OnClickList
 
             }
         });
+        btSave_password_update = ((Button) findViewById(R.id.btSave_password_update));
+        btSave_password_update.setOnClickListener(this);
+
     }
 
     @Override
@@ -68,6 +80,22 @@ public class ScoreActivity extends AppCompatActivity implements View.OnClickList
             case R.id.iv_child_title_bar_back:
                 finish();
                 break;
+            case R.id.btSave_password_update:
+//                TODO 账号
+                if (rat == 0){
+                    Toast.makeText(this,"请选择满意程度",Toast.LENGTH_SHORT).show();
+                }else {
+
+                    String userName = getSharedPreferences("sumao", Activity.MODE_PRIVATE).getString("zhanghao","");
+                    LogUtils.log("userName"+userName);
+                    scorePresenter.sendScoreToServer(rat+"",userName);
+                }
+                break;
         }
+    }
+
+    @Override
+    public void getScoreState() {
+
     }
 }

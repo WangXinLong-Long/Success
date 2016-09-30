@@ -27,14 +27,20 @@ public class FunctionIntroductionModel implements IFunctionIntroductionModel {
     public void getFunctionIntroductionDetailInfo(final FunctionIntroductionCallback callback) {
         String url = SuMaoConstant.APP_IP+"/pcoAppService/help/myHelpPage";
         RequestParams requestParams = new RequestParams(url);
-        requestParams.setAsJsonContent(true);
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("helpid", helpid);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        requestParams.setBodyContent(jsonObject.toString());
+//        requestParams.setAsJsonContent(true);
+//        JSONObject jsonObject = new JSONObject();
+//        try {
+//            jsonObject.put("helpid", helpid);
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//        requestParams.setBodyContent(jsonObject.toString());
+//
+//        LogUtils.log(jsonObject.toString()+"<---");
+        LogUtils.log(helpid+"<---");
+        requestParams.addParameter("helpid",helpid);
+        LogUtils.log(requestParams+"<---");
+
         try {
             x.http().request(HttpMethod.POST, requestParams, new Callback.CacheCallback<String>() {
 

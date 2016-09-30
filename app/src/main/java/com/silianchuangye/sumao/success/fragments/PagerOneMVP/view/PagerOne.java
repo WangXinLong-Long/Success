@@ -111,6 +111,9 @@ public class PagerOne extends BasePager implements IPagerOneView {
 //        listAdwords();
         initHorn();
         initlvFragmentoneGroupon();
+        SharedPreferences sp=getActivity().getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+        String zhanghao=sp.getString("zhanghao","");
+        Log.d("账号的值",zhanghao);
     }
 //     预售的listview
     private void initlvFragmentoneGroupon() {

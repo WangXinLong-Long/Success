@@ -42,7 +42,7 @@
                 android:layout_marginLeft="@dimen/x5"
                 android:layout_marginTop="@dimen/y6"
                 android:background="@drawable/edittext_backgroup"
-                android:password="true" />
+                android:inputType="number" />
         </LinearLayout>
 
         <LinearLayout
