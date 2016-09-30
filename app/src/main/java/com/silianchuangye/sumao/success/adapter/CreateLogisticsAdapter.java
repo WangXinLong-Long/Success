@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.bean.Createlogistics_ExpandInfo;
+import com.silianchuangye.sumao.success.fragments.bean.Createlogistics_ListInfo;
 
 import java.util.List;
 
@@ -26,6 +27,9 @@ public class CreateLogisticsAdapter extends BaseExpandableListAdapter{
     private boolean showFlag;
     boolean expandFlag;
     private LogisticsCall call;
+    boolean falg=true;
+    String  cangku;
+
     public CreateLogisticsAdapter(Context ctx,List<Createlogistics_ExpandInfo>expandList,LogisticsCall call){
         this.ctx=ctx;
         this.expandList=expandList;
@@ -96,7 +100,7 @@ public class CreateLogisticsAdapter extends BaseExpandableListAdapter{
     }
 
     @Override
-    public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+    public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView, final ViewGroup parent) {
         final ViewHolder holder;
         if(convertView==null){
             convertView=View.inflate(ctx,R.layout.item_create_logistics_lv,null);
@@ -133,6 +137,7 @@ public class CreateLogisticsAdapter extends BaseExpandableListAdapter{
         holder.tv_child_logistics.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.e("TAG","监听");
                 if(showFlag) {
                     holder.liear_child_message.setVisibility(View.VISIBLE);
                     holder.img_child_logistics_top_in.setImageResource(R.mipmap.my_sumao_iv_order_down);
@@ -146,6 +151,7 @@ public class CreateLogisticsAdapter extends BaseExpandableListAdapter{
         holder.img_child_logistics_top_in.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if(showFlag) {
                     holder.liear_child_message.setVisibility(View.VISIBLE);
                     holder.img_child_logistics_top_in.setImageResource(R.mipmap.my_sumao_iv_order_down);
@@ -158,14 +164,39 @@ public class CreateLogisticsAdapter extends BaseExpandableListAdapter{
         });
         if(expandList.get(groupPosition).list.get(childPosition).SelectFlag){
             holder.img_child_select.setImageResource(R.mipmap.cart_select);
+           cangku=expandList.get(groupPosition).list.get(childPosition).cangku_name;
         }else{
             holder.img_child_select.setImageResource(R.mipmap.cart_select_null);
         }
         holder.img_child_select.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("TAG","点击");
-               call.call(groupPosition,childPosition);
+                Log.e("TAG", "点击------"+cangku);
+                //根据卖家，仓库，和配送方式选择是否可以打勾，目前还不完善，
+                if (cangku != null) {
+                    if (cangku.equals(expandList.get(groupPosition).list.get(childPosition).cangku_name)) {
+                        call.call(groupPosition, childPosition,holder.edt_child_num.getText().toString());
+                    }
+                } else {
+                    call.call(groupPosition, childPosition,holder.edt_child_num.getText().toString());
+                }
+                int k = 0;
+                for (int i = 0; i < expandList.size(); i++) {
+                    for (int j = 0; j < expandList.get(i).list.size(); j++) {
+                        if (!expandList.get(i).list.get(j).SelectFlag) {
+                            k++;
+                        }
+                    }
+                }
+                int sum = 0;
+                for (int i = 0; i < expandList.size(); i++) {
+                    int all = expandList.get(i).list.size();
+                    sum += all;
+                }
+                if(k==sum){
+                    cangku=null;
+                    notifyDataSetChanged();
+                }
             }
          });
         holder.tv_child_sub.setOnClickListener(new View.OnClickListener() {
@@ -174,6 +205,9 @@ public class CreateLogisticsAdapter extends BaseExpandableListAdapter{
                 String str=holder.edt_child_num.getText().toString();
                 int i=Integer.valueOf(str);
                 i--;
+                if(i<1){
+                    i=1;
+                }
                 holder.edt_child_num.setText(i+"");
             }
         });
@@ -211,6 +245,6 @@ public class CreateLogisticsAdapter extends BaseExpandableListAdapter{
                 ,tv_child_can_num,tv_child_date,tv_child_cangku;
     }
     public interface LogisticsCall{
-        public void call(int groupPosition,int childPosition);
+        public void call(int groupPosition,int childPosition,String num);
     }
 }

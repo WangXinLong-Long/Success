@@ -81,6 +81,5 @@ public class SelectProvinceArea extends Activity implements View.OnClickListener
         intent.putExtra("province", lists.get(position).getLevel());
         intent.putExtra("className", className);
         startActivity(intent);
-
     }
 }

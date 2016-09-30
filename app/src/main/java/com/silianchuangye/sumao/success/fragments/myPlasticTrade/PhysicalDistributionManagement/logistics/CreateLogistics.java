@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -21,7 +22,16 @@ import com.silianchuangye.sumao.success.adapter.CreateLogisticsAdapter;
 import com.silianchuangye.sumao.success.fragments.bean.Createlogistics_ExpandInfo;
 import com.silianchuangye.sumao.success.fragments.bean.Createlogistics_ListInfo;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.CreateLogisticsNeed;
+import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -46,12 +56,15 @@ public class CreateLogistics extends AppCompatActivity implements View.OnClickLi
     private TextView tv_pop_start_date,tv_pop_end_date;
     private Button btn_pop_ok;
     private PopupWindow popWindow;
+    Createlogistics_ListInfo listInfo;
+    String edt_num,tv_changku,startTime;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_logistics);
-        initDate();
+//        initDate();
         initView();
+        showNet();
     }
 
     private void initDate() {
@@ -73,43 +86,53 @@ public class CreateLogistics extends AppCompatActivity implements View.OnClickLi
         expandInfo3.order_num="100300000000";
         //给子item添加数据
         Createlogistics_ListInfo listInfo1=new Createlogistics_ListInfo();
-        listInfo1.can_num=10;
+        listInfo1.can_num=10+"";
         listInfo1.cangku_name="迅邦物流一号库";
         listInfo1.date="2016-2-2";
         listInfo1.logistics_name="买家自提";
-        listInfo1.num=10;
-        listInfo1.only_price=6100;
+        listInfo1.num=10+"";
+        listInfo1.only_price=6100+"";
         listInfo1.product_name="兰州石化7024";
         listInfo1.sort="LLDPE";
 
         Createlogistics_ListInfo listInfo2=new Createlogistics_ListInfo();
-        listInfo2.can_num=10;
+        listInfo2.can_num=10+"";
         listInfo2.cangku_name="迅邦物流一号库";
         listInfo2.date="2016-2-2";
         listInfo2.logistics_name="迅帮配送";
-        listInfo2.num=10;
-        listInfo2.only_price=6100;
+        listInfo2.num=10+"";
+        listInfo2.only_price=6100+"";
         listInfo2.product_name="兰州石化7024";
         listInfo2.sort="LLDPE";
 
         Createlogistics_ListInfo listInfo3=new Createlogistics_ListInfo();
-        listInfo3.can_num=10;
+        listInfo3.can_num=10+"";
         listInfo3.cangku_name="迅邦物流一号库";
         listInfo3.date="2016-2-2";
         listInfo3.logistics_name="卖方配送";
-        listInfo3.num=10;
-        listInfo3.only_price=6100;
+        listInfo3.num=1+"";
+        listInfo3.only_price=6100+"";
         listInfo3.product_name="兰州石化7024";
         listInfo3.sort="LLDPE";
         Createlogistics_ListInfo listInfo4=new Createlogistics_ListInfo();
-        listInfo4.can_num=10;
+        listInfo4.can_num=10+"";
         listInfo4.cangku_name="迅邦物流一号库";
         listInfo4.date="2016-2-2";
         listInfo4.logistics_name="卖方配送";
-        listInfo4.num=10;
-        listInfo4.only_price=6100;
+        listInfo4.num="10";
+        listInfo4.only_price=6100+"";
         listInfo4.product_name="兰州石化7024";
         listInfo4.sort="LLDPE";
+
+        Createlogistics_ListInfo listInfo5=new Createlogistics_ListInfo();
+        listInfo5.can_num=10+"";
+        listInfo5.cangku_name="迅邦物流二号库";
+        listInfo5.date="2016-2-2";
+        listInfo5.logistics_name="卖方配送";
+        listInfo5.num="10";
+        listInfo5.only_price=6100+"";
+        listInfo5.product_name="兰州石化7024";
+        listInfo5.sort="LLDPE";
         //先把子item的数据添加到group里的list容器中
         expandInfo1.list.add(listInfo1);
 
@@ -117,9 +140,12 @@ public class CreateLogistics extends AppCompatActivity implements View.OnClickLi
         expandInfo2.list.add(listInfo3);
         expandInfo2.list.add(listInfo4);
 
+        expandInfo3.list.add(listInfo5);
         //把组中的数据添加到expandList中
         expandList.add(expandInfo1);
         expandList.add(expandInfo2);
+        expandList.add(expandInfo3);
+
     }
 
     private void initView() {
@@ -133,12 +159,12 @@ public class CreateLogistics extends AppCompatActivity implements View.OnClickLi
         //去掉ListView之间的线
         expand_lv_create_logistics.setDivider(null);
 
-        adapter=new CreateLogisticsAdapter(this,expandList,this);
-        expand_lv_create_logistics.setAdapter(adapter);
-        if(adapter!=null && expandList!=null){
-            for (int i = 0; i < adapter.getGroupCount(); i++) {
-                expand_lv_create_logistics.expandGroup(i);
-            }}
+//        adapter=new CreateLogisticsAdapter(this,expandList,this);
+//        expand_lv_create_logistics.setAdapter(adapter);
+//        if(adapter!=null && expandList!=null){
+//            for (int i = 0; i < adapter.getGroupCount(); i++) {
+//                expand_lv_create_logistics.expandGroup(i);
+//            }}
         img_create_logistics_back.setOnClickListener(this);
         img_create_logistics_search.setOnClickListener(this);
         img_create_logistics_allselect.setOnClickListener(this);
@@ -158,27 +184,27 @@ public class CreateLogistics extends AppCompatActivity implements View.OnClickLi
 
                 break;
             case R.id.img_create_logistics_allselsect:
-                if(!All_Flag){
-                    img_create_logistics_allselect.setImageResource(R.mipmap.cart_select);
-                        for(int i=0;i<expandList.size();i++){
-                           int k= expandList.get(i).list.size();
-                            for(int j=0;j<k;j++){
-                                expandList.get(i).list.get(j).SelectFlag=true;
-                            }
-                        }
-                    adapter.notifyDataSetChanged();
-                }else{
-                    img_create_logistics_allselect.setImageResource(R.mipmap.cart_select_null);
-                    for(int i=0;i<expandList.size();i++){
-                        int k= expandList.get(i).list.size();
-                        for(int j=0;j<k;j++){
-                            expandList.get(i).list.get(j).SelectFlag=false;
-                        }
-                    }
-                    adapter.notifyDataSetChanged();
-                }
-                All_Flag=!All_Flag;
-                Toast.makeText(this,"全选",Toast.LENGTH_SHORT).show();
+//                if(!All_Flag){
+//                    img_create_logistics_allselect.setImageResource(R.mipmap.cart_select);
+//                        for(int i=0;i<expandList.size();i++){
+//                           int k= expandList.get(i).list.size();
+//                            for(int j=0;j<k;j++){
+//                                expandList.get(i).list.get(j).SelectFlag=true;
+//                            }
+//                        }
+//                    adapter.notifyDataSetChanged();
+//                }else{
+//                    img_create_logistics_allselect.setImageResource(R.mipmap.cart_select_null);
+//                    for(int i=0;i<expandList.size();i++){
+//                        int k= expandList.get(i).list.size();
+//                        for(int j=0;j<k;j++){
+//                            expandList.get(i).list.get(j).SelectFlag=false;
+//                        }
+//                    }
+//                    adapter.notifyDataSetChanged();
+//                }
+//                All_Flag=!All_Flag;
+//                Toast.makeText(this,"全选",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btn_create_logistics_ok:
                 int count=0;
@@ -200,6 +226,10 @@ public class CreateLogistics extends AppCompatActivity implements View.OnClickLi
                 }else{
                     Toast.makeText(this,"创建物流需求",Toast.LENGTH_SHORT).show();
                     Intent intent=new Intent(this,CreateLogisticsNeed.class);
+                    intent.putExtra("num",edt_num);//本次发货数量
+                    intent.putExtra("cangku",tv_changku);//仓库
+                    intent.putExtra("date",startTime);//交货开始时间
+                    Log.e("TAG","edt_numchuang----"+edt_num);
                     startActivity(intent);
                 }
                 break;
@@ -223,29 +253,40 @@ public class CreateLogistics extends AppCompatActivity implements View.OnClickLi
     }
 
     @Override
-    public void call(int groupPosition,int childPosition) {
-        expandList.get(groupPosition).list.get(childPosition).SelectFlag=!expandList.get(groupPosition).list.get(childPosition).SelectFlag;
-        adapter.notifyDataSetChanged();
+    public void call(int groupPosition,int childPosition,String num) {
         int count=0;
     //如果子item全选后，全选按钮变为选中
-        for(int i=0;i<expandList.size();i++){
-            int k= expandList.get(i).list.size();
-            for(int j=0;j<k;j++){
-                if(expandList.get(i).list.get(j).SelectFlag) {
-                    count++;
-                }
-            }
+//
+//        for(int i=0;i<expandList.size();i++){
+//            int k= expandList.get(i).list.size();
+//            for(int j=0;j<k;j++){
+//                if(flag.equals(expandList.get(i).list.get(j).cangku_name)){
+//                    Log.e("TAG","仓库----"+expandList.get(i).list.get(j).cangku_name);
+//                    Log.e("TAG","expandList.get(groupPosition).list.get(childPosition).SelectFlag--"+groupPosition+"-"+childPosition+expandList.get(groupPosition).list.get(childPosition).SelectFlag);
+//
+//                }
+//            }
+//        }
+        expandList.get(groupPosition).list.get(childPosition).SelectFlag = !expandList.get(groupPosition).list.get(childPosition).SelectFlag;
+        count++;
+        adapter.notifyDataSetChanged();
+        edt_num=num;
+        if(expandList.get(groupPosition).list.get(childPosition).SelectFlag){
+            tv_changku=expandList.get(groupPosition).list.get(childPosition).cangku_name;
+            String date=expandList.get(groupPosition).list.get(childPosition).date;
+            startTime=date.substring(0,10);
         }
-        int sum=0;
-        for(int i=0;i<expandList.size();i++){
-            int all= expandList.get(i).list.size();
-            sum+=all;
-        }
-        if(count==sum) {
-            img_create_logistics_allselect.setImageResource(R.mipmap.cart_select);
-        }else{
-            img_create_logistics_allselect.setImageResource(R.mipmap.cart_select_null);
-        }
+        Log.e("TAG","edtnum-"+edt_num+"=="+tv_changku);
+//        int sum=0;
+//        for(int i=0;i<expandList.size();i++){
+//            int all= expandList.get(i).list.size();
+//            sum+=all;
+//        }
+//        if(count==sum) {
+//            img_create_logistics_allselect.setImageResource(R.mipmap.cart_select);
+//        }else{
+//            img_create_logistics_allselect.setImageResource(R.mipmap.cart_select_null);
+//        }
     }
 
     //点击搜索按钮弹出popwindow
@@ -308,5 +349,94 @@ public class CreateLogistics extends AppCompatActivity implements View.OnClickLi
                     }
                 }, year, month, day);
         dialog3.show();
+    }
+    private void showNet(){
+        RequestParams rp=new RequestParams(SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/order/logistics/logisticsActor/logisticsInfo");
+        x.http().post(rp, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.e("TAG","result------"+result);
+                try {
+                    JSONObject j=new JSONObject(result);
+                    String order=j.getString("order");
+                    JSONArray ja=new JSONArray(order);
+
+                    for(int i=0;i<ja.length();i++){
+                        Createlogistics_ExpandInfo expandInfo1=new Createlogistics_ExpandInfo();
+                        JSONObject job= (JSONObject) ja.get(i);
+                        //给group添加数据
+                        expandInfo1.order_name=job.getString("firstName");
+                        if(job.toString().contains("cl_gongsi")){
+                            expandInfo1.company_name=job.getString("cl_gongsi");
+                        }
+                       else{
+                            expandInfo1.company_name="";
+                        }
+                        expandInfo1.date=new SimpleDateFormat("yyyy-MM-dd").format(Long.valueOf(job.getString("submittedDate")));
+                        expandInfo1.order_num=job.getString("id");
+                        //给子item添加
+                       listInfo=new Createlogistics_ListInfo();
+                        String cl=job.getString("cl");
+                        JSONArray jay=new JSONArray(cl);
+                        for(int z=0;z<jay.length();z++){
+                            JSONObject childJob= (JSONObject) jay.get(z);
+                            if(cl.contains("cl_fenlei")){
+                                listInfo.sort=childJob.getString("cl_fenlei");
+                            }
+                            else{
+                                listInfo.sort="";
+                            }
+                            if(cl.contains("cl_mingcheng")){
+                                listInfo.product_name=childJob.getString("cl_mingcheng");
+                            }
+                            else{
+                                listInfo.product_name="";
+                            }
+                            listInfo.num=childJob.getString("cl_shuliang");
+                            listInfo.only_price=childJob.getString("cl_jine");
+
+                            listInfo.can_num="";
+                            if(cl.contains("cl_cangku")){
+                                listInfo.cangku_name=childJob.getString("cl_cangku");
+                            }else{
+                                listInfo.cangku_name="";
+                            }
+                            if(cl.contains("deliveryEndDate")){
+                                listInfo.date=new SimpleDateFormat("yyyy-MM-dd").format(Long.valueOf(childJob.getString("deliveryStartDate")))+"    "+
+                                        new SimpleDateFormat("yyyy-MM-dd").format(Long.valueOf(childJob.getString("deliveryEndDate")));
+                            }
+                            else{
+                                listInfo.date="";
+                            }
+                            expandInfo1.list.add(listInfo);
+                        }
+                        expandList.add(expandInfo1);
+                    }
+                    adapter=new CreateLogisticsAdapter(CreateLogistics.this,expandList,CreateLogistics.this);
+                    expand_lv_create_logistics.setAdapter(adapter);
+                    if(adapter!=null && expandList!=null){
+                        for (int i = 0; i < adapter.getGroupCount(); i++) {
+                            expand_lv_create_logistics.expandGroup(i);
+                        }}
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                Log.e("TAG","ex-----"+ex);
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
     }
 }

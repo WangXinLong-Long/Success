@@ -479,6 +479,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.CreateLogisticsNeed"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.Logistics_SelectAddress"
@@ -580,7 +581,9 @@
         <activity android:name=".fragments.myPlasticTrade.setting.FunctionIntroduction.FunctionIntroductionMVP.view.FunctionIntroductionActivity" />
         <activity android:name=".fragments.myPlasticTrade.setting.FunctionIntroductionDetailActivity" />
         <activity android:name=".fragments.myPlasticTrade.setting.HelpAndFeedbackMVP.view.HelpAndFeedbackActivity" />
-        <activity android:name=".fragments.myPlasticTrade.setting.ScoreActivity"></activity>
+        <activity android:name=".fragments.myPlasticTrade.setting.ScoreActivity" />
+        <activity android:name=".fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.logisticsMesssage" />
+        <activity android:name=".fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.logisticsAddress"></activity>
     </application>
 
 </manifest>

@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.google.android.gms.playlog.internal.LogEvent;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.SpotOrder.TiQu;
+import com.silianchuangye.sumao.success.utils.Loding;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
 import org.json.JSONException;
@@ -73,6 +74,7 @@ public class UserInformation extends Activity implements  View.OnClickListener{
             tv_loginName= (TextView) findViewById(R.id.tv_loginName);
             tv_loginPhoneNum= (TextView) findViewById(R.id.tv_loginPhoneNum);
             tv_loginEmail= (TextView) findViewById(R.id.tv_loginEmail);
+            Loding.show(this,"正在请求网络",false,null);//网络请求之前调用
             sendNet();
         }
 
@@ -120,6 +122,7 @@ public class UserInformation extends Activity implements  View.OnClickListener{
             x.http().post(params, new Callback.CommonCallback<String>() {
                 @Override
                 public void onSuccess(String result) {
+                    Loding.dis();//网络加载完成调用
                     Log.e("TAG","result====="+result);
                     try {
                         JSONObject job=new JSONObject(result);
@@ -151,6 +154,18 @@ public class UserInformation extends Activity implements  View.OnClickListener{
 
                 @Override
                 public void onFinished() {
+                    new Thread(){
+                        @Override
+                        public void run() {
+                            super.run();
+                            try {
+                                Thread.sleep(1000);
+                                Loding.dis();
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }.start();
 
                 }
             });
