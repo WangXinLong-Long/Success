@@ -231,7 +231,7 @@
                         android:id="@+id/tv_logistics_need_give_address"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="234"
+                        android:text=""
                         android:layout_centerVertical="true"
                         android:layout_toLeftOf="@id/img_logistics_need_give_address"
                         />
@@ -268,12 +268,13 @@
                         android:id="@+id/tv_logistics_need_message_address"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="234"
+                        android:text=""
                         android:layout_centerVertical="true"
                         android:layout_toLeftOf="@id/img_logistics_need_message_address"
                         />
                 </RelativeLayout>
             </LinearLayout>
+
             <ListView
                 android:background="@color/selley_lv"
                 android:layout_below="@id/linear_need_three"
@@ -289,7 +290,7 @@
                 android:layout_width="match_parent"
                 android:background="@color/selley_lv"
                 android:layout_height="match_parent"
-                android:layout_below="@id/linear_need_second"></ListView>
+                android:layout_below="@id/linear_need_three"></ListView>
         </RelativeLayout>
     </ScrollView>
 

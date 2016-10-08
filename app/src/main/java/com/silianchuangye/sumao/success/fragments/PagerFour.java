@@ -109,7 +109,7 @@ public class PagerFour extends BasePager {
                     intent.setClass(context, OrderGoodsActivity.class);
                     intent.putExtra("title","客服订单");
                     startActivity(intent);
-                }
+        }
                 else if (sela.getChild(groupPosition, childPosition).toString().equals("用户信息"))
                 {
                     Intent intent = new Intent();

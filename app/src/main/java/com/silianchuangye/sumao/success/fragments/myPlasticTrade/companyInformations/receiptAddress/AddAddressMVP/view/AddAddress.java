@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -85,9 +86,8 @@ public class AddAddress extends Activity implements View.OnClickListener , IAddA
         super.onNewIntent(intent);
         setIntent(intent);
         address = getIntent().getStringExtra("address");
-
         sb.append(address);
-
+        Log.e("TAG","sb"+sb);
         presenter.setDetailAddress(sb.substring(0,4), sb.substring(0,6), sb.toString());
         detailAddress = getIntent().getStringExtra("detailAddress");
         address_detail.setText(detailAddress);
