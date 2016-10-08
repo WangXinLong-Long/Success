@@ -2,11 +2,16 @@ package com.easemob.easeui.ui;
 
 import java.io.File;
 import java.util.List;
+import java.util.Properties;
 
+import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
@@ -14,9 +19,14 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
+import android.provider.Settings;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.text.ClipboardManager;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -62,6 +72,10 @@ import com.easemob.easeui.widget.chatrow.EaseCustomChatRowProvider;
 import com.easemob.util.EMLog;
 import com.easemob.util.PathUtil;
 
+import com.zhy.m.permission.MPermissions;
+import com.zhy.m.permission.PermissionDenied;
+import com.zhy.m.permission.PermissionGrant;
+
 /**
  * 可以直接new出来使用的聊天对话页面fragment，
  * 使用时需调用setArguments方法传入chatType(会话类型)和userId(用户或群id)
@@ -76,7 +90,7 @@ public class EaseChatFragment extends EaseBaseFragment implements EMEventListene
     protected static final int REQUEST_CODE_MAP = 1;
     protected static final int REQUEST_CODE_CAMERA = 2;
     protected static final int REQUEST_CODE_LOCAL = 3;
-
+private static final int PERMISSION_CODE = 1;
     /**
      * 传入fragment的参数
      */
@@ -108,10 +122,10 @@ public class EaseChatFragment extends EaseBaseFragment implements EMEventListene
     static final int ITEM_PICTURE = 2;
     static final int ITEM_LOCATION = 3;
     
-    protected int[] itemStrings = { R.string.attach_take_pic, R.string.attach_picture, R.string.attach_location };
+    protected int[] itemStrings = { R.string.attach_take_pic, R.string.attach_picture/*, R.string.attach_location*/ };
     protected int[] itemdrawables = { R.drawable.ease_chat_takepic_selector, R.drawable.ease_chat_image_selector,
-            R.drawable.ease_chat_location_selector };
-    protected int[] itemIds = { ITEM_TAKE_PICTURE, ITEM_PICTURE, ITEM_LOCATION };
+            /*R.drawable.ease_chat_location_selector*/ };
+    protected int[] itemIds = { ITEM_TAKE_PICTURE, ITEM_PICTURE/*, ITEM_LOCATION*/ };
     private EMChatRoomChangeListener chatRoomChangeListener;
     private boolean isMessageListInited;
     protected MyItemClickListener extendMenuItemClickListener;
@@ -782,14 +796,96 @@ public class EaseChatFragment extends EaseBaseFragment implements EMEventListene
             return;
         }
 
+
+            //        cameraFile = new File(PathUtil.getInstance().getImagePath(), EMChatManager.getInstance().getCurrentUser()
+//                + System.currentTimeMillis() + ".jpg");
+//        cameraFile.getParentFile().mkdirs();
+//        startActivityForResult(
+//                new Intent(MediaStore.ACTION_IMAGE_CAPTURE).putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(cameraFile)),
+//                REQUEST_CODE_CAMERA);
+        if (ContextCompat.checkSelfPermission(getActivity(),Manifest.permission.CAMERA)!= PackageManager.PERMISSION_GRANTED||
+                ContextCompat.checkSelfPermission(getActivity(),Manifest.permission.WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED){
+            Log.i("test","checkSelfPermission-->检查是否需要授权");
+            if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
+                    Manifest.permission.CAMERA)) {
+
+                // Show an expanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+                Log.i("test","shouldShowRequestPermissionRationale-->显示拒绝授权原因");
+                showMissingPermissionDialog();
+            } else{
+                Log.i("test","requestPermissions-->要显示请求权限的dialog");
+                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.CAMERA},PERMISSION_CODE);
+//                showMissingPermissionDialog();
+
+            }
+
+        }else {
+            Log.i("test","checkSelfPermission-->授权成功，使用相机");
+            useCamera();
+        }
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+//
+
+            if(requestCode == PERMISSION_CODE)
+            {
+                if (grantResults.length>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    Log.i("test","onRequestPermissionsResult-->授权结果：成功");
+                    useCamera();
+                }else {
+                    Log.i("test","onRequestPermissionsResult-->授权结果：失败");
+                   showMissingPermissionDialog();
+                }
+            }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+    }
+    // 显示缺失权限提示
+    public void showMissingPermissionDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("帮助");
+        builder.setMessage("当前应用缺少必要权限。\n\n请点击\"设置\"-\"权限\"-打开所需权限。\n\n最后点击两次后退按钮，即可返回。");
+
+        // 拒绝, 退出应用
+        builder.setNegativeButton("退出", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+//                setResult(PERMISSIONS_DENIED);
+
+            }
+        });
+
+        builder.setPositiveButton("设置", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                startAppSettings();
+            }
+        });
+
+        builder.setCancelable(false);
+
+        builder.show();
+    }
+    // 启动应用的设置
+    private void startAppSettings() {
+        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        intent.setData(Uri.parse("package:" + getActivity().getPackageName()));
+        startActivity(intent);
+    }
+    public void useCamera(){
         cameraFile = new File(PathUtil.getInstance().getImagePath(), EMChatManager.getInstance().getCurrentUser()
                 + System.currentTimeMillis() + ".jpg");
         cameraFile.getParentFile().mkdirs();
-        startActivityForResult(
-                new Intent(MediaStore.ACTION_IMAGE_CAPTURE).putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(cameraFile)),
-                REQUEST_CODE_CAMERA);
-    }
-
+    startActivityForResult(
+            new Intent(MediaStore.ACTION_IMAGE_CAPTURE).putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(cameraFile)),
+            REQUEST_CODE_CAMERA);
+}
     /**
      * 从图库获取图片
      */

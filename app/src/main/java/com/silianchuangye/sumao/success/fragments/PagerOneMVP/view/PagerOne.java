@@ -1,11 +1,16 @@
 package com.silianchuangye.sumao.success.fragments.PagerOneMVP.view;
 
+import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -54,6 +59,9 @@ import com.silianchuangye.sumao.success.utils.MarqueeView;
 import com.silianchuangye.sumao.success.utils.scrollviewAD.MyGallery;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.ImageAdapter;
+import com.zhy.m.permission.MPermissions;
+import com.zhy.m.permission.PermissionDenied;
+import com.zhy.m.permission.PermissionGrant;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -92,7 +100,8 @@ public class PagerOne extends BasePager implements IPagerOneView {
     private List<DayAndPrice> calendarlist;
     private Intent calendarintent;
     List<Group> cls;
-
+    private static final int REQUEST_PERMISSION_CAMERA_CODE = 1;
+    static final String[] PERMISSIONS = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
     @Override
     public void myClickSearch() {
         //调到搜索页
@@ -405,12 +414,13 @@ public class PagerOne extends BasePager implements IPagerOneView {
         intent.putExtra(Constant.MESSAGE_TO_INTENT_EXTRA, Constant.MESSAGE_TO_DEFAULT);
         intent.putExtra(Constant.IM_SERVICE_NUMBER, "sumaokefu");
         startActivity(intent);
-
     }
+
 //获取到图片存放的路径，分别进行网络请求
     @Override
     public void setPagerOneBannerDataInFragment(BannerBean bannerBean) {
         banners = new ArrayList<>();
+
         banners.add(bannerBean.getImageUrl1());
         banners.add(bannerBean.getImageUrl2());
         banners.add(bannerBean.getImageUrl3());
@@ -487,6 +497,7 @@ public class PagerOne extends BasePager implements IPagerOneView {
         intent.setClass(mActivity, PreSale.class);
         intent.putExtra("preSaleActivityBean",goodsInStockActivityBean);
         startActivity(intent);
+
     }
 //    点击塑贸资讯
     @Override
