@@ -35,7 +35,6 @@ public class Logistics_SelectAddress extends AppCompatActivity implements View.O
         setContentView(R.layout.activity_logistics__select_address);
         initDate();
         initView();
-        seletctAddNet();
     }
 
     private void initDate() {
@@ -90,29 +89,5 @@ public class Logistics_SelectAddress extends AppCompatActivity implements View.O
         intent.setAction("select");
         sendBroadcast(intent);
         finish();
-    }
-    private void seletctAddNet(){
-        RequestParams params=new RequestParams(SuMaoConstant.SUMAO_IP+"/rest/model/atg/userprofiling/ProfileActor/EntAddress");
-        x.http().post(params, new Callback.CommonCallback<String>() {
-            @Override
-            public void onSuccess(String result) {
-                Log.e("TAG","result-------"+result);
-            }
-
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-
-            }
-
-            @Override
-            public void onCancelled(CancelledException cex) {
-
-            }
-
-            @Override
-            public void onFinished() {
-
-            }
-        });
     }
 }
