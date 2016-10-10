@@ -104,8 +104,8 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
 		super.registerExtendMenuItem();
 		//增加扩展item
 		inputMenu.registerExtendMenuItem(R.string.attach_file, R.drawable.em_chat_file_selector, ITEM_FILE, extendMenuItemClickListener);
-		// 增加扩展item
-		inputMenu.registerExtendMenuItem(R.string.attach_short_cut_message, R.drawable.em_icon_answer, ITEM_SHORT_CUT_MESSAGE, extendMenuItemClickListener);
+		// 增加扩展item  TODO 这里修改了
+//		inputMenu.registerExtendMenuItem(R.string.attach_short_cut_message, R.drawable.em_icon_answer, ITEM_SHORT_CUT_MESSAGE, extendMenuItemClickListener);
 	}
 
 	@SuppressLint("NewApi")
@@ -305,6 +305,7 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
 		}
 		JSONObject weichatJson = getWeichatJSONObject(message);
 		try {
+			//TODO 这里有相关属性的设置
 			JSONObject visitorJson = new JSONObject();
 			visitorJson.put("userNickname", currentUserNick);
 			visitorJson.put("trueName", currentUserNick);

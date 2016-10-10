@@ -35,7 +35,7 @@ public class RegisterPhoneActivity extends AppCompatActivity implements IRegiste
     private Button bt_get_register;
     private TextView tv_next_register;
     private RegisterPhonePresenter registerPhonePresenter;
-    private String yanzhen;
+    private String yanzhen = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
