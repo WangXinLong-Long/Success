@@ -39,6 +39,7 @@ public class SearchActivityModel implements ISearchActivityModel {
         RequestParams requestParams = new RequestParams(url);
        requestParams.setAsJsonContent(true);
         JSONObject jsonObject = new JSONObject();
+
         try {
             jsonObject.put("Ntt", Ntt);
             jsonObject.put("Nrpp",Nrpp+"");

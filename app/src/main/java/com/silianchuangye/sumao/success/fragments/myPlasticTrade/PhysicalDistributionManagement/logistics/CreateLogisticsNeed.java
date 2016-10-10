@@ -29,6 +29,13 @@ import com.silianchuangye.sumao.success.fragments.bean.Createlogistics_ListInfo;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.AddAddressMVP.presenter.AddAddressPresenter;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.AddAddressMVP.view.IAddAddress;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceAreaMVP.view.SelectProvinceArea;
+import com.silianchuangye.sumao.success.utils.SuMaoConstant;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -53,10 +60,12 @@ public class CreateLogisticsNeed extends AppCompatActivity implements View.OnCli
     private Create_LogisticsNeed_Adapter adapter;
     private Create_LogisticsNeed_Adapter adapter2;
     private MyReciver my=new MyReciver();
-    String num,cangku,startTime,address;
-    String strType="迅帮配送";
+    String num,cangku,startTime,address,megList;
+    String strType="";
     Create_Logistics_NeedInfo info1,info2,info3,info4,info5,info6,info7,
             infoLv1,infoLv2,infoLv3,infoLv4,infoLv5,infoLv6;
+    private StringBuilder sb;
+    String start,end;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +73,8 @@ public class CreateLogisticsNeed extends AppCompatActivity implements View.OnCli
         num=getIntent().getStringExtra("num");
         cangku=getIntent().getStringExtra("cangku");
         startTime=getIntent().getStringExtra("date");
+        megList=getIntent().getStringExtra("list");
+        strType=getIntent().getStringExtra("logistic");
         initDate();
         initView();
     }
@@ -99,7 +110,7 @@ public class CreateLogisticsNeed extends AppCompatActivity implements View.OnCli
         list.add(info4);
         list.add(info5);
         list.add(info6);
-        list.add(info7);
+//        list.add(info7);
 
         infoLv1=new Create_Logistics_NeedInfo();
         infoLv1.tv_start="*";
@@ -176,6 +187,15 @@ public class CreateLogisticsNeed extends AppCompatActivity implements View.OnCli
         lv_logistics_need_three.setAdapter(adapter2);
         setListViewHeightBasedOnChildren(lv_logistics_need);//测量listview的高度
         setListViewHeightBasedOnChildren(lv_logistics_need_three);
+        Log.e("TAG","strtype--"+strType);
+        if(strType.equals("自提")){
+            showImg(img_logistics_need_select_buy);
+        }else if(strType.equals("卖家配送")){
+            Log.e("TAG","应该进的");
+            showImg(img_logistics_need_select_maifang);
+        }else{
+            showImg(img_logistics_need_select_xunbang);
+        }
     }
 
     @Override
@@ -237,7 +257,7 @@ public class CreateLogisticsNeed extends AppCompatActivity implements View.OnCli
                 img_logistics_need_select_maifang.setImageResource(R.mipmap.cart_select_null);
                 break;
             case R.id.img_logistics_need_select_maifang:
-                strType="卖方配送";
+                strType="卖家配送";
                 lv_logistics_need_three.setVisibility(View.GONE);
                 lv_logistics_need.setVisibility(View.VISIBLE);
                 relative_logistics_need_three.setVisibility(View.VISIBLE);
@@ -246,7 +266,7 @@ public class CreateLogisticsNeed extends AppCompatActivity implements View.OnCli
                 img_logistics_need_select_maifang.setImageResource(R.mipmap.cart_select);
                 break;
             case R.id.img_logistics_need_select_buy:
-                strType="买方自提";
+                strType="自提";
                 lv_logistics_need_three.setVisibility(View.VISIBLE);
                 lv_logistics_need.setVisibility(View.GONE);
                 relative_logistics_need_three.setVisibility(View.GONE);
@@ -288,7 +308,7 @@ public class CreateLogisticsNeed extends AppCompatActivity implements View.OnCli
         super.onNewIntent(intent);
         setIntent(intent);
         address = getIntent().getStringExtra("address");
-        StringBuilder sb = new StringBuilder();
+        sb= new StringBuilder();
         sb.append(address);
         AddAddressPresenter presenter = new AddAddressPresenter(CreateLogisticsNeed.this);
         presenter.setDetailAddress(sb.substring(0, 4), sb.substring(0, 6), sb.toString());
@@ -297,7 +317,6 @@ public class CreateLogisticsNeed extends AppCompatActivity implements View.OnCli
     @Override
     public void setAddressInText(String address) {
         tv_logistics_need_give_address.setText(address);
-        Log.e("TAG","sfdds===="+address);
     }
 
     @Override
@@ -357,11 +376,12 @@ public class CreateLogisticsNeed extends AppCompatActivity implements View.OnCli
     //判断是否为空
     private void IsNull(){
         Log.e("TAG","strTyep-------"+strType);
-        if(strType.equals("买方自提")) {
+        if(strType.equals("自提")) {
             if (infoLv1.tv_three.length() != 0 && infoLv2.tv_three.length() != 0
-                    && infoLv3.tv_three.length() != 0 && infoLv5.tv_three.length() != 0
+                    && infoLv3.tv_three.length() != 0 && infoLv4.tv_three.length() != 0
                     && infoLv6.tv_three.length() != 0) {
                 Toast.makeText(this, "提交物流需求", Toast.LENGTH_SHORT).show();
+                showCreateNet();
             } else {
                 Toast.makeText(CreateLogisticsNeed.this, "带*不能为空", Toast.LENGTH_SHORT).show();
             }
@@ -369,6 +389,7 @@ public class CreateLogisticsNeed extends AppCompatActivity implements View.OnCli
             if(info1.tv_three.length()!=0&&info2.tv_three.length()!=0
                     &&info3.tv_three.length()!=0&&tv_logistics_need_address_message.length()!=0
                     &&tv_logistics_need_give_address.length()!=0){
+                showCreateNet();
                 Toast.makeText(this, "提交物流需求", Toast.LENGTH_SHORT).show();
             }else{
                 Toast.makeText(CreateLogisticsNeed.this, "带*不能为空", Toast.LENGTH_SHORT).show();
@@ -391,7 +412,9 @@ public class CreateLogisticsNeed extends AppCompatActivity implements View.OnCli
         }else if(resultCode==1){
             info2.tv_three=str;
         }else if(resultCode==2){
-            info3.tv_three=str;
+            start=data.getStringExtra("message1");
+            end=data.getStringExtra("message2");
+            info3.tv_three=start+"至"+end;
         }else if(resultCode==3){
             info4.tv_three=str;
         }else if(resultCode==4){
@@ -418,5 +441,78 @@ public class CreateLogisticsNeed extends AppCompatActivity implements View.OnCli
         }
         adapter2.notifyDataSetChanged();
         adapter.notifyDataSetChanged();
+    }
+    //创建物流订单网络接口
+    private void showCreateNet(){
+        RequestParams params=new RequestParams(SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/order/logistics/logisticsActor/createNewLogistics");
+        params.addParameter("quantity",num);//本次发货数量
+        params.addParameter("commerceJson",megList);
+        if(strType.equals("自提")){
+            params.addParameter("shippingMethod","pickUp");
+            params.addParameter("shippingDate",list2.get(3).tv_three);//提货时间
+            params.addParameter("deliveryerTel",list2.get(2).tv_three);//联系电话
+            params.addParameter("idCard",list2.get(4).tv_three);//联系人身份证
+            params.addParameter("wareHouse",cangku);
+            params.addParameter("licensePlateNo",list2.get(0).tv_three);
+            params.addParameter("deliveryer",list2.get(1).tv_three);
+//            params.addParameter("remarks",list2.get(5).tv_three);
+            JSONObject job=new JSONObject();
+            try {
+//                job.put("commerceJson",megList);
+//                job.put("wareHouse",cangku);//仓库
+//                job.put("licensePlateNo",list2.get(0).tv_three);//提货车号
+//                job.put("deliveryer",list2.get(1));//提货人
+                job.put("remarks",list2.get(5).tv_three);//备注
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            params.setBodyContent(job.toString());
+        }else{
+            if(strType.equals("卖家配送")){
+                params.addParameter("shippingMethod","pickUp");
+            }else{
+                params.addParameter("shippingMethod","xunbang");
+            }
+            params.addParameter("provinceId",sb.substring(0, 4));
+            params.addParameter("cityId",sb.substring(0, 6));
+            params.addParameter("countyId",sb.toString());
+            params.addParameter("contactPhone",list.get(1).tv_three);//联系电话
+            params.addParameter("pickUpDateStart",start);
+            params.addParameter("pickUpDateEnd",end);
+            params.addParameter("shippingContactTel",list.get(5).tv_three);
+            JSONObject job=new JSONObject();
+            try {
+//                job.put("commerceJson",megList);
+                job.put("detailAddress",tv_logistics_need_address_message.getText().toString());//详细地址
+                job.put("contactPerson",list.get(0).tv_three);
+                job.put("repeiptCompany",list.get(3).tv_three);
+                job.put("shippingContact",list.get(4).tv_three);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            params.setBodyContent(job.toString());
+        }
+        Log.e("TAG","创建物流params-----"+params);
+        x.http().post(params, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.e("TAG","result======"+result);
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                Log.e("TAG","ex------"+ex.toString());
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
     }
 }

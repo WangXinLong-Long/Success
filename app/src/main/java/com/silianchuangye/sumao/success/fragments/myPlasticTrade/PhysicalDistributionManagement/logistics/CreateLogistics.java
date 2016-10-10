@@ -17,6 +17,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.CreateLogisticsAdapter;
 import com.silianchuangye.sumao.success.fragments.bean.Createlogistics_ExpandInfo;
@@ -34,7 +35,9 @@ import org.xutils.x;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CreateLogistics extends AppCompatActivity implements View.OnClickListener,CreateLogisticsAdapter.LogisticsCall{
     private ExpandableListView expand_lv_create_logistics;
@@ -58,6 +61,9 @@ public class CreateLogistics extends AppCompatActivity implements View.OnClickLi
     private PopupWindow popWindow;
     Createlogistics_ListInfo listInfo;
     String edt_num,tv_changku,startTime;
+    private String strjson,strNum,logistics,edtNum;
+    List<String>list=new ArrayList<String>();
+    JSONArray array;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -224,13 +230,48 @@ public class CreateLogistics extends AppCompatActivity implements View.OnClickLi
                 if(count==sum) {
                     Toast.makeText(this,"最少选中其中一条",Toast.LENGTH_SHORT).show();
                 }else{
-                    Toast.makeText(this,"创建物流需求",Toast.LENGTH_SHORT).show();
-                    Intent intent=new Intent(this,CreateLogisticsNeed.class);
-                    intent.putExtra("num",edt_num);//本次发货数量
-                    intent.putExtra("cangku",tv_changku);//仓库
-                    intent.putExtra("date",startTime);//交货开始时间
-                    Log.e("TAG","edt_numchuang----"+edt_num);
-                    startActivity(intent);
+                    ArrayList<LogisticsJson> persons = new ArrayList<LogisticsJson>();
+                    for(int i=0;i<expandList.size();i++){
+                        for(int j=0;j<expandList.get(i).list.size();j++){
+                            if(expandList.get(i).list.get(j).SelectFlag){
+                                logistics=expandList.get(i).list.get(j).logistics_name;
+                                Log.e("TAG","logistics--"+logistics);
+                                array= new JSONArray();
+                                persons.add(new LogisticsJson(expandList.get(i).list.get(j).id,"0"));//填充Java实体类集合
+                                // Json格式的数组形式
+                                JSONObject obj;//json格式的单个对象形式
+                                Log.e("TAG","persons"+persons.size());
+                                for(int k=0;k<persons.size();k++) {
+                                    obj = new JSONObject();
+                                    try {
+                                        obj.put("commerItemId", persons.get(k).commerItemId);//json通过put方式以key-value形式填充
+                                        obj.put("shipmentsQuantity", persons.get(k).shipmentsQuantity);
+                                        array.put(obj);//将JSONObject添加入JSONArray
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            Log.e("TAG","终极------"+array.toString());
+                            }
+                            }
+                        }
+                    String str=strNum.substring(0,strNum.length());
+                    Log.e("TAG","str===="+str);
+                    double d2=Double.valueOf(str);
+                    double d1=Double.valueOf(edt_num);
+                    Log.e("TAG","d2---"+d2);
+                    Log.e("TAG","d1--"+d1);
+                    Log.e("TAG","d1-d2====="+(d1-d2<0));
+                    if(d1-d2<0) {
+                        Toast.makeText(this, "创建物流需求", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(this, CreateLogisticsNeed.class);
+                        intent.putExtra("num", edt_num);//本次发货数量
+                        intent.putExtra("cangku", tv_changku);//仓库
+                        intent.putExtra("date", startTime);//交货开始时间
+                        intent.putExtra("logistic", logistics);
+                        intent.putExtra("list", array.toString());
+                        startActivity(intent);
+                    }
                 }
                 break;
             case R.id.img_logistics_title_bar_back:
@@ -256,7 +297,6 @@ public class CreateLogistics extends AppCompatActivity implements View.OnClickLi
     public void call(int groupPosition,int childPosition,String num) {
         int count=0;
     //如果子item全选后，全选按钮变为选中
-//
 //        for(int i=0;i<expandList.size();i++){
 //            int k= expandList.get(i).list.size();
 //            for(int j=0;j<k;j++){
@@ -267,6 +307,7 @@ public class CreateLogistics extends AppCompatActivity implements View.OnClickLi
 //                }
 //            }
 //        }
+
         expandList.get(groupPosition).list.get(childPosition).SelectFlag = !expandList.get(groupPosition).list.get(childPosition).SelectFlag;
         count++;
         adapter.notifyDataSetChanged();
@@ -274,19 +315,10 @@ public class CreateLogistics extends AppCompatActivity implements View.OnClickLi
         if(expandList.get(groupPosition).list.get(childPosition).SelectFlag){
             tv_changku=expandList.get(groupPosition).list.get(childPosition).cangku_name;
             String date=expandList.get(groupPosition).list.get(childPosition).date;
+            strNum=expandList.get(groupPosition).list.get(childPosition).can_num;
             startTime=date.substring(0,10);
         }
-        Log.e("TAG","edtnum-"+edt_num+"=="+tv_changku);
-//        int sum=0;
-//        for(int i=0;i<expandList.size();i++){
-//            int all= expandList.get(i).list.size();
-//            sum+=all;
-//        }
-//        if(count==sum) {
-//            img_create_logistics_allselect.setImageResource(R.mipmap.cart_select);
-//        }else{
-//            img_create_logistics_allselect.setImageResource(R.mipmap.cart_select_null);
-//        }
+
     }
 
     //点击搜索按钮弹出popwindow
@@ -380,6 +412,7 @@ public class CreateLogistics extends AppCompatActivity implements View.OnClickLi
                         JSONArray jay=new JSONArray(cl);
                         for(int z=0;z<jay.length();z++){
                             JSONObject childJob= (JSONObject) jay.get(z);
+                            listInfo.id=childJob.getString("commerceId");
                             if(cl.contains("cl_fenlei")){
                                 listInfo.sort=childJob.getString("cl_fenlei");
                             }
@@ -392,10 +425,22 @@ public class CreateLogistics extends AppCompatActivity implements View.OnClickLi
                             else{
                                 listInfo.product_name="";
                             }
-                            listInfo.num=childJob.getString("cl_shuliang");
+                            if(cl.contains("cl_shuliang")){
+                                listInfo.num=childJob.getString("cl_shuliang");
+                            }else{
+                                listInfo.num="";
+                            }
+                            if(cl.contains("shippingMethod")){
+                                listInfo.logistics_name=childJob.getString("shippingMethod");
+                            }else{
+                                listInfo.logistics_name="";
+                            }
                             listInfo.only_price=childJob.getString("cl_jine");
-
-                            listInfo.can_num="";
+                            if(cl.contains("vailableQuantity")){
+                                listInfo.can_num=childJob.getString("vailableQuantity");
+                            }else{
+                                listInfo.can_num="";
+                            }
                             if(cl.contains("cl_cangku")){
                                 listInfo.cangku_name=childJob.getString("cl_cangku");
                             }else{
