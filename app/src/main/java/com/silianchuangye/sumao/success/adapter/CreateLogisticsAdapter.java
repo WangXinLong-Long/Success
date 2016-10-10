@@ -1,6 +1,8 @@
 package com.silianchuangye.sumao.success.adapter;
 
 import android.content.Context;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -109,9 +111,11 @@ public class CreateLogisticsAdapter extends BaseExpandableListAdapter{
             holder.img_child_select= (ImageView) convertView.findViewById(R.id.img_item_create_logistics_top_select);
             holder.tv_child_product_name= (TextView) convertView.findViewById(R.id.tv_item_create_logistics_lv_produce_name);
             holder.tv_child_logistics= (TextView) convertView.findViewById(R.id.tv_item_create_logistics_logistica_top_type);
-            holder.tv_child_sub= (TextView) convertView.findViewById(R.id.tv_item_create_logistics_lv_sub);
+//            holder.tv_child_sub= (TextView) convertView.findViewById(R.id.tv_item_create_logistics_lv_sub);
+//            holder.edt_child_num= (EditText) convertView.findViewById(R.id.edt_item_create_logistics_num);
+//            holder.tv_child_add= (TextView) convertView.findViewById(R.id.tv_item_create_logistics_lv_add);
             holder.edt_child_num= (EditText) convertView.findViewById(R.id.edt_item_create_logistics_num);
-            holder.tv_child_add= (TextView) convertView.findViewById(R.id.tv_item_create_logistics_lv_add);
+
             holder.tv_child_sort= (TextView) convertView.findViewById(R.id.tv_item_create_logistics_lv_sort_name);
             holder.tv_child_product_name= (TextView) convertView.findViewById(R.id.tv_item_create_logistics_lv_produce_name);
             holder.tv_child_num= (TextView) convertView.findViewById(R.id.tv_item_create_logistics_lv_num_dun);
@@ -199,27 +203,27 @@ public class CreateLogisticsAdapter extends BaseExpandableListAdapter{
                 }
             }
          });
-        holder.tv_child_sub.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String str=holder.edt_child_num.getText().toString();
-                int i=Integer.valueOf(str);
-                i--;
-                if(i<1){
-                    i=1;
-                }
-                holder.edt_child_num.setText(i+"");
-            }
-        });
-        holder.tv_child_add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String str=holder.edt_child_num.getText().toString();
-                int i=Integer.valueOf(str);
-                i++;
-                holder.edt_child_num.setText(i+"");
-            }
-        });
+//        holder.tv_child_sub.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                String str=holder.edt_child_num.getText().toString();
+//                int i=Integer.valueOf(str);
+//                i--;
+//                if(i<1){
+//                    i=1;
+//                }
+//                holder.edt_child_num.setText(i+"");
+//            }
+//        });
+//        holder.tv_child_add.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                String str=holder.edt_child_num.getText().toString();
+//                int i=Integer.valueOf(str);
+//                i++;
+//                holder.edt_child_num.setText(i+"");
+//            }
+//        });
         return convertView;
     }
 
@@ -239,7 +243,7 @@ public class CreateLogisticsAdapter extends BaseExpandableListAdapter{
         TextView tv_child_logistics;
         TextView tv_child_sub;
         TextView tv_child_add;
-        EditText edt_child_num;
+         TextView edt_child_num;
         LinearLayout liear_child_message;
         TextView tv_child_produce_top_name,tv_child_sort,tv_child_product_name,tv_child_num,tv_child_price
                 ,tv_child_can_num,tv_child_date,tv_child_cangku;

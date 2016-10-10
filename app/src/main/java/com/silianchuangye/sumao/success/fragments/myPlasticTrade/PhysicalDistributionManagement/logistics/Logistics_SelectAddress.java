@@ -3,6 +3,7 @@ package com.silianchuangye.sumao.success.fragments.myPlasticTrade.PhysicalDistri
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -13,6 +14,11 @@ import android.widget.Toast;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.LogisticsSelectAddress_Adapter;
 import com.silianchuangye.sumao.success.fragments.bean.Logistics_SelectAddress_Info;
+import com.silianchuangye.sumao.success.utils.SuMaoConstant;
+
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +35,7 @@ public class Logistics_SelectAddress extends AppCompatActivity implements View.O
         setContentView(R.layout.activity_logistics__select_address);
         initDate();
         initView();
+        seletctAddNet();
     }
 
     private void initDate() {
@@ -83,5 +90,29 @@ public class Logistics_SelectAddress extends AppCompatActivity implements View.O
         intent.setAction("select");
         sendBroadcast(intent);
         finish();
+    }
+    private void seletctAddNet(){
+        RequestParams params=new RequestParams(SuMaoConstant.SUMAO_IP+"/rest/model/atg/userprofiling/ProfileActor/EntAddress");
+        x.http().post(params, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.e("TAG","result-------"+result);
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
     }
 }

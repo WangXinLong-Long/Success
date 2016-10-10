@@ -78,7 +78,7 @@
                 android:id="@+id/tv_item_create_logistics_riqi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/x28"
+                android:layout_marginLeft="@dimen/x23"
                 android:text="日期 : "
                 android:layout_toRightOf="@id/tv_item_create_logistics_name"
                 android:layout_centerVertical="true"/>
@@ -88,6 +88,16 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@id/tv_item_create_logistics_riqi"/>
+            <Button
+                android:id="@+id/btn_item_create_logistics_kefu"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/x20"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/x10"
+                android:text="联系客服"
+                android:layout_centerVertical="true"
+                android:textColor="@color/selley_lv"
+                android:background="@drawable/button_background_yellow"/>
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="match_parent"
@@ -99,16 +109,7 @@
                 android:layout_centerVertical="true"
                 android:text="公司"
                 android:layout_marginLeft="@dimen/x10"/>
-            <Button
-                android:id="@+id/btn_item_create_logistics_kefu"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/x20"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="@dimen/x10"
-                android:text="联系客服"
-                android:layout_centerVertical="true"
-                android:textColor="@color/selley_lv"
-                android:background="@drawable/button_background_yellow"/>
+
         </RelativeLayout>
     </LinearLayout>
     <View

@@ -60,6 +60,41 @@
             android:paddingLeft="10dp"
             android:layout_marginRight="20dp"
             android:visibility="gone"/>
+        <LinearLayout
+            android:id="@+id/linear_date"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:orientation="horizontal"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            >
+            <TextView
+                android:id="@+id/tv_date_start"
+                android:layout_width="149dp"
+                android:paddingLeft="10dp"
+                android:layout_height="match_parent"
+               android:gravity="center_vertical"
+                android:background="@drawable/juxing"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:textSize="16sp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:text="至"/>
+            <TextView
+                android:id="@+id/tv_date_end"
+                android:layout_width="145dp"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:background="@drawable/juxing"
+                />
+        </LinearLayout>
+
     </RelativeLayout>
 
     <TextView
