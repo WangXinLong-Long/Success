@@ -27,6 +27,7 @@ import com.silianchuangye.sumao.success.adapter.PopupWindowAdaptrer;
 import com.silianchuangye.sumao.success.custom.customCalendar.CalendarView;
 import com.silianchuangye.sumao.success.custom.customCalendar.DayAndPrice;
 import com.silianchuangye.sumao.success.custom.customCalendar.MonthDateView;
+import com.silianchuangye.sumao.success.dialog.Ok_Dialog;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.OpenAuction;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.VesselThreeActivity;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockDetailActivityMVP.bean.CLAttribute;
@@ -443,6 +444,12 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
                         if(status.equals("YES")){
                             Toast.makeText(PreSaleDetailActivity.this,"支付成功",Toast.LENGTH_SHORT).show();
                             popupWindow.dismiss();
+                            // TODO 显示订单信息
+                            Intent intent=new Intent(PreSaleDetailActivity.this, Ok_Dialog.class);
+                            intent.putExtra("number","11111");
+                            intent.putExtra("type","aa");
+                            startActivity(intent);
+
                         }else{
                             Toast.makeText(PreSaleDetailActivity.this,"支付失败",Toast.LENGTH_SHORT).show();
                         }
