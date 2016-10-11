@@ -3,6 +3,7 @@ package com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInforma
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -10,7 +11,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.silianchuangye.sumao.success.R;
+import com.silianchuangye.sumao.success.adapter.CartAdapter;
 import com.silianchuangye.sumao.success.adapter.SelectCountyAreaAdapter;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.CreateLogisticsNeed;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectCityAreaMVP.view.SelectCityArea;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectCountyAreaMVP.presenter.SelectCountyAreaPresenter;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectDetailAreaMVP.view.SelectDetailArea;
@@ -99,12 +102,18 @@ public class SelectCountyArea extends Activity implements View.OnClickListener,I
             LogUtils.log("county----------->"+lists.get(position).getLevel());
             intent.setClass(SelectCountyArea.this,RegisterFirmActivity.class);
             startActivity(intent);
+        } else if(className.equals("logistics")){
+            intent.setClass(SelectCountyArea.this, CreateLogisticsNeed.class);
+            intent.putExtra("address",lists.get(position).getLevel());
+            startActivity(intent);
         }else {
             Intent intent = new Intent();
             intent.setClass(SelectCountyArea.this,SelectDetailArea.class);
             intent.putExtra("county",lists.get(position).getLevel());
             intent.putExtra("className",className);
             startActivity(intent);
+            finish();
         }
+
     }
 }

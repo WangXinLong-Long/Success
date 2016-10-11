@@ -178,7 +178,9 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase implements OnCl
             if(listener != null)
                 listener.onToggleVoiceBtnClicked();
         } else if (id == R.id.btn_more) {
-            buttonSetModeVoice.setVisibility(View.VISIBLE);
+
+            //TODO 这里修改过
+            buttonSetModeVoice.setVisibility(View.GONE);
             buttonSetModeKeyboard.setVisibility(View.GONE);
             edittext_layout.setVisibility(View.VISIBLE);
             buttonPressToSpeak.setVisibility(View.GONE);

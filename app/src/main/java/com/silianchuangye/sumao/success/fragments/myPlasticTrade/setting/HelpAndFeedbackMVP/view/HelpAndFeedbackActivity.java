@@ -1,5 +1,6 @@
 package com.silianchuangye.sumao.success.fragments.myPlasticTrade.setting.HelpAndFeedbackMVP.view;
 
+import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.setting.HelpAndFeedbackMVP.presenter.HelpAndFeedbackPresenter;
+import com.silianchuangye.sumao.success.utils.LogUtils;
 
 public class HelpAndFeedbackActivity extends AppCompatActivity implements View.OnClickListener,IHelpAndFeedbackView {
 
@@ -58,7 +60,9 @@ public class HelpAndFeedbackActivity extends AppCompatActivity implements View.O
                 }else if (feedbackText.isEmpty()||feedbackText.equals("")){
                     Toast.makeText(this,"输入反馈信息",Toast.LENGTH_SHORT).show();
                 }else {
-                    helpAndFeedbackPresenter.sendMessageInServer(telephoneNumber,feedbackText,"账号");
+                    String userName = getSharedPreferences("sumao", Activity.MODE_PRIVATE).getString("zhanghao","");
+                    LogUtils.log("userName"+userName);
+                    helpAndFeedbackPresenter.sendMessageInServer(telephoneNumber,feedbackText,userName);
                 }
                 break;
 

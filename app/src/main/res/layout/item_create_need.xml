@@ -36,6 +36,16 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/x10"
             />
+        <TextView
+            android:layout_toLeftOf="@id/img_create_need"
+            android:id="@+id/tv_item_create_need_three_error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/x10"
+            android:text="必须填写"
+            android:visibility="gone"
+            android:textColor="@color/red"/>
     </RelativeLayout>
 
 </RelativeLayout>

@@ -1,10 +1,14 @@
 package com.silianchuangye.sumao.success.adapter;
 
 import android.content.Context;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.bean.Create_Logistics_NeedInfo;
@@ -37,14 +41,15 @@ public class Create_LogisticsNeed_Adapter extends BaseAdapter{
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder;
+    public View getView(final int position, View convertView, final ViewGroup parent) {
+        final ViewHolder holder;
         if(convertView==null){
             holder=new ViewHolder();
             convertView=View.inflate(ctx, R.layout.item_create_need,null);
             holder.tv_start= (TextView) convertView.findViewById(R.id.tv_item_create_need_start);
             holder.tv_second= (TextView) convertView.findViewById(R.id.tv_item_create_need_second);
             holder.tv_three= (TextView) convertView.findViewById(R.id.tv_item_create_need_three);
+            holder.tv_item_create_need_three_error= (TextView) convertView.findViewById(R.id.tv_item_create_need_three_error);
             convertView.setTag(holder);
         }else{
             holder= (ViewHolder) convertView.getTag();
@@ -52,9 +57,10 @@ public class Create_LogisticsNeed_Adapter extends BaseAdapter{
         holder.tv_start.setText(list.get(position).tv_start);
         holder.tv_second.setText(list.get(position).tv_second);
         holder.tv_three.setText(list.get(position).tv_three);
+
         return convertView;
     }
     private class ViewHolder{
-        TextView tv_start,tv_second,tv_three;
+        TextView tv_start,tv_second,tv_three,tv_item_create_need_three_error;
     }
 }

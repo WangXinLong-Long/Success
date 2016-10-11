@@ -42,7 +42,7 @@ public class ReceiptAddressModel implements IReceiptAddressModel {
 
                 @Override
                 public void onSuccess(String result) {
-                    LogUtils.log("ReceiptAddressModel：result--->" + result + "<---Province：ReceiptAddressModel");
+                    LogUtils.log("收货地址：result--->" + result + "<---Province：收货地址");
                     receiptAddress = gson.fromJson(result, ReceiptAddress.class);
                     address = receiptAddress.getAddress();
                     callback.callbackReceiptAddressInfo(address);

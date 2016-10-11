@@ -9,10 +9,12 @@ public class Createlogistics_ListInfo {
     public String product_name;
     public String logistics_name;
     public String sort;
-    public double num;
-    public double only_price;
-    public double can_num;
+    public String num;
+    public String only_price;
+    public String can_num;
     public String date;
     public String cangku_name;
     public boolean SelectFlag;
+    public String id;
+    public String edt_num;
 }

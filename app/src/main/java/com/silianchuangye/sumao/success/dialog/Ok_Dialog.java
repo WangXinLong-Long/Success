@@ -24,6 +24,7 @@ public class Ok_Dialog extends Activity {
     String type;
     private Button btn_ok_dialog;
     private LinearLayout linear;
+    private TextView tv_orderId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +32,7 @@ public class Ok_Dialog extends Activity {
         type=getIntent().getStringExtra("type");
         btn_ok_dialog= (Button) findViewById(R.id.btn_ok_dialog);
         linear= (LinearLayout) findViewById(R.id.linear_bottem_ok);
+
         if(type.equals("")){
             linear.setVisibility(View.GONE);
         }else{

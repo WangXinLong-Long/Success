@@ -87,7 +87,7 @@
                 android:layout_height="wrap_content"
                 android:text="产品名称 : "
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/x175"/>
+                android:layout_marginLeft="@dimen/x170"/>
             <TextView
                 android:id="@+id/tv_item_create_logistics_lv_produce_name"
                 android:layout_width="wrap_content"
@@ -117,9 +117,9 @@
                 android:id="@+id/tv_item_create_logistics_lv_product_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="产品单价（元/吨） : "
+                android:text="产品单价(元/吨): "
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/x175"/>
+                android:layout_marginLeft="@dimen/x170"/>
             <TextView
                 android:id="@+id/tv_item_create_logistics_lv_produce_price_money"
                 android:layout_width="wrap_content"
@@ -192,41 +192,51 @@
         android:layout_height="@dimen/x40"
         android:layout_below="@id/linear_item_create_logistics_message"
        >
-       <TextView
-           android:id="@+id/tv_item_create_logistics_lv_add"
-           android:layout_width="@dimen/x20"
-           android:layout_height="@dimen/x25"
-           android:text="+"
-           android:textSize="20sp"
-           android:layout_centerVertical="true"
-           android:gravity="center"
-           android:background="@drawable/cart_num"
-           android:layout_alignParentRight="true"
-           android:layout_marginRight="@dimen/x10"/>
+       <!--<TextView-->
+           <!--android:id="@+id/tv_item_create_logistics_lv_add"-->
+           <!--android:layout_width="@dimen/x20"-->
+           <!--android:layout_height="@dimen/x25"-->
+           <!--android:text="+"-->
+           <!--android:textSize="20sp"-->
+           <!--android:layout_centerVertical="true"-->
+           <!--android:gravity="center"-->
+           <!--android:background="@drawable/cart_num"-->
+           <!--android:layout_alignParentRight="true"-->
+           <!--android:layout_marginRight="@dimen/x10"/>-->
+        <!--<EditText-->
+            <!--android:id="@+id/edt_item_create_logistics_num"-->
+            <!--android:layout_width="@dimen/x45"-->
+            <!--android:layout_height="@dimen/x25"-->
+            <!--android:background="@drawable/juxing"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:gravity="center"-->
+            <!--android:text="1"-->
+            <!--android:layout_toLeftOf="@id/tv_item_create_logistics_lv_add"/>-->
+        <!--<TextView-->
+            <!--android:id="@+id/tv_item_create_logistics_lv_sub"-->
+            <!--android:layout_width="@dimen/x20"-->
+            <!--android:layout_height="@dimen/x25"-->
+            <!--android:text="-"-->
+            <!--android:textSize="20sp"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_toLeftOf="@id/edt_item_create_logistics_num"-->
+            <!--android:background="@drawable/cart_num"-->
+            <!--android:gravity="center"/>-->
         <EditText
             android:id="@+id/edt_item_create_logistics_num"
-            android:layout_width="@dimen/x45"
-            android:layout_height="@dimen/x25"
-            android:background="@drawable/juxing"
+            android:layout_width="@dimen/x85"
+            android:layout_height="match_parent"
             android:layout_centerVertical="true"
             android:gravity="center"
             android:text="0"
-            android:layout_toLeftOf="@id/tv_item_create_logistics_lv_add"/>
-        <TextView
-            android:id="@+id/tv_item_create_logistics_lv_sub"
-            android:layout_width="@dimen/x20"
-            android:layout_height="@dimen/x25"
-            android:text="-"
-            android:textSize="20sp"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/edt_item_create_logistics_num"
-            android:background="@drawable/cart_num"
-            android:gravity="center"/>
+            android:inputType="number"
+           android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/tv_item_create_logistics_lv_sub"
+            android:layout_toLeftOf="@id/edt_item_create_logistics_num"
             android:text="本次发货数量"
             android:layout_marginRight="@dimen/x10"/>
     </RelativeLayout>

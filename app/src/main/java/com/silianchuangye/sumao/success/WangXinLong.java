@@ -75,7 +75,9 @@ public class WangXinLong extends Activity {
 //        9月19日  查看计划
 //        9月22日 修改现货订单bean类
 //        9月26日 网络加载时，显示的dialog
-
+//        9月27日 获取账号、
+//        10月8日 环信的聊天界面中，解决拍照不给授权的情况的处理
+//        10月11日 创建物流需求的收货地址
         showPayDialog();
         ArrayList<String> arrayList = new ArrayList<>();
         LinkedList<String> linkedList = new LinkedList<>();
