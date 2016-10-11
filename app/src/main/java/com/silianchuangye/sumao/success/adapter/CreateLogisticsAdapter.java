@@ -1,6 +1,7 @@
 package com.silianchuangye.sumao.success.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -18,6 +19,7 @@ import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.bean.Createlogistics_ExpandInfo;
 import com.silianchuangye.sumao.success.fragments.bean.Createlogistics_ListInfo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -138,6 +140,29 @@ public class CreateLogisticsAdapter extends BaseExpandableListAdapter{
         holder.tv_child_can_num.setText(expandList.get(groupPosition).list.get(childPosition).can_num+"吨");
         holder.tv_child_date.setText(expandList.get(groupPosition).list.get(childPosition).date);
         holder.tv_child_cangku.setText(expandList.get(groupPosition).list.get(childPosition).cangku_name);
+        expandList.get(groupPosition).list.get(childPosition).edt_num=holder.edt_child_num.getText().toString();
+        holder.edt_child_num.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+//                List list=new ArrayList();
+//                list.add(holder.edt_child_num.getText().toString());
+//                Intent intent=new Intent();
+//                intent.setAction("wuliu");
+//                intent.putExtra("wuliu",list.toString());
+//                ctx.sendBroadcast(intent);
+//                notifyDataSetChanged();
+            }
+        });
         holder.tv_child_logistics.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -169,6 +194,7 @@ public class CreateLogisticsAdapter extends BaseExpandableListAdapter{
         if(expandList.get(groupPosition).list.get(childPosition).SelectFlag){
             holder.img_child_select.setImageResource(R.mipmap.cart_select);
            cangku=expandList.get(groupPosition).list.get(childPosition).cangku_name;
+            holder.edt_child_num.setFocusable(true);
         }else{
             holder.img_child_select.setImageResource(R.mipmap.cart_select_null);
         }

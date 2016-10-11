@@ -1,6 +1,7 @@
 package com.silianchuangye.sumao.success.fragments.myPlasticTrade.PhysicalDistributionManagement.logistics;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -63,6 +64,7 @@ public class CreateLogistics extends AppCompatActivity implements View.OnClickLi
     String edt_num,tv_changku,startTime;
     private String strjson,strNum,logistics,edtNum;
     List<String>list=new ArrayList<String>();
+    double sum2;
     JSONArray array;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -155,6 +157,9 @@ public class CreateLogistics extends AppCompatActivity implements View.OnClickLi
     }
 
     private void initView() {
+        IntentFilter intentFilter=new IntentFilter();
+        intentFilter.addAction("wuliu");
+//        registerReceiver(new MyReciver(),intentFilter);
         img_create_logistics_back= (ImageView) findViewById(R.id.img_create_logistics_back);
         img_create_logistics_search= (ImageView) findViewById(R.id.img_create_logistics_search);
         img_create_logistics_allselect= (ImageView) findViewById(R.id.img_create_logistics_allselsect);
@@ -235,17 +240,23 @@ public class CreateLogistics extends AppCompatActivity implements View.OnClickLi
                         for(int j=0;j<expandList.get(i).list.size();j++){
                             if(expandList.get(i).list.get(j).SelectFlag){
                                 logistics=expandList.get(i).list.get(j).logistics_name;
-                                Log.e("TAG","logistics--"+logistics);
+                                Log.e("TAG","logistics111111--"+expandList.get(i).list.get(j).edt_num);
                                 array= new JSONArray();
-                                persons.add(new LogisticsJson(expandList.get(i).list.get(j).id,"0"));//填充Java实体类集合
+                                persons.add(new LogisticsJson(expandList.get(i).list.get(j).id,expandList.get(i).list.get(j).edt_num));//填充Java实体类集合
                                 // Json格式的数组形式
                                 JSONObject obj;//json格式的单个对象形式
                                 Log.e("TAG","persons"+persons.size());
                                 for(int k=0;k<persons.size();k++) {
+                                    Log.e("TAG","k=per"+k+"=="+persons.size());
                                     obj = new JSONObject();
                                     try {
                                         obj.put("commerItemId", persons.get(k).commerItemId);//json通过put方式以key-value形式填充
                                         obj.put("shipmentsQuantity", persons.get(k).shipmentsQuantity);
+                                        if(k==persons.size()-1){
+                                            Log.e("TAG","shipmentsQuantity===="+persons.get(k).shipmentsQuantity);
+                                            sum2+=Double.valueOf(persons.get(k).shipmentsQuantity);
+                                            Log.e("TAG","sum2---"+sum2);
+                                        }
                                         array.put(obj);//将JSONObject添加入JSONArray
                                     } catch (JSONException e) {
                                         e.printStackTrace();
@@ -253,25 +264,28 @@ public class CreateLogistics extends AppCompatActivity implements View.OnClickLi
                                 }
                             Log.e("TAG","终极------"+array.toString());
                             }
+                            expandList.get(i).list.get(j).SelectFlag=false;
+                            expandList.get(i).list.get(j).edt_num="0";
+                            adapter.notifyDataSetChanged();
                             }
                         }
                     String str=strNum.substring(0,strNum.length());
-                    Log.e("TAG","str===="+str);
                     double d2=Double.valueOf(str);
                     double d1=Double.valueOf(edt_num);
-                    Log.e("TAG","d2---"+d2);
-                    Log.e("TAG","d1--"+d1);
-                    Log.e("TAG","d1-d2====="+(d1-d2<0));
-                    if(d1-d2<0) {
+//                    Log.e("TAG","d2---"+d2);
+//                    Log.e("TAG","d1--"+d1);
+//                    Log.e("TAG","d1-d2====="+(d1-d2<0));
+//                    if(d1-d2<0) {
                         Toast.makeText(this, "创建物流需求", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(this, CreateLogisticsNeed.class);
-                        intent.putExtra("num", edt_num);//本次发货数量
+                        Log.e("TAG","sum2--"+sum2);
+                        intent.putExtra("num", sum2);//本次发货数量总和
                         intent.putExtra("cangku", tv_changku);//仓库
                         intent.putExtra("date", startTime);//交货开始时间
                         intent.putExtra("logistic", logistics);
                         intent.putExtra("list", array.toString());
                         startActivity(intent);
-                    }
+//                    }
                 }
                 break;
             case R.id.img_logistics_title_bar_back:
@@ -290,6 +304,15 @@ public class CreateLogistics extends AppCompatActivity implements View.OnClickLi
             case R.id.tv_pop_logistics_end_date:
                 showDate(tv_pop_end_date);
                 break;
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(adapter!=null) {
+            sum2=0;
+            adapter.notifyDataSetChanged();
         }
     }
 
@@ -317,6 +340,7 @@ public class CreateLogistics extends AppCompatActivity implements View.OnClickLi
             String date=expandList.get(groupPosition).list.get(childPosition).date;
             strNum=expandList.get(groupPosition).list.get(childPosition).can_num;
             startTime=date.substring(0,10);
+
         }
 
     }
@@ -453,6 +477,7 @@ public class CreateLogistics extends AppCompatActivity implements View.OnClickLi
                             else{
                                 listInfo.date="";
                             }
+//                            listInfo.edt_num=0+"";
                             expandInfo1.list.add(listInfo);
                         }
                         expandList.add(expandInfo1);

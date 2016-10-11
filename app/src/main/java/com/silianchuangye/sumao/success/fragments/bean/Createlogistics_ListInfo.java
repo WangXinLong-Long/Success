@@ -16,4 +16,5 @@ public class Createlogistics_ListInfo {
     public String cangku_name;
     public boolean SelectFlag;
     public String id;
+    public String edt_num;
 }
