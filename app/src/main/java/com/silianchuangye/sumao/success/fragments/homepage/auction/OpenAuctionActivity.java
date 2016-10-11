@@ -84,8 +84,11 @@ public class OpenAuctionActivity extends AppCompatActivity {
     private ArrayList<CLAttribute> cl_attribute=new ArrayList<CLAttribute>();
     private String max,min,people_Number,quty;
     private RelativeLayout layoutone;
+    private String jine,zhifujine;
     private TextView tv_Max_value,tv_dun_number,tv__value,tv_people_number;
     private TextView namechanpin,price,sheng,type,qigou,cangku,bianjiadanwei,diqu,time,company,cangkuaddress,way;
+    private String chanpin_Name,chanpin_Price,shengyu,chanpinfenlei,chanpinqigou,chanpincangku,
+    min_liang,chanpin_diqu,commit_time,channpin_gongsi,chuanpin_cangku_address,chanpin_way;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -340,6 +343,15 @@ public class OpenAuctionActivity extends AppCompatActivity {
             }
 
         }
+        new Thread(){
+            @Override
+            public void run() {
+                super.run();
+                Already_baozhengjin();
+                SharedPreferences sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+                jine=sp.getString("jine","");
+            }
+        }.start();
 
 
     }
@@ -352,7 +364,9 @@ public class OpenAuctionActivity extends AppCompatActivity {
         if (username!=""){
             state="yes";
         }
+
     }
+
 
 
     public void Popupwindow(){
@@ -385,12 +399,12 @@ public class OpenAuctionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //支付保证金接口
-                zhifu_baozhengjin(et.getText().toString());
+                zhifu_baozhengjin();
                 tv.setText(et.getText().toString());
                 et.setText("");
-                Intent intent=new Intent(OpenAuctionActivity.this,Ok_Dialog.class);
-                intent.putExtra("number","122");
-                startActivity(intent);
+//                Intent intent=new Intent(OpenAuctionActivity.this,Ok_Dialog.class);
+//                intent.putExtra("number","122");
+//                startActivity(intent);
             }
         });
         popupWindow.setTouchable(true);
@@ -409,6 +423,10 @@ public class OpenAuctionActivity extends AppCompatActivity {
         });
 
     }
+
+    /**
+     * 商品详情的popupWindow
+     */
     public void showPopupWindow(){
         View view=getLayoutInflater().inflate(R.layout.jingpai_baojia,null);
         final PopupWindow popupWindow=new PopupWindow(findViewById(R.id.Layout_c), ActionBarOverlayLayout.LayoutParams.MATCH_PARENT, ActionBarOverlayLayout.LayoutParams.WRAP_CONTENT);
@@ -416,33 +434,37 @@ public class OpenAuctionActivity extends AppCompatActivity {
         TextView tv_Name= (TextView) view.findViewById(R.id.tv_Name);
         ImageView iv_error= (ImageView) view.findViewById(R.id.iv_error);
         TextView tv_price= (TextView) view.findViewById(R.id.tv_price);
-        /**
-         * 可接受最小成交数量
-         */
-        TextView tv_jia_min= (TextView) view.findViewById(R.id.tv_jia_min);
-        TextView tv_jian_min= (TextView) view.findViewById(R.id.tv_jian_min);
-        ed_shuzhi_min= (EditText) view.findViewById(R.id.ed_shuzhi_min);
-        ed_shuzhi_min.setText("10");
-        Log.d("edit的默认值",ed_shuzhi_min.getText().toString());
+        TextView tv_chanpinName= (TextView) view.findViewById(R.id.tv_Name);
+        tv_chanpinName.setText(chanpin_Name);
+        TextView tv_chanpinjiage= (TextView) view.findViewById(R.id.tv_price);
+        tv_chanpinjiage.setText("￥"+chanpin_Price+"元");
+        TextView tv_chanpinshuliang= (TextView) view.findViewById(R.id.surplus_amount_et);
+        tv_chanpinshuliang.setText(shengyu+"吨");
+        TextView tv_chanpinqigou= (TextView) view.findViewById(R.id.purchase_quantity_et);
+        tv_chanpinqigou.setText(chanpinqigou+"吨");
+        TextView tv_min_liang= (TextView) view.findViewById(R.id.min_variable_et);
+        tv_min_liang.setText(min_liang+"吨");
+        TextView tv_commit_time= (TextView) view.findViewById(R.id.delivery_time_et);
+        tv_commit_time.setText(chuanpin_cangku_address+"元");
+//        TextView tv_cangku_address= (TextView) view.findViewById(R.id.warehouse_address_et);
+//        tv_cangku_address.setText(chuanpin_cangku_address);
+        TextView tv_way= (TextView) view.findViewById(R.id.delivery_mode_et);
+        tv_way.setText(channpin_gongsi);
+        TextView tv_chanpin_fenlei= (TextView) view.findViewById(R.id.classification_pre_sale_et);
+        tv_chanpin_fenlei.setText(chanpinfenlei);
+        TextView tv_cangku= (TextView) view.findViewById(R.id.warehouse_et);
+        tv_cangku.setText(chanpincangku);
+        TextView tv_diqu= (TextView) view.findViewById(R.id.region_et);
+        tv_diqu.setText(chanpin_diqu);
+        TextView tv_gongsi= (TextView) view.findViewById(R.id.company_et);
+        tv_gongsi.setText(chanpin_way);
 
-        tv_jia_min.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                i=Integer.parseInt(ed_shuzhi_min.getText().toString());
-                i=i+1;
-                ed_shuzhi_min.setText(i+"");
-            }
-        });
-        tv_jian_min.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                int j=i-1;
-//                ed_shuzhi_min.setText(j+"");
-                i=Integer.parseInt(ed_shuzhi_min.getText().toString());
-                i=i+1;
-                ed_shuzhi_min.setText(i+"");
-            }
-        });
+
+
+
+
+
+
         /**
          *
          * 竞拍单价
@@ -505,8 +527,7 @@ public class OpenAuctionActivity extends AppCompatActivity {
 
                 }
                 popupWindow.dismiss();
-                ZhifuPopupwindow();
-                backgroundAlpha(0.5f);
+
             }
         });
 
@@ -545,6 +566,8 @@ public class OpenAuctionActivity extends AppCompatActivity {
         tv= (TextView) view.findViewById(R.id.tvPrice_popupwindow_auction);
         et= (EditText) view.findViewById(R.id.etZhifu_auction);
         lv= (ListView) view.findViewById(R.id.lv_popupwindow_auction);
+        Log.d("已经支付的保证金金额",jine);
+        tv.setText(jine);
 
         getinfo_Bank();
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -577,7 +600,8 @@ public class OpenAuctionActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         super.run();
-                        zhifu_naozhengjin();
+                        //zhifu_naozhengjin();
+                        zhifu_baozhengjin();
                     }
                 }.start();
 
@@ -601,14 +625,22 @@ public class OpenAuctionActivity extends AppCompatActivity {
 
     }
     //设置背景透明
-    public void backgroundAlpha(float bgAlpha)
-    {
+    public void backgroundAlpha(float bgAlpha){
         WindowManager.LayoutParams lp = getWindow().getAttributes();
         lp.alpha = bgAlpha; //0.0-1.0
         getWindow().setAttributes(lp);
     }
+
+    /**
+     * 获取商品的详情接口
+     */
     public void getAcution(){
-        String url=SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/catalog/ProductCatalogActor/auctionProduct";
+        String url="";
+       if(type_way.equals("公开竞拍")) {
+            url = SuMaoConstant.SUMAO_IP + "/rest/model/atg/commerce/catalog/ProductCatalogActor/auctionProduct";
+       } else if (type_way.equals("密封报价")){
+            url=SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/catalog/ProductCatalogActor/sealAuctionProduct";
+       }
         RequestParams rp=new RequestParams(url);
         Log.d("id的值",id_value);
         rp.addParameter("productId",id_value);
@@ -623,23 +655,35 @@ public class OpenAuctionActivity extends AppCompatActivity {
                     JSONObject obj_result = new JSONObject(result);
 
                     namechanpin.setText(obj_result.getString("cl_mingcheng").toString());
+                    chanpin_Name=obj_result.getString("cl_mingcheng").toString();
                     price.setText(obj_result.getString("cl_qipai"));
+                    chanpin_Price=obj_result.getString("cl_qipai");
 
                     sheng.setText(obj_result.getString("cl_zongliang")+"吨");
+                    shengyu=obj_result.getString("cl_zongliang");
                     type.setText(obj_result.getString("cl_fenlei"));
+                    chanpinfenlei=obj_result.getString("cl_fenlei");
                     qigou.setText(obj_result.getString("cl_qigou")+"吨");
+                    chanpinqigou=obj_result.getString("cl_qigou");
                     cangku.setText(obj_result.getString("cl_cangku"));
+                    chanpincangku=obj_result.getString("cl_cangku");
                     bianjiadanwei.setText(obj_result.getString("cl_xbianliang")+"吨");
+                    min_liang=obj_result.getString("cl_xbianliang");
                     diqu.setText(obj_result.getString("cl_diqu"));
+                    chanpin_diqu=obj_result.getString("cl_diqu");
                     cangkuaddress.setText(obj_result.getString("cl_xbianjia").toString()+"元");
+                    chuanpin_cangku_address=obj_result.getString("cl_xbianjia").toString();
                     Log.d("zuixia",obj_result.getString("cl_xbianjia").toString());
+
                     company.setText(obj_result.getString("cl_gongsi"));
+                    channpin_gongsi=obj_result.getString("cl_gongsi");
 
                     String peisong_way=obj_result.getString("cl_fangshi");
                     int len=peisong_way.length()-2;
                     String aa=peisong_way.substring(2,len);
                     Log.d("配送方式",aa);
                     way.setText(aa);
+                    chanpin_way=aa;
                     String shuxing=obj_result.getString("cl_attribute");
                     Log.d("属性",shuxing+"aaaaaaaaaaaaaaaaaaaaaa");
                     JSONArray jay=new JSONArray(shuxing);
@@ -886,16 +930,29 @@ public class OpenAuctionActivity extends AppCompatActivity {
     /**
      * 支付保证金接口
      */
-    public void zhifu_baozhengjin(String str){
-        String url="http://192.168.32.126:7023rest/model/atg/commerce/payment/OrderPayment/auctionDeposit";
+    public void zhifu_baozhengjin(){
+        String url=SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/payment/OrderPayment/auctionDeposit";
         RequestParams rp=new RequestParams(url);
-        rp.addParameter("presalePrice",str);
+        rp.addParameter("depositAmount",1);
         rp.addParameter("productId",id_value);
         rp.addParameter("paymentPlatform",1);
+        SharedPreferences sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+        String unique=sp.getString("unique","");
+        rp.addParameter("_dynSessConf",unique);
+        Log.d("支付保证金接口的rp",rp+"");
         x.http().post(rp, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
                 Log.d("支付保证金返回值result",""+result);
+                if(result.contains("formError\":true")){
+                    Toast.makeText(OpenAuctionActivity.this, "您支付保证金失败！", Toast.LENGTH_SHORT).show();
+                }else if (result.contains("\"info\":\"sucess\"")){
+                    Toast.makeText(OpenAuctionActivity.this, "您支付保证金成功！", Toast.LENGTH_SHORT).show();
+                    Intent intent=new Intent(OpenAuctionActivity.this,Ok_Dialog.class);
+                    intent.putExtra("number","122");
+                    intent.putExtra("type","");
+                    startActivity(intent);
+                }
             }
 
             @Override
@@ -918,18 +975,29 @@ public class OpenAuctionActivity extends AppCompatActivity {
     /**
      * 公开竞拍的报价
      */
+    //有问题没有解决
     public void gongkai_baojia(){
+        Log.d("这是公开竞拍的报价","这是公开竞拍的报价");
+
         String url=SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/catalog/ProductCatalogActor/submitEnglishAuction";
         RequestParams rp=new RequestParams(url);
         rp.addParameter("productId",id_value);
-        rp.addParameter("bidPrice",price.getText().toString());
+        rp.addParameter("bidPrice",ed_shuzhi_price.getText().toString());
         rp.addParameter("bidQuantity",ed_shuzhi.getText().toString());
+        SharedPreferences sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+        String unique=sp.getString("unique","");
+        rp.addParameter("_dynSessConf",unique);
         Log.d("返回结果的rp",rp+"asa");
+        Log.d("这是公开竞拍的rp","这是公开竞拍的rp");
         x.http().post(rp, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
                 Log.d("公开竞拍的报价",result+"aaass");
-
+                Toast.makeText(OpenAuctionActivity.this, ""+result, Toast.LENGTH_SHORT).show();
+                if (result.equals("success")){
+                    ZhifuPopupwindow();
+                    backgroundAlpha(0.5f);
+                }
             }
 
             @Override
@@ -953,16 +1021,27 @@ public class OpenAuctionActivity extends AppCompatActivity {
     /**
      * 密封报价
      */
+    //有问题，没有解决
     public void mifeng_baojia(){
         String url=SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/catalog/ProductCatalogActor/submitSealAuction";
         RequestParams rp=new RequestParams(url);
         rp.addParameter("productId",id_value);
-        rp.addParameter("bidPrice",price.getText().toString());
+        rp.addParameter("bidPrice",ed_shuzhi_price.getText().toString());
         rp.addParameter("bidQuantity",ed_shuzhi.getText().toString());
+        SharedPreferences sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+        String unique=sp.getString("unique","");
+        rp.addParameter("_dynSessConf",unique);
+        Log.d("密封报价的rp",rp+"");
         x.http().post(rp, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
+
                 Log.d("密封报价的返回的result",result);
+                Toast.makeText(OpenAuctionActivity.this, ""+result, Toast.LENGTH_SHORT).show();
+                if (result.equals("success")){
+                    ZhifuPopupwindow();
+                    backgroundAlpha(0.5f);
+                }
             }
 
             @Override
@@ -983,20 +1062,33 @@ public class OpenAuctionActivity extends AppCompatActivity {
 
 
     }
+
 
     /**
-     * 支付保证金
+     * 获取已支付的保证金金额
      */
-    public void zhifu_naozhengjin(){
-        String url="http://192.168.32.126:7023rest/model/atg/commerce/payment/OrderPayment/auctionDeposit";
+    public void Already_baozhengjin(){
+        String url=SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/catalog/ProductCatalogActor/AuctionDeposit";
         RequestParams rp=new RequestParams(url);
-        rp.addParameter("presalePrice","1");
         rp.addParameter("productId",id_value);
-        rp.addParameter("paymentPlatform",1);
+        SharedPreferences sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+        String unique=sp.getString("unique","");
+        rp.addParameter("_dynSessConf",unique);
         x.http().post(rp, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Log.d("支付保证金的返回值",result);
+                Log.d("获取已经支付的保证金金额",result+"");
+                //String zhifujine;
+                try {
+                    JSONObject obj=new JSONObject(result);
+                    zhifujine=obj.getString("deposit");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                SharedPreferences sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+                SharedPreferences.Editor editor=sp.edit();
+                editor.putString("jine",zhifujine);
+                editor.commit();
             }
 
             @Override
@@ -1015,6 +1107,8 @@ public class OpenAuctionActivity extends AppCompatActivity {
             }
         });
     }
+
+
 
 
 
