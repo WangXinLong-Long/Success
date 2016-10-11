@@ -60,7 +60,8 @@ public class CreateLogisticsNeed extends AppCompatActivity implements View.OnCli
     private Create_LogisticsNeed_Adapter adapter;
     private Create_LogisticsNeed_Adapter adapter2;
     private MyReciver my=new MyReciver();
-    String num,cangku,startTime,address,megList;
+    String cangku,startTime,address,megList;
+    double num;
     String strType="";
     Create_Logistics_NeedInfo info1,info2,info3,info4,info5,info6,info7,
             infoLv1,infoLv2,infoLv3,infoLv4,infoLv5,infoLv6;
@@ -70,7 +71,8 @@ public class CreateLogisticsNeed extends AppCompatActivity implements View.OnCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_logistics_need);
-        num=getIntent().getStringExtra("num");
+        num=getIntent().getDoubleExtra("num",-100);
+        Log.e("TAG","num--"+num);
         cangku=getIntent().getStringExtra("cangku");
         startTime=getIntent().getStringExtra("date");
         megList=getIntent().getStringExtra("list");
@@ -154,7 +156,7 @@ public class CreateLogisticsNeed extends AppCompatActivity implements View.OnCli
         img_logistics_need_select_buy = (ImageView) findViewById(R.id.img_logistics_need_select_buy);
         img_logistics_need_select_maifang = (ImageView) findViewById(R.id.img_logistics_need_select_maifang);
         tv_logistics_need_fahuo_num = (TextView) findViewById(R.id.tv_logistics_need_fahuo_num);
-        tv_logistics_need_fahuo_num.setText(num);
+        tv_logistics_need_fahuo_num.setText(num+"");
         tv_logistics_need_cangku_name = (TextView) findViewById(R.id.tv_logistics_need_cangku_name);
         tv_logistics_need_cangku_name.setText(cangku);
         relative_logistics_need_three= (LinearLayout) findViewById(R.id.linear_need_three);
