@@ -33,6 +33,7 @@ String url = SuMaoConstant.SUMAO_IP+"/rest/model/com/sumao/mobile/order/purchase
             e.printStackTrace();
         }
         rp.setBodyContent(jsonObject.toString());
+        LogUtils.log("rp.getUri()--->"+rp.getUri());
         x.http().request(HttpMethod.POST, rp, new Callback.CommonCallback<String>() {
             private UpstreamDirectorySellingBean upstreamDirectorySellingBean;
 
