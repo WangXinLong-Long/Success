@@ -140,7 +140,7 @@ public class LoginUserActivity extends AppCompatActivity {
     }
 
     private void buyerlogin() {
-        Loding.show(this,"登录中...",false,null);
+        Loding.show( this,"登录中...",false,null);
         sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
         editor = sp.edit();
         name = et_account_login.getText().toString().trim();

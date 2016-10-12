@@ -46,10 +46,6 @@ public class MyOfferFragment extends Fragment {
     private LinearLayout layout;
     private String type;////////
     // private List<String> bianhai,danjia,shuliang,m_dun,time;
-
-
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -71,9 +67,6 @@ public class MyOfferFragment extends Fragment {
                 getData();
             }
         }.start();
-
-
-
 
         return view;
     }
