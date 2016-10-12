@@ -260,6 +260,7 @@ public class TypeInfoActivity extends AppCompatActivity implements OnClickListen
                     /*
                     管俊需要写跳转
                      */
+
                 }else if(type .equals("fixedProduct")){//现货
                     Intent intent = new Intent();
                     intent.putExtra("cl_id", list.get(position).getCl_id());

@@ -44,7 +44,7 @@ public class MyOfferFragment extends Fragment {
     private String id;
     private ListView lvDemo;
     private LinearLayout layout;
-    private String type;
+    private String type;////////
     // private List<String> bianhai,danjia,shuliang,m_dun,time;
 
 
