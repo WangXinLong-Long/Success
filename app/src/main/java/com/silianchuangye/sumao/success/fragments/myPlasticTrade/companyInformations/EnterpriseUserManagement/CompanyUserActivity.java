@@ -15,6 +15,8 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.silianchuangye.sumao.success.R;
+import com.silianchuangye.sumao.success.utils.Loding;
+import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -48,6 +50,7 @@ public class CompanyUserActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_company_user);
+        Loding.show(this,"加载中......",false,null);
         elistview= (ListView) findViewById(R.id.elvinfo_company_user);
         listitem=new ArrayList<Map<String,Object>>();
 //        if (adapter!=null){
@@ -147,7 +150,9 @@ public class CompanyUserActivity extends AppCompatActivity {
      * 显示所有用户
      */
     public void getAllUser(){
-        String url="http://192.168.32.126:7023/rest/model/atg/userprofiling/ProfileActor/allUser";
+    //    Loding.show(this,"加载中......",false,null);
+       // Loding.show(CompanyUserActivity.this,"加载中......",false,null);
+        String url= SuMaoConstant.SUMAO_IP+"/rest/model/atg/userprofiling/ProfileActor/allUser";
         RequestParams rp=new RequestParams(url);
         x.http().post(rp, new Callback.CommonCallback<String>() {
             @Override
@@ -218,6 +223,7 @@ public class CompanyUserActivity extends AppCompatActivity {
                     //Log.d("解析异常",""+e.printStackTrace());
                     e.printStackTrace();
                 }
+                Loding.dis();
 
             }
 

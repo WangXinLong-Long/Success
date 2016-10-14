@@ -20,6 +20,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.silianchuangye.sumao.success.R;
+import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -61,7 +62,7 @@ public class CompanyUserStateActivity extends AppCompatActivity {
         new Thread(){
             @Override
             public void run() {
-                String url="http://192.168.32.126:7023/rest/model/atg/userprofiling/ProfileActor/mstActive";
+                String url= SuMaoConstant.SUMAO_IP+"/rest/model/atg/userprofiling/ProfileActor/mstActive";
                 RequestParams rp=new RequestParams(url);
                 x.http().post(rp, new Callback.CommonCallback<String>() {
                     @Override

@@ -33,7 +33,7 @@ import org.xutils.x;
 public class LoginUserActivity extends AppCompatActivity {
     ImageView iv_title_bar_logo,
             iv_title_bar_back,
-            iv_title_bar_service,
+            iv_title_bar_service ,
             add_address,
             iv_title_bar_search;
     Button sv_title_bar_serachView;

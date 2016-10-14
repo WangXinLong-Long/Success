@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.silianchuangye.sumao.success.R;
+import com.silianchuangye.sumao.success.utils.Loding;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
 import org.json.JSONArray;
@@ -206,7 +207,7 @@ public class AuctionActivity extends AppCompatActivity {
                         intent.putExtra("type","密封报价");
                     }
                     startActivity(intent);
-                    Toast.makeText(AuctionActivity.this, "竞拍已结束,不能参与", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(AuctionActivity.this, "竞拍已结束,不能参与", Toast.LENGTH_SHORT).show();
                 }
 
 
@@ -216,7 +217,7 @@ public class AuctionActivity extends AppCompatActivity {
 
     }
     public void getAddData(){
-        getInfo();
+//        getInfo();
         if (name_Auction.equals("竞拍")){
             getInfo();
         }else if (name_Auction.equals("竞拍专场")){
@@ -246,6 +247,7 @@ public class AuctionActivity extends AppCompatActivity {
 
     }
     public void getInfo(){
+        Loding.show( this,"加载中...",false,null);
         RequestParams rp;
         String url="";
         url=SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/catalog/ProductCatalogActor/auctionProductlist";
@@ -257,6 +259,7 @@ public class AuctionActivity extends AppCompatActivity {
         x.http().post(rp, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
+               // Loding.dis();
                 Log.d("竞拍列表的result",result);
                 try {
                     JSONObject obj_result = new JSONObject(result);
@@ -376,6 +379,7 @@ public class AuctionActivity extends AppCompatActivity {
                 }catch (JSONException e){
                     e.printStackTrace();
                 }
+                Loding.dis();
 
             }
 
@@ -391,6 +395,8 @@ public class AuctionActivity extends AppCompatActivity {
 
             @Override
             public void onFinished() {
+                Log.d("test","进来了");
+                Loding.dis();
 
             }
         });
