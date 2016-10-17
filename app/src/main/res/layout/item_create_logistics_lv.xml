@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/relative1_child_item"
     android:orientation="vertical">
     <RelativeLayout
         android:id="@+id/relative_item_create_logistics_lv_top"
@@ -222,13 +223,13 @@
             <!--android:layout_toLeftOf="@id/edt_item_create_logistics_num"-->
             <!--android:background="@drawable/cart_num"-->
             <!--android:gravity="center"/>-->
-        <EditText
+        <TextView
             android:id="@+id/edt_item_create_logistics_num"
-            android:layout_width="@dimen/x85"
-            android:layout_height="match_parent"
+            android:layout_width="@dimen/x60"
+            android:layout_height="30dp"
             android:layout_centerVertical="true"
             android:gravity="center"
-            android:text="0"
+            android:background="@drawable/juxing"
             android:inputType="number"
            android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"/>

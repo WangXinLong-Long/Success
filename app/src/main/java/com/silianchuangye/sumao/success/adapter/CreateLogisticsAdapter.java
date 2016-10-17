@@ -5,13 +5,16 @@ import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,8 +35,8 @@ public class CreateLogisticsAdapter extends BaseExpandableListAdapter{
     boolean expandFlag;
     private LogisticsCall call;
     boolean falg=true;
-    String  cangku;
-
+    String  cangku,maijia,peisong;
+View view,childView;
     public CreateLogisticsAdapter(Context ctx,List<Createlogistics_ExpandInfo>expandList,LogisticsCall call){
         this.ctx=ctx;
         this.expandList=expandList;
@@ -74,13 +77,14 @@ public class CreateLogisticsAdapter extends BaseExpandableListAdapter{
     public boolean hasStableIds() {
         return false;
     }
-
+    ExpandHolder expand;
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-       ExpandHolder expand;
         if(convertView==null){
             convertView=View.inflate(ctx, R.layout.item_create_logistics,null);
+            view=convertView;
             expand=new ExpandHolder();
+            expand.relative_group_item= (RelativeLayout) convertView.findViewById(R.id.relative_group_item);
             expand.tv_expand_order_num= (TextView) convertView.findViewById(R.id.tv_item_create_logistics_order_num);
             expand.tv_expand_order_name= (TextView) convertView.findViewById(R.id.tv_item_create_logistics_name);
             expand.tv_expand_date= (TextView) convertView.findViewById(R.id.tv_item_create_logistic_date);
@@ -103,12 +107,15 @@ public class CreateLogisticsAdapter extends BaseExpandableListAdapter{
         return convertView;
     }
 
+    ViewHolder holder;
+
     @Override
     public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView, final ViewGroup parent) {
-        final ViewHolder holder;
         if(convertView==null){
             convertView=View.inflate(ctx,R.layout.item_create_logistics_lv,null);
+            childView=convertView;
             holder=new ViewHolder();
+            holder.relative_child_item= (RelativeLayout) convertView.findViewById(R.id.relative1_child_item);
             holder.tv_child_produce_top_name= (TextView) convertView.findViewById(R.id.tv_item_create_logistics_product_top_name);
             holder.img_child_select= (ImageView) convertView.findViewById(R.id.img_item_create_logistics_top_select);
             holder.tv_child_product_name= (TextView) convertView.findViewById(R.id.tv_item_create_logistics_lv_produce_name);
@@ -116,7 +123,7 @@ public class CreateLogisticsAdapter extends BaseExpandableListAdapter{
 //            holder.tv_child_sub= (TextView) convertView.findViewById(R.id.tv_item_create_logistics_lv_sub);
 //            holder.edt_child_num= (EditText) convertView.findViewById(R.id.edt_item_create_logistics_num);
 //            holder.tv_child_add= (TextView) convertView.findViewById(R.id.tv_item_create_logistics_lv_add);
-            holder.edt_child_num= (EditText) convertView.findViewById(R.id.edt_item_create_logistics_num);
+            holder.edt_child_num= (TextView) convertView.findViewById(R.id.edt_item_create_logistics_num);
 
             holder.tv_child_sort= (TextView) convertView.findViewById(R.id.tv_item_create_logistics_lv_sort_name);
             holder.tv_child_product_name= (TextView) convertView.findViewById(R.id.tv_item_create_logistics_lv_produce_name);
@@ -140,75 +147,72 @@ public class CreateLogisticsAdapter extends BaseExpandableListAdapter{
         holder.tv_child_can_num.setText(expandList.get(groupPosition).list.get(childPosition).can_num+"吨");
         holder.tv_child_date.setText(expandList.get(groupPosition).list.get(childPosition).date);
         holder.tv_child_cangku.setText(expandList.get(groupPosition).list.get(childPosition).cangku_name);
-        expandList.get(groupPosition).list.get(childPosition).edt_num=holder.edt_child_num.getText().toString();
-        holder.edt_child_num.addTextChangedListener(new TextWatcher() {
+        holder.edt_child_num.setText(expandList.get(groupPosition).list.get(childPosition).edt_num);
+        holder.edt_child_num.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-//                List list=new ArrayList();
-//                list.add(holder.edt_child_num.getText().toString());
-//                Intent intent=new Intent();
-//                intent.setAction("wuliu");
-//                intent.putExtra("wuliu",list.toString());
-//                ctx.sendBroadcast(intent);
-//                notifyDataSetChanged();
+            public void onClick(View v) {
+                if(expandList.get(groupPosition).list.get(childPosition).SelectFlag) {
+                    call.callNum(groupPosition, childPosition, expandList.get(groupPosition).list.get(childPosition).can_num);
+                }else{
+                    Toast.makeText(ctx,"请先选中该条数据",Toast.LENGTH_SHORT).show();
+                }
             }
         });
+        if(expandList.get(groupPosition).list.get(childPosition).visiableFlag){
+            holder.liear_child_message.setVisibility(View.VISIBLE);
+            holder.img_child_logistics_top_in.setImageResource(R.mipmap.my_sumao_iv_order_down);
+        }else{
+            holder.liear_child_message.setVisibility(View.GONE);
+            holder.img_child_logistics_top_in.setImageResource(R.mipmap.my_sumao_iv_order);
+        }
+        //展开详情与关闭
         holder.tv_child_logistics.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("TAG","监听");
-                if(showFlag) {
-                    holder.liear_child_message.setVisibility(View.VISIBLE);
-                    holder.img_child_logistics_top_in.setImageResource(R.mipmap.my_sumao_iv_order_down);
-                }else{
-                    holder.liear_child_message.setVisibility(View.GONE);
-                    holder.img_child_logistics_top_in.setImageResource(R.mipmap.my_sumao_iv_order);
-                }
-                showFlag=!showFlag;
+                call.callVisiable(groupPosition,childPosition);
             }
         });
+        //展开详情与关闭
         holder.img_child_logistics_top_in.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if(showFlag) {
-                    holder.liear_child_message.setVisibility(View.VISIBLE);
-                    holder.img_child_logistics_top_in.setImageResource(R.mipmap.my_sumao_iv_order_down);
-                }else{
-                    holder.liear_child_message.setVisibility(View.GONE);
-                    holder.img_child_logistics_top_in.setImageResource(R.mipmap.my_sumao_iv_order);
-                }
-                showFlag=!showFlag;
+                call.callVisiable(groupPosition,childPosition);
             }
         });
         if(expandList.get(groupPosition).list.get(childPosition).SelectFlag){
             holder.img_child_select.setImageResource(R.mipmap.cart_select);
-           cangku=expandList.get(groupPosition).list.get(childPosition).cangku_name;
-            holder.edt_child_num.setFocusable(true);
         }else{
-            holder.img_child_select.setImageResource(R.mipmap.cart_select_null);
+            if (cangku==null&&maijia==null&&peisong==null){
+                holder.img_child_select.setImageResource(R.mipmap.cart_select_null);
+            }else {
+                if (cangku.equals(expandList.get(groupPosition).list.get(childPosition).cangku_name)
+                        && maijia.equals(expandList.get(groupPosition).list.get(childPosition).gongsi)
+                        && peisong.equals(expandList.get(groupPosition).list.get(childPosition).logistics_name)) {
+                    holder.img_child_select.setImageResource(R.mipmap.cart_select_null);
+                } else {
+                    holder.img_child_select.setImageResource(R.mipmap.cart_no);
+                }
+            }
         }
+
+        notifyDataSetChanged();
         holder.img_child_select.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("TAG", "点击------"+cangku);
                 //根据卖家，仓库，和配送方式选择是否可以打勾，目前还不完善，
-                if (cangku != null) {
-                    if (cangku.equals(expandList.get(groupPosition).list.get(childPosition).cangku_name)) {
-                        call.call(groupPosition, childPosition,holder.edt_child_num.getText().toString());
+                if (cangku != null&&maijia!=null&&peisong!=null) {
+                    if (cangku.equals(expandList.get(groupPosition).list.get(childPosition).cangku_name)
+                            &&maijia.equals(expandList.get(groupPosition).list.get(childPosition).gongsi)
+                            &&peisong.equals(expandList.get(groupPosition).list.get(childPosition).logistics_name)) {
+                        call.call(groupPosition, childPosition,holder.edt_child_num.getText().toString(),expand.relative_group_item,holder.relative_child_item);
+                    }else{
+                        Toast.makeText(ctx,"同一个卖家、同一个仓库、同一个配送方式的可以创建一个物流订单",Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    call.call(groupPosition, childPosition,holder.edt_child_num.getText().toString());
+                    cangku=expandList.get(groupPosition).list.get(childPosition).cangku_name;
+                    peisong=expandList.get(groupPosition).list.get(childPosition).logistics_name;
+                    maijia=expandList.get(groupPosition).list.get(childPosition).gongsi;
+                    call.call(groupPosition, childPosition,holder.edt_child_num.getText().toString(),expand.relative_group_item,holder.relative_child_item);
                 }
                 int k = 0;
                 for (int i = 0; i < expandList.size(); i++) {
@@ -225,6 +229,8 @@ public class CreateLogisticsAdapter extends BaseExpandableListAdapter{
                 }
                 if(k==sum){
                     cangku=null;
+                    maijia=null;
+                    peisong=null;
                     notifyDataSetChanged();
                 }
             }
@@ -250,6 +256,7 @@ public class CreateLogisticsAdapter extends BaseExpandableListAdapter{
 //                holder.edt_child_num.setText(i+"");
 //            }
 //        });
+
         return convertView;
     }
 
@@ -263,6 +270,7 @@ public class CreateLogisticsAdapter extends BaseExpandableListAdapter{
         TextView tv_expand_date;
         TextView tv_expand_company;
         Button btn_expand_kefu;
+        RelativeLayout relative_group_item;
     }
      class ViewHolder{
         ImageView img_child_select,img_child_logistics_top_in;
@@ -273,8 +281,11 @@ public class CreateLogisticsAdapter extends BaseExpandableListAdapter{
         LinearLayout liear_child_message;
         TextView tv_child_produce_top_name,tv_child_sort,tv_child_product_name,tv_child_num,tv_child_price
                 ,tv_child_can_num,tv_child_date,tv_child_cangku;
+         RelativeLayout relative_child_item;
     }
     public interface LogisticsCall{
-        public void call(int groupPosition,int childPosition,String num);
+        public void call(int groupPosition, int childPosition, String num,RelativeLayout view,RelativeLayout childView);
+        public void callNum(int groupPosition,int childPosition,String id);
+        public void callVisiable(int groupPosition,int childPosition);
     }
 }
