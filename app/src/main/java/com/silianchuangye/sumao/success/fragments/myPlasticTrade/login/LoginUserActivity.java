@@ -33,7 +33,7 @@ import org.xutils.x;
 public class LoginUserActivity extends AppCompatActivity {
     ImageView iv_title_bar_logo,
             iv_title_bar_back,
-            iv_title_bar_service,
+            iv_title_bar_service ,
             add_address,
             iv_title_bar_search;
     Button sv_title_bar_serachView;
@@ -140,7 +140,7 @@ public class LoginUserActivity extends AppCompatActivity {
     }
 
     private void buyerlogin() {
-        Loding.show(this,"登录中...",false,null);
+        Loding.show( this,"登录中...",false,null);
         sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
         editor = sp.edit();
         name = et_account_login.getText().toString().trim();

@@ -20,6 +20,8 @@ import android.widget.Toast;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockDetailActivityMVP.bean.CLAttribute;
+import com.silianchuangye.sumao.success.utils.Loding;
+import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -46,9 +48,11 @@ public class GroupBuyingActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_buying);
+        Loding.show(GroupBuyingActivity.this,"加载中......",false,null);
         init();
         addData();
         event();
+
 
     }
 
@@ -84,8 +88,10 @@ public class GroupBuyingActivity extends AppCompatActivity{
             @Override
             public void run() {
                 super.run();
-                String url="http://192.168.32.126:7023/rest/model/atg/commerce/catalog/ProductCatalogActor/groupProductlist";
+
+                String url= SuMaoConstant.SUMAO_IP+"rest/model/atg/commerce/catalog/ProductCatalogActor/groupProductlist";
                 RequestParams rp=new RequestParams(url);
+
                 x.http().post(rp, new Callback.CommonCallback<String>() {
                     @Override
                     public void onSuccess(String result) {
@@ -111,7 +117,12 @@ public class GroupBuyingActivity extends AppCompatActivity{
                                     map.put("chengtuan",obj_array.getString("cl_groupQuantity"));
                                     map.put("way","自提");
                                     map.put("cangku",obj_array.getString("cl_cangku"));
-                                    map.put("comm",obj_array.getString("cl_gongsi"));
+                                    if (obj_array.toString().contains("cl_gongsi")) {
+
+                                        map.put("comm", obj_array.getString("cl_gongsi"));
+                                    }else{
+                                        map.put("comm","");
+                                    }
 //                                    SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat
 //                                            ("yyyy年MM月dd日 hh:mm:mm");
                                     String end_data=simpleDateFormat.format(Double.parseDouble(obj_array.getString("groupEndDate")));
@@ -141,6 +152,7 @@ public class GroupBuyingActivity extends AppCompatActivity{
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
+                            Loding.dis();
                         }else{
                             Toast.makeText(GroupBuyingActivity.this, "请求网络数据失败!", Toast.LENGTH_SHORT).show();
                         }

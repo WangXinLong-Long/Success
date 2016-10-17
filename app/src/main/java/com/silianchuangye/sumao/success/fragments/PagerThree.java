@@ -40,6 +40,8 @@ import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.PaymentsO
 import com.silianchuangye.sumao.success.fragments.homepage.theprice.MidpointsListctivity;
 import com.silianchuangye.sumao.success.fragments.shoppingCart.dialog.Cart_MyDialog;
 import com.silianchuangye.sumao.success.fragments.type.SelectCallBack;
+import com.silianchuangye.sumao.success.utils.Loding;
+import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -215,7 +217,8 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
     }
 
     public void showGouwuche() {
-        String url = "http://192.168.32.126:7023/rest/model/atg/commerce/ShoppingCartActor/shoppingCartDetail";
+        Loding.show(mActivity,"加载中......",false,null);
+        String url = SuMaoConstant.SUMAO_IP+"rest/model/atg/commerce/ShoppingCartActor/shoppingCartDetail";
         RequestParams rp = new RequestParams(url);
         SharedPreferences sp = getActivity().getSharedPreferences("sumao", Activity.MODE_PRIVATE);
         String unique_gouwuche = sp.getString("unique", "");
@@ -301,6 +304,7 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
                     relative_cart_null.setVisibility(View.VISIBLE);
                     // Toast.makeText(getActivity(), "购物车里暂无数据，请添加", Toast.LENGTH_SHORT).show();
                 }
+                Loding.dis();
             }
 
             @Override
@@ -656,7 +660,7 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
         }
 
         public void delete_data(String commerceId,final  int position) {
-            String url = "http://192.168.32.126:7023/rest/model/atg/commerce/ShoppingCartActor/removeItemFromOrder";
+            String url = SuMaoConstant.SUMAO_IP+"rest/model/atg/commerce/ShoppingCartActor/removeItemFromOrder";
             final RequestParams rp = new RequestParams(url);
             SharedPreferences sp = ctx.getSharedPreferences("sumao", Activity.MODE_PRIVATE);
             String unique_delete = sp.getString("unique", "");
@@ -714,8 +718,8 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
         }
 
         public void update_data(String commerceId ) {
-            //String url = "http://192.168.32.126:7023/rest/model/atg/commerce/ShoppingCartActor/shoppingCartDetail";
-            String url = "http://192.168.32.126:7023/rest/model/atg/commerce/ShoppingCartActor/commerceItemUpdate";
+            //String url = SuMaoConstant.SUMAO_IP+"rest/model/atg/commerce/ShoppingCartActor/shoppingCartDetail";
+            String url = SuMaoConstant.SUMAO_IP+"rest/model/atg/commerce/ShoppingCartActor/commerceItemUpdate";
             RequestParams rp = new RequestParams(url);
             rp.addParameter("amountUnitScale", "1000");
             rp.addParameter("qty", number);
@@ -766,7 +770,7 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
 //                txt = txt + "++;";
 //                holder.strText.setText(txt);
 //                strList.set(posi, txt);
-                String url = "http://192.168.32.126:7023/rest/model/atg/commerce/ShoppingCartActor/commerceItemUpdate";
+                String url = SuMaoConstant.SUMAO_IP+"rest/model/atg/commerce/ShoppingCartActor/commerceItemUpdate";
                 RequestParams rp = new RequestParams(url);
                 rp.addParameter("amountUnitScale", "1000");
                 rp.addParameter("qty", number);
