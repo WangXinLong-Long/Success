@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.bean.CartInfo;
 import com.silianchuangye.sumao.success.fragments.shoppingCart.dialog.Cart_MyDialog;
+import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -233,7 +234,7 @@ private List<CartInfo> list;
         return convertView;
     }
     public void delete_data(final int position){
-        String url="http://192.168.32.126:7023/rest/model/atg/commerce/ShoppingCartActor/removeItemFromOrder";
+        String url= SuMaoConstant.SUMAO_IP+"rest/model/atg/commerce/ShoppingCartActor/removeItemFromOrder";
         final RequestParams rp=new RequestParams(url);
         SharedPreferences sp=ctx.getSharedPreferences("sumao", Activity.MODE_PRIVATE);
         String unique_delete=sp.getString("unique","");
@@ -283,7 +284,7 @@ private List<CartInfo> list;
         });
     }
     public void update_data(){
-        String url="http://192.168.32.126:7023/rest/model/atg/commerce/ShoppingCartActor/shoppingCartDetail";
+        String url=SuMaoConstant.SUMAO_IP+"rest/model/atg/commerce/ShoppingCartActor/shoppingCartDetail";
         RequestParams rp=new RequestParams(url);
         rp.addParameter("amountUnitScale","1000");
         rp.addParameter("qty","3");

@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
+import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -46,10 +47,6 @@ public class MyOfferFragment extends Fragment {
     private LinearLayout layout;
     private String type;////////
     // private List<String> bianhai,danjia,shuliang,m_dun,time;
-
-
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -72,17 +69,14 @@ public class MyOfferFragment extends Fragment {
             }
         }.start();
 
-
-
-
         return view;
     }
     public void getData(){
         String url="";
         if (type.equals("密封报价")){
-             url="http://192.168.32.126:7023/rest/model/atg/commerce/catalog/ProductCatalogActor/sealedAuctionProductPrice";
+             url=SuMaoConstant.SUMAO_IP+"rest/model/atg/commerce/catalog/ProductCatalogActor/sealedAuctionProductPrice";
         }else if (type.equals("公开竞拍")){
-             url="http://192.168.32.126:7023/rest/model/atg/commerce/catalog/ProductCatalogActor/auctionProductPriceList";
+             url= SuMaoConstant.SUMAO_IP+"rest/model/atg/commerce/catalog/ProductCatalogActor/auctionProductPriceList";
         }
 
         RequestParams requestParams=new RequestParams(url);

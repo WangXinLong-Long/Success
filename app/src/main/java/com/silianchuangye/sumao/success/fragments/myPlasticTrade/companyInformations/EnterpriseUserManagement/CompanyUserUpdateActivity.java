@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
+import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -237,7 +238,7 @@ public class CompanyUserUpdateActivity extends AppCompatActivity {
         }
     }
     public void updateUser(){
-        String url="http://192.168.32.126:7023/rest/model/atg/userprofiling/ProfileActor/modifyUser";
+        String url= SuMaoConstant.SUMAO_IP+"/rest/model/atg/userprofiling/ProfileActor/modifyUser";
         RequestParams rp=new RequestParams(url);
         rp.setCharset("utf-8");
         rp.setAsJsonContent(true);

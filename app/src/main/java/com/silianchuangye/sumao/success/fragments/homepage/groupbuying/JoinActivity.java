@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
+import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -66,7 +67,7 @@ public class JoinActivity extends AppCompatActivity {
 
     }
     public void getData(){
-        String url="http://192.168.32.126:7023/rest/model/atg/commerce/catalog/ProductCatalogActor/groupHistory";
+        String url= SuMaoConstant.SUMAO_IP+"rest/model/atg/commerce/catalog/ProductCatalogActor/groupHistory";
         RequestParams requestParams=new RequestParams(url);
         requestParams.addParameter("productId",shangpinId);
         x.http().post(requestParams, new Callback.CommonCallback<String>() {

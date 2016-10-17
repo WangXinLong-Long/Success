@@ -1,7 +1,9 @@
 package com.silianchuangye.sumao.success.fragments.type.view;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Handler;
@@ -34,13 +36,23 @@ import com.silianchuangye.sumao.success.adapter.PreSaleAdapter;
 import com.silianchuangye.sumao.success.custom.customCalendar.CustomGridView;
 import com.silianchuangye.sumao.success.fragments.SearchActivityMVP.bean.Cls;
 import com.silianchuangye.sumao.success.fragments.SearchActivityMVP.bean.SearchActivityBean;
+import com.silianchuangye.sumao.success.fragments.homepage.auction.OpenAuctionActivity;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.bean.GoodsInStockActivityBean;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.bean.SMCl;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockDetailActivityMVP.view.GoodsInStockDetailActivity;
+import com.silianchuangye.sumao.success.fragments.homepage.groupbuying.GroupBuyingSuccessActivity;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.view.PreSaleDetailActivity;
 import com.silianchuangye.sumao.success.fragments.type.TypeInfoActivityAdapter;
 import com.silianchuangye.sumao.success.fragments.type.presenter.TypeInfoPresenter;
 import com.silianchuangye.sumao.success.utils.LogUtils;
+import com.silianchuangye.sumao.success.utils.SuMaoConstant;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -106,6 +118,8 @@ public class TypeInfoActivity extends AppCompatActivity implements OnClickListen
 
     private PullToRefreshLayout ptrl;
     private String total;
+    private String  max,min,people,quty,statu="",jingpaileixiang;
+    private String tuangoustatus;
 
     //    Handler handler = new Handler() {
 //        @Override
@@ -255,11 +269,74 @@ public class TypeInfoActivity extends AppCompatActivity implements OnClickListen
                 String type =(String) list.get(position).getCl_type();
                 LogUtils.log("type-->"+type);
                 if (type .equals("englishAuctionProduct")){//公开竞拍
-                    Toast.makeText(TypeInfoActivity.this,"管俊需要写跳转->公开竞拍",Toast.LENGTH_SHORT).show();
-                    // TODO 管俊需要写跳转
+                    //Toast.makeText(TypeInfoActivity.this,"管俊需要写跳转->公开竞拍",Toast.LENGTH_SHORT).show();
+
                     /*
                     管俊需要写跳转
                      */
+                    SharedPreferences sp=getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+                    String name=sp.getString("name","");
+                    Log.d("用户名称",name);
+                    //Log.d("竞拍时name的值",name+"asasasasasasasasaasasasasasasasasasasasasssssssssssss");
+                    String state;
+                    //Log.d("竞拍时name的值",name+"aa");
+                    if (name!=""){
+                        state="yes";
+                    }else{
+                        state="no";
+                    }
+                    Log.d("竞拍商品的id","aa"+list.get(position).getCl_id());
+                    getResult(list.get(position).getCl_id());
+
+                    Log.d("竞拍商品的类型",statu);
+                    if (statu.equals("竞拍未开始")){
+                        Intent intent=new Intent(TypeInfoActivity.this,OpenAuctionActivity.class);
+                        intent.putExtra("name","竞拍未开始");
+                        intent.putExtra("id",list.get(position).getCl_id());
+                        //intent.putCharSequenceArrayListExtra("list",list_message);
+                        intent.putExtra("max",max);
+                        intent.putExtra("min",min);
+                        intent.putExtra("people_Number",people);
+                        intent.putExtra("quty",quty);
+                        intent.putExtra("state",state);
+
+                        intent.putExtra("type","公开竞拍");
+
+                        Log.d("id",list.get(position).getCl_id());
+                        startActivity(intent);
+                    }else if (statu.equals("正在竞拍")){
+                        Intent intent=new Intent(TypeInfoActivity.this,OpenAuctionActivity.class);
+                        intent.putExtra("name","竞拍已开始");
+                        intent.putExtra("id",list.get(position).getCl_id());
+                        intent.putExtra("state",state);
+                        intent.putExtra("max",max);
+                        intent.putExtra("min",min);
+                        intent.putExtra("people_Number",people);
+                        intent.putExtra("quty",quty);
+                        Log.d("id",list.get(position).getCl_id());
+
+                        intent.putExtra("type","公开竞拍");
+
+                        startActivity(intent);
+                    }else if (statu.equals("竞拍已结束")){
+                        Intent intent=new Intent(TypeInfoActivity.this,OpenAuctionActivity.class);
+                        intent.putExtra("name","竞拍已结束");
+                        intent.putExtra("id",list.get(position).getCl_id());
+                        intent.putExtra("max",max);
+                        intent.putExtra("min",min);
+                        intent.putExtra("people_Number",people);
+                        intent.putExtra("quty",quty);
+                        Log.d("商品详情的id",list.get(position).getCl_id());
+                        intent.putExtra("state",state);
+                        Log.d("id",list.get(position).getCl_id());
+
+                        intent.putExtra("type","公开竞拍");
+
+                        startActivity(intent);
+                    }
+
+
+
 
                 }else if(type .equals("fixedProduct")){//现货
                     Intent intent = new Intent();
@@ -275,20 +352,212 @@ public class TypeInfoActivity extends AppCompatActivity implements OnClickListen
                     intent.setClass(TypeInfoActivity.this, PreSaleDetailActivity.class);
                     startActivity(intent);
                 }else if(type .equals("sealedAuctionProduct")){//密封竞拍
-                    Toast.makeText(TypeInfoActivity.this,"管俊需要写跳转->密封竞拍",Toast.LENGTH_SHORT).show();
-                    // TODO 管俊需要写跳转
                     /*
                     管俊需要写跳转
                      */
+                    SharedPreferences sp=getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+                    String name=sp.getString("name","");
+                    Log.d("用户名称",name);
+                    //Log.d("竞拍时name的值",name+"asasasasasasasasaasasasasasasasasasasasasssssssssssss");
+                    String state;
+                    //Log.d("竞拍时name的值",name+"aa");
+                    if (name!=""){
+                        state="yes";
+                    }else{
+                        state="no";
+                    }
+                    Log.d("竞拍商品的id","aa"+list.get(position).getCl_id());
+                    getResult(list.get(position).getCl_id());
+
+                    Log.d("竞拍商品的类型",statu);
+                    if (statu.equals("竞拍未开始")){
+                        Intent intent=new Intent(TypeInfoActivity.this,OpenAuctionActivity.class);
+                        intent.putExtra("name","竞拍未开始");
+                        intent.putExtra("id",list.get(position).getCl_id());
+                        //intent.putCharSequenceArrayListExtra("list",list_message);
+                        intent.putExtra("max",max);
+                        intent.putExtra("min",min);
+                        intent.putExtra("people_Number",people);
+                        intent.putExtra("quty",quty);
+                        intent.putExtra("state",state);
+
+                        intent.putExtra("type","密封竞拍");
+
+                        Log.d("id",list.get(position).getCl_id());
+                        startActivity(intent);
+                    }else if (statu.equals("正在竞拍")){
+                        Intent intent=new Intent(TypeInfoActivity.this,OpenAuctionActivity.class);
+                        intent.putExtra("name","竞拍已开始");
+                        intent.putExtra("id",list.get(position).getCl_id());
+                        intent.putExtra("state",state);
+                        intent.putExtra("max",max);
+                        intent.putExtra("min",min);
+                        intent.putExtra("people_Number",people);
+                        intent.putExtra("quty",quty);
+                        Log.d("id",list.get(position).getCl_id());
+
+                        intent.putExtra("type","密封竞拍");
+
+                        startActivity(intent);
+                    }else if (statu.equals("竞拍已结束")){
+                        Intent intent=new Intent(TypeInfoActivity.this,OpenAuctionActivity.class);
+                        intent.putExtra("name","竞拍已结束");
+                        intent.putExtra("id",list.get(position).getCl_id());
+                        intent.putExtra("max",max);
+                        intent.putExtra("min",min);
+                        intent.putExtra("people_Number",people);
+                        intent.putExtra("quty",quty);
+                        Log.d("商品详情的id",list.get(position).getCl_id());
+                        intent.putExtra("state",state);
+                        Log.d("id",list.get(position).getCl_id());
+
+                        intent.putExtra("type","密封竞拍");
+
+                        startActivity(intent);
+                    }
+
+
+
                 }else if(type .equals("groupProduct")){//团购
-                    Toast.makeText(TypeInfoActivity.this,"管俊需要写跳转->团购",Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(TypeInfoActivity.this,"管俊需要写跳转->团购",Toast.LENGTH_SHORT).show();
                     // TODO 管俊需要写跳转
                     /*
                     管俊需要写跳转
                      */
+                    getGoupBuying(list.get(position).getCl_id());
+                    if (tuangoustatus.equals("团购未开始")){
+                        Intent intent = new Intent(TypeInfoActivity.this, GroupBuyingSuccessActivity.class);
+                        intent.putExtra("id", list.get(position).getCl_id());
+                        Log.d("商品id的值", list.get(position).getCl_id());
+                        startActivity(intent);
+                    }else if (tuangoustatus.equals("团购已开始")){
+                        Intent intent = new Intent(TypeInfoActivity.this, GroupBuyingSuccessActivity.class);
+                        intent.putExtra("id", list.get(position).getCl_id());
+                        Log.d("商品id的值", list.get(position).getCl_id());
+                        startActivity(intent);
+
+                    }else if (tuangoustatus.equals("团购已结束")){
+                        Intent intent = new Intent(TypeInfoActivity.this, GroupBuyingSuccessActivity.class);
+                        intent.putExtra("id", list.get(position).getCl_id());
+                        Log.d("商品id的值", list.get(position).getCl_id());
+                        startActivity(intent);
+                    }
+
+
+
                 }
 //                demandScheduleProduct--->段少昌
 //                forward-pricing-product
+            }
+        });
+
+    }
+
+    public void getResult(String productId){
+        String uri=SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/catalog/ProductCatalogActor/auctionResultList";
+        RequestParams rp=new RequestParams(uri);
+        rp.addParameter("productId",productId);
+        Log.d("竞拍结果的返回值的rp",rp+"woshi");
+        x.http().post(rp, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.d("竞拍的返回值",result);
+                try {
+                    JSONObject object=new JSONObject(result);
+                    String object_result=object.getString("cl_type");
+                    String array_result=object.getString("List");
+                    String status=object.getString("status");
+                    if (status.equals("0")){
+                        statu="竞拍未开始";
+                    }else if (status.equals("1")){
+                        statu="正在竞拍";
+                    }else if (status.equals("2")){
+                        statu="竞拍已结束";
+                    }
+
+                    if (object_result.equals("englishAuctionProduct")){
+                        jingpaileixiang="公开竞拍";
+                    }else if (object_result.equals("sealedAuctionProduct")){
+                        jingpaileixiang="密封竞拍";
+                    }
+                    if (array_result.equals("[]")){
+                        max="最高竞拍价";
+                        min="最高竞拍价";
+                        people="最高竞拍价";
+                        quty="最高竞拍价";
+                    }else {
+                        JSONArray array=new JSONArray(array_result);
+                        for (int i=0;i<array.length();i++){
+                            JSONObject obj_array=array.getJSONObject(i);
+                            max=obj_array.getString("max");
+                            min=obj_array.getString("min");
+                            people=obj_array.getString("pNumber");
+                            quty=obj_array.getString("quty");
+                        }
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+    }
+
+    public void getGoupBuying(String productId){
+        String url=SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/catalog/ProductCatalogActor/groupProduct";
+        RequestParams rp=new RequestParams(url);
+        rp.addParameter("productId",productId);
+        Log.e("TAG",productId);
+        Log.d("跳转团购rp的值",rp+"");
+        x.http().post(rp, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.d("跳转团购时的返回值",result);
+                try {
+                    JSONObject object=new JSONObject(result);
+                    String tuangoutype=object.getString("section");
+                    if (tuangoutype.equals("0")){
+                        //未开始
+                        tuangoustatus="团购未开始";
+                    }else if (tuangoutype.equals("1")){
+                        tuangoustatus="团购已开始";
+
+                    }else if (tuangoutype.equals("2")){
+                        tuangoustatus="团购已结束";
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
             }
         });
 

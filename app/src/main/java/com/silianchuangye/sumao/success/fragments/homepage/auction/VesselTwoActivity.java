@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.PopupWindowAdaptrer;
+import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -224,7 +225,7 @@ public class VesselTwoActivity extends AppCompatActivity {
             @Override
             public void run() {
                 // super.run();
-                String url="http://192.168.32.126:7023/rest/model/atg/commerce/catalog/ProductCatalogActor/availableBank";
+                String url= SuMaoConstant.SUMAO_IP+"rest/model/atg/commerce/catalog/ProductCatalogActor/availableBank";
                 RequestParams rp=new RequestParams(url);
                 rp.addParameter("productId",id);
                 Log.d("银行列表的rp",""+rp);

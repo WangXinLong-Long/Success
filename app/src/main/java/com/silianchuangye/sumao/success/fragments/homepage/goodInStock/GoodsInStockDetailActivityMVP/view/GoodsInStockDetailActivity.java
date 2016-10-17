@@ -39,6 +39,7 @@ import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.PaymentsO
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.SeeProductMVP.view.SeeProduct;
 import com.silianchuangye.sumao.success.fragments.shoppingCart.dialog.Cart_MyDialog;
 import com.silianchuangye.sumao.success.utils.LogUtils;
+import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -394,7 +395,7 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
 
     }
     public void join_gouwuche(){
-        String url="http://192.168.32.126:7023/rest/model/atg/commerce/ShoppingCartActor/addItemToOrder";
+        String url= SuMaoConstant.SUMAO_IP+"rest/model/atg/commerce/ShoppingCartActor/addItemToOrder";
         RequestParams rp=new RequestParams(url);
         rp.addParameter("productId",cl_id);
         rp.addParameter("quantity",(Integer.parseInt(et_number.getText().toString())*1000)+"");
