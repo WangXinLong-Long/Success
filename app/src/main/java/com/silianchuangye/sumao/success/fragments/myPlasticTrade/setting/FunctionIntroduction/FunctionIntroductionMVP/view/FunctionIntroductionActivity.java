@@ -1,8 +1,8 @@
 package com.silianchuangye.sumao.success.fragments.myPlasticTrade.setting.FunctionIntroduction.FunctionIntroductionMVP.view;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
@@ -16,7 +16,6 @@ import com.silianchuangye.sumao.success.fragments.myPlasticTrade.setting.Functio
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.setting.SettingMVP.bean.FunctionIntroductionBean;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -84,5 +83,8 @@ public class FunctionIntroductionActivity extends AppCompatActivity implements I
         intent.putExtra("functionIntroductionDetailBean",functionIntroductionDetailBean);
         LogUtils.log("FunctionIntroductionActivity-->functionIntroductionDetailBean-->"+functionIntroductionDetailBean);
         startActivity(intent);
+
     }
+
+
 }

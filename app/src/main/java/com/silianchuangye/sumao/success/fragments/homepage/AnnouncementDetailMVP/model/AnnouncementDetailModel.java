@@ -1,7 +1,6 @@
 package com.silianchuangye.sumao.success.fragments.homepage.AnnouncementDetailMVP.model;
 
 import com.google.gson.Gson;
-import com.silianchuangye.sumao.success.fragments.SearchActivityMVP.bean.SearchActivityBean;
 import com.silianchuangye.sumao.success.fragments.homepage.AnnouncementDetailMVP.bean.AnnouncementDetailBean;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
@@ -31,6 +30,7 @@ public class AnnouncementDetailModel implements IAnnouncementDetailModel {
         requestParams.setAsJsonContent(true);
         JSONObject jsonObject = new JSONObject();
         try {
+            LogUtils.log("id是："+id);
             jsonObject.put("id", id);
         } catch (JSONException e) {
             e.printStackTrace();
