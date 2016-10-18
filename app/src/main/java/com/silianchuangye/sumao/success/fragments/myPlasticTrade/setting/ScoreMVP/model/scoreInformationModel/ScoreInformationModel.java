@@ -1,7 +1,5 @@
-package com.silianchuangye.sumao.success.fragments.myPlasticTrade.setting.ScoreMVP.model;
+package com.silianchuangye.sumao.success.fragments.myPlasticTrade.setting.ScoreMVP.model.scoreInformationModel;
 
-import com.google.gson.Gson;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.setting.HelpAndFeedbackMVP.bean.HelpAndFeedbackBean;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
@@ -11,40 +9,34 @@ import org.xutils.http.RequestParams;
 import org.xutils.x;
 
 /**
- * Created by Administrator on 2016/9/27 0027.
+ * Created by Administrator on 2016/10/17 0017.
  */
-public class ScoreModel implements IScoreModel {
-
-    String number;String userName;
-
-    public ScoreModel(String number, String userName) {
-        this.number = number;
+public class ScoreInformationModel implements IScoreInformationModel {
+    String userName ;
+String url = SuMaoConstant.APP_IP_HELP+"/pcoAppService/userscore/myscore";
+    public ScoreInformationModel(String userName) {
         this.userName = userName;
     }
-///pcoAppService/userscore/addScore?username=wangwei&userscore=4.5
-    String url = SuMaoConstant.APP_IP_HELP+"/pcoAppService/userscore/addScore";
+
     @Override
-    public void sendScoreInServer(final ScoreCallback callback) {
+    public void getScoreInformation(final ScoreInformationCallback callback) {
         RequestParams rp = new RequestParams(url);
         rp.addBodyParameter("username",userName);
-        rp.addBodyParameter("userscore",number);
 //        rp.setAsJsonContent(true);
 //        JSONObject jsonObject = new JSONObject();
 //        try {
-//            jsonObject.put("_dynSessConf",number);//TODO 修改
+//            jsonObject.put("username",userName);
 //        } catch (JSONException e) {
 //            e.printStackTrace();
 //        }
 //        rp.setBodyContent(jsonObject.toString());
         x.http().request(HttpMethod.POST, rp, new Callback.CommonCallback<String>() {
-            private HelpAndFeedbackBean helpAndFeedbackBean;
 
             @Override
             public void onSuccess(String result) {
-                LogUtils.log("评分-->"+result);
-                Gson gson = new Gson();
-                helpAndFeedbackBean = gson.fromJson(result, HelpAndFeedbackBean.class);
-                callback.callbackScore( helpAndFeedbackBean);
+                LogUtils.log("评分信息-->"+result);
+
+                callback.callbackScoreInformation( result);
             }
 
             @Override

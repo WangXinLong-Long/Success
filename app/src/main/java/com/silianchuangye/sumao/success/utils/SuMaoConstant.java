@@ -29,6 +29,7 @@ public class SuMaoConstant {
 //public static final String SUMAO_IP = "http://172.22.16.105:7003";
 //    APP自己的维护信息
     public static final  String APP_IP = "http://172.22.16.5:80";
+    public static final  String APP_IP_HELP = "http://139.198.7.21:80";
 //    获取文件：存放文件的服务器地址
 public static final String SUMAO_FILE_IP = "http://192.168.32.126:7003/crsdocroot";
     //    上传文件：存放图片服务器IP
