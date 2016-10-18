@@ -66,7 +66,7 @@ public class CreateLogisticsNeed extends AppCompatActivity implements View.OnCli
     Create_Logistics_NeedInfo info1,info2,info3,info4,info5,info6,info7,
             infoLv1,infoLv2,infoLv3,infoLv4,infoLv5,infoLv6;
     private StringBuilder sb;
-    String start,end;
+    String start,end,address_num,address_people,address_phoneNum;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -212,18 +212,18 @@ public class CreateLogisticsNeed extends AppCompatActivity implements View.OnCli
             case R.id.btn_logistics_need_kefu:
                 Toast.makeText(this,"点击了客服",Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.img_logistics_need_select_xunbang:
-                Toast.makeText(this,"迅帮配送",Toast.LENGTH_SHORT).show();
-                showImg(img_logistics_need_select_xunbang);
-                break;
-            case R.id.img_logistics_need_select_buy:
-                Toast.makeText(this,"买家自提",Toast.LENGTH_SHORT).show();
-               showImg(img_logistics_need_select_buy);
-                break;
-            case R.id.img_logistics_need_select_maifang:
-                Toast.makeText(this,"卖家配送",Toast.LENGTH_SHORT).show();
-                showImg(img_logistics_need_select_maifang);
-                break;
+//            case R.id.img_logistics_need_select_xunbang:
+//                Toast.makeText(this,"迅帮配送",Toast.LENGTH_SHORT).show();
+//                showImg(img_logistics_need_select_xunbang);
+//                break;
+//            case R.id.img_logistics_need_select_buy:
+//                Toast.makeText(this,"买家自提",Toast.LENGTH_SHORT).show();
+//               showImg(img_logistics_need_select_buy);
+//                break;
+//            case R.id.img_logistics_need_select_maifang:
+//                Toast.makeText(this,"卖家配送",Toast.LENGTH_SHORT).show();
+//                showImg(img_logistics_need_select_maifang);
+//                break;
             case R.id.relative_logistics_need_address:
                 Toast.makeText(this,"选择已有地址",Toast.LENGTH_SHORT).show();
                 Intent intent=new Intent(this,Logistics_SelectAddress.class);
@@ -312,6 +312,8 @@ public class CreateLogisticsNeed extends AppCompatActivity implements View.OnCli
         address = getIntent().getStringExtra("address");
         sb= new StringBuilder();
         sb.append(address);
+        address_num=sb.toString();
+        Log.e("TAG","address_num1111111111"+address_num);
         AddAddressPresenter presenter = new AddAddressPresenter(CreateLogisticsNeed.this);
         presenter.setDetailAddress(sb.substring(0, 4), sb.substring(0, 6), sb.toString());
     }
@@ -341,8 +343,15 @@ public class CreateLogisticsNeed extends AppCompatActivity implements View.OnCli
         public void onReceive(Context context, Intent intent) {
             String address=intent.getStringExtra("address");
             String address_message=intent.getStringExtra("address_message");
+           address_num=intent.getStringExtra("address_number");
+             address_people=intent.getStringExtra("address_people");
+             address_phoneNum=intent.getStringExtra("address_phoneNum");
+            Log.e("TAG","address_num2222222"+address_num);
             tv_logistics_need_give_address.setText(address);
             tv_logistics_need_address_message.setText(address_message);
+            info1.tv_three=address_people;
+            info2.tv_three=address_phoneNum;
+            adapter.notifyDataSetChanged();
         }
     }
 
@@ -471,17 +480,18 @@ public class CreateLogisticsNeed extends AppCompatActivity implements View.OnCli
             params.setBodyContent(job.toString());
         }else{
             if(strType.equals("卖家配送")){
-                params.addParameter("shippingMethod","pickUp");
+                params.addParameter("shippingMethod","seller");
             }else{
                 params.addParameter("shippingMethod","xunbang");
             }
-            params.addParameter("provinceId",sb.substring(0, 4));
-            params.addParameter("cityId",sb.substring(0, 6));
-            params.addParameter("countyId",sb.toString());
+            params.addParameter("provinceId",address_num.substring(0, 4));
+            params.addParameter("cityId",address_num.substring(0, 6));
+            params.addParameter("countyId",address_num.toString());
             params.addParameter("contactPhone",list.get(1).tv_three);//联系电话
             params.addParameter("pickUpDateStart",start);
             params.addParameter("pickUpDateEnd",end);
             params.addParameter("shippingContactTel",list.get(5).tv_three);
+            params.addParameter("detailAddress",tv_logistics_need_address_message.getText().toString());
             JSONObject job=new JSONObject();
             try {
 //                job.put("commerceJson",megList);
@@ -499,6 +509,15 @@ public class CreateLogisticsNeed extends AppCompatActivity implements View.OnCli
             @Override
             public void onSuccess(String result) {
                 Log.e("TAG","result======"+result);
+                try {
+                    JSONObject job=new JSONObject(result);
+                    String status=job.getString("status");
+                    if(status.equals("YES")){
+                        Toast.makeText(CreateLogisticsNeed.this,"创建物流订单成功",Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override

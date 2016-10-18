@@ -1,10 +1,14 @@
 package com.silianchuangye.sumao.success.fragments.myPlasticTrade.PhysicalDistributionManagement.logistics;
 import android.app.DatePickerDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -15,14 +19,17 @@ import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.easemob.easeui.widget.EaseExpandGridView;
 import com.google.gson.Gson;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.CreateLogisticsAdapter;
 import com.silianchuangye.sumao.success.fragments.bean.Createlogistics_ExpandInfo;
 import com.silianchuangye.sumao.success.fragments.bean.Createlogistics_ListInfo;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.SpotOrder.TiQu;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.CreateLogisticsNeed;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
@@ -36,16 +43,14 @@ import org.xutils.x;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class CreateLogistics extends AppCompatActivity implements View.OnClickListener,CreateLogisticsAdapter.LogisticsCall{
     private ExpandableListView expand_lv_create_logistics;
     private ImageView img_create_logistics_back;
     private ImageView img_create_logistics_search;
     private ImageView img_create_logistics_allselect;
-    private Button btn_create_logistics_ok;
+    private Button btn_create_logistics_ok,btn_ok;
     private List<Createlogistics_ExpandInfo> expandList=new ArrayList<Createlogistics_ExpandInfo>();
     private CreateLogisticsAdapter adapter;
     boolean All_Flag;
@@ -59,13 +64,14 @@ public class CreateLogistics extends AppCompatActivity implements View.OnClickLi
                         edt_pop_product_name,edt_pop_company,edt_pop_order_num;
     private TextView tv_pop_start_date,tv_pop_end_date;
     private Button btn_pop_ok;
-    private PopupWindow popWindow;
+    private PopupWindow popWindow,pop;
     Createlogistics_ListInfo listInfo;
     String edt_num,tv_changku,startTime;
-    private String strjson,strNum,logistics,edtNum;
+    private String strjson,strNum,logistics,edtNum,canStr,idCallNum;//idCallNum——用来保存点击子item里edt控件的id
     List<String>list=new ArrayList<String>();
     double sum2;
     JSONArray array;
+    private EditText pop_edt;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -157,9 +163,6 @@ public class CreateLogistics extends AppCompatActivity implements View.OnClickLi
     }
 
     private void initView() {
-        IntentFilter intentFilter=new IntentFilter();
-        intentFilter.addAction("wuliu");
-//        registerReceiver(new MyReciver(),intentFilter);
         img_create_logistics_back= (ImageView) findViewById(R.id.img_create_logistics_back);
         img_create_logistics_search= (ImageView) findViewById(R.id.img_create_logistics_search);
         img_create_logistics_allselect= (ImageView) findViewById(R.id.img_create_logistics_allselsect);
@@ -195,35 +198,20 @@ public class CreateLogistics extends AppCompatActivity implements View.OnClickLi
 
                 break;
             case R.id.img_create_logistics_allselsect:
-//                if(!All_Flag){
-//                    img_create_logistics_allselect.setImageResource(R.mipmap.cart_select);
-//                        for(int i=0;i<expandList.size();i++){
-//                           int k= expandList.get(i).list.size();
-//                            for(int j=0;j<k;j++){
-//                                expandList.get(i).list.get(j).SelectFlag=true;
-//                            }
-//                        }
-//                    adapter.notifyDataSetChanged();
-//                }else{
-//                    img_create_logistics_allselect.setImageResource(R.mipmap.cart_select_null);
-//                    for(int i=0;i<expandList.size();i++){
-//                        int k= expandList.get(i).list.size();
-//                        for(int j=0;j<k;j++){
-//                            expandList.get(i).list.get(j).SelectFlag=false;
-//                        }
-//                    }
-//                    adapter.notifyDataSetChanged();
-//                }
-//                All_Flag=!All_Flag;
-//                Toast.makeText(this,"全选",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btn_create_logistics_ok:
-                int count=0;
+                int count=0,NumCount=0;
+                double edtNumShu=0;
                 for(int i=0;i<expandList.size();i++){
                     int k= expandList.get(i).list.size();
                     for(int j=0;j<k;j++){
                         if(!expandList.get(i).list.get(j).SelectFlag) {
                             count++;
+                        }else{
+                            edtNumShu=Double.valueOf(expandList.get(i).list.get(j).edt_num);
+                            if(edtNumShu<=0){
+                                NumCount++;
+                            }
                         }
                     }
                 }
@@ -234,58 +222,45 @@ public class CreateLogistics extends AppCompatActivity implements View.OnClickLi
                 }
                 if(count==sum) {
                     Toast.makeText(this,"最少选中其中一条",Toast.LENGTH_SHORT).show();
+                }else if(NumCount>0){
+                    Toast.makeText(this,"本次购买数量不能为0",Toast.LENGTH_SHORT).show();
                 }else{
                     ArrayList<LogisticsJson> persons = new ArrayList<LogisticsJson>();
                     for(int i=0;i<expandList.size();i++){
                         for(int j=0;j<expandList.get(i).list.size();j++){
                             if(expandList.get(i).list.get(j).SelectFlag){
+                                adapter.notifyDataSetChanged();
                                 logistics=expandList.get(i).list.get(j).logistics_name;
-                                Log.e("TAG","logistics111111--"+expandList.get(i).list.get(j).edt_num);
                                 array= new JSONArray();
                                 persons.add(new LogisticsJson(expandList.get(i).list.get(j).id,expandList.get(i).list.get(j).edt_num));//填充Java实体类集合
                                 // Json格式的数组形式
                                 JSONObject obj;//json格式的单个对象形式
                                 Log.e("TAG","persons"+persons.size());
                                 for(int k=0;k<persons.size();k++) {
-                                    Log.e("TAG","k=per"+k+"=="+persons.size());
                                     obj = new JSONObject();
                                     try {
                                         obj.put("commerItemId", persons.get(k).commerItemId);//json通过put方式以key-value形式填充
                                         obj.put("shipmentsQuantity", persons.get(k).shipmentsQuantity);
                                         if(k==persons.size()-1){
-                                            Log.e("TAG","shipmentsQuantity===="+persons.get(k).shipmentsQuantity);
                                             sum2+=Double.valueOf(persons.get(k).shipmentsQuantity);
-                                            Log.e("TAG","sum2---"+sum2);
                                         }
                                         array.put(obj);//将JSONObject添加入JSONArray
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
                                 }
-                            Log.e("TAG","终极------"+array.toString());
                             }
-                            expandList.get(i).list.get(j).SelectFlag=false;
-                            expandList.get(i).list.get(j).edt_num="0";
-                            adapter.notifyDataSetChanged();
+
                             }
                         }
-                    String str=strNum.substring(0,strNum.length());
-                    double d2=Double.valueOf(str);
-                    double d1=Double.valueOf(edt_num);
-//                    Log.e("TAG","d2---"+d2);
-//                    Log.e("TAG","d1--"+d1);
-//                    Log.e("TAG","d1-d2====="+(d1-d2<0));
-//                    if(d1-d2<0) {
-                        Toast.makeText(this, "创建物流需求", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(this, CreateLogisticsNeed.class);
-                        Log.e("TAG","sum2--"+sum2);
-                        intent.putExtra("num", sum2);//本次发货数量总和
-                        intent.putExtra("cangku", tv_changku);//仓库
-                        intent.putExtra("date", startTime);//交货开始时间
-                        intent.putExtra("logistic", logistics);
-                        intent.putExtra("list", array.toString());
-                        startActivity(intent);
-//                    }
+                    Toast.makeText(this, "创建物流需求", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(this, CreateLogisticsNeed.class);
+                    intent.putExtra("num", sum2);//本次发货数量总和
+                    intent.putExtra("cangku", tv_changku);//仓库
+                    intent.putExtra("date", startTime);//交货开始时间
+                    intent.putExtra("logistic", logistics);
+                    intent.putExtra("list", array.toString());
+                    startActivity(intent);
                 }
                 break;
             case R.id.img_logistics_title_bar_back:
@@ -304,6 +279,34 @@ public class CreateLogistics extends AppCompatActivity implements View.OnClickLi
             case R.id.tv_pop_logistics_end_date:
                 showDate(tv_pop_end_date);
                 break;
+            case R.id.btn_canle:
+                pop.dismiss();
+                backgroundAlpha(1f);
+                break;
+            case R.id.btn_ok:
+                if(pop_edt.getText().toString().equals("")){
+                    Toast.makeText(CreateLogistics.this,"购买数量不能为空",Toast.LENGTH_SHORT).show();
+                }else {
+                    double canNum=Double.valueOf(canStr);
+                    double num=Double.valueOf(pop_edt.getText().toString());
+                    if(num<canNum){
+                          for(int i=0;i<expandList.size();i++) {
+                              for (int j = 0; j < expandList.get(i).list.size(); j++) {
+                                  if (idCallNum.equals(expandList.get(i).list.get(j).id)) {
+                                      expandList.get(i).list.get(j).edt_num = pop_edt.getText().toString();
+                                  }
+                              }
+                          }
+                        adapter.notifyDataSetChanged();
+                        pop.dismiss();
+                        backgroundAlpha(1f);
+                    }
+                    else {
+                        Toast.makeText(CreateLogistics.this, "本次购买数量不能大于可发货数量", Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+                break;
         }
     }
 
@@ -317,32 +320,81 @@ public class CreateLogistics extends AppCompatActivity implements View.OnClickLi
     }
 
     @Override
-    public void call(int groupPosition,int childPosition,String num) {
-        int count=0;
-    //如果子item全选后，全选按钮变为选中
-//        for(int i=0;i<expandList.size();i++){
-//            int k= expandList.get(i).list.size();
-//            for(int j=0;j<k;j++){
-//                if(flag.equals(expandList.get(i).list.get(j).cangku_name)){
-//                    Log.e("TAG","仓库----"+expandList.get(i).list.get(j).cangku_name);
-//                    Log.e("TAG","expandList.get(groupPosition).list.get(childPosition).SelectFlag--"+groupPosition+"-"+childPosition+expandList.get(groupPosition).list.get(childPosition).SelectFlag);
-//
-//                }
-//            }
-//        }
-
+    public void call(int groupPosition, int childPosition, String num,RelativeLayout view,RelativeLayout childView) {
         expandList.get(groupPosition).list.get(childPosition).SelectFlag = !expandList.get(groupPosition).list.get(childPosition).SelectFlag;
-        count++;
-        adapter.notifyDataSetChanged();
         edt_num=num;
         if(expandList.get(groupPosition).list.get(childPosition).SelectFlag){
             tv_changku=expandList.get(groupPosition).list.get(childPosition).cangku_name;
             String date=expandList.get(groupPosition).list.get(childPosition).date;
             strNum=expandList.get(groupPosition).list.get(childPosition).can_num;
             startTime=date.substring(0,10);
-
         }
+        adapter.notifyDataSetChanged();
 
+    }
+    //修改数量的回调
+    @Override
+    public void callNum(final int groupPosition, final int childPosotion, final String can_num){
+         canStr=can_num.substring(0,can_num.length());
+        final View popview=View.inflate(this,R.layout.popnum,null);
+        int w=getWindowManager().getDefaultDisplay().getWidth();
+        popview.measure(0,0);
+        pop=new PopupWindow(popview,500,popview.getMeasuredHeight());
+        pop_edt= (EditText) popview.findViewById(R.id.edt);
+        final Button btn_canle= (Button) popview.findViewById(R.id.btn_canle);
+         btn_ok= (Button) popview.findViewById(R.id.btn_ok);
+        btn_canle.setOnClickListener(this);
+//        pop_edt.setText(str);
+        pop.setBackgroundDrawable(new BitmapDrawable());
+        pop.setFocusable(true);
+        pop.showAtLocation(btn_create_logistics_ok, Gravity.CENTER,0,0);
+        backgroundAlpha(0.5f);
+        idCallNum=expandList.get(groupPosition).list.get(childPosotion).id;
+        btn_ok.setOnClickListener(CreateLogistics.this);
+
+//        pop_edt.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(final Editable s) {
+//                for(int i=0;i<expandList.size();i++){
+//                    for(int j=0;j<expandList.get(i).list.size();j++){
+//                        if(expandList.get(groupPosition).list.get(childPosotion).id.equals(expandList.get(i).list.get(j).id)){
+//                            if(!s.toString().equals("")){
+//                                    strCallNum=s.toString();
+////                                    pop.dismiss();
+////                                    backgroundAlpha(1f);
+////                                    adapter.notifyDataSetChanged();
+//
+//                            }else if(s.toString().equals("")){
+//                                Log.e("TAG","数量为空");
+//                                Toast.makeText(CreateLogistics.this,"购买数量不能为空",Toast.LENGTH_SHORT).show();
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        });
+        pop.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                backgroundAlpha(1f);
+            }
+        });
+    }
+
+    @Override
+    public void callVisiable(int groupPosition, int childPosition) {
+        expandList.get(groupPosition).list.get(childPosition).visiableFlag = !expandList.get(groupPosition).list.get(childPosition).visiableFlag;
+        adapter.notifyDataSetChanged();
     }
 
     //点击搜索按钮弹出popwindow
@@ -411,85 +463,93 @@ public class CreateLogistics extends AppCompatActivity implements View.OnClickLi
         x.http().post(rp, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Log.e("TAG","result------"+result);
-                try {
-                    JSONObject j=new JSONObject(result);
-                    String order=j.getString("order");
-                    JSONArray ja=new JSONArray(order);
+                Log.e("TAG", "result------" + result);
+                if (result.contains("order")) {
+                    try {
+                        JSONObject j = new JSONObject(result);
+                        String order = j.getString("order");
+                        JSONArray ja = new JSONArray(order);
 
-                    for(int i=0;i<ja.length();i++){
-                        Createlogistics_ExpandInfo expandInfo1=new Createlogistics_ExpandInfo();
-                        JSONObject job= (JSONObject) ja.get(i);
-                        //给group添加数据
-                        expandInfo1.order_name=job.getString("firstName");
-                        if(job.toString().contains("cl_gongsi")){
-                            expandInfo1.company_name=job.getString("cl_gongsi");
+                        for (int i = 0; i < ja.length(); i++) {
+                            Createlogistics_ExpandInfo expandInfo1 = new Createlogistics_ExpandInfo();
+                            JSONObject job = (JSONObject) ja.get(i);
+                            //给group添加数据
+                            expandInfo1.order_name = job.getString("firstName");
+                            if (job.toString().contains("cl_gongsi")) {
+                                expandInfo1.company_name = job.getString("cl_gongsi");
+                            } else {
+                                expandInfo1.company_name = "";
+                            }
+                            expandInfo1.date = new SimpleDateFormat("yyyy-MM-dd").format(Long.valueOf(job.getString("submittedDate")));
+                            expandInfo1.order_num = job.getString("id");
+                            //给子item添加
+                            listInfo = new Createlogistics_ListInfo();
+                            String cl = job.getString("cl");
+                            JSONArray jay = new JSONArray(cl);
+                            for (int z = 0; z < jay.length(); z++) {
+                                JSONObject childJob = (JSONObject) jay.get(z);
+                                listInfo.id = childJob.getString("commerceId");
+                                if (cl.contains("cl_fenlei")) {
+                                    listInfo.sort = childJob.getString("cl_fenlei");
+                                } else {
+                                    listInfo.sort = "";
+                                }
+                                if (cl.contains("cl_mingcheng")) {
+                                    listInfo.product_name = childJob.getString("cl_mingcheng");
+                                } else {
+                                    listInfo.product_name = "";
+                                }
+                                if (cl.contains("cl_shuliang")) {
+                                    listInfo.num = childJob.getString("cl_shuliang");
+                                } else {
+                                    listInfo.num = "";
+                                }
+                                if (cl.contains("shippingMethod")) {
+                                    listInfo.logistics_name = childJob.getString("shippingMethod");
+                                } else {
+                                    listInfo.logistics_name = "";
+                                }
+                                listInfo.only_price = childJob.getString("cl_jine");
+                                if (cl.contains("vailableQuantity")) {
+                                    listInfo.can_num = childJob.getString("vailableQuantity");
+                                } else {
+                                    listInfo.can_num = "";
+                                }
+                                if (cl.contains("cl_cangku")) {
+                                    listInfo.cangku_name = childJob.getString("cl_cangku");
+                                } else {
+                                    listInfo.cangku_name = "";
+                                }
+                                if (cl.contains("deliveryEndDate")) {
+                                    listInfo.date = new SimpleDateFormat("yyyy-MM-dd").format(Long.valueOf(childJob.getString("deliveryStartDate"))) + "    " +
+                                            new SimpleDateFormat("yyyy-MM-dd").format(Long.valueOf(childJob.getString("deliveryEndDate")));
+                                } else {
+                                    listInfo.date = "";
+                                }
+                                if (cl.contains("cl_gongsi")) {
+                                    listInfo.gongsi = job.getString("cl_gongsi");
+                                } else {
+                                    listInfo.gongsi = "";
+                                }
+                                listInfo.edt_num = 0 + "";
+                                expandInfo1.list.add(listInfo);
+                            }
+                            expandList.add(expandInfo1);
                         }
-                       else{
-                            expandInfo1.company_name="";
+                        adapter = new CreateLogisticsAdapter(CreateLogistics.this, expandList, CreateLogistics.this);
+                        expand_lv_create_logistics.setAdapter(adapter);
+                        if (adapter != null && expandList != null) {
+                            for (int i = 0; i < adapter.getGroupCount(); i++) {
+                                expand_lv_create_logistics.expandGroup(i);
+                            }
                         }
-                        expandInfo1.date=new SimpleDateFormat("yyyy-MM-dd").format(Long.valueOf(job.getString("submittedDate")));
-                        expandInfo1.order_num=job.getString("id");
-                        //给子item添加
-                       listInfo=new Createlogistics_ListInfo();
-                        String cl=job.getString("cl");
-                        JSONArray jay=new JSONArray(cl);
-                        for(int z=0;z<jay.length();z++){
-                            JSONObject childJob= (JSONObject) jay.get(z);
-                            listInfo.id=childJob.getString("commerceId");
-                            if(cl.contains("cl_fenlei")){
-                                listInfo.sort=childJob.getString("cl_fenlei");
-                            }
-                            else{
-                                listInfo.sort="";
-                            }
-                            if(cl.contains("cl_mingcheng")){
-                                listInfo.product_name=childJob.getString("cl_mingcheng");
-                            }
-                            else{
-                                listInfo.product_name="";
-                            }
-                            if(cl.contains("cl_shuliang")){
-                                listInfo.num=childJob.getString("cl_shuliang");
-                            }else{
-                                listInfo.num="";
-                            }
-                            if(cl.contains("shippingMethod")){
-                                listInfo.logistics_name=childJob.getString("shippingMethod");
-                            }else{
-                                listInfo.logistics_name="";
-                            }
-                            listInfo.only_price=childJob.getString("cl_jine");
-                            if(cl.contains("vailableQuantity")){
-                                listInfo.can_num=childJob.getString("vailableQuantity");
-                            }else{
-                                listInfo.can_num="";
-                            }
-                            if(cl.contains("cl_cangku")){
-                                listInfo.cangku_name=childJob.getString("cl_cangku");
-                            }else{
-                                listInfo.cangku_name="";
-                            }
-                            if(cl.contains("deliveryEndDate")){
-                                listInfo.date=new SimpleDateFormat("yyyy-MM-dd").format(Long.valueOf(childJob.getString("deliveryStartDate")))+"    "+
-                                        new SimpleDateFormat("yyyy-MM-dd").format(Long.valueOf(childJob.getString("deliveryEndDate")));
-                            }
-                            else{
-                                listInfo.date="";
-                            }
-//                            listInfo.edt_num=0+"";
-                            expandInfo1.list.add(listInfo);
-                        }
-                        expandList.add(expandInfo1);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                    adapter=new CreateLogisticsAdapter(CreateLogistics.this,expandList,CreateLogistics.this);
-                    expand_lv_create_logistics.setAdapter(adapter);
-                    if(adapter!=null && expandList!=null){
-                        for (int i = 0; i < adapter.getGroupCount(); i++) {
-                            expand_lv_create_logistics.expandGroup(i);
-                        }}
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                }else{
+                    Toast.makeText(CreateLogistics.this,"请重新登陆",Toast.LENGTH_SHORT).show();
+                    new TiQu(CreateLogistics.this).showLogin();
+                    CreateLogistics.this.finish();
                 }
             }
 
@@ -509,4 +569,5 @@ public class CreateLogistics extends AppCompatActivity implements View.OnClickLi
             }
         });
     }
+
 }
