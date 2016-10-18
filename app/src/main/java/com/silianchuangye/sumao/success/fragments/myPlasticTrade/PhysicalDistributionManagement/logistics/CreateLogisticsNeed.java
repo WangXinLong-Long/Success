@@ -88,7 +88,7 @@ public class CreateLogisticsNeed extends AppCompatActivity implements View.OnCli
         info1.tv_three="";
          info2=new Create_Logistics_NeedInfo();
         info2.tv_start="*";
-        info2.tv_second="联系电话";
+        info2.tv_second="联系方式";
         info2.tv_three="";
          info3=new Create_Logistics_NeedInfo();
         info3.tv_start="*";

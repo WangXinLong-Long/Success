@@ -69,7 +69,7 @@ public class logisticsMesssage extends AppCompatActivity implements View.OnClick
         btn.setOnClickListener(this);
         tv_date_start.setOnClickListener(this);
         tv_date_end.setOnClickListener(this);
-
+        img_logistics_title_bar_back.setOnClickListener(this);
     }
     private void show(){
         Intent intent=new Intent();
@@ -77,7 +77,7 @@ public class logisticsMesssage extends AppCompatActivity implements View.OnClick
         if(buy.equals("1")) {
             if (str.equals("收货联系人")) {
                 setResult(0, intent);
-            } else if (str.equals("联系电话")) {
+            } else if (str.equals("联系方式")) {
                 setResult(1, intent);
             } else if (str.equals("期望提货时间")) {
                 intent.putExtra("message1", tv_date_start.getText().toString());

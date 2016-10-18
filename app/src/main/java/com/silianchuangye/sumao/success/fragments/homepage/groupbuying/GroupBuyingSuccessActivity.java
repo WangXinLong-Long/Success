@@ -234,11 +234,11 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
                 String str=number.getText().toString();
                 Log.d("number的值",str+"");
 //                String bb=bianliang.getText().toString();
-                int aa=Integer.parseInt(str);
-                int cc=Integer.parseInt(strbianliang);
+                double aa=Double.parseDouble(str);
+                double cc=Double.parseDouble(strbianliang);
                 aa=aa+cc;
                 number.setText(aa+"");
-                count_price.setText((Integer.parseInt(number.getText().toString())*Integer.parseInt(strprice))+"");
+                count_price.setText((Double.parseDouble(number.getText().toString())*Double.parseDouble(strprice))+"");
             }
         });
         jian.setOnClickListener(new View.OnClickListener() {
@@ -246,16 +246,16 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String str=number.getText().toString();
 //                String bb=bianliang.getText().toString();
-                int aa=Integer.parseInt(str);
-                int cc=Integer.parseInt(strbianliang);
+                Double aa=Double.parseDouble(str);
+                Double cc=Double.parseDouble(strbianliang);
                 aa=aa-cc;
-                if (aa<=0){
-                    aa=1;
+                if (aa<=cc){
+                    aa=cc;
 //                    number.setText("1");
 //                    count_price.setText(price.getText());
                 }
                 number.setText(aa+"");
-                count_price.setText((Integer.parseInt(number.getText().toString())*Integer.parseInt(strprice))+"");
+                count_price.setText((Double.parseDouble(number.getText().toString())*Double.parseDouble(strprice))+"");
             }
         });
 
@@ -316,6 +316,10 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
                             count.setText(obj.getString("cl_zongliang")+"吨");
                             qigou.setText(obj.getString("cl_qigou")+"吨");
                             strbianliang=obj.getString("cl_xbianliang");
+                            //默认购买数量
+                            number.setText(obj.getString("cl_qigou")+"");
+                            //默认总价
+                            count_price.setText((Double.parseDouble(number.getText().toString())*Double.parseDouble(strprice))+"");
                             bianliang.setText(obj.getString("cl_xbianliang")+"吨");
                             cangku.setText(obj.getString("cl_cangku"));
                             String fangshi=obj.getString("cl_fangshi");
@@ -356,6 +360,7 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
                             pbDemo.setProgress(i);
                             count_price.setText(Integer.valueOf(number.getText().toString())*Integer.valueOf(strprice)+"");
                             String state=obj.getString("section");
+                            Log.e("TAG","state="+state);
                             if (state.equals("2")){
                                 tv_tuangou_line.setVisibility(View.VISIBLE);
                                 relative_tuangou.setVisibility(View.GONE);
@@ -446,29 +451,31 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String str=edt_pop_num.getText().toString();
-                int num=Integer.valueOf(str);
-                num++;
+                double num=Double.valueOf(str);
+                double cc=Double.parseDouble(strbianliang);
+                num+=cc;
                 edt_pop_num.setText(num+"");
-                tv_pop_price.setText(Integer.valueOf(edt_pop_num.getText().toString())*Integer.valueOf(strprice)+"");
+                tv_pop_price.setText(Double.valueOf(edt_pop_num.getText().toString())*Double.valueOf(strprice)+"");
                 //
                 number.setText(edt_pop_num.getText().toString());
-                count_price.setText(Integer.valueOf(number.getText().toString())*Integer.valueOf(strprice)+"");
+                count_price.setText(Double.valueOf(number.getText().toString())*Double.valueOf(strprice)+"");
             }
         });
         tv_pop_sub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String str=edt_pop_num.getText().toString();
-                int num=Integer.valueOf(str);
-                num--;
-                if(num<0){
-                    num=0;
+                double num=Double.valueOf(str);
+                double cc=Double.parseDouble(strbianliang);
+                num-=cc;
+                if(num<cc){
+                    num=cc;
                 }
                 edt_pop_num.setText(num+"");
-                tv_pop_price.setText(Integer.valueOf(edt_pop_num.getText().toString())*Integer.valueOf(strprice)+"");
+                tv_pop_price.setText(Double.valueOf(edt_pop_num.getText().toString())*Double.valueOf(strprice)+"");
                 //
                 number.setText(edt_pop_num.getText().toString());
-                count_price.setText(Integer.valueOf(number.getText().toString())*Integer.valueOf(strprice)+"");
+                count_price.setText(Double.valueOf(number.getText().toString())*Double.valueOf(strprice)+"");
             }
         });
 
@@ -658,7 +665,7 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
         }else{
             str2=strprice;
         }
-        tv_pop_price.setText(Integer.valueOf(str)*Integer.valueOf(str2)+"");
+        tv_pop_price.setText(Double.valueOf(str)*Double.valueOf(str2)+"");
        //TODO
         tv_pop_num.setText("");//剩余数量
         tv_pop_fenlei.setText(type.getText().toString());
