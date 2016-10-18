@@ -8,6 +8,11 @@
     <include
         android:id="@+id/title_function_introduction_detail"
         layout="@layout/child_title_bar"/>
-
+    <WebView
+        android:layout_below="@id/title_function_introduction_detail"
+        android:id="@+id/webView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none"/>
 
 </RelativeLayout>

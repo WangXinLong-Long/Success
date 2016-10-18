@@ -1,5 +1,6 @@
 package com.silianchuangye.sumao.success.fragments.myPlasticTrade.setting.HelpAndFeedbackMVP.presenter;
 
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.setting.HelpAndFeedbackMVP.bean.HelpAndFeedbackBean;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.setting.HelpAndFeedbackMVP.model.HelpAndFeedbackCallback;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.setting.HelpAndFeedbackMVP.model.HelpAndFeedbackModel;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.setting.HelpAndFeedbackMVP.model.IHelpAndFeedbackModel;
@@ -19,8 +20,8 @@ public class HelpAndFeedbackPresenter {
         IHelpAndFeedbackModel helpAndFeedbackModel = new HelpAndFeedbackModel(telephone,message,userName);
         helpAndFeedbackModel.sendMessageHelpAndFeedback(new HelpAndFeedbackCallback() {
             @Override
-            public void callbackHelpAndFeedback() {
-                helpAndFeedbackView.getResultInActivity();
+            public void callbackHelpAndFeedback(HelpAndFeedbackBean helpAndFeedbackBean) {
+                helpAndFeedbackView.getResultInActivity( helpAndFeedbackBean);
             }
         });
     }

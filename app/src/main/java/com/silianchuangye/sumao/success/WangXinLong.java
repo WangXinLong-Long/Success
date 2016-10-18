@@ -7,6 +7,7 @@ import android.os.Bundle;
 import com.silianchuangye.sumao.success.custom.CustomPayDialog;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 
 /**
@@ -81,6 +82,7 @@ public class WangXinLong extends Activity {
         showPayDialog();
         ArrayList<String> arrayList = new ArrayList<>();
         LinkedList<String> linkedList = new LinkedList<>();
+        HashMap<String ,String > map = new HashMap<>();
 
     }
 
