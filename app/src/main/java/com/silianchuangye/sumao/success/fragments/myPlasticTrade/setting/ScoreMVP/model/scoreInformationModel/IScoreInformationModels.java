@@ -1,8 +1,8 @@
 package com.silianchuangye.sumao.success.fragments.myPlasticTrade.setting.ScoreMVP.model.scoreInformationModel;
 
 /**
- * Created by Administrator on 2016/10/17 0017.
+ * Created by Administrator on 2016/10/18.
  */
-public interface IScoreInformationModel {
+public interface IScoreInformationModels {
     void getScoreInformation(ScoreInformationCallback callback);
 }

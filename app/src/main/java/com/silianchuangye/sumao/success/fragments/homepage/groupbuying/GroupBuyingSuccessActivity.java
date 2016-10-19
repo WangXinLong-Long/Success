@@ -358,7 +358,7 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
                             tv_pro_now.setText("当前成团量为 : "+i+"%");
                             tv_all_num.setText(obj.getString("cl_zongliang")+"t");
                             pbDemo.setProgress(i);
-                            count_price.setText(Integer.valueOf(number.getText().toString())*Integer.valueOf(strprice)+"");
+                            count_price.setText(Double.valueOf(number.getText().toString())*Double.valueOf(strprice)+"");
                             String state=obj.getString("section");
                             Log.e("TAG","state="+state);
                             if (state.equals("2")){

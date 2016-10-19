@@ -89,7 +89,7 @@ public class GroupBuyingActivity extends AppCompatActivity{
             public void run() {
                 super.run();
 
-                String url= SuMaoConstant.SUMAO_IP+"rest/model/atg/commerce/catalog/ProductCatalogActor/groupProductlist";
+                String url= SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/catalog/ProductCatalogActor/groupProductlist";
                 RequestParams rp=new RequestParams(url);
 
                 x.http().post(rp, new Callback.CommonCallback<String>() {
