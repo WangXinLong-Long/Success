@@ -127,7 +127,7 @@ public class PaymentsOrder extends Activity implements View.OnClickListener {
                 @Override
                 public void run() {
                     //super.run();
-                    String url = SuMaoConstant.SUMAO_IP+"rest/model/atg/commerce/ShoppingCartActor/cartExpressCheckout";
+                    String url = SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/ShoppingCartActor/cartExpressCheckout";
                     RequestParams rp = new RequestParams(url);
                     String a = list_id.toString();
                     Log.d("商品id", a + "ssssssssssss");
@@ -233,7 +233,7 @@ public class PaymentsOrder extends Activity implements View.OnClickListener {
         } else {
             String info = getIntent().getStringExtra("fix");
             String[] infos = info.split(",");
-            String url = SuMaoConstant.SUMAO_IP+"rest/model/atg/commerce/ShoppingCartActor/go";
+            String url = SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/ShoppingCartActor/go";
             RequestParams requestParams = new RequestParams(url);
             requestParams.addParameter("quantity", infos[0]);
 
@@ -427,7 +427,7 @@ public class PaymentsOrder extends Activity implements View.OnClickListener {
             @Override
             public void run() {
                 // super.run();
-                String url = SuMaoConstant.SUMAO_IP+"rest/model/atg/commerce/payment/OrderPayment/bankList";
+                String url = SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/payment/OrderPayment/bankList";
                 RequestParams rp = new RequestParams(url);
                 rp.addBodyParameter("payFor", "order");
                 String a = list_order.toString();
@@ -528,7 +528,7 @@ public class PaymentsOrder extends Activity implements View.OnClickListener {
     }
 
     public void getzhifu() {
-        String url = SuMaoConstant.SUMAO_IP+"rest/model/atg/commerce/payment/OrderPayment/orderPayment";
+        String url = SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/payment/OrderPayment/orderPayment";
         RequestParams rp = new RequestParams(url);
         String a = list_order.toString();
         Log.d("商品id", a + "ssssssssssss");

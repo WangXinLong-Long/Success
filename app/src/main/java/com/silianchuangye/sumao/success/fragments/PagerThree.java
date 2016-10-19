@@ -217,8 +217,8 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
     }
 
     public void showGouwuche() {
-        Loding.show(mActivity,"加载中......",false,null);
-        String url = SuMaoConstant.SUMAO_IP+"rest/model/atg/commerce/ShoppingCartActor/shoppingCartDetail";
+//        Loding.show(mActivity,"加载中......",false,null);
+        String url = SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/ShoppingCartActor/shoppingCartDetail";
         RequestParams rp = new RequestParams(url);
         SharedPreferences sp = getActivity().getSharedPreferences("sumao", Activity.MODE_PRIVATE);
         String unique_gouwuche = sp.getString("unique", "");
@@ -251,16 +251,16 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
                             info.name = array_data.getString("manufacturer");
                             info.sort_name = array_data.getString("parentCategories");
                             Log.d("parentCategories", array_data.getString("parentCategories"));
-                            info.cangku_name = array_data.getString("warehouse");
-                            Log.d("warehouse", array_data.getString("warehouse"));
+//                            info.cangku_name = array_data.getString("warehouse");
+//                            Log.d("warehouse", array_data.getString("warehouse"));
                             info.pai_num = array_data.getString("gradeNumber");
                             Log.d("pai_num", array_data.getString("gradeNumber"));
                             info.price = array_data.getString("salePrice");
                             Log.d("产品单价",info.price.toString()+"hhhhh"+info.pai_num);
                             info.qiye = array_data.getString("manufacturer");
                             Log.d("manufacturer", array_data.getString("manufacturer"));
-                            info.company = array_data.getString("salesCompanyDisplayName");
-                            Log.d("salesCompanyDisplayName", array_data.getString("salesCompanyDisplayName"));
+                            //info.company = array_data.getString("salesCompanyDisplayName");
+                           // Log.d("salesCompanyDisplayName", array_data.getString("salesCompanyDisplayName"));
                             info.buy_num = array_data.getString("quantity");
                             Log.d("minPurchaseQuantity", array_data.getString("quantity"));
                             info.all_price = array_data.getString("amount");
@@ -304,7 +304,7 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
                     relative_cart_null.setVisibility(View.VISIBLE);
                     // Toast.makeText(getActivity(), "购物车里暂无数据，请添加", Toast.LENGTH_SHORT).show();
                 }
-                Loding.dis();
+                //Loding.dis();
             }
 
             @Override
@@ -660,7 +660,7 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
         }
 
         public void delete_data(String commerceId,final  int position) {
-            String url = SuMaoConstant.SUMAO_IP+"rest/model/atg/commerce/ShoppingCartActor/removeItemFromOrder";
+            String url = SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/ShoppingCartActor/removeItemFromOrder";
             final RequestParams rp = new RequestParams(url);
             SharedPreferences sp = ctx.getSharedPreferences("sumao", Activity.MODE_PRIVATE);
             String unique_delete = sp.getString("unique", "");
@@ -719,7 +719,7 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
 
         public void update_data(String commerceId ) {
             //String url = SuMaoConstant.SUMAO_IP+"rest/model/atg/commerce/ShoppingCartActor/shoppingCartDetail";
-            String url = SuMaoConstant.SUMAO_IP+"rest/model/atg/commerce/ShoppingCartActor/commerceItemUpdate";
+            String url = SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/ShoppingCartActor/commerceItemUpdate";
             RequestParams rp = new RequestParams(url);
             rp.addParameter("amountUnitScale", "1000");
             rp.addParameter("qty", number);
@@ -770,7 +770,7 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
 //                txt = txt + "++;";
 //                holder.strText.setText(txt);
 //                strList.set(posi, txt);
-                String url = SuMaoConstant.SUMAO_IP+"rest/model/atg/commerce/ShoppingCartActor/commerceItemUpdate";
+                String url = SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/ShoppingCartActor/commerceItemUpdate";
                 RequestParams rp = new RequestParams(url);
                 rp.addParameter("amountUnitScale", "1000");
                 rp.addParameter("qty", number);
@@ -798,16 +798,16 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
                                 info.name = array_data.getString("manufacturer");
                                 info.sort_name = array_data.getString("parentCategories");
                                 Log.d("parentCategories", array_data.getString("parentCategories"));
-                                info.cangku_name = array_data.getString("warehouse");
-                                Log.d("warehouse", array_data.getString("warehouse"));
+//                                info.cangku_name = array_data.getString("warehouse");
+//                                Log.d("warehouse", array_data.getString("warehouse"));
                                 info.pai_num = array_data.getString("gradeNumber");
                                 Log.d("pai_num", array_data.getString("gradeNumber"));
                                 info.price = array_data.getString("salePrice");
                                 Log.d("产品单价", info.price.toString() + "hhhhh" + info.pai_num);
                                 info.qiye = array_data.getString("manufacturer");
                                 Log.d("manufacturer", array_data.getString("manufacturer"));
-                                info.company = array_data.getString("salesCompanyDisplayName");
-                                Log.d("salesCompanyDisplayName", array_data.getString("salesCompanyDisplayName"));
+//                                info.company = array_data.getString("salesCompanyDisplayName");
+//                                Log.d("salesCompanyDisplayName", array_data.getString("salesCompanyDisplayName"));
                                 info.buy_num = array_data.getString("quantity");
                                 Log.d("minPurchaseQuantity", array_data.getString("quantity"));
                                 info.all_price = array_data.getString("amount");
