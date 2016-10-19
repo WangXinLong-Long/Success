@@ -109,7 +109,7 @@ public class GroupBuyingActivity extends AppCompatActivity{
                                     map.put("state",obj_array.getString("runing"));
                                     map.put("name",obj_array.getString("cl_mingcheng"));
                                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat
-                                            ("yyyy年MM月dd日 hh:mm:mm");
+                                            ("yyyy-MM-dd hh:mm:mm");
                                     String Start_data=simpleDateFormat.format(Double.parseDouble(obj_array.getString("groupStartDate")));
                                     map.put("startTime",Start_data);
                                     map.put("price",obj_array.getString("cl_jine"));

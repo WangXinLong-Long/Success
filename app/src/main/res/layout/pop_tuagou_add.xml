@@ -59,7 +59,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/x5"
-                android:text="剩余数量："
+                android:text="团购总量："
                 android:textSize="@dimen/x10" />
 
             <TextView
@@ -152,8 +152,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/x5"
-                android:layout_marginLeft="@dimen/x15"
-                android:layout_toRightOf="@id/delivery_time_et"
+                android:layout_marginLeft="@dimen/x25"
+                android:layout_toRightOf="@id/min_variable_et"
                 android:text="分类："
                 android:textSize="@dimen/x10" />
 
@@ -172,9 +172,9 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/classification_pre_sale_tv"
                 android:layout_marginBottom="@dimen/x5"
-                android:layout_marginLeft="@dimen/x15"
-                android:layout_toRightOf="@id/delivery_time_et"
-                android:text="交易方式："
+                android:layout_marginLeft="@dimen/x25"
+                android:layout_toRightOf="@id/min_variable_et"
+                android:text="交货方式："
                 android:textSize="@dimen/x10" />
 
             <TextView
@@ -193,8 +193,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/warehouse_tv"
                 android:layout_marginBottom="@dimen/x5"
-                android:layout_marginLeft="@dimen/x15"
-                android:layout_toRightOf="@id/delivery_time_et"
+                android:layout_marginLeft="@dimen/x25"
+                android:layout_toRightOf="@id/min_variable_et"
                 android:text="地区："
                 android:textSize="@dimen/x10" />
 
