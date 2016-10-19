@@ -1,14 +1,9 @@
 package com.silianchuangye.sumao.success.fragments.myPlasticTrade.PhysicalDistributionManagement.logistics;
 import android.app.DatePickerDialog;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -23,14 +18,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.easemob.easeui.widget.EaseExpandGridView;
-import com.google.gson.Gson;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.CreateLogisticsAdapter;
 import com.silianchuangye.sumao.success.fragments.bean.Createlogistics_ExpandInfo;
 import com.silianchuangye.sumao.success.fragments.bean.Createlogistics_ListInfo;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.SpotOrder.TiQu;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.CreateLogisticsNeed;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
 import org.json.JSONArray;
@@ -336,7 +328,7 @@ public class CreateLogistics extends AppCompatActivity implements View.OnClickLi
     @Override
     public void callNum(final int groupPosition, final int childPosotion, final String can_num){
          canStr=can_num.substring(0,can_num.length());
-        final View popview=View.inflate(this,R.layout.popnum,null);
+        final View popview=View.inflate(this,R.layout.pop_num,null);
         int w=getWindowManager().getDefaultDisplay().getWidth();
         popview.measure(0,0);
         pop=new PopupWindow(popview,500,popview.getMeasuredHeight());

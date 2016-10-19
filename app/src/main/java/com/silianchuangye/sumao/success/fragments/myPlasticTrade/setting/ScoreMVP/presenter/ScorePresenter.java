@@ -1,12 +1,12 @@
 package com.silianchuangye.sumao.success.fragments.myPlasticTrade.setting.ScoreMVP.presenter;
 
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.setting.HelpAndFeedbackMVP.bean.HelpAndFeedbackBean;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.setting.ScoreMVP.model.IScoreModel;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.setting.ScoreMVP.model.IScoreModels;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.setting.ScoreMVP.model.ScoreCallback;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.setting.ScoreMVP.model.ScoreModel;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.setting.ScoreMVP.model.scoreInformationModel.IScoreInformationModel;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.setting.ScoreMVP.model.ScoreModels;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.setting.ScoreMVP.model.scoreInformationModel.IScoreInformationModels;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.setting.ScoreMVP.model.scoreInformationModel.ScoreInformationCallback;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.setting.ScoreMVP.model.scoreInformationModel.ScoreInformationModel;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.setting.ScoreMVP.model.scoreInformationModel.ScoreInformationModels;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.setting.ScoreMVP.view.IScoreView;
 
 /**
@@ -20,7 +20,7 @@ public class ScorePresenter {
     }
 
     public void sendScoreToServer(String number,String userName){
-        IScoreModel scoreModel = new ScoreModel(number,userName);
+        IScoreModels scoreModel = new ScoreModels(number,userName);
         scoreModel.sendScoreInServer(new ScoreCallback() {
             @Override
             public void callbackScore(HelpAndFeedbackBean helpAndFeedbackBean) {
@@ -29,7 +29,7 @@ public class ScorePresenter {
         });
     }
     public void scoreInformation(String userName){
-        IScoreInformationModel scoreInformationModel = new ScoreInformationModel(userName);
+        IScoreInformationModels scoreInformationModel = new ScoreInformationModels(userName);
         scoreInformationModel.getScoreInformation(new ScoreInformationCallback() {
             @Override
             public void callbackScoreInformation(String result) {

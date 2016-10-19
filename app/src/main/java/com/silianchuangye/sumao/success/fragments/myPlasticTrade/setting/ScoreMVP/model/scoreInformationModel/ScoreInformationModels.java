@@ -11,10 +11,10 @@ import org.xutils.x;
 /**
  * Created by Administrator on 2016/10/17 0017.
  */
-public class ScoreInformationModel implements IScoreInformationModel {
+public class ScoreInformationModels implements IScoreInformationModels {
     String userName ;
 String url = SuMaoConstant.APP_IP_HELP+"/pcoAppService/userscore/myscore";
-    public ScoreInformationModel(String userName) {
+    public ScoreInformationModels(String userName) {
         this.userName = userName;
     }
 

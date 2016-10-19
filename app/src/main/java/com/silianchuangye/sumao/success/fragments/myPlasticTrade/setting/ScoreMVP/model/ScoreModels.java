@@ -13,11 +13,11 @@ import org.xutils.x;
 /**
  * Created by Administrator on 2016/9/27 0027.
  */
-public class ScoreModel implements IScoreModel {
+public class ScoreModels implements IScoreModels {
 
     String number;String userName;
 
-    public ScoreModel(String number, String userName) {
+    public ScoreModels(String number, String userName) {
         this.number = number;
         this.userName = userName;
     }
