@@ -465,7 +465,6 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
                 num+=cc;
                 edt_pop_num.setText(num+"");
 //                tv_pop_price.setText(Double.valueOf(edt_pop_num.getText().toString())*Double.valueOf(strprice)+"");
-                //哎，我的第一志愿是5点半，第二志愿是6点，第三志愿是6点半
                 number.setText(edt_pop_num.getText().toString());
                 count_price.setText(Double.valueOf(number.getText().toString())*Double.valueOf(strprice)+"");
             }
