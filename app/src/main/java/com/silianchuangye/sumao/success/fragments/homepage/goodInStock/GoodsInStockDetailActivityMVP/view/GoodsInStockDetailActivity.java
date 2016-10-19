@@ -395,7 +395,7 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
 
     }
     public void join_gouwuche(){
-        String url= SuMaoConstant.SUMAO_IP+"rest/model/atg/commerce/ShoppingCartActor/addItemToOrder";
+        String url= SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/ShoppingCartActor/addItemToOrder";
         RequestParams rp=new RequestParams(url);
         rp.addParameter("productId",cl_id);
         rp.addParameter("quantity",(Integer.parseInt(et_number.getText().toString())*1000)+"");
