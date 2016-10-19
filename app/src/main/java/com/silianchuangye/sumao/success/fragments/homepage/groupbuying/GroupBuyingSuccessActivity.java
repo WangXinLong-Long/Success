@@ -350,7 +350,11 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
                            // jiezhishijian=obj.getString("");
                             jiezhishijian="2016-09-09 12:00";
                             can_gku=obj.getString("cl_cangku");
-                            xiangxi=obj.getString("addressDetail");
+                            if(result.contains("addressDetail")) {
+                                xiangxi = obj.getString("addressDetail");
+                            }else{
+                                xiangxi="";
+                            }
                             kaishishijian=obj.getString("cl_shijian");
                             jieshushijian=obj.getString("cl_shijianend");
                             tuan_start=obj.getString("groupStartDate");
@@ -461,7 +465,7 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
                 num+=cc;
                 edt_pop_num.setText(num+"");
 //                tv_pop_price.setText(Double.valueOf(edt_pop_num.getText().toString())*Double.valueOf(strprice)+"");
-                //
+                //哎，我的第一志愿是5点半，第二志愿是6点，第三志愿是6点半
                 number.setText(edt_pop_num.getText().toString());
                 count_price.setText(Double.valueOf(number.getText().toString())*Double.valueOf(strprice)+"");
             }
