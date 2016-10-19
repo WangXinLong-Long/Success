@@ -109,6 +109,9 @@ public class Logistics_SelectAddress extends AppCompatActivity implements View.O
         Intent intent=new Intent();
         intent.putExtra("address",list.get(position).tv_address_title);
         intent.putExtra("address_message",list.get(position).tv_address_message);
+        intent.putExtra("address_number",lists.get(position).getCounty());
+        intent.putExtra("address_people",list.get(position).tv_address_name);
+        intent.putExtra("address_phoneNum",list.get(position).tv_address_phone_num);
         intent.setAction("select");
         sendBroadcast(intent);
         finish();

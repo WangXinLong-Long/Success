@@ -2,6 +2,7 @@ package com.silianchuangye.sumao.success.fragments.myPlasticTrade.PhysicalDistri
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,11 +22,14 @@ import com.silianchuangye.sumao.success.R;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class logisticsMesssage extends AppCompatActivity implements View.OnClickListener{
     private TextView tv_title_logistics,tv_tishi,tv_date,tv_date_start,tv_date_end;
     private EditText edt;
     private Button btn;
+    private ImageView img_logistics_title_bar_back;
     LinearLayout linear_date;
     String str,startTime,buy;
     @Override
@@ -34,6 +39,7 @@ public class logisticsMesssage extends AppCompatActivity implements View.OnClick
         str= getIntent().getStringExtra("title");
         startTime=getIntent().getStringExtra("time");
         buy=getIntent().getStringExtra("buy");
+        img_logistics_title_bar_back= (ImageView) findViewById(R.id.img_logistics_title_bar_back);
         linear_date= (LinearLayout) findViewById(R.id.linear_date);
         tv_date_start= (TextView) findViewById(R.id.tv_date_start);
         tv_date_end= (TextView) findViewById(R.id.tv_date_end);
@@ -63,7 +69,7 @@ public class logisticsMesssage extends AppCompatActivity implements View.OnClick
         btn.setOnClickListener(this);
         tv_date_start.setOnClickListener(this);
         tv_date_end.setOnClickListener(this);
-
+        img_logistics_title_bar_back.setOnClickListener(this);
     }
     private void show(){
         Intent intent=new Intent();
@@ -71,7 +77,7 @@ public class logisticsMesssage extends AppCompatActivity implements View.OnClick
         if(buy.equals("1")) {
             if (str.equals("收货联系人")) {
                 setResult(0, intent);
-            } else if (str.equals("联系电话")) {
+            } else if (str.equals("联系方式")) {
                 setResult(1, intent);
             } else if (str.equals("期望提货时间")) {
                 intent.putExtra("message1", tv_date_start.getText().toString());
@@ -88,6 +94,7 @@ public class logisticsMesssage extends AppCompatActivity implements View.OnClick
             }
         } else {
              if (str.equals("提货车号")) {
+                 Log.e("TAG","提货车");
                 setResult(10, intent);
             } else if (str.equals("提货人")) {
                 setResult(11, intent);
@@ -204,6 +211,9 @@ public class logisticsMesssage extends AppCompatActivity implements View.OnClick
     @Override
     public void onClick(View v) {
         switch (v.getId()){
+            case R.id.img_logistics_title_bar_back:
+                finish();
+                break;
             case R.id.tv_date_message:
                 showDate(tv_date);
                 break;
@@ -278,7 +288,7 @@ public class logisticsMesssage extends AppCompatActivity implements View.OnClick
                     if(edt.getText().toString()==null){
                         edt.setText("");
                     }
-                }else{
+                }else {
                     Log.e("TAG", "edt.getText().toString()====" + edt.getText().toString());
                     if (edt.getText().toString().equals("")) {
                         if (tv_title_logistics.getText().toString().equals("备注")
@@ -292,20 +302,51 @@ public class logisticsMesssage extends AppCompatActivity implements View.OnClick
                             tv_tishi.setVisibility(View.VISIBLE);
                         }
                     } else {
-                        if(tv_title_logistics.getText().toString().equals("提货人身份证号")){
-                            if(edt.getText().length()<18){
+                        if (tv_title_logistics.getText().toString().equals("提货人身份证号")) {
+                            //汽车牌号正则表达式
+                            String regEx = "^[1-9]\\d{7}((0\\d)|(1[0-2]))(([0|1|2]\\d)|3[0-1])\\d{3}$|^[1-9]\\d{5}[1-9]\\d{3}((0\\d)|(1[0-2]))(([0|1|2]\\d)|3[0-1])\\d{3}([0-9]|X)$";
+                            Pattern pattern = Pattern.compile(regEx);
+                            Matcher matcher = pattern.matcher(edt.getText().toString());
+                            boolean b = matcher.matches();
+                            Log.e("TAG","b="+b);
+                            if(!b){
                                 tv_tishi.setText("身份证号不合理");
                                 tv_tishi.setVisibility(View.VISIBLE);
-                                Toast.makeText(logisticsMesssage.this,"身份证号不合理",Toast.LENGTH_SHORT).show();
                             }else{
                                 show();
                             }
-                        }else{
+                        }else if(tv_title_logistics.getText().toString().equals("提货车号")){
+                            //汽车牌号正则表达式
+                            String regEx = "^[\\u4e00-\\u9fa5]{1}[A-Z]{1}[A-Z_0-9]{5}$";
+                            Pattern pattern = Pattern.compile(regEx);
+                            Matcher matcher = pattern.matcher(edt.getText().toString());
+                            boolean b = matcher.matches();
+                            Log.e("TAG","b="+b);
+                            if(!b){
+                                tv_tishi.setText("车牌号不合理");
+                                tv_tishi.setVisibility(View.VISIBLE);
+                            }else{
+                                show();
+                            }
+                        }else if(tv_title_logistics.getText().toString().equals("联系方式")){
+                            //汽车牌号正则表达式
+                            String regEx = "[1][358]\\d{9}";
+                            Pattern pattern = Pattern.compile(regEx);
+                            Matcher matcher = pattern.matcher(edt.getText().toString());
+                            boolean b = matcher.matches();
+                            Log.e("TAG","b="+b);
+                            if(!b){
+                                tv_tishi.setText("手机号不合理");
+                                tv_tishi.setVisibility(View.VISIBLE);
+                            }else{
+                                show();
+                            }
+                        }else {
                             show();
                         }
-
                     }
                 }
+//
                 break;
         }
     }

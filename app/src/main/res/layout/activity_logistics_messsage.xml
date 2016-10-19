@@ -44,35 +44,35 @@
         <EditText
             android:id="@+id/edt_message"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="@dimen/x40"
             android:background="@drawable/juxing"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="20dp"/>
+            android:layout_marginLeft="@dimen/x20"
+            android:layout_marginTop="@dimen/x20"
+            android:layout_marginRight="@dimen/x20"/>
         <TextView
             android:id="@+id/tv_date_message"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="@dimen/x40"
             android:background="@drawable/juxing"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginLeft="@dimen/x20"
+            android:layout_marginTop="@dimen/x20"
             android:gravity="center_vertical"
-            android:paddingLeft="10dp"
-            android:layout_marginRight="20dp"
+            android:paddingLeft="@dimen/x10"
+            android:layout_marginRight="@dimen/x20"
             android:visibility="gone"/>
         <LinearLayout
             android:id="@+id/linear_date"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="@dimen/x40"
             android:orientation="horizontal"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginLeft="@dimen/x20"
+            android:layout_marginTop="@dimen/x20"
+            android:layout_marginRight="@dimen/x20"
             >
             <TextView
                 android:id="@+id/tv_date_start"
-                android:layout_width="149dp"
-                android:paddingLeft="10dp"
+                android:layout_width="@dimen/x130"
+                android:paddingLeft="@dimen/x10"
                 android:layout_height="match_parent"
                android:gravity="center_vertical"
                 android:background="@drawable/juxing"
@@ -82,15 +82,15 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:textSize="16sp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
+                android:layout_marginLeft="@dimen/x5"
+                android:layout_marginRight="@dimen/x5"
                 android:text="至"/>
             <TextView
                 android:id="@+id/tv_date_end"
-                android:layout_width="145dp"
+                android:layout_width="@dimen/x125"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
-                android:paddingLeft="10dp"
+                android:paddingLeft="@dimen/x10"
                 android:background="@drawable/juxing"
                 />
         </LinearLayout>
@@ -99,7 +99,7 @@
 
     <TextView
         android:id="@+id/tv_tishi"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="@dimen/x20"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/red"
@@ -108,10 +108,10 @@
     <Button
         android:id="@+id/btn_logicits_save"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="@dimen/x40"
         android:text="保存"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginLeft="@dimen/x20"
+        android:layout_marginRight="@dimen/x20"
         android:textColor="@color/selley_lv"
         android:background="@drawable/button_backgroup_save"/>
 </LinearLayout>

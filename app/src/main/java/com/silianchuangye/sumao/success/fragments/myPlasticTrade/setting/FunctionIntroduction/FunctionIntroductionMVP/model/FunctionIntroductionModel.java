@@ -1,13 +1,10 @@
 package com.silianchuangye.sumao.success.fragments.myPlasticTrade.setting.FunctionIntroduction.FunctionIntroductionMVP.model;
 
 import com.google.gson.Gson;
-import com.silianchuangye.sumao.success.fragments.homepage.AnnouncementDetailMVP.bean.AnnouncementDetailBean;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.setting.FunctionIntroduction.FunctionIntroductionMVP.bean.FunctionIntroductionDetailBean;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.xutils.common.Callback;
 import org.xutils.http.HttpMethod;
 import org.xutils.http.RequestParams;
@@ -40,7 +37,7 @@ public class FunctionIntroductionModel implements IFunctionIntroductionModel {
         LogUtils.log(helpid+"<---");
         requestParams.addParameter("helpid",helpid);
         LogUtils.log(requestParams+"<---");
-
+LogUtils.log(requestParams.getUri());
         try {
             x.http().request(HttpMethod.POST, requestParams, new Callback.CacheCallback<String>() {
 

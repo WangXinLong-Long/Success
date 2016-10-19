@@ -174,7 +174,6 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
 
 	@Override
 	public void onEnterToChatDetails() {
-		// TODO Auto-generated method stub
 
 	}
 
