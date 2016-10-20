@@ -200,7 +200,12 @@ public class FirmInfoActivity extends AppCompatActivity implements IFirmInfoView
                     String enterpriseInfoReview = job.getString("enterpriseInfoReview");
                     String cl_zhengjian=zhengjianType(job.getString("cl_zhengjian"));
                     String nashuipeople=job.getString("cl_nashuiren");
-                    String xinyong=job.getString("cl_jigou");
+                    String xinyong;
+                    if(result.contains("cl_jigou")) {
+                        xinyong= job.getString("cl_jigou");
+                   }else{
+                       xinyong="";
+                   }
                     String chuanzhen="";
                     String zhizhao="";
                     String cl_shuiwu="";
