@@ -29,6 +29,7 @@ import com.silianchuangye.sumao.success.adapter.PopupWindowAdaptrer;
 import com.silianchuangye.sumao.success.custom.customCalendar.CalendarView;
 import com.silianchuangye.sumao.success.custom.customCalendar.DayAndPrice;
 import com.silianchuangye.sumao.success.custom.customCalendar.MonthDateView;
+import com.silianchuangye.sumao.success.dialog.Error_Dialog;
 import com.silianchuangye.sumao.success.dialog.Ok_Dialog;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.OpenAuction;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.VesselThreeActivity;
@@ -39,6 +40,7 @@ import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetail
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.presenter.PreSaleDetailPresenter;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleMVP.view.PreSale;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.LoginUserActivity;
+import com.silianchuangye.sumao.success.utils.Loding;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
@@ -372,7 +374,6 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                popupWindow.dismiss();
                 payMoney();
             }
         });
@@ -514,13 +515,12 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
             Log.e("TAG", "blankName------" + blankname);
             params.addParameter("paymentPlatform", blankname);
             Log.e("TAG", "params=-----------" + params);
-
+            Loding.show(this,"正在请求网络",false,null);//网络请求之前调用
             x.http().post(params, new Callback.CommonCallback<String>() {
                 @Override
                 public void onSuccess(String result) {
                     Log.e("TAG", "支付保证金result-----" + result);
-                    //: 支付保证金result-----{"status":"YES","info":"sucess"}
-                    //{"orderId":"10094100000002","info":"sucess"}
+//                    result-----{"orderId":"10094600000005","info":"sucess"}
                     try {
                         JSONObject job=new JSONObject(result);
                         String info=job.getString("info");
@@ -530,12 +530,16 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
                             popupWindow.dismiss();
                             // TODO 显示订单信息
                             Intent intent=new Intent(PreSaleDetailActivity.this, Ok_Dialog.class);
-                            intent.putExtra("number","11111");
+                            intent.putExtra("number",orderId);
                             intent.putExtra("type","预售保证金");
                             startActivity(intent);
 
                         }else{
                             Toast.makeText(PreSaleDetailActivity.this,"支付失败",Toast.LENGTH_SHORT).show();
+                            Intent intent=new Intent(PreSaleDetailActivity.this, Error_Dialog.class);
+                            intent.putExtra("number",orderId);
+//                            intent.putExtra("type","预售保证金");
+                            startActivity(intent);
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -555,6 +559,7 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
 
                 @Override
                 public void onFinished() {
+                    Loding.dis();
                 }
             });
         }
