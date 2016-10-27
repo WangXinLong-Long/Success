@@ -206,7 +206,7 @@ public class FirmInfoActivity extends AppCompatActivity implements IFirmInfoView
                         xinyong= job.getString("cl_jigou");
                     }else{
                         xinyong="";
-                    }
+                    }///////
                     String chuanzhen="";
                     String zhizhao="";
                     String cl_shuiwu="";
