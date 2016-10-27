@@ -32,6 +32,7 @@ import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 //import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockDetailActivityMVP.bean.OrderIdList;
 
+import org.apache.commons.net.io.ToNetASCIIInputStream;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -39,6 +40,7 @@ import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
@@ -76,6 +78,8 @@ public class PaymentsOrder extends Activity implements View.OnClickListener {
     private List<String> list_id;
     private List<OpenAuction> list_pop;
     private String bank_Info;
+    private String count_price;
+    private TextView tv_payments_order_money;
     private List<String> list_order = new ArrayList<String>();
     private String name, type, price, number, qiye, all_price, cangku, comm, paihao, order_id;
 
@@ -86,6 +90,9 @@ public class PaymentsOrder extends Activity implements View.OnClickListener {
 
         lvdemo = (ListView) findViewById(R.id.lbDem);
         addData();
+
+        tv_payments_order_money= (TextView) findViewById(R.id.tv_payments_order_money);
+
         //页面标题 “支付订单”
         title_bar_white_title = (TextView) findViewById(R.id.title_bar_white_title);
 //        设置时：   产品订单号：+number
@@ -140,13 +147,15 @@ public class PaymentsOrder extends Activity implements View.OnClickListener {
                     rp.addParameter("_dynSessConf", coummit_unique);
                     Log.d("提交订单的唯一标识", coummit_unique);
                     Log.d("rp的值", rp + "");
+                    tv_payments_order_money.setText(getIntent().getStringExtra("all_price"));
                     x.http().post(rp, new Callback.CommonCallback<String>() {
                         @Override
                         public void onSuccess(String result) {
                             Log.d("提交订单的result", result);
+                            if (result.contains("orderIdList")){
                             try {
                                 JSONObject obj_result = new JSONObject(result);
-                                String Message = obj_result.getString("OrderIdList");
+                                String Message = obj_result.getString("orderIdList");
                                 JSONArray array = new JSONArray(Message);
                                 list = new ArrayList<Map<String, Object>>();
                                 for (int i = 0; i < array.length(); i++) {
@@ -154,6 +163,9 @@ public class PaymentsOrder extends Activity implements View.OnClickListener {
                                     //Map<String,Object> map=new Hashtable<String, Object>();
                                     String info = obj_array.getString("commerceItem");
                                     String time = obj_array.getString("remainingTime");
+                                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat
+                                            ("yyyy年MM月dd日 hh:mm:mm");
+                                    String data=simpleDateFormat.format(Double.parseDouble(time));
                                     order_id = obj_array.getString("orderId");
                                     String total = obj_array.getString("total");
                                     JSONArray array_obj = new JSONArray(info);
@@ -168,8 +180,16 @@ public class PaymentsOrder extends Activity implements View.OnClickListener {
                                         cangku = gouwuche_info.getString("warehouse");
                                         comm = gouwuche_info.getString("salesCompanyDisplayName");
                                         name = gouwuche_info.getString("productName");
+//                                        if (array_obj.length()==1){
+//                                            tv_payments_order_money.setText(all_price);
+//                                        }else if (array_obj.length()>1){
+//                                          //  tv_payments_order_money.setText(all_price+all_price);
+//                                            all_price=all_price+all_price;
+//                                            tv_payments_order_money.setText(all_price);
+//                                        }all_price
 
                                     }
+Log.d("支付的总价",total+"aa");
                                     Map<String, Object> map = new Hashtable<String, Object>();
                                     map.put("order_id", "订单编号:" + order_id);
                                     map.put("total", total);
@@ -210,6 +230,22 @@ public class PaymentsOrder extends Activity implements View.OnClickListener {
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
+                            }else if (result.contains("formExceptions")){
+                                try {
+                                    JSONObject object_message=new JSONObject(result);
+                                    String message=object_message.getString("formExceptions");
+                                    JSONArray array_msg=new JSONArray(message);
+                                    for (int i=0;i<array_msg.length();i++){
+                                        JSONObject obj=array_msg.getJSONObject(i);
+                                        String message_info=obj.getString("localizedMessage");
+                                        Toast.makeText(PaymentsOrder.this, ""+message_info, Toast.LENGTH_SHORT).show();
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+                            }
+
 
                         }
 
@@ -363,9 +399,13 @@ public class PaymentsOrder extends Activity implements View.OnClickListener {
         tv = (TextView) view.findViewById(R.id.tvPrice_popupwindow_auction);
         et = (EditText) view.findViewById(R.id.etZhifu_auction);
         lv = (ListView) view.findViewById(R.id.lv_popupwindow_auction);
+        TextView count_Price= (TextView) view.findViewById(R.id.count_Price);
         // final List<OpenAuction> list_pop=new ArrayList<OpenAuction>();
 
         getinfo_Bank();
+
+
+        count_Price.setText(count_price);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -446,6 +486,8 @@ public class PaymentsOrder extends Activity implements View.OnClickListener {
                                 list_pop = new ArrayList<OpenAuction>();
                                 JSONObject obj = new JSONObject(result);
                                 String message = obj.getString("bankResult");
+                                count_price=obj.getString("balance");
+                                Log.d("将要支付的金额:",count_price+"");
                                 JSONObject obj_Bank = new JSONObject(message);
                                 if (result.contains("pingAn")) {
                                     OpenAuction auction = new OpenAuction();

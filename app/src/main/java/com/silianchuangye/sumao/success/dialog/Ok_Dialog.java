@@ -43,8 +43,9 @@ public class Ok_Dialog extends Activity {
         TextView tv_order_number= (TextView)findViewById(R.id.tv_order_number_ok);
         Bundle bundle=getIntent().getExtras();
         String order_id=bundle.getString("number");
+        Log.d("订单编号",order_id+"aa");
         tv_order_number.setText(order_id);
-
+      //  tv_order_number_ok
         btn_ok_dialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -52,7 +53,7 @@ public class Ok_Dialog extends Activity {
                 finish();
             }
         });
-
+ 
         Button bt_my_order= (Button)findViewById(R.id.bt_my_order);
         Button bt_wuliu= (Button) findViewById(R.id.bt_wulliu);
         tv_order_number.setText(order_number);
