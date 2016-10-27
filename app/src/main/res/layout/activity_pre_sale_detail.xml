@@ -481,18 +481,22 @@
                         android:background="@drawable/cart_num"
                         />
                     <TextView
-                        android:id="@+id/tv_item_cart_all_price"
-                        android:layout_alignParentRight="true"
-                        android:textColor="#ff0000"
-                        android:layout_marginRight="@dimen/x10"
+                        android:id="@+id/tv_zongjia"
+                        android:layout_marginLeft="10dp"
                         style="@style/tv_dingdan"
-                        android:text="234,900元"
-                        />
-                    <TextView
-                        style="@style/tv_dingdan"
-                        android:layout_toLeftOf="@id/tv_item_cart_all_price"
+                        android:layout_toRightOf="@id/img_item_cart_buy_add"
                         android:text="总价（元） : "
                         />
+                    <TextView
+                        android:id="@+id/tv_item_cart_all_price"
+                       android:layout_toRightOf="@id/tv_zongjia"
+                        android:textColor="#ff0000"
+                        android:layout_marginRight="@dimen/x2"
+                        style="@style/tv_dingdan"
+                        android:text="234,900元"
+
+                        />
+
                 </RelativeLayout>
             </LinearLayout>
             <LinearLayout

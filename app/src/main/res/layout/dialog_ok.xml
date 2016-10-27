@@ -111,7 +111,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/button_background_blue"
             android:textSize="14sp"
-            android:text="我的订单"
+            android:text="订单详情"
             android:id="@+id/bt_my_order"
             android:textColor="#fff"
 
@@ -121,7 +121,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/button_background_green"
             android:textSize="14sp"
-            android:text="物流需求"
+            android:text="继续购物"
             android:id="@+id/bt_wulliu"
             android:textColor="#fff"
             android:layout_centerHorizontal="true"
