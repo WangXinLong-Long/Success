@@ -425,20 +425,24 @@ public class ViewLogisticsDemand extends Activity implements View.OnClickListene
                             String idCard=job2.getString("idCard");
                             //提货时间
                             long shippingDate=job2.getLong("shippingDate");
-                            Log.e("TAG","shippDate="+shippingDate);
                             String time=new SimpleDateFormat("yyyy-MM-dd").format(shippingDate);
                             //备注
                             String remarks=job2.getString("remarks");
                         }else{
                             //托运联系人
                             String shippingContact="";
-                            if(logisticsInfo.contains("shippingContact")) {
+                            if(job2.toString().contains("shippingContact")) {
                                 shippingContact = job2.getString("shippingContact");
+                            }else{
+                                shippingContact="";
                             }
                             //卸货地址
                             String detailAddress=job2.getString("detailAddress");
                             //收货公司
-                            String repeiptCompany=job2.getString("repeiptCompany");
+                            String repeiptCompany="";
+                             if(job2.toString().contains("repeiptCompany")) {
+                                 repeiptCompany = job2.getString("repeiptCompany");
+                             }
                             //提货结束时间
                             String pickUpDateStart=new SimpleDateFormat("yyyy-MM-dd").format(job2.getLong("pickUpDateStart"));
                             //提货开始时间
