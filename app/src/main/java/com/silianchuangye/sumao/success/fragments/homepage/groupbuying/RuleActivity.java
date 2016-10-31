@@ -111,7 +111,7 @@ public class RuleActivity extends AppCompatActivity {
         Map<String,Object> map6=new Hashtable<String,Object>();
         map6.put("left","交易模式");
         map6.put("right","团购");
-        list.add(map6);
+        list.add(map6);///
         Map<String,Object> map7=new Hashtable<String,Object>();
         map7.put("left","团购时间");
         map7.put("right",tuan_kaishi+"至"+tuan_jieshu);
