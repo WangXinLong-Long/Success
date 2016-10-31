@@ -3,6 +3,7 @@ package com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagemen
 import android.app.Activity;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.Image;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.OrderDetailsListViewAdapter;
 import com.silianchuangye.sumao.success.custom.CustomListView;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.CreateLogistics;
 import com.silianchuangye.sumao.success.model.OrderDeatilsModel;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
@@ -45,6 +47,7 @@ public class OrderDetailsHaveBeenPaid extends Activity implements View.OnClickLi
     private Button bt_copy;
     private TextView tv_order_number,univalent2,number2,enterprise2,totalMoney2,warehouse2;
     String str,Id;
+    private Button bottom_money1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +65,8 @@ public class OrderDetailsHaveBeenPaid extends Activity implements View.OnClickLi
         enterprise2= (TextView) findViewById(R.id.enterprise2);
         totalMoney2= (TextView) findViewById(R.id.totalMoney2);
         warehouse2= (TextView) findViewById(R.id.warehouse2);
+        bottom_money1= (Button) findViewById(R.id.bottom_money1);
+        bottom_money1.setOnClickListener(this);
 //        initdata();
         new Thread(){
             @Override
@@ -103,7 +108,10 @@ public class OrderDetailsHaveBeenPaid extends Activity implements View.OnClickLi
                         .getSystemService(Context.CLIPBOARD_SERVICE);
                 copy.setText(tv_order_number.getText().toString());
                 break;
-
+            case R.id.bottom_money1:
+                Intent intnet=new Intent(this, CreateLogistics.class);
+                startActivity(intnet);
+                break;
             default:
                 break;
         }

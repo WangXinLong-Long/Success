@@ -10,12 +10,17 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    dexOptions {
+        preDexLibraries = false
+        javaMaxHeapSize "2g"
     }
     sourceSets { main { jni.srcDirs = ['src/main/jni', 'src/main/jniLibs/'] } }
 }
@@ -52,5 +57,5 @@ dependencies {
     compile 'org.dspace.xmlui.jakarta:jakarta-bcel:5.1.20040329'
     compile 'org.apache.httpcomponents:jakarta-httpcore:4.0-alpha4'
     compile project(':PullToRefresh')
-    compile files('libs/CCP_REST_SDK_JAVA_v2.7r.jar')
+    compile 'com.android.support:multidex:1.0.1'
 }
