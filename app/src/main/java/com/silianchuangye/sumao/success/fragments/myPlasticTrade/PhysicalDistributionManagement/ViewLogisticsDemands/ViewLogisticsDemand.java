@@ -145,7 +145,12 @@ public class ViewLogisticsDemand extends Activity implements View.OnClickListene
 //            提货车号
             logisticsListParent.setDeliveryNumber("京G"+54524+i);
 //            配送方式
-            logisticsListParent.setDistributionMode("卖家配送");
+            if (i%2 == 0){
+                logisticsListParent.setDistributionMode("卖家配送");
+
+            }else {
+                logisticsListParent.setDistributionMode("买家自提");
+            }
 //            身份证号
             logisticsListParent.setIdCardNumber("15242816985893458"+i);
 //            物流需求号
