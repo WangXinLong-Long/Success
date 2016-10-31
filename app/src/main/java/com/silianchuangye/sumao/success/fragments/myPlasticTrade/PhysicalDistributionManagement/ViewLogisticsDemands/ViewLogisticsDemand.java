@@ -35,6 +35,7 @@ import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -356,14 +357,6 @@ public class ViewLogisticsDemand extends Activity implements View.OnClickListene
         RequestParams params=new RequestParams(SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/order/logistics/logisticsActor/logisticsInfoSearch");
         params.addParameter("_dynSessConf", unique123);
         params.addParameter("logisticsId",logisticsId);
-        JSONObject job=new JSONObject();
-//        try {
-//            job.put("logisticsType",logisticsType);//类型
-//            job.put("shippingMethod",shippingMethod);//配送方式
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-        params.setBodyContent(job.toString());
         params.addParameter("logisticsType",logisticsType);
         params.addParameter("shippingMethod",shippingMethod);
         params.addParameter("orderId",orderId);
@@ -418,19 +411,35 @@ public class ViewLogisticsDemand extends Activity implements View.OnClickListene
                         String state=job2.getString("state");
                         if(shippingMethod.equals("pickUp")){//买家自提
                             //提货车号
+                            String licensePlateNo=job2.getString("licensePlateNo");
                             //提货人
+                            String deliveryer=job2.getString("deliveryer");
                             //联系方式
+                            String deliveryerTel=job2.getString("deliveryerTel");
                             //提货人身份证号
+                            String idCard=job2.getString("idCard");
                             //提货时间
+                            long shippingDate=job2.getLong("shippingDate");
+                            Log.e("TAG","shippDate="+shippingDate);
+                            String time=new SimpleDateFormat("yyyy-MM-dd").format(shippingDate);
                             //备注
+                            String remarks=job2.getString("remarks");
                         }else{
                             //托运联系人
+                            String shippingContact="";
+                            if(logisticsInfo.contains("shippingContact")) {
+                                shippingContact = job2.getString("shippingContact");
+                            }
                             //卸货地址
+                            String detailAddress=job2.getString("detailAddress");
                             //收货公司
+                            String repeiptCompany=job2.getString("repeiptCompany");
                             //提货结束时间
+                            String pickUpDateStart=new SimpleDateFormat("yyyy-MM-dd").format(job2.getLong("pickUpDateStart"));
                             //提货开始时间
-                            //托运人联系方式
+                            String pickUpDateEnd=new SimpleDateFormat("yyyy-MM-dd").format(job2.getLong("pickUpDateEnd"));
                             //卸货联系人
+                            String contactPerson=job2.getString("contactPerson");
                         }
                     }
                 } catch (JSONException e) {
