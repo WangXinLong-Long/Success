@@ -36,7 +36,7 @@ public class Error_Dialog extends Activity {
                Error_Dialog.this.finish();
             }
         });
-        tv_order_number.setText(number);
+        tv_order_number.setText("您的订单号为:"+number);
         bt_reZhifu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

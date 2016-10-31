@@ -139,7 +139,9 @@
                 android:layout_marginLeft="@dimen/x3"
                 android:textColor="@color/red"
                 android:textSize="16sp"
-                android:text="61000元"
+
+                android:id="@+id/count_Price"
+
                 />
 
 

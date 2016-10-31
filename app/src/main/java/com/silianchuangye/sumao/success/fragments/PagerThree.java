@@ -179,6 +179,7 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
                     intent.setClass(getActivity(), PaymentsOrder.class);
                     intent.putExtra("type","cart");
                     intent.putExtra("id", (Serializable) id_String);
+                    intent.putExtra("all_price",tv_Cart_All_Price.getText().toString());
                     startActivity(intent);
                 } else {
                     Toast.makeText(getActivity(), "请选择要购买的商品", Toast.LENGTH_SHORT).show();

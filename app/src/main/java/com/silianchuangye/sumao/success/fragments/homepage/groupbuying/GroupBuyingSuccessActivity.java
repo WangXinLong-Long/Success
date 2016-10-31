@@ -313,7 +313,11 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
                             name.setText(obj.getString("cl_mingcheng"));
                             strprice=obj.getString("cl_jine");
                             price.setText(obj.getString("cl_jine")+"元");
-                            count.setText(obj.getString("cl_zongliang")+"吨");
+                            if(result.contains("cl_zongliang")) {
+                                count.setText(obj.getString("cl_zongliang") + "吨");
+                            }else{
+                                count.setText("");
+                            }
                             qigou.setText(obj.getString("cl_qigou")+"吨");
                             strbianliang=obj.getString("cl_xbianliang");
                             //默认购买数量
@@ -346,7 +350,11 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
                            // jiezhishijian=obj.getString("");
                             jiezhishijian="2016-09-09 12:00";
                             can_gku=obj.getString("cl_cangku");
-                            xiangxi=obj.getString("addressDetail");
+                            if(result.contains("addressDetail")) {
+                                xiangxi = obj.getString("addressDetail");
+                            }else{
+                                xiangxi="";
+                            }
                             kaishishijian=obj.getString("cl_shijian");
                             jieshushijian=obj.getString("cl_shijianend");
                             tuan_start=obj.getString("groupStartDate");
@@ -376,11 +384,12 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
                                 tv_tuangou_line.setVisibility(View.GONE);
                                 tv_tuangou_time.setVisibility(View.GONE);
                             }
-                            if(state.equals("1")){
+                            if(state.equals("1")){//正在进行
                                 relative_tuangou.setVisibility(View.VISIBLE);
                                 tv_tuangou_time.setVisibility(View.GONE);
                                 layoutService.setVisibility(View.GONE);
                                 tv_tuangou_line.setVisibility(View.GONE);
+                                layout_number.setVisibility(View.GONE);//增加或减少数量
                                 linear_tuangou_time.setVisibility(View.VISIBLE);
                             }if(state.equals("0")){//未开始
                                 tv_tuangou_line.setVisibility(View.VISIBLE);
@@ -455,8 +464,7 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
                 double cc=Double.parseDouble(strbianliang);
                 num+=cc;
                 edt_pop_num.setText(num+"");
-                tv_pop_price.setText(Double.valueOf(edt_pop_num.getText().toString())*Double.valueOf(strprice)+"");
-                //
+//                tv_pop_price.setText(Double.valueOf(edt_pop_num.getText().toString())*Double.valueOf(strprice)+"");
                 number.setText(edt_pop_num.getText().toString());
                 count_price.setText(Double.valueOf(number.getText().toString())*Double.valueOf(strprice)+"");
             }
@@ -472,7 +480,7 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
                     num=cc;
                 }
                 edt_pop_num.setText(num+"");
-                tv_pop_price.setText(Double.valueOf(edt_pop_num.getText().toString())*Double.valueOf(strprice)+"");
+//                tv_pop_price.setText(Double.valueOf(edt_pop_num.getText().toString())*Double.valueOf(strprice)+"");
                 //
                 number.setText(edt_pop_num.getText().toString());
                 count_price.setText(Double.valueOf(number.getText().toString())*Double.valueOf(strprice)+"");
@@ -665,13 +673,13 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
         }else{
             str2=strprice;
         }
-        tv_pop_price.setText(Double.valueOf(str)*Double.valueOf(str2)+"");
-       //TODO
-        tv_pop_num.setText("");//剩余数量
+        tv_pop_price.setText(price.getText().toString());
+//        String baozhengjin=Double.valueOf(str)*Double.valueOf(str2)+"";
+//        tv_pop_price.setText(Double.valueOf(str)*Double.valueOf(str2)+"");
+        tv_pop_num.setText(count.getText().toString());//剩余数量
         tv_pop_fenlei.setText(type.getText().toString());
         tv_pop_start_num.setText(qigou.getText().toString());
-        //TODO
-        tv_pop_type.setText("");//交易方式
+        tv_pop_type.setText(way.getText().toString());//交易方式
         tv_pop_small_null.setText(bianliang.getText().toString());
         tv_pop_diqu.setText(add.getText().toString());
         tv_pop_cangku.setText(cangku.getText().toString());
@@ -706,9 +714,8 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
             long sec = time;
 //            Log.e("TAG","daojishi------"+day+"天"+hour+"小时"+min+"分"+sec+"秒");
             String finaltime=day+"天"+hour+"小时"+min+"分"+sec+"秒";
-            tv_success.setText(finaltime);
-            tv_tuangou_time.setText("距离开团时间剩余："+finaltime);
+            tv_success.setText("剩余团购时间  :  "+finaltime);
+            tv_tuangou_time.setText("距离开团时间剩余  :  "+finaltime);
         }
     }
-
 }

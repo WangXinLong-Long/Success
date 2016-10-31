@@ -7,6 +7,8 @@ import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.ActionBarOverlayLayout;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -27,6 +29,7 @@ import com.silianchuangye.sumao.success.adapter.PopupWindowAdaptrer;
 import com.silianchuangye.sumao.success.custom.customCalendar.CalendarView;
 import com.silianchuangye.sumao.success.custom.customCalendar.DayAndPrice;
 import com.silianchuangye.sumao.success.custom.customCalendar.MonthDateView;
+import com.silianchuangye.sumao.success.dialog.Error_Dialog;
 import com.silianchuangye.sumao.success.dialog.Ok_Dialog;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.OpenAuction;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.VesselThreeActivity;
@@ -37,6 +40,7 @@ import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetail
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.presenter.PreSaleDetailPresenter;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleMVP.view.PreSale;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.LoginUserActivity;
+import com.silianchuangye.sumao.success.utils.Loding;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
@@ -100,7 +104,7 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
     private double BZprice;
     private EditText edt_num;//购买数量
     private String cl_jiner;
-
+    private TextView img_item_cart_buy_add,img_item_cart_buy_sub,tv_item_cart_all_price;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -208,6 +212,41 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
         pre_sale_detail_remark = ((TextView) findViewById(R.id.pre_sale_detail_remark));
         //购买数量
         edt_num= (EditText) findViewById(R.id.tv_item_cart_buy_num);
+        edt_num.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                if(!edt_num.getText().toString().equals("")){
+                    Double num=Double.valueOf(edt_num.getText().toString());
+//                   Log.e("TAG","boolean="+(num<=Double.valueOf(surplus_amount_et.getText().toString())&&
+//                           num>=Double.valueOf(purchase_quantity_et.getText().toString())));
+//                    if(num<=Double.valueOf(surplus_amount_et.getText().toString())&&
+//                            num>=Double.valueOf(purchase_quantity_et.getText().toString())){
+//                        edt_num.setText(num+"");
+                        tv_item_cart_all_price.setText(num*Double.valueOf(tvPrice_auction.getText().toString())+"");
+//                        payBao();
+//                    }
+                }else if(edt_num.getText().toString().equals("")||
+                        edt_num.getText().toString().equals("0")){
+                    tv_item_cart_all_price.setText("0");
+                }
+            }
+        });
+        img_item_cart_buy_add= (TextView) findViewById(R.id.img_item_cart_buy_add);
+        img_item_cart_buy_sub= (TextView) findViewById(R.id.img_item_cart_buy_sub);
+        tv_item_cart_all_price= (TextView) findViewById(R.id.tv_item_cart_all_price);
+        img_item_cart_buy_add.setOnClickListener(this);
+        img_item_cart_buy_sub.setOnClickListener(this);
     }
 
     @Override
@@ -231,7 +270,35 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
                 intent.putExtra("cl_attribute",cl_attribute);
                 startActivity(intent);
                 break;
+            case R.id.img_item_cart_buy_add:
+                double num=0.0;
 
+//                    edt_num.setText(0+"");
+//                    Toast.makeText(this,"购买数量不能为空",Toast.LENGTH_SHORT);
+                if (!edt_num.getText().toString().equals(""))  {
+                    num = Double.valueOf(edt_num.getText().toString());
+                }
+                num+=Double.valueOf(min_variable_et.getText().toString());
+                if(num>Double.valueOf(surplus_amount_et.getText().toString())){
+                    Toast.makeText(this,"购买数量不能大于剩余数量",Toast.LENGTH_SHORT).show();
+                }else{
+                    edt_num.setText(num+"");
+                    tv_item_cart_all_price.setText(num*Double.valueOf(tvPrice_auction.getText().toString())+"");
+                    payBao();
+                }
+                break;
+            case R.id.img_item_cart_buy_sub:
+                Log.e("TAG","小于");
+                double num1=Double.valueOf(edt_num.getText().toString());
+                num1-=Double.valueOf(min_variable_et.getText().toString());
+                if(num1<Double.valueOf(purchase_quantity_et.getText().toString())){
+                    Toast.makeText(this,"购买数量不能小于起购量",Toast.LENGTH_SHORT).show();
+                }else{
+                    edt_num.setText(num1+"");
+                    tv_item_cart_all_price.setText(num1*Double.valueOf(tvPrice_auction.getText().toString())+"");
+                    payBao();
+                }
+                break;
 //            点击的 支付保证金 按钮
             case R.id.payment_security:
                 /**
@@ -249,8 +316,19 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
                 }else {
                     Log.e("TAG","riliDate----"+riliDate);
                     if(riliDate!=null) {
-                        Popupwindow();
-                        backgroundAlpha(0.5f);
+                       if (edt_num.getText().toString().equals("")){
+                            Toast.makeText(this,"购买数量不能为空",Toast.LENGTH_SHORT).show();
+                        }else {
+                           if (Double.valueOf(edt_num.getText().toString()) < Double.valueOf(purchase_quantity_et.getText().toString())) {
+                               Toast.makeText(this, "购买数量不能小于起购量", Toast.LENGTH_SHORT).show();
+                           } else if (Double.valueOf(edt_num.getText().toString()) > Double.valueOf(surplus_amount_et.getText().toString())) {
+                               Toast.makeText(this, "购买数量不能大于剩余数量", Toast.LENGTH_SHORT).show();
+                           } else {
+                               Popupwindow();
+                               backgroundAlpha(0.5f);
+                           }
+                       }
+
                     }else{
                         Toast.makeText(PreSaleDetailActivity.this,"该产品暂无预售日期",Toast.LENGTH_SHORT).show();
                     }
@@ -337,6 +415,11 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
                                 String info=job.getString("info");
                                 if(!info.equals("sucess")){
                                     Toast.makeText(PreSaleDetailActivity.this, "该用户没有登录,无法获取可支付银行!", Toast.LENGTH_SHORT).show();
+                                }else{
+                                    String bankList=job.getString("bankList");
+                                    if(bankList.equals("No Bank Info")){
+                                        Toast.makeText(PreSaleDetailActivity.this,"没有银行列表",Toast.LENGTH_SHORT).show();
+                                    }
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -432,26 +515,31 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
             Log.e("TAG", "blankName------" + blankname);
             params.addParameter("paymentPlatform", blankname);
             Log.e("TAG", "params=-----------" + params);
-
+            Loding.show(this,"正在请求网络",false,null);//网络请求之前调用
             x.http().post(params, new Callback.CommonCallback<String>() {
                 @Override
                 public void onSuccess(String result) {
                     Log.e("TAG", "支付保证金result-----" + result);
-                    //: 支付保证金result-----{"status":"YES","info":"sucess"}
+//                    result-----{"orderId":"10094600000005","info":"sucess"}
                     try {
                         JSONObject job=new JSONObject(result);
-                        String status=job.getString("status");
-                        if(status.equals("YES")){
+                        String info=job.getString("info");
+                        String orderId=job.getString("orderId");
+                        if(info.equals("sucess")){
                             Toast.makeText(PreSaleDetailActivity.this,"支付成功",Toast.LENGTH_SHORT).show();
                             popupWindow.dismiss();
                             // TODO 显示订单信息
                             Intent intent=new Intent(PreSaleDetailActivity.this, Ok_Dialog.class);
-                            intent.putExtra("number","11111");
-                            intent.putExtra("type","aa");
+                            intent.putExtra("number",orderId);
+                            intent.putExtra("type","预售保证金");
                             startActivity(intent);
 
                         }else{
                             Toast.makeText(PreSaleDetailActivity.this,"支付失败",Toast.LENGTH_SHORT).show();
+                            Intent intent=new Intent(PreSaleDetailActivity.this, Error_Dialog.class);
+                            intent.putExtra("number",orderId);
+//                            intent.putExtra("type","预售保证金");
+                            startActivity(intent);
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -471,6 +559,7 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
 
                 @Override
                 public void onFinished() {
+                    Loding.dis();
                 }
             });
         }
@@ -522,20 +611,26 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
 //        contractString = preSaleDetailBean.get();
         //        获取产品参数
         cl_attribute = preSaleDetailBean.getCl_attribute();
+        edt_num.setText(purchase_quantity_et.getText().toString());
+        tv_item_cart_all_price.setText(Double.valueOf(edt_num.getText().toString())*Double.valueOf(tvPrice_auction.getText().toString())+"");
         //计算保证金
+        payBao();
+//        String bilistr=margin_proportion_et.getText().toString();
+//        String newStr = bilistr.replaceAll("%","");
+//        double bili=Double.valueOf(newStr)/100;
+//        int num=Integer.valueOf(edt_num.getText().toString());
+//        double price=Double.valueOf(tvPrice_auction.getText().toString());
+//        BZprice=bili*num*price;//保证金=价格*数量*保证金比例
+    }
+    private void payBao(){
         String bilistr=margin_proportion_et.getText().toString();
-        Log.e("TAG","bilistr------"+bilistr);
         String newStr = bilistr.replaceAll("%","");
         double bili=Double.valueOf(newStr)/100;
-        Log.e("TAG","bibi---"+bili);
-        Log.e("TAG","edt_num.getText().toString()====="+edt_num.getText().toString());
-        int num=Integer.valueOf(edt_num.getText().toString());
-        Log.e("TAG","num----"+num);
-        Log.e("TAG","tvPrice_auction.getText().toString()="+tvPrice_auction.getText().toString());
+        double num=Double.valueOf(edt_num.getText().toString());
         double price=Double.valueOf(tvPrice_auction.getText().toString());
-        Log.e("TAG","price-----"+price);
-        BZprice=bili*num*price;//保证金=价格*数量*保证金比例
-        Log.e("TAG","保证金-----"+BZprice);
+        BZprice=bili*num*price;
+        Log.e("TAG","num*price="+num*price);
+        tv_item_cart_all_price.setText(num*price+"");
     }
 String riliDate;
     @Override

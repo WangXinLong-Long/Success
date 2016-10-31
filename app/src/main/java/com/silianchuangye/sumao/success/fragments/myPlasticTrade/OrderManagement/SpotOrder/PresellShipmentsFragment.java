@@ -121,7 +121,7 @@ public class PresellShipmentsFragment extends Fragment {
                 Log.e("TAG","listparrent.get(groupPosition).get(\"id\").toString()===="+listparrent.get(groupPosition).get("id").toString());
                 Intent intent = new Intent();
                 intent.putExtra("ID",listparrent.get(groupPosition).get("id").toString());
-                intent.setClass(getActivity(), SpotOrder.class);
+                intent.setClass(getActivity(), AlreadyPaidActivity.class);
                 startActivity(intent);
                 return true;
 
