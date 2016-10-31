@@ -26,6 +26,7 @@ import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.Create_LogisticsNeed_Adapter;
 import com.silianchuangye.sumao.success.fragments.bean.Create_Logistics_NeedInfo;
 import com.silianchuangye.sumao.success.fragments.bean.Createlogistics_ListInfo;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.PhysicalDistributionManagement.ViewLogisticsDemands.ViewLogisticsDemand;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.AddAddressMVP.presenter.AddAddressPresenter;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.AddAddressMVP.view.IAddAddress;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceAreaMVP.view.SelectProvinceArea;
@@ -514,6 +515,8 @@ public class CreateLogisticsNeed extends AppCompatActivity implements View.OnCli
                     String status=job.getString("status");
                     if(status.equals("YES")){
                         Toast.makeText(CreateLogisticsNeed.this,"创建物流订单成功",Toast.LENGTH_SHORT).show();
+                        Intent intent=new Intent(CreateLogisticsNeed.this, ViewLogisticsDemand.class);
+                        startActivity(intent);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
