@@ -1,5 +1,7 @@
 package com.silianchuangye.sumao.success.fragments.bean;
 
+import android.widget.TextView;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -25,6 +27,88 @@ private String logisticsDemand;
     private String remarks;
 //    子列表
     private List<LogisticsListChild> logisticsListChildren;
+
+    private String unloadingArea2;//卸货区域
+    private String dischargeAddress2;//卸货地址
+    private String unloadingContact2;//卸货联系人
+    private String dischargeContactPhone2;//卸货联系电话
+    private String expectedTimeOfReceipt2;//期望收货时间
+    private String receivingCompany2;//收货公司
+    private String shipperContact2;//托运联系人
+    private String shipperContactInformation2;//托运人联系方式
+    private String sellerRemarks2;//卖家配送备注
+
+    public String getUnloadingArea2() {
+        return unloadingArea2;
+    }
+
+    public void setUnloadingArea2(String unloadingArea2) {
+        this.unloadingArea2 = unloadingArea2;
+    }
+
+    public String getDischargeAddress2() {
+        return dischargeAddress2;
+    }
+
+    public void setDischargeAddress2(String dischargeAddress2) {
+        this.dischargeAddress2 = dischargeAddress2;
+    }
+
+    public String getUnloadingContact2() {
+        return unloadingContact2;
+    }
+
+    public void setUnloadingContact2(String unloadingContact2) {
+        this.unloadingContact2 = unloadingContact2;
+    }
+
+    public String getDischargeContactPhone2() {
+        return dischargeContactPhone2;
+    }
+
+    public void setDischargeContactPhone2(String dischargeContactPhone2) {
+        this.dischargeContactPhone2 = dischargeContactPhone2;
+    }
+
+    public String getExpectedTimeOfReceipt2() {
+        return expectedTimeOfReceipt2;
+    }
+
+    public void setExpectedTimeOfReceipt2(String expectedTimeOfReceipt2) {
+        this.expectedTimeOfReceipt2 = expectedTimeOfReceipt2;
+    }
+
+    public String getReceivingCompany2() {
+        return receivingCompany2;
+    }
+
+    public void setReceivingCompany2(String receivingCompany2) {
+        this.receivingCompany2 = receivingCompany2;
+    }
+
+    public String getShipperContact2() {
+        return shipperContact2;
+    }
+
+    public void setShipperContact2(String shipperContact2) {
+        this.shipperContact2 = shipperContact2;
+    }
+
+    public String getShipperContactInformation2() {
+        return shipperContactInformation2;
+    }
+
+    public void setShipperContactInformation2(String shipperContactInformation2) {
+        this.shipperContactInformation2 = shipperContactInformation2;
+    }
+
+    public String getSellerRemarks2() {
+        return sellerRemarks2;
+    }
+
+    public void setSellerRemarks2(String sellerRemarks2) {
+        this.sellerRemarks2 = sellerRemarks2;
+    }
 
     public List<LogisticsListChild> getLogisticsListChildren() {
         return logisticsListChildren;

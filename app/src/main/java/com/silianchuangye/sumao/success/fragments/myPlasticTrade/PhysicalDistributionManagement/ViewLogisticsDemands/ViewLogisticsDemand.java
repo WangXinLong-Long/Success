@@ -164,6 +164,25 @@ public class ViewLogisticsDemand extends Activity implements View.OnClickListene
             logisticsListParent.setRemarks("这个东西很值钱");
 //             状态
             logisticsListParent.setState("已确认");
+           /*
+           * unloadingArea2;//卸货区域
+    private String dischargeAddress2;//卸货地址
+    private String unloadingContact2;//卸货联系人
+    private String dischargeContactPhone2;//卸货联系电话
+    private String expectedTimeOfReceipt2;//期望收货时间
+    private String receivingCompany2;//收货公司
+    private String shipperContact2;//托运联系人
+    private String shipperContactInformation2;//托运人联系方式
+    private String sellerRemarks2;//卖家配送备注*/
+            logisticsListParent.setUnloadingArea2("卸货区域");
+            logisticsListParent.setDischargeAddress2("卸货地址");
+            logisticsListParent.setUnloadingContact2("卸货联系人");
+            logisticsListParent.setDischargeContactPhone2("卸货联系电话");
+            logisticsListParent.setExpectedTimeOfReceipt2("期望收货时间");
+            logisticsListParent.setReceivingCompany2("收货公司");
+            logisticsListParent.setShipperContact2("托运联系人");
+            logisticsListParent.setShipperContactInformation2("托运人联系方式");
+            logisticsListParent.setSellerRemarks2("卖家配送备注");
             logisticsListParentslist.add(logisticsListParent);
 
         }
