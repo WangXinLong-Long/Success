@@ -65,7 +65,7 @@
             android:id="@+id/distribution_mode1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="配送方式"
+            android:text="配送方式:"
             android:textColor="@color/grid_state_focused"
             />
         <TextView

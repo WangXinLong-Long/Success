@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2016/7/8 0008.
  */
-public class LogisticsDemandExpandableListViewAdapter extends BaseExpandableListAdapter implements View.OnClickListener{
+public class LogisticsDemandExpandableListViewAdapter extends BaseExpandableListAdapter implements View.OnClickListener {
     private List<LogisticsListParent> parentslist;
     private List<LogisticsListChild> childrenlist;
     LogisticsListChild logisticsListChild;
@@ -73,9 +73,11 @@ public class LogisticsDemandExpandableListViewAdapter extends BaseExpandableList
         return true;
     }
 
+    GroupHolder groupHolder = null;
+
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-        GroupHolder groupHolder = null;
+
         if (convertView == null) {
             groupHolder = new GroupHolder();
             convertView = inflater.inflate(R.layout.logistics_group_item, null);
@@ -111,17 +113,47 @@ public class LogisticsDemandExpandableListViewAdapter extends BaseExpandableList
             childHolder.contact_information2 = ((TextView) convertView.findViewById(R.id.contact_information2));
             childHolder.id_card2 = ((TextView) convertView.findViewById(R.id.id_card2));
             childHolder.remarks2 = ((TextView) convertView.findViewById(R.id.remarks2));
+            childHolder.seller_distribution = ((RelativeLayout) convertView.findViewById(R.id.seller_distribution));//卖家配送
+            childHolder.buyer_from_mentioning = ((RelativeLayout) convertView.findViewById(R.id.buyer_from_mentioning));//买方自提
+            childHolder.unloading_area2 = ((TextView) convertView.findViewById(R.id.unloading_area2));//卸货区域
+            childHolder.discharge_address2 = ((TextView) convertView.findViewById(R.id.discharge_address2));//卸货地址
+            childHolder.unloading_contact2 = ((TextView) convertView.findViewById(R.id.unloading_contact2));//卸货联系人
+            childHolder.discharge_contact_phone2 = ((TextView) convertView.findViewById(R.id.discharge_contact_phone2));//卸货联系电话
+            childHolder.expected_time_of_receipt2 = ((TextView) convertView.findViewById(R.id.expected_time_of_receipt2));//期望收货时间
+            childHolder.receiving_company2 = ((TextView) convertView.findViewById(R.id.receiving_company2));//收货公司
+            childHolder.shipper_contact2 = ((TextView) convertView.findViewById(R.id.shipper_contact2));//托运联系人
+            childHolder.shipper_contact_information2 = ((TextView) convertView.findViewById(R.id.shipper_contact_information2));//托运人联系方式
+            childHolder.seller_remarks2 = ((TextView) convertView.findViewById(R.id.seller_remarks2));//备注
+
+
             convertView.setTag(childHolder);
         } else {
             childHolder = ((ChildHolder) convertView.getTag());
         }
         childItemListviewAdapter = new LogisticsChildItemListviewAdapter(context, parentslist.get(groupPosition).getLogisticsListChildren());
         childHolder.logistics_child_item_listview.setAdapter(childItemListviewAdapter);//parentslist.get(groupPosition).getLogisticsListChildren().get(childPosition)
-        childHolder.delivery_number2.setText(parentslist.get(groupPosition).getDeliveryNumber());
-        childHolder.pick_up_person2.setText(parentslist.get(groupPosition).getPickUpPerson());
-        childHolder.contact_information2.setText(parentslist.get(groupPosition).getContactInformation());
-        childHolder.id_card2.setText(parentslist.get(groupPosition).getIdCardNumber());
-        childHolder.remarks2.setText(parentslist.get(groupPosition).getRemarks());
+        if (groupHolder.distribution_mode2.getText().toString().equals("买家自提")) {
+            childHolder.seller_distribution.setVisibility(View.GONE);//卖家配送
+            childHolder.buyer_from_mentioning.setVisibility(View.VISIBLE);//买方自提
+            childHolder.delivery_number2.setText(parentslist.get(groupPosition).getDeliveryNumber());
+            childHolder.pick_up_person2.setText(parentslist.get(groupPosition).getPickUpPerson());
+            childHolder.contact_information2.setText(parentslist.get(groupPosition).getContactInformation());
+            childHolder.id_card2.setText(parentslist.get(groupPosition).getIdCardNumber());
+            childHolder.remarks2.setText(parentslist.get(groupPosition).getRemarks());
+        } else if (groupHolder.distribution_mode2.getText().toString().equals("卖家配送")) {
+            childHolder.seller_distribution.setVisibility(View.VISIBLE);//卖家配送
+            childHolder.buyer_from_mentioning.setVisibility(View.GONE);//买方自提
+            childHolder.unloading_area2.setText("");
+            childHolder.discharge_address2.setText("");//卸货地址
+            childHolder.unloading_contact2.setText("");//卸货联系人
+            childHolder.discharge_contact_phone2.setText("");//卸货联系电话
+            childHolder.expected_time_of_receipt2.setText("");//期望收货时间
+            childHolder. receiving_company2.setText("");//收货公司
+            childHolder.shipper_contact2.setText("");//托运联系人
+            childHolder.shipper_contact_information2.setText("");//托运人联系方式
+            childHolder.seller_remarks2.setText("");//备注
+        }
+
         return convertView;
     }
 
@@ -132,12 +164,11 @@ public class LogisticsDemandExpandableListViewAdapter extends BaseExpandableList
 
     @Override
     public void onClick(View v) {
-        switch (v.getId())
-        {
+        switch (v.getId()) {
 //            跳转到跟踪配送详情
             case R.id.logistics_line3:
                 Intent intent = new Intent();
-                intent.setClass(context,TrackingDistributionDetails.class);
+                intent.setClass(context, TrackingDistributionDetails.class);
                 context.startActivity(intent);
                 break;
 
@@ -160,5 +191,18 @@ public class LogisticsDemandExpandableListViewAdapter extends BaseExpandableList
         TextView contact_information2;
         TextView id_card2;
         TextView remarks2;
+        RelativeLayout buyer_from_mentioning;//买方自提
+        RelativeLayout seller_distribution;//卖家配送
+        TextView unloading_area2;//卸货区域
+        TextView discharge_address2;//卸货地址
+        TextView unloading_contact2;//卸货联系人
+        TextView discharge_contact_phone2;//卸货联系电话
+        TextView expected_time_of_receipt2;//期望收货时间
+        TextView receiving_company2;//收货公司
+        TextView shipper_contact2;//托运联系人
+        TextView shipper_contact_information2;//托运人联系方式
+        TextView seller_remarks2;//备注
+
+
     }
 }

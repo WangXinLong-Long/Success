@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -46,6 +48,8 @@ public class SettingActivity extends AppCompatActivity implements ISettingView{
     public final static String DATA_URL = "/data/data/";
     public final static String SHARED_MAIN_XML = "sumao.xml";
     private SettingPresenter settingPresenter;
+    private TextView tv_version_setting_value;
+    private int versionCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +61,16 @@ public class SettingActivity extends AppCompatActivity implements ISettingView{
         layoutgrade= (RelativeLayout) findViewById(R.id.layout_grade_setting);
         layoutintroduction= (RelativeLayout) findViewById(R.id.layout_introduction_setting);
         tvVersion= (TextView) findViewById(R.id.tv_version_setting);
+//        当前的版本号
+        tv_version_setting_value = ((TextView) findViewById(R.id.tv_version_setting_value));
+        try {
+            PackageInfo pi = getPackageManager().getPackageInfo(getPackageName(),0);
+            versionCode = pi.versionCode;
+            tv_version_setting_value.setText(versionCode);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
         btEdit= (Button) findViewById(R.id.btEdit);
         layoutintroduction.setOnClickListener(new View.OnClickListener() {
             @Override
