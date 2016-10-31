@@ -22,6 +22,8 @@ public class RuleActivity extends AppCompatActivity {
     private ListView lv_rule;
     private SimpleAdapter adapter;
     private List<Map<String,Object>> list;
+    private String state;
+    private RelativeLayout layout_not_action,layout_Bottom_action,relative_tuangou_end;
     private String bili,jiezhishijian,can_gku,xiangxi,kaishishijian,jieshushijian,tuan_start,tuan_end;
 
     @Override
@@ -33,12 +35,16 @@ public class RuleActivity extends AppCompatActivity {
         addData();
     }
     public void init(){
+        layout_not_action= (RelativeLayout) findViewById(R.id.layout_not_action);
+        layout_Bottom_action= (RelativeLayout) findViewById(R.id.layout_Bottom_action);
+        relative_tuangou_end= (RelativeLayout) findViewById(R.id.relative_tuangou_end);
         ivBack= (ImageView) findViewById(R.id.ivBack);
         ivSearch= (ImageView) findViewById(R.id.gouwuche);
         lv_rule= (ListView) findViewById(R.id.lv_rule);
         list=new ArrayList<Map<String,Object>>();
         Bundle bundle=getIntent().getExtras();
         bili=bundle.getString("bili");
+        state=bundle.getString("state");
         jiezhishijian=bundle.getString("jiezhi");
         can_gku=bundle.getString("cangku");
         xiangxi=bundle.getString("xiangxi");
@@ -47,6 +53,23 @@ public class RuleActivity extends AppCompatActivity {
         jieshushijian=bundle.getString("jieshu");
         tuan_start=bundle.getString("tuan_start");
         tuan_end=bundle.getString("tuan_end");
+        if (state.equals("团购未开始")){
+            layout_not_action.setVisibility(View.VISIBLE);
+            layout_Bottom_action.setVisibility(View.GONE);
+            relative_tuangou_end.setVisibility(View.GONE);
+
+
+        }else if (state.equals("团购已开始")){
+            layout_Bottom_action.setVisibility(View.VISIBLE);
+            layout_not_action.setVisibility(View.GONE);
+            relative_tuangou_end.setVisibility(View.GONE);
+
+        }else if (state.equals("团购已结束")){
+            relative_tuangou_end.setVisibility(View.VISIBLE);
+            layout_Bottom_action.setVisibility(View.GONE);
+            layout_not_action.setVisibility(View.GONE);
+
+        }
 
     }
     public void event(){

@@ -13,8 +13,10 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,13 +49,47 @@ public class VesselTwoActivity extends AppCompatActivity {
     private PopupWindowAdaptrer adapter;
     private List<OpenAuction> list1;
     private String id;
+    private String state;
+    private LinearLayout layout_action,layout_not_action;
+    private RelativeLayout layout_action_end;
+    private Button bt_jinpai_colse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vessel_two);
+        layout_action= (LinearLayout) findViewById(R.id.layout_action);
+        layout_not_action= (LinearLayout) findViewById(R.id.layout_not_action);
+        layout_action_end= (RelativeLayout) findViewById(R.id.layout_action_end);
+        bt_jinpai_colse= (Button) findViewById(R.id.bt_jinpai_colse);
         Bundle bundle=getIntent().getExtras();
         id=bundle.getString("id");
+        state=bundle.getString("state");
+
+         if (state.equals("竞拍未开始")){
+             layout_action.setVisibility(View.GONE);
+             layout_action_end.setVisibility(View.GONE);
+             layout_not_action.setVisibility(View.VISIBLE);
+
+         }else if (state.equals("竞拍已开始")){
+             layout_action.setVisibility(View.VISIBLE);
+             layout_not_action.setVisibility(View.GONE);
+             layout_action_end.setVisibility(View.GONE);
+
+         }else if (state.equals("竞拍已结束")){
+             layout_action.setVisibility(View.GONE);
+             layout_not_action.setVisibility(View.GONE);
+             layout_action_end.setVisibility(View.VISIBLE);
+
+         }
+        bt_jinpai_colse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Popupwindow();
+                backgroundAlpha(0.5f);
+            }
+        });
+
         btZhifu_auction= (Button) findViewById(R.id.btZhifu_auction);
         btZhifu_auction.setOnClickListener(new View.OnClickListener() {
             @Override

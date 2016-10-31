@@ -17,8 +17,10 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,6 +54,10 @@ public class VesselOneActivity extends AppCompatActivity {
     private String type;
     private String id;
     private List<OpenAuction> list1;
+    private String state;
+    private LinearLayout layout_action,layout_not_action;
+    private RelativeLayout layout_action_end;
+    private Button bt_jinpai_colse;
 
 
 
@@ -59,6 +65,9 @@ public class VesselOneActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vessel_one);
+        layout_action= (LinearLayout) findViewById(R.id.layout_action);
+        layout_not_action= (LinearLayout) findViewById(R.id.layout_not_action);
+        layout_action_end= (RelativeLayout ) findViewById(R.id.layout_action_end);
         ivBack_vessel_one= (ImageView) findViewById(R.id.ivBack_vessel_one);
         ivBack_vessel_one.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,6 +85,23 @@ public class VesselOneActivity extends AppCompatActivity {
         Bundle bundle=getIntent().getExtras();
         type=bundle.getString("type");
         id=bundle.getString("id");
+        state=bundle.getString("state");
+        if (state.equals("竞拍已结束")){
+            layout_action.setVisibility(View.GONE);
+            layout_not_action.setVisibility(View.GONE);
+            layout_action_end.setVisibility(View.VISIBLE);
+        }else if (state.equals("竞拍未开始")){
+            layout_not_action.setVisibility(View.VISIBLE);
+            layout_action.setVisibility(View.GONE);
+            layout_action_end.setVisibility(View.GONE);
+
+        }else if (state.equals("竞拍已开始")){
+            layout_action.setVisibility(View.VISIBLE);
+            layout_not_action.setVisibility(View.GONE);
+            layout_action_end.setVisibility(View.GONE);
+
+        }
+
         SharedPreferences sp=getSharedPreferences("sumao", Activity.MODE_PRIVATE);
         SharedPreferences.Editor editor=sp.edit();
         editor.putString("id",id);
@@ -99,6 +125,15 @@ public class VesselOneActivity extends AppCompatActivity {
         vp_vessel_one= (ViewPager) findViewById(R.id.vp_vessel_one);
         vp_vessel_one.setAdapter(adapter1);
         tab_vessel_one.setupWithViewPager(vp_vessel_one);
+
+        bt_jinpai_colse= (Button) findViewById(R.id.bt_jinpai_colse);
+        bt_jinpai_colse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Popupwindow();
+                backgroundAlpha(0.5f);
+            }
+        });
 
         btZhifu_auction= (Button) findViewById(R.id.btZhifu_auction);
         btZhifu_auction.setOnClickListener(new View.OnClickListener() {

@@ -50,26 +50,62 @@
         android:background="#fff"
 
         >
-        <LinearLayout
+        <RelativeLayout
+            android:id="@+id/relative_tuangou_end"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:weightSum="2">
-            <LinearLayout
+            android:layout_alignParentBottom="true"
+            android:background="#fff"
+            android:layout_height="@dimen/x38"
+            android:visibility="gone">
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
-            </LinearLayout>
+                android:text="团购结束"
+                android:textSize="18sp"
+                android:textColor="#fff"
+                android:gravity="center"
+                android:background="@drawable/juxing_gary"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x40"
+            android:layout_alignParentBottom="true"
+            android:id="@+id/layout_Bottom_action"
+            android:background="#fff"
+            android:visibility="gone"
+            >
             <Button
+                android:id="@+id/btn_tuangou_add"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
                 android:text="参与团购"
                 android:textSize="16sp"
                 android:background="#116CB0"
                 android:textColor="#fff"
-
                 />
-        </LinearLayout>
+
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x40"
+            android:layout_alignParentBottom="true"
+            android:id="@+id/layout_not_action"
+            android:background="#fff"
+            android:visibility="gone"
+            >
+            <Button
+                android:id="@+id/btn_tuangou_not"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="团购未开始"
+                android:textSize="16sp"
+                android:background="#d3d3d3"
+                android:textColor="#fff"
+                />
+
+
+        </RelativeLayout>
     </RelativeLayout>
     <!--<GridView
         android:layout_width="match_parent"
