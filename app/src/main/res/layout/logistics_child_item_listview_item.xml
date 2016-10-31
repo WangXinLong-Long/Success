@@ -10,6 +10,7 @@
         android:paddingTop="@dimen/x5"
         android:paddingBottom="@dimen/x5"
         android:background="@color/white"
+        android:id="@+id/product_name"
         >
         <TextView
             android:id="@+id/productModel1"
@@ -34,6 +35,7 @@
         android:layout_marginTop="@dimen/x1"
         android:background="@color/white"
         android:padding="@dimen/x5"
+        android:layout_below="@+id/product_name"
         >
         <TextView
             android:id="@+id/logistics_child_item_listview_item_number1"

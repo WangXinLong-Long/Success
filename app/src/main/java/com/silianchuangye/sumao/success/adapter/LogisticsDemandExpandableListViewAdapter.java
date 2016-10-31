@@ -143,14 +143,14 @@ public class LogisticsDemandExpandableListViewAdapter extends BaseExpandableList
         } else if (groupHolder.distribution_mode2.getText().toString().equals("卖家配送")) {
             childHolder.seller_distribution.setVisibility(View.VISIBLE);//卖家配送
             childHolder.buyer_from_mentioning.setVisibility(View.GONE);//买方自提
-            childHolder.unloading_area2.setText("");
-            childHolder.discharge_address2.setText("");//卸货地址
-            childHolder.unloading_contact2.setText("");//卸货联系人
-            childHolder.discharge_contact_phone2.setText("");//卸货联系电话
-            childHolder.expected_time_of_receipt2.setText("");//期望收货时间
-            childHolder. receiving_company2.setText("");//收货公司
-            childHolder.shipper_contact2.setText("");//托运联系人
-            childHolder.shipper_contact_information2.setText("");//托运人联系方式
+            childHolder.unloading_area2.setText(parentslist.get(groupPosition).getUnloadingArea2());
+            childHolder.discharge_address2.setText(parentslist.get(groupPosition).getDischargeAddress2());//卸货地址
+            childHolder.unloading_contact2.setText(parentslist.get(groupPosition).getUnloadingContact2());//卸货联系人
+            childHolder.discharge_contact_phone2.setText(parentslist.get(groupPosition).getDischargeContactPhone2());//卸货联系电话
+            childHolder.expected_time_of_receipt2.setText(parentslist.get(groupPosition).getExpectedTimeOfReceipt2());//期望收货时间
+            childHolder. receiving_company2.setText(parentslist.get(groupPosition).getReceivingCompany2());//收货公司
+            childHolder.shipper_contact2.setText(parentslist.get(groupPosition).getShipperContact2());//托运联系人
+            childHolder.shipper_contact_information2.setText(parentslist.get(groupPosition).getShipperContactInformation2());//托运人联系方式
             childHolder.seller_remarks2.setText("");//备注
         }
 
@@ -201,7 +201,7 @@ public class LogisticsDemandExpandableListViewAdapter extends BaseExpandableList
         TextView receiving_company2;//收货公司
         TextView shipper_contact2;//托运联系人
         TextView shipper_contact_information2;//托运人联系方式
-        TextView seller_remarks2;//备注
+        TextView seller_remarks2;//卖家配送备注
 
 
     }
