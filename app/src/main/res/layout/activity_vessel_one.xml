@@ -60,14 +60,23 @@
 
         ></android.support.design.widget.TabLayout>
 
-    <LinearLayout
-       android:id="@+id/Layout_Button"
+    <RelativeLayout
+        android:id="@+id/Layout_Button"
         android:layout_width="match_parent"
         android:layout_height="@dimen/x50"
-        android:weightSum="2"
+
         android:layout_alignParentBottom="true"
         >
-        <Button
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="2"
+            android:id="@+id/layout_action"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            >
+
+             <Button
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -78,7 +87,7 @@
             android:textSize="16sp"
             android:id="@+id/btZhifu_auction"
             />
-        <Button
+             <Button
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -88,7 +97,45 @@
             android:text="立即竞拍"
             android:textSize="16sp"
             />
-    </LinearLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/layout_not_action"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            >
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="#fff"
+                android:background="#0071BC"
+                android:textStyle="bold"
+                android:text="支付保证金"
+                android:textSize="16sp"
+                android:id="@+id/bt_jinpai_colse"
+                />
+        </LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/layout_action_end"
+
+            android:visibility="gone"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textColor="#6E6E6E"
+                android:layout_centerInParent="true"
+                android:text="竞拍已结束"
+                android:id="@+id/tv_Result"
+                />
+        </RelativeLayout>
+
+    </RelativeLayout>
     <android.support.v4.view.ViewPager
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -96,4 +143,5 @@
         android:id="@+id/vp_vessel_one"
         android:layout_above="@+id/Layout_Button"
         ></android.support.v4.view.ViewPager>
+
 </RelativeLayout>

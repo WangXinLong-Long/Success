@@ -229,9 +229,9 @@ public class OpenAuctionActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if(position==0){
                     SharedPreferences sp=getSharedPreferences("sumao", Activity.MODE_PRIVATE);
-                    String name=sp.getString("name","");
-                    Log.d("是否登录判断",name);
-                    if (name==""){
+                    String name1=sp.getString("name","");
+                    Log.d("是否登录判断",name1);
+                    if (name1==""){
                         //没有登录状态
                         Intent intent=new Intent(OpenAuctionActivity.this, LoginUserActivity.class);
                         startActivity(intent);
@@ -240,12 +240,16 @@ public class OpenAuctionActivity extends AppCompatActivity {
                         Intent intent=new Intent(OpenAuctionActivity.this,VesselOneActivity.class);
                         intent.putExtra("id",id_value);
                         intent.putExtra("type",type_way);
+                        Log.d("状态是state",name);
+                        intent.putExtra("state",name);
+
                         startActivity(intent);
                     }
 
                 }else if(position==1){
                         Intent intent=new Intent(OpenAuctionActivity.this,VesselTwoActivity.class);
                         intent.putExtra("id",id_value);
+                        intent.putExtra("state",name);
                         startActivity(intent);
 
 
