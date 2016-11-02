@@ -45,7 +45,7 @@ public class OrderDetailsHaveBeenPaid extends Activity implements View.OnClickLi
     private TextView tv_child_title_bar_title;
     private ImageView iv_child_title_bar_back;
     private Button bt_copy;
-    private TextView tv_order_number,univalent2,number2,enterprise2,totalMoney2,warehouse2;
+    private TextView tv_order_number,univalent2,number2,enterprise2,totalMoney2,warehouse2,tv_type;
     String str,Id;
     private Button bottom_money1;
     @Override
@@ -66,6 +66,7 @@ public class OrderDetailsHaveBeenPaid extends Activity implements View.OnClickLi
         totalMoney2= (TextView) findViewById(R.id.totalMoney2);
         warehouse2= (TextView) findViewById(R.id.warehouse2);
         bottom_money1= (Button) findViewById(R.id.bottom_money1);
+        tv_type= (TextView) findViewById(R.id.tv_type);
         bottom_money1.setOnClickListener(this);
 //        initdata();
         new Thread(){
@@ -137,6 +138,7 @@ public class OrderDetailsHaveBeenPaid extends Activity implements View.OnClickLi
                         String type=job2.getString("type");//类型
                         String type1=getType(type);
                         Log.e("TAG","类型-----"+type1);
+                         tv_type.setText(type1);
                         univalent2.setText(type1);
                         String shippingGroupState=job2.getString("shippingGroupState");
                         String state = job2.getString("state");//状态

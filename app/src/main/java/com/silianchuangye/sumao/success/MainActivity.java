@@ -329,11 +329,11 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
                 break;
             case 4:
                showCart();
+                break;
             default:
                 break;
 
         }
-
     }
 
     @Override
