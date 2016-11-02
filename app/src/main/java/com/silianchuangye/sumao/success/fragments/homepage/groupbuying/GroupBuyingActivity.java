@@ -203,17 +203,20 @@ public class GroupBuyingActivity extends AppCompatActivity{
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 //                 if (position%2==0){
+                Log.d("该团购商品的的状态",list.get(position).get("state").toString());
                 if (!list.get(position).get("state").equals("end")){
                     if(list.get(position).get("state").equals("true")) {
                         Intent intent = new Intent(GroupBuyingActivity.this, GroupBuyingSuccessActivity.class);
 //                        intent.putExtra("state", "ok1");
                         intent.putExtra("id", list.get(position).get("id").toString());
+                        intent.putExtra("state","团购已开始");
                         Log.d("商品id的值", shangpinId);
                         startActivity(intent);
                     }else if(list.get(position).get("state").equals("false")){
                         Intent intent = new Intent(GroupBuyingActivity.this, GroupBuyingSuccessActivity.class);
 //                        intent.putExtra("state", "ok2");
                         intent.putExtra("id", list.get(position).get("id").toString());
+                        intent.putExtra("state","团购未开始");
                         Log.d("商品id的值", shangpinId);
                         startActivity(intent);
                     }
@@ -222,6 +225,7 @@ public class GroupBuyingActivity extends AppCompatActivity{
 //                     intent.putExtra("state","no");
                      intent.putExtra("id",list.get(position).get("id").toString());
                      Log.d("商品id",shangpinId);
+                     intent.putExtra("state","团购已结束");
                      startActivity(intent);
 
                  }

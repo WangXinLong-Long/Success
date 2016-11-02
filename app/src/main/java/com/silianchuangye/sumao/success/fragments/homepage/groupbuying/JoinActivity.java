@@ -41,6 +41,8 @@ public class JoinActivity extends AppCompatActivity {
     private ListView lvDemo;
     private String shangpinId;
     private LinearLayout layout;
+    private String state;
+    private RelativeLayout layout_not_action,layout_Bottom_action,relative_tuangou_end;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,8 +52,29 @@ public class JoinActivity extends AppCompatActivity {
 
     }
     public void init(){
+        layout_not_action= (RelativeLayout) findViewById(R.id.layout_not_action);
+        layout_Bottom_action= (RelativeLayout) findViewById(R.id.layout_Bottom_action);
+        relative_tuangou_end= (RelativeLayout) findViewById(R.id.relative_tuangou_end);
         Bundle bundle=getIntent().getExtras();
         shangpinId=bundle.getString("id");
+        state=bundle.getString("state");
+        if (state.equals("团购未开始")){
+            layout_not_action.setVisibility(View.VISIBLE);
+            layout_Bottom_action.setVisibility(View.GONE);
+            relative_tuangou_end.setVisibility(View.GONE);
+
+
+        }else if (state.equals("团购已开始")){
+            layout_Bottom_action.setVisibility(View.VISIBLE);
+            layout_not_action.setVisibility(View.GONE);
+            relative_tuangou_end.setVisibility(View.GONE);
+
+        }else if (state.equals("团购已结束")){
+            relative_tuangou_end.setVisibility(View.VISIBLE);
+            layout_Bottom_action.setVisibility(View.GONE);
+            layout_not_action.setVisibility(View.GONE);
+
+        }
         Log.d("商品的编号",shangpinId);
         lvDemo= (ListView)findViewById(R.id.lvDemo);
         layout= (LinearLayout) findViewById(R.id.layout_center);

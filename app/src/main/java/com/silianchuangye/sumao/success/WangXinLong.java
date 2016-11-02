@@ -81,6 +81,7 @@ public class WangXinLong extends Activity {
 //        修改布局文件名
 //        10月31日 解决65536问题
 //        10月31日 解决65536问题
+//        11月1日 文件名重复问题
         showPayDialog();
         ArrayList<String> arrayList = new ArrayList<>();
         LinkedList<String> linkedList = new LinkedList<>();

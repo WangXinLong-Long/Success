@@ -61,7 +61,7 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
     private TextView tv_failed;
     private LinearLayout aaa;
     private RelativeLayout layout_number;
-    private RelativeLayout layout_Bottom;
+
     private String Shangpinid;
     private TextView name;
     private TextView price;
@@ -99,7 +99,8 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
     private ProgressBar pbDemo;
     private MyCount mc;
     TextView tv_all_num,tv_tuangou_time,tv_tuangou_line;
-    RelativeLayout relative_tuangou;
+    RelativeLayout relative_tuangou,layout_not_action,layout_Bottom;
+    private String state;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,6 +111,9 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
         addData();
     }
     public void init(){
+        layout_Bottom= (RelativeLayout) findViewById(R.id.layout_Bottom);
+        layout_not_action= (RelativeLayout) findViewById(R.id.layout_not_action);
+        //relative_tuangou= (RelativeLayout) findViewById(R.id.relative_tuangou_end);
         pbDemo= (ProgressBar) findViewById(R.id.pbDemo);
         pbDemo.setMax(100);
         img= (ImageView) findViewById(R.id.ivBack);
@@ -122,6 +126,24 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
         Bundle bundle=getIntent().getExtras();
 //        String state=bundle.getString("state");
         Shangpinid=bundle.getString("id");
+        state=bundle.getString("state");
+        Log.d("接收团购的商品的状态",state);
+        relative_tuangou_end= (RelativeLayout) findViewById(R.id.relative_tuangou_end);
+        if (state.equals("团购未开始")){
+            layout_not_action.setVisibility(View.VISIBLE);
+            layout_Bottom.setVisibility(View.GONE);
+            relative_tuangou_end.setVisibility(View.GONE);
+        }else if (state.equals("团购已开始")){
+            layout_Bottom.setVisibility(View.VISIBLE);
+            layout_not_action.setVisibility(View.GONE);
+            relative_tuangou_end.setVisibility(View.GONE);
+
+        }else if (state.equals("团购已结束")){
+            relative_tuangou_end.setVisibility(View.VISIBLE);
+            layout_Bottom.setVisibility(View.GONE);
+            layout_not_action.setVisibility(View.GONE);
+
+        }
         Log.e("TAG","shangp----"+Shangpinid);
         lvDemo= (ListView) findViewById(R.id.lv_demo);
         list=new ArrayList<Map<String,Object>>();
@@ -130,7 +152,7 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
         aaa= (LinearLayout) findViewById(R.id.aaa);
         layout_number= (RelativeLayout) findViewById(R.id.layout_number);
         layout_Bottom= (RelativeLayout) findViewById(R.id.layout_Bottom);
-        relative_tuangou_end= (RelativeLayout) findViewById(R.id.relative_tuangou_end);
+
         linear_tuangou_time= (LinearLayout) findViewById(R.id.linear_tuangou_time);
         layoutService= (LinearLayout) findViewById(R.id.layoutService);
         linear_tuagou_line= (LinearLayout) findViewById(R.id.linear_tuagou_line);
@@ -212,10 +234,12 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
                     intent.putExtra("jieshu",jieshushijian);
                     intent.putExtra("tuan_start",tuan_start);
                     intent.putExtra("tuan_end",tuan_end);
+                    intent.putExtra("state",state);
                     startActivity(intent);
                 }else if (position==1){
                     Intent intent=new Intent(GroupBuyingSuccessActivity.this,JoinActivity.class);
                     intent.putExtra("id",Shangpinid);
+                    intent.putExtra("state",state);
                     startActivity(intent);
 
                 }else if (position==2){
