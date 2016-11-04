@@ -66,19 +66,20 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
     SharedPreferences sp;
     private SharedPreferences.Editor editor;
     private String unique;
-//    public static MainActivity instancefinish;
+    public static MainActivity instancefinish;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         sp=getSharedPreferences("sumao",Context.MODE_PRIVATE);
-//        instancefinish = this;
+        instancefinish = this;
 //      初始化数据
         initData();
-//      初始化组件buh
+//      初始化组件
         initView();
-      //  getUnique();
+//        getUnique();
         init();
+        showIntent();
     }
 
     private void initView() {
@@ -98,40 +99,30 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
         mTabHost.getTabWidget().getChildTabViewAt(3).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String unique =sp.getString("unique","");
-                Log.d("获取唯一标识的值",unique);
-                username=sp.getString("name","");
-                Log.e("deng","denglu="+username+"==="+unique);
+                String unique = sp.getString("unique","");
                 if (unique.equals("false")){
-
                     Toast.makeText(MainActivity.this,"请登录",Toast.LENGTH_SHORT).show();
                     SharedPreferences.Editor editor=sp.edit();
                     editor.clear();
                     //      editor.clear();
                     editor.commit();
-                    Intent intent = new Intent(MainActivity.this, LoginUserActivity.class);
+                    Intent intent = new Intent();
                     intent.putExtra("roles","buyer");
-                    intent.putExtra("cart1",12);
-                    //intent.setClass(MainActivity.this, LoginUserActivity.class);
-                    //startActivity(intent);
-                    //setResult(100,intent);
-                    startActivityForResult(intent,10);
+                    intent.setClass(MainActivity.this, LoginUserActivity.class);
+                    startActivity(intent);
                 }else {
-
-
+                    username=sp.getString("name","");
                     if (username!=""){
                         mTabHost.setCurrentTab(3);
                     }else {
-//                        SharedPreferences.Editor editor=sp.edit();
-//                        editor.clear();
-//                        //      editor.clear();
-//                        editor.commit();
-                        Intent intent = new Intent(MainActivity.this, LoginUserActivity.class);
+                        SharedPreferences.Editor editor=sp.edit();
+                        editor.clear();
+                        //      editor.clear();
+                        editor.commit();
+                        Intent intent = new Intent();
                         intent.putExtra("roles","buyer");
-                        intent.putExtra("cart1",12);
-                        //intent.setClass(MainActivity.this, LoginUserActivity.class);
-                        //startActivity(intent);
-                        startActivityForResult(intent,10);
+                        intent.setClass(MainActivity.this, LoginUserActivity.class);
+                        startActivity(intent);
                     }
                 }
 
@@ -152,14 +143,12 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
                 if(username!=""){
                     mTabHost.setCurrentTab(2);
                 }else {
-                    Intent intent = new Intent(MainActivity.this, LoginUserActivity.class);
+                    Intent intent = new Intent();
                     intent.putExtra("roles","buyer");
                     intent.putExtra("cart1", 9);
 
-                    //intent.setClass(MainActivity.this, LoginUserActivity.class);
-                   // startActivity(intent);
-                    startActivityForResult(intent,11);
-
+                    intent.setClass(MainActivity.this, LoginUserActivity.class);
+                    startActivity(intent);
                 }
             }
         });
@@ -290,21 +279,53 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
         } catch (Exception e) {
         }
     }
-//     //非点击购物车按钮，点击其他时跳转回来时；
-//    private void showCart(){
-//        SharedPreferences share=getSharedPreferences("sumao",Context.MODE_PRIVATE);
-//        String str=share.getString("name","");
-//        if (str!=""){
-//            mTabHost.setCurrentTab(2);
-//        }else {
-//            Intent intent = new Intent();
-//            intent.putExtra("cart1", 9);
-//            intent.putExtra("roles","buyer");
-//            intent.setClass(MainActivity.this, LoginUserActivity.class);
-//            startActivity(intent);
-//            MainActivity.this.finish();
-//        }
-//    }
+//非点击购物车按钮，点击其他时跳转回来时；
+    private void showCart(){
+        SharedPreferences share=getSharedPreferences("sumao",Context.MODE_PRIVATE);
+        String str=share.getString("name","");
+        if (str!=""){
+            mTabHost.setCurrentTab(2);
+        }else {
+            Intent intent = new Intent();
+            intent.putExtra("cart1", 9);
+            intent.putExtra("roles","buyer");
+            intent.setClass(MainActivity.this, LoginUserActivity.class);
+            startActivity(intent);
+            MainActivity.this.finish();
+        }
+    }
+    private void showIntent(){
+        int num=getIntent().getIntExtra("cart",0);
+        Log.e("TAG","num====="+num);
+        switch (num)
+        {
+            case 1:
+                showCart();
+                break;
+            case 3:
+//                GlobalVariable.FLAG = true;
+//                mTabHost.setCurrentTab(3);
+                sp=getSharedPreferences("sumao",Context.MODE_PRIVATE);
+                username=sp.getString("name","");
+                Log.e("TAG","username11111-----"+username);
+                if (username!=""){
+                    mTabHost.setCurrentTab(3);
+                }else {
+                    Intent intent = new Intent();
+                    intent.setClass(MainActivity.this, LoginUserActivity.class);
+                    intent.putExtra("roles","buyer");
+                    startActivity(intent);
+                    MainActivity.this.finish();
+                }
+                break;
+            case 4:
+                showCart();
+                break;
+            default:
+                break;
+
+        }
+    }
     @Override
     protected void onResume() {
         super.onResume();
@@ -341,11 +362,11 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
 //                break;
 //            case 4:
 //               showCart();
+//                break;
 //            default:
 //                break;
 //
 //        }
-
     }
 
     @Override
@@ -353,38 +374,6 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
          id = intent.getIntExtra("cart",0);
         Log.d("id",id+"------------>");
 
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        //super.onActivityResult(requestCode, resultCode, data);
-        Log.d("来了","来了");
-        switch (resultCode){
-            case 1:
-                Log.d("页面跳转有了","页面跳转有救了");
-                mTabHost.setCurrentTab(0);
-                break;
-            case 10:
-                Log.d("这是我的","这是我的");
-              //  mTabHost.setCurrentTab(3);
-              //  mTabHost.setCurrentTab(0);
-                if(data!=null && !data.equals("")){
-                    Log.d("判断是不是data的问题","是");
-                    Log.d("data的值",data.toString()+"aa");
-                    mTabHost.setCurrentTab(3);
-                }else {
-                    Log.d("判断是不是data的问题","不是");
-                }
-
-                break;
-            case 11:
-                Log.d("这是购物车","这是购物车");
-                mTabHost.setCurrentTab(2);
-                break;
-
-            default:
-                break;
-        }
     }
 
     @Override
@@ -414,6 +403,45 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
 
     }
 
+    public String getUnique() {
+        editor = sp.edit();
+        RequestParams unique_rp = new RequestParams(SuMaoConstant.SUMAO_IP+"/rest/model/atg/rest/SessionConfirmationActor/getSessionConfirmationNumber");
+        x.http().post(unique_rp, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                try {
+                    JSONObject object = new JSONObject(result);
+                    unique = object.getString("sessionConfirmationNumber");
+                    Log.d("unique", "unique" + unique);
+                    /**
+                     * 把唯一标识储存在SharedPreferences
+                     */
+                    editor.putString("unique", unique);
+                    editor.commit();
+                } catch (Exception e) {
+                    Log.d("exception", "解析唯一标识时错误！");
+                }
+
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+
+        return unique;
+    }
 
 
 }

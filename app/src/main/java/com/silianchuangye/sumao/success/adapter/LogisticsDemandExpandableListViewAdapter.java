@@ -2,9 +2,11 @@ package com.silianchuangye.sumao.success.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -15,14 +17,18 @@ import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.custom.CustomListView;
 import com.silianchuangye.sumao.success.fragments.bean.LogisticsListChild;
 import com.silianchuangye.sumao.success.fragments.bean.LogisticsListParent;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.OrderDetails.OrderDetailsActivity;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.OrderDetails.OrderDetailsHaveBeenPaid;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.PhysicalDistributionManagement.ViewLogisticsDemands.TrackingDistributionDetails;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.AddAddressMVP.presenter.AddAddressPresenter;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.AddAddressMVP.view.IAddAddress;
 
 import java.util.List;
 
 /**
  * Created by Administrator on 2016/7/8 0008.
  */
-public class LogisticsDemandExpandableListViewAdapter extends BaseExpandableListAdapter implements View.OnClickListener {
+public class LogisticsDemandExpandableListViewAdapter extends BaseExpandableListAdapter implements View.OnClickListener,IAddAddress{
     private List<LogisticsListParent> parentslist;
     private List<LogisticsListChild> childrenlist;
     LogisticsListChild logisticsListChild;
@@ -102,7 +108,7 @@ public class LogisticsDemandExpandableListViewAdapter extends BaseExpandableList
     }
 
     @Override
-    public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+    public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         ChildHolder childHolder = null;
         if (convertView == null) {
             childHolder = new ChildHolder();
@@ -130,6 +136,24 @@ public class LogisticsDemandExpandableListViewAdapter extends BaseExpandableList
         } else {
             childHolder = ((ChildHolder) convertView.getTag());
         }
+        childHolder.logistics_child_item_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.e("TAG","state="+parentslist.get(groupPosition).getState());
+//                if(parentslist.get(groupPosition).getState().equals("已付款")) {
+//                    Intent intent = new Intent(context, OrderDetailsHaveBeenPaid.class);
+//                    Log.e("TAG","产品ID=="+parentslist.get(groupPosition).getLogisticsListChildren().get(childPosition).getProductOrderNumber());
+//                    intent.putExtra("ID",parentslist.get(groupPosition).getLogisticsListChildren().get(childPosition).getProductOrderNumber());
+//                    context.startActivity(intent);
+//                }else if(parentslist.get(groupPosition).getState().equals("待付款")){
+//                    Intent intent = new Intent(context,OrderDetailsActivity.class);
+//                    Log.e("TAG","产品ID=="+parentslist.get(groupPosition).getLogisticsListChildren().get(childPosition).getProductOrderNumber());
+//                    intent.putExtra("ID",parentslist.get(groupPosition).getLogisticsListChildren().get(childPosition).getProductOrderNumber());
+//                    context.startActivity(intent);
+//                }
+            }
+        });
+
         childItemListviewAdapter = new LogisticsChildItemListviewAdapter(context, parentslist.get(groupPosition).getLogisticsListChildren());
         childHolder.logistics_child_item_listview.setAdapter(childItemListviewAdapter);//parentslist.get(groupPosition).getLogisticsListChildren().get(childPosition)
         if (groupHolder.distribution_mode2.getText().toString().equals("买家自提")) {
@@ -143,7 +167,10 @@ public class LogisticsDemandExpandableListViewAdapter extends BaseExpandableList
         } else if (groupHolder.distribution_mode2.getText().toString().equals("卖家配送")) {
             childHolder.seller_distribution.setVisibility(View.VISIBLE);//卖家配送
             childHolder.buyer_from_mentioning.setVisibility(View.GONE);//买方自提
-            childHolder.unloading_area2.setText(parentslist.get(groupPosition).getUnloadingArea2());
+            String addressstr=parentslist.get(groupPosition).getUnloadingArea2();
+            AddAddressPresenter presenter = new AddAddressPresenter(this);
+            presenter.setDetailAddress(addressstr.substring(0, 4), addressstr.substring(0, 6), addressstr.toString());
+            childHolder.unloading_area2.setText(str);//卸货区域
             childHolder.discharge_address2.setText(parentslist.get(groupPosition).getDischargeAddress2());//卸货地址
             childHolder.unloading_contact2.setText(parentslist.get(groupPosition).getUnloadingContact2());//卸货联系人
             childHolder.discharge_contact_phone2.setText(parentslist.get(groupPosition).getDischargeContactPhone2());//卸货联系电话
@@ -151,9 +178,8 @@ public class LogisticsDemandExpandableListViewAdapter extends BaseExpandableList
             childHolder. receiving_company2.setText(parentslist.get(groupPosition).getReceivingCompany2());//收货公司
             childHolder.shipper_contact2.setText(parentslist.get(groupPosition).getShipperContact2());//托运联系人
             childHolder.shipper_contact_information2.setText(parentslist.get(groupPosition).getShipperContactInformation2());//托运人联系方式
-            childHolder.seller_remarks2.setText("");//备注
+            childHolder.seller_remarks2.setText(parentslist.get(groupPosition).getSellerRemarks2());//备注
         }
-
         return convertView;
     }
 
@@ -175,6 +201,27 @@ public class LogisticsDemandExpandableListViewAdapter extends BaseExpandableList
             default:
                 break;
         }
+    }
+String str="";
+    @Override
+    public void setAddressInText(String address) {
+        str=address;
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public void sendAddAddressToServerSuccess() {
+
+    }
+
+    @Override
+    public void sendAddAddressToServerFaild() {
+
+    }
+
+    @Override
+    public void sendAddAddressToServer() {
+
     }
 
     class GroupHolder {

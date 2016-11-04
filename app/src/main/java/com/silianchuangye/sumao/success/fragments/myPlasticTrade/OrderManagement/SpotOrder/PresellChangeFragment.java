@@ -311,7 +311,7 @@ public class PresellChangeFragment extends Fragment {
                     pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
                     Log.e("TAG","下拉刷子新");
                     page=1;
-                    ListFlag=true;
+                    ListFlag=false;
                     sendMy(subType,Kpstate,startDate,endDate,company,OrderId);
 //                    adapter.notifyDataSetChanged();
                 }
