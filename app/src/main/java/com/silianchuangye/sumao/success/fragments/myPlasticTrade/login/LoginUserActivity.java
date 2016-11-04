@@ -173,9 +173,7 @@ public class LoginUserActivity extends AppCompatActivity {
                             public void onSuccess(String result) {
                                 try {
                                     JSONObject object = new JSONObject(result);
-                                    Log.d("请求",""+result);
                                     String unique = object.getString("sessionConfirmationNumber");
-                                    Log.d("啊啊啊啊唯一标识",unique);
                                     /**
                                      * 把唯一标识储存在SharedPreferences
                                      */
@@ -223,29 +221,22 @@ public class LoginUserActivity extends AppCompatActivity {
 
                 Loding.dis();
                     //接收mainactivity传递过来的参数
-                Log.d("str","str="+str);
                     if (str == 9) {
                         Intent intent = new Intent();
                         intent.putExtra("cart", 4);
-                        //intent.setClass(LoginUserActivity.this, MainActivity.class);
+                        intent.setClass(LoginUserActivity.this, MainActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                       // startActivity(intent);
-                        //setResult();
-                        setResult(11,intent);
-                        LoginUserActivity.this.finish();
-                    }
-                    else if(str==12){
+                        startActivity(intent);
+                    } else {
                         Intent intent = new Intent();
-                        //intent.setClass(LoginUserActivity.this, MainActivity.class);
+                        intent.setClass(LoginUserActivity.this, MainActivity.class);
                         intent.putExtra("cart", 3);
                         intent.putExtra("name", name);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        //startActivity(intent);
-                        setResult(10,intent);
-                        LoginUserActivity.this.finish();
+                        startActivity(intent);
                     }
                     GlobalVariable.FLAG = true;
-
+                    LoginUserActivity.this.finish();
 
 
             }
