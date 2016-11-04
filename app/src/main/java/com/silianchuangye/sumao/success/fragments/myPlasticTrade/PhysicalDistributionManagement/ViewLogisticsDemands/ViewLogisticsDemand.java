@@ -81,6 +81,7 @@ public class ViewLogisticsDemand extends Activity implements View.OnClickListene
     private ShowCalendar showCalendar;
     SharedPreferences sp;
     String unique123,addressstr;
+    private LinearLayout pop_linear2,pop_linear3;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -214,7 +215,7 @@ public class ViewLogisticsDemand extends Activity implements View.OnClickListene
                 hideListView(lv_type);
                 hideListView(lv_distribution_mode);
                 break;
-            case R.id.popup_window_type1:
+            case R.id.linear2:
                 first = "two";
 //                showLv(Lv_kaipiao);
                 list.clear();
@@ -228,7 +229,7 @@ public class ViewLogisticsDemand extends Activity implements View.OnClickListene
                 hideListView(lv_logistics_demand);
                 hideListView(lv_distribution_mode);
                 break;
-            case R.id.popup_window_distribution_mode1:
+            case R.id.linear3:
                 list.clear();
                 list.add("请选择");
                 list.add("买方自提");
@@ -366,6 +367,10 @@ public class ViewLogisticsDemand extends Activity implements View.OnClickListene
         tv_pop_logistics_start_date= (TextView) popupWindowView.findViewById(R.id.tv_pop_logistics_start_date);
         popup_window_search= (Button) popupWindowView.findViewById(R.id.popup_window_search);
 //        popup_window_logistics_demand1.setOnClickListener(this);
+        pop_linear2= (LinearLayout) popupWindowView.findViewById(R.id.linear2);
+        pop_linear3= (LinearLayout) popupWindowView.findViewById(R.id.linear3);
+        pop_linear3.setOnClickListener(this);
+        pop_linear2.setOnClickListener(this);
         popup_window_type1.setOnClickListener(this);
         popup_window_distribution_mode1.setOnClickListener(this);
         popup_window_delivery_date1.setOnClickListener(this);
