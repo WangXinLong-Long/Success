@@ -77,8 +77,9 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
         initData();
 //      初始化组件
         initView();
-        getUnique();
+//        getUnique();
         init();
+        showIntent();
     }
 
     private void initView() {
@@ -98,12 +99,12 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
         mTabHost.getTabWidget().getChildTabViewAt(3).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String unique = getUnique();
+                String unique = sp.getString("unique","");
                 if (unique.equals("false")){
                     Toast.makeText(MainActivity.this,"请登录",Toast.LENGTH_SHORT).show();
                     SharedPreferences.Editor editor=sp.edit();
                     editor.clear();
-                    //      editor.clear();
+                    //      editor.clear();////
                     editor.commit();
                     Intent intent = new Intent();
                     intent.putExtra("roles","buyer");
@@ -293,23 +294,13 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
             MainActivity.this.finish();
         }
     }
-    @Override
-    protected void onResume() {
-        super.onResume();
-        DemoHelper.getInstance().pushActivity(this);
-        //register the event listener when enter the foreground
-        EMChatManager.getInstance().registerEventListener(this,
-                new EMNotifierEvent.Event[] { EMNotifierEvent.Event.EventNewMessage,
-                        EMNotifierEvent.Event.EventOfflineMessage });
-        //Jpush推送
-        JPushInterface.onResume(this);
-        //注册广播
+    private void showIntent(){
         int num=getIntent().getIntExtra("cart",0);
         Log.e("TAG","num====="+num);
         switch (num)
         {
             case 1:
-               showCart();
+                showCart();
                 break;
             case 3:
 //                GlobalVariable.FLAG = true;
@@ -328,12 +319,54 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
                 }
                 break;
             case 4:
-               showCart();
+                showCart();
+                break;
             default:
                 break;
 
         }
-
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        DemoHelper.getInstance().pushActivity(this);
+        //register the event listener when enter the foreground
+        EMChatManager.getInstance().registerEventListener(this,
+                new EMNotifierEvent.Event[] { EMNotifierEvent.Event.EventNewMessage,
+                        EMNotifierEvent.Event.EventOfflineMessage });
+        //Jpush推送
+        JPushInterface.onResume(this);
+        //注册广播
+//        int num=getIntent().getIntExtra("cart",0);
+//        Log.e("TAG","num====="+num);
+//        switch (num)
+//        {
+//            case 1:
+//               showCart();
+//                break;
+//            case 3:
+////                GlobalVariable.FLAG = true;
+////                mTabHost.setCurrentTab(3);
+//                sp=getSharedPreferences("sumao",Context.MODE_PRIVATE);
+//                username=sp.getString("name","");
+//                Log.e("TAG","username11111-----"+username);
+//                if (username!=""){
+//                    mTabHost.setCurrentTab(3);
+//                }else {
+//                    Intent intent = new Intent();
+//                    intent.setClass(MainActivity.this, LoginUserActivity.class);
+//                    intent.putExtra("roles","buyer");
+//                    startActivity(intent);
+//                    MainActivity.this.finish();
+//                }
+//                break;
+//            case 4:
+//               showCart();
+//                break;
+//            default:
+//                break;
+//
+//        }
     }
 
     @Override

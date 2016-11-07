@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.baidu.mapapi.map.Text;
@@ -44,7 +45,8 @@ public class OrderDetailsActivity  extends Activity{
     private TextView tv_order_number;
     private String Id;
     private TextView totalMoney2,univalent2,number2,enterprise2,warehouse2;
-    private TextView bottom_money2;
+    private TextView bottom_money2,tv_xianqing_type;
+    private ImageView iv_child_title_bar_back;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +64,14 @@ public class OrderDetailsActivity  extends Activity{
         tv_child_title_bar_title = ((TextView) findViewById(R.id.tv_child_title_bar_title));
         tv_child_title_bar_title.setText("订单详情");
         bottom_money2= (TextView) findViewById(R.id.bottom_money2);
+        tv_xianqing_type= (TextView) findViewById(R.id.tv_xianqing_type);
+        iv_child_title_bar_back= (ImageView) findViewById(R.id.iv_child_title_bar_back);
+        iv_child_title_bar_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 //        initdata();
         order_details_listView.setAdapter(adapter);
         enevt();
@@ -124,6 +134,7 @@ public class OrderDetailsActivity  extends Activity{
                     String type=job2.getString("type");//类型
                     String type1=getType(type);
                     Log.e("TAG","类型-----"+type1);
+                    tv_xianqing_type.setText(type1);
                     univalent2.setText(type1);
                     String shippingGroupState=job2.getString("shippingGroupState");
                     String state = job2.getString("state");//状态

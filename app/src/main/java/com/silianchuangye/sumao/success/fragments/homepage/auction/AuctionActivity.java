@@ -76,7 +76,10 @@ public class AuctionActivity extends AppCompatActivity {
         imageback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent=new Intent();
+                setResult(1,intent);
                 AuctionActivity.this.finish();
+
             }
         });
         lvAuction= (PullToRefreshListView) findViewById(R.id.lvAuction_Auction_Layout);

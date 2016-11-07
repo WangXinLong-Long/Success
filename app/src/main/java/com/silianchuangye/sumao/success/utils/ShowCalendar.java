@@ -29,13 +29,19 @@ public class ShowCalendar {
                         Toast.makeText(context,
                                 "" + year + "-" + (monthOfYear + 1)
                                         + "-" + dayOfMonth + "", Toast.LENGTH_LONG).show();
+                        String str="";
+                        if(dayOfMonth<10){
+                            str="0"+dayOfMonth;
+                        }else{
+                            str=dayOfMonth+"";
+                        }
                         if (flag)
                         {
                             Tv.setText(year + "-" + (monthOfYear + 1)
-                                    + "-\n" + dayOfMonth + "");
+                                    + "-" + str + "");
                         }else {
                             Tv.setText(year + "-" + (monthOfYear + 1)
-                                    + "-" + dayOfMonth + "");
+                                    + "-" + str + "");
                         }
                     }
                 }, year, month, day);

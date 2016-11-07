@@ -164,7 +164,7 @@ public class LoginUserActivity extends AppCompatActivity {
                     editor.commit();
                     String unique = sp.getString("unique", "");
                     Log.d("唯一标识", unique);
-                    if (unique.equals("") || unique == null) {
+                    if (unique.equals("") || unique == null||unique.equals("false")) {
                         sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
                         editor = sp.edit();
                         RequestParams unique_rp = new RequestParams(SuMaoConstant.SUMAO_IP + "/rest/model/atg/rest/SessionConfirmationActor/getSessionConfirmationNumber");

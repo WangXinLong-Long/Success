@@ -449,7 +449,8 @@ public class PagerOne extends BasePager implements IPagerOneView {
                     Intent intent = new Intent(mActivity, AuctionActivity.class);
                     intent.putExtra("name","竞拍");
                     intent.putExtra("sellerCompanyId","no");
-                    startActivity(intent);
+                   // startActivity(intent);
+                    startActivityForResult(intent,1);
                 } else if (list.get(position).get("icon").equals(R.mipmap.order)) {
                     Toast.makeText(mActivity, "点击了点价按钮", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(mActivity, MidpointsListctivity.class);
