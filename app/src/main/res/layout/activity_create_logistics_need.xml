@@ -177,9 +177,9 @@
                     android:layout_height="@dimen/x35">
                     <ImageView
                         android:id="@+id/img_logistics_need_address"
-                        android:layout_width="@dimen/x25"
-                        android:layout_height="@dimen/x25"
-                        android:src="@mipmap/ic_launcher"
+                        android:layout_width="@dimen/x17"
+                        android:layout_height="@dimen/x27"
+                        android:src="@mipmap/dizhiadd"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/x10"/>
                     <TextView
