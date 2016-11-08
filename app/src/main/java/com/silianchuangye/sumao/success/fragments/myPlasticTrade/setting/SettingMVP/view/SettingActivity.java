@@ -66,7 +66,9 @@ public class SettingActivity extends AppCompatActivity implements ISettingView{
         try {
             PackageInfo pi = getPackageManager().getPackageInfo(getPackageName(),0);
             versionCode = pi.versionCode;
-            tv_version_setting_value.setText(versionCode);
+            Log.d("值","sssss"+versionCode);
+
+            //tv_version_setting_value.setText(versionCode);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }

@@ -105,7 +105,7 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
                     Toast.makeText(MainActivity.this,"请登录",Toast.LENGTH_SHORT).show();
                     SharedPreferences.Editor editor=sp.edit();
                     editor.clear();
-                    //      editor.clear();
+                    //      editor.clear();////
                     editor.commit();
                     Intent intent = new Intent();
                     intent.putExtra("roles","buyer");
