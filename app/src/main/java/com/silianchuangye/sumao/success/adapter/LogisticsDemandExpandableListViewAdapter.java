@@ -106,10 +106,9 @@ public class LogisticsDemandExpandableListViewAdapter extends BaseExpandableList
 //        groupHolder.logistics_line1.setOnClickListener(this);
         return convertView;
     }
-
+    ChildHolder childHolder = null;
     @Override
     public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        ChildHolder childHolder = null;
         if (convertView == null) {
             childHolder = new ChildHolder();
             convertView = inflater.inflate(R.layout.logistics_child_item, null);
@@ -170,7 +169,7 @@ public class LogisticsDemandExpandableListViewAdapter extends BaseExpandableList
             String addressstr=parentslist.get(groupPosition).getUnloadingArea2();
             AddAddressPresenter presenter = new AddAddressPresenter(this);
             presenter.setDetailAddress(addressstr.substring(0, 4), addressstr.substring(0, 6), addressstr.toString());
-            childHolder.unloading_area2.setText(str);//卸货区域
+            Log.e("TAG","str==="+str);
             childHolder.discharge_address2.setText(parentslist.get(groupPosition).getDischargeAddress2());//卸货地址
             childHolder.unloading_contact2.setText(parentslist.get(groupPosition).getUnloadingContact2());//卸货联系人
             childHolder.discharge_contact_phone2.setText(parentslist.get(groupPosition).getDischargeContactPhone2());//卸货联系电话
@@ -206,7 +205,9 @@ String str="";
     @Override
     public void setAddressInText(String address) {
         str=address;
-        notifyDataSetChanged();
+        childHolder.unloading_area2.setText(str);//卸货区域
+//        notifyDataSetChanged();
+        Log.e("TAG","str2="+str);
     }
 
     @Override
