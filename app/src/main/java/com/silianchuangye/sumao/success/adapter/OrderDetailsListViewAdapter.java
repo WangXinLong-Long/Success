@@ -69,6 +69,7 @@ private Context context;
             holder.delivery_time2 =(TextView) convertView.findViewById(R.id.delivery_time2);
 //            仓库
             holder.warehouse2 =(TextView) convertView.findViewById(R.id.warehouse2);
+            holder.productModel= (TextView) convertView.findViewById(R.id.productModel);
             convertView.setTag(holder);
         }else {
             holder = ((ViewHolder) convertView.getTag());
@@ -87,10 +88,11 @@ private Context context;
         holder.delivery_time2.setText(list.get(position).getDeliveryTime()+"");
         //            仓库
         holder.warehouse2.setText(list.get(position).getWarehouse()+"");
+        holder.productModel.setText(list.get(position).getTitle());
         return convertView;
     }
     class ViewHolder{
-        TextView classification2;
+        TextView classification2,productModel;
         TextView product_unit_price2;
         TextView enterprise2;
         TextView totalMoney2;
