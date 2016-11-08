@@ -354,7 +354,7 @@
                         android:id="@+id/img_sanjiao"
                         android:layout_width="@dimen/x10"
                         android:layout_height="@dimen/x10"
-                        android:src="@mipmap/ic_launcher"
+                        android:src="@mipmap/xiaosanjiao"
                         android:layout_below="@id/pbDemo"
                         android:layout_marginLeft="@dimen/x140"/>
                     <TextView

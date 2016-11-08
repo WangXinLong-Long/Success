@@ -65,7 +65,7 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
     String username = "";
     SharedPreferences sp;
     private SharedPreferences.Editor editor;
-    private String unique;
+    private String unique="false";
     public static MainActivity instancefinish;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,8 +76,8 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
 //      初始化数据
         initData();
 //      初始化组件
+        getUnique();
         initView();
-//        getUnique();
         init();
         showIntent();
     }
@@ -99,7 +99,8 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
         mTabHost.getTabWidget().getChildTabViewAt(3).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String unique = sp.getString("unique","");
+//                String unique = sp.getString("unique","");
+                unique=getUnique();
                 if (unique.equals("false")){
                     Toast.makeText(MainActivity.this,"请登录",Toast.LENGTH_SHORT).show();
                     SharedPreferences.Editor editor=sp.edit();
@@ -140,7 +141,7 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
                 sp=getSharedPreferences("sumao",Context.MODE_PRIVATE);
                 username=sp.getString("name","");
                 Log.e("TAG","usernam===="+username);
-                if(username!=""){
+                if(!unique.equals("false")){
                     mTabHost.setCurrentTab(2);
                 }else {
                     Intent intent = new Intent();
@@ -336,6 +337,7 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
                         EMNotifierEvent.Event.EventOfflineMessage });
         //Jpush推送
         JPushInterface.onResume(this);
+//        getUnique();
         //注册广播
 //        int num=getIntent().getIntExtra("cart",0);
 //        Log.e("TAG","num====="+num);
