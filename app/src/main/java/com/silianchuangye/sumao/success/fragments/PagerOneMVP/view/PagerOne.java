@@ -436,12 +436,12 @@ public class PagerOne extends BasePager implements IPagerOneView {
                     startActivity(intent);
                     //Toast.makeText(mActivity, "点击了团购按钮", Toast.LENGTH_SHORT).show();
                 } else if (list.get(position).get("icon").equals(R.mipmap.goods)) {
-                    Loding.show(mActivity,"加载中...",false,null);
+                    Loding.show(mActivity,"加载中...",true,null);
                     pagerOnePresenter.getGoodsInStockInfo("","","",10,0);
 
                 } else if (list.get(position).get("icon").equals(R.mipmap.presell)) {
                     //Toast.makeText(mActivity, "点击了预售按钮", Toast.LENGTH_SHORT).show();
-                    Loding.show(mActivity,"加载中...",false,null);
+                    Loding.show(mActivity,"加载中...",true,null);
                     pagerOnePresenter.getPreSaleInfo("","","",10,0);
 
                 } else if (list.get(position).get("icon").equals(R.mipmap.adwords)) {
@@ -460,7 +460,7 @@ public class PagerOne extends BasePager implements IPagerOneView {
                    SharedPreferences sp = mActivity.getSharedPreferences("sumao", Activity.MODE_PRIVATE);
                     String uniqued = sp.getString("unique","");
 //                    unique
-                    Loding.show(mActivity,"加载中...",false,null);
+                    Loding.show(mActivity,"加载中...",true,null);
                     pagerOnePresenter.getUpstreamDirectSellingInfo(uniqued);
 
                 } else if (list.get(position).get("icon").equals(R.mipmap.aa)) {
@@ -472,7 +472,7 @@ public class PagerOne extends BasePager implements IPagerOneView {
                     intent.putExtra(Constant.IM_SERVICE_NUMBER, "feisumaokefu1");
                     startActivity(intent);*/
                 } else if (list.get(position).get("icon").equals(R.mipmap.consult)) {
-                    Loding.show(mActivity,"加载中...",false,null);
+                    Loding.show(mActivity,"加载中...",true,null);
                    pagerOnePresenter.getSuMaoConsultInfo();
                     Toast.makeText(mActivity, "点击了塑贸咨询按钮", Toast.LENGTH_SHORT).show();
                 } else if (list.get(position).get("icon").equals(R.mipmap.maifang)) {

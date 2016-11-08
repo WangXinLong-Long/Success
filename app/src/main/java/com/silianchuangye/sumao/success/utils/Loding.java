@@ -78,6 +78,7 @@ public class Loding extends Dialog {
 		}
 		// 按返回键是否取消
 		dialog.setCancelable(cancelable);
+		dialog.setCanceledOnTouchOutside(false);// 设置点击屏幕Dialog不消失
 		// 监听返回键处理
 		dialog.setOnCancelListener(cancelListener);
 		// 设置居中
