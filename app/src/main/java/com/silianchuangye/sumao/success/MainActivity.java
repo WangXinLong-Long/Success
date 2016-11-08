@@ -65,7 +65,7 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
     String username = "";
     SharedPreferences sp;
     private SharedPreferences.Editor editor;
-    private String unique;
+    private String unique="false";
     public static MainActivity instancefinish;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
