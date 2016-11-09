@@ -43,6 +43,7 @@ import com.silianchuangye.sumao.success.fragments.homepage.auction.OpenAuction;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.OrderDetails.AlreadyPaidActivity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.OrderDetails.OrderDetailsActivity;
 import com.silianchuangye.sumao.success.model.SpotOrderModel;
+import com.silianchuangye.sumao.success.utils.Loding;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
 import org.json.JSONArray;
@@ -97,6 +98,8 @@ public class SpotOrder extends Activity implements View.OnClickListener {
     String type1,Id,type;//类型和ID-现货的
     private TextView the_order_price,type2,buyer2,state2,company2;
     private TextView bottom_money2;
+    private PopupWindowAdaptrer adapterBank;
+    String cl_id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -113,14 +116,7 @@ public class SpotOrder extends Activity implements View.OnClickListener {
         state2= (TextView) findViewById(R.id.state2);
         company2= (TextView) findViewById(R.id.company2);
         bt_zhifu = (Button) findViewById(R.id.bt_Zhifu);
-        bt_zhifu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Popupwindow();
-                backgroundAlpha(0.5f);
 
-            }
-        });
         bt_copy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -168,6 +164,20 @@ public class SpotOrder extends Activity implements View.OnClickListener {
                 sendMy();
             }
         }.start();
+        bt_zhifu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Popupwindow();
+                if(type1.equals("预售")){
+                    Popupwindow();
+                    backgroundAlpha(0.5f);
+                }else if(type1.equals("现货")){
+
+                }
+//                backgroundAlpha(0.5f);
+
+            }
+        });
 //        list = new ArrayList<>();
 //        for (int i = 0; i < 10; i++) {
 //            model = new SpotOrderModel();
@@ -230,60 +240,117 @@ public class SpotOrder extends Activity implements View.OnClickListener {
         }
     }
 
+//    public void Popupwindow(){
+//        View view=getLayoutInflater().inflate(R.layout.item_popupwindow_auction,null);
+//          popupWindow=new PopupWindow(findViewById(R.id.Layout_c), ActionBarOverlayLayout.LayoutParams.MATCH_PARENT, ActionBarOverlayLayout.LayoutParams.WRAP_CONTENT);
+//        popupWindow.setContentView(view);
+//        LinearLayout layout_one= (LinearLayout) view.findViewById(R.id.layout_one);
+//        LinearLayout layout_two= (LinearLayout) view.findViewById(R.id.layout_two);
+//        LinearLayout layout_three= (LinearLayout) view.findViewById(R.id.layout_three);
+//        layout_one.setVisibility(View.GONE);
+//        layout_two.setVisibility(View.GONE);
+//        layout_three.setVisibility(View.GONE);
+//        tv= (TextView) view.findViewById(R.id.tvPrice_popupwindow_auction);
+//        et= (EditText) view.findViewById(R.id.etZhifu_auction);
+//        lv= (ListView) view.findViewById(R.id.lv_popupwindow_auction);
+//        final List<OpenAuction> list_pop=new ArrayList<OpenAuction>();
+//        OpenAuction openauction1=new OpenAuction();
+//        openauction1.iv_icon=R.mipmap.direct;
+//        openauction1.tv_Name="北京工商银行";
+//        openauction1.tv_money="1234";
+//        list_pop.add(openauction1);
+//        OpenAuction openauction2=new OpenAuction();
+//        openauction2.iv_icon=R.mipmap.vertet;
+//        openauction2.tv_Name="北京建设银行";
+//        openauction2.tv_money="1234";
+//        list_pop.add(openauction2);
+//        Log.d("changdu",list_pop.size()+"");
+//        adapter1=new PopupWindowAdaptrer(list_pop,SpotOrder.this);
+//        lv.setAdapter(adapter1);
+//        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                if(parent.getId()==lv.getId()){
+//                    for(int i=0;i<list_pop.size();i++){
+//                        Log.d("Listview的item",position+"");
+//                        if(i!=position){
+//
+//                            list_pop.get(i).Flag=false;
+//
+//                        }
+//                    }
+//                    list_pop.get(position).Flag=!list_pop.get(position).Flag;
+//                    adapter1.notifyDataSetChanged();
+//                }
+//            }
+//        });
+//        Button bt= (Button) view.findViewById(R.id.btZhifu);
+//        bt.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//            popupWindow.dismiss();
+//                Intent intent=new Intent(SpotOrder.this,Ok_Dialog.class);
+//                intent.putExtra("number",tv_order_number1.getText().toString());
+//                intent.putExtra("type",type1);
+//                startActivity(intent);
+//
+//            }
+//        });
+//        popupWindow.setTouchable(true);
+//        popupWindow.setBackgroundDrawable(new BitmapDrawable());
+//        popupWindow.setOutsideTouchable(true);
+//        popupWindow.setFocusable(true);
+//
+//        popupWindow.showAtLocation(spot_order_listView, Gravity.BOTTOM,0,0);
+//
+//        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+//            @Override
+//            public void onDismiss() {
+//                //popupWindow.dismiss();
+//                backgroundAlpha(1f);
+//            }
+//        });
+//
+//    }
+    //设置背景透明
+    public void backgroundAlpha(float bgAlpha)
+    {
+        WindowManager.LayoutParams lp = getWindow().getAttributes();
+        lp.alpha = bgAlpha; //0.0-1.0
+        getWindow().setAttributes(lp);
+    }
+    //预售银行列表弹框
+    TextView tv_yushou;
     public void Popupwindow(){
-        View view=getLayoutInflater().inflate(R.layout.item_popupwindow_auction,null);
-          popupWindow=new PopupWindow(findViewById(R.id.Layout_c), ActionBarOverlayLayout.LayoutParams.MATCH_PARENT, ActionBarOverlayLayout.LayoutParams.WRAP_CONTENT);
+        View view=getLayoutInflater().inflate(R.layout.pop_yushou,null);
+        popupWindow=new PopupWindow(findViewById(R.id.Layout_c), ActionBarOverlayLayout.LayoutParams.MATCH_PARENT, ActionBarOverlayLayout.LayoutParams.WRAP_CONTENT);
         popupWindow.setContentView(view);
-        LinearLayout layout_one= (LinearLayout) view.findViewById(R.id.layout_one);
-        LinearLayout layout_two= (LinearLayout) view.findViewById(R.id.layout_two);
-        LinearLayout layout_three= (LinearLayout) view.findViewById(R.id.layout_three);
-        layout_one.setVisibility(View.GONE);
-        layout_two.setVisibility(View.GONE);
-        layout_three.setVisibility(View.GONE);
-        tv= (TextView) view.findViewById(R.id.tvPrice_popupwindow_auction);
-        et= (EditText) view.findViewById(R.id.etZhifu_auction);
+        tv_yushou= (TextView) view.findViewById(R.id.tv_pay);
+        tv_yushou.setText(11111+"");
+//        et= (EditText) view.findViewById(R.id.etZhifu_auction);
         lv= (ListView) view.findViewById(R.id.lv_popupwindow_auction);
-        final List<OpenAuction> list_pop=new ArrayList<OpenAuction>();
-        OpenAuction openauction1=new OpenAuction();
-        openauction1.iv_icon=R.mipmap.direct;
-        openauction1.tv_Name="北京工商银行";
-        openauction1.tv_money="1234";
-        list_pop.add(openauction1);
-        OpenAuction openauction2=new OpenAuction();
-        openauction2.iv_icon=R.mipmap.vertet;
-        openauction2.tv_Name="北京建设银行";
-        openauction2.tv_money="1234";
-        list_pop.add(openauction2);
-        Log.d("changdu",list_pop.size()+"");
-        adapter1=new PopupWindowAdaptrer(list_pop,SpotOrder.this);
-        lv.setAdapter(adapter1);
+        getinfo_Bank();
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if(parent.getId()==lv.getId()){
-                    for(int i=0;i<list_pop.size();i++){
+                    for(int i=0;i<list1.size();i++){
                         Log.d("Listview的item",position+"");
                         if(i!=position){
-
-                            list_pop.get(i).Flag=false;
-
+                            list1.get(i).Flag=false;
                         }
                     }
-                    list_pop.get(position).Flag=!list_pop.get(position).Flag;
-                    adapter1.notifyDataSetChanged();
+                    list1.get(position).Flag=!list1.get(position).Flag;
+                    adapterBank.notifyDataSetChanged();
                 }
             }
         });
         Button bt= (Button) view.findViewById(R.id.btZhifu);
+        //支付
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            popupWindow.dismiss();
-                Intent intent=new Intent(SpotOrder.this,Ok_Dialog.class);
-                intent.putExtra("number",tv_order_number1.getText().toString());
-                intent.putExtra("type",type1);
-                startActivity(intent);
-
+                payMoney();
             }
         });
         popupWindow.setTouchable(true);
@@ -291,7 +358,7 @@ public class SpotOrder extends Activity implements View.OnClickListener {
         popupWindow.setOutsideTouchable(true);
         popupWindow.setFocusable(true);
 
-        popupWindow.showAtLocation(spot_order_listView, Gravity.BOTTOM,0,0);
+        popupWindow.showAtLocation(bt, Gravity.BOTTOM,0,0);
 
         popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
@@ -302,12 +369,176 @@ public class SpotOrder extends Activity implements View.OnClickListener {
         });
 
     }
-    //设置背景透明
-    public void backgroundAlpha(float bgAlpha)
-    {
-        WindowManager.LayoutParams lp = getWindow().getAttributes();
-        lp.alpha = bgAlpha; //0.0-1.0
-        getWindow().setAttributes(lp);
+    List<OpenAuction> list1;
+    //获取银行列表
+    public void getinfo_Bank(){
+        new Thread(){
+            @Override
+            public void run() {
+                // super.run();
+                String url=SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/catalog/ProductCatalogActor/availableBank";
+                RequestParams rp=new RequestParams(url);
+                rp.addParameter("productId",cl_id);
+                Log.d("银行列表的rp",""+rp);
+                Log.e("TAG","rp------"+rp);
+                x.http().post(rp, new Callback.CommonCallback<String>() {
+                    @Override
+                    public void onSuccess(String result) {
+                        Log.d("银行的列表",result);
+                        Log.e("TAG","result-----"+result);
+                        //{"bankList":[{"amount":"21417.51","balance":"19752.69","accountNumber":"11014970585008","bankType":"1","bankName":"???????"}],"info":"sucess"}
+                        try {
+                            JSONObject job=new JSONObject(result);
+                            String info=job.getString("info");
+                            if(!info.equals("sucess")){
+                                Toast.makeText(SpotOrder.this, "该用户没有登录,无法获取可支付银行!", Toast.LENGTH_SHORT).show();
+                            }else{
+                                String bankList=job.getString("bankList");
+                                if(bankList.equals("No Bank Info")){
+                                    Toast.makeText(SpotOrder.this,"没有银行列表",Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        if (result.contains("amount")){
+                            try{
+                                list1=new ArrayList<OpenAuction>();
+                                JSONObject obj=new JSONObject(result);
+                                String message=obj.getString("bankList");
+                                JSONArray array=new JSONArray(message);
+                                for (int i=0;i<array.length();i++){
+                                    JSONObject obj_array=array.getJSONObject(i);
+                                    OpenAuction auction=new OpenAuction();
+                                    auction.tv_money=obj_array.getString("balance");
+                                    String type=obj_array.getString("bankType");
+                                    if (type.equals("1")){
+                                        //平安
+                                        auction.iv_icon=R.mipmap.pingan;
+                                        auction.tv_Name="平安银行";
+
+                                    }else if (type.equals("2")){
+                                        //昆仑
+                                        auction.iv_icon=R.mipmap.kunlun;
+                                        auction.tv_Name="昆仑银行";
+                                    }else if (type.equals("3")){
+                                        //建行
+                                        auction.iv_icon=R.mipmap.jianshe;
+                                        auction.tv_Name="中国建设银行";
+                                    }
+                                    list1.add(auction);
+
+                                }
+                                adapterBank=new PopupWindowAdaptrer(list1,SpotOrder.this);
+                                lv.setAdapter(adapterBank);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable ex, boolean isOnCallback) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(CancelledException cex) {
+
+                    }
+
+                    @Override
+                    public void onFinished() {
+
+                    }
+                });
+
+            }
+        }.start();
+    }
+    //支付预售保证金
+    private void payMoney(){
+        RequestParams params=new RequestParams(SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/payment/OrderPayment/goPresale");
+        params.addParameter("skuId","243");
+        params.addParameter("productId",cl_id);
+        params.addParameter("quantity","123");//保证金
+        String str,blankname="";
+        if (list1!=null){
+            for(int i=0;i<list1.size();i++) {
+                if (list1.get(i).Flag) {
+                    str = list1.get(i).tv_Name;
+                    Log.e("TAG","str----"+str);
+                    if (str.equals("平安银行")) {
+                        //平安
+                        blankname = "1";
+                    } else if (str.equals("昆仑银行")) {
+                        //昆仑
+                        blankname = "2";
+                    } else if (str.equals("中国建设银行")) {
+                        //建行
+                        blankname = "3";
+                    }
+                }
+            }
+        }
+        if(blankname.equals("")){
+            Toast.makeText(SpotOrder.this,"请选择支付银行",Toast.LENGTH_SHORT).show();
+
+        }else {
+            SharedPreferences sp = this.getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+            String unique123 = sp.getString("unique", "");
+            params.addParameter("_dynSessConf", unique123);
+            Log.e("TAG", "blankName------" + blankname);
+            params.addParameter("paymentPlatform", blankname);
+            Log.e("TAG", "params=-----------" + params);
+            Loding.show(this,"正在请求网络",false,null);//网络请求之前调用
+            x.http().post(params, new Callback.CommonCallback<String>() {
+                @Override
+                public void onSuccess(String result) {
+                    Log.e("TAG", "支付保证金result-----" + result);
+//                    result-----{"orderId":"10094600000005","info":"sucess"}
+                    try {
+                        JSONObject job=new JSONObject(result);
+                        String info=job.getString("info");
+                        String orderId=job.getString("orderId");
+                        if(info.equals("sucess")){
+                            Toast.makeText(SpotOrder.this,"支付成功",Toast.LENGTH_SHORT).show();
+                            popupWindow.dismiss();
+                            // TODO 显示订单信息
+                            Intent intent=new Intent(SpotOrder.this, Ok_Dialog.class);
+                            intent.putExtra("number",orderId);
+                            intent.putExtra("type","预售保证金");
+                            startActivity(intent);
+
+                        }else{
+                            Toast.makeText(SpotOrder.this,"支付失败",Toast.LENGTH_SHORT).show();
+                            Intent intent=new Intent(SpotOrder.this, Error_Dialog.class);
+                            intent.putExtra("number",orderId);
+//                            intent.putExtra("type","预售保证金");
+                            startActivity(intent);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onError(Throwable ex, boolean isOnCallback) {
+                    Log.e("TAG", "ex----" + ex.toString());
+                    Log.e("TAG", "ex-----" + ex.getMessage().toString());
+                }
+
+                @Override
+                public void onCancelled(CancelledException cex) {
+
+                }
+
+                @Override
+                public void onFinished() {
+                    Loding.dis();
+                }
+            });
+        }
     }
     private void sendMy(){
         list = new ArrayList<>();
@@ -358,6 +589,8 @@ public class SpotOrder extends Activity implements View.OnClickListener {
                             JSONArray j1 = new JSONArray(cl);
                             for (int k = 0; k < j1.length(); k++) {
                                 JSONObject job1 = (JSONObject) j1.get(k);
+                                cl_id=job1.getString("cl_id");
+                                Log.e("TAG","cl_id="+cl_id);
                                 String cl_mingcheng = job1.getString("cl_mingcheng");//产品名称
                                 Log.e("TAG","名称");
                                 String fenlei = job1.getString("cl_fenlei");//分类

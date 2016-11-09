@@ -104,7 +104,7 @@
         <activity
             android:name=".HeLinJian"
             android:screenOrientation="portrait" />
-
+        <activity android:name=".bankAndPay.PerBank"/>
         <!-- 登陆 -->
         <activity
             android:name=".HX.ui.LoginActivity"
