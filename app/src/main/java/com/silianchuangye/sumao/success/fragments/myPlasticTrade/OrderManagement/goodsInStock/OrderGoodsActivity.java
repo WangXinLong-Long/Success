@@ -348,7 +348,7 @@ public class OrderGoodsActivity extends AppCompatActivity implements View.OnClic
                 R.layout.item_view,
                 R.id.tv_item, list);
         Kplist.add("所有");
-        Kplist.add("代开票");
+        Kplist.add("待开票");
         Kplist.add("已开票");
         KpLvAdapter = new ArrayAdapter<String>(this, R.layout.item_view,
                 R.id.tv_item, Kplist);
