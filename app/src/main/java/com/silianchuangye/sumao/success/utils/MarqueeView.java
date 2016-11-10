@@ -19,7 +19,7 @@ import java.util.List;
 
 
 /**
- * Created by sunfusheng on 16/5/31.
+ * Created by Administrator on 16/5/31.
  */
 public class MarqueeView extends ViewFlipper {
 
