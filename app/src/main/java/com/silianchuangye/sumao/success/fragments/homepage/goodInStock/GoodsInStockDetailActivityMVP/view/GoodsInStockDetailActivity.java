@@ -47,6 +47,7 @@ import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -174,7 +175,18 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
         tvRemark_auction = ((TextView) findViewById(R.id.tvRemark_auction));
 //        联系客服
         layoutContent_auction = ((LinearLayout) findViewById(R.id.layoutContent_auction));
+
 //        getPurchase();
+//        监听et_number发生改变，从而改变总价
+        et_number.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                double x = (Double.parseDouble(et_number.getText().toString()))*(Double.parseDouble(tvPrice_auction.getText().toString()));
+                DecimalFormat df  = new DecimalFormat("#.##");
+                all_price.setText(df.format(x)+"");
+
+            }
+        });
     }
 
     @Override

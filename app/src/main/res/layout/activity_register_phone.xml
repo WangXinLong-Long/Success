@@ -24,7 +24,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/x10"
             />
-        <Button
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="@dimen/x30"
             android:id="@+id/bt_get_register"

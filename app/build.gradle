@@ -12,26 +12,36 @@ android {
         versionName "1.0"
         multiDexEnabled true
     }
+    productFlavors {
+        // Define separate dev and prod product flavors.
+        dev {
+            // dev utilizes minSDKVersion = 21 to allow the Android gradle plugin
+            // to pre-dex each module and produce an APK that can be tested on
+            // Android Lollipop without time consuming dex merging processes.
+            minSdkVersion 21
+        }
+        prod {
+            // The actual minSdkVersion for the application.
+            minSdkVersion 14
+        }
+    }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
     dexOptions {
-        preDexLibraries = false
+//        preDexLibraries = false
         javaMaxHeapSize "2g"
+        incremental true
     }
     sourceSets { main { jni.srcDirs = ['src/main/jni', 'src/main/jniLibs/'] } }
+
+
 }
 
 dependencies {
-    //        provided fileTree(dir: 'libs', include: ['*.jar'])
-    //        testCompile 'junit:junit:4.12'
-    //        compile 'com.android.support:appcompat-v7:23.3.0'
-    //        compile 'org.xutils:xutils:3.3.32'
-    //        compile files('libs/hyphenatechat_3.1.1.jar')
-    //        compile project(':easeui')
     provided fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile project(':easeui')
@@ -47,10 +57,8 @@ dependencies {
     compile files('libs/core.jar')
     compile files('libs/commons-net-3.3.jar')
     compile project(':pullToRefreshlibrary')
-    compile 'com.android.support:appcompat-v7:23.3.0'
     compile 'org.xutils:xutils:3.3.32'
     compile 'com.android.support:design:23.3.0'
-    compile 'com.android.support:support-v4:23.3.0'
     compile 'com.google.android.gms:play-services-appindexing:8.1.0'
     compile 'com.zhy:mpermission-api:1.0.0'
     compile 'com.google.code.gson:gson:2.7'
@@ -58,4 +66,7 @@ dependencies {
     compile 'org.apache.httpcomponents:jakarta-httpcore:4.0-alpha4'
     compile project(':PullToRefresh')
     compile 'com.android.support:multidex:1.0.1'
+    compile files('libs/CCP_REST_SDK_JAVA_v2.7r.jar')
 }
+
+

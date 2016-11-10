@@ -71,6 +71,8 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
         sp=getSharedPreferences("sumao",Context.MODE_PRIVATE);
         instancefinish = this;
 //      初始化数据

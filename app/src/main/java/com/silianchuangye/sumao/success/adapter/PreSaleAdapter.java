@@ -31,7 +31,6 @@ public class PreSaleAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        LogUtils.log("Adapter中收到值-->"+preSaleModels.size() );
         return preSaleModels.size();
     }
 

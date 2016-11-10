@@ -16,6 +16,7 @@ import com.cloopen.rest.sdk.CCPRestSDK;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.RegisterActivity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.RegisterFirmActivityMVP.view.RegisterFirmActivity;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.RegisterPhone.CountDownTimerUtils;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.RegisterPhoneMVP.RegisterPhonePresenter.RegisterPhonePresenter;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 
@@ -32,10 +33,11 @@ public class RegisterPhoneActivity extends AppCompatActivity implements IRegiste
     TextView tv_title_bar_title,tv,tvUpdate;
     RelativeLayout layoutTop,add_address_rl;
     private EditText et_phone_register,editText;
-    private Button bt_get_register;
+    private TextView bt_get_register;
     private TextView tv_next_register;
     private RegisterPhonePresenter registerPhonePresenter;
     private String yanzhen = "";
+    private CountDownTimerUtils mCountDownTimerUtils;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,17 +50,20 @@ public class RegisterPhoneActivity extends AppCompatActivity implements IRegiste
         //手机验证码
         editText= (EditText) findViewById(R.id.et_phone);
         //获取验证码按钮
-        bt_get_register= (Button) findViewById(R.id.bt_get_register);
+        bt_get_register= (TextView) findViewById(R.id.bt_get_register);
+        mCountDownTimerUtils = new CountDownTimerUtils(bt_get_register, 30000, 1000);
         /**
          * 获取验证码
          */
         bt_get_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (et_phone_register.getText().toString().length()!=11){
-                    Toast.makeText(RegisterPhoneActivity.this,"您输入的手机号不符合规则",Toast.LENGTH_SHORT).show();
-                }else {
 
+                if (et_phone_register.getText().toString().length()!=11){
+
+                    Toast.makeText(RegisterPhoneActivity.this,"您输入的手机号不符合规则"+et_phone_register.getText().toString().length(),Toast.LENGTH_SHORT).show();
+                }else {
+                    mCountDownTimerUtils.start();
                     registerPhonePresenter.sendRegisterPhoneToServer(et_phone_register.getText().toString());
                 }
             }
