@@ -16,10 +16,14 @@ import android.widget.AdapterView;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.jingchen.pulltorefresh.PullToRefreshLayout;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.MyAdapter;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.OrderDetails.AlreadyPaidActivity;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.SpotOrder.orderStaypayBean.Order;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.SpotOrder.orderStaypayBean.OrderCl;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.SpotOrder.orderStaypayBean.ToBePaid;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
 
@@ -207,57 +211,49 @@ public class OrderstayshipmentsFragment extends Fragment{
             @Override
             public void onSuccess(String result) {
                 Log.e("TAG","result----"+result);
-                try {
-                    JSONObject job=new JSONObject(result);
-                    String info=job.getString("info");
-                    if(info.equals("fail")){
-                        Toast.makeText(getActivity(),"请重新登陆",Toast.LENGTH_SHORT).show();
-                        new TiQu(getActivity()).showLogin();
-                        getActivity().finish();
+                Gson gson = new Gson();
+                ToBePaid toBePaid = gson.fromJson(result, ToBePaid.class);
+                String info = toBePaid.getInfo();
+                if(info.equals("fail")){
+                    Toast.makeText(getActivity(),"请重新登陆",Toast.LENGTH_SHORT).show();
+                    new TiQu(getActivity()).showLogin();
+                    getActivity().finish();
+                }
+                String count = toBePaid.getCount();
+                if(count.equals("0")){
+                    listparrent.clear();
+                    listitem.clear();
+                }
+                List<Order> orders= toBePaid.getOrder();
+                for (int i = 0; i <  orders.size(); i++) {
+                    List<OrderCl> cl = orders.get(i).getCl();
+                    String state=orders.get(i).getState();//状态
+                    String shippingGroupState=orders.get(i).getShippingGroupState();
+                    type=orders.get(i).getType();
+                    String cl_amount="";
+                    String state1=getState(state,type,shippingGroupState);
+                    String owner=orders.get(i).getOwner();//采购员
+                    orderId=orders.get(i).getOrderId();//订单编号
+                    List<Map<String,Object>> list1=new ArrayList<Map<String,Object>>();
+                    for(int k=0;k<cl.size();k++){
+                        cl_amount=cl.get(i).getCl_amount();//金额
+                        String cl_mingcheng=cl.get(i).getCl_mingcheng();//产品名称
+                        String cl_fenlei=cl.get(i).getCl_fenlei();
+                        Log.e("TAG","mingc=="+cl_mingcheng);
+
+                        Map<String,Object> map=new Hashtable<String,Object>();
+                        map.put("type",cl_fenlei);
+                        map.put("name",cl_mingcheng);
+                        list1.add(map);
+                        listitem.add(list1);
                     }
-                    String count=job.getString("count");
-                    Log.e("TAG","count----"+count);
-                    if(count.equals("0")){
-                        listparrent.clear();
-                        listitem.clear();
-                    }
-                    String str=job.getString("order");
-                    JSONArray jay=new JSONArray(str);
-                    for(int i=0;i<jay.length();i++){
-                        JSONObject j= (JSONObject) jay.get(i);
-                        String cl= (String) j.getString("cl");
-                        String state=j.getString("state");//状态
-                        String shippingGroupState=j.getString("shippingGroupState");
-                        type=j.getString("type");
-                        String cl_amount="";
-                        String state1=getState(state,type,shippingGroupState);
-                        String owner=j.getString("owner");//采购员
-                        orderId=j.getString("orderId");//订单编号
-                        List<Map<String,Object>> list1=new ArrayList<Map<String,Object>>();
-                        JSONArray j1=new JSONArray(cl);
-                        for(int k=0;k<j1.length();k++){
-                            JSONObject job1= (JSONObject) j1.get(k);
-                            cl_amount=job1.getString("cl_amount");//金额
-                            String cl_mingcheng=job1.getString("cl_mingcheng");//产品名称
-                            String cl_fenlei=job1.getString("cl_fenlei");
-                            Log.e("TAG","mingc=="+cl_mingcheng);
-                           ;
-                            Map<String,Object> map=new Hashtable<String,Object>();
-                            map.put("type",cl_fenlei);
-                            map.put("name",cl_mingcheng);
-                            list1.add(map);
-                            listitem.add(list1);
-                        }
-                        Map<String,Object> map1=new Hashtable<String,Object>();
-                        map1.put("id",orderId);
-                        map1.put("price",cl_amount);
-                        map1.put("states",state1);
-                        map1.put("name",owner);
-                        Log.e("TAG","map1-----"+map1);
-                        listparrent.add(map1);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                    Map<String,Object> map1=new Hashtable<String,Object>();
+                    map1.put("id",orderId);
+                    map1.put("price",cl_amount);
+                    map1.put("states",state1);
+                    map1.put("name",owner);
+                    Log.e("TAG","map1-----"+map1);
+                    listparrent.add(map1);
                 }
                 if(!ListFlag) {
                     adapter = new MyAdapter(listparrent, listitem, getActivity());

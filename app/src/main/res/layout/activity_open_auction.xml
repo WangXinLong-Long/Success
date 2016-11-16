@@ -105,7 +105,7 @@
                 android:layout_marginTop="@dimen/x10"
                 android:layout_marginLeft="@dimen/x10"
                 />
-            <LinearLayout
+           <!-- <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
@@ -129,13 +129,13 @@
                     android:layout_marginTop="@dimen/x13"
                     android:textColor="#5AA3D4"
                     />
-            </LinearLayout>
+            </LinearLayout>-->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:id="@+id/layoutService"
                 android:orientation="horizontal"
-                android:layout_toLeftOf="@+id/layoutContent_auction"
+                android:layout_alignParentRight="true"
                 android:layout_marginRight="@dimen/x10"
                 >
                 <ImageView

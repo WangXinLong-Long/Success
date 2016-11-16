@@ -28,6 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.HX.Constant;
+import com.silianchuangye.sumao.success.HX.ui.LoginActivity;
 import com.silianchuangye.sumao.success.MainActivity;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.PopupWindowAdaptrer;
@@ -89,6 +90,10 @@ public class OpenAuctionActivity extends AppCompatActivity {
     private TextView namechanpin,price,sheng,type,qigou,cangku,bianjiadanwei,diqu,time,company,cangkuaddress,way;
     private String chanpin_Name,chanpin_Price,shengyu,chanpinfenlei,chanpinqigou,chanpincangku,
     min_liang,chanpin_diqu,commit_time,channpin_gongsi,chuanpin_cangku_address,chanpin_way;
+    private LinearLayout contactCustomerService;
+    private String cl_gongsiId;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -142,6 +147,7 @@ public class OpenAuctionActivity extends AppCompatActivity {
         layout_Message= (RelativeLayout) findViewById(R.id.layout_Message);
         tv_Message= (TextView) findViewById(R.id.tv_Message);
         Layout_Button_no_login= (RelativeLayout) findViewById(R.id.Layout_Button_no_login);
+
         new Thread(){
             @Override
             public void run() {
@@ -262,6 +268,10 @@ public class OpenAuctionActivity extends AppCompatActivity {
                 }
             }
         });
+//Jobs Created 联系客服
+        contactCustomerService = ((LinearLayout) findViewById(R.id.layoutService));
+
+
 
     }
 
@@ -656,7 +666,7 @@ public class OpenAuctionActivity extends AppCompatActivity {
             public void onSuccess(String result) {
                 Log.d("竞拍详情",result);
                 try {
-                    JSONObject obj_result = new JSONObject(result);
+                    final JSONObject obj_result = new JSONObject(result);
 
                     namechanpin.setText(obj_result.getString("cl_mingcheng").toString());
                     chanpin_Name=obj_result.getString("cl_mingcheng").toString();
@@ -681,7 +691,7 @@ public class OpenAuctionActivity extends AppCompatActivity {
 
                     company.setText(obj_result.getString("cl_gongsi"));
                     channpin_gongsi=obj_result.getString("cl_gongsi");
-
+                    cl_gongsiId = obj_result.getString("cl_gongsiId");
                     String peisong_way=obj_result.getString("cl_fangshi");
                     int len=peisong_way.length()-2;
                     String aa=peisong_way.substring(2,len);
@@ -703,10 +713,22 @@ public class OpenAuctionActivity extends AppCompatActivity {
                     path=obj_result.getString("contract");
 
                     //cl_attribute.addAll();
-
+//                Jobs Created 联系客服跳转
+                    contactCustomerService.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intentHX = new Intent();
+                            intentHX.setClass(OpenAuctionActivity.this, LoginActivity.class);
+                            intentHX.putExtra(Constant.MESSAGE_TO_INTENT_EXTRA, Constant.MESSAGE_TO_DEFAULT);
+//                传入卖家id
+                            intentHX.putExtra(Constant.IM_SERVICE_NUMBER, cl_gongsiId);
+                            startActivity(intentHX);
+                        }
+                    });
                 }catch (JSONException e){
                     e.printStackTrace();
                 }
+
             }
 
             @Override

@@ -17,12 +17,15 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.silianchuangye.sumao.success.HX.Constant;
+import com.silianchuangye.sumao.success.HX.ui.LoginActivity;
 import com.silianchuangye.sumao.success.MainActivity;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.PopupWindowAdaptrer;
@@ -105,6 +108,8 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
     private EditText edt_num;//购买数量
     private String cl_jiner;
     private TextView img_item_cart_buy_add,img_item_cart_buy_sub,tv_item_cart_all_price;
+    private LinearLayout layoutService;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -247,6 +252,9 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
         tv_item_cart_all_price= (TextView) findViewById(R.id.tv_item_cart_all_price);
         img_item_cart_buy_add.setOnClickListener(this);
         img_item_cart_buy_sub.setOnClickListener(this);
+//        Jobs Created 联系客服
+        layoutService = ((LinearLayout) findViewById(R.id.layoutService));
+
     }
 
     @Override
@@ -333,6 +341,9 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
                         Toast.makeText(PreSaleDetailActivity.this,"该产品暂无预售日期",Toast.LENGTH_SHORT).show();
                     }
                 }
+                break;
+            case R.id.layoutService:
+
                 break;
 
         }
@@ -613,6 +624,20 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
         cl_attribute = preSaleDetailBean.getCl_attribute();
         edt_num.setText(purchase_quantity_et.getText().toString());
         tv_item_cart_all_price.setText(Double.valueOf(edt_num.getText().toString())*Double.valueOf(tvPrice_auction.getText().toString())+"");
+
+//        Jobs Created      联系客服跳转 TODO:  需要cl_gongsiId
+        /*layoutService.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentHX = new Intent();
+                intentHX.setClass(PreSaleDetailActivity.this, LoginActivity.class);
+                intentHX.putExtra(Constant.MESSAGE_TO_INTENT_EXTRA, Constant.MESSAGE_TO_DEFAULT);
+//                传入卖家id
+                intentHX.putExtra(Constant.IM_SERVICE_NUMBER, cl_gongsiId);
+                startActivity(intentHX);
+            }
+        });*/
+
         //计算保证金
         payBao();
 //        String bilistr=margin_proportion_et.getText().toString();

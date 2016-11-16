@@ -138,7 +138,7 @@
             android:maxLength="6"
             android:inputType="number"
             />
-        <Button
+        <TextView
             android:id="@+id/New_mobile_phone_verification_code_bn"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/x25"

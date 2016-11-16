@@ -230,7 +230,7 @@ public class PagerOne extends BasePager implements IPagerOneView {
             }
         });
 
-        pagerOnePresenter.getHomeSaleInfoToPagerOneFragment();
+//        pagerOnePresenter.getHomeSaleInfoToPagerOneFragment();
         lvFragmentoneAD.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -315,16 +315,8 @@ public class PagerOne extends BasePager implements IPagerOneView {
     private void initHorn() {
         rlHorn = (RelativeLayout) view.findViewById(R.id.rlFragmentGridView);
         tvFragmentHord = ((MarqueeView) view.findViewById(R.id.tvFragmentHord));
-        pagerOnePresenter.getAnnouncementInfoToPagerOneFragment();
-        tvFragmentHord.setOnItemClickListener(new MarqueeView.OnItemClickListener(){
-            @Override
-            public void onItemClick(int position, TextView textView) {
-                Intent intent = new Intent();
-                intent.putExtra("id",items.get(position).getId());
-                intent.setClass(mActivity,AnnouncementDetailActivity.class);
-                startActivity(intent);
-            }
-        });
+//        pagerOnePresenter.getAnnouncementInfoToPagerOneFragment();
+
     }
 
     public void listAdwords() {
@@ -496,7 +488,7 @@ public class PagerOne extends BasePager implements IPagerOneView {
 
         gallery = (MyGallery) view.findViewById(R.id.fragment_gallery);
         //给Listview填充数据
-        InitImgList();
+//        InitImgList();
 
 
         gallery.setFocusable(true);
@@ -675,4 +667,30 @@ public class PagerOne extends BasePager implements IPagerOneView {
         startActivity(intent);
     }
 
+//    Jobs Created
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser){
+
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+//        pagerOnePresenter.getPagerOneInfoToPagerOneFragment();
+        pagerOnePresenter.getHomeSaleInfoToPagerOneFragment();
+        pagerOnePresenter.getAnnouncementInfoToPagerOneFragment();
+        tvFragmentHord.setOnItemClickListener(new MarqueeView.OnItemClickListener(){
+            @Override
+            public void onItemClick(int position, TextView textView) {
+                Intent intent = new Intent();
+                intent.putExtra("id",items.get(position).getId());
+                intent.setClass(mActivity,AnnouncementDetailActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
 }
