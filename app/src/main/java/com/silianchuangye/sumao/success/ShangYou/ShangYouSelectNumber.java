@@ -39,44 +39,48 @@ public class ShangYouSelectNumber extends AppCompatActivity implements View.OnCl
         modify_name_save.setOnClickListener(this);
         prompt_information = ((TextView) findViewById(R.id.prompt_information));
         //限制数量不能超过两位小数
-        modify_information.addTextChangedListener(new TextWatcher() {
+        EditTextWitcher editTextWitcher = new EditTextWitcher();
+        modify_information.addTextChangedListener(editTextWitcher);
+        modify_information.removeTextChangedListener(editTextWitcher);
+    }
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before,
-                                      int count) {
-                if (s.toString().contains(".")) {
-                    if (s.length() - 1 - s.toString().indexOf(".") > 2) {
-                        s = s.toString().subSequence(0,
-                                s.toString().indexOf(".") + 3);
-                        modify_information.setText(s);
-                        modify_information.setSelection(s.length());
-                    }
-                }
-                if (s.toString().trim().substring(0).equals(".")) {
-                    s = "0" + s;
+    class EditTextWitcher implements TextWatcher {
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before,
+                                  int count) {
+            if (s.toString().contains(".")) {
+                if (s.length() - 1 - s.toString().indexOf(".") > 2) {
+                    s = s.toString().subSequence(0,
+                            s.toString().indexOf(".") + 3);
                     modify_information.setText(s);
-                    modify_information.setSelection(2);
+                    modify_information.setSelection(s.length());
                 }
-
-                if (s.toString().startsWith("0")
-                        && s.toString().trim().length() > 1) {
-                    if (!s.toString().substring(1, 2).equals(".")) {
-                        modify_information.setText(s.subSequence(0, 1));
-                        modify_information.setSelection(1);
-                        return;
-                    }
-                }
-
+            }
+            if (s.toString().trim().substring(0).equals(".")) {
+                s = "0" + s;
+                modify_information.setText(s);
+                modify_information.setSelection(2);
             }
 
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count,
-                                          int after) {
-
+            if (s.toString().startsWith("0")
+                    && s.toString().trim().length() > 1) {
+                if (!s.toString().substring(1, 2).equals(".")) {
+                    modify_information.setText(s.subSequence(0, 1));
+                    modify_information.setSelection(1);
+                    return;
+                }
             }
 
-            @Override
-            public void afterTextChanged(Editable s) {
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count,
+                                      int after) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
 //                LogUtils.log(s.length() + "");
 //                String str = "";
 //                if (s.length() == s.toString().trim().indexOf(".")) {
@@ -84,9 +88,7 @@ public class ShangYouSelectNumber extends AppCompatActivity implements View.OnCl
 //                    modify_information.setText(str);
 //                    modify_information.setSelection(s.length());
 //                }
-            }
-
-        });
+        }
 
     }
 
@@ -105,9 +107,9 @@ public class ShangYouSelectNumber extends AppCompatActivity implements View.OnCl
             prompt_information.setText("*请输入" + titleName);
             prompt_information.setVisibility(View.VISIBLE);
         } else {
-            if (modify_information.getText().toString().endsWith(".")){
-                intent.putExtra("number", modify_information.getText().toString().substring(0,modify_information.getText().toString().trim().length()-1));
-            }else {
+            if (modify_information.getText().toString().endsWith(".")) {
+                intent.putExtra("number", modify_information.getText().toString().substring(0, modify_information.getText().toString().trim().length() - 1));
+            } else {
                 intent.putExtra("number", modify_information.getText().toString());
             }
 

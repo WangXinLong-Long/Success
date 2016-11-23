@@ -115,8 +115,10 @@ public class OrderGoodsActivity extends AppCompatActivity implements View.OnClic
             //现货订单访问数据库的内容
             OrderallFragment all = new OrderallFragment();
             listFragment.add(all);
+//            待支付订单
             OrderStaypayFragment pay = new OrderStaypayFragment();
             listFragment.add(pay);
+//            待发货
             OrderstayshipmentsFragment staygoods = new OrderstayshipmentsFragment();
             listFragment.add(staygoods);
             OrderAlreadygoodsFragment goods = new OrderAlreadygoodsFragment();

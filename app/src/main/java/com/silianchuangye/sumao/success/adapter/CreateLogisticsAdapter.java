@@ -18,6 +18,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.silianchuangye.sumao.success.HX.Constant;
+import com.silianchuangye.sumao.success.HX.ui.LoginActivity;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.bean.Createlogistics_ExpandInfo;
 import com.silianchuangye.sumao.success.fragments.bean.Createlogistics_ListInfo;
@@ -79,7 +81,7 @@ View view,childView;
     }
     ExpandHolder expand;
     @Override
-    public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
+    public View getGroupView(final int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         if(convertView==null){
             convertView=View.inflate(ctx, R.layout.item_create_logistics,null);
             view=convertView;
@@ -90,6 +92,8 @@ View view,childView;
             expand.tv_expand_date= (TextView) convertView.findViewById(R.id.tv_item_create_logistic_date);
             expand.tv_expand_company= (TextView) convertView.findViewById(R.id.tv_item_create_logistics_company_name);
             expand.btn_expand_kefu= (Button) convertView.findViewById(R.id.btn_item_create_logistics_kefu);
+//            Jobs Created 最大可发货数量
+            expand.tv_item_create_logistic_vailable_quantity2 = ((TextView) convertView.findViewById(R.id.tv_item_create_logistic_vailable_quantity2));
             convertView.setTag(expand);
         }else {
             expand = (ExpandHolder) convertView.getTag();
@@ -98,10 +102,16 @@ View view,childView;
         expand.tv_expand_order_name.setText(expandList.get(groupPosition).order_name);
         expand.tv_expand_company.setText(expandList.get(groupPosition).company_name);
         expand.tv_expand_date.setText(expandList.get(groupPosition).date);
+        expand.tv_item_create_logistic_vailable_quantity2.setText(expandList.get(groupPosition).list.get(0).can_num);
         expand.btn_expand_kefu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(ctx,"客服",Toast.LENGTH_SHORT).show();
+                Intent intentHX = new Intent();
+                intentHX.setClass(ctx, LoginActivity.class);
+                intentHX.putExtra(Constant.MESSAGE_TO_INTENT_EXTRA, Constant.MESSAGE_TO_DEFAULT);
+//                传入卖家id
+                intentHX.putExtra(Constant.IM_SERVICE_NUMBER, expandList.get(groupPosition).cl_gongsiId);
+                ctx.startActivity(intentHX);
             }
         });
         return convertView;
@@ -271,6 +281,8 @@ View view,childView;
         TextView tv_expand_company;
         Button btn_expand_kefu;
         RelativeLayout relative_group_item;
+        //            Jobs Created 最大可发货数量
+        TextView tv_item_create_logistic_vailable_quantity2;
     }
      class ViewHolder{
         ImageView img_child_select,img_child_logistics_top_in;

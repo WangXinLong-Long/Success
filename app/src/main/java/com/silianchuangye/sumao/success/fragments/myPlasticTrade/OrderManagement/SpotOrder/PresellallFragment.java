@@ -229,7 +229,7 @@ public class PresellallFragment extends Fragment {
                             JSONObject job1= (JSONObject) j1.get(k);
                             cl_amount=job1.getString("cl_amount");//金额
                             String cl_mingcheng=job1.getString("cl_mingcheng");//产品名称
-                            String cl_fenlei=job1.getString("cl_fenlei");
+                            String cl_fenlei="";
                             Log.e("TAG","mingc=="+cl_mingcheng);
                             List<Map<String,Object>> list1=new ArrayList<Map<String,Object>>();
                             Map<String,Object> map=new Hashtable<String,Object>();

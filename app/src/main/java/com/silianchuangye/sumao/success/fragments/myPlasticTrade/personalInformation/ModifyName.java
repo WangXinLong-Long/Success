@@ -44,6 +44,8 @@ public class ModifyName extends Activity implements View.OnClickListener{
     String message;
     private Intent intent;
     String email,phoneNum,name,i;
+    private SharedPreferences sp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -141,7 +143,7 @@ public class ModifyName extends Activity implements View.OnClickListener{
                 params.setBodyContent(job1.toString());
                 params.addParameter("phoneNumber",phoneNum);
             }
-            SharedPreferences sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+            sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
             String unique = sp.getString("unique", "");
             params.addParameter("_dynSessConf",unique);
             Log.e("TAG","parames------"+params);
@@ -152,7 +154,7 @@ public class ModifyName extends Activity implements View.OnClickListener{
                         if(receivingInformation.equals("修改姓名")) {
                             Toast.makeText(ModifyName.this, "您输入的用户名不符合规则", Toast.LENGTH_SHORT).show();
                         }else{
-                            Toast.makeText(ModifyName.this, "您输入的邮箱不符合规则", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ModifyName.this, "您输入的"+message+"不符合规则", Toast.LENGTH_SHORT).show();
                         }
                     }
                     try {
@@ -161,6 +163,11 @@ public class ModifyName extends Activity implements View.OnClickListener{
 
                         if(changeResult.equals("YES")){
                             Toast.makeText(ModifyName.this,"修改成功",Toast.LENGTH_SHORT).show();
+                            //Jobs Created 首页姓名的刷新
+                            SharedPreferences.Editor edit = sp.edit();
+                            edit.putString("name",modify_information.getText().toString().trim());
+                            edit.commit();
+
                             intent.putExtra(SuMaoConstant.MODIFY_INFORMATION,modify_information.getText().toString().trim());
                             Log.e("TAG","RESULT_OK===="+RESULT_OK);
                             setResult(RESULT_OK, intent);

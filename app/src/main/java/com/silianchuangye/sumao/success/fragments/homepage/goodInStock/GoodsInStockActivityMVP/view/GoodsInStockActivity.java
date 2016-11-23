@@ -28,6 +28,8 @@ import com.jingchen.pulltorefresh.PullToRefreshLayout;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.PreSaleAdapter;
 import com.silianchuangye.sumao.success.custom.customCalendar.CustomGridView;
+import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.UpstreamDirectDetailMVP.bean.DirectSellingBean;
+import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.UpstreamDirectDetailMVP.bean.ProductItemBean;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.bean.GoodsInStockActivityBean;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.bean.SMCl;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.presenter.GoodsInStockActivityPresenter;
@@ -35,6 +37,7 @@ import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInSt
 import com.silianchuangye.sumao.success.model.PreSaleModel;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -109,7 +112,7 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
         goodsInStockActivityPresenter = new GoodsInStockActivityPresenter(this);
 
         tv_screen_title_bar_title = ((TextView) findViewById(R.id.tv_screen_title_bar_title));
-        tv_screen_title_bar_title.setText("现货");
+
         iv_screen_title_bar_search = ((ImageView) findViewById(R.id.iv_screen_title_bar_search));
 //        现在先屏蔽掉，
         iv_screen_title_bar_search.setVisibility(View.INVISIBLE);
@@ -147,14 +150,37 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
         name = new ArrayList<>();
         number = new ArrayList<>();
         Intent intent = getIntent();
-        goodsInStockActivityBean = (GoodsInStockActivityBean)intent.getSerializableExtra("goodsInStockActivityBean");
-        jsonArrayClassification = goodsInStockActivityBean.getSort();
-        jsonArrayApplication = goodsInStockActivityBean.getApplication();
-        jsonArrayRegion = goodsInStockActivityBean.getRegion();
-        smClList = goodsInStockActivityBean.getCl();
-        total = goodsInStockActivityBean.getTotal();
-        adapter = new PreSaleAdapter(this, smClList);
-        pre_sale_listView.setAdapter(adapter);
+        String title = intent.getStringExtra("title");
+        tv_screen_title_bar_title.setText(title);
+        if (title.equals("现货")){
+
+            goodsInStockActivityBean = (GoodsInStockActivityBean)intent.getSerializableExtra("goodsInStockActivityBean");
+            jsonArrayClassification = goodsInStockActivityBean.getSort();
+            jsonArrayApplication = goodsInStockActivityBean.getApplication();
+            jsonArrayRegion = goodsInStockActivityBean.getRegion();
+            smClList = goodsInStockActivityBean.getCl();
+            total = goodsInStockActivityBean.getTotal();
+            adapter = new PreSaleAdapter(this, smClList);
+            pre_sale_listView.setAdapter(adapter);
+        }else {
+            smClList =  new ArrayList<SMCl>();
+            DirectSellingBean directSellingBean = ((DirectSellingBean) intent.getSerializableExtra("directSellingBean"));
+            List<ProductItemBean> productItem = directSellingBean.getProductItem();
+            for (int i = 0; i < productItem.size(); i++) {
+                SMCl smCl = new SMCl();
+                smCl.setCl_cangku(productItem.get(i).getWareHouse());
+                smCl.setCl_id(productItem.get(i).getProductId());
+//                TODO 差价格参数
+                smCl.setCl_jine(productItem.get(i).getProductId());
+
+                smCl.setCl_mingcheng(productItem.get(i).getProductName());
+                smCl.setCl_qiye(productItem.get(i).getSalerEnterpriseName());
+                smCl.setCl_shuliang(productItem.get(i).getQuantity());
+                smClList.add(smCl);
+            }
+            adapter = new PreSaleAdapter(this, smClList);
+            pre_sale_listView.setAdapter(adapter);
+        }
 //        manufacturing_enterprise.setOnClickListener(this);
 //        从网络进行网络请求需要的参数
 //        goodsInStockActivityPresenter.getGoodsInStockInfo(region2, classification2, application2, Nrpp, No);

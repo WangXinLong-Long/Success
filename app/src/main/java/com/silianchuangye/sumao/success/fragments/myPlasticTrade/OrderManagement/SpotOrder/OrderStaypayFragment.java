@@ -199,7 +199,7 @@ public class OrderStaypayFragment extends Fragment {
         x.http().post(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                LogUtils.log("Jobs Created "+result);
+                LogUtils.log("Jobs Created -- 待支付订单 -->"+result);
                 Gson gson = new Gson();
                 ToBePaid toBePaid = gson.fromJson(result, ToBePaid.class);
                 String info = toBePaid.getInfo();
@@ -225,9 +225,9 @@ public class OrderStaypayFragment extends Fragment {
                     orderId=orders.get(i).getOrderId();//订单编号
                     List<Map<String,Object>> list1=new ArrayList<Map<String,Object>>();
                     for(int k=0;k<cl.size();k++){
-                        cl_amount=cl.get(i).getCl_amount();//金额
-                        String cl_mingcheng=cl.get(i).getCl_mingcheng();//产品名称
-                        String cl_fenlei=cl.get(i).getCl_fenlei();
+                        cl_amount=cl.get(k).getCl_amount();//金额
+                        String cl_mingcheng=cl.get(k).getCl_mingcheng();//产品名称
+                        String cl_fenlei="";
                         Log.e("TAG","mingc=="+cl_mingcheng);
 
                         Map<String,Object> map=new Hashtable<String,Object>();

@@ -5,19 +5,17 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.OrderDetailsListViewAdapter;
 import com.silianchuangye.sumao.success.custom.CustomListView;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.CreateLogistics;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.createLogisticsMVP.CreateLogistics;
 import com.silianchuangye.sumao.success.model.OrderDeatilsModel;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
@@ -30,9 +28,7 @@ import org.xutils.x;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Hashtable;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Administrator on 2016/7/7 0007.

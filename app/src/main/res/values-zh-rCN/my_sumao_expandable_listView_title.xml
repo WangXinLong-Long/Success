@@ -36,7 +36,7 @@
         <item>企业用户管理</item>
         <item>收货地址</item>
         <item>开票信息</item>
-        <item>企业等级和积分</item>
+        <!--<item>企业等级和积分</item>-->
     </string-array>
 
     <string-array name="child5_buyer">

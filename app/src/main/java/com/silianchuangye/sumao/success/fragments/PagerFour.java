@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.PhysicalDistributionManagement.ViewLogisticsDemands.ViewLogisticsDemand;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.CreateLogistics;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.createLogisticsMVP.CreateLogistics;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.InvoiceInformationMVP.view.InvoiceInformation;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.ReceiptAddressMVP.view.ReceiptAddress;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.EnterpriseCapitalAccountManagement.FundInfoActivity;
@@ -29,6 +29,7 @@ import com.silianchuangye.sumao.success.fragments.myPlasticTrade.personalInforma
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.personalInformation.PasswordUpdate;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.personalInformation.UserInformation;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.setting.SettingMVP.view.SettingActivity;
+import com.silianchuangye.sumao.success.utils.LogUtils;
 
 /**
  * Created by Administrator on 2016/4/20 0020.
@@ -47,6 +48,8 @@ public class PagerFour extends BasePager {
     private ImageView my_sumao_ib_setting;
     private TextView name_User;
     View view;
+    private SharedPreferences sp;
+
     @Override
     public void myClickSearch() {
 
@@ -61,8 +64,8 @@ public class PagerFour extends BasePager {
 //        String name = ((MainActivity)getActivity()).getName();
 //        Log.d("aaaaaaa",""+name);
 //
-        SharedPreferences sp=getActivity().getSharedPreferences("sumao", Activity.MODE_PRIVATE);
-        String name=sp.getString("name","");
+        sp = getActivity().getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+        String name= sp.getString("name","");
         Log.d("用户名称",name);
         name_User= (TextView) view.findViewById(R.id.my_sumao_tv_name);
         name_User.setText(name);
@@ -224,5 +227,12 @@ public class PagerFour extends BasePager {
     @Override
     public void myClickRight() {
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        LogUtils.log("姓名-->"+sp.getString("name",""));
+        name_User.setText(sp.getString("name",""));
     }
 }

@@ -75,20 +75,7 @@
                 android:text="sdf"
                 android:layout_toRightOf="@id/tv_item_create_logistics_order_people"
                 android:layout_centerVertical="true"/>
-            <TextView
-                android:id="@+id/tv_item_create_logistics_riqi"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/x23"
-                android:text="日期 : "
-                android:layout_toRightOf="@id/tv_item_create_logistics_name"
-                android:layout_centerVertical="true"/>
-            <TextView
-                android:id="@+id/tv_item_create_logistic_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@id/tv_item_create_logistics_riqi"/>
+
             <Button
                 android:id="@+id/btn_item_create_logistics_kefu"
                 android:layout_width="wrap_content"
@@ -99,6 +86,36 @@
                 android:layout_centerVertical="true"
                 android:textColor="@color/selley_lv"
                 android:background="@drawable/button_background_yellow"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tv_item_create_logistics_riqi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x23"
+                android:text="日期 : "
+                android:layout_centerVertical="true"/>
+            <TextView
+                android:id="@+id/tv_item_create_logistic_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/tv_item_create_logistics_riqi"/>
+            <TextView
+                android:id="@+id/tv_item_create_logistics_vailable_quantity1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x23"
+                android:text="最大可发货数量:"
+                android:layout_toRightOf="@id/tv_item_create_logistic_date"/>
+            <TextView
+                android:id="@+id/tv_item_create_logistic_vailable_quantity2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/tv_item_create_logistics_vailable_quantity1"/>
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="match_parent"

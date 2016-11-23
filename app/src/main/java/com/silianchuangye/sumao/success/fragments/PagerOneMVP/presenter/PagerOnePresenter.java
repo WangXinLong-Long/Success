@@ -89,7 +89,7 @@ public class PagerOnePresenter {
         });
     }
 //      现货
-    public   void getGoodsInStockInfo(String region2,String classification2,String application2,int Nrpp,int No){
+    public   void  getGoodsInStockInfo(String region2,String classification2,String application2,int Nrpp,int No){
         IGoodsInStockActivityModel goodsInStockActivityModel = new GoodsInStockActivityModel(region2,classification2,application2,Nrpp,No);
         goodsInStockActivityModel.getGoodsInStockActivityResult(new GoodsInStockActivityCallback() {
             @Override

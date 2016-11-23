@@ -517,6 +517,7 @@ public class CreateLogisticsNeed extends AppCompatActivity implements View.OnCli
                         Toast.makeText(CreateLogisticsNeed.this,"创建物流订单成功",Toast.LENGTH_SHORT).show();
                         Intent intent=new Intent(CreateLogisticsNeed.this, ViewLogisticsDemand.class);
                         startActivity(intent);
+                        finish();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

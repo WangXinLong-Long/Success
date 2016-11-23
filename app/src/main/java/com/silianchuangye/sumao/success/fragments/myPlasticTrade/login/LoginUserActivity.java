@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -25,6 +27,7 @@ import com.silianchuangye.sumao.success.utils.Loding;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
@@ -33,7 +36,7 @@ import org.xutils.x;
 public class LoginUserActivity extends AppCompatActivity {
     ImageView iv_title_bar_logo,
             iv_title_bar_back,
-            iv_title_bar_service ,
+            iv_title_bar_service,
             add_address,
             iv_title_bar_search;
     Button sv_title_bar_serachView;
@@ -52,6 +55,8 @@ public class LoginUserActivity extends AppCompatActivity {
     private String roles;
 
     int str;
+    private EditTextWitcher textWitcher;
+    private EditTextWitcher textWitcher1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +65,19 @@ public class LoginUserActivity extends AppCompatActivity {
         title_Bar();
         db = SQLiteDatabase.openOrCreateDatabase(this.getFilesDir().toString() + "/test.dbs", null);
         et_account_login = (EditText) findViewById(R.id.et_account_login);
+        textWitcher1 = new EditTextWitcher(et_account_login);
+
         et_pass_login = (EditText) findViewById(R.id.et_pass_login);
+        textWitcher = new EditTextWitcher(et_pass_login);
+
+        et_pass_login.addTextChangedListener(textWitcher);
+        et_account_login.addTextChangedListener(textWitcher1);
+
+//        et_account_login.addTextChangedListener(textWitcher);
+//        et_account_login.removeTextChangedListener(textWitcher);
+
         bt_Login = (Button) findViewById(R.id.bt_login);
+
         Intent intent = getIntent();
         roles = intent.getStringExtra("roles");
         LogUtils.log("roles-->" + roles + "<--roles");
@@ -73,8 +89,21 @@ public class LoginUserActivity extends AppCompatActivity {
                     //卖家登录
                     sellerlogin();
                 } else if (roles.equals("buyer")) {
+                    name = et_account_login.getText().toString().trim();
+                    password = et_pass_login.getText().toString().trim();
                     //买家登录功能
-                    buyerlogin();
+                    LogUtils.log("name-->" + name + "<----passowrd--->" + password);
+                    if (name == null || name.isEmpty() || password == null || password.isEmpty()) {
+                        LogUtils.log("没有去掉空格的");
+                        Toast.makeText(LoginUserActivity.this, "用户名或密码不能为空", Toast.LENGTH_SHORT).show();
+                    } else if (name.trim().length() == 0 || name.trim().isEmpty() || password.trim().length() == 0 || password.trim().isEmpty()) {
+                        LogUtils.log("去掉空格的");
+                        Toast.makeText(LoginUserActivity.this, "用户名或密码不能为空", Toast.LENGTH_SHORT).show();
+                    } else {
+                        buyerlogin();
+                    }
+
+
                 }
 
 
@@ -99,6 +128,61 @@ public class LoginUserActivity extends AppCompatActivity {
             }
         });
         str = getIntent().getIntExtra("cart1", 0);
+    }
+
+    class EditTextWitcher implements TextWatcher {
+        private CharSequence temp;//监听前的文本
+        private int editStart;//光标开始位置
+        private int editEnd;//光标结束位置
+        private final int charMaxNum = 28;
+        int length;
+        private EditText watch;
+
+        public EditTextWitcher(EditText watch) {
+            this.watch = watch;
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            if (length < charMaxNum) {
+                if (s.toString().contains(" ")) {
+                    String[] str = s.toString().split(" ");
+                    String str1 = "";
+                    for (int i = 0; i < str.length; i++) {
+                        str1 += str[i];
+                    }
+                    watch.setText(str1);
+                    watch.setSelection(start);
+                }
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            editStart = watch.getSelectionStart();
+            editEnd = watch.getSelectionEnd();
+            length = watch.length() + getChineseNum(watch.getText().toString().trim());
+            if (length > charMaxNum) {
+                s.delete(editStart - 1, editEnd);
+            }
+        }
+
+    }
+
+    public int getChineseNum(String s) {
+        int num = 0;
+        char[] myChar = s.toCharArray();
+        for (int i = 0; i < myChar.length; i++) {
+            if ((char) (byte) myChar[i] != myChar[i]) {
+                num++;
+            }
+        }
+        return num;
     }
 
     public void title_Bar() {
@@ -140,11 +224,10 @@ public class LoginUserActivity extends AppCompatActivity {
     }
 
     private void buyerlogin() {
-        Loding.show( this,"登录中...",false,null);
+        Loding.show(this, "登录中...", false, null);
         sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
         editor = sp.edit();
-        name = et_account_login.getText().toString().trim();
-        password = et_pass_login.getText().toString().trim();
+
 
         RequestParams rp = new RequestParams(SuMaoConstant.SUMAO_IP + "/rest/model/atg/userprofiling/ProfileActor/login");
         rp.addParameter("login", name.trim());
@@ -158,19 +241,20 @@ public class LoginUserActivity extends AppCompatActivity {
                 } else {
 //                    Log.d("object",result);
                     sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
-                    editor=sp.edit();
-                    Log.d("账号的值",name.trim());
-                    editor.putString("zhanghao",name.trim());
+                    editor = sp.edit();
+                    Log.d("账号的值", name.trim());
+                    editor.putString("zhanghao", name.trim());
                     editor.commit();
                     String unique = sp.getString("unique", "");
                     Log.d("唯一标识", unique);
-                    if (unique.equals("") || unique == null||unique.equals("false")) {
+                    if (unique.equals("") || unique == null || unique.equals("false")) {
                         sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
                         editor = sp.edit();
                         RequestParams unique_rp = new RequestParams(SuMaoConstant.SUMAO_IP + "/rest/model/atg/rest/SessionConfirmationActor/getSessionConfirmationNumber");
                         x.http().post(unique_rp, new CommonCallback<String>() {
                             @Override
                             public void onSuccess(String result) {
+                                LogUtils.log("Jobs Created--->" + result);
                                 try {
                                     JSONObject object = new JSONObject(result);
                                     String unique = object.getString("sessionConfirmationNumber");
@@ -180,7 +264,7 @@ public class LoginUserActivity extends AppCompatActivity {
 
                                     editor.putString("unique", unique);
 
-                                    editor.commit();
+
                                     Log.d("唯一标识----------->", unique);
                                 } catch (Exception e) {
                                     Log.d("exception", "解析唯一标识时错误！");
@@ -204,22 +288,19 @@ public class LoginUserActivity extends AppCompatActivity {
                             }
                         });
                     }
-                }
-                try {
-                    JSONObject object = new JSONObject(result);
-                    String name = object.getString("U_name");
+                    JSONObject object = null;
+                    try {
+                        object = new JSONObject(result);
+                        String name = object.getString("U_name");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                     /**
                      * 把姓名储存在SharedPreferences
                      */
                     editor.putString("name", name);
                     editor.commit();
-
-
-                } catch (Exception e) {
-                    Log.d("exception", "解析异常");
-                }
-
-                Loding.dis();
+                    Loding.dis();
                     //接收mainactivity传递过来的参数
                     if (str == 9) {
                         Intent intent = new Intent();
@@ -237,6 +318,7 @@ public class LoginUserActivity extends AppCompatActivity {
                     }
                     GlobalVariable.FLAG = true;
                     LoginUserActivity.this.finish();
+                }
 
 
             }
@@ -261,5 +343,10 @@ public class LoginUserActivity extends AppCompatActivity {
 
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        et_pass_login.removeTextChangedListener(textWitcher);
+        et_account_login.removeTextChangedListener(textWitcher1);
+    }
 }

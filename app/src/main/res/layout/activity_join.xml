@@ -30,7 +30,8 @@
             android:textSize="18sp"
             android:text="我的参团记录"
             />
-        <ImageView
+        <!--Jobs Created 屏蔽掉购物车图表-->
+        <!--<ImageView
             android:layout_width="@dimen/x25"
             android:layout_height="@dimen/x25"
             android:layout_marginTop="@dimen/x10"
@@ -39,7 +40,7 @@
             android:id="@+id/gouwuche"
             android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/x10"
-            />
+            />-->
 
     </RelativeLayout>
     <RelativeLayout

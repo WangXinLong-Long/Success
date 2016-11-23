@@ -11,6 +11,8 @@ public class SMCl implements Serializable {
     private  String cl_cangku;
     private  String cl_shuliang;
     private String cl_jine;
+    private  String cl_id;
+    private  String cl_qiye;
 
     public String getCl_jine() {
         return cl_jine;
@@ -19,9 +21,6 @@ public class SMCl implements Serializable {
     public void setCl_jine(String cl_jine) {
         this.cl_jine = cl_jine;
     }
-
-    private  String cl_id;
-    private  String cl_qiye;
 
     public String getCl_mingcheng() {
         return cl_mingcheng;

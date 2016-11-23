@@ -15,6 +15,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.silianchuangye.sumao.success.HX.Constant;
+import com.silianchuangye.sumao.success.HX.ui.LoginActivity;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.OrderDetailsListViewAdapter;
 import com.silianchuangye.sumao.success.adapter.SpotOrderAdapter;
@@ -107,6 +109,21 @@ public class AlreadyPaidActivity extends Activity implements View.OnClickListene
 //        }
 //        adapter = new SpotOrderAdapter(this,list);
 //        spot_order_listView.setAdapter(adapter);
+
+//        Jobs Created 联系客服
+        Button services = (Button) findViewById(R.id.services);
+        // TODO 联系客服 添加
+//        services.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intentHX = new Intent();
+//                intentHX.setClass(AlreadyPaidActivity.this, LoginActivity.class);
+//                intentHX.putExtra(Constant.MESSAGE_TO_INTENT_EXTRA, Constant.MESSAGE_TO_DEFAULT);
+////                传入卖家id
+//                intentHX.putExtra(Constant.IM_SERVICE_NUMBER, cl_gongsiId);
+//                startActivity(intentHX);
+//            }
+//        });
     }
 
     @Override

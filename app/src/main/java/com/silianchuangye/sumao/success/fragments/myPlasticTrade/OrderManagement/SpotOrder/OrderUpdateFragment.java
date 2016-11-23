@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.jingchen.pulltorefresh.PullToRefreshLayout;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.MyAdapter;
+import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
 
@@ -222,7 +223,7 @@ public class OrderUpdateFragment extends Fragment {
         x.http().post(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Log.e("TAG","result----"+result);
+                LogUtils.log("Jobs Created 已变更订单-->"+result);
                 try {
                     JSONObject job=new JSONObject(result);
                     String info=job.getString("info");
@@ -255,7 +256,7 @@ public class OrderUpdateFragment extends Fragment {
                             JSONObject job1= (JSONObject) j1.get(k);
                             cl_amount=job1.getString("cl_amount");//金额
                             String cl_mingcheng=job1.getString("cl_mingcheng");//产品名称
-                            String cl_fenlei=job1.getString("cl_fenlei");
+                            String cl_fenlei="";
                             Log.e("TAG","mingc=="+cl_mingcheng);
 
                             Map<String,Object> map=new Hashtable<String,Object>();

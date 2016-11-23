@@ -40,6 +40,7 @@ import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformat
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.LoginUserActivity;
 
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.RegisterPhoneMVP.RegisterPhoneView.RegisterPhoneActivity;
+import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
 import org.json.JSONArray;
@@ -226,8 +227,16 @@ public class OpenAuctionActivity extends AppCompatActivity {
         btZhifu_auction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Popupwindow();
-                backgroundAlpha(0.5f);
+//                Jobs Created 判断是否登录
+                SharedPreferences sp = getSharedPreferences("sumao",Context.MODE_PRIVATE);
+                String name = sp.getString("name", "");
+                if (name.equals("")){
+                    Toast.makeText(OpenAuctionActivity.this,"请登录后进行操作",Toast.LENGTH_SHORT).show();
+                }else {
+                    Popupwindow();
+                    backgroundAlpha(0.5f);
+                }
+
             }
         });
         lv_auction.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -859,11 +868,20 @@ public class OpenAuctionActivity extends AppCompatActivity {
                             //参加过并失败的
                             tv_result.setText("竞拍失败");
                             layout_Message.setVisibility(View.VISIBLE);
-                            tv_Message.setText(Message);
+//                            Jobs Created
+                            LogUtils.log("tv_Message"+Message);
+                            if (Message.equals("attendAuction")){
+                                tv_Message.setText("已经参加竞拍");
+                            }else {
+                                tv_Message.setText(Message);
+                            }
+
                         }else if (Success.equals("no")){
                             //点击已经结束，并且失败
                             tv_result.setText("竞拍失败");
                             layout_Message.setVisibility(View.VISIBLE);
+                            //                            Jobs Created
+                            LogUtils.log("tv_Message"+Message);
                             tv_Message.setText(Message);
                         }else if (shifou.equals("no")){
                             Layout_info.setVisibility(View.VISIBLE);

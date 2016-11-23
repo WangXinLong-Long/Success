@@ -2,15 +2,11 @@ package com.silianchuangye.sumao.success.fragments.PagerOneMVP.view;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -41,14 +37,13 @@ import com.silianchuangye.sumao.success.fragments.homepage.groupbuying.GroupBuyi
 import com.silianchuangye.sumao.success.fragments.homepage.groupbuying.GroupBuyingSuccessActivity;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.view.PreSaleDetailActivity;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleMVP.bean.Auction;
-import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleMVP.bean.Cl;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleMVP.bean.Forward;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleMVP.bean.Group;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleMVP.bean.PreSaleBean;
 import com.silianchuangye.sumao.success.fragments.homepage.sumaoconsultMVP.SuMaoConsult;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.LoginUserActivity;
 import com.silianchuangye.sumao.success.fragments.SearchActivityMVP.view.SearchActivity;
-import com.silianchuangye.sumao.success.fragments.homepage.auction.AuctionActivity;
+import com.silianchuangye.sumao.success.fragments.homepage.auction.AuctionMVP.AuctionActivity;
 import com.silianchuangye.sumao.success.HX.Constant;
 import com.silianchuangye.sumao.success.HX.ui.LoginActivity;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.view.GoodsInStockActivity;
@@ -61,9 +56,6 @@ import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 import com.silianchuangye.sumao.success.utils.scrollviewAD.MyGallery;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.ImageAdapter;
-import com.zhy.m.permission.MPermissions;
-import com.zhy.m.permission.PermissionDenied;
-import com.zhy.m.permission.PermissionGrant;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -559,7 +551,7 @@ public class PagerOne extends BasePager implements IPagerOneView {
         Intent intent = new Intent();
         intent.setClass(mActivity, LoginActivity.class);
         intent.putExtra(Constant.MESSAGE_TO_INTENT_EXTRA, Constant.MESSAGE_TO_DEFAULT);
-        intent.putExtra(Constant.IM_SERVICE_NUMBER, "sumaokefu");
+        intent.putExtra(Constant.IM_SERVICE_NUMBER, "塑贸客服");
         startActivity(intent);
     }
 
@@ -632,6 +624,7 @@ public class PagerOne extends BasePager implements IPagerOneView {
         Loding.dis();
         Intent intent = new Intent(mActivity, GoodsInStockActivity.class);
         //Toast.makeText(mActivity, "点击了现货按钮", Toast.LENGTH_SHORT).show();
+        intent.putExtra("title", "现货");
         intent.putExtra("goodsInStockActivityBean",goodsInStockActivityBean);
         startActivity(intent);
     }
@@ -667,15 +660,7 @@ public class PagerOne extends BasePager implements IPagerOneView {
         startActivity(intent);
     }
 
-//    Jobs Created
 
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser){
-
-        }
-    }
 
     @Override
     public void onResume() {

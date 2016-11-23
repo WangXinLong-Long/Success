@@ -104,7 +104,7 @@
         <activity
             android:name=".HeLinJian"
             android:screenOrientation="portrait" />
-        <activity android:name=".bankAndPay.PerBank"/>
+        <!--<activity android:name="bankAndPay.PerBank"/>-->
         <!-- 登陆 -->
         <activity
             android:name=".HX.ui.LoginActivity"
@@ -296,7 +296,7 @@
             android:name=".fragments.homepage.theprice.MidpointsListctivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".fragments.homepage.auction.AuctionActivity"
+            android:name=".fragments.homepage.auction.AuctionMVP.AuctionActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".fragments.myPlasticTrade.OrderManagement.SpotOrder.SpotOrder"
@@ -449,7 +449,7 @@
             android:name=".fragments.type.view.TypeInfoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.CreateLogistics"
+            android:name=".fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.createLogisticsMVP.CreateLogistics"
             android:screenOrientation="portrait" />
         <activity
             android:name=".fragments.homepage.goodInStock.PaymentsOrder"
@@ -569,7 +569,7 @@
             android:name=".fragments.homepage.UpstreamDirectSellingMVP.UpstreamDirectSellingDetailMVP.VipProductList"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".fragments.homepage.UpstreamDirectSellingMVP.UpstreamDirectSellingDetailMVP.UpstreamDirectSellingDetailsActivity"
+            android:name=".fragments.homepage.UpstreamDirectSellingMVP.UpstreamDirectDetailMVP.view.UpstreamDirectSellingDetailsActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".fragments.SellerManagementPlatform.SellerOrderManagement.PayMessage"
