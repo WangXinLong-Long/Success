@@ -260,7 +260,8 @@ public class InvoiceInformation extends Activity implements View.OnClickListener
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (!(data.getStringExtra(SuMaoConstant.MODIFY_INFORMATION).equals("") || data.getStringExtra(SuMaoConstant.MODIFY_INFORMATION).isEmpty())) {
+        String  content = data.getStringExtra(SuMaoConstant.MODIFY_INFORMATION);
+        if (!(content == null||content.equals("") || content.isEmpty())) {
             switch (requestCode) {
                 //        税号
                 case SuMaoConstant.CHANGE_POSITION_ONE:
@@ -346,6 +347,20 @@ public class InvoiceInformation extends Activity implements View.OnClickListener
                         showSaveButton();
                     }
                     break;
+            }
+        }else if (resultCode == 1){
+            String oldBelowPhone = bill_mailing_address_fix_telephone_tv.getText().toString();
+            newBelowPhone = data.getStringExtra(SuMaoConstant.MODIFY_INFORMATION);
+            if (!(oldBelowPhone.equals(newBelowPhone))) {
+                bill_mailing_address_fix_telephone_tv.setText(newBelowPhone);
+                showSaveButton();
+            }
+        }else if (resultCode == 2){
+            String oldzip_code = bill_mailing_address_zip_code_tv.getText().toString();
+            newzip_code = data.getStringExtra(SuMaoConstant.MODIFY_INFORMATION);
+            if (!(oldzip_code.equals(newzip_code))) {
+                bill_mailing_address_zip_code_tv.setText(newzip_code);
+                showSaveButton();
             }
         }
 
