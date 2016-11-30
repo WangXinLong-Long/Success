@@ -84,6 +84,7 @@ public class WangXinLong extends Activity {
 //        11月1日 文件名重复问题
 //        11月8日  更新代码
 //        11月8日  更新代码
+//        11月30日   更改首页内容
         showPayDialog();
         ArrayList<String> arrayList = new ArrayList<>();
         LinkedList<String> linkedList = new LinkedList<>();
