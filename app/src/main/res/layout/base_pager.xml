@@ -4,7 +4,9 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <include layout="@layout/title_bar"/>
+    <include
+        android:id="@+id/fl_title"
+        layout="@layout/title_bar"/>
     <FrameLayout
         android:id="@+id/fl_basepager_content"
         android:layout_width="match_parent"

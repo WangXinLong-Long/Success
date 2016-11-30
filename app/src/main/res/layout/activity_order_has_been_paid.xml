@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/spot_order_title"
+        layout="@layout/child_title_bar" />
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/spot_order_title"
+        android:background="@color/my_sumao_background">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/my_sumao_background">
+
+                <RelativeLayout
+                    android:id="@+id/order_amount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/countdown"
+                    android:layout_marginTop="@dimen/x1"
+                    android:background="@color/white">
+
+                    <TextView
+                        android:id="@+id/the_order_number_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/x5"
+                        android:paddingBottom="@dimen/x5"
+                        android:paddingTop="@dimen/x5"
+                        android:text="@string/my_sumao_the_order_number"
+                        android:textColor="@color/textColor_expandable_listview_hide"
+                        android:textSize="@dimen/x15" />
+
+                    <TextView
+                        android:id="@+id/the_order_number_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/the_order_number_text"
+                        android:paddingBottom="@dimen/x5"
+                        android:paddingTop="@dimen/x5"
+                        android:text="1000000000"
+                        android:textColor="@color/the_order_number_textview_blue"
+                        android:textSize="@dimen/x15" />
+
+                     <Button
+                         android:layout_width="@dimen/x36"
+                         android:layout_height="@dimen/x20"
+                         android:layout_centerVertical="true"
+                         android:layout_toLeftOf="@+id/iv_More"
+                         android:layout_marginRight="@dimen/x5"
+                         android:text="复制"
+                         android:textColor="#59BEE9"
+                         android:textSize="12sp"
+                         android:id="@+id/bt_copy"
+                         android:background="@drawable/text_corner"
+                         />
+                    <ImageView
+                        android:id="@+id/iv_More"
+                        android:layout_width="@dimen/x15"
+                        android:layout_height="@dimen/x15"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/x10"
+                        android:src="@mipmap/my_sumao_iv_order" />
+                </RelativeLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/x1"
+                    android:background="#EEEEF3"
+
+                    android:layout_below="@+id/order_amount"
+                    android:id="@+id/order_line"
+                    android:orientation="horizontal"
+                    ></LinearLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/order_line"
+                    android:layout_marginTop="@dimen/x1"
+                    android:background="@color/white"
+                    android:id="@+id/layout_two"
+                    >
+                    <TextView
+                        android:id="@+id/the_order_price_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/x5"
+                        android:paddingBottom="@dimen/x5"
+                        android:paddingTop="@dimen/x5"
+                        android:text="金额:"
+                        android:textColor="@color/textColor_expandable_listview_hide"
+                        android:textSize="@dimen/x15" />
+
+                    <TextView
+                        android:id="@+id/the_order_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/the_order_price_text"
+                        android:paddingBottom="@dimen/x5"
+                        android:paddingTop="@dimen/x5"
+                        android:text="1000000000"
+                        android:textColor="@color/red"
+                        android:textSize="@dimen/x15" />
+
+                </RelativeLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/x1"
+                    android:background="#EEEEF3"
+
+                    android:layout_below="@+id/layout_two"
+                    android:id="@+id/order_line_line"
+                    android:orientation="horizontal"
+                    ></LinearLayout>
+                <RelativeLayout
+                    android:id="@+id/detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/order_line_line"
+                    android:layout_marginTop="@dimen/x1"
+                    android:background="@color/white">
+
+                    <TextView
+                        android:id="@+id/type1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="@dimen/x5"
+                        android:paddingLeft="@dimen/x5"
+                        android:paddingTop="@dimen/x5"
+                        android:text="@string/type"
+                        android:textSize="@dimen/x13" />
+
+                    <TextView
+                        android:id="@+id/type2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/type1"
+                        android:paddingBottom="@dimen/x5"
+                        android:paddingRight="@dimen/x5"
+                        android:paddingTop="@dimen/x5"
+                        android:text="定价"
+                        android:textSize="@dimen/x13" />
+
+                    <TextView
+                        android:id="@+id/buyer1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/type2"
+                        android:paddingBottom="@dimen/x5"
+                        android:paddingLeft="@dimen/x15"
+                        android:paddingTop="@dimen/x5"
+                        android:text="@string/buyer"
+                        android:textSize="@dimen/x13" />
+
+                    <TextView
+                        android:id="@+id/buyer2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/buyer1"
+                        android:paddingBottom="@dimen/x5"
+                        android:paddingRight="@dimen/x5"
+                        android:paddingTop="@dimen/x5"
+                        android:text="张三"
+                        android:textSize="@dimen/x13" />
+
+                    <TextView
+                        android:id="@+id/state1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/buyer2"
+                        android:paddingBottom="@dimen/x5"
+                        android:paddingLeft="@dimen/x15"
+                        android:paddingTop="@dimen/x5"
+                        android:text="@string/state"
+                        android:textSize="@dimen/x13" />
+
+                    <TextView
+                        android:id="@+id/state2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/state1"
+                        android:paddingBottom="@dimen/x5"
+                        android:paddingRight="@dimen/x5"
+                        android:paddingTop="@dimen/x5"
+                        android:text="待支付1"
+                        android:textSize="@dimen/x13" />
+
+                    <TextView
+                        android:id="@+id/company1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/type1"
+                        android:paddingBottom="@dimen/x5"
+                        android:paddingLeft="@dimen/x5"
+                        android:paddingTop="@dimen/x5"
+                        android:text="@string/company"
+                        android:textSize="@dimen/x13" />
+
+                    <TextView
+                        android:id="@+id/company2"
+                        android:layout_width="@dimen/x210"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/type1"
+                        android:layout_toRightOf="@id/company1"
+                        android:paddingBottom="@dimen/x5"
+                        android:paddingRight="@dimen/x5"
+                        android:paddingTop="@dimen/x5"
+                        android:text="北京四联创业化工集团有限公司"
+                        android:textSize="@dimen/x13" />
+
+                    <Button
+                        android:id="@+id/services"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/x25"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@id/type1"
+                        android:layout_marginBottom="@dimen/x5"
+                        android:layout_marginRight="@dimen/x5"
+                        android:background="@drawable/button_background"
+                        android:text="联系客服"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/x13" />
+                </RelativeLayout>
+
+                <com.silianchuangye.sumao.success.custom.CustomListView
+                    android:id="@+id/spot_order_listView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/detail"
+                    android:layout_marginTop="@dimen/x5"
+                    android:divider="@color/my_sumao_background"
+                    android:background="@color/my_sumao_background"
+                    android:dividerHeight="@dimen/x5"></com.silianchuangye.sumao.success.custom.CustomListView>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/spot_order_listView"
+                    android:layout_marginTop="@dimen/x5">
+
+
+                    <!--<RelativeLayout
+                        android:id="@+id/bottom1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingBottom="@dimen/x5"
+                            android:paddingLeft="@dimen/x10"
+                            android:paddingTop="@dimen/x5"
+                            android:text="@string/Cancel_order"
+                            android:textColor="@color/textColor_expandable_listview_show"
+                            android:textSize="@dimen/x17" />
+
+                        <ImageView
+                            android:layout_width="@dimen/x15"
+                            android:layout_height="@dimen/x15"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="@dimen/x10"
+                            android:src="@mipmap/my_sumao_iv_order" />
+                    </RelativeLayout>-->
+
+                    <RelativeLayout
+                        android:id="@+id/bottom2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/x1"
+                        android:background="@color/white"
+                        android:paddingTop="@dimen/x5"
+                        android:paddingBottom="@dimen/x5"
+                        >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingBottom="@dimen/x5"
+                            android:paddingLeft="@dimen/x10"
+                            android:paddingTop="@dimen/x5"
+                            android:text="@string/Contract_information"
+                            android:textColor="@color/textColor_expandable_listview_show"
+                            android:textSize="@dimen/x15" />
+
+                        <ImageView
+                            android:layout_width="@dimen/x15"
+                            android:layout_height="@dimen/x15"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="@dimen/x10"
+                            android:src="@mipmap/my_sumao_iv_order" />
+                    </RelativeLayout>
+
+                    <!--<RelativeLayout
+                        android:id="@+id/bottom3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/bottom2"
+                        android:layout_marginTop="@dimen/x1"
+                        android:background="@color/white"
+                        android:paddingTop="@dimen/x5"
+                        android:paddingBottom="@dimen/x5">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingBottom="@dimen/x5"
+                            android:paddingLeft="@dimen/x10"
+                            android:paddingTop="@dimen/x5"
+                            android:text="@string/Distribution_plan"
+                            android:textColor="@color/textColor_expandable_listview_show"
+                            android:textSize="@dimen/x15" />
+
+                        <ImageView
+                            android:layout_width="@dimen/x15"
+                            android:layout_height="@dimen/x15"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="@dimen/x10"
+                            android:src="@mipmap/my_sumao_iv_order" />
+                    </RelativeLayout>-->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/x55"
+                        android:text="  "
+                        android:layout_below="@id/bottom2"
+                        />
+                </RelativeLayout>
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

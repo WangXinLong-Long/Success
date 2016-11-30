@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<include
+    android:id="@+id/receip_address_title"
+    layout="@layout/title_bar"></include>
+        <ListView
+            android:layout_below="@id/receip_address_title"
+            android:dividerHeight="@dimen/x7"
+            android:id="@+id/receipt_address_listView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/my_sumao_background"
+            android:divider="@color/my_sumao_background">
+        </ListView>
+
+</RelativeLayout>

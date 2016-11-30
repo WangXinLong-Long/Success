@@ -1,0 +1,1 @@
+-keep class com/cloopen/rest/sdk/CCPRestSDK{*;}

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x30"
+        android:background="#29ABE2"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_dialog_error"
+            android:textColor="#fff"
+            android:textSize="15sp"
+            android:text="订单支付"
+            android:layout_marginLeft="@dimen/x10"
+            android:layout_centerVertical="true"
+            />
+        <ImageView
+            android:layout_width="@dimen/x18"
+            android:layout_height="@dimen/x18"
+            android:id="@+id/iv_dialog_error_cancel"
+            android:src="@mipmap/erroy"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/x10"
+            />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="@dimen/x25"
+            android:layout_height="@dimen/x25"
+            android:src="@mipmap/error_icon"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/x10"
+            android:layout_marginBottom="@dimen/x10"
+            android:id="@+id/iv_error_icon"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_error_text"
+            android:layout_below="@+id/iv_error_icon"
+            android:textColor="@color/red"
+            android:textSize="14sp"
+            android:text="您订单支付失败"
+            android:layout_centerHorizontal="true"
+
+            />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_error_text"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/x10"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_order_number"
+                android:textColor="#29ABE2"
+                android:text="12345678901"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/red"
+                android:layout_marginLeft="@dimen/x5"
+                android:text="支付失败"
+                />
+        </LinearLayout>
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x1"
+        android:background="#EEEEF3"
+        android:layout_marginTop="@dimen/x10"
+        ></LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x30"
+        android:layout_marginBottom="@dimen/x10"
+        android:layout_marginTop="@dimen/x10"
+        >
+
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_background_red"
+            android:textSize="14sp"
+            android:text="重新支付"
+            android:id="@+id/bt_rezhifu"
+            android:textColor="#fff"
+            android:layout_centerHorizontal="true"
+            />
+    </RelativeLayout>
+
+
+</LinearLayout>

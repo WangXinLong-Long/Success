@@ -1,0 +1,14 @@
+#Fat Jar Configuration File
+#Sat Apr 25 17:31:39 CST 2015
+onejar.license.required=true
+manifest.classpath=
+manifest.removesigners=true
+onejar.checkbox=false
+jarname=C\:\\Users\\dodo\\Desktop\\CCP_REST_SDK_JAVA_v2.7r.jar
+manifest.mergeall=true
+manifest.mainclass=com.cloopen.rest.demo.Test
+manifest.file=<createnew>
+jarname.isextern=true
+onejar.expand=
+excludes=
+includes=

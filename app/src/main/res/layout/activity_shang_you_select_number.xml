@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/my_sumao_background"
+    tools:context="com.silianchuangye.sumao.success.ShangYou.ShangYouSelectNumber">
+    <include layout="@layout/child_title_bar"/>
+    <EditText
+        android:id="@+id/modify_information"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/x15"
+        android:layout_marginLeft="@dimen/x15"
+        android:layout_marginRight="@dimen/x15"
+        android:layout_marginBottom="@dimen/x5"
+
+        android:background="@drawable/edit_background"
+        />
+    <TextView
+        android:id="@+id/prompt_information"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/prompt_information"
+        android:textSize="@dimen/x10"
+        android:layout_marginLeft="@dimen/x15"
+        android:textColor="@color/red"
+        android:visibility="invisible"
+        />
+    <Button
+        android:layout_margin="@dimen/x15"
+        android:id="@+id/modify_name_save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_background_blue"
+        android:text="@string/modify_name_save"
+        android:onClick="onClick"
+        android:textColor="@color/white"
+        android:textSize="@dimen/x15"
+        />
+</LinearLayout>

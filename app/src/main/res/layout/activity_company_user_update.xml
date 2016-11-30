@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context=".fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.CompanyUserUpdateActivity">
+<include
+    android:id="@+id/layouttop_update"
+    layout="@layout/title_bar"></include>
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lvupdate_company_user"
+        android:layout_below="@+id/layouttop_update"
+        ></ListView>
+<Button
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/btsave_company_user_update"
+    android:layout_below="@+id/lvupdate_company_user"
+    android:background="@drawable/button_background_blue"
+    android:layout_marginTop="@dimen/x10"
+    android:layout_marginLeft="@dimen/x10"
+    android:layout_marginRight="@dimen/x10"
+    android:text="保存修改"
+    android:textColor="#fff"
+    android:textSize="15sp"
+    />
+</RelativeLayout>

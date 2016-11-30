@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="#fff"
+    android:orientation="vertical"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x40"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:text="保证金金额 : "/>
+        <TextView
+            android:id="@+id/tv_pay"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:textColor="@color/red"
+            android:layout_height="40dp"
+            android:text="1012"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x1"
+        android:background="#EEEEF3"
+        ></LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y30"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="资金账户支付"
+            android:textStyle="bold"
+            android:textColor="#85CFEF"
+            android:textSize="16sp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/x10"
+
+            />
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x1"
+        android:background="#EEEEF3"
+        ></LinearLayout>
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lv_popupwindow_auction"
+        ></ListView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x1"
+        android:background="#EEEEF3"
+        ></LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y30">
+
+        <Button
+            android:layout_width="@dimen/x150"
+            android:layout_height="match_parent"
+            android:id="@+id/btZhifu"
+            android:textColor="#fff"
+            android:background="#1FA7E1"
+            android:layout_alignParentRight="true"
+            android:text="支付保证金"
+            android:textSize="16sp"
+            />
+    </RelativeLayout>
+
+</LinearLayout>

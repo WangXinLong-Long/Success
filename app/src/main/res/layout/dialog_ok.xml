@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#fff"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x30"
+        android:background="#29ABE2"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_dialog_error"
+            android:textColor="#fff"
+            android:textSize="15sp"
+            android:text="订单支付"
+            android:layout_marginLeft="@dimen/x10"
+            android:layout_centerVertical="true"
+            />
+        <ImageView
+            android:layout_width="@dimen/x18"
+            android:layout_height="@dimen/x18"
+            android:id="@+id/iv_dialog_ok_cancel"
+            android:src="@mipmap/erroy"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/x10"
+            />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="@dimen/x25"
+            android:layout_height="@dimen/x25"
+            android:src="@mipmap/ok_icon"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/x10"
+            android:layout_marginBottom="@dimen/x10"
+            android:id="@+id/iv_ok_icon"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_ok_text"
+            android:layout_below="@+id/iv_ok_icon"
+            android:textColor="#8CC63F"
+            android:textSize="14sp"
+            android:text="您订单支付成功"
+            android:layout_centerHorizontal="true"
+
+            />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_ok_text"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/x10"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_order_number_ok"
+                android:textColor="#29ABE2"
+
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#8CC63F"
+                android:layout_marginLeft="@dimen/x5"
+                android:text="支付成功"
+                />
+        </LinearLayout>
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x1"
+        android:background="#EEEEF3"
+        android:layout_marginTop="@dimen/x10"
+        ></LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x40"
+        android:layout_marginBottom="@dimen/x10"
+        android:layout_marginTop="@dimen/x10"
+        >
+        <Button
+            android:id="@+id/btn_ok_dialog"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/x30"
+            android:text="确定"
+            android:textColor="@color/selley_lv"
+            android:background="@drawable/button_background_blue"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"/>
+<LinearLayout
+    android:id="@+id/linear_bottem_ok"
+    android:layout_width="wrap_content"
+    android:layout_height="@dimen/x30"
+    android:layout_centerHorizontal="true"
+    >
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_background_blue"
+            android:textSize="14sp"
+            android:text="订单详情"
+            android:id="@+id/bt_my_order"
+            android:textColor="#fff"
+
+            />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_background_green"
+            android:textSize="14sp"
+            android:text="继续购物"
+            android:id="@+id/bt_wulliu"
+            android:textColor="#fff"
+            android:layout_centerHorizontal="true"
+            android:layout_toRightOf="@+id/bt_my_order"
+            android:layout_marginLeft="@dimen/x30"
+
+            />
+</LinearLayout>
+    </RelativeLayout>
+
+
+</LinearLayout>
+

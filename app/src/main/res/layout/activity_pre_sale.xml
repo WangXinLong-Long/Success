@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/my_sumao_background">
+
+    <include
+        android:id="@+id/pre_sale_title"
+        layout="@layout/screen_title_bar" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x40"
+        android:layout_below="@id/pre_sale_title"
+        android:background="#E6E6E6"
+        android:id="@+id/selection_condition"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x30"
+            android:layout_marginTop="@dimen/x5"
+            android:layout_marginBottom="@dimen/x2"
+            android:orientation="horizontal"
+            android:weightSum="4"
+            android:background="#fff"
+            >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/classification1"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/classification"
+                    android:text="分类"
+                    android:layout_centerInParent="true"
+                    android:textColor="#000"
+                    android:textSize="14sp"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    />
+            </RelativeLayout>
+            <LinearLayout
+                android:layout_width="@dimen/x1"
+                android:layout_height="match_parent"
+                android:background="#E6E6E6"
+                ></LinearLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/application1"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/application"
+                    android:text="应用"
+                    android:layout_centerInParent="true"
+                    android:textColor="#000"
+                    android:textSize="14sp"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    />
+            </RelativeLayout>
+            <LinearLayout
+                android:layout_width="@dimen/x1"
+                android:layout_height="match_parent"
+                android:background="#E6E6E6"
+                ></LinearLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/region1"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/region"
+                    android:text="地区"
+                    android:layout_centerInParent="true"
+                    android:textColor="#000"
+                    android:textSize="14sp"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    />
+            </RelativeLayout>
+            <LinearLayout
+                android:layout_width="@dimen/x1"
+                android:layout_height="match_parent"
+                android:background="#E6E6E6"
+                ></LinearLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/screen1"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/screen"
+                    android:text="筛选"
+                    android:layout_centerInParent="true"
+                    android:textColor="#000"
+                    android:textSize="14sp"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    />
+            </RelativeLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <!--<LinearLayout
+        android:orientation="horizontal"
+        android:id="@+id/selection_condition"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pre_sale_title"
+        android:layout_marginTop="@dimen/x5"
+        android:background="@color/white"
+        android:weightSum="4"
+        >
+
+        <TextView
+            android:id="@+id/classification"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="分类"
+            android:paddingLeft="@dimen/x10"
+            />
+
+        <TextView
+            android:id="@+id/application"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="应用" />
+
+        <TextView
+            android:id="@+id/region"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="地区"
+            />
+        <TextView
+            android:id="@+id/manufacturing_enterprise"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="生产企业"
+            android:paddingRight="@dimen/x10"/>
+
+    </LinearLayout>-->
+<TextView
+    android:id="@+id/split_line"
+    android:layout_below="@id/selection_condition"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/x1"
+    android:background="@color/my_sumao_background"/>
+
+    <com.jingchen.pulltorefresh.PullToRefreshLayout
+        android:id="@+id/refresh_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/split_line">
+    <com.jingchen.pulltorefresh.PullableListView
+        android:id="@+id/pre_sale_listView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:background="@color/white"
+        ></com.jingchen.pulltorefresh.PullableListView>
+    </com.jingchen.pulltorefresh.PullToRefreshLayout>
+
+   <!-- <ListView
+        android:id="@+id/pre_sale_listView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/split_line"
+
+        android:background="@color/white"
+        >
+
+    </ListView>-->
+
+</RelativeLayout>

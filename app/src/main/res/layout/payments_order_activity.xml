@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/my_sumao_background">
+
+    <include
+        android:id="@+id/title_payments_order_activity"
+        layout="@layout/title_bar_white"></include>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:layout_below="@id/title_payments_order_activity"
+        >
+
+
+
+     <ListView
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:id="@+id/lbDem"
+         android:background="@color/white"
+         ></ListView>
+    </LinearLayout>
+    <RelativeLayout
+        android:id="@+id/Layout_Button_Open"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x40"
+        android:layout_alignParentBottom="true"
+
+        > <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="3"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        >
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:layout_marginLeft="@dimen/x20">
+            <TextView
+                android:id="@+id/total_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="合计金额:"
+                android:layout_marginTop="@dimen/x15"
+                />
+            <TextView
+                android:id="@+id/tv_payments_order_money"
+                android:layout_toRightOf="@id/total_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:textSize="@dimen/x15"
+                android:textColor="@color/red"
+                android:layout_marginTop="@dimen/x15"
+                />
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/buy_immediately"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textColor="#fff"
+            android:background="#0071BC"
+            android:textStyle="bold"
+            android:text="立即购买"
+            android:textSize="16sp"
+            />
+    </LinearLayout>
+
+    </RelativeLayout>
+</RelativeLayout>

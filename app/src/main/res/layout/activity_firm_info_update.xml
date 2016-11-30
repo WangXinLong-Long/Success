@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EEEEF3"
+    tools:context=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoUpdateMVP.view.FirmInfoUpdateActivity">
+  <include
+      android:id="@+id/layoutTop_firm_info_update"
+      layout="@layout/title_bar"></include>
+    <ListView
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lvUpdate_firm_info"
+        android:layout_marginTop="@dimen/x10"
+        android:layout_below="@+id/layoutTop_firm_info_update"
+        ></ListView>
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/x1"
+      android:background="#EEEEF3"
+      android:orientation="horizontal"
+      android:layout_below="@+id/lvUpdate_firm_info"
+      android:id="@+id/layoutLine"
+      ></LinearLayout>
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/x40"
+      android:layout_below="@+id/layoutLine"
+      android:background="#fff"
+      android:id="@+id/layout"
+      >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_firm_info"
+        android:text="企业注册证件"
+        android:layout_marginLeft="@dimen/x10"
+        android:layout_marginTop="@dimen/x13"
+        android:textSize="14sp"
+        />
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/sp_firm_info"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/x10"
+        android:layout_marginRight="@dimen/x10"
+        android:entries="@array/name"
+        android:requiresFadingEdge="none"
+        android:spinnerMode="dropdown"
+        android:dropDownVerticalOffset="@dimen/x20"
+        ></Spinner>
+
+
+  </RelativeLayout>
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/x1"
+      android:layout_below="@+id/layout"
+      android:id="@+id/aaaa"
+      android:background="#EEEEF3"
+      android:orientation="horizontal"
+      ></LinearLayout>
+  <ListView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:id="@+id/lvUpdate_firm_info_two"
+
+      android:layout_below="@+id/aaaa"></ListView>
+</RelativeLayout>

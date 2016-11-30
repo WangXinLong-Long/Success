@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context="com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation.FirmActivity">
+    <include
+        android:id="@+id/layoutTop_register"
+        layout="@layout/title_bar"></include>
+     <ListView
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:id="@+id/lv_province"
+         android:layout_below="@+id/layoutTop_register"
+         ></ListView>
+  <!--  <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x45"
+        android:layout_below="@+id/lv_province"
+        android:layout_marginTop="@dimen/x8"
+        android:background="#fff"
+        android:id="@+id/layout_bottom"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/x10"
+            android:textColor="#111"
+            android:textSize="14sp"
+            android:text="地址详情"
+            />
+        <ImageView
+            android:layout_width="@dimen/x15"
+            android:layout_height="@dimen/x15"
+            android:id="@+id/iv_more"
+            android:src="@mipmap/my_sumao_iv_order"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/x10"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_xiangsi_dizhi"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/iv_more"
+            android:layout_marginRight="@dimen/x3"
+            android:textSize="14sp"
+            />
+
+    </RelativeLayout>-->
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/x10"
+        android:layout_marginLeft="@dimen/x10"
+        android:layout_marginTop="@dimen/x20"
+        android:background="@drawable/button_background_blue"
+        android:text="保存 "
+        android:textColor="#fff"
+        android:layout_below="@+id/lv_province"
+        android:id="@+id/bt_save"
+        />
+</RelativeLayout>

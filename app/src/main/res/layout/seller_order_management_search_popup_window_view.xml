@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <RelativeLayout
+        android:id="@+id/seller_order_management_search_content"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y260"
+        android:background="@color/white">
+        <RelativeLayout
+            android:id="@+id/seller_order_management_name_of_seller"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+           >
+
+            <TextView
+                android:id="@+id/seller_order_management_name_of_seller1"
+                android:layout_width="@dimen/x200"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/x5"
+                android:layout_marginLeft="@dimen/x5"
+                android:layout_marginRight="@dimen/x15"
+                android:layout_marginTop="@dimen/x5"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/textview_background" />
+            <TextView
+                android:layout_toLeftOf="@id/seller_order_management_name_of_seller1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="卖方企业名称:"
+                android:layout_centerVertical="true"
+                />
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/seller_order_management_name_of_buyer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/seller_order_management_name_of_seller">
+
+            <TextView
+                android:id="@+id/seller_order_management_name_of_buyer1"
+                android:layout_width="@dimen/x200"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/x5"
+                android:layout_marginLeft="@dimen/x5"
+                android:layout_marginRight="@dimen/x15"
+                android:layout_marginTop="@dimen/x5"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/textview_background" />
+            <TextView
+                android:layout_toLeftOf="@id/seller_order_management_name_of_buyer1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="买方企业名称:"
+                android:layout_centerVertical="true"
+                />
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/seller_order_management_order_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/seller_order_management_name_of_buyer">
+
+            <TextView
+                android:id="@+id/seller_order_management_order_type1"
+                android:layout_width="@dimen/x200"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/x5"
+                android:layout_marginLeft="@dimen/x5"
+                android:layout_marginRight="@dimen/x15"
+                android:layout_marginTop="@dimen/x5"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/textview_background" />
+            <ImageView
+                android:layout_width="@dimen/x17"
+                android:layout_height="@dimen/x17"
+                android:src="@mipmap/drop_down"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/x17"
+                android:layout_marginTop="@dimen/x8"
+                />
+            <TextView
+                android:layout_toLeftOf="@id/seller_order_management_order_type1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="订单类型:"
+                android:layout_centerVertical="true"
+                />
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/seller_order_management_order_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/seller_order_management_order_type">
+
+            <TextView
+                android:id="@+id/seller_order_management_order_status1"
+                android:layout_width="@dimen/x200"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/x5"
+                android:layout_marginLeft="@dimen/x5"
+                android:layout_marginRight="@dimen/x15"
+                android:layout_marginTop="@dimen/x5"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/textview_background" />
+            <ImageView
+                android:layout_width="@dimen/x17"
+                android:layout_height="@dimen/x17"
+                android:src="@mipmap/drop_down"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/x17"
+                android:layout_marginTop="@dimen/x8"
+                />
+            <TextView
+                android:layout_toLeftOf="@id/seller_order_management_order_status1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="订单状态:"
+                android:layout_centerVertical="true"
+                />
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/seller_order_management_product_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/seller_order_management_order_status">
+
+            <TextView
+                android:id="@+id/seller_order_management_product_name1"
+                android:layout_width="@dimen/x200"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/x5"
+                android:layout_marginLeft="@dimen/x5"
+                android:layout_marginRight="@dimen/x15"
+                android:layout_marginTop="@dimen/x5"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/textview_background" />
+            <TextView
+                android:layout_toLeftOf="@id/seller_order_management_product_name1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="产品名称:"
+                android:layout_centerVertical="true"
+                />
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/seller_order_management_order_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/seller_order_management_product_name">
+
+            <RelativeLayout
+                android:id="@+id/seller_order_management_order_date1"
+                android:layout_width="@dimen/x200"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/x5"
+                android:layout_marginLeft="@dimen/x5"
+                android:layout_marginRight="@dimen/x15"
+                android:layout_marginTop="@dimen/x5"
+                android:layout_alignParentRight="true">
+                <RelativeLayout
+                    android:id="@+id/order_date_start"
+                    android:layout_width="@dimen/x90"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/order_date_start1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/textview_background"
+                        android:singleLine="false"
+                        android:maxEms="8"
+                    />
+                    <ImageView
+                        android:id="@+id/start_candela"
+                        android:layout_width="@dimen/x17"
+                        android:layout_height="@dimen/x17"
+                        android:src="@mipmap/candela"
+                        android:layout_alignRight="@id/order_date_start1"
+                        android:layout_marginRight="@dimen/x2"
+                        android:layout_marginTop="@dimen/x2"
+                        />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/order_date_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="至"
+                    android:layout_toRightOf="@id/order_date_start"
+                    />
+                <RelativeLayout
+                    android:id="@+id/order_date_end"
+                    android:layout_width="@dimen/x90"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true">
+                    <TextView
+                        android:id="@+id/order_date_end1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/textview_background"
+                        android:singleLine="false"
+                        android:maxLength="11"
+                        android:maxEms="8"
+                        />
+                    <ImageView
+                        android:layout_alignParentEnd="true"
+                        android:id="@+id/end_candela"
+                        android:layout_width="@dimen/x17"
+                        android:layout_height="@dimen/x17"
+                        android:src="@mipmap/candela"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="@dimen/x2"
+                        android:layout_marginTop="@dimen/x2"
+                        />
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_toLeftOf="@id/seller_order_management_order_date1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="下单日期:"
+                android:layout_centerVertical="true"
+                />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/seller_order_management_order_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/seller_order_management_order_date">
+
+            <TextView
+                android:id="@+id/seller_order_management_order_number1"
+                android:layout_width="@dimen/x200"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/x5"
+                android:layout_marginLeft="@dimen/x5"
+                android:layout_marginRight="@dimen/x15"
+                android:layout_marginTop="@dimen/x5"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/textview_background" />
+            <TextView
+                android:layout_toLeftOf="@id/seller_order_management_order_number1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="订单编号:"
+                android:layout_centerVertical="true"
+                />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/seller_order_management_billing_statusr"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/seller_order_management_order_number">
+
+            <TextView
+                android:id="@+id/seller_order_management_billing_statusr1"
+                android:layout_width="@dimen/x200"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/x5"
+                android:layout_marginLeft="@dimen/x5"
+                android:layout_marginRight="@dimen/x15"
+                android:layout_marginTop="@dimen/x5"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/textview_background" />
+            <TextView
+                android:layout_toLeftOf="@id/seller_order_management_billing_statusr1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="开票状态:"
+                android:layout_centerVertical="true"
+                />
+            <ImageView
+                android:layout_width="@dimen/x17"
+                android:layout_height="@dimen/x17"
+                android:src="@mipmap/drop_down"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/x17"
+                android:layout_marginTop="@dimen/x8"
+                />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/seller_order_management_salesman"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/seller_order_management_billing_statusr">
+
+            <TextView
+                android:id="@+id/seller_order_management_salesman1"
+                android:layout_width="@dimen/x200"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/x5"
+                android:layout_marginLeft="@dimen/x5"
+                android:layout_marginRight="@dimen/x15"
+                android:layout_marginTop="@dimen/x5"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/textview_background" />
+            <TextView
+                android:layout_toLeftOf="@id/seller_order_management_salesman1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="业务员:"
+                android:layout_centerVertical="true"
+                />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/seller_order_management_examination_and_approval_of_people"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/seller_order_management_salesman">
+
+            <TextView
+                android:id="@+id/seller_order_management_examination_and_approval_of_people1"
+                android:layout_width="@dimen/x200"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/x5"
+                android:layout_marginLeft="@dimen/x5"
+                android:layout_marginRight="@dimen/x15"
+                android:layout_marginTop="@dimen/x5"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/textview_background" />
+            <TextView
+                android:layout_toLeftOf="@id/seller_order_management_examination_and_approval_of_people1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="审批人:"
+                android:layout_centerVertical="true"
+                />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/seller_order_management_examination_and_approval_of_people">
+
+
+            <TextView
+                android:id="@+id/tv_lime"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/x1"
+                android:background="@color/my_sumao_background"
+                android:layout_marginTop="@dimen/x5"
+                />
+
+            <Button
+                android:id="@+id/btn_pop_order"
+                android:layout_width="@dimen/x110"
+                android:layout_height="@dimen/x35"
+                android:text="立即查询"
+                android:layout_below="@id/tv_lime"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/x5"
+                android:textColor="@color/selley_lv"
+                android:layout_marginBottom="@dimen/x5"
+                android:background="@drawable/button_background_blue"
+                />
+        </RelativeLayout>
+
+
+        <ListView
+            android:id="@+id/order_type_list_view"
+            android:layout_width="@dimen/x200"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/seller_order_management_order_type"
+            android:layout_marginRight="@dimen/x15"
+            android:layout_alignParentRight="true"
+            android:visibility="gone"
+            android:background="@mipmap/a">
+        </ListView>
+
+        <ListView
+            android:id="@+id/order_status_list_view"
+            android:layout_width="@dimen/x200"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/seller_order_management_order_status"
+            android:layout_marginRight="@dimen/x15"
+            android:layout_alignParentRight="true"
+            android:visibility="gone"
+            android:background="@mipmap/a">
+        </ListView>
+
+        <ListView
+            android:id="@+id/billing_statusr_list_view"
+            android:layout_width="@dimen/x200"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/seller_order_management_billing_statusr"
+            android:layout_marginRight="@dimen/x15"
+            android:layout_alignParentRight="true"
+            android:visibility="gone"
+            android:background="@mipmap/a">
+        </ListView>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_below="@id/seller_order_management_search_content"
+        android:id="@+id/bottom_pre_sale_search"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y400"
+        android:background="#AF000000"
+        android:clickable="true"
+        android:orientation="vertical">
+
+    </LinearLayout>
+
+</RelativeLayout>

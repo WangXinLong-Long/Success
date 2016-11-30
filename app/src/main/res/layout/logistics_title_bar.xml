@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/title_height"
+    android:background="@color/zixun_topbg">
+    <ImageView
+        android:id="@+id/img_logistics_title_bar_back"
+        android:layout_width="@dimen/x17"
+        android:layout_height="@dimen/x17"
+        android:src="@mipmap/back"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/x10"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="创建物流需求"
+        android:textSize="18sp"
+        android:textColor="@color/selley_lv"
+        android:layout_centerInParent="true"
+        />
+    <TextView
+        android:id="@+id/tv_logistics_title_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="取消"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/x10"
+        android:layout_centerVertical="true"
+        android:textColor="@color/selley_lv"
+        android:textSize="16sp"/>
+</RelativeLayout>

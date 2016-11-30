@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto" >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <FrameLayout
+                android:id="@+id/fragemnet_a"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/y100"
+                android:background="@mipmap/spannerbackground">
+
+                <com.silianchuangye.sumao.success.utils.scrollviewAD.MyGallery
+                    android:id="@+id/fragment_gallery"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"></com.silianchuangye.sumao.success.utils.scrollviewAD.MyGallery>
+            </FrameLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_icon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/x15"
+                android:layout_marginTop="@dimen/y88"
+                android:gravity="right"
+                android:orientation="horizontal"></LinearLayout>
+
+            <GridView
+                android:id="@+id/gvfragmentone"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/y96"
+                android:layout_below="@id/fragemnet_a"
+                android:horizontalSpacing="@dimen/x2"
+                android:numColumns="5"
+                android:verticalSpacing="@dimen/x2"
+
+                ></GridView>
+
+            <RelativeLayout
+                android:id="@+id/rlFragmentGridView"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/y34"
+                android:layout_below="@+id/gvfragmentone"
+                android:background="#E6E6E6">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/y26"
+                    android:layout_marginLeft="@dimen/x10"
+                    android:layout_marginRight="@dimen/x10"
+                    android:layout_marginTop="@dimen/y4"
+                    android:background="#fff">
+
+                    <ImageView
+                        android:id="@+id/ivFragmentoneHord"
+                        android:layout_width="@dimen/x25"
+                        android:layout_height="@dimen/y20"
+                        android:layout_marginLeft="@dimen/x10"
+                        android:layout_marginTop="@dimen/y3"
+                        android:src="@mipmap/hord" />
+
+                   <!-- <TextView
+                        android:id="@+id/tvFragmentHord"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/x5"
+                        android:layout_marginTop="@dimen/y3"
+                        android:layout_toRightOf="@+id/ivFragmentoneHord"
+                        android:text="2016年最新采购优惠上9.5折"
+                        android:textSize="18sp" />-->
+                    <com.silianchuangye.sumao.success.utils.MarqueeView
+                        android:id="@+id/tvFragmentHord"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/x5"
+                        android:layout_marginTop="@dimen/y5"
+                        android:layout_toRightOf="@+id/ivFragmentoneHord"
+                        app:mvAnimDuration="1000"
+                        app:mvInterval="3000"
+                        app:mvTextColor="@color/colorPrimary"
+                        app:mvTextSize="18sp"></com.silianchuangye.sumao.success.utils.MarqueeView>
+
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+
+                android:id="@+id/rlFragmentAdwords"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/y138"
+                android:layout_below="@+id/rlFragmentGridView">
+
+                <RelativeLayout
+                    android:id="@+id/one"
+                    android:layout_width="@dimen/x115"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/ivFragmentAdwords"
+                        android:layout_width="@dimen/x60"
+                        android:layout_height="@dimen/y50"
+                        android:layout_marginLeft="@dimen/x25"
+                        android:layout_marginTop="@dimen/x40"
+                        android:src="@mipmap/adeordsinfo" />
+
+                    <TextView
+                        android:id="@+id/tvFragmentAdwords"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/ivFragmentAdwords"
+                        android:layout_marginLeft="@dimen/x15"
+                        android:layout_marginTop="@dimen/x5"
+                        android:text="竞价信息"
+                        android:textColor="#39BCB3"
+                        android:textSize="20sp" />
+
+                </RelativeLayout>
+
+                <ListView
+                    android:id="@+id/lvFragmentAdwords"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_toRightOf="@+id/one"
+                    android:scrollbars="none"
+
+                    ></ListView>
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/ivFragmentoneAds"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:layout_below="@id/rlFragmentAdwords"
+                android:visibility="gone" />
+
+            <RelativeLayout
+                android:id="@+id/rlFragmentGroupon"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/y138"
+                android:layout_below="@id/ivFragmentoneAds"
+                android:background="#fff123"
+
+                >
+
+                <RelativeLayout
+                    android:id="@+id/two"
+                    android:layout_width="@dimen/x115"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/ivFragmentGroup"
+                        android:layout_width="@dimen/x60"
+                        android:layout_height="@dimen/y50"
+                        android:layout_marginLeft="@dimen/x25"
+                        android:layout_marginTop="@dimen/y40"
+                        android:src="@mipmap/grouponicon" />
+
+                    <TextView
+                        android:id="@+id/tvFragmentGroupon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/ivFragmentGroup"
+                        android:layout_marginLeft="@dimen/x15"
+                        android:layout_marginTop="@dimen/x5"
+                        android:text="团购信息"
+                        android:textColor="#F7931E"
+                        android:textSize="20sp" />
+
+                </RelativeLayout>
+
+                <ListView
+                    android:id="@+id/lvFragmentoneGroupon"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_toRightOf="@+id/two"
+
+                    android:scrollbars="none"></ListView>
+            </RelativeLayout>
+
+            <GridView
+                android:id="@+id/gvFragmentoneAd"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_below="@+id/rlFragmentGroupon"
+                android:numColumns="3"
+                android:visibility="gone"></GridView>
+
+            <RelativeLayout
+                android:id="@+id/rlFragmentPresell"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/y138"
+                android:layout_below="@id/gvFragmentoneAd"
+                android:background="#eaabd2"
+
+                >
+
+                <RelativeLayout
+                    android:id="@+id/three"
+                    android:layout_width="@dimen/x115"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/ivFragmentoneAd"
+                        android:layout_width="@dimen/x60"
+                        android:layout_height="@dimen/y50"
+                        android:layout_marginLeft="@dimen/x25"
+                        android:layout_marginTop="@dimen/y40"
+                        android:src="@mipmap/presellicon" />
+
+                    <TextView
+                        android:id="@+id/tvFragmentPresell"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/ivFragmentoneAd"
+                        android:layout_marginLeft="@dimen/x15"
+                        android:text="预售信息"
+                        android:textColor="#4AB6E4"
+                        android:textSize="20sp" />
+                </RelativeLayout>
+
+                <ListView
+                    android:id="@+id/lvFragmentoneAD"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_toRightOf="@+id/three"
+                    android:scrollbars="none"></ListView>
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+    </ScrollView>
+</LinearLayout>

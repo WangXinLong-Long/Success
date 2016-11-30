@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="name">
+        <item>三证合一</item>
+        <item>三证独立</item>
+    </string-array>
+    <string-array name="name1">
+        <item>LDPE</item>
+    </string-array>
+    <string-array name="name2">
+        <item>LLDPE</item>
+    </string-array>
+    <string-array name="name3">
+        <item>其他</item>
+    </string-array>
+</resources>

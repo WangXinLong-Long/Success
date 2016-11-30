@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="10dp"
+    android:paddingTop="10dp"
+    android:paddingLeft="15dp"
+    android:background="@color/expandable_listview_gray"
+    >
+
+    <TextView
+        android:layout_centerVertical="true"
+        android:id="@+id/tv_my_sumao_child"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="We will rock you"
+        android:layout_marginLeft="@dimen/x15"
+
+        />
+    <ImageView
+        android:layout_alignParentRight="true"
+        android:layout_width="@dimen/x15"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/my_sumao_iv_order"
+        android:layout_centerVertical="true"
+        android:paddingRight="@dimen/x10"
+
+        />
+</RelativeLayout>

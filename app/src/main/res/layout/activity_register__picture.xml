@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".fragments.myPlasticTrade.register.RegisterPicture">
+    <ImageView
+        android:id="@+id/picture"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y300" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="请上传图片"
+        android:textColor="@color/red"
+        android:layout_below="@id/picture"
+        android:id="@+id/prompt"
+        android:visibility="gone"
+        />
+    <include
+        layout="@layout/child_title_bar"/>
+
+    <Button
+        android:id="@+id/save"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="@dimen/x15"
+        android:layout_marginRight="@dimen/x15"
+        android:background="@drawable/button_background_blue"
+        android:layout_height="wrap_content"
+        android:text="保存"
+        android:textColor="@color/white"
+        android:layout_marginTop="@dimen/x1"
+        />
+    <Button
+        android:id="@+id/get_picture"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="@dimen/x15"
+        android:layout_marginRight="@dimen/x15"
+        android:background="@drawable/button_background_blue"
+        android:layout_height="wrap_content"
+        android:text="上传照片"
+        android:textColor="@color/white"
+        android:layout_above="@id/save"
+        />
+
+</RelativeLayout>

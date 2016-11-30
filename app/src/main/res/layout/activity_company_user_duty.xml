@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EEEEF3"
+    android:orientation="vertical"
+    tools:context=".fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.CompanyUserDutyActivity">
+
+    <include
+        android:id="@+id/layoutTop_duty"
+        layout="@layout/title_bar"></include>
+  <!--  <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x40"
+        android:background="#fff"
+        android:layout_marginTop="@dimen/x10"
+        android:orientation="horizontal"
+        >
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/rg_duty_conpant_user"
+            android:orientation="horizontal"
+            android:checkedButton="@+id/rbRole_company_user_duty"
+            >
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/x20"
+            android:id="@+id/rbRole_company_user_duty"
+            android:layout_marginTop="@dimen/x10"
+            android:layout_marginLeft="@dimen/x10"
+            android:text="业务员"
+            android:textSize="16sp"
+
+            />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/x20"
+            android:id="@+id/rbRoletwo_company_user_duty"
+            android:layout_marginTop="@dimen/x10"
+            android:layout_marginLeft="@dimen/x20"
+            android:text="业务经理"
+            android:textSize="16sp"
+
+
+            />
+        </RadioGroup>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x40"
+        android:background="#fff"
+        android:layout_marginTop="@dimen/x10"
+        android:orientation="horizontal"
+        >
+        <CheckBox
+            android:layout_width="@dimen/x30"
+            android:layout_height="@dimen/x20"
+            android:id="@+id/cbRole_Company_user_duty"
+            android:layout_marginLeft="@dimen/x10"
+            android:layout_marginTop="@dimen/x10"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvRelo_company_user_duty"
+            android:text="财务员"
+            android:textSize="16sp"
+            android:layout_marginTop="@dimen/x10"
+            />
+    </LinearLayout>-->
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lv_Firm_Type"
+        ></ListView>
+    <TextView
+        android:id="@+id/prompt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_marginLeft="@dimen/x10"
+        android:layout_marginTop="@dimen/x10"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_background_blue"
+        android:layout_marginRight="@dimen/x10"
+        android:layout_marginLeft="@dimen/x10"
+        android:text="保存"
+        android:textColor="#fff"
+        android:textSize="16sp"
+        android:layout_marginTop="@dimen/x10"
+        android:id="@+id/btSave"
+        />
+</LinearLayout>

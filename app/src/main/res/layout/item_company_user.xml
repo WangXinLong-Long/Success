@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x8"
+        android:background="#EEEEF3"
+
+        ></LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x40"
+        android:background="#fff"
+        >
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/tvAccount_company_user"
+    android:text="zhangsan01"
+    android:layout_marginLeft="@dimen/x10"
+    android:layout_marginTop="@dimen/x10"
+    android:textSize="16sp"
+    />
+        <ImageView
+
+            android:layout_width="@dimen/x20"
+            android:layout_height="@dimen/x20"
+            android:id="@+id/ivBack_company_user"
+            android:layout_marginTop="@dimen/x10"
+            android:layout_marginRight="@dimen/x10"
+            android:layout_alignParentRight="true"
+            android:src="@mipmap/my_sumao_iv_order"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvName_company_user"
+            android:layout_marginTop="@dimen/x10"
+            android:text="张三"
+            android:textSize="16sp"
+            android:layout_toLeftOf="@+id/ivBack_company_user"
+            android:layout_marginRight="@dimen/x5"
+            />
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#d3d3d3"
+        ></LinearLayout>
+    <LinearLayout
+        android:background="#fff"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvOne_company_user"
+            android:layout_marginTop="@dimen/x10"
+            android:layout_marginLeft="@dimen/x5"
+            android:text="联系电话:"
+
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvTwo_company_user"
+            android:layout_toRightOf="@+id/tvOne_company_user"
+            android:text="18410167528"
+            android:layout_marginTop="@dimen/x10"
+
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvFour_company_user"
+            android:layout_marginTop="@dimen/x10"
+            android:text="邮箱:"
+            android:layout_marginLeft="@dimen/x20"
+            android:layout_toLeftOf="@+id/tvThree_company_user"
+
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvThree_company_user"
+
+            android:text="guanjunxinxin@sian.com"
+            android:layout_marginTop="@dimen/x10"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/x5"
+            />
+
+    </LinearLayout>
+    <LinearLayout
+        android:background="#fff"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvduty_company_user"
+            android:layout_marginTop="@dimen/x10"
+            android:layout_marginLeft="@dimen/x5"
+            android:text="职责:"
+
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvrole_company_user"
+            android:layout_toRightOf="@+id/tvOne_company_user"
+            android:text="企业管理员"
+            android:layout_marginTop="@dimen/x10"
+
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvEmail_company_user"
+            android:layout_marginTop="@dimen/x10"
+            android:text="状态:"
+            android:layout_toLeftOf="@+id/tvThree_company_user"
+            android:layout_marginLeft="@dimen/x60"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvstate_company_user"
+
+            android:text="可用"
+            android:layout_marginTop="@dimen/x10"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/x5"
+            />
+
+    </LinearLayout>
+    <LinearLayout
+        android:background="#fff"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x10"></LinearLayout>
+</LinearLayout>

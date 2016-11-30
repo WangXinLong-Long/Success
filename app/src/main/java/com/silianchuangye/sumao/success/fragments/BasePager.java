@@ -2,15 +2,18 @@ package com.silianchuangye.sumao.success.fragments;
 
 import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
 
@@ -29,11 +32,15 @@ public abstract class BasePager extends Fragment implements View.OnClickListener
 //    标题栏最左边的logo
     protected ImageView logo;
 //    标题栏搜索框
-    protected EditText searchView;
+    protected Button searchView;
 //    标题栏标题
     protected TextView title;
 //    标题栏右边图标
     protected ImageView service;
+    //    整个标题栏
+    protected RelativeLayout rl_title;
+    private TextView tv_title_bar_service;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,11 +53,19 @@ public abstract class BasePager extends Fragment implements View.OnClickListener
         if (view==null)
         {
             view = View.inflate(mActivity, R.layout.base_pager,null);
+            rl_title = (RelativeLayout) view.findViewById(R.id.fl_title);
+
             logo = ((ImageView) view.findViewById(R.id.iv_title_bar_logo));
-            searchView = ((EditText) view.findViewById(R.id.sv_title_bar_serachView));
+            searchView = ((Button) view.findViewById(R.id.sv_title_bar_serachView));
             title = ((TextView) view.findViewById(R.id.tv_title_bar_title));
+
             service = ((ImageView) view.findViewById(R.id.iv_title_bar_service));
             fl_content = ((FrameLayout) view.findViewById(R.id.fl_basepager_content));
+            ImageView iv_title_bar_search = ((ImageView) view.findViewById(R.id.iv_title_bar_search));
+            iv_title_bar_search.setVisibility(View.INVISIBLE);
+
+            tv_title_bar_service = ((TextView) view.findViewById(R.id.tv_title_bar_service));
+            tv_title_bar_service.setVisibility(View.VISIBLE);
 //            logo.setOnClickListener(this);
 //            searchView.setIconifiedByDefault(false);
             initDate();
@@ -60,6 +75,10 @@ public abstract class BasePager extends Fragment implements View.OnClickListener
         {
             parent.removeView(view);
         }
+        searchView.setOnClickListener(this);
+        logo.setOnClickListener(this);
+        title.setOnClickListener(this);
+        service.setOnClickListener(this);
         return view;
     }
 
@@ -73,12 +92,16 @@ public abstract class BasePager extends Fragment implements View.OnClickListener
             case R.id.iv_title_bar_service:
                 myClickRight();
                 break;
+            case R.id.sv_title_bar_serachView:
+                myClickSearch();
+                break;
             default:
                 break;
 
         }
     }
 
+    public abstract void myClickSearch();
     public abstract void initDate();
     public abstract void myClickLeft();
     public abstract void myClickRight();

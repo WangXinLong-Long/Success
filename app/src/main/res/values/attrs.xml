@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CalendarView">
+        <attr name="EnableDateColor" format="reference|color"/>
+        <attr name="UnableDateColor" format="reference|color"/>
+        <attr name="CurrentColor" format="reference|color"/>
+        <attr name="SelectBGColor" format="reference|color"/>
+        <attr name="CircleColor" format="reference|color"/>
+        <attr name="RelaxColor" format="reference|color"/>
+        <attr name="WorkColor" format="reference|color"/>
+        <attr name="PriceColor" format="reference|color"/>
+        <attr name="DateSize" format="dimension"/>
+        <attr name="PriceSize" format="dimension"/>
+        <attr name="DateHeight" format="dimension"/>
+    </declare-styleable>
+    <declare-styleable name="MarqueeViewStyle">
+        <attr name="mvInterval" format="integer|reference"/>
+        <attr name="mvAnimDuration" format="integer|reference"/>
+        <attr name="mvTextSize" format="dimension|reference"/>
+        <attr name="mvTextColor" format="color|reference"/>
+        <attr name="mvGravity">
+            <enum name="left" value="0"/>
+            <enum name="center" value="1"/>
+            <enum name="right" value="2"/>
+        </attr>
+    </declare-styleable>
+</resources>

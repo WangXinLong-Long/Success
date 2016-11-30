@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.SearchActivityMVP.view.SearchActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x43"
+        android:id="@+id/layout_Top_Search"
+        android:background="#fff"
+        >
+        <ImageView
+            android:layout_width="@dimen/x20"
+            android:layout_height="@dimen/x20"
+            android:id="@+id/iv_Back_Search"
+            android:src="@mipmap/my_sumao_back"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/x10"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_Info_Search"
+            android:text="搜索"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/x10"
+            android:layout_alignParentRight="true"
+
+            />
+        <ImageView
+            android:layout_width="@dimen/x15"
+            android:layout_height="@dimen/x15"
+            android:src="@mipmap/search"
+            android:layout_marginLeft="@dimen/x26"
+            android:layout_marginTop="@dimen/x9"
+
+
+            />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x30"
+            android:layout_toLeftOf="@+id/tv_Info_Search"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/x10"
+            android:background="@drawable/edit_search"
+            android:layout_marginRight="@dimen/x10"
+            android:id="@+id/search_content"
+            android:hint="输入你要搜索的内容"
+            android:layout_toRightOf="@+id/iv_Back_Search"
+            >
+
+        </EditText>
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x2"
+        android:layout_below="@+id/layout_Top_Search"
+        android:id="@+id/layout_Certen_Sraech"
+        android:orientation="horizontal"
+        android:background="#E6E6E6"
+        ></LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layout_Certen_Sraech"
+        android:background="#fff"
+        android:id="@+id/layout_risou"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="热搜"
+            android:layout_marginTop="@dimen/x5"
+            android:textColor="#000"
+            android:id="@+id/tv_More_Search"
+            android:layout_marginLeft="@dimen/x10"
+            />
+        <GridView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/gv_More_Search"
+            android:layout_below="@+id/tv_More_Search"
+            android:numColumns="3"
+            android:horizontalSpacing="@dimen/x15"
+            android:verticalSpacing="@dimen/x10"
+            android:layout_marginLeft="@dimen/x10"
+            android:layout_marginRight="@dimen/x10"
+            android:layout_marginTop="@dimen/x5"
+            ></GridView>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#fff"
+        android:layout_below="@+id/layout_risou"
+
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x3"
+
+            android:background="#EEEEF3"
+            android:id="@+id/layout_resou_line"
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/x10"
+            ></LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_clear"
+            android:text="清除搜索历史"
+            android:textColor="#59BEE9"
+            android:textSize="15sp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/x20"
+            android:background="@drawable/text_corner"
+            />
+    </RelativeLayout>
+
+</RelativeLayout>

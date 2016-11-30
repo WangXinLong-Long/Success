@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context=".fragments.myPlasticTrade.register.RegisterValueActivity">
+
+    <include
+        android:id="@+id/layoutTop_register_value"
+        layout="@layout/title_bar"></include>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x40"
+        android:layout_marginTop="@dimen/x20"
+        android:layout_marginLeft="@dimen/x10"
+        android:layout_marginRight="@dimen/x10"
+        android:background="@drawable/edittext_backgroup"
+        android:id="@+id/et_content_value"
+        android:layout_below="@+id/layoutTop_register_value"
+        android:focusable="true"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_a"
+        android:layout_below="@+id/et_content_value"
+        android:layout_marginTop="@dimen/x10"
+        android:visibility="gone"
+        android:layout_marginLeft="@dimen/x10"
+        />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/bt_save_register_value"
+        android:layout_marginTop="@dimen/x20"
+        android:layout_marginRight="@dimen/x10"
+        android:layout_marginLeft="@dimen/x10"
+        android:background="@drawable/button_background_blue"
+        android:text="保存"
+        android:textColor="#fff"
+        android:textSize="16sp"
+        android:layout_below="@+id/tv_a"
+        />
+
+</RelativeLayout>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EEEEF3"
+    android:orientation="vertical"
+   >
+    <include
+        android:id="@+id/layoutTop_firm_info_particular"
+        layout="@layout/title_bar"></include>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x40"
+        android:background="@drawable/editbank"
+        android:layout_marginTop="@dimen/x5"
+        android:layout_marginLeft="@dimen/x10"
+        android:layout_marginRight="@dimen/x10"
+        android:id="@+id/tvParticular"
+
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btSave_firm_info_particular"
+        android:layout_marginRight="@dimen/x10"
+        android:layout_marginLeft="@dimen/x10"
+        android:background="@drawable/button_background_blue"
+        android:text="保存"
+        android:textColor="#fff"
+        android:textSize="16sp"
+        android:layout_marginTop="@dimen/x10"
+
+        />
+</LinearLayout>
