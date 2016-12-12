@@ -79,13 +79,19 @@ public class RegisterPicture extends AppCompatActivity implements View.OnClickLi
                 case 1:
                     boolean flag = (boolean) msg.obj;
                     LogUtils.log("handlerflag" + flag);
-                    Toast.makeText(RegisterPicture.this, "--->" + flag + "", Toast.LENGTH_SHORT).show();
+                    if (flag == false){
+                        Toast.makeText(RegisterPicture.this, "上传失败请稍后重试"  + "", Toast.LENGTH_SHORT).show();
+
+                    }else {
+                        Toast.makeText(RegisterPicture.this, "上传成功"  + "", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent();
+                        intent.putExtra("picturePath", filename);
+                        intent.putExtra("value", "已有相片");
+                        setResult(number1, intent);
+                        RegisterPicture.this.finish();
+                    }
 //                    new CustomProgress(FirmInfoPictureActivity.this).dismiss();
-                    Intent intent = new Intent();
-                    intent.putExtra("picturePath", filename);
-                    intent.putExtra("value", "已有相片");
-                    setResult(number1, intent);
-                    RegisterPicture.this.finish();
+
                     break;
             }
         }

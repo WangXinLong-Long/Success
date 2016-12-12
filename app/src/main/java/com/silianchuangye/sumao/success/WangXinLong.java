@@ -88,7 +88,6 @@ public class WangXinLong extends Activity {
         ArrayList<String> arrayList = new ArrayList<>();
         LinkedList<String> linkedList = new LinkedList<>();
         HashMap<String ,String > map = new HashMap<>();
-
     }
 
     public void showPayDialog()

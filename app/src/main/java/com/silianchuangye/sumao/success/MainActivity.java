@@ -28,6 +28,7 @@ import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMMessage;
 import com.silianchuangye.sumao.success.HX.DemoHelper;
 import com.silianchuangye.sumao.success.HX.ui.ChatActivity;
+import com.silianchuangye.sumao.success.fragments.PagerFive;
 import com.silianchuangye.sumao.success.fragments.PagerFour;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.view.PagerOne;
 import com.silianchuangye.sumao.success.fragments.PagerThree;
@@ -98,7 +99,7 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
         /**
          * 设置默认选中第几个
          */
-        mTabHost.getTabWidget().getChildTabViewAt(3).setOnClickListener(new View.OnClickListener() {
+        mTabHost.getTabWidget().getChildTabViewAt(4).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                String unique = sp.getString("unique","");
@@ -116,7 +117,7 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
                 }else {
                     username=sp.getString("name","");
                     if (username!=""){
-                        mTabHost.setCurrentTab(3);
+                        mTabHost.setCurrentTab(4);
                     }else {
                         SharedPreferences.Editor editor=sp.edit();
                         editor.clear();
@@ -177,18 +178,22 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
         mFragmentArray.add(PagerTwo.class);
         mFragmentArray.add(PagerThree.class);
         mFragmentArray.add(PagerFour.class);
+        mFragmentArray.add(PagerFive.class);
 
         mImageArray.add(R.drawable.home_page);
         mImageArray.add(R.drawable.classification);
         mImageArray.add(R.drawable.shopping_car);
+        mImageArray.add(R.drawable.help);
         mImageArray.add(R.drawable.mine_sumao);
 
         mTextArray.add("首页");
         mTextArray.add("分类");
         mTextArray.add("购物车");
+        mTextArray.add("帮助");
         mTextArray.add("我的塑贸");
     }
 
+//    返回键的操作
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode==KeyEvent.KEYCODE_BACK&&event.getAction()==KeyEvent.ACTION_DOWN)
@@ -282,6 +287,7 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
         } catch (Exception e) {
         }
     }
+
 //非点击购物车按钮，点击其他时跳转回来时；
     private void showCart(){
         SharedPreferences share=getSharedPreferences("sumao",Context.MODE_PRIVATE);
@@ -312,7 +318,7 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
                 username=sp.getString("name","");
                 Log.e("TAG","username11111-----"+username);
                 if (username!=""){
-                    mTabHost.setCurrentTab(3);
+                    mTabHost.setCurrentTab(4);
                 }else {
                     Intent intent = new Intent();
                     intent.setClass(MainActivity.this, LoginUserActivity.class);

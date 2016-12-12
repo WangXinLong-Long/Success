@@ -16,6 +16,9 @@ import com.silianchuangye.sumao.success.fragments.PagerOneMVP.model.HomeSaleMode
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.model.IPagerOneModel;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.model.PagerOneCallback;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.model.PagerOneModel;
+import com.silianchuangye.sumao.success.fragments.PagerOneMVP.model.grideViewModel.GrideViewCallback;
+import com.silianchuangye.sumao.success.fragments.PagerOneMVP.model.grideViewModel.GrideViewModel;
+import com.silianchuangye.sumao.success.fragments.PagerOneMVP.model.grideViewModel.IGrideViewModel;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.view.IPagerOneView;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.view.PagerOne;
 import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.bean.UpstreamDirectorySellingBean;
@@ -68,26 +71,6 @@ public class PagerOnePresenter {
         });
 
     }
-//    公告
-    public void getAnnouncementInfoToPagerOneFragment(){
-        IAnnouncementModel announcementModel = new AnnouncementModel();
-        announcementModel.getAnnouncementInfo(new AnnouncementCallback() {
-            @Override
-            public void callbackAnnouncement(AnnounceBean announceBean) {
-                pagerOne.saveAnnounceInAnnounceList(announceBean);
-            }
-        });
-    }
-//      预售信息
-    public void getHomeSaleInfoToPagerOneFragment(){
-        IHomeSaleModel homeSaleModel = new HomeSaleModels();
-        homeSaleModel.getHomeSaleInfo(new HomeSaleCallback() {
-            @Override
-            public void callbackHomeSale(PreSaleBean preSaleBean) {
-                pagerOne.saveHomeSaleInFragmentList(preSaleBean);
-            }
-        });
-    }
 //      现货
     public   void  getGoodsInStockInfo(String region2,String classification2,String application2,int Nrpp,int No){
         IGoodsInStockActivityModel goodsInStockActivityModel = new GoodsInStockActivityModel(region2,classification2,application2,Nrpp,No);
@@ -108,16 +91,6 @@ public class PagerOnePresenter {
             }
         });
     }
-//      塑贸资讯
-    public void getSuMaoConsultInfo(){
-        ISuMaoConsultModel suMaoConsultModel = new SuMaoConsultModel();
-        suMaoConsultModel.getSuMaoConsultInfo(new SuMaoConsultCallback() {
-            @Override
-            public void callbackSuMaoConsult(AnnounceBean announceBean) {
-                pagerOne.setSuMaoConsultInActivity(announceBean);
-            }
-        });
-    }
 //      上游直销
     public void getUpstreamDirectSellingInfo(String sessionId){
         IUpstreamDirectSellingModel upstreamDirectSellingModel = new UpstreamDirectSellingModel(sessionId);
@@ -125,6 +98,16 @@ public class PagerOnePresenter {
             @Override
             public void callbackUpstreamDirectSelling(UpstreamDirectorySellingBean upstreamDirectorySellingBean) {
                 pagerOne.setUpstreamDirectSellingInActivity(upstreamDirectorySellingBean);
+            }
+        });
+    }
+//    获取地区、分类、应用的列表值
+    public void getGridViewData(){
+        IGrideViewModel grideViewModel = new GrideViewModel();
+        grideViewModel.getGrideViewData(new GrideViewCallback() {
+            @Override
+            public void callbackGrideViewData() {
+                pagerOne.setGrideViewDataInActivity();
             }
         });
     }

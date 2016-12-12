@@ -528,31 +528,45 @@
             android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.CaptureActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
-        <activity android:name=".fragments.SellerManagementPlatform.acutionManagement.SearchPriceActivity" />
-        <activity android:name=".fragments.SellerManagementPlatform.acutionManagement.PriceSearchinfoActivity" />
-        <activity android:name=".fragments.SellerManagementPlatform.acutionManagement.AcutionResultActivity" />
-        <activity android:name=".fragments.SellerManagementPlatform.acutionManagement.AuctionSuccessActivity" />
-        <activity android:name=".fragments.SellerManagementPlatform.acutionManagement.AcutionFailActivity" />
+        <activity android:name=".fragments.SellerManagementPlatform.acutionManagement.SearchPriceActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".fragments.SellerManagementPlatform.acutionManagement.PriceSearchinfoActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".fragments.SellerManagementPlatform.acutionManagement.AcutionResultActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".fragments.SellerManagementPlatform.acutionManagement.AuctionSuccessActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".fragments.SellerManagementPlatform.acutionManagement.AcutionFailActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".salesearch.SaleSearch"
             android:screenOrientation="portrait" />
         <activity
             android:name=".customermanger.CustomerParent"
             android:screenOrientation="portrait" />
-        <activity android:name=".fragments.myPlasticTrade.register.RegisterPhoneMVP.RegisterPhoneView.RegisterPhoneActivity" />
-        <activity android:name=".fragments.homepage.groupbuying.GroupBuyingActivity" />
-        <activity android:name=".fragments.homepage.groupbuying.GroupBuyingSuccessActivity" />
-        <activity android:name=".fragments.homepage.groupbuying.RuleActivity" />
-        <activity android:name=".fragments.homepage.groupbuying.JoinActivity" />
+        <activity android:name=".fragments.myPlasticTrade.register.RegisterPhoneMVP.RegisterPhoneView.RegisterPhoneActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".fragments.homepage.groupbuying.GroupBuyingActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".fragments.homepage.groupbuying.GroupBuyingSuccessActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".fragments.homepage.groupbuying.RuleActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".fragments.homepage.groupbuying.JoinActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".fragments.myPlasticTrade.register.RegisterFirmActivityMVP.view.RegisterFirmActivity"
+            android:screenOrientation="portrait"
             android:launchMode="singleTask" />
         <activity
             android:name=".fragments.homepage.AnnouncementDetailMVP.view.AnnouncementDetailActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.CompanyUserValueActivity" />
-        <activity android:name=".fragments.myPlasticTrade.register.RegisterPicture" />
-        <activity android:name=".fragments.homepage.sumaoconsultMVP.SuMaoConsult" />
+        <activity android:name=".fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.CompanyUserValueActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".fragments.myPlasticTrade.register.RegisterPicture"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".fragments.homepage.sumaoconsultMVP.SuMaoConsult"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".customermanger.NoAgree"
             android:screenOrientation="portrait" />
@@ -577,14 +591,22 @@
         <activity
             android:name=".fragments.SellerManagementPlatform.SellerOrderManagement.Fragments.FaPiaoMessage"
             android:screenOrientation="portrait" />
-        <activity android:name=".ShangYou.ShangYouSelectNumber" />
-        <activity android:name=".ShangYou.PlanDayMVP.ShangYouRemarks" />
-        <activity android:name=".fragments.myPlasticTrade.setting.FunctionIntroduction.FunctionIntroductionMVP.view.FunctionIntroductionActivity" />
-        <activity android:name=".fragments.myPlasticTrade.setting.FunctionIntroductionDetailActivity" />
-        <activity android:name=".fragments.myPlasticTrade.setting.HelpAndFeedbackMVP.view.HelpAndFeedbackActivity" />
-        <activity android:name=".fragments.myPlasticTrade.setting.ScoreMVP.view.ScoreActivity" />
-        <activity android:name=".fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.logisticsMesssage" />
-        <activity android:name=".fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.logisticsAddress"></activity>
+        <activity android:name=".ShangYou.ShangYouSelectNumber"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ShangYou.PlanDayMVP.ShangYouRemarks"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".fragments.myPlasticTrade.setting.FunctionIntroduction.FunctionIntroductionMVP.view.FunctionIntroductionActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".fragments.myPlasticTrade.setting.FunctionIntroductionDetailActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".fragments.myPlasticTrade.setting.HelpAndFeedbackMVP.view.HelpAndFeedbackActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".fragments.myPlasticTrade.setting.ScoreMVP.view.ScoreActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.logisticsMesssage"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.logisticsAddress"
+            android:screenOrientation="portrait"></activity>
         <!-- 显示下载大图页面 -->
         <activity
             android:name="com.easemob.easeui.ui.EaseShowBigImageActivity"

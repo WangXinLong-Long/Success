@@ -17,17 +17,13 @@ public interface IPagerOneView {
     void setPagerOneBannerDataInFragment(BannerBean bannerBean);
 //    将获取到的图片，存在PagerOne的集合中
     void savePictureInPagerOneCollection(Drawable result);
-//    获取到公告栏的信息，并填充到数组中
-    void saveAnnounceInAnnounceList(AnnounceBean announceBean);
-//    获取首页的预售列表,现货列表，竞拍列表
-    void saveHomeSaleInFragmentList(PreSaleBean preSaleBean);
 //      点击现货按钮后，先进行网络请求
 void setDataInActivity(GoodsInStockActivityBean goodsInStockActivityBean);
 //    z点击预售按钮后，进行网络请求
 void setPreSaleDataInActivity(GoodsInStockActivityBean goodsInStockActivityBean);
-//    点击塑贸资讯按钮后，进行网络请求
-    void setSuMaoConsultInActivity(AnnounceBean announceBean);
 //    点击上游直销，进行网络请求
     void setUpstreamDirectSellingInActivity(UpstreamDirectorySellingBean upstreamDirectorySellingBean);
+//    将GrideView请求下来的值，放置到List中
+    void setGrideViewDataInActivity();
 
 }

@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
+import android.graphics.Paint;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -12,6 +12,8 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -22,6 +24,7 @@ import com.silianchuangye.sumao.success.MainActivity;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.SellerManagementPlatform.SellerManagementPlatformActivity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.RegisterPhoneMVP.RegisterPhoneView.RegisterPhoneActivity;
+import com.silianchuangye.sumao.success.utils.BPUtil;
 import com.silianchuangye.sumao.success.utils.GlobalVariable;
 import com.silianchuangye.sumao.success.utils.Loding;
 import com.silianchuangye.sumao.success.utils.LogUtils;
@@ -44,8 +47,8 @@ public class LoginUserActivity extends AppCompatActivity {
     RelativeLayout layoutTop, add_address_rl;
     private EditText et_account_login;
     private EditText et_pass_login;
-    private Button bt_Login;
-    private TextView tv_register, tv_findpass;
+    private Button tv_register, bt_Login;
+    private TextView tv_findpass;
     public static SQLiteDatabase db;
     private String name;
     private String password;
@@ -54,9 +57,15 @@ public class LoginUserActivity extends AppCompatActivity {
     private SharedPreferences.Editor editor;
     private String roles;
 
-    int str;
+    int mainActivityInteger;
     private EditTextWitcher textWitcher;
     private EditTextWitcher textWitcher1;
+    private ImageView verification_code;
+    private EditText checkOut;
+    private TextView tv_title_bar_back;
+    private boolean verificationCode;
+    private CheckBox sellerLogin;
+    private CheckBox buyerLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +73,31 @@ public class LoginUserActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login_for_mai_mai);
         title_Bar();
         db = SQLiteDatabase.openOrCreateDatabase(this.getFilesDir().toString() + "/test.dbs", null);
-        et_account_login = (EditText) findViewById(R.id.et_account_login);
+
+//        卖家登录
+        sellerLogin = ((CheckBox) findViewById(R.id.checkbox2));
+//        买家登录
+        buyerLogin = ((CheckBox) findViewById(R.id.checkbox1));
+
+        sellerLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sellerLogin.setChecked(true);
+                buyerLogin.setChecked(false);
+                roles = "seller";
+            }
+        });
+        buyerLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                buyerLogin.setChecked(true);
+                sellerLogin.setChecked(false);
+                roles = "buyer";
+            }
+        });
+
+//        对账号和密码进行校验
+        et_account_login = (EditText) findViewById(R.id.et_pass_login);
         textWitcher1 = new EditTextWitcher(et_account_login);
 
         et_pass_login = (EditText) findViewById(R.id.et_pass_login);
@@ -72,10 +105,22 @@ public class LoginUserActivity extends AppCompatActivity {
 
         et_pass_login.addTextChangedListener(textWitcher);
         et_account_login.addTextChangedListener(textWitcher1);
-
-//        et_account_login.addTextChangedListener(textWitcher);
-//        et_account_login.removeTextChangedListener(textWitcher);
-
+//          忘记密码
+        TextView forgetPassword = (TextView) findViewById(R.id.tv_findpass_login);
+        forgetPassword.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
+//          验证码
+        verification_code = ((ImageView) findViewById(R.id.verification_code));
+        verification_code.setImageBitmap(BPUtil.getInstance().createBitmap());
+        verification_code.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                verification_code.setImageBitmap(BPUtil.getInstance().createBitmap());
+            }
+        });
+//          验证码输入框
+        checkOut = ((EditText) findViewById(R.id.checkout));
+        checkOut.addTextChangedListener(mTextWatcher);
+//          登录按钮
         bt_Login = (Button) findViewById(R.id.bt_login);
 
         Intent intent = getIntent();
@@ -100,7 +145,12 @@ public class LoginUserActivity extends AppCompatActivity {
                         LogUtils.log("去掉空格的");
                         Toast.makeText(LoginUserActivity.this, "用户名或密码不能为空", Toast.LENGTH_SHORT).show();
                     } else {
-                        buyerlogin();
+                        if (verificationCode == true) {
+
+                            buyerlogin();
+                        } else {
+                            Toast.makeText(LoginUserActivity.this, "请输入正确的验证码", Toast.LENGTH_SHORT).show();
+                        }
                     }
 
 
@@ -109,8 +159,11 @@ public class LoginUserActivity extends AppCompatActivity {
 
             }
         });
-        tv_register = (TextView) findViewById(R.id.tv_register_login);
+//        注册
+        tv_register = (Button) findViewById(R.id.tv_register_login);
+//        忘记密码
         tv_findpass = (TextView) findViewById(R.id.tv_findpass_login);
+//        注册跳转
         tv_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -118,6 +171,7 @@ public class LoginUserActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+//        找回密码操作
         tv_findpass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -127,9 +181,49 @@ public class LoginUserActivity extends AppCompatActivity {
 //                startActivity(intent);
             }
         });
-        str = getIntent().getIntExtra("cart1", 0);
+        mainActivityInteger = getIntent().getIntExtra("cart1", 0);
     }
 
+    //    检测验证码的正确性
+    TextWatcher mTextWatcher = new TextWatcher() {
+        private CharSequence temp;
+        private int editStart;
+        private int editEnd;
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            temp = s;
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            editStart = checkOut.getSelectionStart();
+            editEnd = checkOut.getSelectionEnd();
+            if (temp.length() == 4) {
+                if (BPUtil.getInstance().getCode().equals(checkOut.getText().toString())) {
+                    verificationCode = true;
+                } else {
+                    checkOut.setText("");
+                    verification_code.setImageBitmap(BPUtil.getInstance().createBitmap());
+                    verificationCode = false;
+                    Toast.makeText(LoginUserActivity.this, "验证码错误请重新输入", Toast.LENGTH_SHORT).show();
+                }
+            }
+            if (temp.length() > 4) {
+                s.delete(editStart - 1, editEnd);
+                int tempSelection = editStart;
+                checkOut.setText(s);
+                checkOut.setSelection(tempSelection);
+            }
+        }
+
+    };
+
+    //      账号和密码的正则表达式判断
     class EditTextWitcher implements TextWatcher {
         private CharSequence temp;//监听前的文本
         private int editStart;//光标开始位置
@@ -185,31 +279,20 @@ public class LoginUserActivity extends AppCompatActivity {
         return num;
     }
 
+    //    返回按钮的结束操作
     public void title_Bar() {
 
         iv_title_bar_back = ((ImageView) findViewById(R.id.iv_title_bar_back));
-        iv_title_bar_logo = ((ImageView) findViewById(R.id.iv_title_bar_logo));
-        iv_title_bar_service = ((ImageView) findViewById(R.id.iv_title_bar_service));
-        iv_title_bar_search = ((ImageView) findViewById(R.id.iv_title_bar_search));
-        sv_title_bar_serachView = ((Button) findViewById(R.id.sv_title_bar_serachView));
-        tv_title_bar_title = ((TextView) findViewById(R.id.tv_title_bar_title));
-
-        tvUpdate = (TextView) findViewById(R.id.tvUpdate);
-        iv_title_bar_logo.setVisibility(View.GONE);
-        iv_title_bar_service.setVisibility(View.GONE);
-        sv_title_bar_serachView.setVisibility(View.GONE);
-        iv_title_bar_search.setVisibility(View.GONE);
-
-        tvUpdate.setVisibility(View.GONE);
-        tv_title_bar_title.setText("登录账号");
-
-
-        tv_title_bar_title.setTextColor(Color.WHITE);
+        tv_title_bar_back = ((TextView) findViewById(R.id.tv_title_bar_back));
         iv_title_bar_back.setVisibility(View.VISIBLE);
-        layoutTop = (RelativeLayout) findViewById(R.id.layoutTop_Login);
-        layoutTop.setBackgroundColor(getResources().getColor(R.color.textColor_expandable_listview_show));
 
         iv_title_bar_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LoginUserActivity.this.finish();
+            }
+        });
+        tv_title_bar_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 LoginUserActivity.this.finish();
@@ -261,10 +344,7 @@ public class LoginUserActivity extends AppCompatActivity {
                                     /**
                                      * 把唯一标识储存在SharedPreferences
                                      */
-
                                     editor.putString("unique", unique);
-
-
                                     Log.d("唯一标识----------->", unique);
                                 } catch (Exception e) {
                                     Log.d("exception", "解析唯一标识时错误！");
@@ -302,7 +382,7 @@ public class LoginUserActivity extends AppCompatActivity {
                     editor.commit();
                     Loding.dis();
                     //接收mainactivity传递过来的参数
-                    if (str == 9) {
+                    if (mainActivityInteger == 9) {
                         Intent intent = new Intent();
                         intent.putExtra("cart", 4);
                         intent.setClass(LoginUserActivity.this, MainActivity.class);

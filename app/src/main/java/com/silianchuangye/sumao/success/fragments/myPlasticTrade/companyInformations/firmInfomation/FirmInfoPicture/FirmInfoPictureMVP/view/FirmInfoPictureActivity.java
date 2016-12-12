@@ -107,14 +107,19 @@ public class FirmInfoPictureActivity extends AppCompatActivity implements IFirmI
                 case 1:
                     boolean flag = (boolean) msg.obj;
                     LogUtils.log("handlerflag" + flag);
-                    Toast.makeText(FirmInfoPictureActivity.this, "--->" + flag + "", Toast.LENGTH_SHORT).show();
-//                    new CustomProgress(FirmInfoPictureActivity.this).dismiss();
-                    Intent intent = new Intent();
-                    intent.putExtra("value", tvinfoValue_firm_info_pictrue.getText
-                            ().toString());
-                    intent.putExtra("picturePath", filename);
-                    setResult(number1, intent);
-                    FirmInfoPictureActivity.this.finish();
+                    if (flag == false){
+                        Toast.makeText(FirmInfoPictureActivity.this, "上传失败请稍后重试"  + "", Toast.LENGTH_SHORT).show();
+
+                    }else {
+                        Toast.makeText(FirmInfoPictureActivity.this, "上传成功"  + "", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent();
+                        intent.putExtra("value", tvinfoValue_firm_info_pictrue.getText
+                                ().toString());
+                        intent.putExtra("picturePath", filename);
+                        setResult(number1, intent);
+                        FirmInfoPictureActivity.this.finish();
+                    }
+
                     break;
             }
         }
@@ -177,12 +182,7 @@ public class FirmInfoPictureActivity extends AppCompatActivity implements IFirmI
         bt_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-
-
 //                firmInfoPicturePresenter.sendFirmInfoPictureInServer(filePath);
-
                 if (filePath == null || tvinfoValue_firm_info_pictrue.getText().toString() == null || tvinfoValue_firm_info_pictrue.getText().toString() == "") {
                     prompt.setVisibility(View.VISIBLE);
               } else {
@@ -194,7 +194,6 @@ public class FirmInfoPictureActivity extends AppCompatActivity implements IFirmI
                         @Override
                         public void run() {
                             Message msg = new Message();
-
                             flag = FavFTPUtil.uploadFileFromProduction(SuMaoConstant.hostname, SuMaoConstant.port,
                                     SuMaoConstant.username, SuMaoConstant.password,SuMaoConstant. pathname, filename, filePath);
                             LogUtils.log("flag-->" + flag);
