@@ -18,36 +18,36 @@ import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
-
+import com.silianchuangye.sumao.success.HX.Constant;
+import com.silianchuangye.sumao.success.HX.ui.LoginActivity;
+import com.silianchuangye.sumao.success.R;
+import com.silianchuangye.sumao.success.adapter.ImageAdapter;
 import com.silianchuangye.sumao.success.adapter.LvFragmentoneGrouponAdapter;
 import com.silianchuangye.sumao.success.custom.customCalendar.DayAndPrice;
 import com.silianchuangye.sumao.success.fragments.BasePager;
+import com.silianchuangye.sumao.success.fragments.PagerOneMVP.MyAdapterItemClickListener;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.adapter.TextGrideViewAdapter;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.bean.AnnouncementBean;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.bean.BannerBean;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.presenter.PagerOnePresenter;
+import com.silianchuangye.sumao.success.fragments.SearchActivityMVP.view.SearchActivity;
 import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.bean.UpstreamDirectorySellingBean;
 import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.view.UpstreamDirectSellingActivity;
+import com.silianchuangye.sumao.success.fragments.homepage.auction.AuctionMVP.AuctionActivity;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.bean.GoodsInStockActivityBean;
+import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.view.GoodsInStockActivity;
 import com.silianchuangye.sumao.success.fragments.homepage.groupbuying.GroupBuyingActivity;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleMVP.bean.Auction;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleMVP.bean.Forward;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleMVP.bean.Group;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.LoginUserActivity;
-import com.silianchuangye.sumao.success.fragments.SearchActivityMVP.view.SearchActivity;
-import com.silianchuangye.sumao.success.fragments.homepage.auction.AuctionMVP.AuctionActivity;
-import com.silianchuangye.sumao.success.HX.Constant;
-import com.silianchuangye.sumao.success.HX.ui.LoginActivity;
-import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.view.GoodsInStockActivity;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleMVP.view.PreSale;
 import com.silianchuangye.sumao.success.fragments.homepage.theprice.MidpointsListctivity;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.LoginUserActivity;
 import com.silianchuangye.sumao.success.utils.Loding;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.MarqueeView;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 import com.silianchuangye.sumao.success.utils.scrollviewAD.MyGallery;
-import com.silianchuangye.sumao.success.R;
-import com.silianchuangye.sumao.success.adapter.ImageAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -441,6 +441,11 @@ public class PagerOne extends BasePager implements IPagerOneView {
         classificationGridView.setAdapter(classificationAdapter);
 //        应用的GridView
         applicationDetail.setAdapter(applicationAdapter);
+        areaGridView.setOnItemClickListener(new MyAdapterItemClickListener(getActivity(),areaList));
+        classificationGridView.setOnItemClickListener(new MyAdapterItemClickListener(getActivity(),classificationList));
+        applicationDetail.setOnItemClickListener(new MyAdapterItemClickListener(getActivity(),applicationList));
     }
+
+
 
 }

@@ -24,7 +24,7 @@ public class InvoiceInformationModel implements IInvoiceInformationModel {
     public void getInvoiceInformationFromService(final InvoiceInformationCallback callback) {
 
         String url = SuMaoConstant.SUMAO_IP+"/rest/model/atg/userprofiling/ProfileActor/invoiceInfo";
-        LogUtils.log("URL----->"+url+"<-----URL");
+        LogUtils.log("开票信息URL----->"+url+"<-----开票信息URL");
         RequestParams requestParams = new RequestParams(url);
         requestParams.addParameter("_dynSessConf",sessionId);
         try {

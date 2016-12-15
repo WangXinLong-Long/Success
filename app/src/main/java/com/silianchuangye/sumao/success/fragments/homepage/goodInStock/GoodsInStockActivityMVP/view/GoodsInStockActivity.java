@@ -36,8 +36,11 @@ import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInSt
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockDetailActivityMVP.view.GoodsInStockDetailActivity;
 import com.silianchuangye.sumao.success.model.PreSaleModel;
 import com.silianchuangye.sumao.success.utils.LogUtils;
+import com.silianchuangye.sumao.success.utils.ThreeLevelLindage.Area;
+import com.silianchuangye.sumao.success.utils.ThreeLevelLindage.CascadingMenuPopWindow;
+import com.silianchuangye.sumao.success.utils.ThreeLevelLindage.CascadingMenuViewOnSelectListener;
+import com.silianchuangye.sumao.success.utils.ThreeLevelLindage.DBHelper;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -104,11 +107,16 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
     private String classificationString = "";
     private String applicationString = "";
     private GoodsInStockActivityBean goodsInStockActivityBean;
+    private DBHelper dbHelper;
+    private ArrayList<Area> provinceList;
 
+    private CascadingMenuPopWindow cascadingMenuPopWindow = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pre_sale);
+        dbHelper = new DBHelper(this);
+        provinceList = dbHelper.getProvince();
         goodsInStockActivityPresenter = new GoodsInStockActivityPresenter(this);
 
         tv_screen_title_bar_title = ((TextView) findViewById(R.id.tv_screen_title_bar_title));
@@ -153,15 +161,15 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
         String title = intent.getStringExtra("title");
         tv_screen_title_bar_title.setText(title);
         if (title.equals("现货")){
-
-            goodsInStockActivityBean = (GoodsInStockActivityBean)intent.getSerializableExtra("goodsInStockActivityBean");
-            jsonArrayClassification = goodsInStockActivityBean.getSort();
-            jsonArrayApplication = goodsInStockActivityBean.getApplication();
-            jsonArrayRegion = goodsInStockActivityBean.getRegion();
-            smClList = goodsInStockActivityBean.getCl();
-            total = goodsInStockActivityBean.getTotal();
-            adapter = new PreSaleAdapter(this, smClList);
-            pre_sale_listView.setAdapter(adapter);
+//            TODO 放开这里
+//            goodsInStockActivityBean = (GoodsInStockActivityBean)intent.getSerializableExtra("goodsInStockActivityBean");
+//            jsonArrayClassification = goodsInStockActivityBean.getSort();
+//            jsonArrayApplication = goodsInStockActivityBean.getApplication();
+//            jsonArrayRegion = goodsInStockActivityBean.getRegion();
+//            smClList = goodsInStockActivityBean.getCl();
+//            total = goodsInStockActivityBean.getTotal();
+//            adapter = new PreSaleAdapter(this, smClList);
+//            pre_sale_listView.setAdapter(adapter);
         }else {
             smClList =  new ArrayList<SMCl>();
             DirectSellingBean directSellingBean = ((DirectSellingBean) intent.getSerializableExtra("directSellingBean"));
@@ -184,6 +192,8 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
 //        manufacturing_enterprise.setOnClickListener(this);
 //        从网络进行网络请求需要的参数
 //        goodsInStockActivityPresenter.getGoodsInStockInfo(region2, classification2, application2, Nrpp, No);
+
+
     }
 
     @Override
@@ -210,14 +220,16 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
 
 //            点击地区的点击事件
             case R.id.region1:
-                if (jsonArrayRegion != null) {
-                    //                初始化数据
-                    initListPopupWindowView("地区");
-                    //                显示listView
-                    showListPopupWindow();
-                } else {
-                    Toast.makeText(this, "暂无其他地区", Toast.LENGTH_SHORT).show();
-                }
+//                TODO 可以删除这里？
+//                if (jsonArrayRegion != null) {
+//                    //                初始化数据
+//                    initListPopupWindowView("地区");
+//                    //                显示listView
+//                    showListPopupWindow();
+//                } else {
+//                    Toast.makeText(this, "暂无其他地区", Toast.LENGTH_SHORT).show();
+//                }
+                showPopMenu();
                 break;
 //            点击分类的点击事件
             case R.id.classification1:
@@ -753,5 +765,25 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
         TextView text_Name;
         RelativeLayout layout_Type;
 
+    }
+
+    private void showPopMenu() {
+        if (cascadingMenuPopWindow == null){
+            cascadingMenuPopWindow = new CascadingMenuPopWindow(getApplicationContext(),provinceList);
+            cascadingMenuPopWindow.setMenuViewOnSelectListener(new NMCascadingMenuViewOnSelectListener());
+            cascadingMenuPopWindow.showAsDropDown(region1,5,5);
+        }else if (cascadingMenuPopWindow!=null && cascadingMenuPopWindow.isShowing()){
+            cascadingMenuPopWindow.dismiss();
+        }else {
+            cascadingMenuPopWindow.showAsDropDown(region1,5,5);
+        }
+    }
+
+    class NMCascadingMenuViewOnSelectListener implements CascadingMenuViewOnSelectListener {
+
+        @Override
+        public void getValue(Area area) {
+            Toast.makeText(getApplicationContext(),""+area.getName(),Toast.LENGTH_SHORT).show();
+        }
     }
 }

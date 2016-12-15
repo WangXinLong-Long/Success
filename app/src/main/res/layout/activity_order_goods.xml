@@ -46,7 +46,7 @@
     <android.support.design.widget.TabLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/y25"
-        android:id="@+id/tlDemo"
+        android:id="@+id/tab_layout"
         app:tabSelectedTextColor="#28ABE3"
         app:tabIndicatorColor="#28ABE3"
         android:layout_below="@+id/order_layout_top"
@@ -54,7 +54,7 @@
     <android.support.v4.view.ViewPager
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/tlDemo"
-        android:id="@+id/vpDemo"
+        android:layout_below="@id/tab_layout"
+        android:id="@+id/view_pager"
         ></android.support.v4.view.ViewPager>
 </RelativeLayout>

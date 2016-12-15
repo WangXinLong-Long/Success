@@ -18,6 +18,7 @@ import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformat
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.AddAddressMVP.presenter.AddAddressPresenter;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceAreaMVP.view.SelectProvinceArea;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.personalInformation.ModifyName;
+import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
 /**
@@ -79,6 +80,7 @@ public class InvoiceInformation extends Activity implements View.OnClickListener
                 finish();
             }
         });
+        LogUtils.log("开票信息-->");
         invoiceInformationPresenter.getInvoiceInformationToBean(sessionId);
     }
 

@@ -9,6 +9,7 @@ import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformat
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.InvoiceInformationMVP.model.saveModifyInvoiceInformationModel.SaveModifyInvoiceInformationModel;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.InvoiceInformationMVP.view.IInvoiceInformationView;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.InvoiceInformationMVP.view.InvoiceInformation;
+import com.silianchuangye.sumao.success.utils.LogUtils;
 
 /**
  * Created by Administrator on 2016/8/11 0011.
@@ -22,6 +23,7 @@ public class InvoiceInformationPresenter {
 
 //    从服务器获取数据，设置到对应的位置上
     public void getInvoiceInformationToBean(String sessionId){
+        LogUtils.log("开票信息Presenter");
         IInvoiceInformationModel model = new InvoiceInformationModel(sessionId);
         model.getInvoiceInformationFromService(new InvoiceInformationCallback() {
             @Override

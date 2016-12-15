@@ -70,7 +70,7 @@ public class PreSaleModel implements IPreSaleModel{
 
                 @Override
                 public void onSuccess(String result) {
-                    LogUtils.log("首页：现货--->" + result + "<---首页：现货");
+                    LogUtils.log("首页：预售--->" + result + "<---首页：预售");
                     Gson gson = new Gson();
                     goodsInStockActivityBean = gson.fromJson(result,GoodsInStockActivityBean.class);
                     callback.callbackPreSale(goodsInStockActivityBean);

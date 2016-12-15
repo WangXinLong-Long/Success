@@ -22,6 +22,7 @@ import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformat
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoUpdateMVP.bean.FirmInfoUpdateActivityBean;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoUpdateMVP.view.FirmInfoUpdateActivity;
 import com.silianchuangye.sumao.success.model.DifferentTypes;
+import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
 import org.json.JSONException;
@@ -132,6 +133,7 @@ public class FirmInfoActivity extends AppCompatActivity implements IFirmInfoView
 
 
     }
+
     public void title_Bar(){
 
         iv_title_bar_back = ((ImageView) findViewById(R.id.iv_title_bar_back));
@@ -165,18 +167,17 @@ public class FirmInfoActivity extends AppCompatActivity implements IFirmInfoView
             @Override
             public void onClick(View v) {
                 firmInfoPresenter.getFirmInfoUpdatePresenterInActivity();
-
-
-
             }
         });
     }
+
     private void sendNet(){
+        LogUtils.log("企业信息-->");
         RequestParams params=new RequestParams(SuMaoConstant.SUMAO_IP+"/rest/model/atg/userprofiling/ProfileActor/enterpriseInfo");
         x.http().post(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Log.e("TAG","result====="+result);
+                LogUtils.log("企业信息result-->onSuccess-->"+result);
 //                {"cl_stat":"27","cl_mingcheng":"四联创业深圳分公司","cl_yewu":"销售部1hao ",
 // "U_province":"1315","cl_zhengjian":"5","info":"sucess","cl_id":"161","U_city":"131509",
 // "U_county":"13150981","cl_dizhi":"倒档到","cl_zhizhao":"91120116724472468Y","cl_leixing":"3"}
@@ -326,17 +327,17 @@ public class FirmInfoActivity extends AppCompatActivity implements IFirmInfoView
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-
+                LogUtils.log("企业信息onError-->"+ex);
             }
 
             @Override
             public void onCancelled(CancelledException cex) {
-
+                LogUtils.log("企业信息onCancelled-->"+cex);
             }
 
             @Override
             public void onFinished() {
-
+                LogUtils.log("企业信息onFinished-->");
             }
         });
     }
@@ -360,6 +361,7 @@ public class FirmInfoActivity extends AppCompatActivity implements IFirmInfoView
         }
         return str;
     }
+
     private String zhengjianType(String i){
         String str="";
         if(i.equals("4")){
@@ -392,8 +394,6 @@ public class FirmInfoActivity extends AppCompatActivity implements IFirmInfoView
         intent.putExtra("firmInfoUpdateActivityBean",firmInfoUpdateActivityBea);
         startActivity(intent);
     }
-
-
 
     @Override
     public void initFirmInfoTypeActivityView(DifferentTypes differentTypes) {

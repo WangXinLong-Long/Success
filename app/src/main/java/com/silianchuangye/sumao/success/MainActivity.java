@@ -32,7 +32,7 @@ import com.silianchuangye.sumao.success.fragments.PagerFive;
 import com.silianchuangye.sumao.success.fragments.PagerFour;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.view.PagerOne;
 import com.silianchuangye.sumao.success.fragments.PagerThree;
-import com.silianchuangye.sumao.success.fragments.PagerTwo;
+import com.silianchuangye.sumao.success.fragments.pagerTwoMVP.PagerTwo;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.LoginUserActivity;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
@@ -187,7 +187,7 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
         mImageArray.add(R.drawable.mine_sumao);
 
         mTextArray.add("首页");
-        mTextArray.add("分类");
+        mTextArray.add("资讯");
         mTextArray.add("购物车");
         mTextArray.add("帮助");
         mTextArray.add("我的塑贸");

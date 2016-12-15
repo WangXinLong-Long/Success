@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/my_sumao_background">
+
+    <include
+        android:id="@+id/pre_sale_title"
+        layout="@layout/screen_title_bar" />
+
+    <RelativeLayout
+        android:id="@+id/selection_condition"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x40"
+        android:layout_below="@id/pre_sale_title"
+        android:background="#E6E6E6">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x30"
+            android:layout_marginBottom="@dimen/x2"
+            android:layout_marginTop="@dimen/x5"
+            android:background="#fff"
+            android:orientation="horizontal"
+            android:weightSum="5">
+
+            <RelativeLayout
+                android:id="@+id/trading_patterns_rl"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/trading_patterns_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="交易模式"
+                    android:textColor="#000"
+                    android:textSize="14sp" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="@dimen/x1"
+                android:layout_height="match_parent"
+                android:background="#E6E6E6"></LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/region_rl"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/region_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="地区"
+                    android:textColor="#000"
+                    android:textSize="14sp" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="@dimen/x1"
+                android:layout_height="match_parent"
+                android:background="#E6E6E6"></LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/classification_rl"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/classification_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="分类"
+                    android:textColor="#000"
+                    android:textSize="14sp" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="@dimen/x1"
+                android:layout_height="match_parent"
+                android:background="#E6E6E6"></LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/application_rl"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/application_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="应用"
+                    android:textColor="#000"
+                    android:textSize="14sp" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="@dimen/x1"
+                android:layout_height="match_parent"
+                android:background="#E6E6E6"></LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/grade_rl"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/grade_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="牌号"
+                    android:textColor="#000"
+                    android:textSize="14sp" />
+            </RelativeLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/split_line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x1"
+        android:layout_below="@id/selection_condition"
+        android:background="@color/my_sumao_background" />
+
+    <com.jingchen.pulltorefresh.PullToRefreshLayout
+        android:id="@+id/refresh_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/split_line">
+
+        <com.jingchen.pulltorefresh.PullableListView
+            android:id="@+id/pre_sale_listView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:background="@color/white"></com.jingchen.pulltorefresh.PullableListView>
+    </com.jingchen.pulltorefresh.PullToRefreshLayout>
+
+
+</RelativeLayout>

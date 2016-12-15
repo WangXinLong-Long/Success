@@ -1,171 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:background="#fff"
-    android:layout_height="match_parent">
-     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/x1"
-        android:background="#F2F2F2"
-        android:id="@+id/layout_Line_Type"
-        android:orientation="horizontal"
-        ></LinearLayout>
+    android:layout_height="match_parent"
+    android:background="@color/selley_bg">
+
     <RelativeLayout
-        android:layout_width="@dimen/x90"
-        android:layout_height="match_parent"
-        android:id="@+id/layout_Show_type"
+        android:id="@+id/rl_informatin"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x43"
+        android:layout_marginBottom="@dimen/x5"
+        android:background="#fff">
+
+        <TextView
+            android:id="@+id/information"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:paddingBottom="@dimen/x5"
+            android:paddingTop="@dimen/x5"
+            android:text="资讯"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:visibility="invisible"
+            android:id="@+id/calendar_view"
+            android:layout_width="@dimen/x30"
+            android:layout_height="@dimen/x30"
+            android:src="@mipmap/calendar"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/x8"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x40"
+        android:layout_below="@id/rl_informatin"
         android:background="#fff"
-        android:layout_below="@+id/layout_Line_Type"
-        >
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/lv_Show_Type"
-        android:listSelector="#00000000"
-        android:fastScrollEnabled="true"
-        android:cacheColorHint="@android:color/transparent"
-        ></ListView>
+        android:layout_marginBottom="@dimen/x5">
+
+        <android.support.design.widget.TabLayout
+            app:tabTextAppearance="@style/MyTabLayoutTextAppearance"
+            android:id="@+id/tab_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            app:tabIndicatorColor="#28ABE3"
+            app:tabSelectedTextColor="#28ABE3" />
     </RelativeLayout>
 
-    <ScrollView
-        android:background="#F2F2F2"
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_toRightOf="@+id/layout_Show_type"
-        android:scrollbars="none"
-        android:id="@+id/scrollDemo"
-        >
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-
-
-
-        >
-        <RelativeLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:id="@+id/layout_Apple_Type"
-          >
-          <TextView
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:id="@+id/tv_Apple_Type"
-              android:textSize="14sp"
-              android:textColor="#000"
-              android:text="产品应用"
-              android:layout_marginTop="@dimen/x5"
-              android:layout_marginLeft="@dimen/x10"
-              />
-          <com.silianchuangye.sumao.success.custom.customCalendar.CustomGridView
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:numColumns="2"
-              android:descendantFocusability="blocksDescendants"
-              android:focusable="true"
-              android:horizontalSpacing="@dimen/x10"
-              android:verticalSpacing="@dimen/x10"
-              android:id="@+id/gv_Apple_Type"
-              android:layout_below="@+id/tv_Apple_Type"
-              android:layout_marginTop="@dimen/x8"
-              android:layout_marginLeft="@dimen/x10"
-              ></com.silianchuangye.sumao.success.custom.customCalendar.CustomGridView>
-      </RelativeLayout>
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/layout_Number_Type"
-            android:layout_below="@+id/layout_Apple_Type"
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/tv_Number_Type"
-                android:textSize="14sp"
-                android:textColor="#000"
-                android:text="热门牌号"
-                android:layout_marginTop="@dimen/x5"
-                android:layout_marginLeft="@dimen/x10"
-                />
-            <com.silianchuangye.sumao.success.custom.customCalendar.CustomGridView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:numColumns="2"
-                android:horizontalSpacing="@dimen/x10"
-                android:verticalSpacing="@dimen/x10"
-                android:id="@+id/gv_Number_Type"
-                android:layout_below="@+id/tv_Number_Type"
-                android:layout_marginTop="@dimen/x8"
-                android:layout_marginLeft="@dimen/x10"
-                ></com.silianchuangye.sumao.success.custom.customCalendar.CustomGridView>
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/layout_Address_Type"
-            android:layout_below="@+id/layout_Number_Type"
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/tv_Address_Type"
-                android:textSize="14sp"
-                android:textColor="#000"
-                android:text="热门地区"
-                android:layout_marginTop="@dimen/x5"
-                android:layout_marginLeft="@dimen/x10"
-                />
-            <com.silianchuangye.sumao.success.custom.customCalendar.CustomGridView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:numColumns="2"
-                android:horizontalSpacing="@dimen/x10"
-                android:verticalSpacing="@dimen/x10"
-                android:id="@+id/gv_Address_Type"
-                android:layout_below="@+id/tv_Address_Type"
-                android:layout_marginTop="@dimen/x8"
-                android:layout_marginLeft="@dimen/x10"
-                ></com.silianchuangye.sumao.success.custom.customCalendar.CustomGridView>
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/layout_Firm_Type"
-            android:layout_below="@+id/layout_Address_Type"
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/tv_Firm_Type"
-                android:textSize="14sp"
-                android:textColor="#000"
-                android:text="生产企业"
-                android:layout_marginTop="@dimen/x5"
-                android:layout_marginLeft="@dimen/x10"
-                />
-            <com.silianchuangye.sumao.success.custom.customCalendar.CustomGridView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:numColumns="2"
-                android:horizontalSpacing="@dimen/x10"
-                android:verticalSpacing="@dimen/x10"
-                android:id="@+id/gv_Firm_Type"
-                android:layout_below="@+id/tv_Firm_Type"
-                android:layout_marginTop="@dimen/x8"
-                android:layout_marginLeft="@dimen/x10"
-                ></com.silianchuangye.sumao.success.custom.customCalendar.CustomGridView>
-
-        </RelativeLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/x15"
-            android:background="#F2F2F2"
-            android:layout_below="@id/layout_Firm_Type"
-            ></LinearLayout>
-    </RelativeLayout>
-    </ScrollView>
-
-
-
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rl_tab_layout" />
 </RelativeLayout>

@@ -1,10 +1,6 @@
 package com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.goodsInStock;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -27,7 +23,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
-import com.silianchuangye.sumao.success.adapter.MyAdapter;
 import com.silianchuangye.sumao.success.adapter.MyPageAdapter;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.SpotOrder.OrderAlreadyFinishFragment;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.SpotOrder.OrderAlreadygoodsFragment;
@@ -48,20 +43,9 @@ import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.SpotOrder.ServiceChangeFragment;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.SpotOrder.ServiceFinishFragment;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.SpotOrder.ServiceShipmentsFragment;
-import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.xutils.common.Callback;
-import org.xutils.http.RequestParams;
-import org.xutils.x;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
@@ -195,8 +179,8 @@ public class OrderGoodsActivity extends AppCompatActivity implements View.OnClic
         adapter.setTitles(listString);
 
 
-        tlDemo = (TabLayout) findViewById(R.id.tlDemo);
-        vpDemo = (ViewPager) findViewById(R.id.vpDemo);
+        tlDemo = (TabLayout) findViewById(R.id.tab_layout);
+        vpDemo = (ViewPager) findViewById(R.id.view_pager);
         vpDemo.setAdapter(adapter);
         tlDemo.setupWithViewPager(vpDemo);
 //        vpDemo.setOffscreenPageLimit(7);

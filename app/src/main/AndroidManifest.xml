@@ -619,6 +619,8 @@
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide" >
         </activity>
+        <activity android:name=".fragments.homepage.PagerOneGridViewDetailActivityMVP.PagerOneGridViewDetailActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

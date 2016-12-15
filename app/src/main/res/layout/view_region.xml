@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/expand_tab_eara_height"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:background="@drawable/choose_eara_item_selector"
+
+    >
+
+    <LinearLayout
+        android:id="@+id/linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y280"
+        android:orientation="horizontal">
+
+        <ListView
+            android:id="@+id/listView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:cacheColorHint="@color/no_color"
+            android:divider="#dcdcdc"
+            android:dividerHeight="1px"
+            android:paddingLeft="4dp"
+            android:scrollbars="none"/>
+
+        <ListView
+            android:visibility="invisible"
+            android:id="@+id/listView2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:cacheColorHint="@color/no_color"
+            android:divider="#dcdcdc"
+            android:dividerHeight="1px"
+            android:paddingLeft="4dp"
+            android:scrollbars="none"/>
+
+        <ListView
+            android:visibility="invisible"
+            android:id="@+id/listView3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:cacheColorHint="@color/no_color"
+            android:divider="#dcdcdc"
+            android:dividerHeight="1px"
+            android:paddingLeft="4dp"
+            android:scrollbars="none"/>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/linear_layout"
+        android:background="@color/white">
+
+        <Button
+            android:layout_width="@dimen/x50"
+            android:layout_height="@dimen/x35"
+            android:layout_centerVertical="true"
+            android:background="@drawable/button_background_yellow"
+            android:layout_marginLeft="@dimen/x10"
+            android:text="重置" />
+
+        <Button
+            android:layout_width="@dimen/x50"
+            android:layout_height="@dimen/x35"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/x10"
+            android:background="@drawable/button_backgroup_save"
+            android:text="确定" />
+    </RelativeLayout>
+</merge>
