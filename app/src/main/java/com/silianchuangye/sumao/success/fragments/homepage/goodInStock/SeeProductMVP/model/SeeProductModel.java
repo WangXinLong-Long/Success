@@ -1,7 +1,6 @@
 package com.silianchuangye.sumao.success.fragments.homepage.goodInStock.SeeProductMVP.model;
 
 import com.google.gson.Gson;
-import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockDetailActivityMVP.bean.GoodsInStockDetailBean;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.SeeProductMVP.bean.SeeProductBean;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;

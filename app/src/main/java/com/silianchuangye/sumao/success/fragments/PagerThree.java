@@ -8,16 +8,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -31,16 +27,13 @@ import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.MainActivity;
 import com.silianchuangye.sumao.success.R;
-import com.silianchuangye.sumao.success.adapter.CartAdapter;
 import com.silianchuangye.sumao.success.adapter.CartItemAdapter;
 import com.silianchuangye.sumao.success.custom.CustomListView;
 import com.silianchuangye.sumao.success.fragments.bean.CartInfo;
 import com.silianchuangye.sumao.success.fragments.bean.CartItemInfo;
-import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.PaymentsOrder;
-import com.silianchuangye.sumao.success.fragments.homepage.theprice.MidpointsListctivity;
+import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.PayMentsOrderMVP.PaymentsOrder;
 import com.silianchuangye.sumao.success.fragments.shoppingCart.dialog.Cart_MyDialog;
 import com.silianchuangye.sumao.success.fragments.type.SelectCallBack;
-import com.silianchuangye.sumao.success.utils.Loding;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
 import org.json.JSONArray;
@@ -53,7 +46,6 @@ import org.xutils.x;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ThreadFactory;
 
 /**
  * Created by Administrator on 2016/4/20 0020.

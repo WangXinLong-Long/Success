@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+
+    android:layout_height="@dimen/expand_tab_eara_height"
+
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            >
+            <TextView
+                android:id="@+id/region_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:paddingLeft="@dimen/x10"
+                android:paddingBottom="@dimen/x5"
+                android:paddingTop="@dimen/x5"
+                android:text="地区" />
+
+
+            <ImageView
+                android:id="@+id/region_more_iv"
+                android:layout_width="@dimen/x15"
+                android:layout_height="@dimen/x10"
+                android:layout_marginRight="@dimen/x10"
+                android:layout_marginLeft="@dimen/x5"
+                android:layout_marginTop="@dimen/x10"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/more" />
+
+            <TextView
+                android:id="@+id/region_more_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/region_more_iv"
+                android:textColor="@color/black"
+                android:paddingLeft="@dimen/x10"
+                android:paddingBottom="@dimen/x5"
+                android:paddingTop="@dimen/x5"
+                android:text="更多" />
+
+            <com.silianchuangye.sumao.success.custom.CustomGridView
+                android:id="@+id/region_grid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/region_tv"
+                android:horizontalSpacing="3dp"
+                android:numColumns="5"
+                android:padding="@dimen/x5"
+                android:verticalSpacing="3dp" />
+
+
+            <TextView
+                android:id="@+id/classification_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:paddingLeft="@dimen/x10"
+                android:paddingBottom="@dimen/x5"
+                android:paddingTop="@dimen/x5"
+                android:layout_below="@id/region_grid"
+                android:text="分类" />
+
+
+            <ImageView
+                android:id="@+id/classification_more_iv"
+                android:layout_width="@dimen/x15"
+                android:layout_height="@dimen/x10"
+                android:layout_marginRight="@dimen/x10"
+                android:layout_marginLeft="@dimen/x5"
+                android:layout_marginTop="@dimen/x10"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/region_grid"
+                android:src="@drawable/more" />
+
+            <TextView
+                android:id="@+id/classification_more_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/region_more_iv"
+                android:textColor="@color/black"
+                android:paddingLeft="@dimen/x10"
+                android:paddingBottom="@dimen/x5"
+                android:paddingTop="@dimen/x5"
+                android:layout_below="@id/region_grid"
+                android:text="更多" />
+            <com.silianchuangye.sumao.success.custom.CustomGridView
+                android:layout_below="@id/classification_tv"
+                android:id="@+id/classification_grid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:horizontalSpacing="3dp"
+                android:numColumns="5"
+                android:padding="@dimen/x5"
+                android:verticalSpacing="3dp" />
+
+            <TextView
+                android:id="@+id/application_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:paddingLeft="@dimen/x10"
+                android:paddingBottom="@dimen/x5"
+                android:paddingTop="@dimen/x5"
+                android:layout_below="@id/classification_grid"
+                android:text="应用" />
+
+
+            <ImageView
+                android:id="@+id/application_more_iv"
+                android:layout_width="@dimen/x15"
+                android:layout_height="@dimen/x10"
+                android:layout_marginRight="@dimen/x10"
+                android:layout_marginLeft="@dimen/x5"
+                android:layout_marginTop="@dimen/x10"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/classification_grid"
+                android:src="@drawable/more" />
+
+            <TextView
+                android:id="@+id/application_more_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/region_more_iv"
+                android:textColor="@color/black"
+                android:paddingLeft="@dimen/x10"
+                android:paddingBottom="@dimen/x5"
+                android:paddingTop="@dimen/x5"
+                android:layout_below="@id/classification_grid"
+                android:text="更多" />
+            <com.silianchuangye.sumao.success.custom.CustomGridView
+                android:layout_below="@id/application_tv"
+                android:id="@+id/application_grid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:horizontalSpacing="3dp"
+                android:numColumns="5"
+                android:padding="@dimen/x5"
+                android:verticalSpacing="3dp" />
+
+            <TextView
+                android:id="@+id/graden_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:paddingLeft="@dimen/x10"
+                android:paddingBottom="@dimen/x5"
+                android:paddingTop="@dimen/x5"
+                android:layout_below="@id/application_grid"
+                android:text="牌号" />
+
+
+            <ImageView
+                android:id="@+id/grade_more_iv"
+                android:layout_width="@dimen/x15"
+                android:layout_height="@dimen/x10"
+                android:layout_marginRight="@dimen/x10"
+                android:layout_marginLeft="@dimen/x5"
+                android:layout_marginTop="@dimen/x10"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/application_grid"
+                android:src="@drawable/more" />
+
+            <TextView
+                android:id="@+id/grade_more_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/region_more_iv"
+                android:textColor="@color/black"
+                android:paddingLeft="@dimen/x10"
+                android:paddingBottom="@dimen/x5"
+                android:paddingTop="@dimen/x5"
+                android:layout_below="@id/application_grid"
+                android:text="更多" />
+            <com.silianchuangye.sumao.success.custom.CustomGridView
+                android:layout_below="@id/graden_tv"
+                android:id="@+id/grade_grid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:horizontalSpacing="3dp"
+                android:numColumns="5"
+                android:padding="@dimen/x5"
+                android:verticalSpacing="3dp" />
+
+            <RelativeLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/x50"
+                android:layout_below="@id/grade_grid"
+                >
+
+                <Button
+                    android:id="@+id/reset"
+                    android:layout_width="@dimen/x50"
+                    android:layout_height="@dimen/x25"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/x10"
+                    android:background="@drawable/button_background_yellow"
+                    android:text="重置" />
+
+                <Button
+                    android:id="@+id/completed"
+                    android:layout_width="@dimen/x50"
+                    android:layout_height="@dimen/x25"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/x10"
+                    android:background="@drawable/button_backgroup_save"
+                    android:text="确定" />
+            </RelativeLayout>
+        </RelativeLayout>
+    </ScrollView>
+
+
+</merge>

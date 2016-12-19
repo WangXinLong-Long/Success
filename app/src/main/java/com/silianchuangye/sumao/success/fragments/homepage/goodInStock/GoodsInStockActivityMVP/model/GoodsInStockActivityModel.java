@@ -2,6 +2,7 @@ package com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInS
 
 import com.google.gson.Gson;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.bean.GoodsInStockActivityBean;
+import com.silianchuangye.sumao.success.utils.Loding;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
@@ -30,34 +31,34 @@ public class GoodsInStockActivityModel implements IGoodsInStockActivityModel {
 
     @Override
     public void getGoodsInStockActivityResult(final GoodsInStockActivityCallback callback) {
-        String url = SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/catalog/ProductCatalogActor/fixedPrductlist";
+        String url = SuMaoConstant.SUMAO_IP + "/rest/model/atg/commerce/catalog/ProductCatalogActor/fixedPrductlist";
         String params = "";
-        if(region2!=null && !region2.equals("") ){
-            if(params.equals("")){
+        if (region2 != null && !region2.equals("")) {
+            if (params.equals("")) {
                 params += region2;
-            }else {
-                params += "+"+region2;
+            } else {
+                params += "+" + region2;
             }
         }
-        if(classification2!=null && !classification2.equals("")){
-            if(params.equals("")){
+        if (classification2 != null && !classification2.equals("")) {
+            if (params.equals("")) {
                 params += classification2;
-            }else {
-                params += "+"+classification2;
+            } else {
+                params += "+" + classification2;
             }
         }
-        if(application2!=null && !application2.equals("")){
-            if(params.equals("")){
+        if (application2 != null && !application2.equals("")) {
+            if (params.equals("")) {
                 params += application2;
-            }else {
-                params += "+"+application2;
+            } else {
+                params += "+" + application2;
             }
         }
-        url=url+"?N="+params;
-        LogUtils.log("URL----->"+url+"<-----URL");
+        url = url + "?N=" + params;
+        LogUtils.log("URL----->" + url + "<-----URL");
         RequestParams requestParams = new RequestParams(url);
-        requestParams.addParameter("Nrpp",Nrpp+"");
-        requestParams.addParameter("No",No+"");
+        requestParams.addParameter("Nrpp", Nrpp + "");
+        requestParams.addParameter("No", No + "");
         LogUtils.log("首页：现货requestParams--->" + requestParams + "<---首页：现货requestParams");
         try {
             x.http().request(HttpMethod.POST, requestParams, new Callback.CacheCallback<String>() {
@@ -73,7 +74,10 @@ public class GoodsInStockActivityModel implements IGoodsInStockActivityModel {
                 public void onSuccess(String result) {
                     LogUtils.log("首页：现货--->" + result + "<---首页：现货");
                     Gson gson = new Gson();
-                    goodsInStockActivityBean = gson.fromJson(result,GoodsInStockActivityBean.class);
+                    goodsInStockActivityBean = gson.fromJson(result, GoodsInStockActivityBean.class);
+//                   TODO 删除掉 添加虚假数据
+//                    getData();
+
                     callback.callbackInGoodsInStockActivity(goodsInStockActivityBean);
                 }
 
@@ -91,6 +95,7 @@ public class GoodsInStockActivityModel implements IGoodsInStockActivityModel {
                 @Override
                 public void onFinished() {
                     LogUtils.log("--------->" + "3.2+onFinished" + "<-----------");
+                    Loding.dis();
                 }
             });
         } catch (Exception e) {
@@ -98,4 +103,6 @@ public class GoodsInStockActivityModel implements IGoodsInStockActivityModel {
             LogUtils.log("--------->" + "3.2+printStackTrace" + e.toString() + "<-----------");
         }
     }
+
+
 }

@@ -27,7 +27,7 @@ import android.widget.Toast;
 import com.jingchen.pulltorefresh.PullToRefreshLayout;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.PreSaleAdapter;
-import com.silianchuangye.sumao.success.custom.customCalendar.CustomGridView;
+import com.silianchuangye.sumao.success.custom.CustomGridView;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.bean.GoodsInStockActivityBean;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.bean.SMCl;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.view.PreSaleDetailActivity;

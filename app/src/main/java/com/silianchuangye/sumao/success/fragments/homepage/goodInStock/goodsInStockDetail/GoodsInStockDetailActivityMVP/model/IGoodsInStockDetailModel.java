@@ -1,4 +1,4 @@
-package com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockDetailActivityMVP.model;
+package com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.model;
 
 /**
  * Created by Administrator on 2016/8/13 0013.

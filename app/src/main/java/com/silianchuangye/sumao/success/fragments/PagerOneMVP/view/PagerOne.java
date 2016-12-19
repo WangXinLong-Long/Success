@@ -35,6 +35,7 @@ import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSelling
 import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.view.UpstreamDirectSellingActivity;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.AuctionMVP.AuctionActivity;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.bean.GoodsInStockActivityBean;
+import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.bean.SMCl;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.view.GoodsInStockActivity;
 import com.silianchuangye.sumao.success.fragments.homepage.groupbuying.GroupBuyingActivity;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleMVP.bean.Auction;
@@ -223,6 +224,7 @@ public class PagerOne extends BasePager implements IPagerOneView {
                     startActivity(intent);
                     //Toast.makeText(mActivity, "点击了团购按钮", Toast.LENGTH_SHORT).show();
                 } else if (list.get(position).get("icon").equals(R.mipmap.goods)) {
+                    //Toast.makeText(mActivity, "点击了现货按钮", Toast.LENGTH_SHORT).show();
                     Loding.show(mActivity, "加载中...", true, null);
                     pagerOnePresenter.getGoodsInStockInfo("", "", "", 10, 0);
 
@@ -393,10 +395,34 @@ public class PagerOne extends BasePager implements IPagerOneView {
     @Override
     public void setDataInActivity(GoodsInStockActivityBean goodsInStockActivityBean) {
         Loding.dis();
+        GoodsInStockActivityBean  goodsInStockActivityBean1 = new GoodsInStockActivityBean();
+        Map<String, String> address = new HashMap<String, String>();
+        Map<String, String> application = new HashMap<String, String>();
+        Map<String, String> sort = new HashMap<String, String>();
+        List<SMCl> cl = new ArrayList<SMCl>();
+        for (int i = 0; i < 5; i++) {
+            address.put("地址" + i, 2020 + i + "");
+            application.put("应用" + i, 2021 + i + "");
+            sort.put("分类" + i, 2022 + i + "");
+            SMCl smcl = new SMCl();
+            smcl.setCl_shuliang("5"+i);
+            smcl.setCl_qiye("企业"+i);
+            smcl.setCl_mingcheng("名称"+i);
+            smcl.setCl_jine(5+i+"");
+            smcl.setCl_cangku("仓库"+i);
+            smcl.setCl_cpid("2023"+i);
+            smcl.setCl_id("2024"+i);
+            cl.add(smcl);
+        }
+        goodsInStockActivityBean1.setApplication(application);
+        goodsInStockActivityBean1.setCl(cl);
+        goodsInStockActivityBean1.setRegion(address);
+        goodsInStockActivityBean1.setSort(sort);
+        goodsInStockActivityBean1.setTotal(5 + "");
         Intent intent = new Intent(mActivity, GoodsInStockActivity.class);
         //Toast.makeText(mActivity, "点击了现货按钮", Toast.LENGTH_SHORT).show();
         intent.putExtra("title", "现货");
-        intent.putExtra("goodsInStockActivityBean", goodsInStockActivityBean);
+        intent.putExtra("goodsInStockActivityBean", goodsInStockActivityBean1);
         startActivity(intent);
     }
 

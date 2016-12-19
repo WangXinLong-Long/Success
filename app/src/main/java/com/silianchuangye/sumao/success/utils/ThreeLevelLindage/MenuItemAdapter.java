@@ -140,7 +140,6 @@ public class MenuItemAdapter extends BaseAdapter {
         if (selectedText != null && selectedText.equals(mString)) {
             view.setBackgroundDrawable(selectedDrawble);
         } else {
-//            设置未选中状态的背景图片
             view.setBackgroundDrawable(context.getResources().getDrawable(normalDrawleId));
         }
         view.setPadding(20, 0, 0, 0);

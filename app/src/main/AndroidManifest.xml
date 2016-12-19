@@ -432,7 +432,7 @@
             android:name=".fragments.myPlasticTrade.register.RegisterValueActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".fragments.homepage.goodInStock.GoodsInStockDetailActivityMVP.view.GoodsInStockDetailActivity"
+            android:name=".fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.view.GoodsInStockDetailActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
@@ -452,7 +452,7 @@
             android:name=".fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.createLogisticsMVP.CreateLogistics"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".fragments.homepage.goodInStock.PaymentsOrder"
+            android:name=".fragments.homepage.goodInStock.goodsInStockDetail.PayMentsOrderMVP.PaymentsOrder"
             android:screenOrientation="portrait" />
         <activity
             android:name=".fragments.SearchActivityMVP.view.SearchActivity"
@@ -619,7 +619,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide" >
         </activity>
-        <activity android:name=".fragments.homepage.PagerOneGridViewDetailActivityMVP.PagerOneGridViewDetailActivity"
+        <activity android:name=".fragments.homepage.pagerOneGridViewDetailActivity.PagerOneGridViewDetailActivity"
             android:screenOrientation="portrait"/>
     </application>
 

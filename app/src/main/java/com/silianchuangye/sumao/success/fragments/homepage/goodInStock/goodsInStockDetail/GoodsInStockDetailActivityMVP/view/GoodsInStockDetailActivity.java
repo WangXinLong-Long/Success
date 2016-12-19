@@ -1,4 +1,4 @@
-package com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockDetailActivityMVP.view;
+package com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.view;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -22,22 +22,19 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.silianchuangye.sumao.success.HX.Constant;
 import com.silianchuangye.sumao.success.HX.ui.LoginActivity;
 import com.silianchuangye.sumao.success.MainActivity;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.custom.customCalendar.CalendarView;
-import com.silianchuangye.sumao.success.dialog.Error_Dialog;
-import com.silianchuangye.sumao.success.dialog.Ok_Dialog;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.VesselThreeActivity;
-import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockDetailActivityMVP.bean.CLAttribute;
-import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockDetailActivityMVP.bean.GoodsInStockDetailBean;
-
-import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockDetailActivityMVP.bean.RelatedProduct;
-import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockDetailActivityMVP.presenter.GoodsInStockDetailPresenter;
+import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.bean.CLAttribute;
+import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.bean.GoodsInStockDetailBean;
+import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.bean.RelatedProduct;
+import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.bean.SimilarProduct;
+import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.presenter.GoodsInStockDetailPresenter;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.LikeProduct;
-import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.PaymentsOrder;
+import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.PayMentsOrderMVP.PaymentsOrder;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.SeeProductMVP.view.SeeProduct;
 import com.silianchuangye.sumao.success.fragments.shoppingCart.dialog.Cart_MyDialog;
 import com.silianchuangye.sumao.success.utils.Loding;
@@ -353,8 +350,51 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
     }
 
     @Override
-    public void getGoodsInStockDetailData(GoodsInStockDetailBean goodsInStockDetailBean) {
+    public void getGoodsInStockDetailData(GoodsInStockDetailBean goodsInStockDetailBean1) {
         Loding.dis();
+        GoodsInStockDetailBean goodsInStockDetailBean = new GoodsInStockDetailBean();
+        goodsInStockDetailBean.setMstEbsSkuInfoId(2020+"1");
+        List<SimilarProduct> similarProducts = new ArrayList<>();
+        List<String> cl_jhfangshi = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            SimilarProduct similarProduct = new SimilarProduct();
+            similarProduct.setCl_id(2021+""+i);
+            similarProduct.setCl_shuliang(12+i+"");
+            similarProduct.setCl_cangku("仓库"+i);
+            similarProduct.setCl_jine(12+""+i);
+            similarProduct.setCl_mingcheng("名称"+1);
+            similarProducts.add(similarProduct);
+            cl_jhfangshi.add("交货方式"+i);
+        }
+         relatedProduct = new RelatedProduct();
+        relatedProduct.setSimilarProduct(similarProducts);
+        goodsInStockDetailBean.setRelatedProducts(relatedProduct);
+        goodsInStockDetailBean.setCl_jifen("2");
+        goodsInStockDetailBean.setCl_cpid("2022"+1);
+        goodsInStockDetailBean.setCl_hyfenlei("分类");
+        goodsInStockDetailBean.setCl_gongsiId("2023"+1);
+        goodsInStockDetailBean.setCl_gongsi("公司"+1);
+        goodsInStockDetailBean.setCl_qigou(2+"");
+        goodsInStockDetailBean.setCl_jine("13");
+        goodsInStockDetailBean.setCl_fenlei("分类");
+        goodsInStockDetailBean.setCl_paihao("牌号");
+        goodsInStockDetailBean.setCl_shuliang("13");
+        goodsInStockDetailBean.setCl_xiaobian("1");
+        goodsInStockDetailBean.setCl_mingcheng("名称"+1);
+        goodsInStockDetailBean.setContract("www.baidu.com");
+        goodsInStockDetailBean.setCl_scqiye("企业"+1);
+        goodsInStockDetailBean.setCl_yingyong("应用"+1);
+        goodsInStockDetailBean.setCl_id("2023"+1);
+        goodsInStockDetailBean.setCl_jhfangshi(cl_jhfangshi);
+        goodsInStockDetailBean.setCl_shijian(System.currentTimeMillis()+"");
+        goodsInStockDetailBean.setCl_type("类型"+1);
+        goodsInStockDetailBean.setCl_shijianend(System.currentTimeMillis()+"");
+        goodsInStockDetailBean.setAmountUnitScale("元");
+        goodsInStockDetailBean.setCl_jituan("集团"+1);
+        goodsInStockDetailBean.setCl_dizhi("地址"+1);
+        goodsInStockDetailBean.setCl_diqu("地区"+1);
+        goodsInStockDetailBean.setCl_cangku("仓库"+1);
+        goodsInStockDetailBean.setCl_guojia("中国"+1);
         //skuId
         sku_id = goodsInStockDetailBean.getCl_cpid();
 //        兰州石化7042

@@ -75,7 +75,7 @@
 
             </RelativeLayout>
 
-            <com.silianchuangye.sumao.success.custom.customCalendar.CustomGridView
+            <com.silianchuangye.sumao.success.custom.CustomGridView
                 android:layout_centerInParent="true"
 
                 android:layout_marginTop="@dimen/x2"
@@ -85,7 +85,7 @@
                 android:layout_below="@id/area"
                 android:horizontalSpacing="@dimen/x2"
                 android:numColumns="5"
-                android:verticalSpacing="@dimen/x2"></com.silianchuangye.sumao.success.custom.customCalendar.CustomGridView>
+                android:verticalSpacing="@dimen/x2"></com.silianchuangye.sumao.success.custom.CustomGridView>
             <!--分类-->
             <RelativeLayout
                 android:id="@+id/classification"
@@ -117,7 +117,7 @@
                     android:textStyle="bold" />
             </RelativeLayout>
 
-            <com.silianchuangye.sumao.success.custom.customCalendar.CustomGridView
+            <com.silianchuangye.sumao.success.custom.CustomGridView
                 android:layout_marginTop="@dimen/x2"
                 android:id="@+id/classification_detail"
                 android:layout_width="match_parent"
@@ -125,7 +125,7 @@
                 android:layout_below="@id/classification"
                 android:horizontalSpacing="@dimen/x2"
                 android:numColumns="5"
-                android:verticalSpacing="@dimen/x2"></com.silianchuangye.sumao.success.custom.customCalendar.CustomGridView>
+                android:verticalSpacing="@dimen/x2"></com.silianchuangye.sumao.success.custom.CustomGridView>
             <!--应用-->
             <RelativeLayout
                 android:id="@+id/application"
@@ -157,7 +157,7 @@
                     android:textStyle="bold" />
             </RelativeLayout>
 
-            <com.silianchuangye.sumao.success.custom.customCalendar.CustomGridView
+            <com.silianchuangye.sumao.success.custom.CustomGridView
                 android:layout_marginTop="@dimen/x2"
                 android:id="@+id/application_detail"
                 android:layout_width="match_parent"
@@ -165,7 +165,7 @@
                 android:layout_below="@id/application"
                 android:horizontalSpacing="@dimen/x2"
                 android:numColumns="5"
-                android:verticalSpacing="@dimen/x2"></com.silianchuangye.sumao.success.custom.customCalendar.CustomGridView>
+                android:verticalSpacing="@dimen/x2"></com.silianchuangye.sumao.success.custom.CustomGridView>
 
 
         </RelativeLayout>

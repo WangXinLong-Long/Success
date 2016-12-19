@@ -35,7 +35,7 @@
                         android:textColor="#000"
                         android:textSize="14sp" />
 
-                    <com.silianchuangye.sumao.success.custom.customCalendar.CustomGridView
+                    <com.silianchuangye.sumao.success.custom.CustomGridView
                         android:id="@+id/gv_Apple_Type"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -46,7 +46,7 @@
                         android:focusable="true"
                         android:horizontalSpacing="@dimen/x10"
                         android:numColumns="3"
-                        android:verticalSpacing="@dimen/x10"></com.silianchuangye.sumao.success.custom.customCalendar.CustomGridView>
+                        android:verticalSpacing="@dimen/x10"></com.silianchuangye.sumao.success.custom.CustomGridView>
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -65,7 +65,7 @@
                         android:textColor="#000"
                         android:textSize="14sp" />
 
-                    <com.silianchuangye.sumao.success.custom.customCalendar.CustomGridView
+                    <com.silianchuangye.sumao.success.custom.CustomGridView
                         android:id="@+id/gv_Number_Type"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -74,7 +74,7 @@
                         android:layout_marginTop="@dimen/x8"
                         android:horizontalSpacing="@dimen/x10"
                         android:numColumns="3"
-                        android:verticalSpacing="@dimen/x10"></com.silianchuangye.sumao.success.custom.customCalendar.CustomGridView>
+                        android:verticalSpacing="@dimen/x10"></com.silianchuangye.sumao.success.custom.CustomGridView>
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -93,7 +93,7 @@
                         android:textColor="#000"
                         android:textSize="14sp" />
 
-                    <com.silianchuangye.sumao.success.custom.customCalendar.CustomGridView
+                    <com.silianchuangye.sumao.success.custom.CustomGridView
                         android:id="@+id/gv_Address_Type"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -102,7 +102,7 @@
                         android:layout_marginTop="@dimen/x8"
                         android:horizontalSpacing="@dimen/x10"
                         android:numColumns="3"
-                        android:verticalSpacing="@dimen/x10"></com.silianchuangye.sumao.success.custom.customCalendar.CustomGridView>
+                        android:verticalSpacing="@dimen/x10"></com.silianchuangye.sumao.success.custom.CustomGridView>
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -121,7 +121,7 @@
                         android:textColor="#000"
                         android:textSize="14sp" />
 
-                    <com.silianchuangye.sumao.success.custom.customCalendar.CustomGridView
+                    <com.silianchuangye.sumao.success.custom.CustomGridView
                         android:id="@+id/gv_Firm_Type"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -130,7 +130,7 @@
                         android:layout_marginTop="@dimen/x8"
                         android:horizontalSpacing="@dimen/x10"
                         android:numColumns="3"
-                        android:verticalSpacing="@dimen/x10"></com.silianchuangye.sumao.success.custom.customCalendar.CustomGridView>
+                        android:verticalSpacing="@dimen/x10"></com.silianchuangye.sumao.success.custom.CustomGridView>
 
                 </RelativeLayout>
             </RelativeLayout>

@@ -10,7 +10,7 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
 import com.silianchuangye.sumao.success.R;
-import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockDetailActivityMVP.bean.CLAttribute;
+import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.bean.CLAttribute;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 
 import java.util.ArrayList;

@@ -27,13 +27,13 @@ import android.widget.Toast;
 import com.jingchen.pulltorefresh.PullToRefreshLayout;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.PreSaleAdapter;
-import com.silianchuangye.sumao.success.custom.customCalendar.CustomGridView;
+import com.silianchuangye.sumao.success.custom.CustomGridView;
 import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.UpstreamDirectDetailMVP.bean.DirectSellingBean;
 import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.UpstreamDirectDetailMVP.bean.ProductItemBean;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.bean.GoodsInStockActivityBean;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.bean.SMCl;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.presenter.GoodsInStockActivityPresenter;
-import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockDetailActivityMVP.view.GoodsInStockDetailActivity;
+import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.view.GoodsInStockDetailActivity;
 import com.silianchuangye.sumao.success.model.PreSaleModel;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.ThreeLevelLindage.Area;
@@ -161,15 +161,14 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
         String title = intent.getStringExtra("title");
         tv_screen_title_bar_title.setText(title);
         if (title.equals("现货")){
-//            TODO 放开这里
-//            goodsInStockActivityBean = (GoodsInStockActivityBean)intent.getSerializableExtra("goodsInStockActivityBean");
-//            jsonArrayClassification = goodsInStockActivityBean.getSort();
-//            jsonArrayApplication = goodsInStockActivityBean.getApplication();
-//            jsonArrayRegion = goodsInStockActivityBean.getRegion();
-//            smClList = goodsInStockActivityBean.getCl();
-//            total = goodsInStockActivityBean.getTotal();
-//            adapter = new PreSaleAdapter(this, smClList);
-//            pre_sale_listView.setAdapter(adapter);
+            goodsInStockActivityBean = (GoodsInStockActivityBean)intent.getSerializableExtra("goodsInStockActivityBean");
+            jsonArrayClassification = goodsInStockActivityBean.getSort();
+            jsonArrayApplication = goodsInStockActivityBean.getApplication();
+            jsonArrayRegion = goodsInStockActivityBean.getRegion();
+            smClList = goodsInStockActivityBean.getCl();
+            total = goodsInStockActivityBean.getTotal();
+            adapter = new PreSaleAdapter(this, smClList);
+            pre_sale_listView.setAdapter(adapter);
         }else {
             smClList =  new ArrayList<SMCl>();
             DirectSellingBean directSellingBean = ((DirectSellingBean) intent.getSerializableExtra("directSellingBean"));

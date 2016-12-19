@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+
+    android:layout_height="match_parent"
+
+    android:orientation="vertical" >
+
+
+
+    <TextView
+        android:id="@+id/image_item"
+        android:layout_width="@dimen/x50"
+        android:layout_height="@dimen/x25"
+        android:padding="@dimen/x3"
+        android:text="内蒙"
+        android:textSize="@dimen/x15"
+        android:gravity="center"
+        android:background="@drawable/button_back_gray"
+        />
+
+</LinearLayout>

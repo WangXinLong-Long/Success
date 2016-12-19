@@ -8,7 +8,7 @@ import android.widget.AdapterView;
 import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
-import com.silianchuangye.sumao.success.fragments.homepage.PagerOneGridViewDetailActivityMVP.PagerOneGridViewDetailActivity;
+import com.silianchuangye.sumao.success.fragments.homepage.pagerOneGridViewDetailActivity.PagerOneGridViewDetailActivity;
 
 import java.util.List;
 

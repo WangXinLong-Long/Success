@@ -62,6 +62,7 @@ public class CascadingMenuView extends RelativeLayout {
     private void init(final Context context) {
         LayoutInflater inflater = ((LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE));
         inflater.inflate(R.layout.view_region,this,true);
+        setBackgroundColor(getResources().getColor(R.color.white));
         firstMenuListView = ((ListView) findViewById(R.id.listView));
         secondMenuListView = ((ListView) findViewById(R.id.listView2));
         thirdMenuListView = ((ListView) findViewById(R.id.listView3));

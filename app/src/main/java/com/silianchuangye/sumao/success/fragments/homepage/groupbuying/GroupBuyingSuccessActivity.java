@@ -1,14 +1,11 @@
 package com.silianchuangye.sumao.success.fragments.homepage.groupbuying;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.CountDownTimer;
-import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.ActionBarOverlayLayout;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -29,14 +26,12 @@ import android.widget.Toast;
 import com.silianchuangye.sumao.success.HX.Constant;
 import com.silianchuangye.sumao.success.HX.ui.LoginActivity;
 import com.silianchuangye.sumao.success.R;
-import com.silianchuangye.sumao.success.adapter.MyPageAdapter;
 import com.silianchuangye.sumao.success.adapter.PopupWindowAdaptrer;
 import com.silianchuangye.sumao.success.dialog.Error_Dialog;
 import com.silianchuangye.sumao.success.dialog.Ok_Dialog;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.OpenAuction;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.VesselThreeActivity;
-import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockDetailActivityMVP.bean.CLAttribute;
-import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleMVP.bean.Group;
+import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.bean.CLAttribute;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
 import org.json.JSONArray;
@@ -49,11 +44,9 @@ import org.xutils.x;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TimeZone;
 
 public class GroupBuyingSuccessActivity extends AppCompatActivity {
     private ListView lvDemo;

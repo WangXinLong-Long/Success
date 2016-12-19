@@ -1,4 +1,4 @@
-package com.silianchuangye.sumao.success.fragments.homepage.goodInStock;
+package com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.PayMentsOrderMVP;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -27,12 +27,10 @@ import com.silianchuangye.sumao.success.adapter.PopupWindowAdaptrer;
 import com.silianchuangye.sumao.success.dialog.Error_Dialog;
 import com.silianchuangye.sumao.success.dialog.Ok_Dialog;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.OpenAuction;
-import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockDetailActivityMVP.bean.OrderList;
+import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.bean.OrderList;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
-//import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockDetailActivityMVP.bean.OrderIdList;
 
-import org.apache.commons.net.io.ToNetASCIIInputStream;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -45,6 +43,8 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
+
+//import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockDetailActivityMVP.bean.OrderIdList;
 
 /**
  * Created by Administrator on 2016/7/4 0004.
@@ -91,7 +91,7 @@ public class PaymentsOrder extends Activity implements View.OnClickListener {
         lvdemo = (ListView) findViewById(R.id.lbDem);
         addData();
 
-        tv_payments_order_money= (TextView) findViewById(R.id.tv_payments_order_money);
+        tv_payments_order_money = (TextView) findViewById(R.id.tv_payments_order_money);
 
         //页面标题 “支付订单”
         title_bar_white_title = (TextView) findViewById(R.id.title_bar_white_title);
@@ -134,7 +134,7 @@ public class PaymentsOrder extends Activity implements View.OnClickListener {
                 @Override
                 public void run() {
                     //super.run();
-                    String url = SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/ShoppingCartActor/cartExpressCheckout";
+                    String url = SuMaoConstant.SUMAO_IP + "/rest/model/atg/commerce/ShoppingCartActor/cartExpressCheckout";
                     RequestParams rp = new RequestParams(url);
                     String a = list_id.toString();
                     Log.d("商品id", a + "ssssssssssss");
@@ -152,34 +152,34 @@ public class PaymentsOrder extends Activity implements View.OnClickListener {
                         @Override
                         public void onSuccess(String result) {
                             Log.d("提交订单的result", result);
-                            if (result.contains("orderIdList")){
-                            try {
-                                JSONObject obj_result = new JSONObject(result);
-                                String Message = obj_result.getString("orderIdList");
-                                JSONArray array = new JSONArray(Message);
-                                list = new ArrayList<Map<String, Object>>();
-                                for (int i = 0; i < array.length(); i++) {
-                                    JSONObject obj_array = array.getJSONObject(i);
-                                    //Map<String,Object> map=new Hashtable<String, Object>();
-                                    String info = obj_array.getString("commerceItem");
-                                    String time = obj_array.getString("remainingTime");
-                                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat
-                                            ("yyyy年MM月dd日 hh:mm:mm");
-                                    String data=simpleDateFormat.format(Double.parseDouble(time));
-                                    order_id = obj_array.getString("orderId");
-                                    String total = obj_array.getString("total");
-                                    JSONArray array_obj = new JSONArray(info);
-                                    for (int j = 0; j < array_obj.length(); j++) {
-                                        JSONObject gouwuche_info = array_obj.getJSONObject(j);
-                                        type = gouwuche_info.getString("parentCategories");
-                                        price = gouwuche_info.getString("salePrice");
-                                        paihao = gouwuche_info.getString("gradeNumber");
-                                        number = gouwuche_info.getString("quantity");
-                                        qiye = gouwuche_info.getString("manufacturer");
-                                        all_price = gouwuche_info.getString("amount");
-                                        cangku = gouwuche_info.getString("warehouse");
-                                        comm = gouwuche_info.getString("salesCompanyDisplayName");
-                                        name = gouwuche_info.getString("productName");
+                            if (result.contains("orderIdList")) {
+                                try {
+                                    JSONObject obj_result = new JSONObject(result);
+                                    String Message = obj_result.getString("orderIdList");
+                                    JSONArray array = new JSONArray(Message);
+                                    list = new ArrayList<Map<String, Object>>();
+                                    for (int i = 0; i < array.length(); i++) {
+                                        JSONObject obj_array = array.getJSONObject(i);
+                                        //Map<String,Object> map=new Hashtable<String, Object>();
+                                        String info = obj_array.getString("commerceItem");
+                                        String time = obj_array.getString("remainingTime");
+                                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat
+                                                ("yyyy年MM月dd日 hh:mm:mm");
+                                        String data = simpleDateFormat.format(Double.parseDouble(time));
+                                        order_id = obj_array.getString("orderId");
+                                        String total = obj_array.getString("total");
+                                        JSONArray array_obj = new JSONArray(info);
+                                        for (int j = 0; j < array_obj.length(); j++) {
+                                            JSONObject gouwuche_info = array_obj.getJSONObject(j);
+                                            type = gouwuche_info.getString("parentCategories");
+                                            price = gouwuche_info.getString("salePrice");
+                                            paihao = gouwuche_info.getString("gradeNumber");
+                                            number = gouwuche_info.getString("quantity");
+                                            qiye = gouwuche_info.getString("manufacturer");
+                                            all_price = gouwuche_info.getString("amount");
+                                            cangku = gouwuche_info.getString("warehouse");
+                                            comm = gouwuche_info.getString("salesCompanyDisplayName");
+                                            name = gouwuche_info.getString("productName");
 //                                        if (array_obj.length()==1){
 //                                            tv_payments_order_money.setText(all_price);
 //                                        }else if (array_obj.length()>1){
@@ -188,57 +188,57 @@ public class PaymentsOrder extends Activity implements View.OnClickListener {
 //                                            tv_payments_order_money.setText(all_price);
 //                                        }all_price
 
+                                        }
+                                        Log.d("支付的总价", total + "aa");
+                                        Map<String, Object> map = new Hashtable<String, Object>();
+                                        map.put("order_id", "订单编号:" + order_id);
+                                        map.put("total", total);
+                                        map.put("time", time);
+                                        map.put("name", name);
+                                        map.put("type", type);
+                                        map.put("paihao", paihao);
+                                        map.put("qiye", qiye);
+                                        map.put("cangku", cangku);
+                                        map.put("price", price);
+                                        map.put("number", number);
+                                        map.put("all_price", all_price);
+                                        map.put("comm", comm);
+                                        list.add(map);
+                                        list_order.add(order_id);
+
                                     }
-Log.d("支付的总价",total+"aa");
-                                    Map<String, Object> map = new Hashtable<String, Object>();
-                                    map.put("order_id", "订单编号:" + order_id);
-                                    map.put("total", total);
-                                    map.put("time", time);
-                                    map.put("name", name);
-                                    map.put("type", type);
-                                    map.put("paihao", paihao);
-                                    map.put("qiye", qiye);
-                                    map.put("cangku", cangku);
-                                    map.put("price", price);
-                                    map.put("number", number);
-                                    map.put("all_price", all_price);
-                                    map.put("comm", comm);
-                                    list.add(map);
-                                    list_order.add(order_id);
+                                    list_adapter = new SimpleAdapter(PaymentsOrder.this, list, R.layout.order_item,
+                                            new String[]{"order_id", "total", "time", "name", "type", "paihao", "qiye",
+                                                    "cangku", "price", "number", "all_price", "comm"},
+                                            new int[]{
+                                                    R.id.product_order_number,
+                                                    R.id.money_number,
+                                                    R.id.residual_time,
+                                                    R.id.tv_name,
+                                                    R.id.surplus_amount_et,
+                                                    R.id.purchase_quantity_et,
+                                                    R.id.min_variable_et,
+                                                    R.id.delivery_time_et,
+                                                    R.id.classification_pre_sale_et,
+                                                    R.id.warehouse_et,
+                                                    R.id.region_et,
+                                                    R.id.company_et
 
+
+                                            });
+                                    lvdemo.setAdapter(list_adapter);/////////////
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
                                 }
-                                list_adapter = new SimpleAdapter(PaymentsOrder.this, list, R.layout.order_item,
-                                        new String[]{"order_id", "total", "time", "name", "type", "paihao", "qiye",
-                                                "cangku", "price", "number", "all_price", "comm"},
-                                        new int[]{
-                                                R.id.product_order_number,
-                                                R.id.money_number,
-                                                R.id.residual_time,
-                                                R.id.tv_name,
-                                                R.id.surplus_amount_et,
-                                                R.id.purchase_quantity_et,
-                                                R.id.min_variable_et,
-                                                R.id.delivery_time_et,
-                                                R.id.classification_pre_sale_et,
-                                                R.id.warehouse_et,
-                                                R.id.region_et,
-                                                R.id.company_et
-
-
-                                        });
-                                lvdemo.setAdapter(list_adapter);/////////////
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                            }else if (result.contains("formExceptions")){
+                            } else if (result.contains("formExceptions")) {
                                 try {
-                                    JSONObject object_message=new JSONObject(result);
-                                    String message=object_message.getString("formExceptions");
-                                    JSONArray array_msg=new JSONArray(message);
-                                    for (int i=0;i<array_msg.length();i++){
-                                        JSONObject obj=array_msg.getJSONObject(i);
-                                        String message_info=obj.getString("localizedMessage");
-                                        Toast.makeText(PaymentsOrder.this, ""+message_info, Toast.LENGTH_SHORT).show();
+                                    JSONObject object_message = new JSONObject(result);
+                                    String message = object_message.getString("formExceptions");
+                                    JSONArray array_msg = new JSONArray(message);
+                                    for (int i = 0; i < array_msg.length(); i++) {
+                                        JSONObject obj = array_msg.getJSONObject(i);
+                                        String message_info = obj.getString("localizedMessage");
+                                        Toast.makeText(PaymentsOrder.this, "" + message_info, Toast.LENGTH_SHORT).show();
                                     }
                                 } catch (JSONException e) {
                                     e.printStackTrace();
@@ -269,7 +269,7 @@ Log.d("支付的总价",total+"aa");
         } else {
             String info = getIntent().getStringExtra("fix");
             String[] infos = info.split(",");
-            String url = SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/ShoppingCartActor/go";
+            String url = SuMaoConstant.SUMAO_IP + "/rest/model/atg/commerce/ShoppingCartActor/go";
             RequestParams requestParams = new RequestParams(url);
             requestParams.addParameter("quantity", infos[0]);
 
@@ -293,7 +293,7 @@ Log.d("支付的总价",total+"aa");
                     Gson gson = new Gson();
                     orderList = gson.fromJson(result, OrderList.class);
                     LogUtils.log("可以获取到的数据-->getQuantity" + orderList.getOrderIdList().get(0).getCommerceItem().get(0).getQuantity());//这里可以获取到数据么？
-                    list=new ArrayList<Map<String,Object>>();
+                    list = new ArrayList<Map<String, Object>>();
                     order_id = orderList.getOrderIdList().get(0).getOrderId();
                     type = orderList.getOrderIdList().get(0).getCommerceItem().get(0).getParentCategories();
                     price = orderList.getOrderIdList().get(0).getCommerceItem().get(0).getSalePrice() + "";
@@ -306,8 +306,8 @@ Log.d("支付的总价",total+"aa");
                     name = orderList.getOrderIdList().get(0).getCommerceItem().get(0).getProductName();
                     String total = orderList.getOrderIdList().get(0).getTotal() + "";
                     String time = orderList.getOrderIdList().get(0).getRemainingTime() + "";
-                    Log.d("企业名称","企业名称"+order_id);
-                    Log.d("企业名称","企业名称"+qiye);
+                    Log.d("企业名称", "企业名称" + order_id);
+                    Log.d("企业名称", "企业名称" + qiye);
                     Map<String, Object> map = new Hashtable<String, Object>();
                     map.put("order_id", "订单编号:" + order_id);
                     map.put("total", total);
@@ -321,11 +321,11 @@ Log.d("支付的总价",total+"aa");
                     map.put("number", number);
                     map.put("all_price", all_price);
                     map.put("comm", comm);
-                    Log.d("企业名称",map.toString());
+                    Log.d("企业名称", map.toString());
                     list.add(map);
                     list_order.add(order_id);
-                    Log.d("企业名称",list.toString());
-                    Log.d("企业名称",list.size()+"");
+                    Log.d("企业名称", list.toString());
+                    Log.d("企业名称", list.size() + "");
 
 
                     list_adapter = new SimpleAdapter(PaymentsOrder.this, list, R.layout.order_item,
@@ -399,7 +399,7 @@ Log.d("支付的总价",total+"aa");
         tv = (TextView) view.findViewById(R.id.tvPrice_popupwindow_auction);
         et = (EditText) view.findViewById(R.id.etZhifu_auction);
         lv = (ListView) view.findViewById(R.id.lv_popupwindow_auction);
-        TextView count_Price= (TextView) view.findViewById(R.id.count_Price);
+        TextView count_Price = (TextView) view.findViewById(R.id.count_Price);
         // final List<OpenAuction> list_pop=new ArrayList<OpenAuction>();
 
         getinfo_Bank();
@@ -467,7 +467,7 @@ Log.d("支付的总价",total+"aa");
             @Override
             public void run() {
                 // super.run();
-                String url = SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/payment/OrderPayment/bankList";
+                String url = SuMaoConstant.SUMAO_IP + "/rest/model/atg/commerce/payment/OrderPayment/bankList";
                 RequestParams rp = new RequestParams(url);
                 rp.addBodyParameter("payFor", "order");
                 String a = list_order.toString();
@@ -486,8 +486,8 @@ Log.d("支付的总价",total+"aa");
                                 list_pop = new ArrayList<OpenAuction>();
                                 JSONObject obj = new JSONObject(result);
                                 String message = obj.getString("bankResult");
-                                count_price=obj.getString("balance");
-                                Log.d("将要支付的金额:",count_price+"");
+                                count_price = obj.getString("balance");
+                                Log.d("将要支付的金额:", count_price + "");
                                 JSONObject obj_Bank = new JSONObject(message);
                                 if (result.contains("pingAn")) {
                                     OpenAuction auction = new OpenAuction();
@@ -570,7 +570,7 @@ Log.d("支付的总价",total+"aa");
     }
 
     public void getzhifu() {
-        String url = SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/payment/OrderPayment/orderPayment";
+        String url = SuMaoConstant.SUMAO_IP + "/rest/model/atg/commerce/payment/OrderPayment/orderPayment";
         RequestParams rp = new RequestParams(url);
         String a = list_order.toString();
         Log.d("商品id", a + "ssssssssssss");

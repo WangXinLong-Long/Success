@@ -11,10 +11,9 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
-import com.silianchuangye.sumao.success.adapter.PreSaleAdapter;
 import com.silianchuangye.sumao.success.adapter.SeeProductAdapter;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.bean.SMCl;
-import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockDetailActivityMVP.view.GoodsInStockDetailActivity;
+import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.view.GoodsInStockDetailActivity;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.SeeProductMVP.bean.RecentlyViewedProduct;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.SeeProductMVP.bean.SeeProductBean;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.SeeProductMVP.presenter.SeeProductPresenter;
