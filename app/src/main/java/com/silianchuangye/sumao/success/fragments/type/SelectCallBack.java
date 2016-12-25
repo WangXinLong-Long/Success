@@ -1,6 +1,6 @@
 package com.silianchuangye.sumao.success.fragments.type;
 
-import com.silianchuangye.sumao.success.fragments.bean.CartInfo;
+import com.silianchuangye.sumao.success.fragments.pagerThreeMVP.bean.CartBean;
 
 import java.util.List;
 
@@ -10,6 +10,8 @@ import java.util.List;
 public interface SelectCallBack {
     public void Call(int index);
 
-    public void CartNull(List<CartInfo> list);
+    public void CartNull(List<CartBean.CommerceItemBean> list);
+//    public void CartNull(List<CartInfo> list);
+
     //1111111111111111111111111111111
 }

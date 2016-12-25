@@ -5,5 +5,5 @@ package com.silianchuangye.sumao.success.utils.ThreeLevelLindage;
  */
 
 public interface CascadingMenuViewOnSelectListener {
-    public void getValue(Area area);
+     void getValue(String provinceId,String cityId,String countyId);
 }

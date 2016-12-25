@@ -1,7 +1,6 @@
-package com.silianchuangye.sumao.success.fragments.myPlasticTrade.PhysicalDistributionManagement.ViewLogisticsDemands;
+package com.silianchuangye.sumao.success.fragments.myPlasticTrade.PhysicalDistributionManagement.ViewLogisticsDemands.ViewLogisticsDemandMVP.view;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -20,22 +19,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
-import com.silianchuangye.sumao.success.adapter.ExpandableListViewAdapter;
 import com.silianchuangye.sumao.success.adapter.LogisticsDemandExpandableListViewAdapter;
 import com.silianchuangye.sumao.success.custom.CustomExpandableListView;
 import com.silianchuangye.sumao.success.fragments.bean.LogisticsListChild;
 import com.silianchuangye.sumao.success.fragments.bean.LogisticsListParent;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.AddAddressMVP.presenter.AddAddressPresenter;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.AddAddressMVP.view.IAddAddress;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.PhysicalDistributionManagement.ViewLogisticsDemands.ViewLogisticsDemandMVP.presenter.ViewLogisticsDemandPresenter;
 import com.silianchuangye.sumao.success.utils.ShowCalendar;
-import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.xutils.common.Callback;
-import org.xutils.http.RequestParams;
-import org.xutils.x;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -45,7 +38,7 @@ import java.util.List;
  * Created by Administrator on 2016/7/8 0008.
  * 查看物流需求
  */
-public class ViewLogisticsDemand extends Activity implements View.OnClickListener,AdapterView.OnItemClickListener{
+public class ViewLogisticsDemand extends Activity implements View.OnClickListener,AdapterView.OnItemClickListener,IViewLogisticsDemandView{
     private CustomExpandableListView listview;
     private LogisticsDemandExpandableListViewAdapter adapter;
 //    private ExpandableListViewAdapter adapter;
@@ -82,13 +75,15 @@ public class ViewLogisticsDemand extends Activity implements View.OnClickListene
     SharedPreferences sp;
     String unique123,addressstr;
     private LinearLayout pop_linear2,pop_linear3;
+    private ViewLogisticsDemandPresenter viewLogisticsDemandPresenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         sp=getSharedPreferences("sumao", Activity.MODE_PRIVATE);
         unique123= sp.getString("unique", "");
         setContentView(R.layout.view_logistics_demand_activity);
-
+        viewLogisticsDemandPresenter = new ViewLogisticsDemandPresenter(this);
         listview = ((CustomExpandableListView) findViewById(R.id.listview));
         view_logistics_demand_activity_title = ((RelativeLayout) findViewById(R.id.view_logistics_demand_activity_title));
 //        题目
@@ -389,176 +384,9 @@ public class ViewLogisticsDemand extends Activity implements View.OnClickListene
     }
     //查询接口
     private void searchOrder(String logisticsId,String logisticsType,String shippingMethod,String orderId,String createDate,String deliveryStartDate,String deliveryEndDate){
-        RequestParams params=new RequestParams(SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/order/logistics/logisticsActor/logisticsInfoSearch");
-        params.addParameter("_dynSessConf", unique123);
-        params.addParameter("logisticsId",logisticsId);
-        params.addParameter("logisticsType",logisticsType);
-        params.addParameter("shippingMethod",shippingMethod);
-        params.addParameter("orderId",orderId);
-        params.addParameter("createDate",createDate);
-        params.addParameter("deliveryStartDate",deliveryStartDate);
-        params.addParameter("deliveryEndDate",deliveryEndDate);
-        Log.e("TAG","params=="+params);
-        x.http().post(params, new Callback.CommonCallback<String>() {
-            @Override
-            public void onSuccess(String result) {
-                Log.e("TAG","result=="+result);
-                if(popupWindow!=null&&popupWindow.isShowing()){
-                    popupWindow.dismiss();
-                }
-                try {
-                    logisticsListParentslist = new ArrayList<>();
-                    JSONObject job=new JSONObject(result);
-                    if(!result.contains("allCount")){
-                        Toast.makeText(ViewLogisticsDemand.this,"没有符合该条件的数据",Toast.LENGTH_SHORT).show();
-                        logisticsListParentslist.clear();
-                    }else{
-                        String allCount=job.getString("allCount");
-                        if(allCount.equals("0")){
-                            Toast.makeText(ViewLogisticsDemand.this,"没有符合该条件的数据",Toast.LENGTH_SHORT).show();
-                            logisticsListParentslist.clear();
-                        }
-                        String logisticsInfo=job.getString("logisticsInfo");
-                        JSONArray jay=new JSONArray(logisticsInfo);
-                        for(int i=0;i<jay.length();i++) {
-                            logisticsListParent = new LogisticsListParent();
-                            JSONObject job2 = (JSONObject) jay.get(i);
-                            String orderInfo = job2.getString("orderInfo");//具体商品
-                            JSONArray jay2 = new JSONArray(orderInfo);
-                            logisticsListChildrenlist = new ArrayList<>();
-                            for (int j = 0; j < jay2.length(); j++) {
-                                JSONObject job3 = (JSONObject) jay2.get(j);
-                                //数量
-                                String quantity = job3.getString("quantity");
-                                //分类
-                                String categoryName = job3.getString("categoryName");
-                                //名称
-                                String productName = job3.getString("productName");
-                                //订单号
-                                String orderId = job3.getString("orderId");
-
-                                logisticsListChild = new LogisticsListChild();
-                                logisticsListChild.setClassification(categoryName);
-                                logisticsListChild.setNumber(quantity);
-                                logisticsListChild.setProductName(productName);
-                                logisticsListChild.setProductOrderNumber(orderId);
-                                logisticsListChildrenlist.add(logisticsListChild);
-                            }
-                            //配送方式
-                            String shippingMethod = job2.getString("shippingMethod");
-                            //物流需求号
-                            String logisticsId = job2.getString("logisticsId");
-                            logisticsListParent.setLogisticsDemand(logisticsId);
-                            //状态
-                            String state = job2.getString("state");
-                            logisticsListParent.setState(getState(state));
-                            //                        配送方式（pickUp 买家自提，seller 卖家配送，independent 独立承运商，xunbang 迅邦配送）
-                            if (shippingMethod.equals("pickUp")) {
-                                logisticsListParent.setDistributionMode("买家自提");
-                            } else if (shippingMethod.equals("seller")) {
-                                logisticsListParent.setDistributionMode("卖家配送");
-                            } else if (shippingMethod.equals("independent")) {
-                                logisticsListParent.setDistributionMode("独立承运商");
-                            } else if (shippingMethod.equals("xunbang")) {
-                                logisticsListParent.setDistributionMode("迅邦配送");
-                            }
-                            if (shippingMethod.equals("pickUp")) {//买家自提
-                                //提货车号
-                                String licensePlateNo = job2.getString("licensePlateNo");
-                                //提货人
-                                String deliveryer = job2.getString("deliveryer");
-                                //联系方式
-                                String deliveryerTel = job2.getString("deliveryerTel");
-                                //提货人身份证号
-                                String idCard = job2.getString("idCard");
-                                //提货时间
-                                long shippingDate = job2.getLong("shippingDate");
-                                String time = new SimpleDateFormat("yyyy-MM-dd").format(shippingDate);
-                                //备注
-                                String remarks = "";
-                                if (job2.toString().contains("remarks")) {
-                                    remarks = job2.getString("remarks");
-                                }
-                                logisticsListParent.setContactInformation(deliveryerTel);
-                                logisticsListParent.setDeliveryNumber(licensePlateNo);
-                                logisticsListParent.setIdCardNumber(idCard);
-                                logisticsListParent.setPickUpPerson(deliveryer);
-                                logisticsListParent.setRemarks(remarks);
-                            } else {
-                                //托运联系人
-                                String shippingContact = "";
-                                if (job2.toString().contains("shippingContact")) {
-                                    shippingContact = job2.getString("shippingContact");
-                                } else {
-                                    shippingContact = "";
-                                }
-                                //卸货地址
-                                String detailAddress = job2.getString("detailAddress");
-                                //收货公司
-                                String repeiptCompany = "";
-                                if (job2.toString().contains("repeiptCompany")) {
-                                    repeiptCompany = job2.getString("repeiptCompany");
-                                }
-                                //提货结束时间
-                                String pickUpDateStart = new SimpleDateFormat("yyyy-MM-dd").format(job2.getLong("pickUpDateStart"));
-                                //提货开始时间
-                                String pickUpDateEnd = new SimpleDateFormat("yyyy-MM-dd").format(job2.getLong("pickUpDateEnd"));
-                                //卸货联系人
-                                String contactPerson = job2.getString("contactPerson");
-                                //托运人联系方式
-                                String shippingContactTel = "";
-                                if (job2.toString().contains("shippingContactTel")) {
-                                    shippingContactTel = job2.getString("shippingContactTel");
-                                }
-                                //卸货联系人电话
-                                String contactPhone = job2.getString("contactPhone");
-                                //省+市+区=卸货区域
-                                String provinceId = job2.getString("provinceId");
-                                String cityId = job2.getString("cityId");
-                                String countyId = job2.getString("countyId");
-                                //备注
-                                String remarks = "";
-                                if (job2.toString().contains("remarks")) {
-                                    remarks = job2.getString("remarks");
-                                }
-
-                                logisticsListParent.setUnloadingArea2(countyId);
-                                logisticsListParent.setDischargeAddress2(detailAddress);
-                                logisticsListParent.setUnloadingContact2(contactPerson);
-                                logisticsListParent.setDischargeContactPhone2(contactPhone);
-                                logisticsListParent.setExpectedTimeOfReceipt2(pickUpDateStart + "至" + pickUpDateEnd);
-                                logisticsListParent.setReceivingCompany2(repeiptCompany);
-                                logisticsListParent.setShipperContact2(shippingContact);
-                                logisticsListParent.setShipperContactInformation2(shippingContactTel);
-                                logisticsListParent.setSellerRemarks2(remarks);
-                            }
-                            logisticsListParent.setLogisticsListChildren(logisticsListChildrenlist);
-                            logisticsListParentslist.add(logisticsListParent);
-                        }
-                    }
-                    Log.e("TAG","p="+logisticsListParentslist.size());
-                    adapter = new LogisticsDemandExpandableListViewAdapter(ViewLogisticsDemand.this,logisticsListParentslist);
-                    listview.setAdapter(adapter);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-                Log.e("TAG","ex="+ex);
-            }
-
-            @Override
-            public void onCancelled(CancelledException cex) {
-
-            }
-
-            @Override
-            public void onFinished() {
-
-            }
-        });
+        /*String logisticsId, String logisticsType, String shippingMethod, String orderId, String createDate, String deliveryStartDate, String deliveryEndDate*/
+        String _dynSessConf = unique123;
+        viewLogisticsDemandPresenter.getViewLogisticsDemandResult(_dynSessConf,logisticsId,logisticsType,shippingMethod,orderId,createDate,deliveryStartDate,deliveryEndDate);
     }
     private String getState(String state){
         String result="";
@@ -580,4 +408,146 @@ public class ViewLogisticsDemand extends Activity implements View.OnClickListene
         return  result;
     }
 
+    @Override
+    public void getViewLogisticsDemandResult(String result) {
+        if(popupWindow!=null&&popupWindow.isShowing()){
+            popupWindow.dismiss();
+        }
+        try {
+            logisticsListParentslist = new ArrayList<>();
+            JSONObject job=new JSONObject(result);
+            if(!result.contains("allCount")){
+                Toast.makeText(ViewLogisticsDemand.this,"没有符合该条件的数据",Toast.LENGTH_SHORT).show();
+                logisticsListParentslist.clear();
+            }else{
+                String allCount=job.getString("allCount");
+                if(allCount.equals("0")){
+                    Toast.makeText(ViewLogisticsDemand.this,"没有符合该条件的数据",Toast.LENGTH_SHORT).show();
+                    logisticsListParentslist.clear();
+                }
+                String logisticsInfo=job.getString("logisticsInfo");
+                JSONArray jay=new JSONArray(logisticsInfo);
+                for(int i=0;i<jay.length();i++) {
+                    logisticsListParent = new LogisticsListParent();
+                    JSONObject job2 = (JSONObject) jay.get(i);
+                    String orderInfo = job2.getString("orderInfo");//具体商品
+                    JSONArray jay2 = new JSONArray(orderInfo);
+                    logisticsListChildrenlist = new ArrayList<>();
+                    for (int j = 0; j < jay2.length(); j++) {
+                        JSONObject job3 = (JSONObject) jay2.get(j);
+                        //数量
+                        String quantity = job3.getString("quantity");
+                        //分类
+                        String categoryName = job3.getString("categoryName");
+                        //名称
+                        String productName = job3.getString("productName");
+                        //订单号
+                        String orderId = job3.getString("orderId");
+
+                        logisticsListChild = new LogisticsListChild();
+                        logisticsListChild.setClassification(categoryName);
+                        logisticsListChild.setNumber(quantity);
+                        logisticsListChild.setProductName(productName);
+                        logisticsListChild.setProductOrderNumber(orderId);
+                        logisticsListChildrenlist.add(logisticsListChild);
+                    }
+                    //配送方式
+                    String shippingMethod = job2.getString("shippingMethod");
+                    //物流需求号
+                    String logisticsId = job2.getString("logisticsId");
+                    logisticsListParent.setLogisticsDemand(logisticsId);
+                    //状态
+                    String state = job2.getString("state");
+                    logisticsListParent.setState(getState(state));
+                    //                        配送方式（pickUp 买家自提，seller 卖家配送，independent 独立承运商，xunbang 迅邦配送）
+                    if (shippingMethod.equals("pickUp")) {
+                        logisticsListParent.setDistributionMode("买家自提");
+                    } else if (shippingMethod.equals("seller")) {
+                        logisticsListParent.setDistributionMode("卖家配送");
+                    } else if (shippingMethod.equals("independent")) {
+                        logisticsListParent.setDistributionMode("独立承运商");
+                    } else if (shippingMethod.equals("xunbang")) {
+                        logisticsListParent.setDistributionMode("迅邦配送");
+                    }
+                    if (shippingMethod.equals("pickUp")) {//买家自提
+                        //提货车号
+                        String licensePlateNo = job2.getString("licensePlateNo");
+                        //提货人
+                        String deliveryer = job2.getString("deliveryer");
+                        //联系方式
+                        String deliveryerTel = job2.getString("deliveryerTel");
+                        //提货人身份证号
+                        String idCard = job2.getString("idCard");
+                        //提货时间
+                        long shippingDate = job2.getLong("shippingDate");
+                        String time = new SimpleDateFormat("yyyy-MM-dd").format(shippingDate);
+                        //备注
+                        String remarks = "";
+                        if (job2.toString().contains("remarks")) {
+                            remarks = job2.getString("remarks");
+                        }
+                        logisticsListParent.setContactInformation(deliveryerTel);
+                        logisticsListParent.setDeliveryNumber(licensePlateNo);
+                        logisticsListParent.setIdCardNumber(idCard);
+                        logisticsListParent.setPickUpPerson(deliveryer);
+                        logisticsListParent.setRemarks(remarks);
+                    } else {
+                        //托运联系人
+                        String shippingContact = "";
+                        if (job2.toString().contains("shippingContact")) {
+                            shippingContact = job2.getString("shippingContact");
+                        } else {
+                            shippingContact = "";
+                        }
+                        //卸货地址
+                        String detailAddress = job2.getString("detailAddress");
+                        //收货公司
+                        String repeiptCompany = "";
+                        if (job2.toString().contains("repeiptCompany")) {
+                            repeiptCompany = job2.getString("repeiptCompany");
+                        }
+                        //提货结束时间
+                        String pickUpDateStart = new SimpleDateFormat("yyyy-MM-dd").format(job2.getLong("pickUpDateStart"));
+                        //提货开始时间
+                        String pickUpDateEnd = new SimpleDateFormat("yyyy-MM-dd").format(job2.getLong("pickUpDateEnd"));
+                        //卸货联系人
+                        String contactPerson = job2.getString("contactPerson");
+                        //托运人联系方式
+                        String shippingContactTel = "";
+                        if (job2.toString().contains("shippingContactTel")) {
+                            shippingContactTel = job2.getString("shippingContactTel");
+                        }
+                        //卸货联系人电话
+                        String contactPhone = job2.getString("contactPhone");
+                        //省+市+区=卸货区域
+                        String provinceId = job2.getString("provinceId");
+                        String cityId = job2.getString("cityId");
+                        String countyId = job2.getString("countyId");
+                        //备注
+                        String remarks = "";
+                        if (job2.toString().contains("remarks")) {
+                            remarks = job2.getString("remarks");
+                        }
+
+                        logisticsListParent.setUnloadingArea2(countyId);
+                        logisticsListParent.setDischargeAddress2(detailAddress);
+                        logisticsListParent.setUnloadingContact2(contactPerson);
+                        logisticsListParent.setDischargeContactPhone2(contactPhone);
+                        logisticsListParent.setExpectedTimeOfReceipt2(pickUpDateStart + "至" + pickUpDateEnd);
+                        logisticsListParent.setReceivingCompany2(repeiptCompany);
+                        logisticsListParent.setShipperContact2(shippingContact);
+                        logisticsListParent.setShipperContactInformation2(shippingContactTel);
+                        logisticsListParent.setSellerRemarks2(remarks);
+                    }
+                    logisticsListParent.setLogisticsListChildren(logisticsListChildrenlist);
+                    logisticsListParentslist.add(logisticsListParent);
+                }
+            }
+            Log.e("TAG","p="+logisticsListParentslist.size());
+            adapter = new LogisticsDemandExpandableListViewAdapter(ViewLogisticsDemand.this,logisticsListParentslist);
+            listview.setAdapter(adapter);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -3,8 +3,6 @@ package com.silianchuangye.sumao.success.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +19,6 @@ import com.silianchuangye.sumao.success.fragments.shoppingCart.dialog.Cart_MyDia
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
@@ -351,8 +348,8 @@ private List<CartInfo> list;
     }
 
     public interface SelectCallBack{
-        public void Call(int index);
-        public void CartNull(List<CartInfo>list);
+         void Call(int index);
+         void CartNull(List<CartInfo>list);
     }
 
 }

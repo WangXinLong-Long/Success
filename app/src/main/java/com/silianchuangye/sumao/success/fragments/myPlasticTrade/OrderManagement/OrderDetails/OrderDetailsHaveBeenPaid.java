@@ -15,7 +15,7 @@ import android.widget.TextView;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.OrderDetailsListViewAdapter;
 import com.silianchuangye.sumao.success.custom.CustomListView;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.createLogisticsMVP.CreateLogistics;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.createLogisticsMVP.view.CreateLogistics;
 import com.silianchuangye.sumao.success.model.OrderDeatilsModel;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 

@@ -13,6 +13,7 @@ public class CartInfo {
             company,
             buy_num,
             all_price,
-            id; ;
-    public boolean Selsct_Flag,Del_Flag;
+            id;
+    ;
+    public boolean Selsct_Flag;
 }

@@ -4,8 +4,6 @@ import android.content.Context;
 import android.view.ViewGroup;
 import android.widget.PopupWindow;
 
-import com.silianchuangye.sumao.success.fragments.homepage.pagerOneGridViewDetailActivity.CustomPopupWindow.MultiselectPopupWindowCompleteClickListener;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +15,7 @@ public class ScreenPopupWindow extends PopupWindow {
 
     private Context context;
     private ArrayList<ArrayList<String>> data;
-        MultiselectPopupWindowCompleteClickListener completeclicklistener;
+    ScreenMultiselectPopupWindowCompleteClickListener completeclicklistener;
     public ScreenPopupWindow(Context context, ArrayList<ArrayList<String>> data) {
         super(context);
         this.context = context;
@@ -33,19 +31,19 @@ public class ScreenPopupWindow extends PopupWindow {
         screenPopupWindowView.setMultiselectPopupWindowCompleteClickListener(new CompleteClickListener());
     }
 
-    public void setOnClickCompleteListener(MultiselectPopupWindowCompleteClickListener completeClickListener) {
+    public void setOnClickCompleteListener(ScreenMultiselectPopupWindowCompleteClickListener completeClickListener) {
         this.completeclicklistener = completeClickListener;
     }
 
-    class CompleteClickListener implements MultiselectPopupWindowCompleteClickListener{
-
+    class CompleteClickListener implements ScreenMultiselectPopupWindowCompleteClickListener{
         @Override
-        public void getSelectionValues(List<String> selectItems) {
-            if (completeclicklistener!=null){
-                completeclicklistener.getSelectionValues(selectItems);
-            }
+        public void getSelectionValues(List<String> regionSelectItems, List<String> classifcationSelectItems, List<String> applicationSelectItems,String grade) {
 
+            if (completeclicklistener!=null){
+                completeclicklistener.getSelectionValues(regionSelectItems,classifcationSelectItems,applicationSelectItems, grade);
+            }
             dismiss();
+
         }
     }
 }

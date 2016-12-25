@@ -11,6 +11,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.silianchuangye.sumao.success.R;
+import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
 /**
@@ -36,8 +37,9 @@ public class ContractFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_contract, container, false);
         contract_web_view = ((WebView) view.findViewById(R.id.contract_web_view));
-       // bundle = getArguments();
-//        contract = bundle.getString("contract");
+        bundle = getArguments();
+        contract = bundle.getString("contract");
+        LogUtils.log(contract+"-------WXL合同页fragment");
         settings = contract_web_view.getSettings();
         settings.setJavaScriptEnabled(true);
         settings.setBuiltInZoomControls(true);

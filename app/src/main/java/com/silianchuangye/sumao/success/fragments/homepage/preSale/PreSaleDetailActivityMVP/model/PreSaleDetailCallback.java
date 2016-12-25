@@ -6,5 +6,5 @@ import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetail
  * Created by Administrator on 2016/8/15 0015.
  */
 public interface PreSaleDetailCallback {
-   void callbackPreSaleDetail(PreSaleDetailBean preSaleDetailBean);
+   void callbackPreSaleDetail(PreSaleDetailBean preSaleDetailBean,String skuId);
 }

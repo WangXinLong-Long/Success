@@ -2,25 +2,28 @@ package com.silianchuangye.sumao.success.fragments.PagerOneMVP.presenter;
 
 import android.graphics.drawable.Drawable;
 
-import com.silianchuangye.sumao.success.fragments.PagerOneMVP.bean.AnnounceBean;
+import com.silianchuangye.sumao.success.fragments.PagerOneMVP.bean.ApplicationBean;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.bean.BannerBean;
-import com.silianchuangye.sumao.success.fragments.PagerOneMVP.model.AnnouncementModel.AnnouncementCallback;
-import com.silianchuangye.sumao.success.fragments.PagerOneMVP.model.AnnouncementModel.AnnouncementModel;
-import com.silianchuangye.sumao.success.fragments.PagerOneMVP.model.AnnouncementModel.IAnnouncementModel;
+import com.silianchuangye.sumao.success.fragments.PagerOneMVP.bean.ClassificationBean;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.model.GetPictureModel.GetPictureCallback;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.model.GetPictureModel.GetPictureModels;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.model.GetPictureModel.IGetPictureModel;
-import com.silianchuangye.sumao.success.fragments.PagerOneMVP.model.HomeSaleModel.HomeSaleCallback;
-import com.silianchuangye.sumao.success.fragments.PagerOneMVP.model.HomeSaleModel.HomeSaleModels;
-import com.silianchuangye.sumao.success.fragments.PagerOneMVP.model.HomeSaleModel.IHomeSaleModel;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.model.IPagerOneModel;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.model.PagerOneCallback;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.model.PagerOneModel;
+import com.silianchuangye.sumao.success.fragments.PagerOneMVP.model.applicationModel.ApplicationCallback;
+import com.silianchuangye.sumao.success.fragments.PagerOneMVP.model.applicationModel.ApplicationModel;
+import com.silianchuangye.sumao.success.fragments.PagerOneMVP.model.applicationModel.IApplicationModel;
+import com.silianchuangye.sumao.success.fragments.PagerOneMVP.model.auctionModel.AuctionCallback;
+import com.silianchuangye.sumao.success.fragments.PagerOneMVP.model.auctionModel.AuctionModel;
+import com.silianchuangye.sumao.success.fragments.PagerOneMVP.model.auctionModel.IAuctionModel;
+import com.silianchuangye.sumao.success.fragments.PagerOneMVP.model.classificationModel.ClassificationCallback;
+import com.silianchuangye.sumao.success.fragments.PagerOneMVP.model.classificationModel.ClassificationModel;
+import com.silianchuangye.sumao.success.fragments.PagerOneMVP.model.classificationModel.IClassificationModel;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.model.grideViewModel.GrideViewCallback;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.model.grideViewModel.GrideViewModel;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.model.grideViewModel.IGrideViewModel;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.view.IPagerOneView;
-import com.silianchuangye.sumao.success.fragments.PagerOneMVP.view.PagerOne;
 import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.bean.UpstreamDirectorySellingBean;
 import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.model.IUpstreamDirectSellingModel;
 import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.model.UpstreamDirectSellingCallback;
@@ -29,18 +32,9 @@ import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInSt
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.model.GoodsInStockActivityCallback;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.model.GoodsInStockActivityModel;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.model.IGoodsInStockActivityModel;
-import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.bean.PreSaleDetailCalendarBean;
-import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.model.CalendarModel.CalendarCallback;
-import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.model.CalendarModel.CalendarModels;
-import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.model.CalendarModel.ICalendarModel;
-import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleMVP.bean.PreSaleBean;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleMVP.model.IPreSaleModel;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleMVP.model.PreSaleCallback;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleMVP.model.PreSaleModel;
-import com.silianchuangye.sumao.success.fragments.homepage.sumaoconsultMVP.model.ISuMaoConsultModel;
-import com.silianchuangye.sumao.success.fragments.homepage.sumaoconsultMVP.model.SuMaoConsultCallback;
-import com.silianchuangye.sumao.success.fragments.homepage.sumaoconsultMVP.model.SuMaoConsultModel;
-import com.silianchuangye.sumao.success.utils.LogUtils;
 
 /**
  * Created by Administrator on 2016/8/16 0016.
@@ -72,22 +66,26 @@ public class PagerOnePresenter {
 
     }
 //      现货
-    public   void  getGoodsInStockInfo(String region2,String classification2,String application2,int Nrpp,int No){
-        IGoodsInStockActivityModel goodsInStockActivityModel = new GoodsInStockActivityModel(region2,classification2,application2,Nrpp,No);
+    public   void  getGoodsInStockInfo(String pattern, String regions, String provinces, String cities,
+                                       String categoryNames, String appNames, String gradeNums, String pageNum,String updateOrLoad){
+        IGoodsInStockActivityModel goodsInStockActivityModel = new GoodsInStockActivityModel(pattern,  regions,  provinces,  cities,
+                categoryNames,  appNames,  gradeNums,  pageNum,updateOrLoad);
         goodsInStockActivityModel.getGoodsInStockActivityResult(new GoodsInStockActivityCallback() {
             @Override
-            public void callbackInGoodsInStockActivity(GoodsInStockActivityBean goodsInStockActivityBean) {
-                pagerOne.setDataInActivity(goodsInStockActivityBean);
+            public void callbackInGoodsInStockActivity(GoodsInStockActivityBean goodsInStockActivityBean,String updateOrLoad) {
+                pagerOne.setDataInActivity(goodsInStockActivityBean,updateOrLoad);
             }
         });
     }
 //      预售
-    public   void getPreSaleInfo(String region2,String classification2,String application2,int Nrpp,int No){
-        IPreSaleModel preSaleModel = new PreSaleModel(region2,classification2,application2,Nrpp,No);
+    public   void getPreSaleInfo(String pattern, String regions, String provinces, String cities,
+                                 String categoryNames, String appNames, String gradeNums, String pageNum,String updateOrLoad){
+        IPreSaleModel preSaleModel = new PreSaleModel( pattern,  regions,  provinces,  cities,
+                 categoryNames,  appNames,  gradeNums,  pageNum,updateOrLoad);
         preSaleModel.getPreSaleResult(new PreSaleCallback() {
             @Override
-            public void callbackPreSale(GoodsInStockActivityBean goodsInStockActivityBean) {
-                pagerOne.setPreSaleDataInActivity(goodsInStockActivityBean);
+            public void callbackPreSale(GoodsInStockActivityBean goodsInStockActivityBean,String updateOrLoad) {
+                pagerOne.setPreSaleDataInActivity(goodsInStockActivityBean,updateOrLoad);
             }
         });
     }
@@ -108,6 +106,37 @@ public class PagerOnePresenter {
             @Override
             public void callbackGrideViewData() {
                 pagerOne.setGrideViewDataInActivity();
+            }
+        });
+    }
+
+    public void getClassification(String transactionType){
+        IClassificationModel classificationModel = new ClassificationModel(transactionType);
+        classificationModel.getClassificationData(new ClassificationCallback() {
+            @Override
+            public void callbackClassification(ClassificationBean classificationBean,String transactionType) {
+                pagerOne.getClassificationData( classificationBean,transactionType);
+            }
+        });
+    }
+
+    public void getApplication(String transactionType){
+        IApplicationModel classificationModel = new ApplicationModel(transactionType);
+        classificationModel.getCalssificationResult(new ApplicationCallback() {
+            @Override
+            public void callbackClassificationModel( ApplicationBean applicationBean,String transactionType) {
+                pagerOne.getApplicationData(  applicationBean,transactionType);
+            }
+        });
+    }
+
+//    获取竞拍数据
+    public void getAuctionResult(String productId){
+        IAuctionModel auctionModel = new AuctionModel(productId);
+        auctionModel.getAuctionModel(new AuctionCallback() {
+            @Override
+            public void callbackAuction(String result) {
+                pagerOne.getAuctionData( result);
             }
         });
     }

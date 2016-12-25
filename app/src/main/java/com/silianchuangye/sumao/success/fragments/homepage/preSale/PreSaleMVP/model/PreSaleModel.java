@@ -5,6 +5,8 @@ import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInSt
 import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.xutils.common.Callback;
 import org.xutils.http.HttpMethod;
 import org.xutils.http.RequestParams;
@@ -13,51 +15,68 @@ import org.xutils.x;
 /**
  * Created by Administrator on 2016/8/15 0015.
  */
-public class PreSaleModel implements IPreSaleModel{
-    String region2;
-    String classification2;
-    String application2;
-    int Nrpp;
-    int No;
-
-    public PreSaleModel(String region2, String classification2, String application2, int nrpp, int no) {
-        this.region2 = region2;
-        this.classification2 = classification2;
-        this.application2 = application2;
-        Nrpp = nrpp;
-        No = no;
+public class PreSaleModel implements IPreSaleModel {
+    String pattern;//交易模式
+    String regions;//    大区
+    String provinces;//省
+    String cities;//市
+    String categoryNames;//分类
+    String appNames;//应用
+    String gradeNums;//牌号
+    String pageNum;//当前页码
+    private String updateOrLoad;
+    public PreSaleModel(String pattern, String regions, String provinces, String cities,
+                        String categoryNames, String appNames, String gradeNums, String pageNum,String updateOrLoad) {
+        this.pattern = pattern;
+        this.regions = regions;
+        this.provinces = provinces;
+        this.cities = cities;
+        this.categoryNames = categoryNames;
+        this.appNames = appNames;
+        this.gradeNums = gradeNums;
+        this.pageNum = pageNum;
+        this.updateOrLoad = updateOrLoad;
     }
 
     @Override
     public void getPreSaleResult(final PreSaleCallback callback) {
-        String url = SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/catalog/ProductCatalogActor/forwardPrductlist";
-        String params = "";
-        if(region2!=null && !region2.equals("") ){
-            if(params.equals("")){
-                params += region2;
-            }else {
-                params += "+"+region2;
-            }
-        }
-        if(classification2!=null && !classification2.equals("")){
-            if(params.equals("")){
-                params += classification2;
-            }else {
-                params += "+"+classification2;
-            }
-        }
-        if(application2!=null && !application2.equals("")){
-            if(params.equals("")){
-                params += application2;
-            }else {
-                params += "+"+application2;
-            }
-        }
-        url=url+"?N="+params;
-        LogUtils.log("URL----->"+url+"<-----URL");
+        String url = SuMaoConstant.SUMAO_IP + "/rest/model/atg/screen/screenShowProductListActor/ScreenShowProductList";
+
+
+        LogUtils.log("URL----->" + url + "<-----URL");
         RequestParams requestParams = new RequestParams(url);
-        requestParams.addParameter("Nrpp",Nrpp+"");
-        requestParams.addParameter("No",No+"");
+        requestParams.setAsJsonContent(true);
+        JSONObject jsonObject = new JSONObject();
+        try {
+            if (regions != null) {
+
+                jsonObject.put("regions", regions);
+
+            }
+            if (provinces != null) {
+                jsonObject.put("provinces", provinces);
+            }
+            if (cities != null) {
+                jsonObject.put("cities", cities);
+            }
+            if (categoryNames != null) {
+                jsonObject.put("categoryNames", categoryNames);
+            }
+            if (appNames != null) {
+                jsonObject.put("appNames", appNames);
+            }
+            if (gradeNums != null) {
+                jsonObject.put("appNames", gradeNums);
+            }
+
+            jsonObject.put("pattern", pattern);
+            jsonObject.put("pageNum", pageNum);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        requestParams.setBodyContent(jsonObject.toString());
+
+
         try {
             x.http().request(HttpMethod.POST, requestParams, new Callback.CacheCallback<String>() {
 
@@ -72,8 +91,8 @@ public class PreSaleModel implements IPreSaleModel{
                 public void onSuccess(String result) {
                     LogUtils.log("首页：预售--->" + result + "<---首页：预售");
                     Gson gson = new Gson();
-                    goodsInStockActivityBean = gson.fromJson(result,GoodsInStockActivityBean.class);
-                    callback.callbackPreSale(goodsInStockActivityBean);
+                    goodsInStockActivityBean = gson.fromJson(result, GoodsInStockActivityBean.class);
+                    callback.callbackPreSale(goodsInStockActivityBean,updateOrLoad);
                 }
 
                 @Override

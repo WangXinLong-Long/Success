@@ -28,34 +28,30 @@ import com.silianchuangye.sumao.success.fragments.BasePager;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.MyAdapterItemClickListener;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.adapter.TextGrideViewAdapter;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.bean.AnnouncementBean;
+import com.silianchuangye.sumao.success.fragments.PagerOneMVP.bean.ApplicationBean;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.bean.BannerBean;
+import com.silianchuangye.sumao.success.fragments.PagerOneMVP.bean.ClassificationBean;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.presenter.PagerOnePresenter;
 import com.silianchuangye.sumao.success.fragments.SearchActivityMVP.view.SearchActivity;
 import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.bean.UpstreamDirectorySellingBean;
 import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.view.UpstreamDirectSellingActivity;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.AuctionMVP.AuctionActivity;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.bean.GoodsInStockActivityBean;
-import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.bean.SMCl;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.view.GoodsInStockActivity;
 import com.silianchuangye.sumao.success.fragments.homepage.groupbuying.GroupBuyingActivity;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleMVP.bean.Auction;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleMVP.bean.Forward;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleMVP.bean.Group;
-import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleMVP.view.PreSale;
 import com.silianchuangye.sumao.success.fragments.homepage.theprice.MidpointsListctivity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.LoginUserActivity;
 import com.silianchuangye.sumao.success.utils.Loding;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.MarqueeView;
-import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 import com.silianchuangye.sumao.success.utils.scrollviewAD.MyGallery;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.xutils.common.Callback;
-import org.xutils.http.RequestParams;
-import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -99,6 +95,8 @@ public class PagerOne extends BasePager implements IPagerOneView {
     private GridView areaGridView;
     private GridView classificationGridView;
     private GridView applicationDetail;
+    private GoodsInStockActivityBean goodsInStockActivityBean;
+    private ClassificationBean classificationBean;
 
     @Override
     public void myClickSearch() {
@@ -123,68 +121,8 @@ public class PagerOne extends BasePager implements IPagerOneView {
     }
 
     public void getResult(String productId) {
-        String uri = SuMaoConstant.SUMAO_IP + "/rest/model/atg/commerce/catalog/ProductCatalogActor/auctionResultList";
-        RequestParams rp = new RequestParams(uri);
-        rp.addParameter("productId", productId);
-        Log.d("竞拍结果的返回值的rp", rp + "woshi");
-        x.http().post(rp, new Callback.CommonCallback<String>() {
-            @Override
-            public void onSuccess(String result) {
-                Log.d("竞拍的返回值", result);
-                try {
-                    JSONObject object = new JSONObject(result);
-                    String object_result = object.getString("cl_type");
-                    String array_result = object.getString("List");
-                    String status = object.getString("status");
-                    if (status.equals("0")) {
-                        statu = "竞拍未开始";
-                    } else if (status.equals("1")) {
-                        statu = "正在竞拍";
-                    } else if (status.equals("2")) {
-                        statu = "竞拍已结束";
-                    }
+        pagerOnePresenter.getAuctionResult(productId);
 
-                    if (object_result.equals("englishAuctionProduct")) {
-                        type = "公开竞拍";
-                    } else if (object_result.equals("sealedAuctionProduct")) {
-                        type = "密封竞拍";
-                    }
-                    if (array_result.equals("[]")) {
-                        max = "最高竞拍价";
-                        min = "最高竞拍价";
-                        people = "最高竞拍价";
-                        number = "最高竞拍价";
-                    } else {
-                        JSONArray array = new JSONArray(array_result);
-                        for (int i = 0; i < array.length(); i++) {
-                            JSONObject obj_array = array.getJSONObject(i);
-                            max = obj_array.getString("max");
-                            min = obj_array.getString("min");
-                            people = obj_array.getString("pNumber");
-                            number = obj_array.getString("quty");
-                        }
-
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-
-            }
-
-            @Override
-            public void onCancelled(CancelledException cex) {
-
-            }
-
-            @Override
-            public void onFinished() {
-
-            }
-        });
     }
 
     /**
@@ -226,12 +164,31 @@ public class PagerOne extends BasePager implements IPagerOneView {
                 } else if (list.get(position).get("icon").equals(R.mipmap.goods)) {
                     //Toast.makeText(mActivity, "点击了现货按钮", Toast.LENGTH_SHORT).show();
                     Loding.show(mActivity, "加载中...", true, null);
-                    pagerOnePresenter.getGoodsInStockInfo("", "", "", 10, 0);
+                    String pattern = "fixedProduct";
+                    String regions = null;
+                    String provinces = null;
+                    String cities = null;
+                    String categoryNames = null;
+                    String appNames = null;
+                    String gradeNums = null;
+                    String pageNum = "1";
+                    String updateOrLoad = "update";
+                    pagerOnePresenter.getGoodsInStockInfo(pattern, regions, provinces, cities,
+                            categoryNames, appNames, gradeNums, pageNum,updateOrLoad);
 
                 } else if (list.get(position).get("icon").equals(R.mipmap.presell)) {
                     //Toast.makeText(mActivity, "点击了预售按钮", Toast.LENGTH_SHORT).show();
                     Loding.show(mActivity, "加载中...", true, null);
-                    pagerOnePresenter.getPreSaleInfo("", "", "", 10, 0);
+                    String pattern = "forward-pricing-product";
+                    String regions = null;
+                    String provinces = null;
+                    String cities = null;
+                    String categoryNames = null;
+                    String appNames = null;
+                    String gradeNums = null;
+                    String pageNum = "1";
+                    pagerOnePresenter.getPreSaleInfo(pattern, regions, provinces, cities,
+                            categoryNames, appNames, gradeNums, pageNum,"update");
 
                 } else if (list.get(position).get("icon").equals(R.mipmap.adwords)) {
                     //Toast.makeText(mActivity, "点击了竞拍按钮", Toast.LENGTH_SHORT).show();
@@ -393,47 +350,18 @@ public class PagerOne extends BasePager implements IPagerOneView {
 
     //把请求下的数据放置到现货界面
     @Override
-    public void setDataInActivity(GoodsInStockActivityBean goodsInStockActivityBean) {
-        Loding.dis();
-        GoodsInStockActivityBean  goodsInStockActivityBean1 = new GoodsInStockActivityBean();
-        Map<String, String> address = new HashMap<String, String>();
-        Map<String, String> application = new HashMap<String, String>();
-        Map<String, String> sort = new HashMap<String, String>();
-        List<SMCl> cl = new ArrayList<SMCl>();
-        for (int i = 0; i < 5; i++) {
-            address.put("地址" + i, 2020 + i + "");
-            application.put("应用" + i, 2021 + i + "");
-            sort.put("分类" + i, 2022 + i + "");
-            SMCl smcl = new SMCl();
-            smcl.setCl_shuliang("5"+i);
-            smcl.setCl_qiye("企业"+i);
-            smcl.setCl_mingcheng("名称"+i);
-            smcl.setCl_jine(5+i+"");
-            smcl.setCl_cangku("仓库"+i);
-            smcl.setCl_cpid("2023"+i);
-            smcl.setCl_id("2024"+i);
-            cl.add(smcl);
-        }
-        goodsInStockActivityBean1.setApplication(application);
-        goodsInStockActivityBean1.setCl(cl);
-        goodsInStockActivityBean1.setRegion(address);
-        goodsInStockActivityBean1.setSort(sort);
-        goodsInStockActivityBean1.setTotal(5 + "");
-        Intent intent = new Intent(mActivity, GoodsInStockActivity.class);
-        //Toast.makeText(mActivity, "点击了现货按钮", Toast.LENGTH_SHORT).show();
-        intent.putExtra("title", "现货");
-        intent.putExtra("goodsInStockActivityBean", goodsInStockActivityBean1);
-        startActivity(intent);
+    public void setDataInActivity(GoodsInStockActivityBean goodsInStockActivityBean,String updateOrLoad) {
+//        Loding.dis();
+        pagerOnePresenter.getClassification("现货");
+        this.goodsInStockActivityBean = goodsInStockActivityBean;
     }
 
     //把请求下的数据放置到预售界面
     @Override
-    public void setPreSaleDataInActivity(GoodsInStockActivityBean goodsInStockActivityBean) {
-        Loding.dis();
-        Intent intent = new Intent();
-        intent.setClass(mActivity, PreSale.class);
-        intent.putExtra("preSaleActivityBean", goodsInStockActivityBean);
-        startActivity(intent);
+    public void setPreSaleDataInActivity(GoodsInStockActivityBean goodsInStockActivityBean,String updateOrLoad) {
+        pagerOnePresenter.getClassification("预售");
+        this.goodsInStockActivityBean = goodsInStockActivityBean;
+
 
     }
 
@@ -456,7 +384,7 @@ public class PagerOne extends BasePager implements IPagerOneView {
         List<String> classificationList = new ArrayList<>();
         List<String> applicationList = new ArrayList<>();
         for (int i = 0; i < 2; i++) {
-            areaList.add("地区" + i );
+            areaList.add("地区" + i);
             classificationList.add("分类" + i + "适配器案发安达");
             applicationList.add("应用" + i + "适配器案发安达");
         }
@@ -467,11 +395,80 @@ public class PagerOne extends BasePager implements IPagerOneView {
         classificationGridView.setAdapter(classificationAdapter);
 //        应用的GridView
         applicationDetail.setAdapter(applicationAdapter);
-        areaGridView.setOnItemClickListener(new MyAdapterItemClickListener(getActivity(),areaList));
-        classificationGridView.setOnItemClickListener(new MyAdapterItemClickListener(getActivity(),classificationList));
-        applicationDetail.setOnItemClickListener(new MyAdapterItemClickListener(getActivity(),applicationList));
+        areaGridView.setOnItemClickListener(new MyAdapterItemClickListener(getActivity(), areaList));
+        classificationGridView.setOnItemClickListener(new MyAdapterItemClickListener(getActivity(), classificationList));
+        applicationDetail.setOnItemClickListener(new MyAdapterItemClickListener(getActivity(), applicationList));
     }
 
+    @Override
+    public void getClassificationData(ClassificationBean classificationBean,String transactionType) {
+       this.classificationBean = classificationBean;
+        pagerOnePresenter.getApplication(transactionType);
+
+    }
+
+    @Override
+    public void getApplicationData(ApplicationBean applicationBean,String transactionType) {
+        Loding.dis();
+        Intent intent = new Intent(mActivity, GoodsInStockActivity.class);
+        if (transactionType.equals("现货")){
+        intent.putExtra("title", "现货");
+        }else if (transactionType.equals("预售")){
+//            Loding.dis();
+//            Intent intent = new Intent();
+            intent.putExtra("title", "预售");
+//            intent.setClass(mActivity, PreSale.class);
+//            intent.putExtra("preSaleActivityBean", goodsInStockActivityBean);
+//            startActivity(intent);
+        }
+
+
+
+        intent.putExtra("goodsInStockActivityBean", goodsInStockActivityBean);
+        intent.putExtra("classificationBean",classificationBean);
+        intent.putExtra("applicationBean",applicationBean);
+        startActivity(intent);
+    }
+
+    @Override
+    public void getAuctionData(String result) {
+        try {
+            JSONObject object = new JSONObject(result);
+            String object_result = object.getString("cl_type");
+            String array_result = object.getString("List");
+            String status = object.getString("status");
+            if (status.equals("0")) {
+                statu = "竞拍未开始";
+            } else if (status.equals("1")) {
+                statu = "正在竞拍";
+            } else if (status.equals("2")) {
+                statu = "竞拍已结束";
+            }
+            if (object_result.equals("englishAuctionProduct")) {
+                type = "公开竞拍";
+            } else if (object_result.equals("sealedAuctionProduct")) {
+                type = "密封竞拍";
+            }
+            if (array_result.equals("[]")) {
+                max = "最高竞拍价";
+                min = "最高竞拍价";
+                people = "最高竞拍价";
+                number = "最高竞拍价";
+            } else {
+                JSONArray array = new JSONArray(array_result);
+                for (int i = 0; i < array.length(); i++) {
+                    JSONObject obj_array = array.getJSONObject(i);
+                    max = obj_array.getString("max");
+                    min = obj_array.getString("min");
+                    people = obj_array.getString("pNumber");
+                    number = obj_array.getString("quty");
+                }
+
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
 
 
 }

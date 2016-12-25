@@ -1,17 +1,16 @@
 package com.silianchuangye.sumao.success.fragments.homepage.pagerOneGridViewDetailActivity.screenPopupWindow;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridView;
-import android.widget.ScrollView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.silianchuangye.sumao.success.R;
-import com.silianchuangye.sumao.success.fragments.homepage.pagerOneGridViewDetailActivity.CustomPopupWindow.MultiselectPopupWindowCompleteClickListener;
 import com.silianchuangye.sumao.success.fragments.homepage.pagerOneGridViewDetailActivity.CustomPopupWindow.MultiselectPopupWindowGrideViewAdpter;
 
 import java.util.ArrayList;
@@ -20,20 +19,17 @@ import java.util.ArrayList;
  * Created by Jobs Created on 2016/12/16.
  * 筛选PopupWindow的视图
  */
-public class ScreenPopupWindowView extends ScrollView implements View.OnClickListener {
+public class ScreenPopupWindowView extends RelativeLayout implements View.OnClickListener {
     private Context context;
     //    为GrideView填充数据
     private ArrayList<ArrayList<String>> data;
-    //    设置适配器
-    private MultiselectPopupWindowGrideViewAdpter adpter;
-    //    （交易模式、分类、应用、牌号中的一种）
-    private String type;
 
-    private MultiselectPopupWindowCompleteClickListener multiselectPopupWindowCompleteClickListener;
+    private ScreenMultiselectPopupWindowCompleteClickListener multiselectPopupWindowCompleteClickListener;
     private MultiselectPopupWindowGrideViewAdpter regionAdpter;
     private MultiselectPopupWindowGrideViewAdpter classifcationAdpter;
     private MultiselectPopupWindowGrideViewAdpter applicationAdpter;
     private MultiselectPopupWindowGrideViewAdpter gradeAdpter;
+    private EditText tv_screen_title_bar_title;
 
     public ScreenPopupWindowView(Context context, ArrayList<ArrayList<String>> data) {
         super(context);
@@ -49,8 +45,7 @@ public class ScreenPopupWindowView extends ScrollView implements View.OnClickLis
         GridView regionGrid = (GridView) findViewById(R.id.region_grid);//地区
         GridView classificationGrid = (GridView) findViewById(R.id.classification_grid);//分类
         GridView applicationGrid = (GridView) findViewById(R.id.application_grid);//应用
-        GridView gradeGrid = (GridView) findViewById(R.id.grade_grid);//牌号
-
+        tv_screen_title_bar_title = (EditText) findViewById(R.id.tv_screen_title_bar_title);
         Button completed = (Button) findViewById(R.id.completed);//完成按钮
         Button reset = (Button) findViewById(R.id.reset);//重置按钮
         completed.setOnClickListener(this);
@@ -59,14 +54,12 @@ public class ScreenPopupWindowView extends ScrollView implements View.OnClickLis
         TextView regionMoreTv = (TextView) findViewById(R.id.region_more_tv);
         TextView classificationMoreTv = (TextView) findViewById(R.id.classification_more_tv);
         TextView applicationMoreTv = (TextView) findViewById(R.id.application_more_tv);
-        TextView gradeMoreTv = (TextView) findViewById(R.id.grade_more_tv);
         regionMoreTv.setOnClickListener(this);
         classificationMoreTv.setOnClickListener(this);
         applicationMoreTv.setOnClickListener(this);
-        gradeMoreTv.setOnClickListener(this);
 
 //        地区
-        regionAdpter = new MultiselectPopupWindowGrideViewAdpter( context);
+        regionAdpter = new MultiselectPopupWindowGrideViewAdpter(context);
         regionAdpter.setData(getTenItem(data.get(0)));
         regionGrid.setAdapter(regionAdpter);
         regionGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -77,7 +70,7 @@ public class ScreenPopupWindowView extends ScrollView implements View.OnClickLis
             }
         });
 //        分类
-        classifcationAdpter = new MultiselectPopupWindowGrideViewAdpter( context);
+        classifcationAdpter = new MultiselectPopupWindowGrideViewAdpter(context);
         classifcationAdpter.setData(getTenItem(data.get(1)));
         classificationGrid.setAdapter(classifcationAdpter);
         classificationGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -88,7 +81,7 @@ public class ScreenPopupWindowView extends ScrollView implements View.OnClickLis
             }
         });
 //        应用
-        applicationAdpter = new MultiselectPopupWindowGrideViewAdpter( context);
+        applicationAdpter = new MultiselectPopupWindowGrideViewAdpter(context);
         applicationAdpter.setData(getTenItem(data.get(2)));
         applicationGrid.setAdapter(applicationAdpter);
         applicationGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -96,17 +89,6 @@ public class ScreenPopupWindowView extends ScrollView implements View.OnClickLis
             public void onItemClick(AdapterView<?> arg0, View arg1,
                                     int position, long arg3) {
                 applicationAdpter.chiceState(position);
-            }
-        });
-//        牌号
-        gradeAdpter = new MultiselectPopupWindowGrideViewAdpter( context);
-        gradeAdpter.setData(getTenItem(data.get(3)));
-        gradeGrid.setAdapter(gradeAdpter);
-        gradeGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1,
-                                    int position, long arg3) {
-                gradeAdpter.chiceState(position);
             }
         });
 
@@ -120,6 +102,8 @@ public class ScreenPopupWindowView extends ScrollView implements View.OnClickLis
                 list.add(data.get(i));
             }
 
+        }else {
+            list.addAll(data);
         }
         return list;
     }
@@ -128,7 +112,7 @@ public class ScreenPopupWindowView extends ScrollView implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.completed:
-                completedMethod(type);
+                completedMethod();
                 break;
             case R.id.reset:
                 resetMethod();
@@ -138,33 +122,65 @@ public class ScreenPopupWindowView extends ScrollView implements View.OnClickLis
                 regionAdpter.setData(data.get(0));
                 regionAdpter.notifyDataSetChanged();
                 break;
+            case R.id.classification_more_tv:
+                classifcationAdpter.clearData();
+                classifcationAdpter.setData(data.get(1));
+                classifcationAdpter.notifyDataSetChanged();
+                break;
+            case R.id.application_more_tv:
+                applicationAdpter.clearData();
+                applicationAdpter.setData(data.get(2));
+                applicationAdpter.notifyDataSetChanged();
+                break;
 
         }
     }
 
     private void resetMethod() {
-        adpter.clear();
-        adpter.notifyDataSetChanged();
+        regionAdpter.clear();
+        regionAdpter.notifyDataSetChanged();
+
+        classifcationAdpter.clear();
+        classifcationAdpter.notifyDataSetChanged();
+
+        applicationAdpter.clear();
+        applicationAdpter.notifyDataSetChanged();
     }
 
-    private void completedMethod(String type) {
-        StringBuilder sb = new StringBuilder();
-        ArrayList<String> selects = new ArrayList<>();
-        Log.i("test", adpter.getCheseState().get(1) + "");
-        for (int i = 0; i < adpter.getCheseState().size(); i++) {
-            boolean flag = adpter.getCheseState().get(i);
+    private void completedMethod() {
+//        地区选择的内容
+        ArrayList<String> regionSelects = new ArrayList<>();
+        for (int i = 0; i < regionAdpter.getCheseState().size(); i++) {
+            boolean flag = regionAdpter.getCheseState().get(i);
             if (flag) {
-//                sb.append(data.get(i) + "");
-                selects.add(data.get(i).get(i));
+                regionSelects.add(data.get(0).get(i));
             }
         }
+
+        ArrayList<String> classificationSelects = new ArrayList<>();
+        for (int i = 0; i < classifcationAdpter.getCheseState().size(); i++) {
+            boolean flag = classifcationAdpter.getCheseState().get(i);
+            if (flag) {
+                classificationSelects.add(data.get(1).get(i));
+            }
+        }
+
+        ArrayList<String> applicationSelects = new ArrayList<>();
+        for (int i = 0; i < applicationAdpter.getCheseState().size(); i++) {
+            boolean flag = applicationAdpter.getCheseState().get(i);
+            if (flag) {
+                applicationSelects.add(data.get(2).get(i));
+            }
+        }
+
+
         if (multiselectPopupWindowCompleteClickListener != null) {
-            multiselectPopupWindowCompleteClickListener.getSelectionValues(selects);
+            multiselectPopupWindowCompleteClickListener.getSelectionValues(regionSelects, classificationSelects, applicationSelects,tv_screen_title_bar_title.getText().toString());
         }
 
     }
 
-    public void setMultiselectPopupWindowCompleteClickListener(MultiselectPopupWindowCompleteClickListener listener) {
+    public void setMultiselectPopupWindowCompleteClickListener(ScreenMultiselectPopupWindowCompleteClickListener listener) {
         this.multiselectPopupWindowCompleteClickListener = listener;
     }
 }

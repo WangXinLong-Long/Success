@@ -40,7 +40,7 @@ public class Cart_MyDialog extends AlertDialog{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cart_dialog);
          Tv_name= (TextView) findViewById(R.id.tv_cart_dailog_name);
-        Tv_name.setText("您购买的商品"+name+"库存不足！");
+        Tv_name.setText("您购买的商品"+name+"！");
          Tv_num= (TextView) findViewById(R.id.tv_cart_dialog_num);
         Tv_num.setText("当前商品共"+kucong+"吨");
        // Tv_name

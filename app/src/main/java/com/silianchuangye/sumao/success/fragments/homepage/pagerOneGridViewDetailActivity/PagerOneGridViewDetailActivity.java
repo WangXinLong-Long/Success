@@ -2,6 +2,7 @@ package com.silianchuangye.sumao.success.fragments.homepage.pagerOneGridViewDeta
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -10,11 +11,13 @@ import android.widget.Toast;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.homepage.pagerOneGridViewDetailActivity.CustomPopupWindow.MultiselectPopupWindow;
 import com.silianchuangye.sumao.success.fragments.homepage.pagerOneGridViewDetailActivity.CustomPopupWindow.MultiselectPopupWindowCompleteClickListener;
+import com.silianchuangye.sumao.success.fragments.homepage.pagerOneGridViewDetailActivity.screenPopupWindow.ScreenMultiselectPopupWindowCompleteClickListener;
 import com.silianchuangye.sumao.success.fragments.homepage.pagerOneGridViewDetailActivity.screenPopupWindow.ScreenPopupWindow;
 import com.silianchuangye.sumao.success.utils.ThreeLevelLindage.Area;
 import com.silianchuangye.sumao.success.utils.ThreeLevelLindage.CascadingMenuPopWindow;
 import com.silianchuangye.sumao.success.utils.ThreeLevelLindage.CascadingMenuViewOnSelectListener;
 import com.silianchuangye.sumao.success.utils.ThreeLevelLindage.DBHelper;
+import com.silianchuangye.sumao.success.utils.ThreeLevelLindage.ThreeLevelCompletedListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +39,10 @@ public class PagerOneGridViewDetailActivity extends Activity implements View.OnC
     ArrayList<String> datas = new ArrayList<>();
     ArrayList<ArrayList<String>> lists = new ArrayList<>();
     private ImageView screen;
+    private ArrayList<String> classification1;
+    private ArrayList<String> application1;
+    private ArrayList<String> gride;
+    private ThreeLevelCompletedListener threeLevelCompletedListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,9 +62,7 @@ public class PagerOneGridViewDetailActivity extends Activity implements View.OnC
 //        应用
         application = ((RelativeLayout) findViewById(R.id.application_rl));
         application.setOnClickListener(this);
-//        牌号
-        grade = ((RelativeLayout) findViewById(R.id.grade_rl));
-        grade.setOnClickListener(this);
+
 
 //        筛选
         screen = ((ImageView) findViewById(R.id.iv_screen_title_bar_search));
@@ -68,9 +73,23 @@ public class PagerOneGridViewDetailActivity extends Activity implements View.OnC
         for (Area area : provinceList) {
             datas.add(area.getName());
         }
-        for (int i = 0; i < 4; i++) {
-            lists.add(datas);
+
+        classification1 = new ArrayList<>();
+        for (int i = 0; i < 15; i++) {
+            classification1.add("分类"+i);
         }
+        application1 = new ArrayList<>();
+        for (int i = 0; i < 40; i++) {
+            application1.add("应用"+i);
+        }
+        gride = new ArrayList<>();
+        for (int i = 0; i < 20; i++) {
+            gride.add("牌号"+i);
+        }
+            lists.add(datas);
+            lists.add(classification1);
+            lists.add(application1);
+            lists.add(gride);
     }
 
     @Override
@@ -87,15 +106,11 @@ public class PagerOneGridViewDetailActivity extends Activity implements View.OnC
                 break;
 //            分类
             case R.id.classification_rl:
-
+                showTradingPatternPopupWindow("classification", classification1);
                 break;
 //            应用
             case R.id.application_rl:
-
-                break;
-//            牌号
-            case R.id.grade_rl:
-
+                showTradingPatternPopupWindow("application", application1);
                 break;
 //            筛选
             case R.id.iv_screen_title_bar_search:
@@ -125,13 +140,13 @@ public class PagerOneGridViewDetailActivity extends Activity implements View.OnC
         ScreenPopupWindow screenPopupWindow = null;
         if (screenPopupWindow == null) {
             screenPopupWindow = new ScreenPopupWindow(getApplicationContext(), datas);
-            screenPopupWindow.setOnClickCompleteListener(new CompleteClickListener());
+            screenPopupWindow.setOnClickCompleteListener(new ScreenCompleteClickListener());
             screenPopupWindow.setFocusable(true);
-            screenPopupWindow.showAsDropDown(findViewById(R.id.pre_sale_title), 5, 5);
+            screenPopupWindow.showAtLocation(findViewById(R.id.parent), Gravity.TOP, 5, 5);
         } else if (screenPopupWindow != null && screenPopupWindow.isShowing()) {
             screenPopupWindow.dismiss();
         } else {
-            screenPopupWindow.showAsDropDown(findViewById(R.id.pre_sale_title), 5, 5);
+            screenPopupWindow.showAsDropDown(findViewById(R.id.parent), 5, 5);
         }
     }
 
@@ -139,8 +154,9 @@ public class PagerOneGridViewDetailActivity extends Activity implements View.OnC
     private void showPopMenu() {
 
         if (cascadingMenuPopWindow == null) {
-            cascadingMenuPopWindow = new CascadingMenuPopWindow(getApplicationContext(), provinceList);
+            cascadingMenuPopWindow = new CascadingMenuPopWindow(this, provinceList);
             cascadingMenuPopWindow.setMenuViewOnSelectListener(new NMCascadingMenuViewOnSelectListener());
+            cascadingMenuPopWindow.setThreeLevelCompletedListener(new ThreeLevelCompleteClickListener());
             cascadingMenuPopWindow.setFocusable(true);
             cascadingMenuPopWindow.showAsDropDown(region, 5, 5);
         } else if (cascadingMenuPopWindow != null && cascadingMenuPopWindow.isShowing()) {
@@ -154,8 +170,8 @@ public class PagerOneGridViewDetailActivity extends Activity implements View.OnC
     class NMCascadingMenuViewOnSelectListener implements CascadingMenuViewOnSelectListener {
 
         @Override
-        public void getValue(Area area) {
-            Toast.makeText(getApplicationContext(), "" + area.getName(), Toast.LENGTH_SHORT).show();
+        public void getValue(String provinceId,String cityId,String countyId) {
+            Toast.makeText(getApplicationContext(), "省市县的id--"+provinceId+"--"+cityId+"--"+countyId, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -164,8 +180,28 @@ public class PagerOneGridViewDetailActivity extends Activity implements View.OnC
     class CompleteClickListener implements MultiselectPopupWindowCompleteClickListener {
 
         @Override
-        public void getSelectionValues(List<String> selectItems) {
+        public void getSelectionValues(List<String> selectItems,String type) {
             Toast.makeText(PagerOneGridViewDetailActivity.this, "search" + selectItems.toString(), Toast.LENGTH_SHORT).show();
         }
     }
+
+    class ScreenCompleteClickListener implements ScreenMultiselectPopupWindowCompleteClickListener {
+        @Override
+        public void getSelectionValues(List<String> regionSelectItems, List<String> classifcationSelectItems, List<String> applicationSelectItems,String grade) {
+
+            Toast.makeText(PagerOneGridViewDetailActivity.this, "search"+"地区:"+regionSelectItems+"   分类:"+classifcationSelectItems+"   应用:"+applicationSelectItems, Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+
+    //
+    public class ThreeLevelCompleteClickListener implements ThreeLevelCompletedListener{
+
+        @Override
+        public void getSelectionProvinceCityCounty(String provinceId, String cityId) {
+            Toast.makeText(PagerOneGridViewDetailActivity.this, "搜索地区id为：" + provinceId + "   省的id为：" + cityId, Toast.LENGTH_SHORT).show();
+        }
+    }
+
 }

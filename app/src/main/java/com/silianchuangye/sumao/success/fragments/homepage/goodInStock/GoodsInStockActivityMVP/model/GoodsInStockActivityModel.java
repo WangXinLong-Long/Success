@@ -6,6 +6,8 @@ import com.silianchuangye.sumao.success.utils.Loding;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.xutils.common.Callback;
 import org.xutils.http.HttpMethod;
 import org.xutils.http.RequestParams;
@@ -15,50 +17,67 @@ import org.xutils.x;
  * Created by Administrator on 2016/8/12 0012.
  */
 public class GoodsInStockActivityModel implements IGoodsInStockActivityModel {
-    String region2;
-    String classification2;
-    String application2;
-    int Nrpp;
-    int No;
+    String pattern;//交易模式
+    String regions;//    大区
+    String provinces;//省
+    String cities;//市
+    String categoryNames;//分类
+    String appNames;//应用
+    String gradeNums;//牌号
+    String pageNum;//当前页码
+    String updateOrLoad;
 
-    public GoodsInStockActivityModel(String region2, String classification2, String application2, int nrpp, int no) {
-        this.region2 = region2;
-        this.classification2 = classification2;
-        this.application2 = application2;
-        Nrpp = nrpp;
-        No = no;
+    public GoodsInStockActivityModel(String pattern, String regions, String provinces, String cities,
+                                     String categoryNames, String appNames, String gradeNums, String pageNum, String updateOrLoad) {
+        this.pattern = pattern;
+        this.regions = regions;
+        this.provinces = provinces;
+        this.cities = cities;
+        this.categoryNames = categoryNames;
+        this.appNames = appNames;
+        this.gradeNums = gradeNums;
+        this.pageNum = pageNum;
+        this.updateOrLoad = updateOrLoad;
     }
 
     @Override
     public void getGoodsInStockActivityResult(final GoodsInStockActivityCallback callback) {
-        String url = SuMaoConstant.SUMAO_IP + "/rest/model/atg/commerce/catalog/ProductCatalogActor/fixedPrductlist";
-        String params = "";
-        if (region2 != null && !region2.equals("")) {
-            if (params.equals("")) {
-                params += region2;
-            } else {
-                params += "+" + region2;
-            }
-        }
-        if (classification2 != null && !classification2.equals("")) {
-            if (params.equals("")) {
-                params += classification2;
-            } else {
-                params += "+" + classification2;
-            }
-        }
-        if (application2 != null && !application2.equals("")) {
-            if (params.equals("")) {
-                params += application2;
-            } else {
-                params += "+" + application2;
-            }
-        }
-        url = url + "?N=" + params;
+
+        String url = SuMaoConstant.SUMAO_IP + "/rest/model/atg/screen/screenShowProductListActor/ScreenShowProductList";
+
+
         LogUtils.log("URL----->" + url + "<-----URL");
         RequestParams requestParams = new RequestParams(url);
-        requestParams.addParameter("Nrpp", Nrpp + "");
-        requestParams.addParameter("No", No + "");
+        requestParams.setAsJsonContent(true);
+        JSONObject jsonObject = new JSONObject();
+        try {
+            if (regions != null) {
+
+                jsonObject.put("regions", regions);
+
+            }
+            if (provinces != null) {
+                jsonObject.put("provinces", provinces);
+            }
+            if (cities != null) {
+                jsonObject.put("cities", cities);
+            }
+            if (categoryNames != null) {
+                jsonObject.put("categoryNames", categoryNames);
+            }
+            if (appNames != null) {
+                jsonObject.put("appNames", appNames);
+            }
+            if (gradeNums != null) {
+                jsonObject.put("appNames", gradeNums);
+            }
+
+            jsonObject.put("pattern", pattern);
+            jsonObject.put("pageNum", pageNum);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        requestParams.setBodyContent(jsonObject.toString());
         LogUtils.log("首页：现货requestParams--->" + requestParams + "<---首页：现货requestParams");
         try {
             x.http().request(HttpMethod.POST, requestParams, new Callback.CacheCallback<String>() {
@@ -75,10 +94,7 @@ public class GoodsInStockActivityModel implements IGoodsInStockActivityModel {
                     LogUtils.log("首页：现货--->" + result + "<---首页：现货");
                     Gson gson = new Gson();
                     goodsInStockActivityBean = gson.fromJson(result, GoodsInStockActivityBean.class);
-//                   TODO 删除掉 添加虚假数据
-//                    getData();
-
-                    callback.callbackInGoodsInStockActivity(goodsInStockActivityBean);
+                    callback.callbackInGoodsInStockActivity(goodsInStockActivityBean, updateOrLoad);
                 }
 
                 @Override

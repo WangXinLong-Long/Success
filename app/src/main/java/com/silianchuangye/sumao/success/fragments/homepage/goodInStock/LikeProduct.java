@@ -1,8 +1,8 @@
 package com.silianchuangye.sumao.success.fragments.homepage.goodInStock;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -12,8 +12,7 @@ import android.widget.Toast;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.LikeProductAdapter;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.bean.SMCl;
-import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.bean.RelatedProduct;
-import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.bean.SimilarProduct;
+import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.bean.GoodsInStockDetailBean;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.view.GoodsInStockDetailActivity;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 
@@ -28,9 +27,9 @@ public class LikeProduct extends AppCompatActivity implements View.OnClickListen
     private ListView lv_like_product;
     private List<String> list = new ArrayList<String>();
     LikeProductAdapter adapter;
-    List<SimilarProduct> lists;
+    List<GoodsInStockDetailBean.RecentlyViewedProductBean> lists;
     SMCl preSaleModel;
-    private RelatedProduct relatedProduct;
+    private GoodsInStockDetailBean.RecentlyViewedProductBean relatedProduct;
 
 
     @Override
@@ -39,9 +38,9 @@ public class LikeProduct extends AppCompatActivity implements View.OnClickListen
         setContentView(R.layout.activity_like_product);
         Intent intent = getIntent();
 
-        relatedProduct = (RelatedProduct) intent.getSerializableExtra("relatedProduct");
-        for (int i = 0; i < relatedProduct.getSimilarProduct().size(); i++) {
-            LogUtils.log("relatedProduct" + relatedProduct.getSimilarProduct().get(i).getCl_id());
+        lists = (List<GoodsInStockDetailBean.RecentlyViewedProductBean>) intent.getSerializableExtra("relatedProduct");
+        for (int i = 0; i < lists.size(); i++) {
+            LogUtils.log("relatedProduct" + lists.get(i).getCl_id());
 
         }
         lists = new ArrayList<>();
@@ -51,7 +50,7 @@ public class LikeProduct extends AppCompatActivity implements View.OnClickListen
     }
 
     private void initdata() {
-        lists.addAll(relatedProduct.getSimilarProduct());
+        lists.addAll(lists);
 
         adapter = new LikeProductAdapter(this, lists);
 
@@ -77,7 +76,7 @@ public class LikeProduct extends AppCompatActivity implements View.OnClickListen
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Toast.makeText(LikeProduct.this, "点击了第" + position + "条数据", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent();
-        intent.putExtra("cl_id", relatedProduct.getSimilarProduct().get(position).getCl_id());
+        intent.putExtra("cl_id", lists.get(position).getCl_id());
         intent.setClass(this, GoodsInStockDetailActivity.class);
         startActivity(intent);
     }

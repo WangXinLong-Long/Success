@@ -7,7 +7,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -22,34 +21,28 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.silianchuangye.sumao.success.HX.Constant;
 import com.silianchuangye.sumao.success.HX.ui.LoginActivity;
 import com.silianchuangye.sumao.success.MainActivity;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.custom.customCalendar.CalendarView;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.VesselThreeActivity;
-import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.bean.CLAttribute;
-import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.bean.GoodsInStockDetailBean;
-import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.bean.RelatedProduct;
-import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.bean.SimilarProduct;
-import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.presenter.GoodsInStockDetailPresenter;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.LikeProduct;
-import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.PayMentsOrderMVP.PaymentsOrder;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.SeeProductMVP.view.SeeProduct;
+import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.bean.GoodsInStockDetailBean;
+import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.bean.Orders;
+import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.presenter.GoodsInStockDetailPresenter;
+import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.PayMentsOrderMVP.view.PaymentsOrder;
 import com.silianchuangye.sumao.success.fragments.shoppingCart.dialog.Cart_MyDialog;
-import com.silianchuangye.sumao.success.utils.Loding;
 import com.silianchuangye.sumao.success.utils.LogUtils;
-import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.xutils.common.Callback;
-import org.xutils.http.RequestParams;
-import org.xutils.x;
 
+import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -72,7 +65,7 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
     private Cart_MyDialog dialog;
     private Button determine_buy_immediately_button;
     private Intent activityiIntent;
-    private String cl_id;
+    private GoodsInStockDetailBean goodsInStockDetailBean;
     private GoodsInStockDetailPresenter goodsInStockDetailPresenter;
     private TextView tvName_auction;
     private TextView tvPrice_auction;
@@ -89,8 +82,8 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
     private TextView tvRemark_auction;
     private TextView delivery_time_et_end;
     private ImageView image;
-    private RelatedProduct relatedProduct;
-    private ArrayList<CLAttribute> cl_attribute;
+    private List<GoodsInStockDetailBean.RecentlyViewedProductBean> relatedProduct;
+    private List<GoodsInStockDetailBean.ClAttributeBean> cl_attribute;
     private LinearLayout layoutContent_auction;
     private String cl_gongsiId;
     private String contractString;
@@ -107,13 +100,13 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
         setContentView(R.layout.activity_goods_in_stock_detail);
 
         activityiIntent = getIntent();
-        cl_id = activityiIntent.getStringExtra("cl_id");
+        goodsInStockDetailBean = (GoodsInStockDetailBean) activityiIntent.getSerializableExtra("goodsInStockDetailBean");
 
         initView();
+        getGoodsInStockDetailData(goodsInStockDetailBean);
         initListener();
         goodsInStockDetailPresenter = new GoodsInStockDetailPresenter(this);
-        goodsInStockDetailPresenter.GoodsInStockDetailSendData(cl_id);
-        Loding.show(this,"加载中...",true,null);
+
     }
 
     private void initListener() {
@@ -195,22 +188,23 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
                 break;
             case R.id.pre_sale_sale_detail_detail:
                 LogUtils.log("GoodsInStockDetailActivity---->cl_attribute:" + cl_attribute);
-                intent.putExtra("cl_attribute", cl_attribute);
+                intent.putExtra("cl_attribute", (Serializable) cl_attribute);
                 intent.setClass(GoodsInStockDetailActivity.this, VesselThreeActivity.class);
                 intent.putExtra("title", "现货");
-                intent.putExtra("contract", contractString);
+                intent.putExtra("contract", goodsInStockDetailBean.getContract());
+                LogUtils.log(goodsInStockDetailBean.getContract() + "-------WXL");
                 startActivity(intent);
                 break;
             case R.id.pre_sale_sale_detail_similar_product:
                 if (relatedProduct != null) {
                     Bundle bundle = new Bundle();
 
-                    bundle.putSerializable("relatedProduct", relatedProduct);
+                    bundle.putSerializable("relatedProduct", (Serializable) relatedProduct);
                     intent.putExtras(bundle);
                     intent.setClass(GoodsInStockDetailActivity.this, LikeProduct.class);
                     startActivity(intent);
                 } else {
-                    Toast.makeText(this, "暂时还没有相似产品哦", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "暂时还没有相似产品", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.pre_sale_sale_detail_similar_liulan:
@@ -221,38 +215,39 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
 //            立即购买：
             case R.id.buy_immediately:
                 int type = 1;
-//                showPopupWindow(type);
-//                backgroundAlpha(0.5f);
                 SharedPreferences sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
                 String unique = sp.getString("unique", "");
                 if (unique.equals("false")) {
                     Toast.makeText(GoodsInStockDetailActivity.this, "请登录后进行操作", Toast.LENGTH_SHORT).show();
                 } else {
-                    getPurchase(unique);
+                    if (System.currentTimeMillis() > Long.parseLong(goodsInStockDetailBean.getCl_xiajiaend())
+                            || System.currentTimeMillis() > Long.parseLong(goodsInStockDetailBean.getCl_shijianend())) {
+                        Toast.makeText(this, "产品已下架", Toast.LENGTH_SHORT).show();
+                    } else {
+
+                        getPurchase(unique);
+                    }
                 }
                 break;
 //             加入购物车：
             case R.id.join_shopping_cart:
-////                type = 2;
-////                showPopupWindow(type);
-////                backgroundAlpha(0.5f);
                 SharedPreferences sp1 = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
                 String unique1 = sp1.getString("unique", "");
                 if (unique1.equals("false")) {
                     Toast.makeText(GoodsInStockDetailActivity.this, "请登录后进行操作", Toast.LENGTH_SHORT).show();
                 } else {
-                    image.setVisibility(View.VISIBLE);
-                    Animation animation = AnimationUtils.loadAnimation(this, R.anim.joincartanim);
-                    animation.setFillAfter(true);
-                    image.startAnimation(animation);
-                    //Toast.makeText(this,"加入购物车成功",Toast.LENGTH_SHORT).show();
-                    new Thread() {
-                        @Override
-                        public void run() {
-                            // super.run();
-                            join_gouwuche();
-                        }
-                    }.start();
+                    if (System.currentTimeMillis() > Long.parseLong(goodsInStockDetailBean.getCl_xiajiaend())
+                            || System.currentTimeMillis() > Long.parseLong(goodsInStockDetailBean.getCl_shijianend())) {
+                        Toast.makeText(this, "产品已下架", Toast.LENGTH_SHORT).show();
+                    }else {
+                        image.setVisibility(View.VISIBLE);
+                        Animation animation = AnimationUtils.loadAnimation(this, R.anim.joincartanim);
+                        animation.setFillAfter(true);
+                        image.startAnimation(animation);
+                        //Toast.makeText(this,"加入购物车成功",Toast.LENGTH_SHORT).show();
+                        join_gouwuche();
+                    }
+
                 }
 //
                 break;
@@ -268,12 +263,7 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
                 str = et_number.getText().toString();
                 num = Integer.valueOf(str);
                 num++;
-//                if (num >= Integer.valueOf(surplus_amount_et.getText().toString())) {
-//                    dialog.show();
-//                }
-                //  if (num < Integer.parseInt(surplus_amount_et.getText().toString()) && num >= 0) {
                 et_number.setText("" + num);
-                //  }
                 break;
             case R.id.layoutContent_auction:
                 Intent intentHX = new Intent();
@@ -349,72 +339,30 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
         GoodsInStockDetailActivity.this.getWindow().setAttributes(lp);
     }
 
-    @Override
-    public void getGoodsInStockDetailData(GoodsInStockDetailBean goodsInStockDetailBean1) {
-        Loding.dis();
-        GoodsInStockDetailBean goodsInStockDetailBean = new GoodsInStockDetailBean();
-        goodsInStockDetailBean.setMstEbsSkuInfoId(2020+"1");
-        List<SimilarProduct> similarProducts = new ArrayList<>();
-        List<String> cl_jhfangshi = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            SimilarProduct similarProduct = new SimilarProduct();
-            similarProduct.setCl_id(2021+""+i);
-            similarProduct.setCl_shuliang(12+i+"");
-            similarProduct.setCl_cangku("仓库"+i);
-            similarProduct.setCl_jine(12+""+i);
-            similarProduct.setCl_mingcheng("名称"+1);
-            similarProducts.add(similarProduct);
-            cl_jhfangshi.add("交货方式"+i);
-        }
-         relatedProduct = new RelatedProduct();
-        relatedProduct.setSimilarProduct(similarProducts);
-        goodsInStockDetailBean.setRelatedProducts(relatedProduct);
-        goodsInStockDetailBean.setCl_jifen("2");
-        goodsInStockDetailBean.setCl_cpid("2022"+1);
-        goodsInStockDetailBean.setCl_hyfenlei("分类");
-        goodsInStockDetailBean.setCl_gongsiId("2023"+1);
-        goodsInStockDetailBean.setCl_gongsi("公司"+1);
-        goodsInStockDetailBean.setCl_qigou(2+"");
-        goodsInStockDetailBean.setCl_jine("13");
-        goodsInStockDetailBean.setCl_fenlei("分类");
-        goodsInStockDetailBean.setCl_paihao("牌号");
-        goodsInStockDetailBean.setCl_shuliang("13");
-        goodsInStockDetailBean.setCl_xiaobian("1");
-        goodsInStockDetailBean.setCl_mingcheng("名称"+1);
-        goodsInStockDetailBean.setContract("www.baidu.com");
-        goodsInStockDetailBean.setCl_scqiye("企业"+1);
-        goodsInStockDetailBean.setCl_yingyong("应用"+1);
-        goodsInStockDetailBean.setCl_id("2023"+1);
-        goodsInStockDetailBean.setCl_jhfangshi(cl_jhfangshi);
-        goodsInStockDetailBean.setCl_shijian(System.currentTimeMillis()+"");
-        goodsInStockDetailBean.setCl_type("类型"+1);
-        goodsInStockDetailBean.setCl_shijianend(System.currentTimeMillis()+"");
-        goodsInStockDetailBean.setAmountUnitScale("元");
-        goodsInStockDetailBean.setCl_jituan("集团"+1);
-        goodsInStockDetailBean.setCl_dizhi("地址"+1);
-        goodsInStockDetailBean.setCl_diqu("地区"+1);
-        goodsInStockDetailBean.setCl_cangku("仓库"+1);
-        goodsInStockDetailBean.setCl_guojia("中国"+1);
+    public void getGoodsInStockDetailData(GoodsInStockDetailBean goodsInStockDetailBean) {
+//        Loding.dis();
+
+
         //skuId
         sku_id = goodsInStockDetailBean.getCl_cpid();
 //        兰州石化7042
         tvName_auction.setText(goodsInStockDetailBean.getCl_mingcheng());
 //        6000
-        tvPrice_auction.setText(goodsInStockDetailBean.getCl_jine());
+        tvPrice_auction.setText(goodsInStockDetailBean.getCl_jine() + "");
 //        积分规则
         integral_rule.setText(goodsInStockDetailBean.getCl_jifen());
 //        剩余数量
         surplus_amount_et.setText(goodsInStockDetailBean.getCl_shuliang());
 //        最小变量单位
-        min_variable_et.setText(goodsInStockDetailBean.getCl_xiaobian());
+        min_variable_et.setText(goodsInStockDetailBean.getCl_xiaobian() + "");
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日");
 //        release_date.setText(simpleDateFormat.format(Double.parseDouble(%获取到的数字%)));
 //        交货时间
-        delivery_time_et.setText(simpleDateFormat.format(Double.parseDouble(goodsInStockDetailBean.getCl_shijian())));
+        delivery_time_et.setText(simpleDateFormat.format(Double.parseDouble(goodsInStockDetailBean.getCl_shijian() + "")));
 //        交货结束时间
-        delivery_time_et_end.setText("-" + simpleDateFormat.format(Double.parseDouble(goodsInStockDetailBean.getCl_shijianend())));
+        delivery_time_et_end.setText("-" + simpleDateFormat.format(Double.parseDouble(goodsInStockDetailBean.getCl_shijianend() + "")));
 //        仓库地址
-        warehouse_address_et.setText(goodsInStockDetailBean.getCl_dizhi());
+        warehouse_address_et.setText(goodsInStockDetailBean.getCl_cangku() + "");
         StringBuilder sb = new StringBuilder();
         int jhfssize = goodsInStockDetailBean.getCl_jhfangshi().size();
         for (int i = 0; i < jhfssize; i++) {
@@ -437,11 +385,11 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
         tvRemark_auction.setText(goodsInStockDetailBean.getCl_jifen());
 //        总价格
         double x = (Double.parseDouble(et_number.getText().toString())) * (Double.parseDouble(tvPrice_auction.getText().toString()));
-        LogUtils.log(x + "<---X");
+        LogUtils.log(x + "<---WXL");
         DecimalFormat df = new DecimalFormat("#.##");
         all_price.setText(df.format(x) + "");
 //        相似产品
-        relatedProduct = goodsInStockDetailBean.getRelatedProducts();
+        relatedProduct = goodsInStockDetailBean.getRecentlyViewedProduct();
 //        获取产品参数
         cl_attribute = goodsInStockDetailBean.getCl_attribute();
         LogUtils.log("GoodsInStockDetailActivity---->cl_attribute:" + cl_attribute);
@@ -458,95 +406,107 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() == 0) {
+                    et_number.setText("0");
+                    et_number.setSelection(1);
+                }
+                if (s.toString().contains(".")) {
+                    if (s.length() - 1 - s.toString().indexOf(".") > 3) {
+                        s = s.toString().subSequence(0,
+                                s.toString().indexOf(".") + 4);
+                        et_number.setText(s);
+                        et_number.setSelection(s.length());
+                    }
+                }
+                if (s.toString().trim().substring(0).equals(".")) {
+                    s = "0" + s;
+                    et_number.setText(s);
+                    et_number.setSelection(3);
+                }
+
+                if (s.toString().startsWith("0")
+                        && s.toString().trim().length() > 1) {
+                    if (!s.toString().substring(1, 2).equals(".")) {
+                        et_number.setText(s.subSequence(1, s.length()));
+                        et_number.setSelection(1);
+                        return;
+                    }
+                }
 
             }
 
             @Override
             public void afterTextChanged(Editable s) {
+                if (Double.parseDouble(et_number.getText().toString()) > Double.parseDouble(surplus_amount_et.getText().toString())) {
+                    et_number.setText((surplus_amount_et.getText().toString()));
+                    et_number.setSelection(surplus_amount_et.getText().toString().length());
+                }
                 double x = (Double.parseDouble(et_number.getText().toString())) * (Double.parseDouble(tvPrice_auction.getText().toString()));
-                LogUtils.log(x + "<---X");
                 DecimalFormat df = new DecimalFormat("#.##");
                 all_price.setText(df.format(x) + "");
             }
         });
-//        et_number.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-//            @Override
-//            public void onFocusChange(View v, boolean hasFocus) {
-//                double x = (Double.parseDouble(et_number.getText().toString()))*(Double.parseDouble(tvPrice_auction.getText().toString()));
-//                LogUtils.log(x+"<---X");
-//                DecimalFormat df  = new DecimalFormat("#.##");
-//                all_price.setText(df.format(x)+"");
-//
-//            }
-//        });
+        if (System.currentTimeMillis() > Long.parseLong(goodsInStockDetailBean.getCl_xiajiaend())
+                || System.currentTimeMillis() > Long.parseLong(goodsInStockDetailBean.getCl_shijianend())) {
+            buy_immediately.setBackgroundColor(getResources().getColor(R.color.gray));
+            join_shopping_cart.setBackgroundColor(getResources().getColor(R.color.gray));
+        }
 
     }
 
+
     public void join_gouwuche() {
-        String url = SuMaoConstant.SUMAO_IP + "/rest/model/atg/commerce/ShoppingCartActor/addItemToOrder";
-        RequestParams rp = new RequestParams(url);
-        rp.addParameter("productId", cl_id);
-        rp.addParameter("quantity", (Integer.parseInt(et_number.getText().toString()) * 1000) + "");
-        rp.addParameter("skuId", sku_id);
-        Log.d("skuid的值", sku_id);
+        String productId = goodsInStockDetailBean.getCl_id();
+        String quantity = Integer.parseInt(et_number.getText().toString()) * 1000 + "";
+        String skuId = sku_id;
         SharedPreferences sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
         String unique = sp.getString("unique", "");
-        rp.addParameter("_dynSessConf", unique);
-        Log.d("添加到购物车的skuid", "" + rp);
-        x.http().post(rp, new Callback.CommonCallback<String>() {
-            @Override
-            public void onSuccess(String result) {
-                Log.d("添加到购物车result", result);
-                if (result.contains("commerceItem")) {
-                    Toast.makeText(GoodsInStockDetailActivity.this, "加入购物车成功", Toast.LENGTH_SHORT).show();
-                } else {
-                    try {
-                        JSONObject obj_result = new JSONObject(result);
-                        String message = obj_result.getString("formExceptions");
-                        JSONArray array = new JSONArray(message);
-                        JSONObject obj_array = array.getJSONObject(0);
-                        String info = obj_array.getString("localizedMessage");
-                        Toast.makeText(GoodsInStockDetailActivity.this, "" + info, Toast.LENGTH_SHORT).show();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-                }
-            }
-
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-
-            }
-
-            @Override
-            public void onCancelled(CancelledException cex) {
-
-            }
-
-            @Override
-            public void onFinished() {
-
-            }
-        });
+        String _dynSessConf = unique;
+        goodsInStockDetailPresenter.joinToCart(productId, quantity, skuId, _dynSessConf);
         // rp.addParameter("");
     }
 
     public void getPurchase(String unique) {
-        Intent intent = new Intent();
-        StringBuilder sb = new StringBuilder();
-        sb.append((Integer.parseInt(et_number.getText().toString()) * 1000) + ",");
-        sb.append(unique + ",");
-        sb.append(cl_id + ",");
-        sb.append(sku_id);
-        String string = sb.toString();
-//        List<String> list_id = new ArrayList<>();
-//        list_id.add(string);
-        intent.putExtra("type", "fix");
-        intent.putExtra("fix", string);
-        intent.setClass(GoodsInStockDetailActivity.this, PaymentsOrder.class);
-        startActivity(intent);
+        String quantity = Integer.parseInt(et_number.getText().toString()) * 1000 + "";
+        goodsInStockDetailPresenter.submitOrder(quantity, unique, goodsInStockDetailBean.getCl_id(), sku_id);
 
+    }
+
+    //    获取到提交订单后返回的订单列表
+    @Override
+    public void getSubmitOrderData(String result) {
+        if (result.contains("formError")) {
+            Toast.makeText(this, "该商品已下架", Toast.LENGTH_SHORT).show();
+        } else {
+            Gson gson = new Gson();
+            Orders orders = gson.fromJson(result, Orders.class);
+            Intent intent = new Intent();
+            intent.putExtra("type", "fix");
+            intent.putExtra("fix",(Serializable) orders.getOrderIdList());
+            intent.setClass(GoodsInStockDetailActivity.this, PaymentsOrder.class);
+            startActivity(intent);
+        }
+
+
+    }
+
+    @Override
+    public void getJoinToCartData(String result) {
+        if (result.contains("commerceItem")) {
+            Toast.makeText(GoodsInStockDetailActivity.this, "加入购物车成功", Toast.LENGTH_SHORT).show();
+        } else {
+            try {
+                JSONObject obj_result = new JSONObject(result);
+                String message = obj_result.getString("formExceptions");
+                JSONArray array = new JSONArray(message);
+                JSONObject obj_array = array.getJSONObject(0);
+                String info = obj_array.getString("localizedMessage");
+                Toast.makeText(GoodsInStockDetailActivity.this, "" + info, Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
     }
 
 

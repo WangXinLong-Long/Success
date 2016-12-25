@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/parent"
     >
 
     <include
@@ -112,7 +113,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/x5"
-                        android:text=""
+                        android:text="0"
                         android:textColor="#EE272F"
                         android:textSize="20sp" />
 
@@ -461,12 +462,12 @@
                         android:id="@+id/tv_item_cart_buy_num"
                         android:layout_width="@dimen/x50"
                         android:layout_height="@dimen/x25"
-                        android:text="1"
+                        android:hint="0"
                         android:layout_toRightOf="@id/img_item_cart_buy_sub"
                         android:layout_centerVertical="true"
                         android:background="@drawable/juxing"
-                        android:numeric="integer"
                         android:gravity="center"
+                        android:inputType="numberDecimal"
                         />
                     <TextView
                         android:textSize="20sp"
@@ -493,7 +494,7 @@
                         android:textColor="#ff0000"
                         android:layout_marginRight="@dimen/x2"
                         style="@style/tv_dingdan"
-                        android:text="234,900元"
+                        android:text="0"
 
                         />
 

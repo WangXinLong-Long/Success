@@ -25,7 +25,7 @@ public class Error_Dialog extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_error);
         Bundle bundle=getIntent().getExtras();
-        String number=bundle.getString("number");
+        String number=getIntent().getStringExtra("number");
 
         error_dialog_cancel= (ImageView) findViewById(R.id.iv_dialog_error_cancel);
         tv_order_number= (TextView) findViewById(R.id.tv_order_number);

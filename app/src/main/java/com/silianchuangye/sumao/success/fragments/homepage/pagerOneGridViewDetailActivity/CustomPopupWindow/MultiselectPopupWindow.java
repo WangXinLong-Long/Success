@@ -39,9 +39,9 @@ public class MultiselectPopupWindow extends PopupWindow {
     class CompleteClickListener implements MultiselectPopupWindowCompleteClickListener{
 
         @Override
-        public void getSelectionValues(List<String> selectItems) {
+        public void getSelectionValues(List<String> selectItems,String type) {
             if (completeclicklistener!=null){
-                completeclicklistener.getSelectionValues(selectItems);
+                completeclicklistener.getSelectionValues(selectItems, type);
             }
 
             dismiss();

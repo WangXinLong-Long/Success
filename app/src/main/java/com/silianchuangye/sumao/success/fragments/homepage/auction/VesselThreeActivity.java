@@ -1,22 +1,23 @@
 package com.silianchuangye.sumao.success.fragments.homepage.auction;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.MyPageAdapter;
-import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.bean.CLAttribute;
+import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.bean.GoodsInStockDetailBean;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public class VesselThreeActivity extends AppCompatActivity {
     private ImageView ivBack_vessel_three;
@@ -25,7 +26,7 @@ public class VesselThreeActivity extends AppCompatActivity {
     private ViewPager vp_vessel_three;
     private ArrayList<Fragment> list;
     private MyPageAdapter adapter;
-    private ArrayList<CLAttribute> cl_attribute;
+    private  List<GoodsInStockDetailBean.ClAttributeBean> cl_attribute;
     private TextView activity_vessel_three_title;
     private String contract;
 
@@ -35,20 +36,19 @@ public class VesselThreeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_vessel_three);
         activity_vessel_three_title = ((TextView) findViewById(R.id.activity_vessel_three_title));
         Intent intent = getIntent();
-        cl_attribute = (ArrayList<CLAttribute>) intent.getSerializableExtra("cl_attribute");
+        cl_attribute = ( List<GoodsInStockDetailBean.ClAttributeBean>) intent.getSerializableExtra("cl_attribute");
 //        标题
         String title = intent.getStringExtra("title");
 //        合同
         contract = intent.getStringExtra("contract");
+        LogUtils.log(contract+"-------WXL合同页");
         LogUtils.log("VesselThreeActivity--->cl_attribute:"+cl_attribute);
         activity_vessel_three_title.setText(title);
 
         Bundle bundle = new Bundle();
-        bundle.putSerializable("cl_attribute",cl_attribute);
-        Log.d("bundl的值",bundle.toString());
+        bundle.putSerializable("cl_attribute",(Serializable) cl_attribute);
         ParameterFragment pf =  new ParameterFragment();
         pf.setArguments(bundle);
-        Log.d("bundl的值",pf+"");
 
         ivBack_vessel_three= (ImageView) findViewById(R.id.ivBack_vessel_three);
         ivBack_vessel_three.setOnClickListener(new View.OnClickListener() {
@@ -64,9 +64,10 @@ public class VesselThreeActivity extends AppCompatActivity {
                 //跳转购物车界面
             }
         });
+        Bundle bundle1= new Bundle();
         ContractFragment contractFragment = new ContractFragment();
-        bundle.putString("contract",contract);
-        contractFragment.setArguments(bundle);
+        bundle1.putString("contract",contract);
+        contractFragment.setArguments(bundle1);
         list=new ArrayList<Fragment>();
         list.add(contractFragment);
         list.add(pf);

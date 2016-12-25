@@ -1,25 +1,15 @@
 package com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.view;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
-import android.view.LayoutInflater;
+import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,467 +17,468 @@ import android.widget.Toast;
 import com.jingchen.pulltorefresh.PullToRefreshLayout;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.PreSaleAdapter;
-import com.silianchuangye.sumao.success.custom.CustomGridView;
+import com.silianchuangye.sumao.success.fragments.PagerOneMVP.bean.ApplicationBean;
+import com.silianchuangye.sumao.success.fragments.PagerOneMVP.bean.ClassificationBean;
 import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.UpstreamDirectDetailMVP.bean.DirectSellingBean;
 import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.UpstreamDirectDetailMVP.bean.ProductItemBean;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.bean.GoodsInStockActivityBean;
-import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.bean.SMCl;
+import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.bean.TransactionTypeBean;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.presenter.GoodsInStockActivityPresenter;
+import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.bean.GoodsInStockDetailBean;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.view.GoodsInStockDetailActivity;
-import com.silianchuangye.sumao.success.model.PreSaleModel;
+import com.silianchuangye.sumao.success.fragments.homepage.pagerOneGridViewDetailActivity.CustomPopupWindow.MultiselectPopupWindow;
+import com.silianchuangye.sumao.success.fragments.homepage.pagerOneGridViewDetailActivity.CustomPopupWindow.MultiselectPopupWindowCompleteClickListener;
+import com.silianchuangye.sumao.success.fragments.homepage.pagerOneGridViewDetailActivity.screenPopupWindow.ScreenMultiselectPopupWindowCompleteClickListener;
+import com.silianchuangye.sumao.success.fragments.homepage.pagerOneGridViewDetailActivity.screenPopupWindow.ScreenPopupWindow;
+import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.bean.PreSaleDetailBean;
+import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.view.PreSaleDetailActivity;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.ThreeLevelLindage.Area;
 import com.silianchuangye.sumao.success.utils.ThreeLevelLindage.CascadingMenuPopWindow;
 import com.silianchuangye.sumao.success.utils.ThreeLevelLindage.CascadingMenuViewOnSelectListener;
 import com.silianchuangye.sumao.success.utils.ThreeLevelLindage.DBHelper;
+import com.silianchuangye.sumao.success.utils.ThreeLevelLindage.ThreeLevelCompletedListener;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 /**
- * Created by Administrator on 2016/5/20 0020.
+ * Created by Jobs on 2016/5/20 0020.
  */
 public class GoodsInStockActivity extends Activity implements View.OnClickListener, AdapterView.OnItemClickListener, IGoodsInStockActivityView {
-    TextView tv_screen_title_bar_title;
-    ImageView iv_screen_title_bar_search, iv_screen_title_bar_back;
-    View popwindowView;
-    View listPopupWindowView;
-    ListView popupWindowListView;
-    LinearLayout bottom_pre_sale_search, popup_window_back;
 
-    List<SMCl> lists;
-    PreSaleAdapter adapter;
-    PopupWindow popupWindow;
-    PopupWindow listPopupWindow;
-    RelativeLayout pre_sale_title;
-    TextView classification, application, region;
-    //    TextView manufacturing_enterprise;
-    ListView pre_sale_listView;
-    PreSaleModel preSaleModel;
-    ArrayList<String> mArrayList;
-    RelativeLayout selection_condition;
-    TextView split_line;
-    private RelativeLayout application1;
-    private RelativeLayout classification1;
-    private RelativeLayout region1;
-    private RelativeLayout screen1;
-    private TextView cancel_tv;
-    private boolean flag;
+    private RelativeLayout tradingPatterns;
+    private RelativeLayout region;
+    private RelativeLayout classification;
+    private RelativeLayout application;
+    private CascadingMenuPopWindow cascadingMenuPopWindow;
+    DBHelper dbHelper = new DBHelper(this);
+
+    ArrayList<Area> provinceList = null;
+    ArrayList<String> datas = new ArrayList<>();
+    ArrayList<ArrayList<String>> lists = new ArrayList<>();
+    private ImageView screen;
+    private ArrayList<String> classification1;
+    private ArrayList<String> application1;
+    private ArrayList<String> gride;
+    private TextView tv_screen_title_bar_title;
+    private ListView pre_sale_listView;
+    private List<GoodsInStockActivityBean.InBean> smClList = new ArrayList<>();
+    private PreSaleAdapter adapter;
+    private PullToRefreshLayout prl;
     private GoodsInStockActivityPresenter goodsInStockActivityPresenter;
-    private Map<String, String> jsonArrayClassification;
-    private Map<String, String> jsonArrayApplication;
-    private Map<String, String> jsonArrayRegion;
-    private ArrayList<String> name;
-    private ArrayList<String> number;
-    private String region2 = "";
-    private String classification2 = "";
-    private String application2 = "";
-    private int Nrpp = 10;
-    private int No = 0;
-    private List<SMCl> smClList ;
-    private Handler handler = new Handler();
-    private PullToRefreshLayout ptrl;
-    List<SMCl> sList = new ArrayList<>();
-    private String total;
-    private View view;
-    private List<String> name1 = new ArrayList<String>();
-    ;
-    private List<String> name2 = new ArrayList<String>();
-    private List<String> name3 = new ArrayList<String>();
-    private List<String> number1 = new ArrayList<String>();
-    private List<String> number2 = new ArrayList<String>();
-    private List<String> number3 = new ArrayList<String>();
-    private GridViewAdapter adpater3, adpater2, adpater1, adpater4;
-    private String address = "";
-    private String  yingyong = "";
-    private String fenlei = "";
-    private String regionString = "";
-    private String classificationString = "";
-    private String applicationString = "";
-    private GoodsInStockActivityBean goodsInStockActivityBean;
-    private DBHelper dbHelper;
-    private ArrayList<Area> provinceList;
+    private ApplicationBean applicationBean;
+    private ClassificationBean classificationBean;
+    String pattern = "fixedProduct";//交易模式
+    String regions = null;//    大区
+    String provinces = null;//省
+    String cities = null;//市
+    String categoryNames = null;//分类
+    String appNames = null;//应用
+    String gradeNums = null;//牌号
 
-    private CascadingMenuPopWindow cascadingMenuPopWindow = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pre_sale);
-        dbHelper = new DBHelper(this);
+        setContentView(R.layout.pager_one_grid_view_detail_activity);
         provinceList = dbHelper.getProvince();
         goodsInStockActivityPresenter = new GoodsInStockActivityPresenter(this);
+//        交易模式
+        tradingPatterns = ((RelativeLayout) findViewById(R.id.trading_patterns_rl));
+        tradingPatterns.setOnClickListener(this);
+//        地区
+        region = ((RelativeLayout) findViewById(R.id.region_rl));
+        region.setOnClickListener(this);
+//        分类
+        classification = ((RelativeLayout) findViewById(R.id.classification_rl));
+        classification.setOnClickListener(this);
+//        应用
+        application = ((RelativeLayout) findViewById(R.id.application_rl));
+        application.setOnClickListener(this);
 
+//        筛选
+        screen = ((ImageView) findViewById(R.id.iv_screen_title_bar_search));
+        screen.setVisibility(View.VISIBLE);
+        screen.setOnClickListener(this);
+
+//
+
+//        获取标题
         tv_screen_title_bar_title = ((TextView) findViewById(R.id.tv_screen_title_bar_title));
-
-        iv_screen_title_bar_search = ((ImageView) findViewById(R.id.iv_screen_title_bar_search));
-//        现在先屏蔽掉，
-        iv_screen_title_bar_search.setVisibility(View.INVISIBLE);
-        iv_screen_title_bar_back = ((ImageView) findViewById(R.id.iv_screen_title_bar_back));
-        iv_screen_title_bar_search.setOnClickListener(this);
-        iv_screen_title_bar_back.setOnClickListener(this);
-        pre_sale_title = ((RelativeLayout) findViewById(R.id.pre_sale_title));
-        classification = ((TextView) findViewById(R.id.classification));
-        application = ((TextView) findViewById(R.id.application));
-        region = ((TextView) findViewById(R.id.region));
-
-//        刷新
-        ptrl = ((PullToRefreshLayout) findViewById(R.id.refresh_view));
-        ptrl.setOnPullListener(new MyPullToRefreshListener());
-//        manufacturing_enterprise = ((TextView) findViewById(R.id.manufacturing_enterprise));
-        pre_sale_listView = ((ListView) findViewById(R.id.pre_sale_listView));
-
-
-        selection_condition = ((RelativeLayout) findViewById(R.id.selection_condition));
-        split_line = ((TextView) findViewById(R.id.split_line));
-        application1 = ((RelativeLayout) findViewById(R.id.application1));
-        classification1 = ((RelativeLayout) findViewById(R.id.classification1));
-        region1 = ((RelativeLayout) findViewById(R.id.region1));
-        screen1 = ((RelativeLayout) findViewById(R.id.screen1));
-
-        cancel_tv = ((TextView) findViewById(R.id.cancel_tv));
-        cancel_tv.setOnClickListener(this);
-
-        pre_sale_listView.setOnItemClickListener(this);
-        application1.setOnClickListener(this);
-        classification1.setOnClickListener(this);
-        region1.setOnClickListener(this);
-        screen1.setOnClickListener(this);
-        pre_sale_title.setOnClickListener(this);
-        name = new ArrayList<>();
-        number = new ArrayList<>();
         Intent intent = getIntent();
         String title = intent.getStringExtra("title");
         tv_screen_title_bar_title.setText(title);
-        if (title.equals("现货")){
-            goodsInStockActivityBean = (GoodsInStockActivityBean)intent.getSerializableExtra("goodsInStockActivityBean");
-            jsonArrayClassification = goodsInStockActivityBean.getSort();
-            jsonArrayApplication = goodsInStockActivityBean.getApplication();
-            jsonArrayRegion = goodsInStockActivityBean.getRegion();
-            smClList = goodsInStockActivityBean.getCl();
-            total = goodsInStockActivityBean.getTotal();
-            adapter = new PreSaleAdapter(this, smClList);
+
+        prl = ((PullToRefreshLayout) findViewById(R.id.refresh_view));
+
+        pre_sale_listView = ((ListView) prl.getPullableView());
+        if (title.equals("现货")||title.equals("预售")) {
+            LogUtils.log("现货" + "--------------WXL");
+            GoodsInStockActivityBean goodsInStockActivityBean = (GoodsInStockActivityBean) intent.getSerializableExtra("goodsInStockActivityBean");
+            applicationBean = (ApplicationBean) intent.getSerializableExtra("applicationBean");
+            classificationBean = ((ClassificationBean) intent.getSerializableExtra("classificationBean"));
+            smClList.addAll(goodsInStockActivityBean.getIn());
+            LogUtils.log(smClList.size() + "--------------WXL");
+            adapter = new PreSaleAdapter(this);
             pre_sale_listView.setAdapter(adapter);
-        }else {
-            smClList =  new ArrayList<SMCl>();
+            adapter.addData(smClList);
+            adapter.notifyDataSetChanged();
+        } else {
+            smClList = new ArrayList<GoodsInStockActivityBean.InBean>();
             DirectSellingBean directSellingBean = ((DirectSellingBean) intent.getSerializableExtra("directSellingBean"));
             List<ProductItemBean> productItem = directSellingBean.getProductItem();
             for (int i = 0; i < productItem.size(); i++) {
-                SMCl smCl = new SMCl();
-                smCl.setCl_cangku(productItem.get(i).getWareHouse());
-                smCl.setCl_id(productItem.get(i).getProductId());
+                GoodsInStockActivityBean.InBean smCl = new GoodsInStockActivityBean.InBean();
+                smCl.setIn_cangku(productItem.get(i).getWareHouse());
+                smCl.setIn_cpid(productItem.get(i).getProductId());
 //                TODO 差价格参数
-                smCl.setCl_jine(productItem.get(i).getProductId());
+                smCl.setIn_prix(productItem.get(i).getProductId());
 
-                smCl.setCl_mingcheng(productItem.get(i).getProductName());
-                smCl.setCl_qiye(productItem.get(i).getSalerEnterpriseName());
-                smCl.setCl_shuliang(productItem.get(i).getQuantity());
+                smCl.setIn_name(productItem.get(i).getProductName());
+                smCl.setIn_qiye(productItem.get(i).getSalerEnterpriseName());
+                smCl.setIn_num(productItem.get(i).getQuantity());
                 smClList.add(smCl);
             }
-            adapter = new PreSaleAdapter(this, smClList);
+            adapter = new PreSaleAdapter(this);
             pre_sale_listView.setAdapter(adapter);
+            adapter.addData(smClList);
         }
-//        manufacturing_enterprise.setOnClickListener(this);
-//        从网络进行网络请求需要的参数
-//        goodsInStockActivityPresenter.getGoodsInStockInfo(region2, classification2, application2, Nrpp, No);
-
+        //        上啦加载，下拉刷新的监听
+        prl.setOnPullListener(new PagerOneGoodsInStockActivityListPullListener(/*goodsInStockActivityPresenter, pattern, regions, provinces, cities,
+                categoryNames, appNames, gradeNums*/));
+        pre_sale_listView.setOnItemClickListener(this);
+        initData();
 
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-//            搜索框的点击事件
-            case R.id.iv_screen_title_bar_search:
-                flag = true;
-                cancel_tv.setVisibility(View.VISIBLE);
-                iv_screen_title_bar_search.setVisibility(View.INVISIBLE);
-                initView();
-                showSearchDialog();
+//            交易模式
+            case R.id.trading_patterns_rl:
+//                这里填写类型（交易模式、分类、应用、牌号）
+                showTradingPatternPopupWindow("trading", datas);
                 break;
-//            取消   汉字的点击事件
-            case R.id.cancel_tv:
-                cancel_tv.setVisibility(View.INVISIBLE);
-                iv_screen_title_bar_search.setVisibility(View.INVISIBLE);
-                break;
-//            和点击  取消 的点击事件是相同的
-            case R.id.pre_sale_title:
-                cancel_tv.setVisibility(View.INVISIBLE);
-                iv_screen_title_bar_search.setVisibility(View.INVISIBLE);
-                break;
-
-//            点击地区的点击事件
-            case R.id.region1:
-//                TODO 可以删除这里？
-//                if (jsonArrayRegion != null) {
-//                    //                初始化数据
-//                    initListPopupWindowView("地区");
-//                    //                显示listView
-//                    showListPopupWindow();
-//                } else {
-//                    Toast.makeText(this, "暂无其他地区", Toast.LENGTH_SHORT).show();
-//                }
+//            地区
+            case R.id.region_rl:
                 showPopMenu();
                 break;
-//            点击分类的点击事件
-            case R.id.classification1:
-                if (jsonArrayClassification != null) {
-                    //                初始化数据
-                    initListPopupWindowView("分类");
-                    //                显示listView
-                    showListPopupWindow();
-                } else {
-                    Toast.makeText(this, "暂无其他分类", Toast.LENGTH_SHORT).show();
-                }
+//            分类
+            case R.id.classification_rl:
+                showTradingPatternPopupWindow("classification", classification1);
                 break;
-//            点击应用的点击事件
-            case R.id.application1:
-                if (jsonArrayApplication != null) {
-                    //                初始化数据
-                    initListPopupWindowView("应用");
-//                显示listView
-                    showListPopupWindow();
-                } else {
-                    Toast.makeText(this, "暂无其他应用", Toast.LENGTH_SHORT).show();
-                }
-                break;
-            case R.id.screen1:
-                if (total.equals("0")) {
-                    Toast.makeText(GoodsInStockActivity.this, "没有可供筛选的条件", Toast.LENGTH_LONG).show();
-                } else {
-                    popupwindow_shaixuan();
-                    init_popupwindowView();
-                }
-                break;
-            /*case R.id.manufacturing_enterprise:
-                initListPopupWindowView("生产企业");
-                showListPopupWindow();
-                break;*/
-//              点击透明区域
-            case R.id.bottom_pre_sale_search:
-                cancel_tv.setVisibility(View.INVISIBLE);
-                iv_screen_title_bar_search.setVisibility(View.INVISIBLE);
-                popupWindow.dismiss();
-                break;
-//            返回键的点击事件
-            case R.id.popup_window_back:
-                listPopupWindow.dismiss();
-                break;
-            case R.id.iv_screen_title_bar_back:
-                finish();
+//            应用
+            case R.id.application_rl:
+                showTradingPatternPopupWindow("application", application1);
                 break;
 
-            default:
+//            筛选
+            case R.id.iv_screen_title_bar_search:
+                screenPopupWindow(lists);
                 break;
+
+        }
+    }
+
+    //    （交易模式、分类、应用、牌号）PopupWindow
+    private void showTradingPatternPopupWindow(String type, List<String> datas) {
+        MultiselectPopupWindow multiselectPopupWindow = null;
+        if (multiselectPopupWindow == null) {
+            multiselectPopupWindow = new MultiselectPopupWindow(getApplicationContext(), datas, type);
+            multiselectPopupWindow.setOnClickCompleteListener(new CompleteClickListener());
+            multiselectPopupWindow.setFocusable(true);
+            multiselectPopupWindow.showAsDropDown(tradingPatterns, 5, 5);
+        } else if (multiselectPopupWindow != null && multiselectPopupWindow.isShowing()) {
+            multiselectPopupWindow.dismiss();
+        } else {
+            multiselectPopupWindow.showAsDropDown(tradingPatterns, 5, 5);
+        }
+    }
+
+    //    筛选的PopupWindow
+    private void screenPopupWindow(ArrayList<ArrayList<String>> lists) {
+        ScreenPopupWindow screenPopupWindow = null;
+        if (screenPopupWindow == null) {
+            screenPopupWindow = new ScreenPopupWindow(getApplicationContext(), lists);
+            screenPopupWindow.setOnClickCompleteListener(new ScreenCompleteClickListener());
+            screenPopupWindow.setFocusable(true);
+            screenPopupWindow.showAtLocation(findViewById(R.id.parent), Gravity.TOP, 5, 5);
+        } else if (screenPopupWindow != null && screenPopupWindow.isShowing()) {
+            screenPopupWindow.dismiss();
+        } else {
+            screenPopupWindow.showAtLocation(findViewById(R.id.parent), Gravity.TOP, 5, 5);
+        }
+    }
+
+    //      地区PopupWindow
+    private void showPopMenu() {
+
+        if (cascadingMenuPopWindow == null) {
+            cascadingMenuPopWindow = new CascadingMenuPopWindow(getApplicationContext(), provinceList);
+            cascadingMenuPopWindow.setMenuViewOnSelectListener(new NMCascadingMenuViewOnSelectListener());
+            cascadingMenuPopWindow.setThreeLevelCompletedListener(new ThreeLevelCompleteClickListener());
+            cascadingMenuPopWindow.setFocusable(true);
+            cascadingMenuPopWindow.showAsDropDown(region, 5, 5);
+        } else if (cascadingMenuPopWindow != null && cascadingMenuPopWindow.isShowing()) {
+            cascadingMenuPopWindow.dismiss();
+        } else {
+            cascadingMenuPopWindow.showAsDropDown(region, 5, 5);
+        }
+    }
+
+    //点击 市 的点击事件
+    class NMCascadingMenuViewOnSelectListener implements CascadingMenuViewOnSelectListener {
+        @Override
+        public void getValue(String provinceId, String cityId, String countyId) {
+            Toast.makeText(getApplicationContext(), "省市县的id--" + provinceId + "--" + cityId + "--" + countyId, Toast.LENGTH_SHORT).show();
+            regions = provinceId;
+            provinces = cityId;
+            cities = countyId;
+            goodsInStockActivityPresenter.getGoodsInStockInfo(pattern, regions, provinces, cities,
+                    categoryNames, appNames, gradeNums, "1", "update");
+        }
+    }
+
+    //      点击完成后，
+    class CompleteClickListener implements MultiselectPopupWindowCompleteClickListener {
+
+        @Override
+        public void getSelectionValues(List<String> selectItems, String type) {
+
+            if (type.equals("trading")) {
+                String trading = selectItems.toString();
+                StringBuffer sb = new StringBuffer();
+                if (trading.contains("现货")) {
+                    if (sb.toString().equals("")){
+                        sb.append("fixedProduct");
+                    }else {
+                        sb.append("&fixedProduct");
+                    }
+                }
+                if (trading.contains("预售")){
+                    if (sb.toString().equals("")){
+                        sb.append("forward-pricing-product");
+                    }else {
+                        sb.append("&forward-pricing-product");
+                    }
+                }
+                pattern = sb.toString();
+                Toast.makeText(GoodsInStockActivity.this, "" + pattern, Toast.LENGTH_SHORT).show();
+                goodsInStockActivityPresenter.getGoodsInStockInfo(pattern, regions, provinces, cities,
+                    categoryNames, appNames, gradeNums, "1", "update");
+            } else if (type.equals("classification")) {
+                StringBuffer stringBuffer2 = new StringBuffer();
+
+                for (int i = 0; i < selectItems.size(); i++) {
+                    if (i == selectItems.size() - 1) {
+                        stringBuffer2.append(selectItems.get(i));
+                    } else {
+                        stringBuffer2.append(selectItems.get(i));
+                        stringBuffer2.append("&");
+                    }
+                }
+                categoryNames = stringBuffer2.toString();
+                Toast.makeText(GoodsInStockActivity.this, categoryNames, Toast.LENGTH_SHORT).show();
+                goodsInStockActivityPresenter.getGoodsInStockInfo(pattern, regions, provinces, cities,
+                        categoryNames, appNames, gradeNums, "1", "update");
+            } else if (type.equals("application")) {
+                StringBuffer stringBuffer3 = new StringBuffer();
+
+                for (int i = 0; i < selectItems.size(); i++) {
+                    if (i == selectItems.size() - 1) {
+                        stringBuffer3.append(selectItems.get(i));
+                    } else {
+                        stringBuffer3.append(selectItems.get(i));
+                        stringBuffer3.append("&");
+                    }
+                }
+                appNames = stringBuffer3.toString();
+                Toast.makeText(GoodsInStockActivity.this, "" + appNames, Toast.LENGTH_SHORT).show();
+                goodsInStockActivityPresenter.getGoodsInStockInfo(pattern, regions, provinces, cities,
+                        categoryNames, appNames, gradeNums, "1", "update");
+            }
+        }
+    }
+
+    //    筛选的完成按钮的动作
+    class ScreenCompleteClickListener implements ScreenMultiselectPopupWindowCompleteClickListener {
+        @Override
+        public void getSelectionValues(List<String> regionSelectItems, List<String> classifcationSelectItems, List<String> applicationSelectItems,String grade) {
+
+            Toast.makeText(GoodsInStockActivity.this, "search" + "地区:" + regionSelectItems + "   分类:" + classifcationSelectItems + "   应用:" + applicationSelectItems, Toast.LENGTH_SHORT).show();
+            if (regionSelectItems.size() != 0){
+                StringBuffer stringBuffer2 = new StringBuffer();
+
+                for (int i = 0; i < regionSelectItems.size(); i++) {
+                    if (i == regionSelectItems.size() - 1) {
+                        stringBuffer2.append(regionSelectItems.get(i));
+                    } else {
+                        stringBuffer2.append(regionSelectItems.get(i));
+                        stringBuffer2.append("&");
+                    }
+                }
+                regions = stringBuffer2.toString();
+            }
+            if (classifcationSelectItems.size() != 0){
+                StringBuffer stringBuffer2 = new StringBuffer();
+
+                for (int i = 0; i < classifcationSelectItems.size(); i++) {
+                    if (i == classifcationSelectItems.size() - 1) {
+                        stringBuffer2.append(classifcationSelectItems.get(i));
+                    } else {
+                        stringBuffer2.append(classifcationSelectItems.get(i));
+                        stringBuffer2.append("&");
+                    }
+                }
+                categoryNames = stringBuffer2.toString();
+            }
+             if (applicationSelectItems.size() != 0){
+                StringBuffer stringBuffer2 = new StringBuffer();
+
+                for (int i = 0; i < applicationSelectItems.size(); i++) {
+                    if (i == applicationSelectItems.size() - 1) {
+                        stringBuffer2.append(applicationSelectItems.get(i));
+                    } else {
+                        stringBuffer2.append(applicationSelectItems.get(i));
+                        stringBuffer2.append("&");
+                    }
+                }
+                 appNames = stringBuffer2.toString();
+            }
+            gradeNums = grade;
+            goodsInStockActivityPresenter.getGoodsInStockInfo(pattern, regions, provinces, cities,
+                    categoryNames, appNames, gradeNums, "1", "update");
         }
 
     }
 
-    //点击搜索变成"取消",点击”取消" 变成搜索
+
+    //    上啦加载下拉刷新的加载
     @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-        if (!flag) {
-            cancel_tv.setVisibility(View.INVISIBLE);
-            iv_screen_title_bar_search.setVisibility(View.INVISIBLE);
-
+    public void setDataInActivity(GoodsInStockActivityBean goodsInStockActivityBean, String updateOrLoad) {
+        if (updateOrLoad.equals("update")) {
+            adapter.clearData();
+            smClList.clear();
         }
-        flag = false;
+        List<GoodsInStockActivityBean.InBean> in = goodsInStockActivityBean.getIn();
+        smClList.addAll(in);
+        adapter.addData(in);
+        adapter.notifyDataSetChanged();
     }
 
-    //显示popupWindow（分类，应用、地区）
-    private void showListPopupWindow() {
-        listPopupWindowView.measure(0, 0);
-        int width = getWindowManager().getDefaultDisplay().getWidth();
-        listPopupWindow = new PopupWindow(listPopupWindowView, width,
-                listPopupWindowView.getMeasuredHeight());
-        listPopupWindow.setFocusable(true);
-        listPopupWindow.setBackgroundDrawable(new BitmapDrawable());
-        listPopupWindow.showAsDropDown(split_line, 0, 0);
-    }
-
-    //初始化popupWindow数据（分类，应用、地区）
-    private void initListPopupWindowView(final String s) {
-        listPopupWindowView = View.inflate(this, R.layout.list_popup_window_view, null);
-        popupWindowListView = (ListView) listPopupWindowView.findViewById(R.id.popup_window_list_view);
-        popup_window_back = ((LinearLayout) listPopupWindowView.findViewById(R.id.popup_window_back));
-        popup_window_back.setOnClickListener(this);
-        mArrayList = new ArrayList<String>();
-//        为弹出的框添加数据   getData(s)
-        final ArrayAdapter<String> popupWindowListViewAdpter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, getData(s));
-//        这句应该懂吧
-        popupWindowListView.setAdapter(popupWindowListViewAdpter);
-//        点击（分类，应用、地区）后弹出的popupWindow上面的listview的点击事件
-        popupWindowListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                if (s.equals("地区")) {
-                    region.setText(popupWindowListViewAdpter.getItem(position));
-                    region2 = number.get(position);
-                    sList.clear();
-                    smClList.clear();
-                    Nrpp = 10;
-                    No =  0;
-                    goodsInStockActivityPresenter.getGoodsInStockInfo(region2, classification2, application2, Nrpp, No);
-                } else if (s.equals("分类")) {
-                    classification.setText(popupWindowListViewAdpter.getItem(position));
-                    classification2 = number.get(position);
-                    sList.clear();
-                    smClList.clear();
-                    Nrpp = 10;
-                    No =  0;
-                    goodsInStockActivityPresenter.getGoodsInStockInfo(region2, classification2, application2, Nrpp, No);
-                } else if (s.equals("应用")) {
-                    application.setText(popupWindowListViewAdpter.getItem(position));
-                    application2 = number.get(position);
-                    sList.clear();
-                    smClList.clear();
-                    Nrpp = 10;
-                    No =  0;
-                    goodsInStockActivityPresenter.getGoodsInStockInfo(region2, classification2, application2, Nrpp, No);
-                }/*else if (s.equals("生产企业"))
-                {
-                    manufacturing_enterprise.setText(popupWindowListViewAdpter.getItem(position));
-                }*/
-                listPopupWindow.dismiss();
-            }
-        });
-
-    }
-
-    //为弹出的框添加数据   getData(s)
-    private ArrayList<String> getData(String s) {
-        if (s.equals("分类")) {
-            if (name != null || number != null) {
-                number.clear();
-                name.clear();
-
-                Iterator<Map.Entry<String, String>> iterator = jsonArrayClassification.entrySet().iterator();
-                while (iterator.hasNext()) {
-                    Map.Entry<String, String> entry = iterator.next();
-                    String key = entry.getKey();
-                    LogUtils.log("现货：" + key);
-                    String value = entry.getValue();
-                    LogUtils.log("现货：" + value);
-                    name.add(key.toString());
-                    number.add(value.toString());
-                }
-            }
-        } else if (s.equals("应用")) {
-            if (name != null || number != null) {
-                number.clear();
-                name.clear();
-
-                Iterator<Map.Entry<String, String>> iterator = jsonArrayApplication.entrySet().iterator();
-                while (iterator.hasNext()) {
-                    Map.Entry<String, String> entry = iterator.next();
-                    String key = entry.getKey();
-                    String value = entry.getValue();
-                    name.add(key);
-                    number.add(value);
-                }
-            }
-        } else if (s.equals("地区")) {
-            if (name != null || number != null) {
-                number.clear();
-                name.clear();
-
-                Iterator<Map.Entry<String, String>> iterator = jsonArrayRegion.entrySet().iterator();
-                while (iterator.hasNext()) {
-                    Map.Entry<String, String> entry = iterator.next();
-                    String key = entry.getKey();
-                    String value = entry.getValue();
-                    name.add(key);
-                    number.add(value);
-                }
-            }
-        }
-        return name;
-    }
-
-    //初始化搜索按钮  的搜索框
-    private void initView() {
-        popwindowView = View.inflate(this, R.layout.pre_sale_search, null);
-        bottom_pre_sale_search = ((LinearLayout) popwindowView.findViewById(R.id.bottom_pre_sale_search));
-        bottom_pre_sale_search.setOnClickListener(this);
-    }
-
-    //显示搜索按钮  的搜索框
-    private void showSearchDialog() {
-        popwindowView.measure(0, 0);
-        int width = getWindowManager().getDefaultDisplay().getWidth();
-        popupWindow = new PopupWindow(popwindowView, width, popwindowView.getMeasuredHeight());
-        popupWindow.setFocusable(true);
-        popupWindow.setBackgroundDrawable(new BitmapDrawable());
-        popupWindow.showAsDropDown(pre_sale_title, 0, 0);
-    }
-
-    //页面上的listview
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-
-//        if (pre_sale_listView == parent) {
+    public void getGoodsInStockDetailData(GoodsInStockDetailBean goodsInStockDetailBean) {
         Intent intent = new Intent();
-        intent.putExtra("cl_id", smClList.get(position).getCl_id());
+        intent.putExtra("goodsInStockDetailBean", goodsInStockDetailBean);
         intent.setClass(this, GoodsInStockDetailActivity.class);
         startActivity(intent);
-//        }
-
     }
-    // 接收到从服务器返回的数据
 
-    //    重写接口 IGoodsInStockActivityView 中的方法
     @Override
-    public void setDataInActivity(GoodsInStockActivityBean goodsInStockActivityBean) {
-        total = goodsInStockActivityBean.getTotal();
-        if (total.equals("0")){
-            smClList.clear();
-            sList.clear();
-            adapter.notifyDataSetChanged();
-        }else{
-            jsonArrayClassification = goodsInStockActivityBean.getSort();
-            jsonArrayApplication = goodsInStockActivityBean.getApplication();
-            jsonArrayRegion = goodsInStockActivityBean.getRegion();
-            LogUtils.log("jsonArrayClassification-->" + jsonArrayClassification);
-            LogUtils.log("jsonArrayApplication-->" + jsonArrayApplication);
-            LogUtils.log("jsonArrayRegion-->" + jsonArrayRegion);
+    public void getPreSaleDetailData(PreSaleDetailBean preSaleDetailBean,String skuId) {
+        Intent intent = new Intent();
+        intent.putExtra("preSaleDetailBean",preSaleDetailBean);
+        intent.putExtra("skuId",skuId);
+        intent.setClass(this, PreSaleDetailActivity.class);
+        startActivity(intent);
+    }
 
-            smClList.addAll(goodsInStockActivityBean.getCl());
-            if (smClList == null||smClList.size() == 0) {
-                Toast.makeText(GoodsInStockActivity.this, "已经到底了", Toast.LENGTH_SHORT).show();
-            } else {
-                LogUtils.log("smClList.size()---->"+smClList.size());
-
-                adapter.notifyDataSetChanged();
-            }
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        if (smClList.get(position).getIn_leixing().equals("现货")){
+            String cl_id = smClList.get(position).getIn_id();
+            Toast.makeText(this, "走现货,id为"+cl_id, Toast.LENGTH_SHORT).show();
+            LogUtils.log("走现货,id为"+cl_id);
+            goodsInStockActivityPresenter.getGoodInStockDetailInfo(cl_id);
+        }else {
+            Toast.makeText(this, "走预售", Toast.LENGTH_SHORT).show();
+            String productId = smClList.get(position).getIn_id();
+            String skuId = smClList.get(position).getIn_cpid();
+            String cl_jiner = smClList.get(position).getIn_prix();
+            goodsInStockActivityPresenter.getPreSaleDetailInfo(productId,skuId,cl_jiner);
         }
 
+    }
+
+
+    //
+    public class ThreeLevelCompleteClickListener implements ThreeLevelCompletedListener {
+
+        @Override
+        public void getSelectionProvinceCityCounty(String provinceId, String cityId) {
+            if (cityId.equals("")){
+                cityId = null;
+            }
+
+            regions = provinceId;
+            provinces = cityId;
+            goodsInStockActivityPresenter.getGoodsInStockInfo(pattern, regions, provinces, cities,
+                    categoryNames, appNames, gradeNums, "1", "update");
+
+        }
+    }
+
+    private void initData() {
+        TransactionTypeBean transactionTypeBean1 = new TransactionTypeBean();
+        transactionTypeBean1.setCode("fixedProduct");
+        transactionTypeBean1.setName("现货");
+        TransactionTypeBean transactionTypeBean2 = new TransactionTypeBean();
+        transactionTypeBean2.setCode("forward-pricing-product");
+        transactionTypeBean2.setName("预售");
+        List<TransactionTypeBean> list = new ArrayList<>();
+        list.add(transactionTypeBean1);
+        list.add(transactionTypeBean2);
+        for (int i = 0; i < list.size(); i++) {
+            datas.add(list.get(i).getName());
+        }
+        ArrayList<String> region = new ArrayList<>();
+        for (int i = 0; i < provinceList.size(); i++) {
+            region.add(provinceList.get(i).getName());
+        }
+        classification1 = new ArrayList<>();
+        classification1.addAll(classificationBean.getIn_flname());
+        application1 = new ArrayList<>();
+        application1.addAll(applicationBean.getIn_yyname());
+        lists.add(region);
+        lists.add(classification1);
+        lists.add(application1);
 
     }
 
-    //    上拉刷新，下拉加载的监听
-    private class MyPullToRefreshListener implements PullToRefreshLayout.OnPullListener {
+    public class PagerOneGoodsInStockActivityListPullListener implements PullToRefreshLayout.OnPullListener {
+//        private GoodsInStockActivityPresenter goodsInStockActivityPresenter;
+//        private String title;
+        String pageNum = "1";
+        int num = Integer.parseInt(pageNum);
+//        String pattern;//交易模式
+//        String regions;//    大区
+//        String provinces;//省
+//        String cities;//市
+//        String categoryNames;//分类
+//        String appNames;//应用
+//        String gradeNums;//牌号
+//
+//        public PagerOneGoodsInStockActivityListPullListener(GoodsInStockActivityPresenter goodsInStockActivityPresenter,
+//                                                            String pattern, String regions, String provinces, String cities,
+//                                                            String categoryNames, String appNames, String gradeNums) {
+//            this.goodsInStockActivityPresenter = goodsInStockActivityPresenter;
+//            this.pattern = pattern;
+//            this.regions = regions;
+//            this.provinces = provinces;
+//            this.cities = cities;
+//            this.categoryNames = categoryNames;
+//            this.appNames = appNames;
+//            this.gradeNums = gradeNums;
+//        }
+
         @Override
         public void onRefresh(final PullToRefreshLayout pullToRefreshLayout) {
-            new Handler() {
-                @Override
-                public void handleMessage(Message msg) {
-                    super.handleMessage(msg);
-
-                        sList.clear();
-                        smClList.clear();
+            goodsInStockActivityPresenter.getGoodsInStockInfo(pattern, regions, provinces, cities,
+                    categoryNames, appNames, gradeNums, pageNum, "update");
 
 
-                    goodsInStockActivityPresenter.getGoodsInStockInfo(region2, classification2, application2, 10, 0);
-                    pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
-                }
-
-            }.sendEmptyMessageDelayed(0, 1000);
-
-
+            // 千万别忘了告诉控件刷新完毕了哦！
+            pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
         }
 
         @Override
@@ -495,294 +486,17 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
             new Handler() {
                 @Override
                 public void handleMessage(Message msg) {
-                    super.handleMessage(msg);
-
-                    goodsInStockActivityPresenter.getGoodsInStockInfo(region2, classification2, application2, Nrpp, No + Nrpp);
-                    pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
-
+                    String updateOrLoad = "load";
+                    num++;
+                    String pageNum = num + "";
+                    goodsInStockActivityPresenter.getGoodsInStockInfo(pattern, regions, provinces, cities,
+                            categoryNames, appNames, gradeNums, pageNum, updateOrLoad);
+                    // 千万别忘了告诉控件加载完毕了哦！
+                    pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
                 }
             }.sendEmptyMessageDelayed(0, 1000);
         }
-    }
-
-    /**
-     * 筛选的popupwindow
-     */
-    public void popupwindow_shaixuan() {
-
-        view = View.inflate(this, R.layout.item_shaixuan, null);
-
-        final CustomGridView gv_Apple_Type = (CustomGridView) view.findViewById(R.id.gv_Apple_Type);
-        if (jsonArrayClassification != null) {
-            number1.clear();
-            name1.clear();
-
-            Iterator<Map.Entry<String, String>> iterator = jsonArrayClassification.entrySet().iterator();
-            while (iterator.hasNext()) {
-                Map.Entry<String, String> entry = iterator.next();
-                String key = entry.getKey();
-                String value = entry.getValue();
-                name1.add(key.toString());
-                number1.add(value.toString());
-            }
-
-        }else{
-            number1.clear();
-            name1.clear();
-        }
-
-        adpater4 = new GridViewAdapter(name1);
-        gv_Apple_Type.setAdapter(adpater4);
-        gv_Apple_Type.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                adpater4.setSelectedPosition(position);
-                adpater4.notifyDataSetChanged();
-                fenlei = name1.get(position).toString();
-                Log.d("分类", fenlei);
-            }
-        });
-
-        /**
-         * 应用
-         */
-        final CustomGridView gv_Address_Type = (CustomGridView) view.findViewById(R.id.gv_Address_Type);
-        if (jsonArrayApplication != null) {
-            number2.clear();
-            name2.clear();
-
-            Iterator<Map.Entry<String, String>> iterator = jsonArrayApplication.entrySet().iterator();
-            while (iterator.hasNext()) {
-                Map.Entry<String, String> entry = iterator.next();
-                String key = entry.getKey();
-                String value = entry.getValue();
-                name2.add(key);
-                number2.add(value);
-            }
-        }else{
-            number2.clear();
-            name2.clear();
-        }
-        adpater2 = new GridViewAdapter(name2);
-        gv_Address_Type.setAdapter(adpater2);
-        gv_Address_Type.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                adpater2.setSelectedPosition(position);
-                adpater2.notifyDataSetChanged();
-                yingyong = name2.get(position).toString();
-            }
-        });
-        /**
-         * 地区
-         */
-        final CustomGridView gv_Firm_Type = (CustomGridView) view.findViewById(R.id.gv_Firm_Type);
-        if (jsonArrayRegion != null) {
-            number3.clear();
-            name3.clear();
-
-            Iterator<Map.Entry<String, String>> iterator = jsonArrayRegion.entrySet().iterator();
-            while (iterator.hasNext()) {
-                Map.Entry<String, String> entry = iterator.next();
-                String key = entry.getKey();
-                String value = entry.getValue();
-                name3.add(key);
-                number3.add(value);
-            }
-        }else{
-            number3.clear();
-            name3.clear();
-        }
-        adpater3 = new GridViewAdapter(name3);
-        gv_Firm_Type.setAdapter(adpater3);
-        gv_Firm_Type.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                adpater3.setSelectedPosition(position);
-                adpater3.notifyDataSetInvalidated();
-                address = name3.get(position).toString();
-
-            }
-        });
-
-        /**
-         * 重置按钮
-         */
-        Button bt_reset = (Button) view.findViewById(R.id.bt_reset);
-        bt_reset.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("令所选的为空", "null");
-//                adpater1.setSelectedPosition(-1);
-//                adpater1.notifyDataSetChanged();
-                adpater2.setSelectedPosition(-1);
-                adpater2.notifyDataSetChanged();
-                adpater3.setSelectedPosition(-1);
-                adpater3.notifyDataSetChanged();
-                adpater4.setSelectedPosition(-1);
-                adpater4.notifyDataSetChanged();
-                Log.d("令所选的为空", address + fenlei + yingyong );
-            }
-        });
-        /**
-         * 完成按钮
-         */
-        Button bt_finish = (Button) view.findViewById(R.id.bt_finish);
-        bt_finish.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-                Log.d("根据所选的进行筛选", "");
-//                地区、分类、应用、交易模式
-                if (address == null || address.isEmpty()) {
-                    regionString = "";
-                } else {
-                    if (!(null==jsonArrayRegion.get(address))){
-
-                        regionString = jsonArrayRegion.get(address);
-                    }
-                }
-                if (fenlei == null || fenlei.isEmpty()) {
-                    classificationString = "";
-                } else {
-                    if (!(null==jsonArrayClassification.get(fenlei))){
-
-                        classificationString = jsonArrayClassification.get(fenlei);
-                    }
-                }
-                if (yingyong == null || yingyong.isEmpty()) {
-                    applicationString = "";
-                } else {
-                    if (!(null==jsonArrayApplication.get(yingyong))){
-
-                        applicationString = jsonArrayApplication.get(yingyong);
-                    }
-                }
-
-                if (smClList != null) {
-                    sList.clear();
-                    smClList.clear();
-//                    smClList.clear();
-                }
-                Nrpp = 10;
-                No = 0;
-                goodsInStockActivityPresenter.getGoodsInStockInfo(regionString, classificationString, applicationString, Nrpp, No);
-
-
-                LogUtils.log("参数-->" + regionString + classificationString + applicationString );
-                popupWindow.dismiss();
-            }
-
-        });
-
 
     }
 
-    private void init_popupwindowView() {
-        view.measure(0, 0);
-        int width = getWindowManager().getDefaultDisplay().getWidth();
-        int heigh = view.getMeasuredHeight() > getWindowManager().getDefaultDisplay().getHeight() ? getWindowManager().getDefaultDisplay().getHeight() : view.getMeasuredHeight();
-        popupWindow = new PopupWindow(view, width, 1600);
-        popupWindow.setFocusable(true);
-        popupWindow.setBackgroundDrawable(new BitmapDrawable());
-        popupWindow.showAsDropDown(split_line, 0, 0);
-
-    }
-
-    class GridViewAdapter extends BaseAdapter {
-        private List<String> list_String;
-        private int selectedPosition = -1;
-        LayoutInflater inflater;
-        View view;
-        ViewHolder Layoutholder;
-        RelativeLayout Layout;
-        TextView text = null;
-
-        public GridViewAdapter(List<String> list) {
-            this.list_String = list;
-        }
-
-        @Override
-        public int getCount() {
-            return list_String.size();
-        }
-
-        @Override
-        public String getItem(int position) {
-            return list_String.get(position);
-        }
-
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        public void setSelectedPosition(int selectedPosition) {
-            this.selectedPosition = selectedPosition;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            inflater = (LayoutInflater) getApplication().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.item_type, parent, false);
-            Layoutholder = (ViewHolder) view.getTag();
-            if (Layoutholder == null) {
-                Layoutholder = new ViewHolder();
-                Layoutholder.layout_Type = (RelativeLayout) view.findViewById(R.id.layout);
-                Layoutholder.text_Name = (TextView) view.findViewById(R.id.tv_Type);
-                view.setTag(Layoutholder);
-
-            } else {
-                Layoutholder = (ViewHolder) view.getTag();
-            }
-            Layout = Layoutholder.layout_Type;
-            text = Layoutholder.text_Name;
-            if (selectedPosition == position) {
-                text.setSelected(true);
-                text.setPressed(true);
-                // Layout.setBackgroundColor(getResources().getColor(R.color.zixun_topbg));
-                Layout.setBackgroundDrawable(getResources().getDrawable(R.drawable.text_corner));
-                text.setTextColor(Color.BLACK);
-            } else {
-                text.setSelected(false);
-                text.setPressed(false);
-                Layout.setBackgroundColor(Color.WHITE);
-                text.setTextColor(Color.BLACK);
-
-            }
-
-
-            text.setText(list_String.get(position).toString());
-
-            return view;
-        }
-    }
-
-    class ViewHolder {
-        TextView text_Name;
-        RelativeLayout layout_Type;
-
-    }
-
-    private void showPopMenu() {
-        if (cascadingMenuPopWindow == null){
-            cascadingMenuPopWindow = new CascadingMenuPopWindow(getApplicationContext(),provinceList);
-            cascadingMenuPopWindow.setMenuViewOnSelectListener(new NMCascadingMenuViewOnSelectListener());
-            cascadingMenuPopWindow.showAsDropDown(region1,5,5);
-        }else if (cascadingMenuPopWindow!=null && cascadingMenuPopWindow.isShowing()){
-            cascadingMenuPopWindow.dismiss();
-        }else {
-            cascadingMenuPopWindow.showAsDropDown(region1,5,5);
-        }
-    }
-
-    class NMCascadingMenuViewOnSelectListener implements CascadingMenuViewOnSelectListener {
-
-        @Override
-        public void getValue(Area area) {
-            Toast.makeText(getApplicationContext(),""+area.getName(),Toast.LENGTH_SHORT).show();
-        }
-    }
 }

@@ -2,12 +2,11 @@ package com.silianchuangye.sumao.success.fragments.PagerOneMVP.view;
 
 import android.graphics.drawable.Drawable;
 
-import com.silianchuangye.sumao.success.fragments.PagerOneMVP.bean.AnnounceBean;
+import com.silianchuangye.sumao.success.fragments.PagerOneMVP.bean.ApplicationBean;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.bean.BannerBean;
+import com.silianchuangye.sumao.success.fragments.PagerOneMVP.bean.ClassificationBean;
 import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.bean.UpstreamDirectorySellingBean;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.bean.GoodsInStockActivityBean;
-import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.bean.PreSaleDetailCalendarBean;
-import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleMVP.bean.PreSaleBean;
 
 /**
  * Created by Administrator on 2016/8/16 0016.
@@ -18,12 +17,18 @@ public interface IPagerOneView {
 //    将获取到的图片，存在PagerOne的集合中
     void savePictureInPagerOneCollection(Drawable result);
 //      点击现货按钮后，先进行网络请求
-void setDataInActivity(GoodsInStockActivityBean goodsInStockActivityBean);
+void setDataInActivity(GoodsInStockActivityBean goodsInStockActivityBean,String updateOrLoad);
 //    z点击预售按钮后，进行网络请求
-void setPreSaleDataInActivity(GoodsInStockActivityBean goodsInStockActivityBean);
+void setPreSaleDataInActivity(GoodsInStockActivityBean goodsInStockActivityBean,String updateOrLoad);
 //    点击上游直销，进行网络请求
     void setUpstreamDirectSellingInActivity(UpstreamDirectorySellingBean upstreamDirectorySellingBean);
 //    将GrideView请求下来的值，放置到List中
     void setGrideViewDataInActivity();
+    //    获取分类列表
+    void getClassificationData(ClassificationBean classificationBean,String transactionType);
+    //    获取应用列表
+    void getApplicationData( ApplicationBean applicationBean,String transactionType);
 
+//    获取竞拍的数据
+    void getAuctionData(String result);
 }

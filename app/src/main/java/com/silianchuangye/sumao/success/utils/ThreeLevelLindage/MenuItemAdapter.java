@@ -55,7 +55,7 @@ public class MenuItemAdapter extends BaseAdapter {
     /*
     设置选中的position,并通知刷新其他列表
      */
-    private void setSelectedPosition(int pos) {
+    public void setSelectedPosition(int pos) {
         if (this.mListData != null && pos < mListData.size()) {
             this.selectedPos = pos;
             this.selectedText = mListData.get(pos).getName();
@@ -94,7 +94,7 @@ public class MenuItemAdapter extends BaseAdapter {
     }
 
     public interface OnItemClickListener {
-        public void onItemClick(View view, int position);
+         void onItemClick(View view, int position);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener){

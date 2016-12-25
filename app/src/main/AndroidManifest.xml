@@ -449,10 +449,10 @@
             android:name=".fragments.type.view.TypeInfoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.createLogisticsMVP.CreateLogistics"
+            android:name=".fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.createLogisticsMVP.view.CreateLogistics"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".fragments.homepage.goodInStock.goodsInStockDetail.PayMentsOrderMVP.PaymentsOrder"
+            android:name=".fragments.homepage.goodInStock.goodsInStockDetail.PayMentsOrderMVP.view.PaymentsOrder"
             android:screenOrientation="portrait" />
         <activity
             android:name=".fragments.SearchActivityMVP.view.SearchActivity"
@@ -473,13 +473,13 @@
             android:name=".dialog.Ok_Dialog"
             android:theme="@style/Theme.AppCompat.Light.Dialog" />
         <activity
-            android:name=".fragments.myPlasticTrade.PhysicalDistributionManagement.ViewLogisticsDemands.ViewLogisticsDemand"
+            android:name=".fragments.myPlasticTrade.PhysicalDistributionManagement.ViewLogisticsDemands.ViewLogisticsDemandMVP.view.ViewLogisticsDemand"
             android:screenOrientation="portrait" />
         <activity
             android:name=".fragments.myPlasticTrade.PhysicalDistributionManagement.ViewLogisticsDemands.TrackingDistributionDetails"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.CreateLogisticsNeed"
+            android:name=".fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.createLogisticsNeedMVP.view.CreateLogisticsNeed"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity

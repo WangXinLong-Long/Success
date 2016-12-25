@@ -43,6 +43,7 @@ import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.SpotOrder.ServiceChangeFragment;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.SpotOrder.ServiceFinishFragment;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.SpotOrder.ServiceShipmentsFragment;
+import com.silianchuangye.sumao.success.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -92,8 +93,8 @@ public class OrderGoodsActivity extends AppCompatActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_goods);
         tv_title_name = (TextView) findViewById(R.id.tv_title_name_order);
-        Bundle bundle = getIntent().getExtras();
-        title = bundle.getString("title");
+        title = getIntent().getStringExtra("title");
+        LogUtils.log("title--->"+title);
         listFragment = new ArrayList<Fragment>();
         if (title.equals("现货订单")) {
             //现货订单访问数据库的内容

@@ -1,11 +1,11 @@
-package com.silianchuangye.sumao.success.fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.createLogisticsMVP;
+package com.silianchuangye.sumao.success.fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.createLogisticsMVP.view;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -28,26 +28,22 @@ import com.silianchuangye.sumao.success.adapter.CreateLogisticsAdapter;
 import com.silianchuangye.sumao.success.fragments.bean.Createlogistics_ExpandInfo;
 import com.silianchuangye.sumao.success.fragments.bean.Createlogistics_ListInfo;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.SpotOrder.TiQu;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.CreateLogisticsNeed;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.createLogisticsNeedMVP.view.CreateLogisticsNeed;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.LogisticsJson;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.createLogisticsMVP.Bean.Order;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.createLogisticsMVP.Bean.Orders;
-import com.silianchuangye.sumao.success.utils.LogUtils;
-import com.silianchuangye.sumao.success.utils.SuMaoConstant;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.createLogisticsMVP.presenter.CreateLogisticPresenter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.xutils.common.Callback;
-import org.xutils.http.RequestParams;
-import org.xutils.x;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class CreateLogistics extends AppCompatActivity implements View.OnClickListener, CreateLogisticsAdapter.LogisticsCall {
+public class CreateLogistics extends AppCompatActivity implements View.OnClickListener, CreateLogisticsAdapter.LogisticsCall, ICreateLogisticView {
     private ExpandableListView expand_lv_create_logistics;
     private ImageView img_create_logistics_back;
     private ImageView img_create_logistics_search;
@@ -74,11 +70,13 @@ public class CreateLogistics extends AppCompatActivity implements View.OnClickLi
     double sum2;
     JSONArray array;
     private EditText pop_edt;
+    private CreateLogisticPresenter createLogisticPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_logistics);
+        createLogisticPresenter = new CreateLogisticPresenter(this);
 //        initDate();
         initView();
         showNet();
@@ -487,76 +485,56 @@ public class CreateLogistics extends AppCompatActivity implements View.OnClickLi
     }
 
     private void showNet() {
-        RequestParams rp = new RequestParams(SuMaoConstant.SUMAO_IP + "/rest/model/atg/commerce/order/logistics/logisticsActor/logisticsInfo");
-        rp.addBodyParameter("_dynSessConf", getSharedPreferences("sumao", Activity.MODE_PRIVATE).getString("unique", ""));
-        LogUtils.log("---->" + getSharedPreferences("sumao", Activity.MODE_PRIVATE).getString("unique", ""));
-        x.http().post(rp, new Callback.CommonCallback<String>() {
-            @Override
-            public void onSuccess(String result) {
-//                 Jobs Created
-                LogUtils.log("创建物流需求-->" + result);
-                if (result.contains("order")){
-                    Gson gson = new Gson();
-                    Orders orders = gson.fromJson(result, Orders.class);
-                    List<Order> order = orders.getOrder();
-                    for (int i = 0; i < order.size(); i++) {
-                        Createlogistics_ExpandInfo expandInfo1 = new Createlogistics_ExpandInfo();
-                        Order ord = order.get(i);
-                        expandInfo1.company_name = ord.getFirstName();
-                        expandInfo1.company_name = ord.getCl_gongsi();
-                        expandInfo1.date = new SimpleDateFormat("yyyy-MM-dd").format(Long.valueOf(ord.getSubmittedDate()));
-                        expandInfo1.order_num = ord.getId();
-                        expandInfo1.cl_gongsiId = ord.getCl_gongsiId();
-                        listInfo = new Createlogistics_ListInfo();
-                        List<Order.ClBean> cl = ord.getCl();
-                        for (int j = 0; j < cl.size(); j++) {
-                            Order.ClBean clBean = cl.get(j);
-                            listInfo.id = clBean.getCommerceId();
-                            listInfo.sort = clBean.getCl_fenlei();
-                            listInfo.product_name = clBean.getCl_mingcheng();
-                            listInfo.num = clBean.getCl_shuliang()+"";
-                            listInfo.logistics_name = clBean.getShippingMethod();
-                            listInfo.only_price = clBean.getCl_jine();
-                            listInfo.can_num = clBean.getVailableQuantity();
-                            listInfo.cangku_name = clBean.getCl_cangku();
-                            listInfo.date = new SimpleDateFormat("yyyy-MM-dd").format(Long.valueOf(clBean.getDeliveryStartDate())) + "-" + new SimpleDateFormat("yyyy-MM-dd").format(Long.valueOf(clBean.getDeliveryEndDate()));
-                            listInfo.gongsi = clBean.getCl_gongsi();
-                            listInfo.edt_num = 0 + "";
-                            expandInfo1.list.add(listInfo);
-                        }
-                        expandList.add(expandInfo1);
+        String _dynSessConf = getSharedPreferences("sumao", Activity.MODE_PRIVATE).getString("unique", "");
+        createLogisticPresenter.getCreateLogisticResultFromService(_dynSessConf);
 
-                    }
-                    adapter = new CreateLogisticsAdapter(CreateLogistics.this, expandList, CreateLogistics.this);
-                    expand_lv_create_logistics.setAdapter(adapter);
-                    if (adapter != null && expandList != null) {
-                        for (int i = 0; i < adapter.getGroupCount(); i++) {
-                            expand_lv_create_logistics.expandGroup(i);
-                        }
-                    }
-                }else {
-                    Toast.makeText(CreateLogistics.this, "请重新登陆", Toast.LENGTH_SHORT).show();
-                    new TiQu(CreateLogistics.this).showLogin();
-                    CreateLogistics.this.finish();
-                }
-
-            }
-
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-                Log.e("TAG", "ex-----" + ex);
-            }
-
-            @Override
-            public void onCancelled(CancelledException cex) {
-
-            }
-
-            @Override
-            public void onFinished() {
-
-            }
-        });
     }
 
+    @Override
+    public void getCreateLogisticResult(String result) {
+        if (result.contains("order")) {
+            Gson gson = new Gson();
+            Orders orders = gson.fromJson(result, Orders.class);
+            List<Order> order = orders.getOrder();
+            for (int i = 0; i < order.size(); i++) {
+                Createlogistics_ExpandInfo expandInfo1 = new Createlogistics_ExpandInfo();
+                Order ord = order.get(i);
+                expandInfo1.company_name = ord.getFirstName();
+                expandInfo1.company_name = ord.getCl_gongsi();
+                expandInfo1.date = new SimpleDateFormat("yyyy-MM-dd").format(Long.valueOf(ord.getSubmittedDate()));
+                expandInfo1.order_num = ord.getId();
+                expandInfo1.cl_gongsiId = ord.getCl_gongsiId();
+                listInfo = new Createlogistics_ListInfo();
+                List<Order.ClBean> cl = ord.getCl();
+                for (int j = 0; j < cl.size(); j++) {
+                    Order.ClBean clBean = cl.get(j);
+                    listInfo.id = clBean.getCommerceId();
+                    listInfo.sort = clBean.getCl_fenlei();
+                    listInfo.product_name = clBean.getCl_mingcheng();
+                    listInfo.num = clBean.getCl_shuliang() + "";
+                    listInfo.logistics_name = clBean.getShippingMethod();
+                    listInfo.only_price = clBean.getCl_jine();
+                    listInfo.can_num = clBean.getVailableQuantity();
+                    listInfo.cangku_name = clBean.getCl_cangku();
+                    listInfo.date = new SimpleDateFormat("yyyy-MM-dd").format(Long.valueOf(clBean.getDeliveryStartDate())) + "-" + new SimpleDateFormat("yyyy-MM-dd").format(Long.valueOf(clBean.getDeliveryEndDate()));
+                    listInfo.gongsi = clBean.getCl_gongsi();
+                    listInfo.edt_num = 0 + "";
+                    expandInfo1.list.add(listInfo);
+                }
+                expandList.add(expandInfo1);
+
+            }
+            adapter = new CreateLogisticsAdapter(CreateLogistics.this, expandList, CreateLogistics.this);
+            expand_lv_create_logistics.setAdapter(adapter);
+            if (adapter != null && expandList != null) {
+                for (int i = 0; i < adapter.getGroupCount(); i++) {
+                    expand_lv_create_logistics.expandGroup(i);
+                }
+            }
+        } else {
+            Toast.makeText(CreateLogistics.this, "请重新登陆", Toast.LENGTH_SHORT).show();
+            new TiQu(CreateLogistics.this).showLogin();
+            CreateLogistics.this.finish();
+        }
+    }
 }

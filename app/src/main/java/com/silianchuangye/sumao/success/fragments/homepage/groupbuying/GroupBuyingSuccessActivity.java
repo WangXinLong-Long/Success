@@ -31,7 +31,7 @@ import com.silianchuangye.sumao.success.dialog.Error_Dialog;
 import com.silianchuangye.sumao.success.dialog.Ok_Dialog;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.OpenAuction;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.VesselThreeActivity;
-import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.bean.CLAttribute;
+import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.bean.GoodsInStockDetailBean;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
 import org.json.JSONArray;
@@ -74,7 +74,7 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
     private EditText number;
     private TextView count_price;
     private String path;
-    private ArrayList<CLAttribute> cl_attribute = new ArrayList<CLAttribute>();
+    private ArrayList<GoodsInStockDetailBean.ClAttributeBean> cl_attribute = new ArrayList<GoodsInStockDetailBean.ClAttributeBean>();
     private String bili, jiezhishijian, can_gku, xiangxi, kaishishijian, jieshushijian, tuan_start, tuan_end;
     private LinearLayout linear_tuangou_time, layoutService, linear_tuagou_line;
     private RelativeLayout relative_tuangou_end;
@@ -382,7 +382,7 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity {
                             JSONArray array = new JSONArray(shuxing);
                             for (int i = 0; i < array.length(); i++) {
                                 JSONObject obj_array = array.getJSONObject(i);
-                                CLAttribute attribute = new CLAttribute();
+                                GoodsInStockDetailBean.ClAttributeBean attribute = new GoodsInStockDetailBean.ClAttributeBean();
                                 attribute.setAttrName(obj_array.getString("attrName"));
                                 attribute.setAttrValue(obj_array.getString("attrValue"));
                                 cl_attribute.add(attribute);

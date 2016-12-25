@@ -7,5 +7,5 @@ import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInSt
  */
 public interface GoodsInStockActivityCallback {
 
-    void callbackInGoodsInStockActivity(GoodsInStockActivityBean goodsInStockActivityBean);
+    void callbackInGoodsInStockActivity(GoodsInStockActivityBean goodsInStockActivityBean,String updateOrLoad);
 }

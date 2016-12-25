@@ -1,64 +1,66 @@
 package com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.bean;
 
-        import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.bean.CLAttribute;
+        import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.bean.GoodsInStockDetailBean;
 
-        import java.io.Serializable;
-        import java.util.ArrayList;
-        import java.util.List;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Administrator on 2016/8/15 0015.
  */
 public class PreSaleDetailBean implements Serializable{
+    private ArrayList<GoodsInStockDetailBean.ClAttributeBean> cl_attribute;
+
+    /**
+     * deliveryPeriodEnd : 1483113600000
+     * cl_jifen : 1
+     * cl_mingcheng : 上海041
+     * contract : /mnt/template/fixed_product.htm
+     * cl_baozhj : 3.0%
+     * cl_ckdizhi : 河北省保定市建国路440号
+     * cl_qigou : 1
+     * cl_id : prod1190007
+     * cl_qiye : 北京橡胶
+     * cl_jhfangshi : ["自提","卖家配送"]
+     * deliveryPeriodStart : 1483027200000
+     * manufacturer : 上海石化
+     * cl_fenlei : HDPE
+     * cl_attribute : [{"attrName":"简支梁冲击强度 (KJ/m2)","attrValue":"null"},{"attrName":"氧化诱导时间(210℃/min)","attrValue":"null"},{"attrName":"行业分类","attrValue":"null"},{"attrName":"熔体质量流动速率","attrValue":"null"},{"attrName":"密度（g/cm3）","attrValue":"null"},{"attrName":"拉伸屈服强度（Mpa）","attrValue":"null"},{"attrName":"拉伸断裂标称应变 %","attrValue":"null"}]
+     * cl_diqu : 保定市
+     * cl_cangku : 保定库
+     * cl_qiyeId : 100001
+     * cl_shuliang : 100
+     * cl_xiaobian : 1
+     * cl_jiner : 5
+     */
+
     private String deliveryPeriodEnd;
     private String cl_jifen;
     private String cl_mingcheng;
+    private String contract;
     private String cl_baozhj;
     private String cl_ckdizhi;
     private String cl_qigou;
     private String cl_id;
     private String cl_qiye;
-    private List<String> cl_jhfangshi;
     private String deliveryPeriodStart;
     private String manufacturer;
     private String cl_fenlei;
-    private ArrayList<CLAttribute> cl_attribute;
     private String cl_diqu;
     private String cl_cangku;
     private String cl_qiyeId;
     private String cl_shuliang;
     private String cl_xiaobian;
+    private String cl_jiner;
+    private List<String> cl_jhfangshi;
 
-    public List<String> getCl_jhfangshi() {
-        return cl_jhfangshi;
-    }
-
-    public void setCl_jhfangshi(List<String> cl_jhfangshi) {
-        this.cl_jhfangshi = cl_jhfangshi;
-    }
-
-    public String getCl_fenlei() {
-        return cl_fenlei;
-    }
-
-    public void setCl_fenlei(String cl_fenlei) {
-        this.cl_fenlei = cl_fenlei;
-    }
-
-    public ArrayList<CLAttribute> getCl_attribute() {
+    public ArrayList<GoodsInStockDetailBean.ClAttributeBean> getCl_attribute() {
         return cl_attribute;
     }
 
-    public void setCl_attribute(ArrayList<CLAttribute> cl_attribute) {
+    public void setCl_attribute(ArrayList<GoodsInStockDetailBean.ClAttributeBean> cl_attribute) {
         this.cl_attribute = cl_attribute;
-    }
-
-    public String getCl_qiyeId() {
-        return cl_qiyeId;
-    }
-
-    public void setCl_qiyeId(String cl_qiyeId) {
-        this.cl_qiyeId = cl_qiyeId;
     }
 
     public String getDeliveryPeriodEnd() {
@@ -83,6 +85,14 @@ public class PreSaleDetailBean implements Serializable{
 
     public void setCl_mingcheng(String cl_mingcheng) {
         this.cl_mingcheng = cl_mingcheng;
+    }
+
+    public String getContract() {
+        return contract;
+    }
+
+    public void setContract(String contract) {
+        this.contract = contract;
     }
 
     public String getCl_baozhj() {
@@ -141,6 +151,14 @@ public class PreSaleDetailBean implements Serializable{
         this.manufacturer = manufacturer;
     }
 
+    public String getCl_fenlei() {
+        return cl_fenlei;
+    }
+
+    public void setCl_fenlei(String cl_fenlei) {
+        this.cl_fenlei = cl_fenlei;
+    }
+
     public String getCl_diqu() {
         return cl_diqu;
     }
@@ -157,6 +175,14 @@ public class PreSaleDetailBean implements Serializable{
         this.cl_cangku = cl_cangku;
     }
 
+    public String getCl_qiyeId() {
+        return cl_qiyeId;
+    }
+
+    public void setCl_qiyeId(String cl_qiyeId) {
+        this.cl_qiyeId = cl_qiyeId;
+    }
+
     public String getCl_shuliang() {
         return cl_shuliang;
     }
@@ -171,5 +197,21 @@ public class PreSaleDetailBean implements Serializable{
 
     public void setCl_xiaobian(String cl_xiaobian) {
         this.cl_xiaobian = cl_xiaobian;
+    }
+
+    public String getCl_jiner() {
+        return cl_jiner;
+    }
+
+    public void setCl_jiner(String cl_jiner) {
+        this.cl_jiner = cl_jiner;
+    }
+
+    public List<String> getCl_jhfangshi() {
+        return cl_jhfangshi;
+    }
+
+    public void setCl_jhfangshi(List<String> cl_jhfangshi) {
+        this.cl_jhfangshi = cl_jhfangshi;
     }
 }

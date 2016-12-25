@@ -1,23 +1,17 @@
 package com.silianchuangye.sumao.success.adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.OpenAuction;
-import com.silianchuangye.sumao.success.fragments.homepage.auction.OpenAuctionActivity;
-import com.silianchuangye.sumao.success.fragments.homepage.auction.VesselOneActivity;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by junjun on 2016/7/4.
@@ -72,6 +66,7 @@ public class PopupWindowAdaptrer extends BaseAdapter{
         viewHolder.tv_Name.setText(data.get(position).tv_Name);
         viewHolder.tv_money.setText(data.get(position).tv_money);
         String message=data.get(position).message;
+
         if (data.get(position).Flag){
             viewHolder.iv_select_null.setImageResource(R.mipmap.cart_select);
             if (message!=null){
@@ -80,6 +75,10 @@ public class PopupWindowAdaptrer extends BaseAdapter{
 
         }else{
             viewHolder.iv_select_null.setImageResource(R.mipmap.cart_select_null);
+        }
+
+        if (data.get(position).tv_Name == "昆仑银行"){
+            viewHolder.iv_select_null.setImageResource(R.mipmap.cart_no);
         }
         return convertView;
     }

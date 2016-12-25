@@ -29,7 +29,7 @@ import com.silianchuangye.sumao.success.HX.ui.LoginActivity;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.PopupWindowAdaptrer;
 import com.silianchuangye.sumao.success.dialog.Ok_Dialog;
-import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.bean.CLAttribute;
+import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.bean.GoodsInStockDetailBean;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.LoginUserActivity;
 
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.RegisterPhoneMVP.RegisterPhoneView.RegisterPhoneActivity;
@@ -43,6 +43,7 @@ import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
@@ -75,7 +76,7 @@ public class OpenAuctionActivity extends AppCompatActivity {
     private RelativeLayout user_success,layout_Message;
     private TextView tv_order_id,tv_price,tv_number,tv_all_price,tv_result,tv_Message;
     private String price_auction,number_auction,count_auction,order_id;
-    private ArrayList<CLAttribute> cl_attribute=new ArrayList<CLAttribute>();
+    private List<GoodsInStockDetailBean.ClAttributeBean> cl_attribute=new ArrayList<GoodsInStockDetailBean.ClAttributeBean>();
     private String max,min,people_Number,quty;
     private RelativeLayout layoutone;
     private String jine,zhifujine;
@@ -263,7 +264,7 @@ public class OpenAuctionActivity extends AppCompatActivity {
                 }else if(position==2){
                     Intent intent=new Intent(OpenAuctionActivity.this,VesselThreeActivity.class);
                     intent.putExtra("title","竞拍");
-                    intent.putExtra("cl_attribute",cl_attribute);
+                    intent.putExtra("cl_attribute",(Serializable)cl_attribute);
                     intent.putExtra("contract",path);
                     startActivity(intent);
                 }
@@ -704,7 +705,7 @@ public class OpenAuctionActivity extends AppCompatActivity {
                     JSONArray jay=new JSONArray(shuxing);
                     for(int i=0;i<jay.length();i++){
                         JSONObject jsonObject=jay.getJSONObject(i);
-                        CLAttribute attribute=new CLAttribute();
+                        GoodsInStockDetailBean.ClAttributeBean attribute=new GoodsInStockDetailBean.ClAttributeBean();
                         attribute.setAttrName(jsonObject.getString("attrName"));
                         attribute.setAttrValue(jsonObject.getString("attrValue"));
                         cl_attribute.add(attribute);

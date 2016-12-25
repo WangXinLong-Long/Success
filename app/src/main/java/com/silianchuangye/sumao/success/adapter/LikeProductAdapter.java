@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.silianchuangye.sumao.success.R;
-import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.bean.SimilarProduct;
+import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.bean.GoodsInStockDetailBean;
 
 import java.util.List;
 
@@ -17,9 +17,9 @@ import java.util.List;
  */
 public class LikeProductAdapter extends BaseAdapter {
     private Context context;
-    private List<SimilarProduct> similarProduct;
+    private List<GoodsInStockDetailBean.RecentlyViewedProductBean> similarProduct;
     LayoutInflater inflater;
-    public LikeProductAdapter(Context context,  List<SimilarProduct> similarProduct) {
+    public LikeProductAdapter(Context context,  List<GoodsInStockDetailBean.RecentlyViewedProductBean> similarProduct) {
         this.context = context;
         this.similarProduct = similarProduct;
         inflater = LayoutInflater.from(context);
@@ -60,9 +60,9 @@ public class LikeProductAdapter extends BaseAdapter {
         viewHolder.title.setText(similarProduct.get(position).getCl_mingcheng());
         viewHolder.number.setText(similarProduct.get(position).getCl_shuliang());
         viewHolder.price.setText(similarProduct.get(position).getCl_jine());
-//        viewHolder.company.setText(similarProduct.get(position).getCl_qiye());
+//        viewHolder.company.setText(similarProduct.get(position).getCl_gongsi());
         viewHolder.warehouse.setText(similarProduct.get(position).getCl_cangku());
-//        viewHolder.productType.setText(preSaleModels.get(position).getProductType());
+//        viewHolder.productType.setText(similarProduct.get(position).get);
 
         return convertView;
     }

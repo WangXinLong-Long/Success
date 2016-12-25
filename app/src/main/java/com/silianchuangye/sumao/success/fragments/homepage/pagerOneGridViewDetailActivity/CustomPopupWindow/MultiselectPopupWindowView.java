@@ -75,7 +75,7 @@ public class MultiselectPopupWindowView extends RelativeLayout implements View.O
         adpter.clear();
         adpter.notifyDataSetChanged();
     }
-//  重置
+//  完成
     private void completedMethod(String type) {
         StringBuilder sb = new StringBuilder();
         ArrayList<String> selects = new ArrayList<>();
@@ -87,7 +87,7 @@ public class MultiselectPopupWindowView extends RelativeLayout implements View.O
             }
         }
         if (multiselectPopupWindowCompleteClickListener!=null){
-            multiselectPopupWindowCompleteClickListener.getSelectionValues(selects);
+            multiselectPopupWindowCompleteClickListener.getSelectionValues(selects,type);
         }
 
     }

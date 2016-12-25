@@ -7,7 +7,48 @@
 
     android:orientation="vertical">
 
+    <RelativeLayout
+        android:layout_height="@dimen/x43"
+        android:layout_width="match_parent"
+        android:paddingTop="@dimen/padding_right"
+        android:paddingBottom="@dimen/padding_right"
+        android:background="@color/textColor_expandable_listview_show"
+        android:id="@+id/title"
+        >
+        <ImageView
+            android:id="@+id/iv_screen_title_bar_back"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/x20"
+            android:src="@mipmap/back"
+            android:layout_marginRight="@dimen/x20"
+            android:paddingLeft="@dimen/x10"
+            android:paddingRight="@dimen/x15"
+            android:layout_centerVertical="true"
+            />
+        <EditText
+            android:layout_toRightOf="@id/iv_screen_title_bar_back"
+            android:id="@+id/tv_screen_title_bar_title"
+            android:layout_width="@dimen/x180"
+            android:layout_height="@dimen/x50"
+            android:text=""
+            android:textSize="12sp"
+            android:background="@drawable/button_background_white"
+            android:hint="请输入牌号或其他信息"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            />
+        <ImageView
+            android:id="@+id/iv_screen_title_bar_search"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/x20"
+            android:paddingLeft="@dimen/x15"
+            android:paddingRight="@dimen/x10"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/search"
+            android:layout_alignParentRight="true"/>
+    </RelativeLayout>
     <ScrollView
+        android:layout_below="@id/title"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <RelativeLayout
@@ -146,55 +187,12 @@
                 android:padding="@dimen/x5"
                 android:verticalSpacing="3dp" />
 
-            <TextView
-                android:id="@+id/graden_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:paddingLeft="@dimen/x10"
-                android:paddingBottom="@dimen/x5"
-                android:paddingTop="@dimen/x5"
-                android:layout_below="@id/application_grid"
-                android:text="牌号" />
-
-
-            <ImageView
-                android:id="@+id/grade_more_iv"
-                android:layout_width="@dimen/x15"
-                android:layout_height="@dimen/x10"
-                android:layout_marginRight="@dimen/x10"
-                android:layout_marginLeft="@dimen/x5"
-                android:layout_marginTop="@dimen/x10"
-                android:layout_alignParentRight="true"
-                android:layout_below="@id/application_grid"
-                android:src="@drawable/more" />
-
-            <TextView
-                android:id="@+id/grade_more_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toLeftOf="@id/region_more_iv"
-                android:textColor="@color/black"
-                android:paddingLeft="@dimen/x10"
-                android:paddingBottom="@dimen/x5"
-                android:paddingTop="@dimen/x5"
-                android:layout_below="@id/application_grid"
-                android:text="更多" />
-            <com.silianchuangye.sumao.success.custom.CustomGridView
-                android:layout_below="@id/graden_tv"
-                android:id="@+id/grade_grid"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:horizontalSpacing="3dp"
-                android:numColumns="5"
-                android:padding="@dimen/x5"
-                android:verticalSpacing="3dp" />
 
             <RelativeLayout
 
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/x50"
-                android:layout_below="@id/grade_grid"
+                android:layout_below="@id/application_grid"
                 >
 
                 <Button

@@ -11,8 +11,8 @@ import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.PhysicalDistributionManagement.ViewLogisticsDemands.ViewLogisticsDemand;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.createLogisticsMVP.CreateLogistics;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.PhysicalDistributionManagement.ViewLogisticsDemands.ViewLogisticsDemandMVP.view.ViewLogisticsDemand;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.createLogisticsMVP.view.CreateLogistics;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.InvoiceInformationMVP.view.InvoiceInformation;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.ReceiptAddressMVP.view.ReceiptAddress;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.EnterpriseCapitalAccountManagement.FundInfoActivity;
@@ -61,9 +61,6 @@ public class PagerFive extends BasePager {
         rl_title.setVisibility(View.GONE);
         view = View.inflate(mActivity, R.layout.fragment_five, null);
         fl_content.addView(view);
-//        String name = ((MainActivity)getActivity()).getName();
-//        Log.d("aaaaaaa",""+name);
-
         sp = getActivity().getSharedPreferences("sumao", Activity.MODE_PRIVATE);
         String name = sp.getString("name", "");
         Log.d("用户名称", name);

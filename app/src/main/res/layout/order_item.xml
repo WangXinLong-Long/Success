@@ -70,7 +70,7 @@
             android:id="@+id/money_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="61000"
+            android:text="0"
             android:textColor="@color/red"
             android:textSize="@dimen/x20"
             android:layout_toRightOf="@id/money_tv"
@@ -123,7 +123,7 @@
             android:layout_marginBottom="@dimen/x5"
             android:layout_toRightOf="@id/surplus_amount_tv"
             android:textSize="@dimen/x10"
-            android:text="LLDPE"/>
+            android:text=""/>
         <TextView
             android:id="@+id/purchase_quantity_tv"
             android:layout_width="wrap_content"
@@ -138,7 +138,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/x5"
             android:layout_toRightOf="@id/purchase_quantity_tv"
-            android:text="7045"
+            android:text=""
             android:textSize="@dimen/x10"
             android:layout_below="@id/surplus_amount_tv"/>
         <TextView
@@ -155,7 +155,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/x5"
             android:layout_toRightOf="@id/min_variable_tv"
-            android:text="中海油"
+            android:text=""
             android:textSize="@dimen/x10"
             android:layout_below="@id/purchase_quantity_tv"/>
         <TextView
@@ -233,7 +233,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/x10"
-            android:text="61000"
+            android:text=""
             android:layout_toRightOf="@id/warehouse_tv"
             android:layout_marginBottom="@dimen/x5"
             android:layout_below="@id/warehouse_tv"
@@ -253,7 +253,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/x10"
-            android:text="四联创业集团"
+            android:text=""
             android:layout_toRightOf="@id/company_tv"
             android:layout_marginBottom="@dimen/x5"
             android:layout_below="@id/region_tv"

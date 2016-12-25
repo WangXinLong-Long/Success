@@ -16,6 +16,8 @@ public class CascadingMenuPopWindow extends PopupWindow {
     private ArrayList<Area> areas = null;
     //    提供给外的接口
     private CascadingMenuViewOnSelectListener menuViewOnSelectListener;
+    private ThreeLevelCompletedListener threeLevelCompletedListener;
+
 
     public void setMenuItems(ArrayList<Area> areas) {
         this.areas = areas;
@@ -40,16 +42,31 @@ public class CascadingMenuPopWindow extends PopupWindow {
         setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
 //        设置回调接口
         cascadingMenuView.setCascadingMenuViewOnSelectListener(new MCascadingMenuViewOnSelectListener());
+        cascadingMenuView.setThreeLevelCompletedListener(new ThreeLevelCompleteClickListener());
     }
 
     class MCascadingMenuViewOnSelectListener implements CascadingMenuViewOnSelectListener{
 
         @Override
-        public void getValue(Area menuItem) {
+        public void getValue(String provinceId,String cityId,String countyId) {
             if (menuViewOnSelectListener!=null){
-                menuViewOnSelectListener.getValue(menuItem);
+                menuViewOnSelectListener.getValue(provinceId, cityId, countyId);
                 dismiss();
             }
+        }
+    }
+
+    public void setThreeLevelCompletedListener(ThreeLevelCompletedListener threeLevelCompletedListener) {
+        this.threeLevelCompletedListener = threeLevelCompletedListener;
+    }
+
+    //
+    public class ThreeLevelCompleteClickListener implements ThreeLevelCompletedListener{
+
+        @Override
+        public void getSelectionProvinceCityCounty(String provinceId, String cityId) {
+            threeLevelCompletedListener.getSelectionProvinceCityCounty( provinceId,  cityId);
+            dismiss();
         }
     }
 }

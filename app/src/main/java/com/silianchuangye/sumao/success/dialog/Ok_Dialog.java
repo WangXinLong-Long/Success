@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +13,8 @@ import android.widget.TextView;
 
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.goodsInStock.OrderGoodsActivity;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.createLogisticsMVP.view.CreateLogistics;
+import com.silianchuangye.sumao.success.utils.LogUtils;
 
 /**
  * Created by junjun on 2016/7/7.
@@ -25,6 +26,8 @@ public class Ok_Dialog extends Activity {
     private Button btn_ok_dialog;
     private LinearLayout linear;
     private TextView tv_orderId;
+    private boolean isClosePrevious;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +35,7 @@ public class Ok_Dialog extends Activity {
         type=getIntent().getStringExtra("type");
         btn_ok_dialog= (Button) findViewById(R.id.btn_ok_dialog);
         linear= (LinearLayout) findViewById(R.id.linear_bottem_ok);
-
+        LogUtils.log("type的类型是---》"+type);
         if(type.equals("")){
             linear.setVisibility(View.GONE);
         }else{
@@ -41,22 +44,18 @@ public class Ok_Dialog extends Activity {
         ImageView iv_cancel= (ImageView)findViewById(R.id.iv_dialog_ok_cancel);
 
         TextView tv_order_number= (TextView)findViewById(R.id.tv_order_number_ok);
-        Bundle bundle=getIntent().getExtras();
-        String order_id=bundle.getString("number");
+        String order_id=getIntent().getStringExtra("number");
         Log.d("订单编号",order_id+"aa");
         tv_order_number.setText(order_id);
-      //  tv_order_number_ok
         btn_ok_dialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("TAG","sfddsfsdf");
                 finish();
             }
         });
  
         Button bt_my_order= (Button)findViewById(R.id.bt_my_order);
         Button bt_wuliu= (Button) findViewById(R.id.bt_wulliu);
-        tv_order_number.setText(order_number);
         iv_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,6 +73,7 @@ public class Ok_Dialog extends Activity {
                     intent.putExtra("title", "预售订单");
                 }
                 startActivity(intent);
+                isClosePrevious = true;
                 finish();
             }
         });
@@ -81,10 +81,17 @@ public class Ok_Dialog extends Activity {
             @Override
             public void onClick(View v) {
                 //跳转到物流
-                Log.d("跳转","物流需求");
+              Intent intent = new Intent(Ok_Dialog.this, CreateLogistics.class);
+                startActivity(intent);
             }
         });
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (isClosePrevious&&type.equals("现货")){
+            sendBroadcast(new Intent().setAction("finish"));
+        }
+    }
 }

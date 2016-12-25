@@ -27,14 +27,12 @@ public class PreSaleDetailModel implements IPreSaleDetailModel{
     @Override
     public void getPreSaleDetailResult(final PreSaleDetailCallback callback) {
         String url = SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/catalog/ProductCatalogActor/forwardPrductDetail";
-
-
-        LogUtils.log("URL----->"+url+"<-----URL");
         RequestParams requestParams = new RequestParams(url);
         requestParams.addParameter("skuId",skuId+"");
-        LogUtils.log("skuId-->"+skuId);
+//        LogUtils.log("skuId-->"+skuId);
         LogUtils.log("productId--->"+productId);
         requestParams.addParameter("productId",productId+"");
+        LogUtils.log("预售详情URL--->"+requestParams);
         try {
             x.http().request(HttpMethod.POST, requestParams, new Callback.CacheCallback<String>() {
 
@@ -51,7 +49,7 @@ public class PreSaleDetailModel implements IPreSaleDetailModel{
                     LogUtils.log("首页：预售详情--->" + result + "<---首页：预售详情");
                     Gson gson = new Gson();
                     preSaleDetailBean = gson.fromJson(result,PreSaleDetailBean.class);
-                    callback.callbackPreSaleDetail( preSaleDetailBean);
+                    callback.callbackPreSaleDetail( preSaleDetailBean,skuId);
                 }
 
                 @Override

@@ -3,7 +3,6 @@ package com.silianchuangye.sumao.success.adapter;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -14,8 +13,6 @@ import android.widget.Toast;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.ShangYou.CaiGouMVP.bean.PlanOrderList;
 import com.silianchuangye.sumao.success.ShangYou.SearchSeePlan;
-import com.silianchuangye.sumao.success.ShangYou.SeePlanInfo;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.PhysicalDistributionManagement.ViewLogisticsDemands.ViewLogisticsDemand;
 
 import java.util.List;
 

@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/selley_bg"
     android:orientation="vertical"
-    tools:context=".fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.CreateLogisticsNeed">
+    tools:context=".fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.createLogisticsNeedMVP.view.CreateLogisticsNeed">
     <include
         android:id="@+id/top"
         layout="@layout/logistics_title_bar"/>

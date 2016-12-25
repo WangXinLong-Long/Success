@@ -1,12 +1,15 @@
 package com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.view;
 
-import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.bean.GoodsInStockDetailBean;
-
 /**
  * Created by Administrator on 2016/8/13 0013.
  */
 public interface IGoodsInStockDetailView {
-//    返回数据模型
-   void  getGoodsInStockDetailData(GoodsInStockDetailBean goodsInStockDetailBean);
+
+//   返回立即购买后订单列表
+   void getSubmitOrderData(String result);
+
+//   返回加入购物车的信息
+   void getJoinToCartData(String result);
+
 
 }
