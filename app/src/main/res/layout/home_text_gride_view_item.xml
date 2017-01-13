@@ -7,15 +7,13 @@
     android:orientation="vertical">
 
     <TextView
-        android:padding="@dimen/x3"
-        android:layout_centerInParent="true"
-
         android:id="@id/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
+        android:layout_centerInParent="true"
         android:ellipsize="end"
         android:maxEms="16"
+        android:padding="@dimen/x5"
         android:singleLine="true"
         android:textSize="@dimen/x12" />
 </RelativeLayout>

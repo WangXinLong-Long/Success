@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.homepage.groupbuying.GroupBuyingActivity">
+    tools:context=".fragments.homepage.groupbuying.GroupBuyingMVP.view.GroupBuyingActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -39,11 +39,18 @@
             android:visibility="gone"
             />
     </RelativeLayout>
-    <ListView
+    <com.jingchen.pulltorefresh.PullToRefreshLayout
+        android:id="@+id/refresh_view"
         android:layout_below="@id/group_layout_top"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+    <com.jingchen.pulltorefresh.PullableListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#EEEEF3"
         android:id="@+id/lvAuction_Auction_Layout"
-        ></ListView>
+        ></com.jingchen.pulltorefresh.PullableListView>
+    </com.jingchen.pulltorefresh.PullToRefreshLayout>
 </RelativeLayout>

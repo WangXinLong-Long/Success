@@ -22,25 +22,14 @@ public class FunctionIntroductionModel implements IFunctionIntroductionModel {
 
     @Override
     public void getFunctionIntroductionDetailInfo(final FunctionIntroductionCallback callback) {
-        String url = SuMaoConstant.APP_IP+"/pcoAppService/help/myHelpPage";
+        String url = SuMaoConstant.APP_IP + "/pcoAppService/help/myHelpPage";
         RequestParams requestParams = new RequestParams(url);
-//        requestParams.setAsJsonContent(true);
-//        JSONObject jsonObject = new JSONObject();
-//        try {
-//            jsonObject.put("helpid", helpid);
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//        requestParams.setBodyContent(jsonObject.toString());
-//
-//        LogUtils.log(jsonObject.toString()+"<---");
-        LogUtils.log(helpid+"<---");
-        requestParams.addParameter("helpid",helpid);
-        LogUtils.log(requestParams+"<---");
-LogUtils.log(requestParams.getUri());
+        LogUtils.log(helpid + "<---");
+        requestParams.addParameter("helpid", helpid);
+        LogUtils.log(requestParams + "<---");
+        LogUtils.log(requestParams.getUri());
         try {
             x.http().request(HttpMethod.POST, requestParams, new Callback.CacheCallback<String>() {
-
 
                 private FunctionIntroductionDetailBean functionIntroductionDetailBean;
 
@@ -53,13 +42,13 @@ LogUtils.log(requestParams.getUri());
                 public void onSuccess(String result) {
                     LogUtils.log("帮助详情--->" + result + "<---帮助详情");
                     Gson gson = new Gson();
-                    functionIntroductionDetailBean = gson.fromJson(result,FunctionIntroductionDetailBean.class);
-                    callback.callbackFunctionIntroduction( functionIntroductionDetailBean);
+                    functionIntroductionDetailBean = gson.fromJson(result, FunctionIntroductionDetailBean.class);
+                    callback.callbackFunctionIntroduction(functionIntroductionDetailBean);
                 }
 
                 @Override
                 public void onError(Throwable ex, boolean isOnCallback) {
-                    LogUtils.log("--------->" + "3.2+onError" +ex.toString()+ "<-----------");
+                    LogUtils.log("--------->" + "3.2+onError" + ex.toString() + "<-----------");
                 }
 
                 @Override
@@ -74,7 +63,7 @@ LogUtils.log(requestParams.getUri());
             });
         } catch (Exception e) {
             e.printStackTrace();
-            LogUtils.log("--------->" + "3.2+printStackTrace"+e.toString() + "<-----------");
+            LogUtils.log("--------->" + "3.2+printStackTrace" + e.toString() + "<-----------");
         }
     }
 }

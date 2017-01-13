@@ -51,7 +51,7 @@ public class PagerOneGridViewDetailActivity extends Activity implements View.OnC
         provinceList = dbHelper.getProvince();
 
 //        交易模式
-        tradingPatterns = ((RelativeLayout) findViewById(R.id.trading_patterns_rl));
+        tradingPatterns = ((RelativeLayout) findViewById(R.id.supplier_patterns_rl));
         tradingPatterns.setOnClickListener(this);
 //        地区
         region = ((RelativeLayout) findViewById(R.id.region_rl));
@@ -96,7 +96,7 @@ public class PagerOneGridViewDetailActivity extends Activity implements View.OnC
     public void onClick(View v) {
         switch (v.getId()) {
 //            交易模式
-            case R.id.trading_patterns_rl:
+            case R.id.supplier_patterns_rl:
 //                这里填写类型（交易模式、分类、应用、牌号）
                 showTradingPatternPopupWindow("", datas);
                 break;

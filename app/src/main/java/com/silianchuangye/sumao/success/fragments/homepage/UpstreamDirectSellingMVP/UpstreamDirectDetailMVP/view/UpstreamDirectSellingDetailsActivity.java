@@ -2,9 +2,8 @@ package com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellin
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -16,7 +15,7 @@ import com.silianchuangye.sumao.success.ShangYou.CaiGouMVP.view.CaiGou;
 import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.UpstreamDirectDetailMVP.bean.DirectSellingBean;
 import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.UpstreamDirectDetailMVP.presenter.UpstreamDirectDetailPresenter;
 import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.bean.vipProductBean.VipProductBean;
-import com.silianchuangye.sumao.success.fragments.homepage.auction.AuctionMVP.AuctionActivity;
+import com.silianchuangye.sumao.success.fragments.homepage.auction.AuctionMVP.view.AuctionActivity;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.view.GoodsInStockActivity;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 
@@ -78,11 +77,8 @@ public class UpstreamDirectSellingDetailsActivity extends AppCompatActivity impl
                 break;
             case R.id.auction_session_rl://
                 //      竞拍专场
-                Log.d("竞拍专场的点击事件", "点击事件");
-                Intent intent_Acution = new Intent(UpstreamDirectSellingDetailsActivity.this, AuctionActivity.class);
-                intent_Acution.putExtra("name", "竞拍专场");
-                intent_Acution.putExtra("sellerCompanyId", sellerCompanyId);
-                startActivity(intent_Acution);
+                upstreamDirectDetailPresenter.getAuctionSessionResult("1",sellerCompanyId,getSharedPreferences("sumao",Activity.MODE_PRIVATE).getString("unique",""));
+
                 break;
 
         }
@@ -95,5 +91,13 @@ public class UpstreamDirectSellingDetailsActivity extends AppCompatActivity impl
         intent1.putExtra("title", "现货直销");
         intent1.putExtra("directSellingBean", directSellingBean);
         startActivity(intent1);
+    }
+
+    @Override
+    public void getAuctionSessionResult(String result) {
+        Intent intent_Acution = new Intent(UpstreamDirectSellingDetailsActivity.this, AuctionActivity.class);
+        intent_Acution.putExtra("name", "竞拍专场");
+        intent_Acution.putExtra("result", result);
+        startActivity(intent_Acution);
     }
 }

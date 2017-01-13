@@ -101,6 +101,7 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
     private LinearLayout layoutService;
     private PreSaleDetailBean preSaleDetailBean;
     private String contractString;
+    private boolean canPayTheMargin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -171,7 +172,6 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
         title_bar_white_title = ((TextView) findViewById(R.id.title_bar_white_title));
         title_bar_white_shopping_cart = ((ImageView) findViewById(R.id.title_bar_white_shopping_cart));
         pre_sale_sale_detail_detail = ((RelativeLayout) findViewById(R.id.pre_sale_sale_detail_detail));
-//        payment_security = ((Button) findViewById(R.id.payment_security));
         //        兰州石化7042
         tvName_auction = ((TextView) findViewById(R.id.tvName_auction));
         //        6000
@@ -399,28 +399,28 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
                  * 这里需要弹出popupWindow，即支付的弹出窗
                  */
                 SharedPreferences sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
-                String name = sp.getString("name", "");
-                if (name.equals("") || name.isEmpty()) {
+                String unique = sp.getString("unique", "");
+                if (unique.equals("false") || unique.equals("")) {
                     Intent intent1 = new Intent(PreSaleDetailActivity.this, LoginUserActivity.class);
                     intent1.putExtra("roles", "buyer");
-//
                     startActivityForResult(intent1, 0);
                 } else {
-                    Log.e("TAG", "riliDate----" + riliDate);
-                    if (riliDate != null) {
-                        if (edt_num.getText().toString().equals("")) {
-                            Toast.makeText(this, "购买数量不能为空", Toast.LENGTH_SHORT).show();
-                        } else {
-                            if (Double.valueOf(edt_num.getText().toString()) < Double.valueOf(purchase_quantity_et.getText().toString())) {
-                                Toast.makeText(this, "购买数量不能小于起购量", Toast.LENGTH_SHORT).show();
-                            } else if (Double.valueOf(edt_num.getText().toString()) > Double.valueOf(surplus_amount_et.getText().toString())) {
-                                Toast.makeText(this, "购买数量不能大于剩余数量", Toast.LENGTH_SHORT).show();
+                    if (canPayTheMargin) {//根据预售日历的情况，判断是否可以支付保证金
+                        if (riliDate != null) {
+                            if (edt_num.getText().toString().equals("")) {
+                                Toast.makeText(this, "购买数量不能为空", Toast.LENGTH_SHORT).show();
                             } else {
-                                Popupwindow();
+                                if (Double.valueOf(edt_num.getText().toString()) < Double.valueOf(purchase_quantity_et.getText().toString())) {
+                                    Toast.makeText(this, "购买数量不能小于起购量", Toast.LENGTH_SHORT).show();
+                                } else if (Double.valueOf(edt_num.getText().toString()) > Double.valueOf(surplus_amount_et.getText().toString())) {
+                                    Toast.makeText(this, "购买数量不能大于剩余数量", Toast.LENGTH_SHORT).show();
+                                } else {
+                            Popupwindow();
 //                                backgroundAlpha(0.5f);
+                                }
                             }
-                        }
 
+                        }
                     } else {
                         Toast.makeText(PreSaleDetailActivity.this, "该产品暂无预售日期", Toast.LENGTH_SHORT).show();
                     }
@@ -482,7 +482,7 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
 
         } else {
             Loding.show(this, "正在支付保证金...", false, null);//网络请求之前调用
-            String quantity = BZprice + "";//保证金
+            String quantity = edt_num.getText().toString();//数量
             SharedPreferences sp = this.getSharedPreferences("sumao", Activity.MODE_PRIVATE);
             String _dynSessConf = sp.getString("unique", "");
             String paymentPlatform = blankname;
@@ -514,129 +514,160 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
         setPreSaleDetailData(preSaleDetailBean);
     }
 
+    //    预售日历的
     @Override
     public void getPreSaleDetailCalendarData(PreSaleDetailCalendarBean preSaleDetailCalendarBean/*,int position*/) {
         List<Sku> skus = preSaleDetailCalendarBean.getSku();
-        LogUtils.log("lists" + skus.toString());
+        if (skus == null) {
+            canPayTheMargin = false;
+            payment_security.setBackgroundColor(getResources().getColor(R.color.gray));
+        } else {
+            canPayTheMargin = true;
+            LogUtils.log("lists" + skus.toString());
 //        List<DayAndPrice> list = new ArrayList<DayAndPrice>();
-        for (int i = 0; i < skus.size(); i++) {
-            Sku sku = skus.get(i);
-            String[] data = sku.getCl_date().split("-");
-            LogUtils.log("sku.getCl_jiner()-->" + sku.getCl_jiner() + "<---new Integer(data[0]),new Integer(data[1]),new Integer(data[2])-->" + data[0] + "---" + data[1] + "---" + data[2]);
-            String skuId = sku.getSkuId();
-            try {
-                year = Integer.parseInt(data[0]);
-                mounth = Integer.parseInt(data[1]);
-                day = Integer.parseInt(data[2]);
-            } catch (NumberFormatException e) {
-                throw new RuntimeException("没有转换成功");
+            StringBuffer cacheSb = new StringBuffer();
+            cacheSb.append("00000000");
+            double cachevalue = Double.parseDouble(cacheSb + "");
+            int cacheyear = 0;
+            int cachemonth = 0;
+            int cacheday = 0;
+            String cacheSKUId = "";
+            for (int i = 0; i < skus.size(); i++) {
+                Sku sku = skus.get(i);
+                String[] data = sku.getCl_date().split("-");
+                LogUtils.log("sku.getCl_jiner()-->" + sku.getCl_jiner() + "<---new Integer(data[0]),new Integer(data[1]),new Integer(data[2])-->" + data[0] + "---" + data[1] + "---" + data[2]);
+                String skuId = sku.getSkuId();
+                try {
+                    year = Integer.parseInt(data[0]);
+                    mounth = Integer.parseInt(data[1]);
+                    day = Integer.parseInt(data[2]);
+                } catch (NumberFormatException e) {
+                    throw new RuntimeException("没有转换成功");
+                }
+                riliDate = year + "..." + mounth + "..." + day;
+                LogUtils.log(year + "..." + mounth + "..." + day);
+                calendarlist.add(new DayAndPrice("￥" + sku.getCl_jiner(), year, mounth, day, skuId));
+                StringBuffer sb = new StringBuffer();
+                sb.append(String.valueOf(year));
+                sb.append(String.valueOf(mounth));
+                sb.append(String.valueOf(day));
+                double value = Double.parseDouble(sb + "");
+
+                if (value > cachevalue) {
+                    cacheSb = sb;
+                    cacheyear = year;
+                    cachemonth = mounth;
+                    cacheday = day;
+                    cacheSKUId = skuId;
+                }
+
             }
-            riliDate = year + "..." + mounth + "..." + day;
-            LogUtils.log(year + "..." + mounth + "..." + day);
-            calendarlist.add(new DayAndPrice("￥" + sku.getCl_jiner(), year, mounth, day, skuId));
-            if (i == 0) {
-                //设置进来就显示到预售日期的第一个
-                calendarView.monthDateView.setSelectYearMonth(year, mounth - 1, day);
-            }
+            LogUtils.log("skuId-->" + cacheSKUId);
+            //设置进来就显示到预售日期的日起最远的一个
+            preSaleDetailPresenter.sendPreSaleDetailData(cacheSKUId, productId);
+            calendarView.monthDateView.setSelectYearMonth(cacheyear, cachemonth - 1, cacheday);
+            calendarView.setSelected(true);
         }
 
-        calendarView.setSelected(true);
-        for (int i = 0; i < calendarlist.size(); i++) {
-            LogUtils.log("我这没问题：" + calendarlist.get(i).toString());
-        }
     }
 
     //    从服务器获取银行列表
     @Override
     public void setBankListResult(String result) {
         Loding.dis();
-        backgroundAlpha(0.5f);
-        View view = getLayoutInflater().inflate(R.layout.pop_yushou, null);
-        popupWindow = new PopupWindow(findViewById(R.id.parent), ActionBarOverlayLayout.LayoutParams.MATCH_PARENT,
-                ActionBarOverlayLayout.LayoutParams.WRAP_CONTENT);
-        popupWindow.setContentView(view);
-        tv = (TextView) view.findViewById(R.id.tv_pay);
-        tv.setText(BZprice + "");
+        if (result.contains("No Bank Info")){
+            Toast.makeText(this, "该商品暂不支持银行付款", Toast.LENGTH_SHORT).show();
+        }else {
+            backgroundAlpha(0.5f);
+            View view = getLayoutInflater().inflate(R.layout.pop_yushou, null);
+            popupWindow = new PopupWindow(findViewById(R.id.parent), ActionBarOverlayLayout.LayoutParams.MATCH_PARENT,
+                    ActionBarOverlayLayout.LayoutParams.WRAP_CONTENT);
+            popupWindow.setContentView(view);
+            tv = (TextView) view.findViewById(R.id.tv_pay);
+            tv.setText(BZprice + "");
 //        et= (EditText) view.findViewById(R.id.etZhifu_auction);
-        lv = (ListView) view.findViewById(R.id.lv_popupwindow_auction);
-        Button bt = (Button) view.findViewById(R.id.btZhifu);
+            lv = (ListView) view.findViewById(R.id.lv_popupwindow_auction);
+            Button bt = (Button) view.findViewById(R.id.btZhifu);
 
-        popupWindow.setTouchable(true);
-        popupWindow.setBackgroundDrawable(new BitmapDrawable());
-        popupWindow.setOutsideTouchable(true);
-        popupWindow.setFocusable(true);
+            popupWindow.setTouchable(true);
+            popupWindow.setBackgroundDrawable(new BitmapDrawable());
+            popupWindow.setOutsideTouchable(true);
+            popupWindow.setFocusable(true);
 
 
-        Gson gson = new Gson();
-        PreSaleBondBean preSaleBondBean = gson.fromJson(result, PreSaleBondBean.class);
-        if (!preSaleBondBean.getInfo().equals("sucess")) {
-            Toast.makeText(PreSaleDetailActivity.this, "登录已超时,请重新登录!", Toast.LENGTH_SHORT).show();
-        } else {
-            if (result.contains("No Bank Info")) {
-                Toast.makeText(PreSaleDetailActivity.this, "没有可用银行", Toast.LENGTH_SHORT).show();
-            }
-
-            if (result.contains("amount")) {
-                List<PreSaleBondBean.BankListBean> bankList = preSaleBondBean.getBankList();
-                for (int i = 0; i < bankList.size(); i++) {
-                    OpenAuction auction = new OpenAuction();
-                    auction.tv_money = bankList.get(i).getBalance();
-                    String type = bankList.get(i).getBankType();
-                    if (type.equals("1")) {
-                        //平安
-                        auction.iv_icon = R.mipmap.pingan;
-                        auction.tv_Name = "平安银行";
-
-                    } else if (type.equals("2")) {
-                        //昆仑
-                        auction.iv_icon = R.mipmap.kunlun;
-                        auction.tv_Name = "昆仑银行";
-                    } else if (type.equals("3")) {
-                        //建行
-                        auction.iv_icon = R.mipmap.jianshe;
-                        auction.tv_Name = "中国建设银行";
-                    }
-                    list1.add(auction);
-
+            Gson gson = new Gson();
+            PreSaleBondBean preSaleBondBean = gson.fromJson(result, PreSaleBondBean.class);
+            if (!preSaleBondBean.getInfo().equals("sucess")) {
+                Toast.makeText(PreSaleDetailActivity.this, "登录已超时,请重新登录!", Toast.LENGTH_SHORT).show();
+            } else {
+                if (result.contains("No Bank Info")) {
+                    Toast.makeText(PreSaleDetailActivity.this, "没有可用银行", Toast.LENGTH_SHORT).show();
                 }
-                adapter = new PopupWindowAdaptrer(list1, PreSaleDetailActivity.this);
-                lv.setAdapter(adapter);
 
-                popupWindow.showAtLocation(findViewById(R.id.parent), Gravity.BOTTOM, 0, 0);
-                lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        if (parent.getId() == lv.getId()) {
-                            for (int i = 0; i < list1.size(); i++) {
-                                Log.d("Listview的item", position + "");
-                                if (i != position) {
-                                    list1.get(i).Flag = false;
-                                }
-                            }
-                            list1.get(position).Flag = !list1.get(position).Flag;
-                            adapter.notifyDataSetChanged();
+                if (result.contains("amount")) {
+                    List<PreSaleBondBean.BankListBean> bankList = preSaleBondBean.getBankList();
+                    for (int i = 0; i < bankList.size(); i++) {
+                        OpenAuction auction = new OpenAuction();
+                        auction.tv_money = bankList.get(i).getBalance();
+                        String type = bankList.get(i).getBankType();
+                        if (type.equals("1")) {
+                            //平安
+                            auction.iv_icon = R.mipmap.pingan;
+                            auction.tv_Name = "平安银行";
+
+                        } else if (type.equals("2")) {
+                            //昆仑
+                            auction.iv_icon = R.mipmap.kunlun;
+                            auction.tv_Name = "昆仑银行";
+                        } else if (type.equals("3")) {
+                            //建行
+                            auction.iv_icon = R.mipmap.jianshe;
+                            auction.tv_Name = "中国建设银行";
                         }
-                    }
-                });
+                        list1.clear();
+                        list1.add(auction);
 
-                popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-                    @Override
-                    public void onDismiss() {
-                        //popupWindow.dismiss();
-                        backgroundAlpha(1f);
                     }
-                });
+                    adapter = new PopupWindowAdaptrer(list1, PreSaleDetailActivity.this);
+                    lv.setAdapter(adapter);
 
-                //支付
-                bt.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        payMoney();
-                        popupWindow.dismiss();
-                    }
-                });
+                    popupWindow.showAtLocation(findViewById(R.id.parent), Gravity.BOTTOM, 0, 0);
+                    lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            if (parent.getId() == lv.getId()) {
+                                for (int i = 0; i < list1.size(); i++) {
+                                    Log.d("Listview的item", position + "");
+                                    if (i != position) {
+                                        list1.get(i).Flag = false;
+                                    }
+                                }
+                                list1.get(position).Flag = !list1.get(position).Flag;
+                                adapter.notifyDataSetChanged();
+                            }
+                        }
+                    });
+
+                    popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                        @Override
+                        public void onDismiss() {
+                            //popupWindow.dismiss();
+                            backgroundAlpha(1f);
+                        }
+                    });
+
+                    //支付
+                    bt.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            payMoney();
+                            popupWindow.dismiss();
+                        }
+                    });
+                }
             }
         }
+
     }
 
     //    支付保证金

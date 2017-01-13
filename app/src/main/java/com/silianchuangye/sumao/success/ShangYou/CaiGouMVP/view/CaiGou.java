@@ -3,12 +3,11 @@ package com.silianchuangye.sumao.success.ShangYou.CaiGouMVP.view;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.text.format.DateUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -27,12 +26,10 @@ import android.widget.TextView;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.ShangYou.CaiGouMVP.bean.CaiGouBean;
 import com.silianchuangye.sumao.success.ShangYou.CaiGouMVP.presenter.CaiGouPresenter;
-import com.silianchuangye.sumao.success.ShangYou.DayPlanInfo;
 import com.silianchuangye.sumao.success.ShangYou.PlanDayMVP.view.PlanDay;
 import com.silianchuangye.sumao.success.ShangYou.SeePlanMVP.presenter.SeePlanPresenter;
 import com.silianchuangye.sumao.success.ShangYou.SeePlanMVP.view.SeePlan;
 import com.silianchuangye.sumao.success.adapter.MyPageAdapter;
-import com.silianchuangye.sumao.success.custom.customCalendar.CalendarUtil;
 import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.bean.vipProductBean.VipProductBean;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.ShowCalendar;
@@ -133,9 +130,6 @@ public class CaiGou extends AppCompatActivity implements OnClickListener, Adapte
     }
 
     private void initView() {
-        LogUtils.log("initView-->走你");
-
-
         bundle1 = new Bundle();
         bundle1.putSerializable("caiGouBeans", caiGouBeans);
         bundle1.putString("sellerCompanyId", sellerCompanyId);

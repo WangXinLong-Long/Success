@@ -25,13 +25,13 @@ IGoodsInStockActivityView goodsInStockActivityView;
         this.goodsInStockActivityView = goodsInStockActivityView;
     }
 
-    public   void getGoodsInStockInfo(String pattern, String regions, String provinces, String cities,
+    public   void getGoodsInStockInfo(String groups,String pattern, String regions, String provinces, String cities,
                                       String categoryNames, String appNames, String gradeNums, String pageNum,String updateOrLoad){
-        IGoodsInStockActivityModel goodsInStockActivityModel = new GoodsInStockActivityModel(pattern,  regions,  provinces,  cities,
+        IGoodsInStockActivityModel goodsInStockActivityModel = new GoodsInStockActivityModel(groups,pattern,  regions,  provinces,  cities,
                 categoryNames,  appNames,  gradeNums,  pageNum,updateOrLoad);
         goodsInStockActivityModel.getGoodsInStockActivityResult(new GoodsInStockActivityCallback() {
             @Override
-            public void callbackInGoodsInStockActivity(GoodsInStockActivityBean goodsInStockActivityBean,String updateOrLoad) {
+            public void callbackInGoodsInStockActivity(GoodsInStockActivityBean goodsInStockActivityBean,String updateOrLoad,String searchField) {
                 goodsInStockActivityView.setDataInActivity(goodsInStockActivityBean,updateOrLoad);
             }
         });

@@ -35,6 +35,7 @@ import com.silianchuangye.sumao.success.fragments.bean.CartItemInfo;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.bean.Orders;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.PayMentsOrderMVP.view.PaymentsOrder;
 import com.silianchuangye.sumao.success.fragments.pagerThreeMVP.bean.CartBean;
+import com.silianchuangye.sumao.success.fragments.pagerThreeMVP.bean.OrderErrorBean;
 import com.silianchuangye.sumao.success.fragments.pagerThreeMVP.presenter.PagerThreePresenter;
 import com.silianchuangye.sumao.success.fragments.shoppingCart.dialog.Cart_MyDialog;
 import com.silianchuangye.sumao.success.fragments.type.SelectCallBack;
@@ -150,26 +151,25 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
                 break;
             case R.id.btn_activity_cart_ok:
                 boolean flag = false;
-                StringBuffer sb  = new StringBuffer();
+                StringBuffer sb = new StringBuffer();
 //                CartBean.CommerceItemBean info : commerceItem
-                for (int i = 0; i<commerceItem.size();i++) {
-                    if (adapter.checked[i]){
+                for (int i = 0; i < commerceItem.size(); i++) {
+                    if (adapter.checked[i]) {
                         flag = true;
-                        if (i == commerceItem.size()-1)
+                        if (i == commerceItem.size() - 1)
                             sb.append(commerceItem.get(i).getCommerceItemId());
                         else
-                            sb.append(commerceItem.get(i).getCommerceItemId()+",");
+                            sb.append(commerceItem.get(i).getCommerceItemId() + ",");
                     }
 
                 }
                 if (flag) {
                     SharedPreferences sp = getActivity().getSharedPreferences("sumao", Activity.MODE_PRIVATE);
                     String _dynSessConf = sp.getString("unique", "");
-                    LogUtils.log("sb.toString()---->"+sb.toString());
+                    LogUtils.log("sb.toString()---->" + sb.toString());
                     String strCommerceItemIds = sb.toString();
-                    pagerThreePresenter.getGenerateOrder(_dynSessConf,strCommerceItemIds);
+                    pagerThreePresenter.getGenerateOrder(_dynSessConf, strCommerceItemIds);
 //                    intent.putExtra("all_price", tv_Cart_All_Price.getText().toString());
-
                 } else {
                     Toast.makeText(getActivity(), "请选择要购买的商品", Toast.LENGTH_SHORT).show();
                 }
@@ -192,18 +192,30 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
 
     //    提交订单到订单界面
     @Override
-    public void sendDataToOrderPage(  Orders orders) {
-        List<Orders.OrderIdListBean> orderIdListBean = orders.getOrderIdList();
-        for (int i = 0; i < orderIdListBean.size(); i++) {
-            LogUtils.log("产品名称---->"+ orderIdListBean.get(i).getCommerceItem().get(0).getProductName());
+    public void sendDataToOrderPage(String result) {
+        if (result.contains("formError")) {
+            Gson gson = new Gson();
+            OrderErrorBean orderErrorBean = gson.fromJson(result, OrderErrorBean.class);
+            StringBuffer sb = new StringBuffer();
+            for (int i = 0; i < orderErrorBean.getFormExceptions().size(); i++) {
+                sb.append(orderErrorBean.getFormExceptions().get(i).getLocalizedMessage());
+            }
+            Toast.makeText(ctx, sb.toString(), Toast.LENGTH_SHORT).show();
+        } else {
+            Gson gson = new Gson();
+            Orders orderList = gson.fromJson(result, Orders.class);
+            List<Orders.OrderIdListBean> orderIdListBean = orderList.getOrderIdList();
+            for (int i = 0; i < orderIdListBean.size(); i++) {
+                LogUtils.log("产品名称---->" + orderIdListBean.get(i).getCommerceItem().get(0).getProductName());
+            }
+//      TODO  数量修改
+            Intent intent = new Intent();
+            intent.setClass(getActivity(), PaymentsOrder.class);
+            intent.putExtra("type", "cart");
+            intent.putExtra("fix", (Serializable) orderIdListBean);
+            startActivity(intent);
         }
 
-//      TODO  数量修改
-        Intent intent = new Intent();
-        intent.setClass(getActivity(), PaymentsOrder.class);
-        intent.putExtra("type", "cart");
-        intent.putExtra("fix", (Serializable) orderIdListBean );
-        startActivity(intent);
     }
 
     private void selectSwitch() {
@@ -585,10 +597,10 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
                         holder.relative_item_cart.setVisibility(View.GONE);
                         holder.Edt_buy_num.setText("" + num);
                         number = num;
-                                //list.get(position).id.toString()
-                                Log.d("商品的--id", id);
-                                //update_data(list.get(position).id.toString());
-                                updataView(position, lv_Cart, list.get(position).getCommerceItemId().toString());
+                        //list.get(position).id.toString()
+                        Log.d("商品的--id", id);
+                        //update_data(list.get(position).id.toString());
+                        updataView(position, lv_Cart, list.get(position).getCommerceItemId().toString());
 //                   String number=num+"";
 //                    update_data(number);
 //                    holder.Tv_price.setText(price);
@@ -638,13 +650,13 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
                 @Override
                 public void afterTextChanged(Editable s) {
                     temp = holder.Edt_buy_num.getText().toString();
-                    if (Double.parseDouble( temp) > Double.parseDouble(kucong_value)) {
+                    if (Double.parseDouble(temp) > Double.parseDouble(kucong_value)) {
                         holder.Edt_buy_num.setText((kucong_value));
                         holder.Edt_buy_num.setSelection(kucong_value.length());
                     }
 
                     float i = Float.parseFloat(temp);
-                    if (i >=Float.parseFloat(kucong_value)) {
+                    if (i >= Float.parseFloat(kucong_value)) {
                         holder.relative_item_cart.setVisibility(View.VISIBLE);
                         holder.Tv_no_much.setText("产品库存为" + i + "吨");
                         dialog.show();

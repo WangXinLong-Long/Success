@@ -17,13 +17,13 @@
             <FrameLayout
                 android:id="@+id/fragemnet_a"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/y100"
+                android:layout_height="@dimen/y80"
                 android:background="@mipmap/spannerbackground">
 
                 <com.silianchuangye.sumao.success.utils.scrollviewAD.MyGallery
                     android:id="@+id/fragment_gallery"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"></com.silianchuangye.sumao.success.utils.scrollviewAD.MyGallery>
+                    android:layout_height="match_parent" />
             </FrameLayout>
 
             <LinearLayout
@@ -45,14 +45,14 @@
                 android:verticalSpacing="@dimen/x2"></GridView>
             <!--地区-->
             <RelativeLayout
-                android:padding="@dimen/x3"
                 android:id="@+id/area"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/gvfragmentone"
                 android:layout_centerVertical="true"
                 android:layout_marginTop="@dimen/x5"
-                android:background="@color/white">
+                android:background="@color/white"
+                android:padding="@dimen/x3">
 
                 <ImageView
                     android:id="@+id/area_img"
@@ -67,35 +67,35 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/x3"
                     android:layout_toRightOf="@id/area_img"
                     android:text="地区"
                     android:textColor="#0071BC"
-                    android:layout_marginLeft="@dimen/x3"
                     android:textStyle="bold" />
 
             </RelativeLayout>
 
             <com.silianchuangye.sumao.success.custom.CustomGridView
-                android:layout_centerInParent="true"
-
-                android:layout_marginTop="@dimen/x2"
                 android:id="@+id/area_detail"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/area"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="@dimen/x2"
                 android:horizontalSpacing="@dimen/x2"
                 android:numColumns="5"
                 android:verticalSpacing="@dimen/x2"></com.silianchuangye.sumao.success.custom.CustomGridView>
             <!--分类-->
             <RelativeLayout
                 android:id="@+id/classification"
-                android:padding="@dimen/x3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/area_detail"
                 android:layout_centerVertical="true"
                 android:layout_marginTop="@dimen/x5"
-                android:background="@color/white">
+                android:background="@color/white"
+                android:padding="@dimen/x3">
 
                 <ImageView
                     android:id="@+id/classification_img"
@@ -110,19 +110,19 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/x3"
                     android:layout_toRightOf="@id/classification_img"
                     android:text="分类"
                     android:textColor="#8CC63F"
-                    android:layout_marginLeft="@dimen/x3"
                     android:textStyle="bold" />
             </RelativeLayout>
 
             <com.silianchuangye.sumao.success.custom.CustomGridView
-                android:layout_marginTop="@dimen/x2"
                 android:id="@+id/classification_detail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/classification"
+                android:layout_marginTop="@dimen/x2"
                 android:horizontalSpacing="@dimen/x2"
                 android:numColumns="5"
                 android:verticalSpacing="@dimen/x2"></com.silianchuangye.sumao.success.custom.CustomGridView>
@@ -130,12 +130,12 @@
             <RelativeLayout
                 android:id="@+id/application"
                 android:layout_width="match_parent"
-                android:padding="@dimen/x3"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/classification_detail"
                 android:layout_centerVertical="true"
                 android:layout_marginTop="@dimen/x5"
-                android:background="@color/white">
+                android:background="@color/white"
+                android:padding="@dimen/x3">
 
                 <ImageView
                     android:id="@+id/application_img"
@@ -150,24 +150,91 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/x3"
                     android:layout_toRightOf="@id/application_img"
                     android:text="应用"
                     android:textColor="#F7931E"
-                    android:layout_marginLeft="@dimen/x3"
                     android:textStyle="bold" />
             </RelativeLayout>
 
             <com.silianchuangye.sumao.success.custom.CustomGridView
-                android:layout_marginTop="@dimen/x2"
                 android:id="@+id/application_detail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/application"
+                android:layout_marginTop="@dimen/x2"
+                android:horizontalSpacing="@dimen/x2"
+                android:numColumns="5"
+                android:verticalSpacing="@dimen/x2"></com.silianchuangye.sumao.success.custom.CustomGridView>
+            <!--供应商-->
+            <RelativeLayout
+                android:id="@+id/supplier"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/application_detail"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="@dimen/x5"
+                android:background="@color/white"
+                android:padding="@dimen/x3">
+
+                <ImageView
+                    android:id="@+id/supplier_img"
+                    android:layout_width="@dimen/x20"
+                    android:layout_height="@dimen/x20"
+                    android:layout_marginBottom="@dimen/x3"
+                    android:layout_marginLeft="@dimen/x5"
+                    android:layout_marginTop="@dimen/x3"
+                    android:src="@mipmap/supplier" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/x3"
+                    android:layout_toRightOf="@id/supplier_img"
+                    android:text="供应商"
+                    android:textColor="@color/week_name"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <com.silianchuangye.sumao.success.custom.CustomGridView
+                android:id="@+id/supplier_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/supplier"
+                android:layout_marginTop="@dimen/x2"
                 android:horizontalSpacing="@dimen/x2"
                 android:numColumns="5"
                 android:verticalSpacing="@dimen/x2"></com.silianchuangye.sumao.success.custom.CustomGridView>
 
+            <RelativeLayout
+                android:id="@+id/pay_attention"
+                android:layout_below="@id/supplier_detail"
+                android:layout_width="match_parent"
+                android:background="@color/white"
+                android:layout_marginTop="@dimen/x5"
+                android:layout_height="@dimen/x50">
 
+                <TextView
+                    android:id="@+id/please_pay_attention"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="敬请关注:"
+                    android:textColor="@color/blue"
+                    android:layout_marginLeft="@dimen/x30"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="更多活动详情敬请期待..."
+                    android:textColor="@color/black"
+                    android:layout_toRightOf="@id/please_pay_attention"
+                    android:layout_alignBottom="@id/please_pay_attention"
+                    android:layout_marginBottom="@dimen/x1"
+                    android:textSize="15sp" />
+            </RelativeLayout>
         </RelativeLayout>
     </ScrollView>
 </LinearLayout>

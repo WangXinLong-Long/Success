@@ -8,10 +8,10 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.silianchuangye.sumao.success.R;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.addressDisplayMVP.view.IAddressDisplayView;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.ReceiptAddressMVP.bean.ReAddress;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -26,14 +26,17 @@ public class ReceiptAddressAdapter extends BaseAdapter {
     private String[] addressDisplay ;
     private List<String > display;
 
-    public ReceiptAddressAdapter(Context context, List<ReAddress> lists,String[] addressDisplay/* List<String> display*/) {
+    public ReceiptAddressAdapter(Context context,String[] addressDisplay/* List<String> display*/) {
         this.context = context;
-        this.lists = lists;
+        this.lists = new ArrayList<>();
         inflater = LayoutInflater.from(context);
         this.addressDisplay = addressDisplay;
 //        this.display =display;
     }
 
+    public void addData(List<ReAddress> data ){
+        lists.addAll(data);
+    }
     @Override
     public int getCount() {
         if (lists.size() != 0 && lists != null) {

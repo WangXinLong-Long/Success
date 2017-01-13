@@ -29,7 +29,7 @@ import com.easemob.chat.EMMessage;
 import com.silianchuangye.sumao.success.HX.DemoHelper;
 import com.silianchuangye.sumao.success.HX.ui.ChatActivity;
 import com.silianchuangye.sumao.success.fragments.PagerFive;
-import com.silianchuangye.sumao.success.fragments.PagerFour;
+import com.silianchuangye.sumao.success.fragments.pagerFourMVP.view.PagerFour;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.view.PagerOne;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.LoginUserActivity;
 import com.silianchuangye.sumao.success.fragments.pagerThreeMVP.view.PagerThree;

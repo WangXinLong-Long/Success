@@ -77,7 +77,7 @@ public class GoodsInStockDetailModel implements IGoodsInStockDetailModel {
         String url = SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/catalog/ProductCatalogActor/getProduct";
 
 
-        LogUtils.log("URL----->"+url+"<-----URL");
+        LogUtils.log("现货的URL----->"+url+"<-----URL");
         RequestParams requestParams = new RequestParams(url);
         requestParams.addParameter("productId",cl_id+"");
         try {

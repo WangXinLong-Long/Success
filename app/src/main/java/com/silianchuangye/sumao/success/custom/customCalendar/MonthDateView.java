@@ -1,14 +1,5 @@
 package com.silianchuangye.sumao.success.custom.customCalendar;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-
-
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -24,6 +15,14 @@ import android.view.ViewConfiguration;
 import android.widget.TextView;
 
 import com.silianchuangye.sumao.success.R;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 public class MonthDateView extends View {
 	private final int NUM_COLUMNS = 7;
@@ -381,7 +380,7 @@ public class MonthDateView extends View {
 	 * @param month
 	 */
 	public void setSelectYearMonth(int year,int month,int day){
-		if(year <=0 || month <=0 || day <= 0)return;
+		if(year <0 || month <0 || day < 0)return;
 		mSelYear = year;
 		mSelMonth = month;
 		mSelDay = day;

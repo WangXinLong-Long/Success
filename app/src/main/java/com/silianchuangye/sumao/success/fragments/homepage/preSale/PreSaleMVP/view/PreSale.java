@@ -69,7 +69,7 @@ public class PreSale extends Activity implements View.OnClickListener, AdapterVi
         provinceList = dbHelper.getProvince();
         preSalePresenter = new PreSalePresenter(this);
 //        交易模式
-        tradingPatterns = ((RelativeLayout) findViewById(R.id.trading_patterns_rl));
+        tradingPatterns = ((RelativeLayout) findViewById(R.id.supplier_patterns_rl));
         tradingPatterns.setOnClickListener(this);
 //        地区
         region = ((RelativeLayout) findViewById(R.id.region_rl));
@@ -114,7 +114,7 @@ public class PreSale extends Activity implements View.OnClickListener, AdapterVi
     public void onClick(View v) {
         switch (v.getId()) {
 //            交易模式
-            case R.id.trading_patterns_rl:
+            case R.id.supplier_patterns_rl:
 //                这里填写类型（交易模式、分类、应用、牌号）
                 showTradingPatternPopupWindow("trading", datas);
                 break;

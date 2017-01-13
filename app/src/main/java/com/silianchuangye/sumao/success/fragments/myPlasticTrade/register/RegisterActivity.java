@@ -1,13 +1,10 @@
 package com.silianchuangye.sumao.success.fragments.myPlasticTrade.register;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -58,12 +55,6 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-//        //电话号码
-//       et_phone_register= (EditText) findViewById(R.id.et_phone_register);
-//        //手机验证码
-//        editText= (EditText) findViewById(R.id.et_phone);
-//        //获取验证码按钮
-//        bt_get_register= (Button) findViewById(R.id.bt_get_register);
         Bundle bundle = getIntent().getExtras();
         final String phone = bundle.getString("phone");
         tv_next_register = (Button) findViewById(R.id.tv_next_register);

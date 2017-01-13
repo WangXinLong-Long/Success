@@ -1,7 +1,5 @@
 package com.silianchuangye.sumao.success.fragments.pagerThreeMVP.view;
 
-import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.bean.Orders;
-
 /**
  * Created by Jobs Created on 2016/12/23.
  */
@@ -16,5 +14,5 @@ public interface IPagerThreeView {
     void setCarsUpdate(String result);
 
 //    生成订单数据，传递到订单页
-    void sendDataToOrderPage(  Orders orderList);
+    void sendDataToOrderPage(  String result);
 }

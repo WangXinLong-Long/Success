@@ -29,13 +29,13 @@ public class PaymentsOrderPresenter {
         });
     }
 
-//获取支付后信息
-    public void getPaymentInfoFromService(String orderIds, String platform, String _dynSessConf){
+//      获取支付后信息
+    public void getPaymentInfoFromService( String orderIds, String platform, String _dynSessConf){
         IPaymentModel paymentModel = new PaymentModel( orderIds,  platform,  _dynSessConf);
         paymentModel.getPaymentResult(new PaymentCallback() {
             @Override
-            public void callbakcPayment(String result) {
-                paymentsOrderView.getPaymentResult(result);
+            public void callbakcPayment(String result,String orderIds) {
+                paymentsOrderView.getPaymentResult(result,orderIds);
             }
         });
     }

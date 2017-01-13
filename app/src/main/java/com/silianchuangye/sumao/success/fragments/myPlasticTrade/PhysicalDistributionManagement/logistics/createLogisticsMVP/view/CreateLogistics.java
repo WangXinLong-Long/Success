@@ -82,87 +82,6 @@ public class CreateLogistics extends AppCompatActivity implements View.OnClickLi
         showNet();
     }
 
-    private void initDate() {
-        //给group添加数据
-        Createlogistics_ExpandInfo expandInfo1 = new Createlogistics_ExpandInfo();
-        expandInfo1.company_name = "中国石油天然气股份有限公司";
-        expandInfo1.date = "2016-06-21";
-        expandInfo1.order_name = "张一";
-        expandInfo1.order_num = "100000000000";
-        Createlogistics_ExpandInfo expandInfo2 = new Createlogistics_ExpandInfo();
-        expandInfo2.company_name = "中国石油天然气股份有限公司";
-        expandInfo2.date = "2016-06-22";
-        expandInfo2.order_name = "张二";
-        expandInfo2.order_num = "120000000000";
-        Createlogistics_ExpandInfo expandInfo3 = new Createlogistics_ExpandInfo();
-        expandInfo3.company_name = "中国石油天然气股份有限公司";
-        expandInfo3.date = "2016-06-23";
-        expandInfo3.order_name = "张三";
-        expandInfo3.order_num = "100300000000";
-        //给子item添加数据
-        Createlogistics_ListInfo listInfo1 = new Createlogistics_ListInfo();
-        listInfo1.can_num = 10 + "";
-        listInfo1.cangku_name = "迅邦物流一号库";
-        listInfo1.date = "2016-2-2";
-        listInfo1.logistics_name = "买家自提";
-        listInfo1.num = 10 + "";
-        listInfo1.only_price = 6100 + "";
-        listInfo1.product_name = "兰州石化7024";
-        listInfo1.sort = "LLDPE";
-
-        Createlogistics_ListInfo listInfo2 = new Createlogistics_ListInfo();
-        listInfo2.can_num = 10 + "";
-        listInfo2.cangku_name = "迅邦物流一号库";
-        listInfo2.date = "2016-2-2";
-        listInfo2.logistics_name = "迅帮配送";
-        listInfo2.num = 10 + "";
-        listInfo2.only_price = 6100 + "";
-        listInfo2.product_name = "兰州石化7024";
-        listInfo2.sort = "LLDPE";
-
-        Createlogistics_ListInfo listInfo3 = new Createlogistics_ListInfo();
-        listInfo3.can_num = 10 + "";
-        listInfo3.cangku_name = "迅邦物流一号库";
-        listInfo3.date = "2016-2-2";
-        listInfo3.logistics_name = "卖方配送";
-        listInfo3.num = 1 + "";
-        listInfo3.only_price = 6100 + "";
-        listInfo3.product_name = "兰州石化7024";
-        listInfo3.sort = "LLDPE";
-        Createlogistics_ListInfo listInfo4 = new Createlogistics_ListInfo();
-        listInfo4.can_num = 10 + "";
-        listInfo4.cangku_name = "迅邦物流一号库";
-        listInfo4.date = "2016-2-2";
-        listInfo4.logistics_name = "卖方配送";
-        listInfo4.num = "10";
-        listInfo4.only_price = 6100 + "";
-        listInfo4.product_name = "兰州石化7024";
-        listInfo4.sort = "LLDPE";
-
-        Createlogistics_ListInfo listInfo5 = new Createlogistics_ListInfo();
-        listInfo5.can_num = 10 + "";
-        listInfo5.cangku_name = "迅邦物流二号库";
-        listInfo5.date = "2016-2-2";
-        listInfo5.logistics_name = "卖方配送";
-        listInfo5.num = "10";
-        listInfo5.only_price = 6100 + "";
-        listInfo5.product_name = "兰州石化7024";
-        listInfo5.sort = "LLDPE";
-        //先把子item的数据添加到group里的list容器中
-        expandInfo1.list.add(listInfo1);
-
-        expandInfo2.list.add(listInfo2);
-        expandInfo2.list.add(listInfo3);
-        expandInfo2.list.add(listInfo4);
-
-        expandInfo3.list.add(listInfo5);
-        //把组中的数据添加到expandList中
-        expandList.add(expandInfo1);
-        expandList.add(expandInfo2);
-        expandList.add(expandInfo3);
-
-    }
-
     private void initView() {
         img_create_logistics_back = (ImageView) findViewById(R.id.img_create_logistics_back);
         img_create_logistics_search = (ImageView) findViewById(R.id.img_create_logistics_search);
@@ -499,7 +418,7 @@ public class CreateLogistics extends AppCompatActivity implements View.OnClickLi
             for (int i = 0; i < order.size(); i++) {
                 Createlogistics_ExpandInfo expandInfo1 = new Createlogistics_ExpandInfo();
                 Order ord = order.get(i);
-                expandInfo1.company_name = ord.getFirstName();
+                expandInfo1.order_name = ord.getFirstName();
                 expandInfo1.company_name = ord.getCl_gongsi();
                 expandInfo1.date = new SimpleDateFormat("yyyy-MM-dd").format(Long.valueOf(ord.getSubmittedDate()));
                 expandInfo1.order_num = ord.getId();

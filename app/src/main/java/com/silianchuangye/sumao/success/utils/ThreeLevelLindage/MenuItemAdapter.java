@@ -17,7 +17,6 @@ import java.util.List;
 /**
  * Created by Administrator on 2016/12/12.
  */
-
 public class MenuItemAdapter extends BaseAdapter {
 
     private Context context;
@@ -94,7 +93,7 @@ public class MenuItemAdapter extends BaseAdapter {
     }
 
     public interface OnItemClickListener {
-         void onItemClick(View view, int position);
+        void onItemClick(View view, int position);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener){
@@ -118,13 +117,18 @@ public class MenuItemAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup viewGroup) {
-        TextView view;
+        TextView textView;
+        ViewHolder viewHolder;
         if (convertView == null) {
-            view = (TextView) LayoutInflater.from(context).inflate(R.layout.choose_item, viewGroup, false);
+            viewHolder = new ViewHolder();
+            convertView =  LayoutInflater.from(context).inflate(R.layout.choose_item, null);
+            viewHolder.textView = ((TextView) convertView.findViewById(R.id.text));
+            convertView.setTag(viewHolder);
         } else {
-            view = ((TextView) convertView);
+            viewHolder = ((ViewHolder) convertView.getTag());
         }
-        view.setTag(position);
+
+        viewHolder.textView.setTag(position);
         String mString = "";
         if ((mListData != null)) {
             if (position < mListData.size()) {
@@ -132,20 +136,23 @@ public class MenuItemAdapter extends BaseAdapter {
             }
         }
         if (mString.contains("不限")) {
-            view.setText("不限");
+            viewHolder.textView.setText("不限");
         } else {
-            view.setText(mString);
+            viewHolder.textView.setText(mString);
         }
-        view.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
+        viewHolder.textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
         if (selectedText != null && selectedText.equals(mString)) {
-            view.setBackgroundDrawable(selectedDrawble);
+            viewHolder.textView.setBackgroundDrawable(selectedDrawble);
         } else {
-            view.setBackgroundDrawable(context.getResources().getDrawable(normalDrawleId));
+            viewHolder.textView.setBackgroundDrawable(context.getResources().getDrawable(normalDrawleId));
         }
-        view.setPadding(20, 0, 0, 0);
-        view.setOnClickListener(onClickListener);
+//        view.setPadding(20, 0, 0, 0);
+        viewHolder.textView.setOnClickListener(onClickListener);
 
 
-        return view;
+        return convertView;
+    }
+    class ViewHolder{
+        TextView textView;
     }
 }

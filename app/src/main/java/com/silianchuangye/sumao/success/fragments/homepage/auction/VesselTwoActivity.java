@@ -1,37 +1,24 @@
 package com.silianchuangye.sumao.success.fragments.homepage.auction;
 
 import android.content.Intent;
-import android.graphics.drawable.BitmapDrawable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.ActionBarOverlayLayout;
-import android.util.Log;
-import android.view.Gravity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.PopupWindowAdaptrer;
-import com.silianchuangye.sumao.success.utils.SuMaoConstant;
+import com.silianchuangye.sumao.success.fragments.homepage.auction.AuctionMVP.bean.AuctionDetailBean;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.xutils.common.Callback;
-import org.xutils.http.RequestParams;
-import org.xutils.x;
-
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
@@ -53,6 +40,7 @@ public class VesselTwoActivity extends AppCompatActivity {
     private LinearLayout layout_action,layout_not_action;
     private RelativeLayout layout_action_end;
     private Button bt_jinpai_colse;
+    private AuctionDetailBean auctionDetailBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,95 +50,110 @@ public class VesselTwoActivity extends AppCompatActivity {
         layout_not_action= (LinearLayout) findViewById(R.id.layout_not_action);
         layout_action_end= (RelativeLayout) findViewById(R.id.layout_action_end);
         bt_jinpai_colse= (Button) findViewById(R.id.bt_jinpai_colse);
-        Bundle bundle=getIntent().getExtras();
-        id=bundle.getString("id");
-        state=bundle.getString("state");
+        LinearLayout Layout_Button_vessel_two = (LinearLayout) findViewById(R.id.Layout_Button_vessel_two);
+        Layout_Button_vessel_two.setVisibility(View.GONE);
+        auctionDetailBean = (AuctionDetailBean)getIntent().getSerializableExtra("auctionDetailBean");
+        String zhifujine = getIntent().getStringExtra("zhifujine");
 
-         if (state.equals("竞拍未开始")){
-             layout_action.setVisibility(View.GONE);
-             layout_action_end.setVisibility(View.GONE);
-             layout_not_action.setVisibility(View.VISIBLE);
-
-         }else if (state.equals("竞拍已开始")){
-             layout_action.setVisibility(View.VISIBLE);
-             layout_not_action.setVisibility(View.GONE);
-             layout_action_end.setVisibility(View.GONE);
-
-         }else if (state.equals("竞拍已结束")){
-             layout_action.setVisibility(View.GONE);
-             layout_not_action.setVisibility(View.GONE);
-             layout_action_end.setVisibility(View.VISIBLE);
-
-         }
-        bt_jinpai_colse.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Popupwindow();
-                backgroundAlpha(0.5f);
-            }
-        });
-
-        btZhifu_auction= (Button) findViewById(R.id.btZhifu_auction);
-        btZhifu_auction.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Popupwindow();
-                backgroundAlpha(0.5f);
-            }
-        });
         lv_vessel_tow= (ListView) findViewById(R.id.lv_vessel_tow);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         list=new ArrayList<Map<String,Object>>();
         Map<String,Object> map1=new Hashtable<String,Object>();
+        if (auctionDetailBean.getCl_baozhj().equals("%")){
+            map1.put("value","--");
+        }else {
+            map1.put("value",auctionDetailBean.getCl_baozhj());
+        }
         map1.put("text","支付保证金比例");
-        map1.put("value","10%");
+
         list.add(map1);
 
         Map<String,Object> map2=new Hashtable<String,Object>();
         map2.put("text","支付保证金截止时间");
-        map2.put("value","2015-02-09 12:00:00");
+        map2.put("value",simpleDateFormat.format(Double.parseDouble(auctionDetailBean.getDepositDeadline().getTime())));
         list.add(map2);
         Map<String,Object> map3=new Hashtable<String,Object>();
         map3.put("text","支付保证金金额");
-        map3.put("value","1000");
+        map3.put("value",zhifujine);
         list.add(map3);
         Map<String,Object> map4=new Hashtable<String,Object>();
         map4.put("text","仓库");
-        map4.put("value","金山广安库");
+        map4.put("value",auctionDetailBean.getCl_cangku());
         list.add(map4);
         Map<String,Object> map5=new Hashtable<String,Object>();
         map5.put("text","详细地址");
-        map5.put("value","金山石化沪杭公路夏盛路38号");
+        if (auctionDetailBean.getAddressDetail()== null){
+            map5.put("value","");
+        }else {
+            map5.put("value",auctionDetailBean.getAddressDetail());
+        }
         list.add(map5);
         Map<String,Object> map6=new Hashtable<String,Object>();
         map6.put("text","交货时间");
-        map6.put("value","2016-05-19 00:00:00 至2016-05-31 00:00:00");
+        map6.put("value",new SimpleDateFormat("yyyy-MM-dd").format(Double.parseDouble(auctionDetailBean.getCl_shijian()))+"至"+new SimpleDateFormat("yyyy-MM-dd").format(Double.parseDouble(auctionDetailBean.getCl_shijianend())));
         list.add(map6);
         Map<String,Object> map7=new Hashtable<String,Object>();
         map7.put("text","竞价方式");
-        map7.put("value","公开竞价");
+        map7.put("value","竞价方式");
         list.add(map7);
         Map<String,Object> map8=new Hashtable<String,Object>();
-        map8.put("text","竞价时间");
-        map8.put("value","2016-05-19 00:00:00 至2016-05-31 00:00:00");
+        map8.put("text","竞拍时间");
+        map8.put("value",simpleDateFormat.format(Double.parseDouble(auctionDetailBean.getStartDate()))+"至"+simpleDateFormat.format(Double.parseDouble(auctionDetailBean.getEndDate())));
         list.add(map8);
         Map<String,Object> map9=new Hashtable<String,Object>();
-        map9.put("text","竞价规则");
-        map9.put("value","拍卖过程中，竞拍产品的价格按最小加价单位递增，买方可多次出价并能实时获取市场信息...");
+        map9.put("text","竞拍规则");
+        String rule = "";
+        if (auctionDetailBean.getAuctionRuleType() == null){
+            rule = "--";
+        }else if (auctionDetailBean.getAuctionRuleType().equals("englishAuctionRule-allow-surplus")){
+            rule ="拍卖过程中，竞拍产品的价格按最小加价单位递增，买方可多次出价并能实时获取市场信息";
+        }
+        map9.put("value",rule);
         list.add(map9);
         Map<String,Object> map10=new Hashtable<String,Object>();
+//        允许延时
+        String runTimeDelay = "否";
+        if (auctionDetailBean.getAuctionRuleType() == null){
+            runTimeDelay = "--";
+        }else if (auctionDetailBean.getAuctionRuleType().equals("englishAuctionRule-allow-fixed") || auctionDetailBean.getAuctionRuleType().equals("englishAuctionRule-allow-surplus")){
+            runTimeDelay = "是";
+        }
         map10.put("text","允许延时");
-        map10.put("value","是");
+        map10.put("value",runTimeDelay);
         list.add(map10);
+//        延时时长
+        String delayTimeLength = "";
+//        延时规则
+        String delayRule = "";
+        if (auctionDetailBean.getAuctionRuleType() == null){
+            delayTimeLength = "--";
+            delayRule = "--";
+        }else if(auctionDetailBean.getAuctionRuleType().equals("englishAuctionRule-allow-fixed")){
+            delayTimeLength = auctionDetailBean.getOvertimePeriod()+"分钟";
+            delayRule = "初始"+auctionDetailBean.getFreeBiddingTime()+"分钟内不延时，当新报价在剩余"+auctionDetailBean.getTriggerOvertimePeriod()+"分钟内提交时，触发延时"+auctionDetailBean.getOvertimePeriod()+"分钟";
+        }else if (auctionDetailBean.getAuctionRuleType().equals("englishAuctionRule-allow-surplus")){
+            if(auctionDetailBean.getDelayDateNode().equals("")){
+                delayTimeLength = auctionDetailBean.getOvertimePeriod()+"分钟";
+            }else{
+                if( auctionDetailBean.getDelayDateNode().equals(auctionDetailBean.getOvertimePeriod()) ){
+                    delayTimeLength = auctionDetailBean.getDdnOvertimePeriod()+"分钟";
+                }else{
+                    delayTimeLength = auctionDetailBean.getDelayDateNode()+"前"+auctionDetailBean.getDdnOvertimePeriod()+"分钟"+
+                            auctionDetailBean.getDelayDateNode()+"后"+auctionDetailBean.getOvertimePeriod()+"分钟";
+                }
+            }
+            delayRule = "在竞拍产品剩余数量小于起购量时，竞拍进入倒计时， \n" +
+                    "当新报价改变了实时行情时， \n" +
+                    "再次触发倒计时 \n" +
+                    "1 分钟 ";
+        }
         Map<String,Object> map11=new Hashtable<String,Object>();
         map11.put("text","延长时间");
-        map11.put("value","4分钟");
+        map11.put("value",delayTimeLength);
         list.add(map11);
         Map<String,Object> map12=new Hashtable<String,Object>();
         map12.put("text","延时规则");
-        map12.put("value","在剩余数量小于最小购买数量时，竞价进入倒计时， \n" +
-                "当新报价打破本次倒计时触发时的有效价格排序， \n" +
-                "再次触发倒计时 \n" +
-                "4 分钟 ");
+        map12.put("value",delayRule);
         list.add(map12);
         Map<String,Object> map13=new Hashtable<String,Object>();
         map13.put("text","成交价格判定");
@@ -185,146 +188,6 @@ public class VesselTwoActivity extends AppCompatActivity {
         });
 
 
-    }
-    public void Popupwindow(){
-        View view=getLayoutInflater().inflate(R.layout.item_popupwindow_auction,null);
-        PopupWindow popupWindow=new PopupWindow(findViewById(R.id.Layout_c), ActionBarOverlayLayout.LayoutParams.MATCH_PARENT, ActionBarOverlayLayout.LayoutParams.WRAP_CONTENT);
-        popupWindow.setContentView(view);
-        tv= (TextView) view.findViewById(R.id.tvPrice_popupwindow_auction);
-        et= (EditText) view.findViewById(R.id.etZhifu_auction);
-        lv= (ListView) view.findViewById(R.id.lv_popupwindow_auction);
-//        final List<OpenAuction> list_pop=new ArrayList<OpenAuction>();
-//        OpenAuction openauction1=new OpenAuction();
-//        openauction1.iv_icon=R.mipmap.direct;
-//        openauction1.tv_Name="北京工商银行";
-//        openauction1.tv_money="1234";
-//        list_pop.add(openauction1);
-//        OpenAuction openauction2=new OpenAuction();
-//        openauction2.iv_icon=R.mipmap.vertet;
-//        openauction2.tv_Name="北京建设银行";
-//        openauction2.tv_money="1234";
-//        list_pop.add(openauction2);
-//
-//        adapter=new PopupWindowAdaptrer(list_pop,VesselTwoActivity.this);
-//        lv.setAdapter(adapter);
-        getinfo_Bank();
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(parent.getId()==lv.getId()){
-                    for(int i=0;i<list1.size();i++){
-                        Log.d("Listview的item",position+"");
-                        if(i!=position){
-
-                            list1.get(i).Flag=false;
-
-                        }
-                    }
-                    list1.get(position).Flag=!list1.get(position).Flag;
-                    adapter.notifyDataSetChanged();
-                }
-            }
-        });
-        Button bt= (Button) view.findViewById(R.id.btZhifu);
-        bt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tv.setText(et.getText().toString());
-                et.setText("");
-            }
-        });
-        popupWindow.setTouchable(true);
-        popupWindow.setBackgroundDrawable(new BitmapDrawable());
-        popupWindow.setOutsideTouchable(true);
-        popupWindow.setFocusable(true);
-
-        popupWindow.showAtLocation(lv_vessel_tow, Gravity.BOTTOM,0,0);
-
-        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-            @Override
-            public void onDismiss() {
-                //popupWindow.dismiss();
-                backgroundAlpha(1f);
-            }
-        });
-
-    }
-    //设置背景透明
-    public void backgroundAlpha(float bgAlpha)
-    {
-        WindowManager.LayoutParams lp = getWindow().getAttributes();
-        lp.alpha = bgAlpha; //0.0-1.0
-        getWindow().setAttributes(lp);
-    }
-    public void getinfo_Bank(){
-        new Thread(){
-            @Override
-            public void run() {
-                // super.run();
-                String url= SuMaoConstant.SUMAO_IP+"rest/model/atg/commerce/catalog/ProductCatalogActor/availableBank";
-                RequestParams rp=new RequestParams(url);
-                rp.addParameter("productId",id);
-                Log.d("银行列表的rp",""+rp);
-                x.http().post(rp, new Callback.CommonCallback<String>() {
-                    @Override
-                    public void onSuccess(String result) {
-                        Log.d("银行的列表",result);
-                        if (result.contains("amount")){
-                            try {
-                                list1=new ArrayList<OpenAuction>();
-                                JSONObject obj=new JSONObject(result);
-                                String message=obj.getString("bankList");
-                                JSONArray array=new JSONArray(message);
-                                for (int i=0;i<array.length();i++){
-                                    JSONObject obj_array=array.getJSONObject(i);
-                                    OpenAuction auction=new OpenAuction();
-                                    auction.tv_money=obj_array.getString("balance");
-                                    String type=obj_array.getString("bankType");
-                                    if (type.equals("1")){
-                                        //平安
-                                        auction.iv_icon=R.mipmap.pingan;
-                                        auction.tv_Name="平安银行";
-
-                                    }else if (type.equals("2")){
-                                        //昆仑
-                                        auction.iv_icon=R.mipmap.kunlun;
-                                        auction.tv_Name="昆仑银行";
-                                    }else if (type.equals("3")){
-                                        //建行
-                                        auction.iv_icon=R.mipmap.jianshe;
-                                        auction.tv_Name="中国建设银行";
-                                    }
-                                    list1.add(auction);
-
-                                }
-                                adapter=new PopupWindowAdaptrer(list1,VesselTwoActivity.this);
-                                lv.setAdapter(adapter);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }else {
-                            Toast.makeText(VesselTwoActivity.this, "该用户没有登录,无法获取可支付银行列表!", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable ex, boolean isOnCallback) {
-
-                    }
-
-                    @Override
-                    public void onCancelled(CancelledException cex) {
-
-                    }
-
-                    @Override
-                    public void onFinished() {
-
-                    }
-                });
-
-            }
-        }.start();
     }
 
 }

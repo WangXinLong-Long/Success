@@ -8,14 +8,14 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
 import com.silianchuangye.sumao.success.R;
-import com.silianchuangye.sumao.success.fragments.pagerTwoMVP.pagerTwoChilds.InformationPageFragmentMVP.bean.PagerTwoListViewBean;
+import com.silianchuangye.sumao.success.fragments.pagerTwoMVP.pagerTwoChilds.InformationPageFragmentMVP.bean.PagerTwoInformationPageBean;
 
 import org.xutils.common.util.DensityUtil;
 import org.xutils.image.ImageOptions;
 import org.xutils.x;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +24,7 @@ import java.util.List;
  */
 
 public class PagerTwoInformationPageListViewAdapter extends BaseAdapter {
-    List<PagerTwoListViewBean> pagerTwoListViewBeen;
+    List<PagerTwoInformationPageBean.InBean> pagerTwoListViewBeen;
     Context context;
     LayoutInflater inflater;
     ImageOptions imageOptions;
@@ -39,16 +39,16 @@ public class PagerTwoInformationPageListViewAdapter extends BaseAdapter {
                 .setRadius(DensityUtil.dip2px(5))
                 .setCrop(true)
                 .setImageScaleType(ImageView.ScaleType.CENTER_CROP)
-                .setLoadingDrawableId(R.mipmap.ic_launcher)
-                .setFailureDrawableId(R.mipmap.ic_launcher)
+                .setLoadingDrawableId(R.mipmap.logo)
+                .setFailureDrawableId(R.mipmap.logo)
                 .build();
     }
 
-    public void addSrc(List<PagerTwoListViewBean> pagerTwoListViewBeen) {
+    public void addSrc(List<PagerTwoInformationPageBean.InBean> pagerTwoListViewBeen) {
         this.pagerTwoListViewBeen.addAll(pagerTwoListViewBeen);
     }
 
-    public void addSrc(PagerTwoListViewBean imgUrl) {
+    public void addSrc(PagerTwoInformationPageBean.InBean imgUrl) {
         this.pagerTwoListViewBeen.add(imgUrl);
     }
     @Override
@@ -81,11 +81,11 @@ public class PagerTwoInformationPageListViewAdapter extends BaseAdapter {
         } else {
             viewHolder = ((ViewHolder) contentView.getTag());
         }
-        x.image().bind(viewHolder.image_view, pagerTwoListViewBeen.get(position).getIcon(), imageOptions);
-        viewHolder.title.setText(pagerTwoListViewBeen.get(position).getTitle());
-        viewHolder.time.setText(pagerTwoListViewBeen.get(position).getTime());
-        viewHolder.from.setText(pagerTwoListViewBeen.get(position).getFrom());
-        viewHolder.count.setText(pagerTwoListViewBeen.get(position).getCount());
+        x.image().bind(viewHolder.image_view, pagerTwoListViewBeen.get(position).getNewspri(), imageOptions);
+        viewHolder.title.setText(pagerTwoListViewBeen.get(position).getNewsname());
+        viewHolder.time.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Double.parseDouble(pagerTwoListViewBeen.get(position).getNewstime())));
+        viewHolder.from.setText(pagerTwoListViewBeen.get(position).getNewsfrom());
+        viewHolder.count.setText(pagerTwoListViewBeen.get(position).getNewsnum());
         return contentView;
     }
 

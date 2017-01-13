@@ -7,5 +7,5 @@ public interface IPaymentsOrderView {
 //    获取银行列表
     void setBankListResult(String result);
 //    获取支付后的返回信息
-    void getPaymentResult(String result);
+    void getPaymentResult(String result,String orderIds);
 }

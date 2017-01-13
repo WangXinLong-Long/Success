@@ -24,11 +24,13 @@ public class GoodsInStockActivityModel implements IGoodsInStockActivityModel {
     String categoryNames;//分类
     String appNames;//应用
     String gradeNums;//牌号
+    String groups;//牌号
     String pageNum;//当前页码
     String updateOrLoad;
-
-    public GoodsInStockActivityModel(String pattern, String regions, String provinces, String cities,
+String searchField = "";
+    public GoodsInStockActivityModel(String groups,String pattern, String regions, String provinces, String cities,
                                      String categoryNames, String appNames, String gradeNums, String pageNum, String updateOrLoad) {
+        this.groups = groups;
         this.pattern = pattern;
         this.regions = regions;
         this.provinces = provinces;
@@ -52,8 +54,8 @@ public class GoodsInStockActivityModel implements IGoodsInStockActivityModel {
         JSONObject jsonObject = new JSONObject();
         try {
             if (regions != null) {
-
                 jsonObject.put("regions", regions);
+                searchField = "地区"+regions;
 
             }
             if (provinces != null) {
@@ -64,12 +66,18 @@ public class GoodsInStockActivityModel implements IGoodsInStockActivityModel {
             }
             if (categoryNames != null) {
                 jsonObject.put("categoryNames", categoryNames);
+                searchField = "分类"+categoryNames;
             }
             if (appNames != null) {
                 jsonObject.put("appNames", appNames);
+                searchField = "应用"+appNames;
+            }
+            if (groups != null) {
+                jsonObject.put("groupsNames", groups);
+                searchField = "供应"+groups;
             }
             if (gradeNums != null) {
-                jsonObject.put("appNames", gradeNums);
+                jsonObject.put("gradeNums", gradeNums);
             }
 
             jsonObject.put("pattern", pattern);
@@ -94,7 +102,7 @@ public class GoodsInStockActivityModel implements IGoodsInStockActivityModel {
                     LogUtils.log("首页：现货--->" + result + "<---首页：现货");
                     Gson gson = new Gson();
                     goodsInStockActivityBean = gson.fromJson(result, GoodsInStockActivityBean.class);
-                    callback.callbackInGoodsInStockActivity(goodsInStockActivityBean, updateOrLoad);
+                    callback.callbackInGoodsInStockActivity(goodsInStockActivityBean, updateOrLoad,searchField);
                 }
 
                 @Override

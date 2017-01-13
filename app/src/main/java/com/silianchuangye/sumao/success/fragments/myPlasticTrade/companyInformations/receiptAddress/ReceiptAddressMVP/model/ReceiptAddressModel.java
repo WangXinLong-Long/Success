@@ -31,9 +31,9 @@ public class ReceiptAddressModel implements IReceiptAddressModel {
 
 
         String url = SuMaoConstant.SUMAO_IP+"/rest/model/atg/userprofiling/ProfileActor/EntAddress";
-        LogUtils.log("ReceiptAddressModel：sessionId--->" + sessionId + "<---sessionId：ReceiptAddressModel");
         RequestParams requestParams = new RequestParams(url);
         requestParams.addParameter("_dynSessConf" , sessionId);
+        LogUtils.log("收货地址：URL--->" + requestParams);
         try {
             x.http().request(HttpMethod.POST, requestParams, new Callback.CommonCallback<String>() {
 
@@ -50,7 +50,7 @@ public class ReceiptAddressModel implements IReceiptAddressModel {
 
                 @Override
                 public void onError(Throwable ex, boolean isOnCallback) {
-                    LogUtils.log("--------->" + "----ReceiptAddressModel-->3.2+onError" + ex.toString() + "<-----------");
+                    LogUtils.log("" + "onError--------->" + ex.toString() + "<-----------");
                 }
 
                 @Override

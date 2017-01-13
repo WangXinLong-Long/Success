@@ -68,6 +68,7 @@ public class PagerFive extends BasePager {
         name_User.setText(name);
         context = mActivity;
         expandableListView = (CustomExpandableListView) view.findViewById(R.id.expandable_listView);
+        expandableListView.setFocusable(false);
         sela = new ExpandableListViewAdapter(context, "buyer");
         expandableListView.setAdapter(sela);
 //        设置箭头图标消失

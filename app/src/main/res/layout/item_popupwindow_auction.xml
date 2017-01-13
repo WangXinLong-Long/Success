@@ -54,7 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/x10"
             android:layout_marginTop="@dimen/x5"
-            android:text="支付保证金:"
+            android:text="需交保证金金额:"
             android:textSize="16sp" />
 
         <EditText
@@ -62,7 +62,9 @@
             android:layout_width="@dimen/x120"
             android:layout_height="@dimen/x30"
             android:layout_marginTop="@dimen/x5"
-            android:background="@drawable/edittext_backgroup" />
+            android:background="@drawable/edittext_backgroup"
+            android:inputType="numberDecimal"
+            />
 
         <TextView
             android:layout_width="wrap_content"
@@ -125,7 +127,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/AA"
+                android:id="@+id/total_amount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -139,7 +141,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/x3"
-                android:layout_toRightOf="@+id/AA"
+                android:layout_toRightOf="@+id/total_amount"
                 android:textColor="@color/red"
                 android:textSize="16sp"
 

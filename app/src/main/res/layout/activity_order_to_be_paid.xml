@@ -34,7 +34,7 @@
                     android:background="@color/white">
 
                     <TextView
-                        android:id="@+id/tv"
+                        android:id="@+id/count_down_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
@@ -79,13 +79,13 @@
                         android:layout_width="@dimen/x36"
                         android:layout_height="@dimen/x20"
                         android:layout_centerVertical="true"
-                        android:layout_toLeftOf="@+id/iv_More"
                         android:layout_marginRight="@dimen/x5"
+                        android:layout_toLeftOf="@+id/iv_More"
+                        android:background="@drawable/text_corner"
                         android:text="复制"
                         android:textColor="#59BEE9"
-                        android:textSize="12sp"
-                        android:background="@drawable/text_corner"
-                        />
+                        android:textSize="12sp" />
+
                     <ImageView
                         android:id="@+id/iv_More"
                         android:layout_width="@dimen/x15"
@@ -95,11 +95,10 @@
                         android:layout_marginRight="@dimen/x10"
                         android:src="@mipmap/my_sumao_iv_order" />
                 </RelativeLayout>
-                <LinearLayout
+                <!--<LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/x1"
                     android:background="#EEEEF3"
-
                     android:layout_below="@+id/order_amount"
                     android:id="@+id/order_line"
                     android:orientation="horizontal"
@@ -134,16 +133,15 @@
                         android:textColor="@color/red"
                         android:textSize="@dimen/x15" />
 
-                </RelativeLayout>
+                </RelativeLayout>-->
                 <LinearLayout
+                    android:id="@+id/order_line_line"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/x1"
+                    android:layout_below="@+id/order_amount"
                     android:background="#EEEEF3"
+                    android:orientation="horizontal" />
 
-                    android:layout_below="@+id/layout_two"
-                    android:id="@+id/order_line_line"
-                    android:orientation="horizontal"
-                    ></LinearLayout>
                 <RelativeLayout
                     android:id="@+id/detail"
                     android:layout_width="match_parent"
@@ -173,34 +171,15 @@
                         android:text="定价"
                         android:textSize="@dimen/x13" />
 
-                    <TextView
-                        android:id="@+id/buyer1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toRightOf="@id/type2"
-                        android:paddingBottom="@dimen/x5"
-                        android:paddingTop="@dimen/x5"
-                        android:layout_marginLeft="@dimen/x15"
-                        android:text="@string/buyer"
-                        android:textSize="@dimen/x13" />
 
-                    <TextView
-                        android:id="@+id/buyer2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toRightOf="@id/buyer1"
-                        android:paddingBottom="@dimen/x5"
-                        android:paddingRight="@dimen/x5"
-                        android:paddingTop="@dimen/x5"
-                        android:text="张三"
-                        android:textSize="@dimen/x13" />
 
                     <RelativeLayout
                         android:id="@+id/second_line_information"
-                        android:layout_toRightOf="@id/buyer2"
-                        android:layout_marginLeft="@dimen/x12"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/x15"
+                        android:layout_alignParentRight="true">
+
                         <TextView
                             android:id="@+id/state1"
                             android:layout_width="wrap_content"
@@ -219,15 +198,38 @@
                             android:paddingBottom="@dimen/x5"
                             android:paddingRight="@dimen/x5"
                             android:paddingTop="@dimen/x5"
-                            android:text="待支付1"
+                            android:text=""
                             android:textSize="@dimen/x13" />
 
                     </RelativeLayout>
+
+                    <TextView
+                        android:layout_below="@id/second_line_information"
+                        android:id="@+id/buyer1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/x10"
+                        android:paddingBottom="@dimen/x5"
+                        android:paddingTop="@dimen/x5"
+                        android:text="@string/buyer"
+                        android:textSize="@dimen/x13" />
+
+                    <TextView
+                        android:layout_below="@id/second_line_information"
+                        android:id="@+id/buyer2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/buyer1"
+                        android:paddingBottom="@dimen/x5"
+                        android:paddingRight="@dimen/x5"
+                        android:paddingTop="@dimen/x5"
+                        android:text=""
+                        android:textSize="@dimen/x13" />
                     <TextView
                         android:id="@+id/company1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/second_line_information"
+                        android:layout_below="@id/buyer1"
                         android:paddingBottom="@dimen/x5"
                         android:paddingLeft="@dimen/x10"
                         android:paddingTop="@dimen/x5"
@@ -238,12 +240,12 @@
                         android:id="@+id/company2"
                         android:layout_width="@dimen/x210"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/second_line_information"
+                        android:layout_below="@id/buyer1"
                         android:layout_toRightOf="@id/company1"
                         android:paddingBottom="@dimen/x5"
                         android:paddingRight="@dimen/x5"
                         android:paddingTop="@dimen/x5"
-                        android:text="北京四联创业化工集团有限公司"
+                        android:text="有限公司"
                         android:textSize="@dimen/x13" />
 
                     <Button
@@ -266,9 +268,9 @@
                     android:layout_height="match_parent"
                     android:layout_below="@id/detail"
                     android:layout_marginTop="@dimen/x5"
-                    android:divider="@color/my_sumao_background"
                     android:background="@color/my_sumao_background"
-                    android:dividerHeight="@dimen/x5"></com.silianchuangye.sumao.success.custom.CustomListView>
+                    android:divider="@color/my_sumao_background"
+                    android:dividerHeight="@dimen/x5" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -308,9 +310,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/x1"
                         android:background="@color/white"
-                        android:paddingTop="@dimen/x5"
                         android:paddingBottom="@dimen/x5"
-                        >
+                        android:paddingTop="@dimen/x5">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -338,8 +339,8 @@
                         android:layout_below="@id/bottom2"
                         android:layout_marginTop="@dimen/x1"
                         android:background="@color/white"
-                        android:paddingTop="@dimen/x5"
-                        android:paddingBottom="@dimen/x5">
+                        android:paddingBottom="@dimen/x5"
+                        android:paddingTop="@dimen/x5">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -359,62 +360,64 @@
                             android:layout_marginRight="@dimen/x10"
                             android:src="@mipmap/my_sumao_iv_order" />
                     </RelativeLayout>
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/x55"
-                        android:text="  "
                         android:layout_below="@id/bottom3"
-                        />
+                        android:text="  " />
                 </RelativeLayout>
             </RelativeLayout>
         </LinearLayout>
     </ScrollView>
+
     <LinearLayout
+        android:id="@+id/bottom_money"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:orientation="vertical"
-        >
+        android:visibility="invisible"
+        android:orientation="vertical">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/x50"
-android:background="@color/white"
-            >
+            android:background="@color/white">
+
             <TextView
                 android:id="@+id/bottom_money1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="合计金额："
-                android:layout_marginLeft="@dimen/x20"
                 android:layout_centerVertical="true"
-                android:paddingTop="@dimen/x10"
+                android:layout_marginLeft="@dimen/x20"
                 android:paddingBottom="@dimen/x10"
-                android:textSize="@dimen/x15"
-                />
+                android:paddingTop="@dimen/x10"
+                android:text="合计金额："
+                android:textSize="@dimen/x15" />
+
             <TextView
                 android:id="@+id/bottom_money2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="61000元"
-                android:textColor="@color/red"
-                android:layout_toRightOf="@id/bottom_money1"
                 android:layout_centerVertical="true"
-                android:textSize="@dimen/x15"
-                />
+                android:layout_toRightOf="@id/bottom_money1"
+                android:text="duoshao元"
+                android:textColor="@color/red"
+                android:textSize="@dimen/x15" />
+
             <Button
+                android:id="@+id/bt_Zhifu"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="立即支付"
-                android:background="@color/my_sumao_title_background"
                 android:layout_alignParentRight="true"
-                android:textSize="@dimen/x15"
-                android:textColor="@color/white"
-                android:paddingTop="@dimen/x10"
+                android:background="@color/my_sumao_title_background"
                 android:paddingBottom="@dimen/x10"
                 android:paddingLeft="@dimen/x20"
                 android:paddingRight="@dimen/x20"
-                android:id="@+id/bt_Zhifu"
-                />
+                android:paddingTop="@dimen/x10"
+                android:text="立即支付"
+                android:textColor="@color/white"
+                android:textSize="@dimen/x15" />
         </RelativeLayout>
     </LinearLayout>
 </RelativeLayout>

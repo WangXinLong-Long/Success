@@ -19,9 +19,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.silianchuangye.sumao.success.MainActivity;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.SellerManagementPlatform.SellerManagementPlatformActivity;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.bean.LoginUserInfoBean;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.RegisterPhoneMVP.RegisterPhoneView.RegisterPhoneActivity;
 import com.silianchuangye.sumao.success.utils.BPUtil;
 import com.silianchuangye.sumao.success.utils.GlobalVariable;
@@ -322,10 +324,12 @@ public class LoginUserActivity extends AppCompatActivity {
                     Toast.makeText(LoginUserActivity.this, "账号或密码错误请重新登录！", Toast.LENGTH_SHORT).show();
                 } else {
 //                    Log.d("object",result);
+                    Gson gson = new Gson();
+                    LoginUserInfoBean loginUserInfoBean = gson.fromJson(result, LoginUserInfoBean.class);
                     sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
                     editor = sp.edit();
-                    Log.d("账号的值", name.trim());
                     editor.putString("zhanghao", name.trim());
+                    editor.putString("U_clientID", loginUserInfoBean.getU_clientID());
                     editor.commit();
                     String unique = sp.getString("unique", "");
                     Log.d("唯一标识", unique);
@@ -371,14 +375,15 @@ public class LoginUserActivity extends AppCompatActivity {
                     try {
                         object = new JSONObject(result);
                         String name = object.getString("U_name");
+                        editor.putString("name", name);
+                        editor.commit();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                     /**
                      * 把姓名储存在SharedPreferences
                      */
-                    editor.putString("name", name);
-                    editor.commit();
+
                     Loding.dis();
                     //接收mainactivity传递过来的参数
                     if (mainActivityInteger == 9) {

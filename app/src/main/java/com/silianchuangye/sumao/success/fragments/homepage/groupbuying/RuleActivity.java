@@ -1,15 +1,18 @@
 package com.silianchuangye.sumao.success.fragments.homepage.groupbuying;
 
-import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 
 import com.silianchuangye.sumao.success.R;
+import com.silianchuangye.sumao.success.fragments.homepage.auction.VlaueActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -60,7 +63,7 @@ public class RuleActivity extends AppCompatActivity {
 
 
         }else if (state.equals("团购已开始")){
-            layout_Bottom_action.setVisibility(View.VISIBLE);
+            layout_Bottom_action.setVisibility(View.GONE);
             layout_not_action.setVisibility(View.GONE);
             relative_tuangou_end.setVisibility(View.GONE);
 
@@ -117,11 +120,17 @@ public class RuleActivity extends AppCompatActivity {
         map7.put("right",tuan_kaishi+"至"+tuan_jieshu);
         list.add(map7);
         //////////////////////
-        adapter=new SimpleAdapter(RuleActivity.this,list,R.layout.item_firm_info,
-                new String[]{"left","right"},
-                new int[]{R.id.tv_firm_info,R.id.tvValue_firm_info});
+        adapter=new SimpleAdapter(this,list,R.layout.item_vessel_tow,new String[]{"left","right"},new int[]{R.id.tv_a,R.id.tv_b});
         lv_rule.setAdapter(adapter);
-
+        lv_rule.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent=new Intent(RuleActivity.this,VlaueActivity.class);
+                intent.putExtra("text",list.get(position).get("left").toString());
+                intent.putExtra("value",list.get(position).get("right").toString());
+                startActivity(intent);
+            }
+        });
 
     }
 }

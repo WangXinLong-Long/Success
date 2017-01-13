@@ -20,19 +20,22 @@ public class SuMaoConstant {
     public static final int VIP_WAREHOUSE_ID = 3;
     public static final int VIP_DELIVERYMETHOD_ID = 4;
     public static final int VIP_REMARKS_ID = 5;
+    public static final String QUOTE_SUCCESS = "123";
+    public static final String MARGIN_PAYMENT_SUCCESS = "122";
 
     //    ATG数据演示使用
     //   public static final String SUMAO_IP = "http://139.198.7.27:7003";
-       // ATG数据测试使用
-             public static final String SUMAO_IP = "http://192.168.32.126:7023";
-//             public static final String SUMAO_IP = "http://192.168.32.126:7003";
+    // ATG数据测试使用
+    public static final String SUMAO_IP = "http://192.168.32.126:7023";
+    public static final String SUMAO_CONTRACT_IP = "http://192.168.32.126:7003/crsdocroot";
+    //             public static final String SUMAO_IP = "http://192.168.32.126:7003";
 //    ATG数据uat环境
 //public static final String SUMAO_IP = "http://172.22.16.105:7003";
 ////    APP自己的维护信息
-    public static final  String APP_IP = "http://172.22.16.5:80";
-    public static final  String APP_IP_HELP = "http://139.198.7.21:80";
-//    获取文件：存放文件的服务器地址
-public static final String SUMAO_FILE_IP = "http://192.168.32.126:7003/crsdocroot";
+    public static final String APP_IP = "http://172.22.16.5:80";
+    public static final String APP_IP_HELP = "http://139.198.7.21:80";
+    //    获取文件：存放文件的服务器地址
+    public static final String SUMAO_FILE_IP = "http://192.168.32.126:7003/crsdocroot";
     //    上传文件：存放图片服务器IP
     public static final String hostname = "192.168.32.126";
     //    存放图片服务端口

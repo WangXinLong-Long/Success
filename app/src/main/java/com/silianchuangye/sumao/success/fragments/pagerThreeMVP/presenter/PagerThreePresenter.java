@@ -1,6 +1,5 @@
 package com.silianchuangye.sumao.success.fragments.pagerThreeMVP.presenter;
 
-import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.bean.Orders;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.PayMentsOrderMVP.model.paymentOrderModel.IPaymentOrderModel;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.PayMentsOrderMVP.model.paymentOrderModel.PaymentOrderCallback;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.PayMentsOrderMVP.model.paymentOrderModel.PaymentOrderModel;
@@ -60,8 +59,8 @@ public class PagerThreePresenter {
         IPaymentOrderModel paymentOrderModel = new PaymentOrderModel(strCommerceItemIds,_dynSessConf);
         paymentOrderModel.getPaymentOrderResult(new PaymentOrderCallback() {
             @Override
-            public void callbackPaymentOrder(  Orders orderList) {
-                pagerThreeView.sendDataToOrderPage(  orderList);
+            public void callbackPaymentOrder( String result) {
+                pagerThreeView.sendDataToOrderPage(  result);
             }
         });
     }

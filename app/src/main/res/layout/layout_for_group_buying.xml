@@ -128,7 +128,7 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/tv_auction_startPrice"
             android:layout_below="@+id/tv_auction_number"
-            android:text="总量"
+            android:text="团购总量"
             android:layout_marginTop="@dimen/x1"
             android:layout_marginLeft="@dimen/x35"
             />

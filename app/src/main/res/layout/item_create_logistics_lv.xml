@@ -88,7 +88,7 @@
                 android:layout_height="wrap_content"
                 android:text="产品名称 : "
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/x170"/>
+                android:layout_marginLeft="@dimen/x120"/>
             <TextView
                 android:id="@+id/tv_item_create_logistics_lv_produce_name"
                 android:layout_width="wrap_content"
@@ -120,7 +120,7 @@
                 android:layout_height="wrap_content"
                 android:text="产品单价(元/吨): "
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/x170"/>
+                android:layout_marginLeft="@dimen/x120"/>
             <TextView
                 android:id="@+id/tv_item_create_logistics_lv_produce_price_money"
                 android:layout_width="wrap_content"
@@ -152,7 +152,7 @@
                 android:layout_height="wrap_content"
                 android:text="交货时间 : "
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/x170"/>
+                android:layout_marginLeft="@dimen/x120"/>
             <TextView
                 android:id="@+id/tv_item_create_logistics_lv_date"
                 android:layout_width="wrap_content"

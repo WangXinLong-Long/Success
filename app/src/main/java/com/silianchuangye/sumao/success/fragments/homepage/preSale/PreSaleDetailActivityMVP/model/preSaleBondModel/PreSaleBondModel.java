@@ -25,11 +25,11 @@ public class PreSaleBondModel implements IPreSaleBondModel{
         RequestParams rp = new RequestParams(url);
         rp.addParameter("productId", productId);
 //        rp.addParameter("skuId", skuId);
-        LogUtils.log("预售的获取银行列表的URL---->" + rp);
+        LogUtils.log("支付保证金的获取银行列表的URL---->" + rp);
         x.http().post(rp, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                LogUtils.log("预售的获取银行列表的result---->" + result);
+                LogUtils.log("支付保证金的获取银行列表的result---->" + result);
                 callback.callbakcPreSale(result);
 
             }

@@ -34,7 +34,7 @@ public class PaymentSecurityModel implements IPaymentSecurityModel {
         params.addParameter("quantity", quantity);//保证金
         params.addParameter("_dynSessConf", _dynSessConf);
         params.addParameter("paymentPlatform", paymentPlatform);
-
+        LogUtils.log("支付保证金RUL--->"+params);
         x.http().post(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {

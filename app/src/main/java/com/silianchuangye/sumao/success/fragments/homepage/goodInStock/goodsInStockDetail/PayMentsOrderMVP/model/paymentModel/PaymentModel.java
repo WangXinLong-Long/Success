@@ -34,7 +34,7 @@ public class PaymentModel implements IPaymentModel {
             @Override
             public void onSuccess(String result) {
                 LogUtils.log("支付返回的值---->"+result);
-                callback.callbakcPayment(result);
+                callback.callbakcPayment(result, orderIds);
             }
 
             @Override

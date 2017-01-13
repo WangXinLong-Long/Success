@@ -2,8 +2,6 @@ package com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInS
 
 import android.util.Log;
 
-import com.google.gson.Gson;
-import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.bean.Orders;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
 import org.xutils.common.Callback;
@@ -34,10 +32,8 @@ public class PaymentOrderModel implements IPaymentOrderModel {
                 @Override
                 public void onSuccess(String result) {
                     Log.d("提交订单的result--->", result);
-                    Gson gson = new Gson();
-                    Orders orderList = gson.fromJson(result, Orders.class);
 
-                    callback.callbackPaymentOrder(  orderList);
+                    callback.callbackPaymentOrder(  result);
 
 
                 }

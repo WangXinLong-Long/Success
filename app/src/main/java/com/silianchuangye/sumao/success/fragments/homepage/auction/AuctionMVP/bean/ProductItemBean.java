@@ -7,36 +7,45 @@ import java.io.Serializable;
  */
 
 public  class ProductItemBean implements Serializable{
+
     /**
-     * startDate : 1479873000000
-     * wareHouse : 上海阳超库
-     * status : 0
-     * skuId : sku990005
-     * endDate : 1479970800000
-     * quantity : 111
+     * id : prod1510002
+     * startDate : 1482722100000
+     * cl_zongliang : 100
+     * cl_mingcheng : 兰化7042
+     * status : 2
+     * cl_qipai : 10
+     * cl_cangku : 保定库
+     * endDate : 1482722469060
+     * cl_gongsi : 北京橡胶
      * type : englishAuctionProduct
-     * productName : 三菱M7026U
-     * supplier : 中国石油天然气股份有限公司西北化工销售分公司
-     * productId : prod1080006
+     * List : [{"@class":"com.sumao.commerce.product.bean.AuctionBean","max":"16.0","min":"12.0","pNumber":"2","quty":"100.0"}]
      */
 
-    private String startDate;
-    private String wareHouse;
-    private String status;
-    private String skuId;
+    private String productId;
+    private String productName;
     private String endDate;
     private String quantity;
-    private String type;
-    private String productName;
+    private String wareHouse;
     private String supplier;
-    private String productId;
+    private String status;
+    private String type;
+    private String startDate;
 
-    public String getStartDate() {
-        return startDate;
+    public String getProductId() {
+        return productId;
     }
 
-    public void setStartDate(String startDate) {
-        this.startDate = startDate;
+    public void setProductId(String productId) {
+        this.productId = productId;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
     public String getEndDate() {
@@ -63,20 +72,20 @@ public  class ProductItemBean implements Serializable{
         this.wareHouse = wareHouse;
     }
 
+    public String getSupplier() {
+        return supplier;
+    }
+
+    public void setSupplier(String supplier) {
+        this.supplier = supplier;
+    }
+
     public String getStatus() {
         return status;
     }
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public String getSkuId() {
-        return skuId;
-    }
-
-    public void setSkuId(String skuId) {
-        this.skuId = skuId;
     }
 
     public String getType() {
@@ -87,27 +96,11 @@ public  class ProductItemBean implements Serializable{
         this.type = type;
     }
 
-    public String getProductName() {
-        return productName;
+    public String getStartDate() {
+        return startDate;
     }
 
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
-
-    public String getSupplier() {
-        return supplier;
-    }
-
-    public void setSupplier(String supplier) {
-        this.supplier = supplier;
-    }
-
-    public String getProductId() {
-        return productId;
-    }
-
-    public void setProductId(String productId) {
-        this.productId = productId;
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
     }
 }

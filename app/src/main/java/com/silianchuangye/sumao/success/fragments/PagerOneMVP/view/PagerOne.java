@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
@@ -31,14 +32,15 @@ import com.silianchuangye.sumao.success.fragments.PagerOneMVP.bean.AnnouncementB
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.bean.ApplicationBean;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.bean.BannerBean;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.bean.ClassificationBean;
+import com.silianchuangye.sumao.success.fragments.PagerOneMVP.bean.SupplierBean;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.presenter.PagerOnePresenter;
 import com.silianchuangye.sumao.success.fragments.SearchActivityMVP.view.SearchActivity;
 import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.bean.UpstreamDirectorySellingBean;
 import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.view.UpstreamDirectSellingActivity;
-import com.silianchuangye.sumao.success.fragments.homepage.auction.AuctionMVP.AuctionActivity;
+import com.silianchuangye.sumao.success.fragments.homepage.auction.AuctionMVP.view.AuctionActivity;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.bean.GoodsInStockActivityBean;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.view.GoodsInStockActivity;
-import com.silianchuangye.sumao.success.fragments.homepage.groupbuying.GroupBuyingActivity;
+import com.silianchuangye.sumao.success.fragments.homepage.groupbuying.GroupBuyingMVP.view.GroupBuyingActivity;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleMVP.bean.Auction;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleMVP.bean.Forward;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleMVP.bean.Group;
@@ -47,6 +49,8 @@ import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.LoginUser
 import com.silianchuangye.sumao.success.utils.Loding;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.MarqueeView;
+import com.silianchuangye.sumao.success.utils.ThreeLevelLindage.Area;
+import com.silianchuangye.sumao.success.utils.ThreeLevelLindage.DBHelper;
 import com.silianchuangye.sumao.success.utils.scrollviewAD.MyGallery;
 
 import org.json.JSONArray;
@@ -55,12 +59,11 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 /**
- * Created by Administrator on 2016/4/20 0020.
+ * Created by Jobs on 2016/4/20 0020.
  */
 public class PagerOne extends BasePager implements IPagerOneView {
     private LinearLayout layouticon;
@@ -97,6 +100,9 @@ public class PagerOne extends BasePager implements IPagerOneView {
     private GridView applicationDetail;
     private GoodsInStockActivityBean goodsInStockActivityBean;
     private ClassificationBean classificationBean;
+    private ApplicationBean applicationBean;
+    private SupplierBean supplierBean;
+    private GridView supplierDetail;
 
     @Override
     public void myClickSearch() {
@@ -171,10 +177,11 @@ public class PagerOne extends BasePager implements IPagerOneView {
                     String categoryNames = null;
                     String appNames = null;
                     String gradeNums = null;
+                    String groups = null;
                     String pageNum = "1";
                     String updateOrLoad = "update";
-                    pagerOnePresenter.getGoodsInStockInfo(pattern, regions, provinces, cities,
-                            categoryNames, appNames, gradeNums, pageNum,updateOrLoad);
+                    pagerOnePresenter.getGoodsInStockInfo(groups,pattern, regions, provinces, cities,
+                            categoryNames, appNames, gradeNums, pageNum, updateOrLoad);
 
                 } else if (list.get(position).get("icon").equals(R.mipmap.presell)) {
                     //Toast.makeText(mActivity, "点击了预售按钮", Toast.LENGTH_SHORT).show();
@@ -188,15 +195,13 @@ public class PagerOne extends BasePager implements IPagerOneView {
                     String gradeNums = null;
                     String pageNum = "1";
                     pagerOnePresenter.getPreSaleInfo(pattern, regions, provinces, cities,
-                            categoryNames, appNames, gradeNums, pageNum,"update");
+                            categoryNames, appNames, gradeNums, pageNum, "update");
 
                 } else if (list.get(position).get("icon").equals(R.mipmap.adwords)) {
                     //Toast.makeText(mActivity, "点击了竞拍按钮", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(mActivity, AuctionActivity.class);
-                    intent.putExtra("name", "竞拍");
-                    intent.putExtra("sellerCompanyId", "no");
-                    // startActivity(intent);
-                    startActivityForResult(intent, 1);
+                    String pageNum = 1 + "";
+                    pagerOnePresenter.getAuctionListResult(pageNum, "update");
+
                 } else if (list.get(position).get("icon").equals(R.mipmap.order)) {
                     Toast.makeText(mActivity, "点击了点价按钮", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(mActivity, MidpointsListctivity.class);
@@ -208,7 +213,6 @@ public class PagerOne extends BasePager implements IPagerOneView {
 //                    unique
                     Loding.show(mActivity, "加载中...", true, null);
                     pagerOnePresenter.getUpstreamDirectSellingInfo(uniqued);
-
                 } else if (list.get(position).get("icon").equals(R.mipmap.aa)) {
                     Toast.makeText(mActivity, "点击了物流按钮", Toast.LENGTH_SHORT).show();
 //                    联系客服跳转示例
@@ -234,7 +238,11 @@ public class PagerOne extends BasePager implements IPagerOneView {
 
 //        应用的GridView
         applicationDetail = ((GridView) view.findViewById(R.id.application_detail));
-        pagerOnePresenter.getGridViewData();
+
+//        供应商的GridView
+        supplierDetail = ((GridView) view.findViewById(R.id.supplier_detail));
+
+        pagerOnePresenter.getClassification("现货");
 
     }
 
@@ -318,17 +326,24 @@ public class PagerOne extends BasePager implements IPagerOneView {
     //获取到图片存放的路径，分别进行网络请求
     @Override
     public void setPagerOneBannerDataInFragment(BannerBean bannerBean) {
-        banners = new ArrayList<>();
-
-        banners.add(bannerBean.getImageUrl1());
-        banners.add(bannerBean.getImageUrl2());
-        banners.add(bannerBean.getImageUrl3());
-        LogUtils.log("PagerOne-->" + banners);
-        Iterator<String> stringIterator = banners.iterator();
-        while (stringIterator.hasNext()) {
-//            LogUtils.log("PagerOne-->"+stringIterator.next());
-            pagerOnePresenter.getPictureFromServerToPagerOneFragment(stringIterator.next());
-        }
+//        TODO 注释掉这些
+        LogUtils.log("添加三张静态图片--->");
+        listDrawable.add(BitmapFactory.decodeResource(getResources(), R.mipmap.carousel_figure1));
+        listDrawable.add(BitmapFactory.decodeResource(getResources(), R.mipmap.carousel_figure2));
+        listDrawable.add(BitmapFactory.decodeResource(getResources(), R.mipmap.carousel_figure3));
+        gallery.setAdapter(new ImageAdapter(mActivity, listDrawable));
+        InitFocusIndicatorContainer();
+//        TODO 网络图片放开底下的就行
+//        banners = new ArrayList<>();
+//
+//        banners.add(bannerBean.getImageUrl1());
+//        banners.add(bannerBean.getImageUrl2());
+//        banners.add(bannerBean.getImageUrl3());
+//        LogUtils.log("PagerOne-->" + banners);
+//        Iterator<String> stringIterator = banners.iterator();
+//        while (stringIterator.hasNext()) {
+//        pagerOnePresenter.getPictureFromServerToPagerOneFragment(stringIterator.next());
+//        }
 
     }
 
@@ -339,6 +354,9 @@ public class PagerOne extends BasePager implements IPagerOneView {
     @Override
     public void savePictureInPagerOneCollection(Drawable result) {
         LogUtils.log("PagerOne-->添加第" + i++ + "张图片");
+        listDrawable.add(BitmapFactory.decodeResource(getResources(), R.mipmap.carousel_figure1));
+        listDrawable.add(BitmapFactory.decodeResource(getResources(), R.mipmap.carousel_figure2));
+        listDrawable.add(BitmapFactory.decodeResource(getResources(), R.mipmap.carousel_figure3));
         BitmapDrawable bd = (BitmapDrawable) result;
         listDrawable.add(bd.getBitmap());
         if (banners.size() == listDrawable.size()) {
@@ -350,18 +368,39 @@ public class PagerOne extends BasePager implements IPagerOneView {
 
     //把请求下的数据放置到现货界面
     @Override
-    public void setDataInActivity(GoodsInStockActivityBean goodsInStockActivityBean,String updateOrLoad) {
+    public void setDataInActivity(GoodsInStockActivityBean goodsInStockActivityBean, String updateOrLoad) {
 //        Loding.dis();
-        pagerOnePresenter.getClassification("现货");
-        this.goodsInStockActivityBean = goodsInStockActivityBean;
+        String transactionType = "现货";
+        Intent intent = new Intent(mActivity, GoodsInStockActivity.class);
+        if (transactionType.equals("现货")) {
+            intent.putExtra("title", "现货");
+        } else if (transactionType.equals("预售")) {
+            intent.putExtra("title", "预售");
+        }
+        intent.putExtra("goodsInStockActivityBean", goodsInStockActivityBean);
+        intent.putExtra("classificationBean", classificationBean);
+        intent.putExtra("applicationBean", applicationBean);
+        intent.putExtra("supplierBean", supplierBean);
+        startActivity(intent);
     }
 
     //把请求下的数据放置到预售界面
     @Override
-    public void setPreSaleDataInActivity(GoodsInStockActivityBean goodsInStockActivityBean,String updateOrLoad) {
+    public void setPreSaleDataInActivity(GoodsInStockActivityBean goodsInStockActivityBean, String updateOrLoad) {
+        Loding.dis();
         pagerOnePresenter.getClassification("预售");
-        this.goodsInStockActivityBean = goodsInStockActivityBean;
-
+        String transactionType = "预售";
+        Intent intent = new Intent(mActivity, GoodsInStockActivity.class);
+        if (transactionType.equals("现货")) {
+            intent.putExtra("title", "现货");
+        } else if (transactionType.equals("预售")) {
+            intent.putExtra("title", "预售");
+        }
+        intent.putExtra("goodsInStockActivityBean", goodsInStockActivityBean);
+        intent.putExtra("classificationBean", classificationBean);
+        intent.putExtra("applicationBean", applicationBean);
+        intent.putExtra("supplierBean", supplierBean);
+        startActivity(intent);
 
     }
 
@@ -380,54 +419,61 @@ public class PagerOne extends BasePager implements IPagerOneView {
     @Override
     public void setGrideViewDataInActivity() {
         //        TODO  设置适配器
+
+    }
+
+    @Override
+    public void getClassificationData(ClassificationBean classificationBean, String transactionType) {
+        this.classificationBean = classificationBean;
+        pagerOnePresenter.getSupplier(transactionType);
+
+
+    }
+
+    @Override
+    public void getApplicationData(ApplicationBean applicationBean, String transactionType) {
+
+        ArrayList<Area> provinceList = new DBHelper(getActivity().getApplicationContext()).getProvince();
+//        Loding.dis();
+        this.applicationBean = applicationBean;
         List<String> areaList = new ArrayList<>();
         List<String> classificationList = new ArrayList<>();
         List<String> applicationList = new ArrayList<>();
-        for (int i = 0; i < 2; i++) {
-            areaList.add("地区" + i);
-            classificationList.add("分类" + i + "适配器案发安达");
-            applicationList.add("应用" + i + "适配器案发安达");
+        List<String>  supplierBeanList = new ArrayList<>();
+        for (int i = 0; i < classificationBean.getIn_flname().size(); i++) {
+            classificationList.add(classificationBean.getIn_flname().get(i));
+        }
+        for (int i = 0; i < applicationBean.getIn_yyname().size(); i++) {
+            applicationList.add(applicationBean.getIn_yyname().get(i));
+        }
+        for (int i = 0; i < provinceList.size(); i++) {
+            areaList.add(provinceList.get(i).getName());
+        }
+        for (int i = 0; i < supplierBean.getIn_gysname().size(); i++) {
+            supplierBeanList.add(supplierBean.getIn_gysname().get(i));
         }
         TextGrideViewAdapter areaAdapter = new TextGrideViewAdapter(areaList, getActivity());
         TextGrideViewAdapter classificationAdapter = new TextGrideViewAdapter(classificationList, getActivity());
         TextGrideViewAdapter applicationAdapter = new TextGrideViewAdapter(applicationList, getActivity());
+        TextGrideViewAdapter supplierAdapter = new TextGrideViewAdapter(supplierBeanList, getActivity());
+
         areaGridView.setAdapter(areaAdapter);
         classificationGridView.setAdapter(classificationAdapter);
 //        应用的GridView
         applicationDetail.setAdapter(applicationAdapter);
-        areaGridView.setOnItemClickListener(new MyAdapterItemClickListener(getActivity(), areaList));
-        classificationGridView.setOnItemClickListener(new MyAdapterItemClickListener(getActivity(), classificationList));
-        applicationDetail.setOnItemClickListener(new MyAdapterItemClickListener(getActivity(), applicationList));
+//        供应商的GrideView
+        supplierDetail.setAdapter(supplierAdapter);
+
+        areaGridView.setOnItemClickListener(new MyAdapterItemClickListener(getActivity(), areaList, pagerOnePresenter));
+        classificationGridView.setOnItemClickListener(new MyAdapterItemClickListener(getActivity(), classificationList, pagerOnePresenter));
+        applicationDetail.setOnItemClickListener(new MyAdapterItemClickListener(getActivity(), applicationList, pagerOnePresenter));
+        supplierDetail.setOnItemClickListener(new MyAdapterItemClickListener(getActivity(), supplierBeanList, pagerOnePresenter));
     }
 
     @Override
-    public void getClassificationData(ClassificationBean classificationBean,String transactionType) {
-       this.classificationBean = classificationBean;
+    public void getSupplier(SupplierBean supplierBean,String transactionType) {
+        this.supplierBean = supplierBean;
         pagerOnePresenter.getApplication(transactionType);
-
-    }
-
-    @Override
-    public void getApplicationData(ApplicationBean applicationBean,String transactionType) {
-        Loding.dis();
-        Intent intent = new Intent(mActivity, GoodsInStockActivity.class);
-        if (transactionType.equals("现货")){
-        intent.putExtra("title", "现货");
-        }else if (transactionType.equals("预售")){
-//            Loding.dis();
-//            Intent intent = new Intent();
-            intent.putExtra("title", "预售");
-//            intent.setClass(mActivity, PreSale.class);
-//            intent.putExtra("preSaleActivityBean", goodsInStockActivityBean);
-//            startActivity(intent);
-        }
-
-
-
-        intent.putExtra("goodsInStockActivityBean", goodsInStockActivityBean);
-        intent.putExtra("classificationBean",classificationBean);
-        intent.putExtra("applicationBean",applicationBean);
-        startActivity(intent);
     }
 
     @Override
@@ -468,6 +514,29 @@ public class PagerOne extends BasePager implements IPagerOneView {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    //    竞拍
+    @Override
+    public void setAuctionListResult(String result, String updateOrLoad) {
+        Intent intent = new Intent(mActivity, AuctionActivity.class);
+        intent.putExtra("name", "竞拍");
+        intent.putExtra("result", result);
+        startActivityForResult(intent, 1);
+    }
+
+    //    GrideView 的筛选
+    @Override
+    public void setDataInSearchActivity(GoodsInStockActivityBean goodsInStockActivityBean, String updateOrLoad, String searchField) {
+        Loding.dis();
+        String transactionType = "现货";
+        Intent intent = new Intent(mActivity, GoodsInStockActivity.class);
+        intent.putExtra("title", searchField);
+        intent.putExtra("goodsInStockActivityBean", goodsInStockActivityBean);
+        intent.putExtra("classificationBean", classificationBean);
+        intent.putExtra("applicationBean", applicationBean);
+        intent.putExtra("supplierBean", supplierBean);
+        startActivity(intent);
     }
 
 

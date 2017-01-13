@@ -39,14 +39,14 @@ public class ContractFragment extends Fragment {
         contract_web_view = ((WebView) view.findViewById(R.id.contract_web_view));
         bundle = getArguments();
         contract = bundle.getString("contract");
-        LogUtils.log(contract+"-------WXL合同页fragment");
+        LogUtils.log(contract+"-------WXL合同页fragment--ContractFragment");
         settings = contract_web_view.getSettings();
         settings.setJavaScriptEnabled(true);
         settings.setBuiltInZoomControls(true);
         settings.setLoadWithOverviewMode(true);
         settings.setUseWideViewPort(true);
         settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
-        contract_web_view.loadUrl(SuMaoConstant.SUMAO_FILE_IP+contract);
+        contract_web_view.loadUrl(SuMaoConstant.SUMAO_CONTRACT_IP+contract);
         contract_web_view.setWebViewClient(new WebViewClient(){
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {

@@ -34,6 +34,7 @@ import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInSt
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.bean.Orders;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.presenter.GoodsInStockDetailPresenter;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.PayMentsOrderMVP.view.PaymentsOrder;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.LoginUserActivity;
 import com.silianchuangye.sumao.success.fragments.shoppingCart.dialog.Cart_MyDialog;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 
@@ -93,6 +94,7 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
     private EditText et_number;
     private TextView tv_jian;
     private TextView tv_jia;
+    private TextView purchase_quantity_et;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,10 +144,10 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
         tvName_auction = ((TextView) findViewById(R.id.tvName_auction));
 //        6000
         tvPrice_auction = ((TextView) findViewById(R.id.tvPrice_auction));
-//        积分规则
-        integral_rule = ((TextView) findViewById(R.id.integral_rule));
 //        剩余数量
         surplus_amount_et = ((TextView) findViewById(R.id.surplus_amount_et));
+//        起购量
+        purchase_quantity_et = ((TextView) findViewById(R.id.purchase_quantity_et));
 //        最小变量单位
         min_variable_et = ((TextView) findViewById(R.id.min_variable_et));
 //        交货时间
@@ -219,6 +221,10 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
                 String unique = sp.getString("unique", "");
                 if (unique.equals("false")) {
                     Toast.makeText(GoodsInStockDetailActivity.this, "请登录后进行操作", Toast.LENGTH_SHORT).show();
+                    Intent intent1  = new Intent(this, LoginUserActivity.class);
+                    intent1.putExtra("roles", "buyer");
+
+                    startActivity(intent1);
                 } else {
                     if (System.currentTimeMillis() > Long.parseLong(goodsInStockDetailBean.getCl_xiajiaend())
                             || System.currentTimeMillis() > Long.parseLong(goodsInStockDetailBean.getCl_shijianend())) {
@@ -234,7 +240,9 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
                 SharedPreferences sp1 = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
                 String unique1 = sp1.getString("unique", "");
                 if (unique1.equals("false")) {
-                    Toast.makeText(GoodsInStockDetailActivity.this, "请登录后进行操作", Toast.LENGTH_SHORT).show();
+                    Intent intent1  = new Intent(this, LoginUserActivity.class);
+                    intent1.putExtra("roles", "buyer");
+                    startActivity(intent1);
                 } else {
                     if (System.currentTimeMillis() > Long.parseLong(goodsInStockDetailBean.getCl_xiajiaend())
                             || System.currentTimeMillis() > Long.parseLong(goodsInStockDetailBean.getCl_shijianend())) {
@@ -349,18 +357,18 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
         tvName_auction.setText(goodsInStockDetailBean.getCl_mingcheng());
 //        6000
         tvPrice_auction.setText(goodsInStockDetailBean.getCl_jine() + "");
-//        积分规则
-        integral_rule.setText(goodsInStockDetailBean.getCl_jifen());
 //        剩余数量
         surplus_amount_et.setText(goodsInStockDetailBean.getCl_shuliang());
+//        起购量
+        purchase_quantity_et.setText(goodsInStockDetailBean.getCl_qigou()+"吨");
 //        最小变量单位
-        min_variable_et.setText(goodsInStockDetailBean.getCl_xiaobian() + "");
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日");
+        min_variable_et.setText(goodsInStockDetailBean.getCl_xiaobian() + "吨");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 //        release_date.setText(simpleDateFormat.format(Double.parseDouble(%获取到的数字%)));
 //        交货时间
         delivery_time_et.setText(simpleDateFormat.format(Double.parseDouble(goodsInStockDetailBean.getCl_shijian() + "")));
 //        交货结束时间
-        delivery_time_et_end.setText("-" + simpleDateFormat.format(Double.parseDouble(goodsInStockDetailBean.getCl_shijianend() + "")));
+        delivery_time_et_end.setText("至" + simpleDateFormat.format(Double.parseDouble(goodsInStockDetailBean.getCl_shijianend() + "")));
 //        仓库地址
         warehouse_address_et.setText(goodsInStockDetailBean.getCl_cangku() + "");
         StringBuilder sb = new StringBuilder();

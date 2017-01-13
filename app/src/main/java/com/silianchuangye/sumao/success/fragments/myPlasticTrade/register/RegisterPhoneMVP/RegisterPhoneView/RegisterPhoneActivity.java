@@ -2,8 +2,8 @@ package com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.Regis
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -18,7 +18,6 @@ import android.widget.Toast;
 import com.cloopen.rest.sdk.CCPRestSDK;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.RegisterActivity;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.RegisterFirmActivityMVP.view.RegisterFirmActivity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.RegisterPhone.CountDownTimerUtils;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.RegisterPhoneMVP.RegisterPhonePresenter.RegisterPhonePresenter;
 import com.silianchuangye.sumao.success.utils.LogUtils;
@@ -96,7 +95,7 @@ public class RegisterPhoneActivity extends AppCompatActivity implements IRegiste
 
                     Toast.makeText(RegisterPhoneActivity.this, "您输入的手机号不符合规则" + et_phone_register.getText().toString().length(), Toast.LENGTH_SHORT).show();
                 } else {
-                    mCountDownTimerUtils.start();
+
                     registerPhonePresenter.sendRegisterPhoneToServer(et_phone_register.getText().toString());
                 }
             }
@@ -105,17 +104,9 @@ public class RegisterPhoneActivity extends AppCompatActivity implements IRegiste
         tv_next_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (editText.getText().toString() == null || editText.getText().toString().equals("")
-                        || editText.getText().toString().isEmpty()) {
-                    Toast.makeText(RegisterPhoneActivity.this, "请输入验证码", Toast.LENGTH_SHORT).show();
-                } else if (yanzhen.equals(editText.getText().toString())) {
-                    Intent intent = new Intent(RegisterPhoneActivity.this, RegisterActivity.class);
-                    intent.putExtra("phone", et_phone_register.getText().toString());
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(RegisterPhoneActivity.this, "验证码错误", Toast.LENGTH_SHORT).show();
-                }
-
+                Intent intent = new Intent(RegisterPhoneActivity.this, RegisterActivity.class);
+                intent.putExtra("phone", et_phone_register.getText().toString());
+                startActivity(intent);
             }
         });
     }
@@ -157,6 +148,7 @@ public class RegisterPhoneActivity extends AppCompatActivity implements IRegiste
     public void getRegisterPhoneInfo(String results) {
 
         if (results.equals("true")) {
+            mCountDownTimerUtils.start();
             new Thread(new Runnable() {
                 @Override
                 public void run() {

@@ -80,6 +80,7 @@ public class UpstreamDirectSellingActivity extends AppCompatActivity implements 
         startActivity(intent);
     }
 
+
     @Override
     public void onClick(View v) {
         switch (v.getId()){

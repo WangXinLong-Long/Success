@@ -1,160 +1,168 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:orientation="vertical"
+    android:layout_height="wrap_content"
     android:background="#fff"
     android:descendantFocusability="blocksDescendants"
-    android:layout_height="wrap_content">
+    android:orientation="vertical">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/x40">
+<!--竞拍标示-->
         <ImageView
+            android:id="@+id/iv_auction_icon"
             android:layout_width="@dimen/x40"
             android:layout_height="@dimen/y35"
-            android:id="@+id/iv_auction_icon"
 
             />
+
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/tv_auction_name"
-            android:textSize="16sp"
-
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/x25"
+
             android:layout_marginTop="@dimen/x10"
-            android:textStyle="bold"
-            />
-
+            android:textSize="16sp"
+            android:textStyle="bold" />
+        <!--正在竞拍-->
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/tv_auction_time"
-            android:layout_marginTop="@dimen/x13"
-            android:textSize="14sp"
-
-            android:textColor="#29ABE2"
-            android:layout_marginRight="@dimen/x20"
-            android:layout_alignParentRight="true"
-            />
-        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/x20"
 
-           android:layout_toLeftOf="@+id/tv_auction_time"
+            android:layout_marginTop="@dimen/x13"
+            android:textColor="#29ABE2"
+            android:textSize="14sp" />
+        <!--正在竞拍的时间-->
+        <TextView
+            android:id="@+id/tv_auction_start"
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/x5"
             android:layout_marginTop="@dimen/x13"
+            android:layout_toLeftOf="@+id/tv_auction_time"
             android:textColor="#29ABE2"
-            android:textSize="14sp"
-            android:id="@+id/tv_auction_start"
-            />
+            android:textSize="14sp" />
+        <!--已经结束-->
         <ImageView
+            android:id="@+id/iv_auction_end"
             android:layout_width="@dimen/x70"
             android:layout_height="@dimen/x30"
-            android:id="@+id/iv_auction_end"
-
             android:layout_alignParentRight="true"
-            android:layout_marginTop="@dimen/x5"
             android:layout_marginRight="@dimen/x20"
-            />
+            android:layout_marginTop="@dimen/x5"
+            android:src="@mipmap/end"
+             />
     </RelativeLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/x1"
-        android:background="#d3d3d3"
-       android:layout_marginLeft="@dimen/x10"
+        android:layout_marginLeft="@dimen/x10"
         android:layout_marginRight="@dimen/x10"
-        ></RelativeLayout>
+        android:background="#d3d3d3"></RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/a"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/tv_auction_priceicon"
-            android:text="￥"
-            android:layout_marginLeft="@dimen/x30"
-            android:textColor="#EE2B33"
-            android:layout_marginTop="@dimen/x10"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            />
-        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/x30"
+            android:layout_marginTop="@dimen/x10"
+            android:text="￥"
+            android:textColor="#EE2B33"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+<!--竞拍单价-->
+        <TextView
             android:id="@+id/tv_auction_price"
-            android:text="10000.0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/x5"
             android:layout_marginTop="@dimen/x10"
             android:layout_toRightOf="@+id/tv_auction_priceicon"
-            android:textSize="16sp"
+            android:text="~~"
             android:textColor="#EE2B33"
+            android:textSize="16sp"
 
             />
+<!--竞拍总量-->
         <TextView
+            android:id="@+id/tv_auction_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_auction_number"
-
-
             android:layout_marginLeft="@dimen/x120"
             android:layout_marginTop="@dimen/x10"
-            android:textSize="16sp"
             android:textColor="#111"
+            android:textSize="16sp"
 
             />
+
         <TextView
+            android:id="@+id/tv_auction_ton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_auction_ton"
-            android:text="吨"
-            android:layout_toRightOf="@+id/tv_auction_number"
-            android:layout_marginTop="@dimen/x12"
             android:layout_marginLeft="@dimen/x5"
+            android:layout_marginTop="@dimen/x12"
+            android:layout_toRightOf="@+id/tv_auction_number"
+            android:text="吨"
             android:textColor="#111"
             android:textSize="14sp"
 
             />
+
         <TextView
+            android:id="@+id/tv_auction_startPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/x33"
-            android:text="起拍价"
             android:layout_below="@+id/tv_auction_price"
+            android:layout_marginLeft="@dimen/x33"
             android:layout_marginTop="@dimen/x1"
-            android:id="@+id/tv_auction_startPrice"
+            android:text="竞拍单价"
 
             />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
             android:layout_below="@+id/tv_auction_number"
-            android:text="总量"
-            android:layout_marginTop="@dimen/x1"
             android:layout_marginLeft="@dimen/x124"
-            />
-        <Button
+            android:layout_marginTop="@dimen/x1"
+            android:text="竞拍总量" />
+        <!--参与竞拍-->
+        <TextView
+            android:id="@+id/bt_auctionitem"
             android:layout_width="@dimen/x80"
             android:layout_height="@dimen/x30"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="@dimen/x10"
             android:layout_marginRight="@dimen/x20"
-            android:text="参与竞拍"
+            android:layout_marginTop="@dimen/x10"
             android:background="#29ABE2"
+            android:gravity="center"
+            android:text="参与竞拍"
             android:textColor="#fff"
-            android:id="@+id/bt_auctionitem"
 
             />
     </RelativeLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/x1"
-        android:background="#d3d3d3"
         android:layout_marginLeft="@dimen/x10"
         android:layout_marginRight="@dimen/x10"
         android:layout_marginTop="@dimen/x3"
-        ></RelativeLayout>
+        android:background="#d3d3d3"></RelativeLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -162,52 +170,54 @@
         android:layout_marginTop="@dimen/x5">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/tv_auction_werhouse"
-            android:text="仓库:"
-            android:layout_marginLeft="@dimen/x20"
-            android:textSize="12sp"
-            />
-        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/x20"
+            android:text="仓库:"
+            android:textSize="12sp" />
+<!--仓库-->
+        <TextView
             android:id="@+id/tv_auction_acdress"
-            android:text="北京迅邦1号库"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/x5"
-            android:textSize="12sp"
             android:layout_toRightOf="@+id/tv_auction_werhouse"
-            />
+            android:text="北京迅邦1号库"
+            android:textSize="12sp" />
 
     </RelativeLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/x3"
-        >
+        android:layout_marginTop="@dimen/x3">
+
         <TextView
+            android:id="@+id/tv_auction_comm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_auction_comm"
-            android:textSize="12sp"
-            android:text="公司:"
             android:layout_marginLeft="@dimen/x20"
+            android:text="公司:"
+            android:textSize="12sp"
 
             />
+<!--公司-->
         <TextView
+            android:id="@+id/tv_auction_commAdress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_auction_commAdress"
-            android:textSize="12sp"
-            android:text="东莞市住友塑料有限公司"
-            android:layout_toRightOf="@+id/tv_auction_comm"
             android:layout_marginLeft="@dimen/x3"
+            android:layout_toRightOf="@+id/tv_auction_comm"
+            android:text="东莞市住友塑料有限公司"
+            android:textSize="12sp"
 
             />
     </RelativeLayout>
+
     <LinearLayout
-        android:layout_marginTop="@dimen/x5"
         android:layout_width="match_parent"
         android:layout_height="@dimen/x5"
+        android:layout_marginTop="@dimen/x5"
         android:background="#EEEEF3"></LinearLayout>
 </LinearLayout>

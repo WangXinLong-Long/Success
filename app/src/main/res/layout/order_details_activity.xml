@@ -51,7 +51,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/x70"
                 android:layout_below="@id/split_line1_order_details"
-                android:background="@mipmap/to_pay_the_picture" />
+                android:src="@mipmap/to_pay_the_picture" />
 
             <TextView
                 android:id="@+id/split_line3_order_details"
@@ -127,23 +127,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/univalent1"
-                    android:text="代售订单" />
+                    android:text="~~" />
 
-                <TextView
-                    android:id="@+id/number1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/x50"
-                    android:layout_toRightOf="@id/univalent2"
 
-                    android:text="订单状态:" />
-
-                <TextView
-                    android:id="@+id/number2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/number1"
-                    android:text="待支付" />
 
                 <TextView
                     android:id="@+id/enterprise1"
@@ -161,15 +147,30 @@
                     android:layout_below="@id/univalent1"
                     android:layout_toRightOf="@id/enterprise1"
                     android:paddingTop="@dimen/x5"
-                    android:text="2016-01-01 09:37" />
+                    android:text="下单时间" />
+                <TextView
+                    android:id="@+id/number1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/x5"
+                    android:layout_toRightOf="@id/enterprise2"
+
+                    android:text="订单状态:" />
+
+                <TextView
+                    android:id="@+id/number2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/number1"
+                    android:text="待支付" />
 
                 <TextView
                     android:id="@+id/totalMoney1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/univalent1"
-                    android:layout_marginLeft="@dimen/x50"
-                    android:layout_toRightOf="@id/univalent2"
+                    android:layout_marginLeft="@dimen/x5"
+                    android:layout_toRightOf="@id/enterprise2"
                     android:paddingTop="@dimen/x5"
 
                     android:text="订单金额:" />
@@ -181,7 +182,7 @@
                     android:layout_below="@id/univalent1"
                     android:layout_toRightOf="@id/totalMoney1"
                     android:paddingTop="@dimen/x5"
-                    android:text="88700元"
+                    android:text="~~元"
                     android:textColor="@color/red"
 
                     />
@@ -320,6 +321,7 @@
         </RelativeLayout>
     </ScrollView>
     <LinearLayout
+        android:id="@+id/total_money"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

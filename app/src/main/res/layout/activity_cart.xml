@@ -26,6 +26,7 @@
         android:id="@+id/relative_activity_cart_bottom"
         android:layout_marginTop="@dimen/x3"
         >
+        <!--这个是隐藏全选按钮-->
         <ImageView
             android:id="@+id/img_activity_cart_allselect"
             android:layout_width="@dimen/x20"

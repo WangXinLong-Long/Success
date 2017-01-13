@@ -298,6 +298,7 @@
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/layout_bb"
             android:id="@+id/ed_shuzhi_number"
+            android:inputType="numberDecimal"
             />
         <RelativeLayout
             android:layout_width="@dimen/x25"

@@ -1,11 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/my_sumao_background"
+    android:orientation="vertical">
+
+    <GridView
+        android:id="@+id/dateType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:horizontalSpacing="@dimen/x2"
+        android:numColumns="3"
+        android:verticalSpacing="@dimen/x2"
+        />
+
     <ListView
-        android:padding="@dimen/x5"
         android:id="@+id/list_view_data"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/x5"
+        />
 </LinearLayout>

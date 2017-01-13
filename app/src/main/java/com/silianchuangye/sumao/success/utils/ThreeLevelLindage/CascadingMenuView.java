@@ -80,7 +80,7 @@ public class CascadingMenuView extends RelativeLayout implements View.OnClickLis
         completed.setOnClickListener(this);
         reset.setOnClickListener(this);
 
-        firstMenuListViewAdapter = new MenuItemAdapter(context, menuItem, R.drawable.choose_item_selected, R.drawable.choose_eara_item_selector);
+        firstMenuListViewAdapter = new MenuItemAdapter(context, menuItem, R.drawable.button_back_blue, R.drawable.button_back_gray);
         firstMenuListViewAdapter.setTextSize(17);
         firstMenuListViewAdapter.setSelectedPositionNoNotify(firstPosition, menuItem);
         firstMenuListView.setAdapter(firstMenuListViewAdapter);
@@ -120,7 +120,7 @@ public class CascadingMenuView extends RelativeLayout implements View.OnClickLis
         secondItem = getSecondItem(menuItem.get(firstPosition).getCode());
         Log.d(TAG, secondItem.get(secondPosition).toString());
         thirdItem = getThirdItem(secondItem.get(secondPosition).getCode());
-        secondMenuListViewAdapter = new MenuItemAdapter(context, secondItem, R.drawable.choose_item_selected, R.drawable.choose_eara_item_selector);
+        secondMenuListViewAdapter = new MenuItemAdapter(context, secondItem, R.drawable.button_back_blue, R.drawable.button_back_gray);
         secondMenuListViewAdapter.setTextSize(15);
         secondMenuListViewAdapter.setSelectedPositionNoNotify(secondPosition, secondItem);
         secondMenuListView.setAdapter(secondMenuListViewAdapter);
@@ -145,7 +145,7 @@ public class CascadingMenuView extends RelativeLayout implements View.OnClickLis
 
 //        初始化三级主菜单
         thirdItem = getThirdItem(secondItem.get(secondPosition).getCode());
-        thirdMenuListViewAdapter = new MenuItemAdapter(context, thirdItem, R.drawable.choose_item_right, R.drawable.choose_plate_item_selector);
+        thirdMenuListViewAdapter = new MenuItemAdapter(context, thirdItem, R.drawable.button_back_blue, R.drawable.button_back_gray);
         thirdMenuListViewAdapter.setTextSize(13);
         thirdMenuListViewAdapter.setSelectedPositionNoNotify(thirdPosition, thirdItem);
         thirdMenuListView.setAdapter(thirdMenuListViewAdapter);

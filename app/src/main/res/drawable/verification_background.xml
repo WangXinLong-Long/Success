@@ -11,5 +11,5 @@
     <!-- 填充 -->
     <solid android:color="#fff"/>
     <!-- 描边 -->
-    <stroke android:color="#808080" android:width="2sp" />
+    <stroke android:color="#808080" android:width="1dp" />
 </shape>

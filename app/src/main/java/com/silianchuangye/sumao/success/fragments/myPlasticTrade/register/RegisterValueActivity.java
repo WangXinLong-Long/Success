@@ -1,12 +1,10 @@
 package com.silianchuangye.sumao.success.fragments.myPlasticTrade.register;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.provider.ContactsContract;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.text.method.PasswordTransformationMethod;
 import android.view.KeyEvent;
@@ -17,7 +15,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
@@ -28,6 +25,9 @@ import org.xutils.common.Callback;
 import org.xutils.http.HttpMethod;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class RegisterValueActivity extends AppCompatActivity {
     ImageView iv_title_bar_logo,
@@ -46,7 +46,7 @@ public class RegisterValueActivity extends AppCompatActivity {
     String content;
     String pass;
     String type;
-    String url = SuMaoConstant.SUMAO_IP+"/rest/model/atg/store/profile/RegistrationActor/userVerify";
+    String url = SuMaoConstant.SUMAO_IP + "/rest/model/atg/store/profile/RegistrationActor/userVerify";
     SharedPreferences sharePreference;
 
     @Override
@@ -64,14 +64,19 @@ public class RegisterValueActivity extends AppCompatActivity {
         title = bundle.getString("title");
         content = bundle.getString("content");
         pass = bundle.getString("pass");
-
+        LogUtils.log("title:" + title + " content:" + content + " pass:" + pass);
         if (!content.equals("6-16个字符")) {
             ed_content_value.setText(content);
         }
         title_Bar(title);
         if (!content.equals("")) {
             tv_a.setVisibility(View.VISIBLE);
-            tv_a.setText("6-16个字符,可由中英文,数字,'-','_'组成");
+            if (title.equals("企业名称")){
+                tv_a.setVisibility(View.GONE);
+            }else {
+                tv_a.setText("6-16个字符,可由中英文,数字,'-','_'组成");
+            }
+
         }
         if (title.equals("登录密码") || title.equals("确认密码")) {
             ed_content_value.setText(pass);
@@ -82,7 +87,9 @@ public class RegisterValueActivity extends AppCompatActivity {
             ed_content_value.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
         } else if (title.equals("地址详情")) {
             tv_a.setText("6-16个字符,可由中英文,数字,'-','_'组成");
-        } else {
+        } else if (title.equals("登录账号")){
+            tv_a.setText("登录账号不能为纯数字，不能包含特殊字符");
+        }else {
             tv_a.setText("6-16个字符,可由中英文,数字,'-','_'组成");
         }
 
@@ -90,6 +97,9 @@ public class RegisterValueActivity extends AppCompatActivity {
         bt_save_register_value.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String regEx = "[`~!@#$%^&*()_\\-+=|{}':;',\\[\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？\\s]";
+                Pattern p = Pattern.compile(regEx);
+                Matcher m = p.matcher(ed_content_value.getText().toString());
 //                需要进行网络请求
                 if (title.equals("登录账号")) {
                     type = "login";
@@ -102,7 +112,19 @@ public class RegisterValueActivity extends AppCompatActivity {
                     tv_a.setText(title + "不能为空");
                     tv_a.setTextColor(Color.RED);
                     LogUtils.log("tv_a------->" + tv_a.getText().toString() + "<---");
-                } else if (type == "login" || type == "mail") {
+                } else if (ed_content_value.getText().toString().length()<6){
+                    tv_a.setText("6-16个字符,可由中英文,数字组成");
+                    tv_a.setTextColor(Color.RED);
+
+                }else if (ed_content_value.getText().toString().matches("^[0-9]*$")){
+                    tv_a.setText("登录账号不能为纯数字，不能包含特殊字符");
+                    tv_a.setTextColor(Color.RED);
+
+                }else if (title.equals("登录账号")&&m.find()){
+                    tv_a.setText("登录账号不能为纯数字，不能包含特殊字符");
+                    tv_a.setTextColor(Color.RED);
+
+                }else if (type == "login" || type == "mail") {
                     toDetermineWhetherOrNotToRegister(type, ed_content_value.getText().toString().trim());
                 } else {
                     setResultW();
@@ -120,7 +142,7 @@ public class RegisterValueActivity extends AppCompatActivity {
 //        {"type":"login","attr":"本宝宝在此"}
         JSONObject json = new JSONObject();
         try {
-            json.put("type", "login");
+            json.put("type", type);
             json.put("attr", attr.trim());
         } catch (JSONException e) {
             e.printStackTrace();

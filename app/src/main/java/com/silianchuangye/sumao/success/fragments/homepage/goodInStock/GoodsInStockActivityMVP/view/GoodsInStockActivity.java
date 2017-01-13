@@ -19,6 +19,7 @@ import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.PreSaleAdapter;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.bean.ApplicationBean;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.bean.ClassificationBean;
+import com.silianchuangye.sumao.success.fragments.PagerOneMVP.bean.SupplierBean;
 import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.UpstreamDirectDetailMVP.bean.DirectSellingBean;
 import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.UpstreamDirectDetailMVP.bean.ProductItemBean;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.bean.GoodsInStockActivityBean;
@@ -47,7 +48,7 @@ import java.util.List;
  */
 public class GoodsInStockActivity extends Activity implements View.OnClickListener, AdapterView.OnItemClickListener, IGoodsInStockActivityView {
 
-    private RelativeLayout tradingPatterns;
+    private RelativeLayout supplierPatterns;
     private RelativeLayout region;
     private RelativeLayout classification;
     private RelativeLayout application;
@@ -76,6 +77,14 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
     String categoryNames = null;//分类
     String appNames = null;//应用
     String gradeNums = null;//牌号
+    String groups = null;//牌号
+    private TextView supplier_patterns_tv;//供应商
+    private TextView region_tv;//地区
+    private TextView classification_tv;//分类
+    private TextView application_tv;//应用
+    private ArrayList<String> supplier1;
+    private SupplierBean supplierBean;
+    private RelativeLayout selection_condition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,17 +92,22 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
         setContentView(R.layout.pager_one_grid_view_detail_activity);
         provinceList = dbHelper.getProvince();
         goodsInStockActivityPresenter = new GoodsInStockActivityPresenter(this);
-//        交易模式
-        tradingPatterns = ((RelativeLayout) findViewById(R.id.trading_patterns_rl));
-        tradingPatterns.setOnClickListener(this);
+        selection_condition = ((RelativeLayout) findViewById(R.id.selection_condition));
+//        供应商
+        supplierPatterns = ((RelativeLayout) findViewById(R.id.supplier_patterns_rl));
+        supplier_patterns_tv = ((TextView) findViewById(R.id.supplier_patterns_tv));
+        supplierPatterns.setOnClickListener(this);
 //        地区
         region = ((RelativeLayout) findViewById(R.id.region_rl));
+        region_tv = ((TextView) findViewById(R.id.region_tv));
         region.setOnClickListener(this);
 //        分类
         classification = ((RelativeLayout) findViewById(R.id.classification_rl));
+        classification_tv = ((TextView) findViewById(R.id.classification_tv));
         classification.setOnClickListener(this);
 //        应用
         application = ((RelativeLayout) findViewById(R.id.application_rl));
+        application_tv = ((TextView) findViewById(R.id.application_tv));
         application.setOnClickListener(this);
 
 //        筛选
@@ -107,33 +121,50 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
         tv_screen_title_bar_title = ((TextView) findViewById(R.id.tv_screen_title_bar_title));
         Intent intent = getIntent();
         String title = intent.getStringExtra("title");
-        tv_screen_title_bar_title.setText(title);
+        if (title.contains("分类") || title.contains("地区") || title.contains("应用") || title.contains("供应")) {
+            tv_screen_title_bar_title.setText(title.substring(2, title.length()));
+            if (title.contains("分类")) {
+                classification_tv.setText("交易模式");
+            } else if (title.contains("地区")) {
+                region_tv.setText("交易模式");
+            } else if (title.contains("应用")) {
+                application_tv.setText("交易模式");
+            } else if (title.contains("供应")) {
+                supplier_patterns_tv.setText("交易模式");
+            }
+        } else {
+            tv_screen_title_bar_title.setText(title);
+        }
+
 
         prl = ((PullToRefreshLayout) findViewById(R.id.refresh_view));
 
         pre_sale_listView = ((ListView) prl.getPullableView());
-        if (title.equals("现货")||title.equals("预售")) {
-            LogUtils.log("现货" + "--------------WXL");
+        if (title.equals("现货") || title.equals("预售")) {
             GoodsInStockActivityBean goodsInStockActivityBean = (GoodsInStockActivityBean) intent.getSerializableExtra("goodsInStockActivityBean");
             applicationBean = (ApplicationBean) intent.getSerializableExtra("applicationBean");
             classificationBean = ((ClassificationBean) intent.getSerializableExtra("classificationBean"));
+            supplierBean = ((SupplierBean) intent.getSerializableExtra("supplierBean"));
             smClList.addAll(goodsInStockActivityBean.getIn());
             LogUtils.log(smClList.size() + "--------------WXL");
             adapter = new PreSaleAdapter(this);
             pre_sale_listView.setAdapter(adapter);
             adapter.addData(smClList);
             adapter.notifyDataSetChanged();
+            initData();
         } else {
+            selection_condition.setVisibility(View.GONE);
             smClList = new ArrayList<GoodsInStockActivityBean.InBean>();
             DirectSellingBean directSellingBean = ((DirectSellingBean) intent.getSerializableExtra("directSellingBean"));
             List<ProductItemBean> productItem = directSellingBean.getProductItem();
             for (int i = 0; i < productItem.size(); i++) {
                 GoodsInStockActivityBean.InBean smCl = new GoodsInStockActivityBean.InBean();
+                smCl.setIn_leixing(productItem.get(i).getType());
+                smCl.setIn_id(productItem.get(i).getProductId());
                 smCl.setIn_cangku(productItem.get(i).getWareHouse());
-                smCl.setIn_cpid(productItem.get(i).getProductId());
-//                TODO 差价格参数
+                smCl.setIn_cpid(productItem.get(i).getSkuId());
+//                TODO 差价格参数、刷新出来的是现货的数据
                 smCl.setIn_prix(productItem.get(i).getProductId());
-
                 smCl.setIn_name(productItem.get(i).getProductName());
                 smCl.setIn_qiye(productItem.get(i).getSalerEnterpriseName());
                 smCl.setIn_num(productItem.get(i).getQuantity());
@@ -147,29 +178,48 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
         prl.setOnPullListener(new PagerOneGoodsInStockActivityListPullListener(/*goodsInStockActivityPresenter, pattern, regions, provinces, cities,
                 categoryNames, appNames, gradeNums*/));
         pre_sale_listView.setOnItemClickListener(this);
-        initData();
+
 
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-//            交易模式
-            case R.id.trading_patterns_rl:
+//            供应商
+            case R.id.supplier_patterns_rl:
 //                这里填写类型（交易模式、分类、应用、牌号）
-                showTradingPatternPopupWindow("trading", datas);
+                if (supplier_patterns_tv.getText().toString().equals("交易模式")) {
+                    showTradingPatternPopupWindow("trading", datas);
+                } else {
+                    showTradingPatternPopupWindow("supplier", supplier1);
+                }
+
                 break;
 //            地区
             case R.id.region_rl:
-                showPopMenu();
+                if (region_tv.getText().toString().equals("交易模式")) {
+                    showTradingPatternPopupWindow("trading", datas);
+                } else {
+                    showPopMenu();
+                }
+
                 break;
 //            分类
             case R.id.classification_rl:
-                showTradingPatternPopupWindow("classification", classification1);
+                if (classification_tv.getText().toString().equals("交易模式")) {
+                    showTradingPatternPopupWindow("trading", datas);
+                } else {
+                    showTradingPatternPopupWindow("classification", classification1);
+                }
+
                 break;
 //            应用
             case R.id.application_rl:
-                showTradingPatternPopupWindow("application", application1);
+                if (application_tv.getText().toString().equals("交易模式")) {
+                    showTradingPatternPopupWindow("trading", datas);
+                } else {
+                    showTradingPatternPopupWindow("application", application1);
+                }
                 break;
 
 //            筛选
@@ -187,11 +237,11 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
             multiselectPopupWindow = new MultiselectPopupWindow(getApplicationContext(), datas, type);
             multiselectPopupWindow.setOnClickCompleteListener(new CompleteClickListener());
             multiselectPopupWindow.setFocusable(true);
-            multiselectPopupWindow.showAsDropDown(tradingPatterns, 5, 5);
+            multiselectPopupWindow.showAsDropDown(supplierPatterns, 5, 5);
         } else if (multiselectPopupWindow != null && multiselectPopupWindow.isShowing()) {
             multiselectPopupWindow.dismiss();
         } else {
-            multiselectPopupWindow.showAsDropDown(tradingPatterns, 5, 5);
+            multiselectPopupWindow.showAsDropDown(supplierPatterns, 5, 5);
         }
     }
 
@@ -234,7 +284,7 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
             regions = provinceId;
             provinces = cityId;
             cities = countyId;
-            goodsInStockActivityPresenter.getGoodsInStockInfo(pattern, regions, provinces, cities,
+            goodsInStockActivityPresenter.getGoodsInStockInfo(groups, pattern, regions, provinces, cities,
                     categoryNames, appNames, gradeNums, "1", "update");
         }
     }
@@ -249,23 +299,23 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
                 String trading = selectItems.toString();
                 StringBuffer sb = new StringBuffer();
                 if (trading.contains("现货")) {
-                    if (sb.toString().equals("")){
+                    if (sb.toString().equals("")) {
                         sb.append("fixedProduct");
-                    }else {
+                    } else {
                         sb.append("&fixedProduct");
                     }
                 }
-                if (trading.contains("预售")){
-                    if (sb.toString().equals("")){
+                if (trading.contains("预售")) {
+                    if (sb.toString().equals("")) {
                         sb.append("forward-pricing-product");
-                    }else {
+                    } else {
                         sb.append("&forward-pricing-product");
                     }
                 }
                 pattern = sb.toString();
                 Toast.makeText(GoodsInStockActivity.this, "" + pattern, Toast.LENGTH_SHORT).show();
-                goodsInStockActivityPresenter.getGoodsInStockInfo(pattern, regions, provinces, cities,
-                    categoryNames, appNames, gradeNums, "1", "update");
+                goodsInStockActivityPresenter.getGoodsInStockInfo(groups, pattern, regions, provinces, cities,
+                        categoryNames, appNames, gradeNums, "1", "update");
             } else if (type.equals("classification")) {
                 StringBuffer stringBuffer2 = new StringBuffer();
 
@@ -279,7 +329,7 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
                 }
                 categoryNames = stringBuffer2.toString();
                 Toast.makeText(GoodsInStockActivity.this, categoryNames, Toast.LENGTH_SHORT).show();
-                goodsInStockActivityPresenter.getGoodsInStockInfo(pattern, regions, provinces, cities,
+                goodsInStockActivityPresenter.getGoodsInStockInfo(groups, pattern, regions, provinces, cities,
                         categoryNames, appNames, gradeNums, "1", "update");
             } else if (type.equals("application")) {
                 StringBuffer stringBuffer3 = new StringBuffer();
@@ -294,7 +344,22 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
                 }
                 appNames = stringBuffer3.toString();
                 Toast.makeText(GoodsInStockActivity.this, "" + appNames, Toast.LENGTH_SHORT).show();
-                goodsInStockActivityPresenter.getGoodsInStockInfo(pattern, regions, provinces, cities,
+                goodsInStockActivityPresenter.getGoodsInStockInfo(groups, pattern, regions, provinces, cities,
+                        categoryNames, appNames, gradeNums, "1", "update");
+            } else if (type.equals("supplier")) {
+                StringBuffer stringBuffer3 = new StringBuffer();
+
+                for (int i = 0; i < selectItems.size(); i++) {
+                    if (i == selectItems.size() - 1) {
+                        stringBuffer3.append(selectItems.get(i));
+                    } else {
+                        stringBuffer3.append(selectItems.get(i));
+                        stringBuffer3.append("&");
+                    }
+                }
+                groups = stringBuffer3.toString();
+                Toast.makeText(GoodsInStockActivity.this, "" + groups, Toast.LENGTH_SHORT).show();
+                goodsInStockActivityPresenter.getGoodsInStockInfo(groups, pattern, regions, provinces, cities,
                         categoryNames, appNames, gradeNums, "1", "update");
             }
         }
@@ -303,10 +368,10 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
     //    筛选的完成按钮的动作
     class ScreenCompleteClickListener implements ScreenMultiselectPopupWindowCompleteClickListener {
         @Override
-        public void getSelectionValues(List<String> regionSelectItems, List<String> classifcationSelectItems, List<String> applicationSelectItems,String grade) {
+        public void getSelectionValues(List<String> regionSelectItems, List<String> classifcationSelectItems, List<String> applicationSelectItems, String grade) {
 
             Toast.makeText(GoodsInStockActivity.this, "search" + "地区:" + regionSelectItems + "   分类:" + classifcationSelectItems + "   应用:" + applicationSelectItems, Toast.LENGTH_SHORT).show();
-            if (regionSelectItems.size() != 0){
+            if (regionSelectItems.size() != 0) {
                 StringBuffer stringBuffer2 = new StringBuffer();
 
                 for (int i = 0; i < regionSelectItems.size(); i++) {
@@ -319,7 +384,7 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
                 }
                 regions = stringBuffer2.toString();
             }
-            if (classifcationSelectItems.size() != 0){
+            if (classifcationSelectItems.size() != 0) {
                 StringBuffer stringBuffer2 = new StringBuffer();
 
                 for (int i = 0; i < classifcationSelectItems.size(); i++) {
@@ -332,7 +397,7 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
                 }
                 categoryNames = stringBuffer2.toString();
             }
-             if (applicationSelectItems.size() != 0){
+            if (applicationSelectItems.size() != 0) {
                 StringBuffer stringBuffer2 = new StringBuffer();
 
                 for (int i = 0; i < applicationSelectItems.size(); i++) {
@@ -343,10 +408,10 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
                         stringBuffer2.append("&");
                     }
                 }
-                 appNames = stringBuffer2.toString();
+                appNames = stringBuffer2.toString();
             }
             gradeNums = grade;
-            goodsInStockActivityPresenter.getGoodsInStockInfo(pattern, regions, provinces, cities,
+            goodsInStockActivityPresenter.getGoodsInStockInfo(groups, pattern, regions, provinces, cities,
                     categoryNames, appNames, gradeNums, "1", "update");
         }
 
@@ -375,27 +440,27 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
     }
 
     @Override
-    public void getPreSaleDetailData(PreSaleDetailBean preSaleDetailBean,String skuId) {
+    public void getPreSaleDetailData(PreSaleDetailBean preSaleDetailBean, String skuId) {
         Intent intent = new Intent();
-        intent.putExtra("preSaleDetailBean",preSaleDetailBean);
-        intent.putExtra("skuId",skuId);
+        intent.putExtra("preSaleDetailBean", preSaleDetailBean);
+        intent.putExtra("skuId", skuId);
         intent.setClass(this, PreSaleDetailActivity.class);
         startActivity(intent);
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (smClList.get(position).getIn_leixing().equals("现货")){
+        if (smClList.get(position).getIn_leixing().equals("现货")||smClList.get(position).getIn_leixing().equals("fixedProduct")) {
             String cl_id = smClList.get(position).getIn_id();
-            Toast.makeText(this, "走现货,id为"+cl_id, Toast.LENGTH_SHORT).show();
-            LogUtils.log("走现货,id为"+cl_id);
+            Toast.makeText(this, "走现货,id为" + cl_id, Toast.LENGTH_SHORT).show();
+            LogUtils.log("走现货,id为" + cl_id);
             goodsInStockActivityPresenter.getGoodInStockDetailInfo(cl_id);
-        }else {
+        } else if (smClList.get(position).getIn_leixing().equals("预售")){
             Toast.makeText(this, "走预售", Toast.LENGTH_SHORT).show();
             String productId = smClList.get(position).getIn_id();
             String skuId = smClList.get(position).getIn_cpid();
             String cl_jiner = smClList.get(position).getIn_prix();
-            goodsInStockActivityPresenter.getPreSaleDetailInfo(productId,skuId,cl_jiner);
+            goodsInStockActivityPresenter.getPreSaleDetailInfo(productId, skuId, cl_jiner);
         }
 
     }
@@ -406,19 +471,20 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
 
         @Override
         public void getSelectionProvinceCityCounty(String provinceId, String cityId) {
-            if (cityId.equals("")){
+            if (cityId.equals("")) {
                 cityId = null;
             }
 
             regions = provinceId;
             provinces = cityId;
-            goodsInStockActivityPresenter.getGoodsInStockInfo(pattern, regions, provinces, cities,
+            goodsInStockActivityPresenter.getGoodsInStockInfo(groups, pattern, regions, provinces, cities,
                     categoryNames, appNames, gradeNums, "1", "update");
 
         }
     }
 
     private void initData() {
+
         TransactionTypeBean transactionTypeBean1 = new TransactionTypeBean();
         transactionTypeBean1.setCode("fixedProduct");
         transactionTypeBean1.setName("现货");
@@ -437,45 +503,34 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
         }
         classification1 = new ArrayList<>();
         classification1.addAll(classificationBean.getIn_flname());
+
         application1 = new ArrayList<>();
         application1.addAll(applicationBean.getIn_yyname());
+//      TODO 供应商
+        supplier1 = new ArrayList<>();
+        supplier1.addAll(supplierBean.getIn_gysname());
+
         lists.add(region);
         lists.add(classification1);
         lists.add(application1);
+        lists.add(supplier1);
 
     }
 
     public class PagerOneGoodsInStockActivityListPullListener implements PullToRefreshLayout.OnPullListener {
-//        private GoodsInStockActivityPresenter goodsInStockActivityPresenter;
-//        private String title;
         String pageNum = "1";
-        int num = Integer.parseInt(pageNum);
-//        String pattern;//交易模式
-//        String regions;//    大区
-//        String provinces;//省
-//        String cities;//市
-//        String categoryNames;//分类
-//        String appNames;//应用
-//        String gradeNums;//牌号
-//
-//        public PagerOneGoodsInStockActivityListPullListener(GoodsInStockActivityPresenter goodsInStockActivityPresenter,
-//                                                            String pattern, String regions, String provinces, String cities,
-//                                                            String categoryNames, String appNames, String gradeNums) {
-//            this.goodsInStockActivityPresenter = goodsInStockActivityPresenter;
-//            this.pattern = pattern;
-//            this.regions = regions;
-//            this.provinces = provinces;
-//            this.cities = cities;
-//            this.categoryNames = categoryNames;
-//            this.appNames = appNames;
-//            this.gradeNums = gradeNums;
-//        }
+
 
         @Override
         public void onRefresh(final PullToRefreshLayout pullToRefreshLayout) {
-            goodsInStockActivityPresenter.getGoodsInStockInfo(pattern, regions, provinces, cities,
+            pageNum = "1";
+            if (tv_screen_title_bar_title.getText().toString().equals("现货")) {
+                pattern = "fixedProduct";
+            } else if (tv_screen_title_bar_title.getText().toString().equals("预售")) {
+                pattern = "forward-pricing-product";
+            }
+            goodsInStockActivityPresenter.getGoodsInStockInfo(groups, pattern, regions, provinces, cities,
                     categoryNames, appNames, gradeNums, pageNum, "update");
-
 
             // 千万别忘了告诉控件刷新完毕了哦！
             pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
@@ -483,18 +538,23 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
 
         @Override
         public void onLoadMore(final PullToRefreshLayout pullToRefreshLayout) {
+            if (tv_screen_title_bar_title.getText().toString().equals("现货")) {
+                pattern = "fixedProduct";
+            } else if (tv_screen_title_bar_title.getText().toString().equals("预售")) {
+                pattern = "forward-pricing-product";
+            }
             new Handler() {
                 @Override
                 public void handleMessage(Message msg) {
                     String updateOrLoad = "load";
-                    num++;
-                    String pageNum = num + "";
-                    goodsInStockActivityPresenter.getGoodsInStockInfo(pattern, regions, provinces, cities,
+                    int num = Integer.parseInt(pageNum) + 1;
+                    pageNum = num + "";
+                    goodsInStockActivityPresenter.getGoodsInStockInfo(groups, pattern, regions, provinces, cities,
                             categoryNames, appNames, gradeNums, pageNum, updateOrLoad);
                     // 千万别忘了告诉控件加载完毕了哦！
                     pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
                 }
-            }.sendEmptyMessageDelayed(0, 1000);
+            }.sendEmptyMessageDelayed(0, 3000);
         }
 
     }

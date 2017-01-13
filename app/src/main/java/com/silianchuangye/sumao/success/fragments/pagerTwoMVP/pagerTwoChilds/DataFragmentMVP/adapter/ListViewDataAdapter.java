@@ -19,14 +19,19 @@ import java.util.List;
 public class ListViewDataAdapter extends BaseAdapter {
 
     Context context;
-    List<PagerTwoDataListViewBean> pagerTwoDataListViewBeens;
+    List<PagerTwoDataListViewBean.InBean> pagerTwoDataListViewBeens;
+
     public ListViewDataAdapter(Context context) {
         this.context = context;
         pagerTwoDataListViewBeens = new ArrayList<>();
     }
 
-    public void setPagerTwoDataListViewBeens(List<PagerTwoDataListViewBean> pagerTwoDataListViewBeens) {
-        this.pagerTwoDataListViewBeens = pagerTwoDataListViewBeens;
+    public void addPagerTwoDataListViewBeens(List<PagerTwoDataListViewBean.InBean> pagerTwoDataListViewBeens) {
+        this.pagerTwoDataListViewBeens.addAll(pagerTwoDataListViewBeens);
+    }
+
+    public void clearData() {
+        pagerTwoDataListViewBeens.clear();
     }
 
     @Override
@@ -47,20 +52,21 @@ public class ListViewDataAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder = null;
-        if (convertView == null){
+        if (convertView == null) {
             viewHolder = new ViewHolder();
-            convertView = LayoutInflater.from(context).inflate(R.layout.data_list_view_adapter,null);
-            viewHolder.title =(TextView) convertView.findViewById(R.id.title_text_view);
-            viewHolder.time =(TextView) convertView.findViewById(R.id.time_text_view);
+            convertView = LayoutInflater.from(context).inflate(R.layout.data_list_view_adapter, null);
+            viewHolder.title = (TextView) convertView.findViewById(R.id.title_text_view);
+            viewHolder.time = (TextView) convertView.findViewById(R.id.time_text_view);
             convertView.setTag(viewHolder);
-        }else {
+        } else {
             viewHolder = ((ViewHolder) convertView.getTag());
         }
-        viewHolder.title.setText(pagerTwoDataListViewBeens.get(position).getTitle());
-        viewHolder.time.setText(pagerTwoDataListViewBeens.get(position).getTime());
+        viewHolder.title.setText(pagerTwoDataListViewBeens.get(position).getDataname());
+        viewHolder.time.setText(pagerTwoDataListViewBeens.get(position).getDataname());
         return convertView;
     }
-    class ViewHolder{
+
+    class ViewHolder {
         TextView title;
         TextView time;
     }

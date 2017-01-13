@@ -3,15 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="0dp"
-    android:paddingLeft="0dp"
-    android:paddingRight="0dp"
-    android:paddingTop="0dp"
     android:background="#EEEEF3"
-    tools:context=".fragments.homepage.auction.AuctionMVP.AuctionActivity">
+    tools:context=".fragments.homepage.auction.AuctionMVP.view.AuctionActivity">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/title_height"
+        android:layout_height="@dimen/x38"
         android:id="@+id/auction_layout_top"
         android:background="#28ABE3"
         >
@@ -19,9 +15,9 @@
             android:layout_width="@dimen/x15"
             android:layout_height="@dimen/y13"
             android:id="@+id/ivBack_auction_layout_top"
-            android:layout_marginTop="@dimen/y10"
             android:src="@drawable/back"
             android:layout_marginLeft="10dp"
+            android:layout_centerVertical="true"
             />
         <TextView
             android:layout_width="wrap_content"
@@ -29,8 +25,8 @@
             android:text="竞拍"
             android:textColor="#fff"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/y8"
             android:textSize="18sp"
+            android:layout_centerVertical="true"
             />
         <ImageView
             android:layout_width="@dimen/x15"
@@ -43,15 +39,22 @@
             android:visibility="gone"
             />
     </RelativeLayout>
-    <com.handmark.pulltorefresh.library.PullToRefreshListView
+
+    <com.jingchen.pulltorefresh.PullToRefreshLayout
+        android:id="@+id/refresh_view"
         android:layout_below="@id/auction_layout_top"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="#00000000"
-        android:dividerHeight="0dip"
-        android:background="#EEEEF3"
-        android:id="@+id/lvAuction_Auction_Layout"
-        android:layout_marginTop="@dimen/x5"
-        ></com.handmark.pulltorefresh.library.PullToRefreshListView>
+        >
 
+        <com.jingchen.pulltorefresh.PullableListView
+            android:id="@+id/lvAuction_Auction_Layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="#00000000"
+            android:dividerHeight="0dip"
+            android:background="#EEEEF3"
+            android:layout_marginTop="@dimen/x5"
+            ></com.jingchen.pulltorefresh.PullableListView>
+    </com.jingchen.pulltorefresh.PullToRefreshLayout>
 </RelativeLayout>

@@ -1,15 +1,10 @@
 package com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.ReceiptAddressMVP.view;
 
 import android.app.Activity;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.util.AttributeSet;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -29,11 +24,7 @@ import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformat
 import com.silianchuangye.sumao.success.utils.LogUtils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Administrator on 2016/5/10 0010.
@@ -126,7 +117,6 @@ public class ReceiptAddress extends Activity implements View.OnClickListener, IR
     @Override
     public void initReceiptAddressListView(List<ReAddress> address) {
         lists = address;
-//        LogUtils.log("address----->"+lists.size()+"--------------------->");
         LogUtils.log("ReceiptAddress--->lists.size();----->" + lists.size());
         for (int i = 0; i < address.size(); i++) {
             StringBuilder builder = new StringBuilder();
@@ -144,7 +134,6 @@ public class ReceiptAddress extends Activity implements View.OnClickListener, IR
     @Override
     protected void onResume() {
         super.onResume();
-        LogUtils.log("onResume--->");
         lists.clear();
         presenter.setReceiptAddressListView(unique);
     }
@@ -184,8 +173,9 @@ public class ReceiptAddress extends Activity implements View.OnClickListener, IR
         addressDis[position] = addressDisplay;
         count++;
         if (count == lists.size()) {
-            adapter = new ReceiptAddressAdapter(this, lists, addressDis/*al*/);
+            adapter = new ReceiptAddressAdapter(this,  addressDis/*al*/);
             listView.setAdapter(adapter);
+            adapter.addData(lists);
             count = 0;
         }
 //

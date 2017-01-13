@@ -41,7 +41,7 @@ public class VesselThreeActivity extends AppCompatActivity {
         String title = intent.getStringExtra("title");
 //        合同
         contract = intent.getStringExtra("contract");
-        LogUtils.log(contract+"-------WXL合同页");
+        LogUtils.log(contract+"-------WXL合同页VesselThreeActivity");
         LogUtils.log("VesselThreeActivity--->cl_attribute:"+cl_attribute);
         activity_vessel_three_title.setText(title);
 

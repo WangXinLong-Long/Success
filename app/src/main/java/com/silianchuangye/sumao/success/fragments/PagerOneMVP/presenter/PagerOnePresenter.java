@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.bean.ApplicationBean;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.bean.BannerBean;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.bean.ClassificationBean;
+import com.silianchuangye.sumao.success.fragments.PagerOneMVP.bean.SupplierBean;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.model.GetPictureModel.GetPictureCallback;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.model.GetPictureModel.GetPictureModels;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.model.GetPictureModel.IGetPictureModel;
@@ -14,6 +15,9 @@ import com.silianchuangye.sumao.success.fragments.PagerOneMVP.model.PagerOneMode
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.model.applicationModel.ApplicationCallback;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.model.applicationModel.ApplicationModel;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.model.applicationModel.IApplicationModel;
+import com.silianchuangye.sumao.success.fragments.PagerOneMVP.model.auctionListModel.AuctionListCallback;
+import com.silianchuangye.sumao.success.fragments.PagerOneMVP.model.auctionListModel.AuctionListModel;
+import com.silianchuangye.sumao.success.fragments.PagerOneMVP.model.auctionListModel.IAuctionListModel;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.model.auctionModel.AuctionCallback;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.model.auctionModel.AuctionModel;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.model.auctionModel.IAuctionModel;
@@ -23,6 +27,9 @@ import com.silianchuangye.sumao.success.fragments.PagerOneMVP.model.classificati
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.model.grideViewModel.GrideViewCallback;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.model.grideViewModel.GrideViewModel;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.model.grideViewModel.IGrideViewModel;
+import com.silianchuangye.sumao.success.fragments.PagerOneMVP.model.supplierModel.ISupplierModel;
+import com.silianchuangye.sumao.success.fragments.PagerOneMVP.model.supplierModel.SupplierCallback;
+import com.silianchuangye.sumao.success.fragments.PagerOneMVP.model.supplierModel.SupplierModel;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.view.IPagerOneView;
 import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.bean.UpstreamDirectorySellingBean;
 import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.model.IUpstreamDirectSellingModel;
@@ -66,13 +73,13 @@ public class PagerOnePresenter {
 
     }
 //      现货
-    public   void  getGoodsInStockInfo(String pattern, String regions, String provinces, String cities,
+    public   void  getGoodsInStockInfo(String groups,String pattern, String regions, String provinces, String cities,
                                        String categoryNames, String appNames, String gradeNums, String pageNum,String updateOrLoad){
-        IGoodsInStockActivityModel goodsInStockActivityModel = new GoodsInStockActivityModel(pattern,  regions,  provinces,  cities,
+        IGoodsInStockActivityModel goodsInStockActivityModel = new GoodsInStockActivityModel(groups,pattern,  regions,  provinces,  cities,
                 categoryNames,  appNames,  gradeNums,  pageNum,updateOrLoad);
         goodsInStockActivityModel.getGoodsInStockActivityResult(new GoodsInStockActivityCallback() {
             @Override
-            public void callbackInGoodsInStockActivity(GoodsInStockActivityBean goodsInStockActivityBean,String updateOrLoad) {
+            public void callbackInGoodsInStockActivity(GoodsInStockActivityBean goodsInStockActivityBean,String updateOrLoad,String searchField) {
                 pagerOne.setDataInActivity(goodsInStockActivityBean,updateOrLoad);
             }
         });
@@ -130,6 +137,16 @@ public class PagerOnePresenter {
         });
     }
 
+    public void getSupplier(String transactionType){
+        ISupplierModel supplierModel = new SupplierModel(transactionType);
+        supplierModel.getSupplierResult(new SupplierCallback() {
+            @Override
+            public void callbackSupplier(SupplierBean supplierBean,String transactionType) {
+                pagerOne.getSupplier(supplierBean,transactionType);
+            }
+        });
+    }
+
 //    获取竞拍数据
     public void getAuctionResult(String productId){
         IAuctionModel auctionModel = new AuctionModel(productId);
@@ -137,6 +154,31 @@ public class PagerOnePresenter {
             @Override
             public void callbackAuction(String result) {
                 pagerOne.getAuctionData( result);
+            }
+        });
+    }
+
+
+//    获取竞拍列表数据
+    public void getAuctionListResult(String pageNum,String updateOrLoad) {
+        IAuctionListModel auctionListModel = new AuctionListModel( pageNum,updateOrLoad);
+        auctionListModel.getAuctionListResult(new AuctionListCallback() {
+            @Override
+            public void callbackAuctionList(String result,String updateOrLoad) {
+                pagerOne.setAuctionListResult(result,updateOrLoad);
+            }
+        });
+    }
+
+//    根据首页的筛选条件，进行筛选
+    public void getScreeningConditions(String groups,String pattern, String regions, String provinces, String cities,
+                                       String categoryNames, String appNames, String gradeNums, String pageNum, String updateOrLoad){
+        IGoodsInStockActivityModel goodsInStockActivityModel = new GoodsInStockActivityModel(groups,pattern,  regions,  provinces,  cities,
+                categoryNames,  appNames,  gradeNums,  pageNum,updateOrLoad);
+        goodsInStockActivityModel.getGoodsInStockActivityResult(new GoodsInStockActivityCallback() {
+            @Override
+            public void callbackInGoodsInStockActivity(GoodsInStockActivityBean goodsInStockActivityBean,String updateOrLoad,String searchField) {
+                pagerOne.setDataInSearchActivity(goodsInStockActivityBean,updateOrLoad,searchField);
             }
         });
     }

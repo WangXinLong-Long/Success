@@ -34,6 +34,7 @@ import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInSt
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.PayMentsOrderMVP.bean.BankListBean;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.PayMentsOrderMVP.presenter.PaymentsOrderPresenter;
 import com.silianchuangye.sumao.success.utils.Loding;
+import com.silianchuangye.sumao.success.utils.LogUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -82,7 +83,7 @@ public class PaymentsOrder extends Activity implements View.OnClickListener, IPa
     private List<String> list_order = new ArrayList<String>();
     private String name, type, price, number, qiye, all_price, cangku, comm, paihao, order_id;
     private PaymentsOrderPresenter paymentsOrderPresenter;
-    private  List<Orders.OrderIdListBean> orderList;
+    private List<Orders.OrderIdListBean> orderList;
     private Callback.Cancelable cancelable;
 
     @Override
@@ -120,6 +121,8 @@ public class PaymentsOrder extends Activity implements View.OnClickListener, IPa
         buy_immediately.setOnClickListener(this);
 //          设置标题 支付订单
         title_bar_white_title.setText("支付订单");
+        LinearLayout bottom = (LinearLayout) findViewById(R.id.bottom);
+        bottom.setVisibility(View.GONE);
         IntentFilter filter = new IntentFilter();
         filter.addAction("finish");
         registerReceiver(broadcastReceiver, filter);
@@ -133,95 +136,7 @@ public class PaymentsOrder extends Activity implements View.OnClickListener, IPa
 
     public void commit_order() {
         String fixOrCart = getIntent().getStringExtra("type");
-//        if (fixOrCart.equals("cart")) {
-//            TODO !!!
-//            list_id = getIntent().getExtras().getStringArrayList("id");
-//            Log.d("商品id的集合", list_id + "ssssssssssssssssssssssss");
-//            // TODO !!!
-//            String a = list_id.toString();
-//            int len = a.length() - 1;
-//            String id = a.substring(1, len).replaceAll(" ", "");
-//            Log.d("商品id", "" + id);
-////            rp.addParameter("strCommerceItemIds", id);
-//
-        //        SharedPreferences sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
-//        String coummit_unique = sp.getString("unique", "");
-//        String _dynSessConf = coummit_unique;
-//        String strCommerceItemIds = orderList.getOrderIdList().get(0).getCommerceItem().get(0).getCommerceItemId();
-//        goodsInStockDetailPresenter.getPaymentOrder(strCommerceItemIds, _dynSessConf);
-
-//            tv_payments_order_money.setText(getIntent().getStringExtra("all_price"));
-//            if (result.contains("orderIdList")) {
-//                try {
-//                    JSONObject obj_result = new JSONObject(result);
-//                    String Message = obj_result.getString("orderIdList");
-//                    JSONArray array = new JSONArray(Message);
-//                    list = new ArrayList<Map<String, Object>>();
-//                    for (int i = 0; i < array.length(); i++) {
-//                        JSONObject obj_array = array.getJSONObject(i);
-//                        //Map<String,Object> map=new Hashtable<String, Object>();
-//                        String info = obj_array.getString("commerceItem");
-//                        String time = obj_array.getString("remainingTime");
-//                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat
-//                                ("yyyy年MM月dd日 hh:mm:mm");
-//                        String data = simpleDateFormat.format(Double.parseDouble(time));
-//                        order_id = obj_array.getString("orderId");
-//                        String total = obj_array.getString("total");
-//                        JSONArray array_obj = new JSONArray(info);
-//                        for (int j = 0; j < array_obj.length(); j++) {
-//                            JSONObject gouwuche_info = array_obj.getJSONObject(j);
-//                            type = gouwuche_info.getString("parentCategories");
-//                            price = gouwuche_info.getString("salePrice");
-//                            paihao = gouwuche_info.getString("gradeNumber");
-//                            number = gouwuche_info.getString("quantity");
-//                            qiye = gouwuche_info.getString("manufacturer");
-//                            all_price = gouwuche_info.getString("amount");
-//                            cangku = gouwuche_info.getString("warehouse");
-//                            comm = gouwuche_info.getString("salesCompanyDisplayName");
-//                            name = gouwuche_info.getString("productName");
-//
-//                        }
-//                        Log.d("支付的总价", total + "aa");
-//                        Map<String, Object> map = new Hashtable<String, Object>();
-//                        map.put("order_id", "订单编号:" + order_id);
-//                        map.put("total", total);
-//                        map.put("time", time);
-//                        map.put("name", name);
-//                        map.put("type", type);
-//                        map.put("paihao", paihao);
-//                        map.put("qiye", qiye);
-//                        map.put("cangku", cangku);
-//                        map.put("price", price);
-//                        map.put("number", number);
-//                        map.put("all_price", all_price);
-//                        map.put("comm", comm);
-//                        list.add(map);
-//                        list_order.add(order_id);
-//
-//                    }
-//                    list_adapter = new PayMentsOrderListViewAdapter(PaymentsOrder.this);
-//                    lvdemo.setAdapter(list_adapter);/////////////
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//            } else if (result.contains("formExceptions")) {
-//                try {
-//                    JSONObject object_message = new JSONObject(result);
-//                    String message = object_message.getString("formExceptions");
-//                    JSONArray array_msg = new JSONArray(message);
-//                    for (int i = 0; i < array_msg.length(); i++) {
-//                        JSONObject obj = array_msg.getJSONObject(i);
-//                        String message_info = obj.getString("localizedMessage");
-//                        Toast.makeText(PaymentsOrder.this, "" + message_info, Toast.LENGTH_SHORT).show();
-//                    }
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//
-//            }
-
-//        } else {
-        orderList = ( List<Orders.OrderIdListBean>) getIntent().getSerializableExtra("fix");
+        orderList = (List<Orders.OrderIdListBean>) getIntent().getSerializableExtra("fix");
         list = new ArrayList<Map<String, Object>>();
         list_adapter = new PayMentsOrderListViewAdapter(this);
         list_adapter.addLists(orderList);
@@ -230,7 +145,7 @@ public class PaymentsOrder extends Activity implements View.OnClickListener, IPa
         for (int i = 0; i < orderList.size(); i++) {
 
             double count = Double.parseDouble(orderList.get(i).getTotal());
-            total+=count;
+            total += count;
         }
         tv_payments_order_money.setText(total + "");
 //        }
@@ -240,10 +155,10 @@ public class PaymentsOrder extends Activity implements View.OnClickListener, IPa
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.buy_immediately:
-                backgroundAlpha(0.5f);
-                Popupwindow();
-                break;
+//            case R.id.buy_immediately:
+//                backgroundAlpha(0.5f);
+//                Popupwindow();
+//                break;
             case R.id.title_bar_white_back:
                 finish();
                 break;
@@ -252,9 +167,10 @@ public class PaymentsOrder extends Activity implements View.OnClickListener, IPa
         }
     }
 
-    public void Popupwindow() {
-        getinfo_Bank();
 
+    public void payImmediately(int position) {
+        backgroundAlpha(0.5f);
+        getinfo_Bank(position);
     }
 
     //设置背景透明
@@ -265,19 +181,11 @@ public class PaymentsOrder extends Activity implements View.OnClickListener, IPa
     }
 
     //    请求银行列表
-    public void getinfo_Bank() {
+    public void getinfo_Bank(int position) {
 //        Bundle bundle = getIntent().getExtras();
 //        list_id = bundle.getStringArrayList("id");
-        StringBuffer sb = new StringBuffer();
-        for (int i = 0; i < orderList.size(); i++) {
-            if (i == orderList.size()-1){
-                sb.append(orderList.get(i).getOrderId());
-            }else {
-                sb.append(orderList.get(i).getOrderId()+",");
-            }
 
-        }
-        String orderId = sb.toString();
+        String orderId = orderList.get(position).getOrderId();
         list_order.add(orderId);
         String order = null;
         Loding.show(this, "加载中...", false, null);
@@ -301,7 +209,7 @@ public class PaymentsOrder extends Activity implements View.OnClickListener, IPa
         String orderIds = a;
         String platform = bankId;
         String _dynSessConf = zhifu_unique;
-        Loding.show(this,"正在进行支付...",false,null);
+        Loding.show(this, "正在进行支付...", true, null);
         paymentsOrderPresenter.getPaymentInfoFromService(orderIds, platform, _dynSessConf);
     }
 
@@ -309,7 +217,7 @@ public class PaymentsOrder extends Activity implements View.OnClickListener, IPa
     @Override
     public void setBankListResult(String result) {
         Loding.dis();
-        if (result.contains("openedAccount\":\"true\"")){
+        if (result.contains("openedAccount\":\"true\"")) {
 
             View view = getLayoutInflater().inflate(R.layout.item_popupwindow_auction, null);
             popupWindow = new PopupWindow(findViewById(R.id.Layout_Button_Open),
@@ -377,6 +285,7 @@ public class PaymentsOrder extends Activity implements View.OnClickListener, IPa
 
             } else {
                 Toast.makeText(PaymentsOrder.this, "登录已超时,请重新登录!", Toast.LENGTH_SHORT).show();
+
             }
             popupWindow.showAtLocation(buy_immediately, Gravity.BOTTOM, 0, 0);
 
@@ -426,24 +335,37 @@ public class PaymentsOrder extends Activity implements View.OnClickListener, IPa
 
                 }
             });
-        }else {
+        } else {
             Toast.makeText(this, "该商品暂不支持银行付款", Toast.LENGTH_SHORT).show();
+            backgroundAlpha(1f);
         }
 
     }
 
     //    获取支付后的信息
     @Override
-    public void getPaymentResult(String result) {
+    public void getPaymentResult(String result,String orderIds) {
         Loding.dis();
         try {
             JSONObject obj = new JSONObject(result);
             String state = obj.getString("paymentStatus");
             if (state.equals("0")) {
+//                TODO !!!
+                int pos = -1;
+                for (int i = 0; i < orderList.size(); i++) {
+                    if (orderList.get(i).getOrderId().equals(orderIds)){
+                         pos = i;
+                    }
+                }
+                orderList.remove(pos);
+                list_adapter.clear();
+                list_adapter.addLists(orderList);
+                list_adapter.notifyDataSetChanged();
+                LogUtils.log("orderIds--->"+orderIds);
                 //全部成功
                 Intent intent = new Intent(PaymentsOrder.this, Ok_Dialog.class);
                 intent.putExtra("type", "现货");
-                intent.putExtra("number", "这里填写订单号");
+                intent.putExtra("number", orderIds);
                 startActivity(intent);
             } else if (state.equals("1")) {
                 //部分订单成功
@@ -451,7 +373,7 @@ public class PaymentsOrder extends Activity implements View.OnClickListener, IPa
             } else if (state.equals("2")) {
                 //全部失败
                 Intent intent = new Intent(PaymentsOrder.this, Error_Dialog.class);
-                intent.putExtra("number","这里填写订单号");
+                intent.putExtra("number", "这里填写订单号");
                 startActivity(intent);
             }
         } catch (JSONException e) {

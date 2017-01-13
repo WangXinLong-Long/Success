@@ -14,7 +14,7 @@
         android:textSize="@dimen/x17"
         android:paddingLeft="30sp"
         android:paddingTop="7sp"
-        android:text="返回" />
+        android:text="" />
 
     <ImageView
         android:id="@+id/iv_title_bar_back"
@@ -39,6 +39,7 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:text="忘记密码"
+
             android:textColor="#B3B3B3" />
 
         <Button
@@ -69,6 +70,7 @@
             android:layout_marginBottom="@dimen/activity_horizontal_margin"
             android:background="@drawable/login_background"
             android:hint="请输入验证码"
+            android:textSize="13sp"
             android:paddingRight="50dp" />
 
         <ImageView
@@ -89,6 +91,8 @@
             android:layout_above="@id/verification_code"
             android:layout_marginBottom="@dimen/activity_horizontal_margin"
             android:background="@drawable/login_background"
+            android:inputType="textPassword"
+            android:textSize="13sp"
             android:hint="密码" />
 
         <EditText
@@ -98,6 +102,7 @@
             android:layout_above="@id/et_pass_login"
             android:layout_marginBottom="@dimen/activity_horizontal_margin"
             android:background="@drawable/login_background"
+            android:textSize="13sp"
             android:hint="账号" />
 
         <CheckBox

@@ -47,9 +47,19 @@
         android:textSize="16sp"
         android:layout_marginBottom="@dimen/x10"
         android:layout_marginTop="@dimen/x10"
-
         />
 
+    <TextView
+        android:id="@+id/balance"
+        android:text="余额："
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/x10"
+        android:layout_marginRight="@dimen/x3"
+        android:layout_marginTop="@dimen/x10"
+        android:layout_toLeftOf="@id/tv_money"
+        android:textColor="@color/red"
+        android:textSize="16sp" />
 
 
 </RelativeLayout>

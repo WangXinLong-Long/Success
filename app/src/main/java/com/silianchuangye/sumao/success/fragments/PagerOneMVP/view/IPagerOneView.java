@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.bean.ApplicationBean;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.bean.BannerBean;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.bean.ClassificationBean;
+import com.silianchuangye.sumao.success.fragments.PagerOneMVP.bean.SupplierBean;
 import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.bean.UpstreamDirectorySellingBean;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.bean.GoodsInStockActivityBean;
 
@@ -28,7 +29,16 @@ void setPreSaleDataInActivity(GoodsInStockActivityBean goodsInStockActivityBean,
     void getClassificationData(ClassificationBean classificationBean,String transactionType);
     //    获取应用列表
     void getApplicationData( ApplicationBean applicationBean,String transactionType);
+    //    获取供应商列表
+    void getSupplier(SupplierBean supplierBean,String transactionType);
 
 //    获取竞拍的数据
     void getAuctionData(String result);
+
+//    获取竞拍列表的数据
+    void setAuctionListResult(String result,String updateOrLoad);
+
+//    根据首页的筛选条件，进行筛选
+    void setDataInSearchActivity(GoodsInStockActivityBean goodsInStockActivityBean, String updateOrLoad,String searchField);
+
 }

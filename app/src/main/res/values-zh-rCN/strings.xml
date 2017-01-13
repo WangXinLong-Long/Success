@@ -138,7 +138,7 @@
     <string name="univalent">产品单价(元/吨):</string>
     <string name="number">数量(吨):</string>
     <string name="enterprise">生产企业:</string>
-    <string name="totalMoney">产品总价(元):</string>
+    <string name="totalMoney">全额(元):</string>
     <string name="warehouse">仓库:</string>
     <string name="account_login">账号登录</string>
     <string name="login_password">登录密码</string>

@@ -15,14 +15,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.silianchuangye.sumao.success.HX.Constant;
-import com.silianchuangye.sumao.success.HX.ui.LoginActivity;
 import com.silianchuangye.sumao.success.R;
-import com.silianchuangye.sumao.success.adapter.OrderDetailsListViewAdapter;
 import com.silianchuangye.sumao.success.adapter.SpotOrderAdapter;
 import com.silianchuangye.sumao.success.custom.CustomListView;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.SpotOrder.SpotOrder;
-import com.silianchuangye.sumao.success.model.OrderDeatilsModel;
 import com.silianchuangye.sumao.success.model.SpotOrderModel;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
@@ -95,20 +90,6 @@ public class AlreadyPaidActivity extends Activity implements View.OnClickListene
                 sendMy();
             }
         }.start();
-//        list = new ArrayList<>();
-//        for (int i = 0; i < 10; i++) {
-//            model = new SpotOrderModel();
-//            model.setUnivalent(i * 100);
-//            model.setNumber(i + 1);
-//            model.setEnterprise("中石油");
-//            model.setTotalMoney((i*100)*(i+1));
-//            model.setWarehouse("讯帮"+i+"库");
-//            model.setCompany(i+"联创业集团");
-//            model.setProductModel("中国石油"+i+"型产品");
-//            list.add(model);
-//        }
-//        adapter = new SpotOrderAdapter(this,list);
-//        spot_order_listView.setAdapter(adapter);
 
 //        Jobs Created 联系客服
         Button services = (Button) findViewById(R.id.services);
@@ -216,7 +197,7 @@ public class AlreadyPaidActivity extends Activity implements View.OnClickListene
                                 Log.e("TAG","list.size()==="+list.size());
                             }
                             Log.e("TAG","list-----"+list.size());
-                            adapter = new SpotOrderAdapter(AlreadyPaidActivity.this,list);
+//                            adapter = new SpotOrderAdapter(AlreadyPaidActivity.this,list);
                             spot_order_listView.setAdapter(adapter);
                         }
                     }
