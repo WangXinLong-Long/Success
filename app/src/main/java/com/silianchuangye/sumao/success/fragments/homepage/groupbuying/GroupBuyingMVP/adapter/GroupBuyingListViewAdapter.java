@@ -69,70 +69,58 @@ public class GroupBuyingListViewAdapter extends BaseAdapter {
             viewHolder.tv_way = (TextView) convertView.findViewById(R.id.tv_group_way_value);
             viewHolder.tv_cangku = (TextView) convertView.findViewById(R.id.tv_auction_acdress);
             viewHolder.tv_comm = (TextView) convertView.findViewById(R.id.tv_auction_commAdress);
-            viewHolder.tv_endTime = (TextView) convertView.findViewById(R.id.tv_time_end);
-            viewHolder.tv_auction_start = (TextView) convertView.findViewById(R.id.tv_auction_start);
             viewHolder.tv_final_num = (TextView) convertView.findViewById(R.id.tv_final_num);
-            viewHolder.relative_endtime = (RelativeLayout) convertView.findViewById(R.id.relative_endtime);
+            //            开始时间
+            viewHolder.start_data = ((TextView) convertView.findViewById(R.id.start_data));
+//            结束时间
+            viewHolder.end_data = ((TextView) convertView.findViewById(R.id.end_data));
+//            开始和结束的RelativeLayout
+            viewHolder.end_data_rl = ((RelativeLayout) convertView.findViewById(R.id.end_data_rl));
+            viewHolder.start_data_rl = ((RelativeLayout) convertView.findViewById(R.id.start_data_rl));
+//            viewHolder.relative_endtime = (RelativeLayout) convertView.findViewById(R.id.relative_endtime);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = ((ViewHolder) convertView.getTag());
         }
-//        /* map.put("id", obj_array.getString("id"));
-//                    map.put("state", obj_array.getString("runing"));
-//                    map.put("name", obj_array.getString("cl_mingcheng"));
-//                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat
-//                            ("yyyy-MM-dd hh:mm:mm");
-//                    String Start_data = simpleDateFormat.format(Double.parseDouble(obj_array.getString("groupStartDate")));
-//                    map.put("startTime", Start_data);
-//                    map.put("price", obj_array.getString("cl_jine"));
-//                    map.put("number", obj_array.getString("cl_zongliang"));
-//                    map.put("chengtuan", obj_array.getString("cl_groupQuantity"));
-//                    map.put("way", "自提");
-//                    map.put("cangku", obj_array.getString("cl_cangku"));
-//                    if (obj_array.toString().contains("cl_gongsi")) {
-//                        map.put("comm", obj_array.getString("cl_gongsi"));
-//                    } else {
-//                        map.put("comm", "");
-//                    }
-//                    String end_data = simpleDateFormat.format(Double.parseDouble(obj_array.getString("groupEndDate")));
-//                    map.put("endTime", end_data);
-//                    String cl_groupQuantity = obj_array.getString("cl_groupQuantity");
-//                    map.put("cl_groupQuantity", cl_groupQuantity);
-//                    list.add(map);*/
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:mm");
         String shangpinId = list.get(position).getId();
         viewHolder.tv_name.setText(list.get(position).getCl_mingcheng());
-        viewHolder.tv_StartTime.setText(simpleDateFormat.format(Double.parseDouble(list.get(position).getGroupStartDate())));
+
         viewHolder.tv_price.setText(list.get(position).getCl_jine());
         viewHolder.tv_count.setText(list.get(position).getCl_zongliang());
         viewHolder.tv_chengtuan.setText(list.get(position).getCl_groupQuantity());
         viewHolder.tv_way.setText("交货方式");
         viewHolder.tv_cangku.setText(list.get(position).getCl_cangku());
         viewHolder.tv_comm.setText(list.get(position).getCl_gongsi());
-        viewHolder.tv_endTime.setText(simpleDateFormat.format(Double.parseDouble(list.get(position).getGroupEndDate().toString())));
+        String endData = simpleDateFormat.format(Double.parseDouble(list.get(position).getGroupEndDate().toString()));
+        String startData = simpleDateFormat.format(Double.parseDouble(list.get(position).getGroupStartDate().toString()));
+        viewHolder.start_data.setText(startData);
+        viewHolder.end_data.setText(endData);
         viewHolder.tv_final_num.setText("最终成团量 : " + list.get(position).getCl_groupQuantity() + "T");
         if (list.get(position).getRuning().equals("true")) {//正在团购
             viewHolder.iv_icon.setImageResource(R.mipmap.underwey);
             viewHolder.tv_StartTime.setVisibility(View.VISIBLE);
             viewHolder.tv_final_num.setVisibility(View.GONE);
-            viewHolder.relative_endtime.setVisibility(View.VISIBLE);
-            viewHolder.tv_auction_start.setVisibility(View.VISIBLE);
             viewHolder.bt_join.setBackgroundColor(context.getResources().getColor(R.color.btn_blue_normal));
+            viewHolder.end_data_rl.setVisibility(View.VISIBLE);
+            viewHolder.start_data_rl.setVisibility(View.VISIBLE);
+            viewHolder.tv_StartTime.setText("团购进行中");
         } else if (list.get(position).getRuning().equals("false")) {//团购没开始
             viewHolder.iv_icon.setImageResource(R.mipmap.tuangouselect);
             viewHolder.tv_StartTime.setVisibility(View.VISIBLE);
             viewHolder.tv_final_num.setVisibility(View.GONE);
-            viewHolder.relative_endtime.setVisibility(View.VISIBLE);
-            viewHolder.tv_auction_start.setVisibility(View.VISIBLE);
             viewHolder.bt_join.setBackgroundColor(context.getResources().getColor(R.color.btn_blue_normal));
+            viewHolder.end_data_rl.setVisibility(View.VISIBLE);
+            viewHolder.start_data_rl.setVisibility(View.VISIBLE);
+            viewHolder.tv_StartTime.setText("团购未开始");
         } else if (list.get(position).getRuning().equals("end")) {//团购已结束
-            viewHolder.relative_endtime.setVisibility(View.GONE);
             viewHolder.iv_icon.setImageResource(R.mipmap.tuangou);
             viewHolder.bt_join.setBackgroundColor(context.getResources().getColor(R.color.gray));
-            viewHolder.tv_auction_start.setVisibility(View.GONE);
             viewHolder.tv_StartTime.setVisibility(View.GONE);
             viewHolder.tv_final_num.setVisibility(View.VISIBLE);
             viewHolder.bt_join.setText("团购结束");
+            viewHolder.end_data_rl.setVisibility(View.GONE);
+            viewHolder.start_data_rl.setVisibility(View.GONE);
         }
 
         return convertView;
@@ -149,10 +137,15 @@ public class GroupBuyingListViewAdapter extends BaseAdapter {
         TextView tv_way;
         TextView tv_cangku;
         TextView tv_comm;
-        TextView tv_endTime;
         TextView tv_auction_start;
         TextView tv_final_num;
-        RelativeLayout relative_endtime;
+        //        开始时间
+        TextView start_data;
+        //        结束时间
+        TextView end_data;
+        //        开始和结束的RelativeLayout
+        RelativeLayout start_data_rl;
+        RelativeLayout end_data_rl;
     }
 }
 

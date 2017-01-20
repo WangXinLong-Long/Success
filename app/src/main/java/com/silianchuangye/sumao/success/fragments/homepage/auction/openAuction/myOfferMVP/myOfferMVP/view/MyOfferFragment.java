@@ -85,13 +85,18 @@ public class MyOfferFragment extends Fragment implements IMyOfferView {
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
                 String data = simpleDateFormat.format(Double.parseDouble(myPriceBean.getSubmitDate()));
                 Map<String, Object> map = new Hashtable<String, Object>();
-                map.put("bianhao", myPriceBean.getFormatSequenceNum());
+                if (myPriceBean.getBidObjId() == null){
+                    map.put("bianhao", myPriceBean.getFormatSequenceNum());
+                }else {
+                    map.put("bianhao", myPriceBean.getBidObjId());
+                }
                 map.put("danjia", myPriceBean.getBidPrice());
                 map.put("shuliang", myPriceBean.getBidQut());
                 map.put("time", data);
                 list.add(map);
             }
             adapter.addData(list);
+            adapter.notifyDataSetChanged();
         } else {
             Toast.makeText(getActivity(), "暂无我的报价", Toast.LENGTH_SHORT).show();
         }
@@ -106,7 +111,7 @@ public class MyOfferFragment extends Fragment implements IMyOfferView {
     @Override
     public void setMyOfferWithdrawalOfOfferResult(String result,int position) {
         Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
-        if (result.contains("allCount")){
+        if (result.contains("success")){
             list.remove(position);
             adapter.clearData();
             adapter.addData(list);

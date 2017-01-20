@@ -34,7 +34,7 @@ public class SupplierModel implements ISupplierModel {
 
             @Override
             public void onSuccess(String result) {
-                LogUtils.log("应用--->" + result + "<---应用");
+                LogUtils.log("供应商--->" + result + "<---供应商");
                 Gson gson = new Gson();
                 SupplierBean supplierBean = gson.fromJson(result, SupplierBean.class);
                 callback.callbackSupplier( supplierBean,transactionType );

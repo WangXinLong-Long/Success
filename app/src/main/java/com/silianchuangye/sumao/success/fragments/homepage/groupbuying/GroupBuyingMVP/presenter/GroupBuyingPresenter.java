@@ -18,8 +18,8 @@ public class GroupBuyingPresenter {
         this.groupBuyingView = groupBuyingView;
     }
 
-    public void getGroupBuyingResult(boolean updateOrLoad){
-        IGroupBuyingModel groupBuyingModel = new GroupBuyingModel( updateOrLoad);
+    public void getGroupBuyingResult(String pagerNumber,boolean updateOrLoad){
+        IGroupBuyingModel groupBuyingModel = new GroupBuyingModel( updateOrLoad,pagerNumber);
         groupBuyingModel.getGroupBuyingResult(new GroupBuyingCallback() {
             @Override
             public void callbackGroupBuying(String result,boolean updateOrLoad) {

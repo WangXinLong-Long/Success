@@ -1,6 +1,9 @@
 package com.silianchuangye.sumao.success.fragments.pagerTwoMVP.pagerTwoChilds.InformationPageFragmentMVP.view;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -18,6 +21,7 @@ import com.silianchuangye.sumao.success.fragments.pagerTwoMVP.pagerTwoChilds.Inf
 import com.silianchuangye.sumao.success.fragments.pagerTwoMVP.pagerTwoChilds.InformationPageFragmentMVP.bean.PagerTwoInformationPageBean;
 import com.silianchuangye.sumao.success.fragments.pagerTwoMVP.pagerTwoChilds.InformationPageFragmentMVP.presenter.InformationPageFragmentPresenter;
 import com.silianchuangye.sumao.success.fragments.pagerTwoMVP.pagerTwoChilds.informationDetailsMVP.InformationDetailsActivity;
+import com.silianchuangye.sumao.success.utils.NetWorkChangeBroadcastReceiver;
 
 import java.util.List;
 
@@ -33,6 +37,13 @@ public class InformationPageFragment extends Fragment implements IInformationPag
     private InformationPageFragmentPresenter informationPageFragmentPresenter;
     private PagerTwoInformationPageListViewAdapter adapter;
     private List<PagerTwoInformationPageBean.InBean> in;
+    private BroadcastReceiver netReceiver;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        initReceiver();
+    }
 
     @Nullable
     @Override
@@ -86,5 +97,24 @@ public class InformationPageFragment extends Fragment implements IInformationPag
         in = informationPageBean.getIn();
         adapter.addSrc(in);
         adapter.notifyDataSetChanged();
+    }
+    //      监听广播
+    private void initReceiver() {
+        netReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                //                判断当前网络状态
+                if(intent.getIntExtra(NetWorkChangeBroadcastReceiver.NET_TYPE,0)==0){
+                    //                    0表示无网络连接,
+                    //这里填你想要执行的东西
+                    Toast.makeText(context, "暂时没有网络,请检查您的网络设置", Toast.LENGTH_SHORT).show();
+                }else {
+                    //                    1表示有
+                    informationPageFragmentPresenter.getInformationPageFragmentData();
+                }
+            }
+        };
+        IntentFilter filter = new IntentFilter(NetWorkChangeBroadcastReceiver.NET_CHANGE);
+        getActivity().registerReceiver(netReceiver,filter);
     }
 }

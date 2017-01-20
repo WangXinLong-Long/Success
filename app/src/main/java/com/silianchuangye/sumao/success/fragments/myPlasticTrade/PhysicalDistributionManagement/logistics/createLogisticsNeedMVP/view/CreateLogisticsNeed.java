@@ -29,6 +29,7 @@ import com.silianchuangye.sumao.success.fragments.myPlasticTrade.PhysicalDistrib
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.AddAddressMVP.presenter.AddAddressPresenter;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.AddAddressMVP.view.IAddAddress;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceAreaMVP.view.SelectProvinceArea;
+import com.silianchuangye.sumao.success.utils.LogUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -253,16 +254,16 @@ public class CreateLogisticsNeed extends AppCompatActivity implements View.OnCli
                 relative_logistics_need_three.setVisibility(View.VISIBLE);
                 lv_logistics_need.setVisibility(View.VISIBLE);
                 img_logistics_need_select_xunbang.setImageResource(R.mipmap.cart_select);
-                img_logistics_need_select_buy.setImageResource(R.mipmap.cart_select_null);
-                img_logistics_need_select_maifang.setImageResource(R.mipmap.cart_select_null);
+                img_logistics_need_select_buy.setImageResource(R.mipmap.cart_no);
+                img_logistics_need_select_maifang.setImageResource(R.mipmap.cart_no);
                 break;
             case R.id.img_logistics_need_select_maifang:
                 strType = "卖家配送";
                 lv_logistics_need_three.setVisibility(View.GONE);
                 lv_logistics_need.setVisibility(View.VISIBLE);
                 relative_logistics_need_three.setVisibility(View.VISIBLE);
-                img_logistics_need_select_xunbang.setImageResource(R.mipmap.cart_select_null);
-                img_logistics_need_select_buy.setImageResource(R.mipmap.cart_select_null);
+                img_logistics_need_select_xunbang.setImageResource(R.mipmap.cart_no);
+                img_logistics_need_select_buy.setImageResource(R.mipmap.cart_no);
                 img_logistics_need_select_maifang.setImageResource(R.mipmap.cart_select);
                 break;
             case R.id.img_logistics_need_select_buy:
@@ -270,9 +271,9 @@ public class CreateLogisticsNeed extends AppCompatActivity implements View.OnCli
                 lv_logistics_need_three.setVisibility(View.VISIBLE);
                 lv_logistics_need.setVisibility(View.GONE);
                 relative_logistics_need_three.setVisibility(View.GONE);
-                img_logistics_need_select_xunbang.setImageResource(R.mipmap.cart_select_null);
+                img_logistics_need_select_xunbang.setImageResource(R.mipmap.cart_no);
                 img_logistics_need_select_buy.setImageResource(R.mipmap.cart_select);
-                img_logistics_need_select_maifang.setImageResource(R.mipmap.cart_select_null);
+                img_logistics_need_select_maifang.setImageResource(R.mipmap.cart_no);
                 break;
         }
     }
@@ -413,41 +414,61 @@ public class CreateLogisticsNeed extends AppCompatActivity implements View.OnCli
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         String str = "";
+        LogUtils.log("rescode---" + resultCode);
+        LogUtils.log("data.getStringExtra(\"message\")--->" + data.getStringExtra("message"));
         if (data != null) {
             str = data.getStringExtra("message");
             Log.e("TAG", "str-----" + str);
-            Log.e("TAG", "rescode---" + resultCode);
         } else {
 
         }
         if (resultCode == 0) {
-            info1.tv_three = str;
+            if (!str.equals(""))
+                info1.tv_three = str;
         } else if (resultCode == 1) {
-            info2.tv_three = str;
+            if (!str.equals(""))
+                info2.tv_three = str;
         } else if (resultCode == 2) {
+            LogUtils.log("start--->" + start + "  end--->" + end);
+
             start = data.getStringExtra("message1");
             end = data.getStringExtra("message2");
-            info3.tv_three = start + "至" + end;
+            if (start != null && !start.equals("") ) {
+                if (end != null && !end.equals("")){
+                    info3.tv_three = start + "至" + end;
+                }
+
+            }
         } else if (resultCode == 3) {
-            info4.tv_three = str;
+            if (!str.equals(""))
+                info4.tv_three = str;
         } else if (resultCode == 4) {
-            info5.tv_three = str;
+            if (!str.equals(""))
+                info5.tv_three = str;
         } else if (resultCode == 5) {
-            info6.tv_three = str;
+            if (!str.equals(""))
+                info6.tv_three = str;
         } else if (resultCode == 6) {
-            info7.tv_three = str;
+            if (!str.equals(""))
+                info7.tv_three = str;
         } else if (resultCode == 10) {
-            infoLv1.tv_three = str;
+            if (!str.equals(""))
+                infoLv1.tv_three = str;
         } else if (resultCode == 11) {
-            infoLv2.tv_three = str;
+            if (!str.equals(""))
+                infoLv2.tv_three = str;
         } else if (resultCode == 12) {
-            infoLv3.tv_three = str;
+            if (!str.equals(""))
+                infoLv3.tv_three = str;
         } else if (resultCode == 13) {
-            infoLv4.tv_three = str;
+            if (!str.equals(""))
+                infoLv4.tv_three = str;
         } else if (resultCode == 14) {
-            infoLv5.tv_three = str;
+            if (!str.equals(""))
+                infoLv5.tv_three = str;
         } else if (resultCode == 15) {
-            infoLv6.tv_three = str;
+            if (!str.equals(""))
+                infoLv6.tv_three = str;
         } else if (resultCode == 99) {
             Log.e("TAG", "进来了");
             tv_logistics_need_address_message.setText(str);
@@ -458,26 +479,6 @@ public class CreateLogisticsNeed extends AppCompatActivity implements View.OnCli
 
     //创建物流订单网络接口
     private void showCreateNet() {
-        /* params.addParameter("quantity",num);//本次发货数量
-        params.addParameter("commerceJson",megList);
-            params.addParameter("shippingMethod","pickUp");
-            params.addParameter("shippingDate",list2.get(3).tv_three);//提货时间
-            params.addParameter("deliveryerTel",list2.get(2).tv_three);//联系电话
-            params.addParameter("idCard",list2.get(4).tv_three);//联系人身份证
-            params.addParameter("wareHouse",cangku);
-            params.addParameter("licensePlateNo",list2.get(0).tv_three);
-            params.addParameter("deliveryer",list2.get(1).tv_three);
-            params.addParameter("remarks",list2.get(5).tv_three);
-            JSONObject job=new JSONObject();
-            try {
-//                job.put("commerceJson",megList);
-//                job.put("wareHouse",cangku);//仓库
-//                job.put("licensePlateNo",list2.get(0).tv_three);//提货车号
-//                job.put("deliveryer",list2.get(1));//提货人
-                job.put("remarks",list2.get(5).tv_three);//备注
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }*/
         String quantity = num + "";
         String commerceJso = megList;
 
@@ -496,28 +497,6 @@ public class CreateLogisticsNeed extends AppCompatActivity implements View.OnCli
                     wareHouse, licensePlateNo,
                     deliveryer, remarks);
         } else {
-            /*
-            *  params.addParameter("quantity", num);//本次发货数量
-        params.addParameter("commerceJson", megList);
-        params.addParameter("shippingMethod", "seller");
-        params.addParameter("provinceId", address_num.substring(0, 4));
-        params.addParameter("cityId", address_num.substring(0, 6));
-        params.addParameter("countyId", address_num.toString());
-        params.addParameter("contactPhone", list.get(1).tv_three);//联系电话
-        params.addParameter("pickUpDateStart", start);
-        params.addParameter("pickUpDateEnd", end);
-        params.addParameter("shippingContactTel", list.get(5).tv_three);
-        params.addParameter("detailAddress", tv_logistics_need_address_message.getText().toString());
-        JSONObject job = new JSONObject();
-        try {
-//                job.put("commerceJson",megList);
-            job.put("detailAddress", tv_logistics_need_address_message.getText().toString());//详细地址
-            job.put("contactPerson", list.get(0).tv_three);
-            job.put("repeiptCompany", list.get(3).tv_three);
-            job.put("shippingContact", list.get(4).tv_three);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }*/
             String commerceJson = megList;
 
             String provinceId = address_num.substring(0, 4);

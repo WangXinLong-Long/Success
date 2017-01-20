@@ -8,13 +8,9 @@ import java.util.List;
  */
 public class MyOfferBean implements Serializable {
 
-    /**
-     * myPrice : [{"bidPrice":56,"submitDate":1484041850367,"bidQut":47,"formatSequenceNum":"0050"},{"bidPrice":56,"submitDate":1483933027797,"bidQut":46,"formatSequenceNum":"0048"},{"bidPrice":8,"submitDate":1483713603330,"bidQut":5,"formatSequenceNum":"0002"},{"bidPrice":7,"submitDate":1483713548324,"bidQut":5,"formatSequenceNum":"0001"}]
-     * mybidQut : 47
-     */
 
-    private String mybidQut;
     private List<MyPriceBean> myPrice;
+private  String mybidQut;
 
     public String getMybidQut() {
         return mybidQut;
@@ -32,15 +28,17 @@ public class MyOfferBean implements Serializable {
         this.myPrice = myPrice;
     }
 
-    public static class MyPriceBean  implements Serializable{
+    public static class MyPriceBean {
         /**
-         * bidPrice : 56
-         * submitDate : 1484041850367
-         * bidQut : 47
-         * formatSequenceNum : 0050
+         * bidPrice : 12000
+         * bidObjId : 19900001
+         * submitDate : 1484301038410
+         * bidQut : 1
+         * formatSequenceNum : 0009
          */
 
         private String bidPrice;
+        private String bidObjId;
         private String submitDate;
         private String bidQut;
         private String formatSequenceNum;
@@ -67,6 +65,14 @@ public class MyOfferBean implements Serializable {
 
         public void setBidQut(String bidQut) {
             this.bidQut = bidQut;
+        }
+
+        public String getBidObjId() {
+            return bidObjId;
+        }
+
+        public void setBidObjId(String bidObjId) {
+            this.bidObjId = bidObjId;
         }
 
         public String getFormatSequenceNum() {

@@ -3,6 +3,9 @@ package com.silianchuangye.sumao.success.fragments.homepage.groupbuying.groupBuy
 import com.silianchuangye.sumao.success.fragments.homepage.auction.openAuction.openAuctionModel.paymentSecurityModel.IPaymentAuctionSecurityModel;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.openAuction.openAuctionModel.paymentSecurityModel.PaymentSecurityCallback;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.openAuction.openAuctionModel.paymentSecurityModel.PaymentSecurityModel;
+import com.silianchuangye.sumao.success.fragments.homepage.groupbuying.groupBuyingDetailMVP.model.ITheRecordModel;
+import com.silianchuangye.sumao.success.fragments.homepage.groupbuying.groupBuyingDetailMVP.model.TheRecordCallback;
+import com.silianchuangye.sumao.success.fragments.homepage.groupbuying.groupBuyingDetailMVP.model.TheRecordModel;
 import com.silianchuangye.sumao.success.fragments.homepage.groupbuying.groupBuyingDetailMVP.view.IGroupBuyingDetailView;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.model.preSaleBondModel.IPreSaleBondModel;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.model.preSaleBondModel.PreSaleBondCallback;
@@ -36,6 +39,16 @@ public class GroupBuyingDetailPresenter {
             @Override
             public void callbackPaymentSecurity(String result) {
                 groupBuyingDetailView.setPaymentSecurityResult(result);
+            }
+        });
+    }
+
+    public void  getTheRecordResult(String productId){
+        ITheRecordModel theRecordModel = new TheRecordModel(productId);
+        theRecordModel.getTheRecordResult(new TheRecordCallback() {
+            @Override
+            public void callbackTheRecord(String result) {
+                groupBuyingDetailView.setTheRecordResult( result);
             }
         });
     }

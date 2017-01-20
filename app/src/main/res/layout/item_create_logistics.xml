@@ -111,21 +111,22 @@
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@id/tv_item_create_logistics_riqi" />
 
-            <TextView
+            <!--<TextView
                 android:id="@+id/dun_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="吨"
                 android:layout_marginRight="@dimen/x5"
                 android:layout_alignParentRight="true"
-                android:layout_centerVertical="true" />
+                android:layout_centerVertical="true" />-->
 
             <TextView
                 android:id="@+id/tv_item_create_logistic_vailable_quantity2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_toLeftOf="@id/dun_tv" />
+                android:layout_alignParentRight="true"
+                 />
 
             <TextView
                 android:id="@+id/tv_item_create_logistics_vailable_quantity1"

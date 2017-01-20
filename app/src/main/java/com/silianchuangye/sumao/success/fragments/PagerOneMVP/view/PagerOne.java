@@ -2,7 +2,10 @@ package com.silianchuangye.sumao.success.fragments.PagerOneMVP.view;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -21,6 +24,7 @@ import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.HX.Constant;
 import com.silianchuangye.sumao.success.HX.ui.LoginActivity;
+import com.silianchuangye.sumao.success.MainActivity;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.ImageAdapter;
 import com.silianchuangye.sumao.success.adapter.LvFragmentoneGrouponAdapter;
@@ -49,6 +53,7 @@ import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.LoginUser
 import com.silianchuangye.sumao.success.utils.Loding;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.MarqueeView;
+import com.silianchuangye.sumao.success.utils.NetWorkChangeBroadcastReceiver;
 import com.silianchuangye.sumao.success.utils.ThreeLevelLindage.Area;
 import com.silianchuangye.sumao.success.utils.ThreeLevelLindage.DBHelper;
 import com.silianchuangye.sumao.success.utils.scrollviewAD.MyGallery;
@@ -103,6 +108,7 @@ public class PagerOne extends BasePager implements IPagerOneView {
     private ApplicationBean applicationBean;
     private SupplierBean supplierBean;
     private GridView supplierDetail;
+    private BroadcastReceiver netReceiver;
 
     @Override
     public void myClickSearch() {
@@ -116,7 +122,7 @@ public class PagerOne extends BasePager implements IPagerOneView {
         pagerOnePresenter = new PagerOnePresenter(this);
         view = (LinearLayout) View.inflate(mActivity, R.layout.fragmentone, null);
         fl_content.addView(view);
-
+        initReceiver();
         gridview();
 //        轮播图
         vpad();
@@ -161,71 +167,78 @@ public class PagerOne extends BasePager implements IPagerOneView {
         gvFragmentone.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (list.get(position).get("icon").equals(R.mipmap.togther)) {
-                    Toast.makeText(mActivity, "点击了撮合按钮", Toast.LENGTH_SHORT).show();
-                } else if (list.get(position).get("icon").equals(R.mipmap.groupon)) {
-                    Intent intent = new Intent(mActivity, GroupBuyingActivity.class);
-                    startActivity(intent);
-                    //Toast.makeText(mActivity, "点击了团购按钮", Toast.LENGTH_SHORT).show();
-                } else if (list.get(position).get("icon").equals(R.mipmap.goods)) {
-                    //Toast.makeText(mActivity, "点击了现货按钮", Toast.LENGTH_SHORT).show();
-                    Loding.show(mActivity, "加载中...", true, null);
-                    String pattern = "fixedProduct";
-                    String regions = null;
-                    String provinces = null;
-                    String cities = null;
-                    String categoryNames = null;
-                    String appNames = null;
-                    String gradeNums = null;
-                    String groups = null;
-                    String pageNum = "1";
-                    String updateOrLoad = "update";
-                    pagerOnePresenter.getGoodsInStockInfo(groups,pattern, regions, provinces, cities,
-                            categoryNames, appNames, gradeNums, pageNum, updateOrLoad);
+                boolean openNetwork = ((MainActivity) mActivity).isOpenNetwork();
+                if (openNetwork) {
 
-                } else if (list.get(position).get("icon").equals(R.mipmap.presell)) {
-                    //Toast.makeText(mActivity, "点击了预售按钮", Toast.LENGTH_SHORT).show();
-                    Loding.show(mActivity, "加载中...", true, null);
-                    String pattern = "forward-pricing-product";
-                    String regions = null;
-                    String provinces = null;
-                    String cities = null;
-                    String categoryNames = null;
-                    String appNames = null;
-                    String gradeNums = null;
-                    String pageNum = "1";
-                    pagerOnePresenter.getPreSaleInfo(pattern, regions, provinces, cities,
-                            categoryNames, appNames, gradeNums, pageNum, "update");
 
-                } else if (list.get(position).get("icon").equals(R.mipmap.adwords)) {
-                    //Toast.makeText(mActivity, "点击了竞拍按钮", Toast.LENGTH_SHORT).show();
-                    String pageNum = 1 + "";
-                    pagerOnePresenter.getAuctionListResult(pageNum, "update");
+                    if (list.get(position).get("icon").equals(R.mipmap.togther)) {
+                        Toast.makeText(mActivity, "点击了撮合按钮", Toast.LENGTH_SHORT).show();
+                    } else if (list.get(position).get("icon").equals(R.mipmap.groupon)) {
+                        Intent intent = new Intent(mActivity, GroupBuyingActivity.class);
+                        startActivity(intent);
+                        //Toast.makeText(mActivity, "点击了团购按钮", Toast.LENGTH_SHORT).show();
+                    } else if (list.get(position).get("icon").equals(R.mipmap.goods)) {
+                        //Toast.makeText(mActivity, "点击了现货按钮", Toast.LENGTH_SHORT).show();
+                        Loding.show(mActivity, "加载中...", true, null);
+                        String pattern = "fixedProduct";
+                        String regions = null;
+                        String provinces = null;
+                        String cities = null;
+                        String categoryNames = null;
+                        String appNames = null;
+                        String gradeNums = null;
+                        String groups = null;
+                        String pageNum = "1";
+                        String updateOrLoad = "update";
+                        pagerOnePresenter.getGoodsInStockInfo(groups, pattern, regions, provinces, cities,
+                                categoryNames, appNames, gradeNums, pageNum, updateOrLoad);
 
-                } else if (list.get(position).get("icon").equals(R.mipmap.order)) {
-                    Toast.makeText(mActivity, "点击了点价按钮", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(mActivity, MidpointsListctivity.class);
-                    startActivity(intent);
-                } else if (list.get(position).get("icon").equals(R.mipmap.direct)) {
+                    } else if (list.get(position).get("icon").equals(R.mipmap.presell)) {
+                        //Toast.makeText(mActivity, "点击了预售按钮", Toast.LENGTH_SHORT).show();
+                        Loding.show(mActivity, "加载中...", true, null);
+                        String pattern = "forward-pricing-product";
+                        String regions = null;
+                        String provinces = null;
+                        String cities = null;
+                        String categoryNames = null;
+                        String appNames = null;
+                        String gradeNums = null;
+                        String pageNum = "1";
+                        pagerOnePresenter.getPreSaleInfo(pattern, regions, provinces, cities,
+                                categoryNames, appNames, gradeNums, pageNum, "update");
+
+                    } else if (list.get(position).get("icon").equals(R.mipmap.adwords)) {
+                        //Toast.makeText(mActivity, "点击了竞拍按钮", Toast.LENGTH_SHORT).show();
+                        String pageNum = 1 + "";
+                        pagerOnePresenter.getAuctionListResult(pageNum, "update");
+
+                    } else if (list.get(position).get("icon").equals(R.mipmap.order)) {
+                        Toast.makeText(mActivity, "点击了点价按钮", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(mActivity, MidpointsListctivity.class);
+                        startActivity(intent);
+                    } else if (list.get(position).get("icon").equals(R.mipmap.direct)) {
 //                    Toast.makeText(mActivity, "点击了上游直销按钮", Toast.LENGTH_SHORT).show();
-                    SharedPreferences sp = mActivity.getSharedPreferences("sumao", Activity.MODE_PRIVATE);
-                    String uniqued = sp.getString("unique", "");
+                        SharedPreferences sp = mActivity.getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+                        String uniqued = sp.getString("unique", "");
 //                    unique
-                    Loding.show(mActivity, "加载中...", true, null);
-                    pagerOnePresenter.getUpstreamDirectSellingInfo(uniqued);
-                } else if (list.get(position).get("icon").equals(R.mipmap.aa)) {
-                    Toast.makeText(mActivity, "点击了物流按钮", Toast.LENGTH_SHORT).show();
+                        Loding.show(mActivity, "加载中...", true, null);
+                        pagerOnePresenter.getUpstreamDirectSellingInfo(uniqued);
+                    } else if (list.get(position).get("icon").equals(R.mipmap.aa)) {
+                        Toast.makeText(mActivity, "点击了物流按钮", Toast.LENGTH_SHORT).show();
 //                    联系客服跳转示例
                    /* Intent intent = new Intent();
                     intent.setClass(mActivity, LoginActivity.class);
                     intent.putExtra(Constant.MESSAGE_TO_INTENT_EXTRA, Constant.MESSAGE_TO_DEFAULT);
                     intent.putExtra(Constant.IM_SERVICE_NUMBER, "feisumaokefu1");
                     startActivity(intent);*/
-                } else if (list.get(position).get("icon").equals(R.mipmap.maifang)) {
-                    Intent intent = new Intent();
-                    intent.setClass(mActivity, LoginUserActivity.class);
-                    intent.putExtra("roles", "seller");
-                    startActivity(intent);
+                    } else if (list.get(position).get("icon").equals(R.mipmap.maifang)) {
+                        Intent intent = new Intent();
+                        intent.setClass(mActivity, LoginUserActivity.class);
+                        intent.putExtra("roles", "seller");
+                        startActivity(intent);
+                    }
+                }else {
+                    Toast.makeText(mActivity, "暂时没有网络连接,请检查您的网络设置", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -241,7 +254,6 @@ public class PagerOne extends BasePager implements IPagerOneView {
 
 //        供应商的GridView
         supplierDetail = ((GridView) view.findViewById(R.id.supplier_detail));
-
         pagerOnePresenter.getClassification("现货");
 
     }
@@ -256,7 +268,7 @@ public class PagerOne extends BasePager implements IPagerOneView {
 
         gallery = (MyGallery) view.findViewById(R.id.fragment_gallery);
         //给Listview填充数据
-        InitImgList();
+        initImgList();
 
 
         gallery.setFocusable(true);
@@ -305,7 +317,7 @@ public class PagerOne extends BasePager implements IPagerOneView {
     }
 
     // 加载图片数据
-    private void InitImgList() {
+    private void initImgList() {
         pagerOnePresenter.getPagerOneInfoToPagerOneFragment();
     }
 
@@ -432,14 +444,13 @@ public class PagerOne extends BasePager implements IPagerOneView {
 
     @Override
     public void getApplicationData(ApplicationBean applicationBean, String transactionType) {
-
         ArrayList<Area> provinceList = new DBHelper(getActivity().getApplicationContext()).getProvince();
 //        Loding.dis();
         this.applicationBean = applicationBean;
         List<String> areaList = new ArrayList<>();
         List<String> classificationList = new ArrayList<>();
         List<String> applicationList = new ArrayList<>();
-        List<String>  supplierBeanList = new ArrayList<>();
+        List<String> supplierBeanList = new ArrayList<>();
         for (int i = 0; i < classificationBean.getIn_flname().size(); i++) {
             classificationList.add(classificationBean.getIn_flname().get(i));
         }
@@ -452,10 +463,14 @@ public class PagerOne extends BasePager implements IPagerOneView {
         for (int i = 0; i < supplierBean.getIn_gysname().size(); i++) {
             supplierBeanList.add(supplierBean.getIn_gysname().get(i));
         }
-        TextGrideViewAdapter areaAdapter = new TextGrideViewAdapter(areaList, getActivity());
-        TextGrideViewAdapter classificationAdapter = new TextGrideViewAdapter(classificationList, getActivity());
-        TextGrideViewAdapter applicationAdapter = new TextGrideViewAdapter(applicationList, getActivity());
-        TextGrideViewAdapter supplierAdapter = new TextGrideViewAdapter(supplierBeanList, getActivity());
+        TextGrideViewAdapter areaAdapter = new TextGrideViewAdapter(getActivity());
+        areaAdapter.addData(areaList);
+        TextGrideViewAdapter classificationAdapter = new TextGrideViewAdapter(getActivity());
+        classificationAdapter.addData(classificationList);
+        TextGrideViewAdapter applicationAdapter = new TextGrideViewAdapter(getActivity());
+        applicationAdapter.addData(applicationList);
+        TextGrideViewAdapter supplierAdapter = new TextGrideViewAdapter(getActivity());
+        supplierAdapter.addData(supplierBeanList);
 
         areaGridView.setAdapter(areaAdapter);
         classificationGridView.setAdapter(classificationAdapter);
@@ -471,7 +486,7 @@ public class PagerOne extends BasePager implements IPagerOneView {
     }
 
     @Override
-    public void getSupplier(SupplierBean supplierBean,String transactionType) {
+    public void getSupplier(SupplierBean supplierBean, String transactionType) {
         this.supplierBean = supplierBean;
         pagerOnePresenter.getApplication(transactionType);
     }
@@ -539,5 +554,24 @@ public class PagerOne extends BasePager implements IPagerOneView {
         startActivity(intent);
     }
 
-
+    //      监听广播
+    private void initReceiver() {
+        netReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                //                判断当前网络状态
+                if (intent.getIntExtra(NetWorkChangeBroadcastReceiver.NET_TYPE, 0) == 0) {
+                    //                    0表示无网络连接,
+                    //这里填你想要执行的东西
+                    Toast.makeText(context, "暂时没有网络,请检查您的网络设置", Toast.LENGTH_SHORT).show();
+                } else {
+                    //                    1表示有
+                    pagerOnePresenter.getClassification("现货");
+                    initImgList();
+                }
+            }
+        };
+        IntentFilter filter = new IntentFilter(NetWorkChangeBroadcastReceiver.NET_CHANGE);
+        getActivity().registerReceiver(netReceiver, filter);
+    }
 }

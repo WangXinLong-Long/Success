@@ -116,7 +116,7 @@ public class RegisterValueActivity extends AppCompatActivity {
                     tv_a.setText("6-16个字符,可由中英文,数字组成");
                     tv_a.setTextColor(Color.RED);
 
-                }else if (ed_content_value.getText().toString().matches("^[0-9]*$")){
+                }else if (title.equals("登录账号")&&ed_content_value.getText().toString().matches("^[0-9]*$")){
                     tv_a.setText("登录账号不能为纯数字，不能包含特殊字符");
                     tv_a.setTextColor(Color.RED);
 
@@ -127,6 +127,7 @@ public class RegisterValueActivity extends AppCompatActivity {
                 }else if (type == "login" || type == "mail") {
                     toDetermineWhetherOrNotToRegister(type, ed_content_value.getText().toString().trim());
                 } else {
+                    LogUtils.log("走这里---->");
                     setResultW();
                 }
 

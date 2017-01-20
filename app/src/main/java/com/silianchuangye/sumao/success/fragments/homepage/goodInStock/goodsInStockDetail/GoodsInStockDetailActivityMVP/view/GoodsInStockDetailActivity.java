@@ -349,8 +349,6 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
 
     public void getGoodsInStockDetailData(GoodsInStockDetailBean goodsInStockDetailBean) {
 //        Loding.dis();
-
-
         //skuId
         sku_id = goodsInStockDetailBean.getCl_cpid();
 //        兰州石化7042
@@ -372,7 +370,13 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
 //        仓库地址
         warehouse_address_et.setText(goodsInStockDetailBean.getCl_cangku() + "");
         StringBuilder sb = new StringBuilder();
-        int jhfssize = goodsInStockDetailBean.getCl_jhfangshi().size();
+        int jhfssize = 0;
+        if (goodsInStockDetailBean.getCl_jhfangshi() == null) {
+            jhfssize = 0;
+        } else {
+            jhfssize = goodsInStockDetailBean.getCl_jhfangshi().size();
+        }
+
         for (int i = 0; i < jhfssize; i++) {
             sb.append(goodsInStockDetailBean.getCl_jhfangshi().get(i));
             if (i != jhfssize - 1) {

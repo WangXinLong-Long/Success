@@ -22,9 +22,10 @@
             android:id="@+id/ivBack_vessel_one"
             />
         <TextView
+            android:id="@+id/title_vessel_one"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="公开竞拍"
+            android:text="~~"
             android:layout_marginTop="@dimen/x10"
             android:textSize="18sp"
             android:textColor="#111"

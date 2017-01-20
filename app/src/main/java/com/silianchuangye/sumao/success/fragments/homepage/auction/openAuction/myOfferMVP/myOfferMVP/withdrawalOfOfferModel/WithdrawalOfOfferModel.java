@@ -25,7 +25,7 @@ public class WithdrawalOfOfferModel implements IWithdrawalOfOfferModel {
 
     @Override
     public void getWithdrawalOfOfferResult(final WithdrawalOfOfferCallback callback) {
-        String url = SuMaoConstant.SUMAO_IP + "/rest/model/com/sumao/mobile/order/purchase/PlanOrderActor/directEnterpriseAuctionProductList";
+        String url = SuMaoConstant.SUMAO_IP + "/rest/model/atg/commerce/catalog/ProductCatalogActor/SealAuctionPriceCancel";
         RequestParams rp = new RequestParams(url);
         rp.addParameter("productId", productId);
         rp.addParameter("bidObjId", bidObjId);

@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/x10"
-            android:text="公开竞拍"
+            android:text="~~"
             android:textColor="#000"
             android:textSize="18sp" />
 
@@ -71,7 +71,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/x3"
                         android:text="竞拍剩余时间:"
-                        android:textColor="#A8D46E"
+                        android:textColor="#f00"
                         android:textSize="16sp" />
 
                     <TextView
@@ -80,7 +80,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/x3"
                         android:text="02时00分23秒"
-                        android:textColor="#A8D46E"
+                        android:textColor="#f00"
                         android:textSize="16sp" />
 
                 </LinearLayout>

@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.google.gson.Gson;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.jingchen.pulltorefresh.PullToRefreshLayout;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.AuctionMVP.adapter.AuctionListViewAdapter;
@@ -28,7 +27,6 @@ import java.util.Map;
 
 public class AuctionActivity extends AppCompatActivity implements IAuctionView {
     private ImageView imageback;
-    private PullToRefreshListView lvAuction;
     private String name;
     private List<String> order_id;
     private List<String> SKUID;
@@ -101,7 +99,7 @@ public class AuctionActivity extends AppCompatActivity implements IAuctionView {
         } else if (lists.get(position).getType().equals("sealedAuctionProduct")) {
             type_way = "密封报价";
         }
-        String  proType = lists.get(position).getType();
+        String proType = lists.get(position).getType();
         auctionPresenter.getOpenAuctionOrSealedBid(type_way, productId, proType);
 
     }
@@ -141,72 +139,6 @@ public class AuctionActivity extends AppCompatActivity implements IAuctionView {
             prodBean.setCl_zongliang(productItemBean.getQuantity());
             lists.add(prodBean);
         }
-                /*Gson gson = new Gson();
-                AuctionBean auctionBean = gson.fromJson(result, AuctionBean.class);
-                List<Map<String, Object>> list_info = new ArrayList<Map<String, Object>>();
-                List<ProductItemBean> productItem = auctionBean.getProductItem();
-                for (int i = 0; i < productItem.size(); i++) {
-                    id = productItem.get(i).getProductId();
-                    namechuanpin = productItem.get(i).getProductName();
-                    endTime = productItem.get(i).getEndDate();
-                    startPrice = "";//TODO 需要起拍价
-                    count = productItem.get(i).getQuantity();
-                    cangku = productItem.get(i).getWareHouse();
-                    company = productItem.get(i).getSupplier();
-                    state = productItem.get(i).getStatus();
-                    type = productItem.get(i).getType();
-                    startTime = productItem.get(i).getStartDate();
-                    order_id.add(id);
-
-                    Map<String, Object> map = new HashMap<String, Object>();
-                    map.put("name", namechuanpin);
-
-                    if (state == null || state.equals("0")) {
-                        //竞拍未开始
-                        map.put("kaishi", "开始时间:");
-                        map.put("startTime", startTime);
-                        map.put("icon", "");
-
-                    } else if (state.equals("1")) {
-                        //正在竞拍
-                        map.put("kaishi", "正在竞拍:");
-                        map.put("startTime", startTime);
-                        map.put("icon", "");
-                    } else if (state.equals("2")) {
-                        //竞拍结束
-                        map.put("kaishi", "");
-                        map.put("startTime", "");
-                        map.put("icon", R.mipmap.end);
-                    }
-                    map.put("price", startPrice);
-                    map.put("count", count);
-                    map.put("cangku", cangku);
-                    map.put("company", company);
-
-                    if (type.equals("englishAuctionProduct")) {
-                        //公开竞拍
-                        map.put("way", R.mipmap.publicauction);
-
-                    } else if (type.equals("sealedAuctionProduct")) {
-                        //密封竞拍
-                        map.put("way", R.mipmap.mifengauction);
-                    }
-                    list_info.add(map);
-                }
-                if (currentPage == 1) {
-                    if (productItem.size() != 0) {
-//                        list.clear();
-                        // list_message.clear();
-                    }
-                }
-                if (productItem.size() < pageSize) {
-                    isAllGot = true;
-                } else {
-                    isAllGot = false;
-                }
-                currentPage++;
-                refreshListViewadapter.notifyDataSetChanged();
-                lvAuction.onRefreshComplete();*/
     }
 
     //    通过上啦或者下拉取得数据

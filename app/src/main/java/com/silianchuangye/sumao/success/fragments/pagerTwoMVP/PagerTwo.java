@@ -1,6 +1,7 @@
 package com.silianchuangye.sumao.success.fragments.pagerTwoMVP;
 
 import android.app.DatePickerDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -34,9 +35,10 @@ public class PagerTwo extends BasePager {
     private DataFragment dataFragment;
     private AnalysisFragment analysisFragment;
     private NewsFragment newsFragment;
-
+    private BroadcastReceiver netReceiver;
     @Override
     public void initDate() {
+
 //        设置父类的标题不可见
         rl_title.setVisibility(View.GONE);
 //        将PagerTwo的视图添加到父容器中

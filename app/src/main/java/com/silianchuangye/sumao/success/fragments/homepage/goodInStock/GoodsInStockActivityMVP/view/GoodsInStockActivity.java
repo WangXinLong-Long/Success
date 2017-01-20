@@ -140,7 +140,8 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
         prl = ((PullToRefreshLayout) findViewById(R.id.refresh_view));
 
         pre_sale_listView = ((ListView) prl.getPullableView());
-        if (title.equals("现货") || title.equals("预售")) {
+        LogUtils.log("标题是--->"+title);
+        if (title.equals("现货") || title.equals("预售")|| title.contains("分类")|| title.contains("应用")|| title.contains("供应")) {
             GoodsInStockActivityBean goodsInStockActivityBean = (GoodsInStockActivityBean) intent.getSerializableExtra("goodsInStockActivityBean");
             applicationBean = (ApplicationBean) intent.getSerializableExtra("applicationBean");
             classificationBean = ((ClassificationBean) intent.getSerializableExtra("classificationBean"));

@@ -240,14 +240,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/x10"
-                        android:layout_marginTop="@dimen/x5"
-                        android:text="￥"
-                        android:textColor="#EE272F"
-                        android:textSize="20sp" />
+
 
                     <TextView
                         android:id="@+id/tvPrice_auction"
@@ -255,8 +248,15 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/x5"
                         android:text="~~"
+                        android:layout_marginLeft="@dimen/x10"
                         android:textColor="#EE272F"
                         android:textSize="20sp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/x5"
+                        android:text="元/吨"
+                         />
                 </LinearLayout>
 
                 <LinearLayout
@@ -443,30 +443,31 @@
                     android:textSize="@dimen/x10" />
 
                 <TextView
-                    android:id="@+id/min_variable_tv"
+                    android:id="@+id/group_amount_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/purchase_quantity_tv"
                     android:layout_marginBottom="@dimen/x5"
-                    android:text="最小变量单位："
+                    android:text="成团量："
                     android:textSize="@dimen/x10" />
 
                 <TextView
-                    android:id="@+id/min_variable_et"
+                    android:id="@+id/group_amount_et"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/purchase_quantity_tv"
                     android:layout_marginBottom="@dimen/x5"
-                    android:layout_toRightOf="@id/min_variable_tv"
+                    android:layout_toRightOf="@id/group_amount_tv"
+                    android:text="~~"
                     android:textSize="@dimen/x10" />
 
                 <TextView
-                    android:id="@+id/min_variable_et_dun"
+                    android:id="@+id/group_amount_et_dun"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/purchase_quantity_tv"
                     android:layout_marginBottom="@dimen/x5"
-                    android:layout_toRightOf="@id/min_variable_et"
+                    android:layout_toRightOf="@id/group_amount_et"
                     android:text="吨"
                     android:textSize="@dimen/x10" />
                 <!--  <TextView
@@ -510,7 +511,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/x5"
-                    android:layout_marginLeft="@dimen/x100"
+                    android:layout_marginLeft="@dimen/x50"
                     android:layout_toRightOf="@id/warehouse_address_et"
                     android:text="分类："
                     android:textSize="@dimen/x10" />
@@ -530,7 +531,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/classification_pre_sale_tv"
                     android:layout_marginBottom="@dimen/x5"
-                    android:layout_marginLeft="@dimen/x100"
+                    android:layout_marginLeft="@dimen/x50"
                     android:layout_toRightOf="@id/warehouse_address_et"
                     android:text="交货方式："
                     android:textSize="@dimen/x10" />
@@ -543,6 +544,36 @@
                     android:layout_marginBottom="@dimen/x5"
                     android:layout_toRightOf="@id/delivery_mode_tv"
                     android:text="~~"
+                    android:textSize="@dimen/x10" />
+
+                <TextView
+                    android:id="@+id/min_variable_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/delivery_mode_et"
+                    android:layout_marginBottom="@dimen/x5"
+                    android:layout_marginLeft="@dimen/x50"
+                    android:layout_toRightOf="@id/warehouse_address_et"
+                    android:text="最小变量单位："
+                    android:textSize="@dimen/x10" />
+
+                <TextView
+                    android:id="@+id/min_variable_et"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/delivery_mode_et"
+                    android:layout_marginBottom="@dimen/x5"
+                    android:layout_toRightOf="@id/min_variable_tv"
+                    android:textSize="@dimen/x10" />
+
+                <TextView
+                    android:id="@+id/min_variable_et_dun"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/delivery_mode_et"
+                    android:layout_marginBottom="@dimen/x5"
+                    android:layout_toRightOf="@id/min_variable_et"
+                    android:text="吨"
                     android:textSize="@dimen/x10" />
 
                 <TextView
@@ -594,6 +625,7 @@
                 android:background="#EEEEF3"/>
 
             <LinearLayout
+                android:id="@+id/remarks_rl"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/x35"
                 android:background="#fff"

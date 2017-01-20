@@ -70,11 +70,19 @@ public class VesselTwoActivity extends AppCompatActivity {
 
         Map<String,Object> map2=new Hashtable<String,Object>();
         map2.put("text","支付保证金截止时间");
-        map2.put("value",simpleDateFormat.format(Double.parseDouble(auctionDetailBean.getDepositDeadline().getTime())));
+        if (auctionDetailBean.getCl_baozhj().equals("%")){
+            map2.put("value","--");
+        }else {
+            map2.put("value",simpleDateFormat.format(Double.parseDouble(auctionDetailBean.getDepositDeadline().getTime())));
+        }
         list.add(map2);
         Map<String,Object> map3=new Hashtable<String,Object>();
         map3.put("text","支付保证金金额");
-        map3.put("value",zhifujine);
+        if (auctionDetailBean.getCl_baozhj().equals("%")){
+            map3.put("value","--");
+        }else {
+            map3.put("value",zhifujine);
+        }
         list.add(map3);
         Map<String,Object> map4=new Hashtable<String,Object>();
         map4.put("text","仓库");

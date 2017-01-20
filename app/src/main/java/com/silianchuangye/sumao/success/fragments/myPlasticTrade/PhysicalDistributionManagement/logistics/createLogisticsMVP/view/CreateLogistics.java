@@ -33,6 +33,7 @@ import com.silianchuangye.sumao.success.fragments.myPlasticTrade.PhysicalDistrib
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.createLogisticsMVP.Bean.Order;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.createLogisticsMVP.Bean.Orders;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.createLogisticsMVP.presenter.CreateLogisticPresenter;
+import com.silianchuangye.sumao.success.utils.Loding;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -405,12 +406,14 @@ public class CreateLogistics extends AppCompatActivity implements View.OnClickLi
 
     private void showNet() {
         String _dynSessConf = getSharedPreferences("sumao", Activity.MODE_PRIVATE).getString("unique", "");
+        Loding.show(this,"加载中...",true,null);
         createLogisticPresenter.getCreateLogisticResultFromService(_dynSessConf);
 
     }
 
     @Override
     public void getCreateLogisticResult(String result) {
+        Loding.dis();
         if (result.contains("order")) {
             Gson gson = new Gson();
             Orders orders = gson.fromJson(result, Orders.class);

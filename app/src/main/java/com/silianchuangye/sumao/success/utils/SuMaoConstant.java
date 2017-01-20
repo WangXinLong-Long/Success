@@ -45,6 +45,6 @@ public class SuMaoConstant {
     //    FTP 密码
     public static final String password = "Mm123456";
     //    存放目录
-    public static final String pathname = "/docs/";
+    public static final String pathname = "/mnt/docs/";
 
 }

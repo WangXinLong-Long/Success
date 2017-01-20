@@ -9,7 +9,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/x40">
-<!--竞拍标示-->
+        <!--竞拍标示-->
         <ImageView
             android:id="@+id/iv_auction_icon"
             android:layout_width="@dimen/x40"
@@ -56,8 +56,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/x20"
             android:layout_marginTop="@dimen/x5"
-            android:src="@mipmap/end"
-             />
+            android:src="@mipmap/end" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -73,72 +72,59 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/tv_auction_priceicon"
+            android:id="@+id/tv_auction_startPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/x30"
             android:layout_marginTop="@dimen/x10"
-            android:text="￥"
-            android:textColor="#EE2B33"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-<!--竞拍单价-->
+            android:text="竞拍单价:"
+
+            />
+        <!--竞拍单价-->
         <TextView
             android:id="@+id/tv_auction_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/x5"
             android:layout_marginTop="@dimen/x10"
-            android:layout_toRightOf="@+id/tv_auction_priceicon"
+            android:layout_toRightOf="@+id/tv_auction_startPrice"
             android:text="~~"
-            android:textColor="#EE2B33"
-            android:textSize="16sp"
+            android:textColor="#EE2B33" />
 
-            />
-<!--竞拍总量-->
+        <TextView
+            android:id="@+id/tv_auction_priceicon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/x10"
+            android:layout_toRightOf="@id/tv_auction_price"
+            android:text="元/吨" />
+
+
+        <TextView
+            android:id="@+id/auction_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_auction_startPrice"
+            android:layout_marginLeft="@dimen/x30"
+            android:layout_marginTop="@dimen/x5"
+            android:text="竞拍总量:" />
+        <!--竞拍总量-->
         <TextView
             android:id="@+id/tv_auction_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/x120"
-            android:layout_marginTop="@dimen/x10"
-            android:textColor="#111"
-            android:textSize="16sp"
-
-            />
+            android:layout_below="@id/tv_auction_startPrice"
+            android:layout_marginTop="@dimen/x5"
+            android:layout_toRightOf="@id/auction_number" />
 
         <TextView
             android:id="@+id/tv_auction_ton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/x5"
-            android:layout_marginTop="@dimen/x12"
+            android:layout_below="@id/tv_auction_startPrice"
+            android:layout_marginTop="@dimen/x5"
             android:layout_toRightOf="@+id/tv_auction_number"
-            android:text="吨"
-            android:textColor="#111"
-            android:textSize="14sp"
+            android:text="吨" />
 
-            />
-
-        <TextView
-            android:id="@+id/tv_auction_startPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_auction_price"
-            android:layout_marginLeft="@dimen/x33"
-            android:layout_marginTop="@dimen/x1"
-            android:text="竞拍单价"
-
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:layout_below="@+id/tv_auction_number"
-            android:layout_marginLeft="@dimen/x124"
-            android:layout_marginTop="@dimen/x1"
-            android:text="竞拍总量" />
         <!--参与竞拍-->
         <TextView
             android:id="@+id/bt_auctionitem"
@@ -151,7 +137,6 @@
             android:gravity="center"
             android:text="参与竞拍"
             android:textColor="#fff"
-
             />
     </RelativeLayout>
 
@@ -161,12 +146,11 @@
         android:layout_marginLeft="@dimen/x10"
         android:layout_marginRight="@dimen/x10"
         android:layout_marginTop="@dimen/x3"
-        android:background="#d3d3d3"></RelativeLayout>
+        android:background="#d3d3d3" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/a"
         android:layout_marginTop="@dimen/x5">
 
         <TextView
@@ -176,14 +160,14 @@
             android:layout_marginLeft="@dimen/x20"
             android:text="仓库:"
             android:textSize="12sp" />
-<!--仓库-->
+        <!--仓库-->
         <TextView
             android:id="@+id/tv_auction_acdress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/x5"
             android:layout_toRightOf="@+id/tv_auction_werhouse"
-            android:text="北京迅邦1号库"
+            android:text="~~"
             android:textSize="12sp" />
 
     </RelativeLayout>
@@ -202,14 +186,82 @@
             android:textSize="12sp"
 
             />
-<!--公司-->
+        <!--公司-->
         <TextView
             android:id="@+id/tv_auction_commAdress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/x3"
             android:layout_toRightOf="@+id/tv_auction_comm"
-            android:text="东莞市住友塑料有限公司"
+            android:text="~~"
+            android:textSize="12sp"
+
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/time_rl"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x1"
+        android:layout_marginLeft="@dimen/x10"
+        android:layout_marginRight="@dimen/x10"
+        android:layout_marginTop="@dimen/x3"
+        android:background="#d3d3d3" />
+
+    <RelativeLayout
+        android:id="@+id/start_data_rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/x5">
+
+        <TextView
+            android:id="@+id/start_data_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/x20"
+            android:text="开始时间:"
+            android:textColor="@color/btn_register_pressed"
+            android:textStyle="bold"
+            android:textSize="12sp" />
+        <!--开始时间-->
+        <TextView
+            android:id="@+id/start_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/x5"
+            android:layout_toRightOf="@+id/start_data_tv"
+            android:text="~~"
+            android:textStyle="bold"
+            android:textColor="@color/btn_register_pressed"
+            android:textSize="12sp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/end_data_rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/x3">
+
+        <TextView
+            android:id="@+id/end_data_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/x20"
+            android:text="结束时间："
+            android:textStyle="bold"
+            android:textColor="@color/orange"
+            android:textSize="12sp" />
+        <!--结束时间-->
+        <TextView
+            android:id="@+id/end_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/x3"
+            android:layout_toRightOf="@+id/end_data_tv"
+            android:text="~~"
+            android:textColor="@color/orange"
+            android:textStyle="bold"
             android:textSize="12sp"
 
             />

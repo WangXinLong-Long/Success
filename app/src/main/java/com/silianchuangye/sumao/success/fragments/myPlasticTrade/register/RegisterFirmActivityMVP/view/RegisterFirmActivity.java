@@ -4,8 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -23,9 +23,7 @@ import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.custom.CustomListView;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoPicture.FirmInfoPictureMVP.view.FirmInfoPictureActivity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoTypeActivity;
-
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.SelectProvinceAreaMVP.view.SelectProvinceArea;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.LoginUserActivity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.RegisterFirmActivityMVP.adapter.RegisterFirmListAdapter;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.RegisterFirmActivityMVP.model.RegisterFirmList;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.RegisterFirmActivityMVP.presenter.RegisterFirmActivityPresenter;
@@ -34,13 +32,10 @@ import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.Regist
 import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -78,12 +73,12 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
     private String yewu;
     private RegisterFirmActivityPresenter presenter;
     private StringBuilder sb;
-    private String leixingLevel= "";
-    private String naShuiRenLevel= "";
+    private String leixingLevel = "";
+    private String naShuiRenLevel = "";
     private String value;
     private String picturePath1 = "";
-    private String picturePath2= "";
-    private String picturePath3= "";
+    private String picturePath2 = "";
+    private String picturePath3 = "";
     private String zhuce_leixing;
     private String zhuce_leixingLevel = "";
     private Map<String, Object> map13, map14, map15, map12;
@@ -143,12 +138,11 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
     private TextView unified_social_credit_code_name;
     private List<RegisterFirmList> registerFirmLists;
     private RegisterFirmListAdapter registerFirmListAdapter;
-    private String value1=  "123654";
+    private String value1 = "123654";
     private String value2 = "123654";
     private String value3 = "123654";
 
     /**
-     *
      * 谁都不要动！！！
      */
 
@@ -163,7 +157,7 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
         initList();
         Bundle bundle = getIntent().getExtras();
         account = bundle.getString("account");
-        Log.e("TAG","登陆---"+account);
+        Log.e("TAG", "登陆---" + account);
         pass = bundle.getString("pass");
         repass = bundle.getString("repass");
         name = bundle.getString("name");
@@ -187,7 +181,36 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
                 LogUtils.log("省" + sb.substring(0, 4));
                 LogUtils.log("市" + sb.substring(0, 6));
                 LogUtils.log("县" + sb.toString());
-                registerMethodW();
+                 if (leixingLevel == null ||leixingLevel.equals("")){
+                    Toast.makeText(RegisterFirmActivity.this, "企业类型为空", Toast.LENGTH_SHORT).show();
+                }else if (mingcheng == null ||mingcheng.equals("")){
+                    Toast.makeText(RegisterFirmActivity.this, "企业名称为空", Toast.LENGTH_SHORT).show();
+                }else if (office_address_image.getText().toString() == null ||office_address_image.getText().toString().equals("")){
+                    Toast.makeText(RegisterFirmActivity.this, "办公地址为空", Toast.LENGTH_SHORT).show();
+                }else if (office_address_image.getText().toString() == null ||office_address_image.getText().toString().equals("")){
+                    Toast.makeText(RegisterFirmActivity.this, "办公地址为空", Toast.LENGTH_SHORT).show();
+                }else if (detail_address_image.getText().toString() == null ||detail_address_image.getText().toString().equals("")){
+                    Toast.makeText(RegisterFirmActivity.this, "详细地址为空", Toast.LENGTH_SHORT).show();
+                }else if (name_of_enterprise_legal_person_image.getText().toString() == null ||name_of_enterprise_legal_person_image.getText().toString().equals("")){
+                    Toast.makeText(RegisterFirmActivity.this, "企业法人姓名为空", Toast.LENGTH_SHORT).show();
+                }else if (enterprise_registration_certificate_image.getText().toString() == null ||enterprise_registration_certificate_image.getText().toString().equals("")){
+                    Toast.makeText(RegisterFirmActivity.this, "企业注册证件为空", Toast.LENGTH_SHORT).show();
+                }else if (zhuce_leixingLevel.equals("4")&&(value1 == null ||value1.equals(""))){
+                    Toast.makeText(RegisterFirmActivity.this, "营业执照号为空", Toast.LENGTH_SHORT).show();
+                }else if (zhuce_leixingLevel.equals("4")&&(value2 == null ||value2.equals(""))){
+                    Toast.makeText(RegisterFirmActivity.this, "组织机构代码为空", Toast.LENGTH_SHORT).show();
+                }else if (zhuce_leixingLevel.equals("4")&&(value3 == null ||value3.equals(""))){
+                    Toast.makeText(RegisterFirmActivity.this, "税务登记号为空", Toast.LENGTH_SHORT).show();
+                }else if (zhuce_leixingLevel.equals("5")&&(value1 == null ||value1.equals(""))){
+                    Toast.makeText(RegisterFirmActivity.this, "统一社会信用代码为空", Toast.LENGTH_SHORT).show();
+                }else if (naShuiRenLevel== null ||naShuiRenLevel.equals("")){
+                    Toast.makeText(RegisterFirmActivity.this, "纳税人类型为空", Toast.LENGTH_SHORT).show();
+                }else if (applicationAsSMLevel== null ||applicationAsSMLevel.equals("")){
+                    Toast.makeText(RegisterFirmActivity.this, "申请成为塑贸网角色为空", Toast.LENGTH_SHORT).show();
+                }else {
+                     registerMethodW();
+                 }
+
 
             }
         });
@@ -213,30 +236,30 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent();
 //                三证独立
-                if (zhuce_leixingLevel .equals( "4")) {
-                    if (position == 0){
+                if (zhuce_leixingLevel.equals("4")) {
+                    if (position == 0) {
                         intent.setClass(RegisterFirmActivity.this, FirmInfoPictureActivity.class);//营业执照号
                         intent.putExtra("name", registerFirmLists.get(position).getName());
                         intent.putExtra("number", 9);
                         startActivityForResult(intent, 9);
-                    }else if(position == 1){
+                    } else if (position == 1) {
                         intent.setClass(RegisterFirmActivity.this, FirmInfoPictureActivity.class);//        组织机构代码
-                        intent.putExtra("name",  registerFirmLists.get(position).getName());
+                        intent.putExtra("name", registerFirmLists.get(position).getName());
                         intent.putExtra("number", 10);
                         startActivityForResult(intent, 10);
-                    }else if(position == 2){
+                    } else if (position == 2) {
                         intent.setClass(RegisterFirmActivity.this, FirmInfoPictureActivity.class);//        税务登记号
-                        intent.putExtra("name",  registerFirmLists.get(position).getName());
+                        intent.putExtra("name", registerFirmLists.get(position).getName());
                         intent.putExtra("number", 11);
                         startActivityForResult(intent, 11);
                     }
 
-                } else if (zhuce_leixingLevel  .equals( "5")) {
+                } else if (zhuce_leixingLevel.equals("5")) {
                     intent.setClass(RegisterFirmActivity.this, FirmInfoPictureActivity.class);//        统一社会信用代码
-                    intent.putExtra("name",  registerFirmLists.get(position).getName());
+                    intent.putExtra("name", registerFirmLists.get(position).getName());
                     intent.putExtra("number", 15);
                     startActivityForResult(intent, 15);
-                }else  {
+                } else {
                     Toast.makeText(RegisterFirmActivity.this, "请选择类型", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -317,59 +340,106 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
     }
 
     private void registerMethodW() {
-        rp.setAsJsonContent(true);
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("cl_mingcheng", enterprise_name_image.getText().toString().trim());//企业名称
-            jsonObject.put("cl_yewu", business_department_image.getText().toString().trim());//业务部门（可空）
-            jsonObject.put("province", sb.substring(0, 4));//省
-            jsonObject.put("city", sb.substring(0, 6));//市
-            jsonObject.put("county", sb.toString());//县
-            jsonObject.put("cl_dizhi", detail_address_image.getText().toString().trim());//详细地址
+//        rp.setAsJsonContent(true);
+//        JSONObject jsonObject = new JSONObject();
+//        try {
+//            jsonObject.put("cl_mingcheng", enterprise_name_image.getText().toString().trim());//企业名称
+//            if (business_department_image.getText().toString().trim() != null)
+//            jsonObject.put("cl_yewu", business_department_image.getText().toString().trim());//业务部门（可空）
+//            jsonObject.put("province", sb.substring(0, 4));//省
+//            jsonObject.put("city", sb.substring(0, 6));//市
+//            jsonObject.put("county", sb.toString());//县
+//            jsonObject.put("cl_dizhi", detail_address_image.getText().toString().trim());//详细地址
+//
+//            jsonObject.put("cl_chuanzhen", fax_number_image.getText().toString().trim());//传真
+//            jsonObject.put("cl_zhengjian", zhuce_leixingLevel);//企业注册证件
+//            jsonObject.put("cl_nashuiren", naShuiRenLevel);//纳税人类型
+//            jsonObject.put("cl_leixing", leixingLevel);//企业类型
+//            if (value1.trim()!=null)
+//            jsonObject.put("cl_zhizhao", value1.trim());//企业营业执照
+//            if (value2.trim()!=null)
+//            jsonObject.put("cl_jigou", value2.trim());//组织机构代码
+//            if (value3.trim()!=null)
+//            jsonObject.put("cl_shuiwu", value3.trim());//税务登记号
+//
+//            jsonObject.put("cl_login", account);//登录账号
+//            jsonObject.put("cl_password", pass);//密码
+//            jsonObject.put("cl_confirmPassword", repass);//确认密码
+//            jsonObject.put("cl_firstName", name);//姓名
+//            jsonObject.put("cl_email", email);//邮箱
+//            jsonObject.put("cl_mobilePhone", phone);//电话号码
+//            jsonObject.put("cl_applyType", applicationAsSMLevel);//申请成为(买方)
+//            jsonObject.put("cl_entName", name_of_enterprise_legal_person_image.getText().toString().trim());//企业法人
+//            jsonObject.put("cl_taxNum",  value3.trim());//税号
+//            sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+//            String unique123 = sp.getString("unique", "");
+//            jsonObject.put("_dynSessConf", unique123);
+//            if (picturePath1 != null)
+//            jsonObject.put("cl_zhizhaoimage", picturePath1);//营业执照图片路劲
+//            if (picturePath2 != null)
+//            jsonObject.put("cl_jigouimage", picturePath2);//组织机构代码图片路劲
+//            if (picturePath3 != null)
+//            jsonObject.put("cl_shuiwuimage", picturePath3);//税务登记号图片路劲
+//            if (picturePath4 != null)
+//            jsonObject.put("cl_nashuirenimage", picturePath4);//纳税人图片路劲
+//
+//
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//        rp.setBodyContent(jsonObject.toString());
+        rp.addBodyParameter("cl_mingcheng", enterprise_name_image.getText().toString().trim());//企业名称
+        if (business_department_image.getText().toString().trim() != null&&business_department_image.getText().toString().trim().equals(""))
+            rp.addBodyParameter("cl_yewu", business_department_image.getText().toString().trim());//业务部门（可空）
+        rp.addBodyParameter("province", sb.substring(0, 4));//省
+        rp.addBodyParameter("city", sb.substring(0, 6));//市
+        rp.addBodyParameter("county", sb.toString());//县
+        rp.addBodyParameter("cl_dizhi", detail_address_image.getText().toString().trim());//详细地址
 
-            jsonObject.put("cl_chuanzhen", fax_number_image.getText().toString().trim());//传真
-            jsonObject.put("cl_zhengjian", zhuce_leixingLevel);//企业注册证件
-            jsonObject.put("cl_nashuiren", naShuiRenLevel);//纳税人类型
-            jsonObject.put("cl_leixing", leixingLevel);//企业类型
-            jsonObject.put("cl_zhizhao", value1.trim());//企业营业执照
-            jsonObject.put("cl_jigou", value2.trim());//组织机构代码
-            jsonObject.put("cl_shuiwu", value3.trim());//税务登记号
+        rp.addBodyParameter("cl_chuanzhen", fax_number_image.getText().toString().trim());//传真
+        rp.addBodyParameter("cl_zhengjian", zhuce_leixingLevel);//企业注册证件
+        rp.addBodyParameter("cl_nashuiren", naShuiRenLevel);//纳税人类型
+        rp.addBodyParameter("cl_leixing", leixingLevel);//企业类型
+        if (value1.trim() != null&&value1.equals(""))
+            rp.addBodyParameter("cl_zhizhao", value1.trim());//企业营业执照
+        if (value2.trim() != null&&value2.equals(""))
+            rp.addBodyParameter("cl_jigou", value2.trim());//组织机构代码
+        if (value3.trim() != null&&value3.equals(""))
+            rp.addBodyParameter("cl_shuiwu", value3.trim());//税务登记号
 
-            jsonObject.put("cl_login", account);//登录账号
-            jsonObject.put("cl_password", pass);//密码
-            jsonObject.put("cl_confirmPassword", repass);//确认密码
-            jsonObject.put("cl_firstName", name);//姓名
-            jsonObject.put("cl_email", email);//邮箱
-            jsonObject.put("cl_mobilePhone", phone);//电话号码
-            jsonObject.put("cl_applyType", applicationAsSMLevel);//申请成为(买方)
-            jsonObject.put("cl_entName", name_of_enterprise_legal_person_image.getText().toString().trim());//企业法人
-            jsonObject.put("cl_taxNum",  value3.trim());//税号
-            sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
-            String unique123 = sp.getString("unique", "");
-            jsonObject.put("_dynSessConf", unique123);
-            jsonObject.put("cl_zhizhaoimage", picturePath1);//营业执照图片路劲
-            jsonObject.put("cl_jigouimage", picturePath2);//组织机构代码图片路劲
-            jsonObject.put("cl_shuiwuimage", picturePath3);//税务登记号图片路劲
-            jsonObject.put("cl_nashuirenimage", picturePath4);//纳税人图片路劲
+        rp.addBodyParameter("cl_login", account);//登录账号
+        rp.addBodyParameter("cl_password", pass);//密码
+        rp.addBodyParameter("cl_confirmPassword", repass);//确认密码
+        rp.addBodyParameter("cl_firstName", name);//姓名
+        rp.addBodyParameter("cl_email", email);//邮箱
+        rp.addBodyParameter("cl_mobilePhone", phone);//电话号码
+        rp.addBodyParameter("cl_applyType", applicationAsSMLevel);//申请成为(买方)
+        rp.addBodyParameter("cl_entName", name_of_enterprise_legal_person_image.getText().toString().trim());//企业法人
+        rp.addBodyParameter("cl_taxNum", value3.trim());//税号
+        sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+        String unique123 = sp.getString("unique", "");
+        rp.addBodyParameter("_dynSessConf", unique123);
+        if (picturePath1 != null&&picturePath1.equals(""))
+            rp.addBodyParameter("cl_zhizhaoimage", picturePath1);//营业执照图片路劲
+        if (picturePath2 != null&&picturePath2.equals(""))
+            rp.addBodyParameter("cl_jigouimage", picturePath2);//组织机构代码图片路劲
+        if (picturePath3 != null&&picturePath3.equals(""))
+            rp.addBodyParameter("cl_shuiwuimage", picturePath3);//税务登记号图片路劲
+        if (picturePath4 != null&&picturePath4.equals(""))
+            rp.addBodyParameter("cl_nashuirenimage", picturePath4);//纳税人图片路劲
 
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        rp.setBodyContent(jsonObject.toString());
-
-
-//        LogUtils.log("json---------->"+jsonObject.toString()+"<-------json");
         LogUtils.log("picturePath1------->" + picturePath1);
+//        LogUtils.log("jsonObject.toString()------->" + jsonObject.toString());
 
-
+        LogUtils.log("注册的URL--->" + rp);
         x.http().post(rp, new Callback.CacheCallback<String>() {
 
             @Override
             public void onSuccess(String result) {
-                sp=getSharedPreferences("sumao", Activity.MODE_PRIVATE);
-                editor=sp.edit();
-                editor.putString("name",account);
+                LogUtils.log("注册的result--->" + result);
+                sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+                editor = sp.edit();
+                editor.putString("name", account);
                 editor.commit();
                 Intent intent = new Intent(RegisterFirmActivity.this, MainActivity.class);
 
@@ -384,7 +454,6 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
 
             @Override
             public void onCancelled(CancelledException cex) {
-                LogUtils.log("注册CancelledException------->" + cex.toString() + "");
                 LogUtils.log("注册CancelledException------->" + cex.toString() + "");
             }
 
@@ -445,7 +514,7 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
                 LogUtils.log("number8--->" + zhuce_leixingLevel);
                 enterprise_registration_certificate_image.setText(zhuce_leixing);
 //                三证独立  4
-                if (zhuce_leixingLevel .equals( "4")) {
+                if (zhuce_leixingLevel.equals("4")) {
                     registerFirmLists.removeAll(registerFirmLists);
                     registerFirmLists.add(new RegisterFirmList("营业执照号", ""));
                     registerFirmLists.add(new RegisterFirmList("组织机构代码", ""));
@@ -455,7 +524,7 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
 //                    business_license_number_rl.setVisibility(View.VISIBLE);
 //                    organization_code_rl.setVisibility(View.VISIBLE);
 //                    tax_registration_number_rl.setVisibility(View.VISIBLE);
-                } else if (zhuce_leixingLevel .equals( "5")) {//三证合一  5
+                } else if (zhuce_leixingLevel.equals("5")) {//三证合一  5
                     registerFirmLists.removeAll(registerFirmLists);
                     registerFirmLists.add(new RegisterFirmList("统一社会信用代码", ""));
                     registerFirmListAdapter.notifyDataSetChanged();
@@ -470,7 +539,7 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
                 picturePath1 = data.getStringExtra("picturePath");
                 LogUtils.log(" 营业执照号9---------->" + value1);
 //                business_license_number_image.setText(value1);
-                registerFirmLists.set(0,new RegisterFirmList("营业执照号", value1));
+                registerFirmLists.set(0, new RegisterFirmList("营业执照号", value1));
                 registerFirmListAdapter.notifyDataSetChanged();
                 break;
 
@@ -478,7 +547,7 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
                 value2 = data.getStringExtra("value");
                 LogUtils.log("10---------->" + value2);
                 picturePath2 = data.getStringExtra("picturePath");
-                registerFirmLists.set(1,new RegisterFirmList("组织机构代码", value2));
+                registerFirmLists.set(1, new RegisterFirmList("组织机构代码", value2));
                 registerFirmListAdapter.notifyDataSetChanged();
                 break;
 
@@ -487,7 +556,7 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
                 LogUtils.log("11---------->" + value3);
                 picturePath3 = data.getStringExtra("picturePath");
 //                tax_registration_number_image.setText(value3);
-                registerFirmLists.set(2,new RegisterFirmList("组织机构代码", value3));
+                registerFirmLists.set(2, new RegisterFirmList("组织机构代码", value3));
                 registerFirmListAdapter.notifyDataSetChanged();
                 break;
 
@@ -520,7 +589,7 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
                 picturePath1 = data.getStringExtra("picturePath");
                 LogUtils.log(" 统一社会信用代码9---------->" + value1);
 //                business_license_number_image.setText(value1);
-                registerFirmLists.set(0,new RegisterFirmList("统一社会信用代码", value1));
+                registerFirmLists.set(0, new RegisterFirmList("统一社会信用代码", value1));
                 registerFirmListAdapter.notifyDataSetChanged();
                 break;
 

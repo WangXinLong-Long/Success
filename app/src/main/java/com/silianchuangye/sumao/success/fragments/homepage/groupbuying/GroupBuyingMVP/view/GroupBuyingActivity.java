@@ -56,7 +56,7 @@ public class GroupBuyingActivity extends AppCompatActivity implements IGroupBuyi
     public void addData() {
         boolean updateOrLoad = true;
         Loding.show(GroupBuyingActivity.this, "加载中...", false, null);
-        groupBuyingPresenter.getGroupBuyingResult(updateOrLoad);
+        groupBuyingPresenter.getGroupBuyingResult("1",updateOrLoad);
     }
 
     /**
@@ -128,7 +128,7 @@ public class GroupBuyingActivity extends AppCompatActivity implements IGroupBuyi
                     super.handleMessage(msg);
                     pageNum = "1";
                     boolean updateOrLoad = true;
-                    groupBuyingPresenter.getGroupBuyingResult(updateOrLoad);
+                    groupBuyingPresenter.getGroupBuyingResult(pageNum,updateOrLoad);
                     pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
                 }
             }.sendEmptyMessageDelayed(0, 3000);
@@ -143,7 +143,8 @@ public class GroupBuyingActivity extends AppCompatActivity implements IGroupBuyi
                     super.handleMessage(msg);
                     int num = Integer.parseInt(pageNum) + 1;
                     pageNum = num + "";
-//                    auctionPresenter.getAuctionListResult(pageNum, "load");
+                    boolean updateOrLoad = false;
+                    groupBuyingPresenter.getGroupBuyingResult(pageNum,updateOrLoad);
                     pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
                 }
             }.sendEmptyMessageDelayed(0, 3000);

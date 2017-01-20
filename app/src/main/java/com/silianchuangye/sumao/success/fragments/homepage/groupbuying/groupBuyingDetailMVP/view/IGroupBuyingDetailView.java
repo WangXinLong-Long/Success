@@ -8,4 +8,7 @@ public interface IGroupBuyingDetailView {
     void setBankListResult(String result);
 //      支付保证金
     void setPaymentSecurityResult(String result);
+
+//    获取我的参团记录
+    void setTheRecordResult(String result);
 }

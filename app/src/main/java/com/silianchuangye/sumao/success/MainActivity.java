@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
@@ -29,9 +31,9 @@ import com.easemob.chat.EMMessage;
 import com.silianchuangye.sumao.success.HX.DemoHelper;
 import com.silianchuangye.sumao.success.HX.ui.ChatActivity;
 import com.silianchuangye.sumao.success.fragments.PagerFive;
-import com.silianchuangye.sumao.success.fragments.pagerFourMVP.view.PagerFour;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.view.PagerOne;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.LoginUserActivity;
+import com.silianchuangye.sumao.success.fragments.pagerFourMVP.view.PagerFour;
 import com.silianchuangye.sumao.success.fragments.pagerThreeMVP.view.PagerThree;
 import com.silianchuangye.sumao.success.fragments.pagerTwoMVP.PagerTwo;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
@@ -66,36 +68,82 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
     String username = "";
     SharedPreferences sp;
     private SharedPreferences.Editor editor;
-    private String unique="false";
+    private String unique = "false";
     public static MainActivity instancefinish;
+    boolean networkConnections = false;
+    private String[] fragmentTag;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
 
-        sp=getSharedPreferences("sumao",Context.MODE_PRIVATE);
+        sp = getSharedPreferences("sumao", Context.MODE_PRIVATE);
         instancefinish = this;
 //      初始化数据
         initData();
 //      初始化组件
         getUnique();
-        initView();
+        initView(savedInstanceState);
         init();
-        showIntent();
+        showIntent(savedInstanceState);
     }
 
-    private void initView() {
+    private void initView(final Bundle savedInstanceState) {
         mLayoutInflater = LayoutInflater.from(this);
-        mTabHost  = ((FragmentTabHost) findViewById(android.R.id.tabhost));
-        mTabHost.setup(this,getSupportFragmentManager(),R.id.fl_activity_main_content);
+        mTabHost = ((FragmentTabHost) findViewById(android.R.id.tabhost));
+        mTabHost.setup(this, getSupportFragmentManager(), R.id.fl_activity_main_content);
 //        得到Fragment的个数
         int count = mFragmentArray.size();
         for (int i = 0; i < count; i++) {
             TabHost.TabSpec tabSpec = mTabHost.newTabSpec(mTextArray.get(i)).setIndicator(getTabItemView(i));
-            mTabHost.addTab(tabSpec,mFragmentArray.get(i),null);
+            mTabHost.addTab(tabSpec, mFragmentArray.get(i), null);
         }
-
+        int currentTab = mTabHost.getCurrentTab();
+        if (currentTab == 0) {
+            boolean openNetwork = isOpenNetwork();
+            if (openNetwork) {
+            } else {
+                Toast.makeText(MainActivity.this, "暂时没有网络连接,请检查您的网络设置", Toast.LENGTH_SHORT).show();
+            }
+        }
+        mTabHost.getTabWidget().getChildTabViewAt(0).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mTabHost.setCurrentTab(0);
+                boolean openNetwork = isOpenNetwork();
+                if (openNetwork) {
+                } else {
+                    networkConnections = false;
+                    Toast.makeText(MainActivity.this, "暂时没有网络连接,请检查您的网络设置", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        mTabHost.getTabWidget().getChildTabViewAt(1).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mTabHost.setCurrentTab(1);
+                boolean openNetwork = isOpenNetwork();
+                if (openNetwork) {
+                } else {
+                    networkConnections = false;
+                    Toast.makeText(MainActivity.this, "暂时没有网络连接,请检查您的网络设置", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        mTabHost.getTabWidget().getChildTabViewAt(3).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mTabHost.setCurrentTab(3);
+                boolean openNetwork = isOpenNetwork();
+                if (openNetwork) {
+                } else {
+                    networkConnections = false;
+                    Toast.makeText(MainActivity.this, "暂时没有网络连接,请检查您的网络设置", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
         /**
          * 设置默认选中第几个
          */
@@ -103,28 +151,34 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
             @Override
             public void onClick(View v) {
 //                String unique = sp.getString("unique","");
-                unique=getUnique();
-                if (unique.equals("false")){
-                    Toast.makeText(MainActivity.this,"请登录",Toast.LENGTH_SHORT).show();
-                    SharedPreferences.Editor editor=sp.edit();
+                unique = getUnique();
+                if (unique.equals("false")) {
+                    Toast.makeText(MainActivity.this, "请登录", Toast.LENGTH_SHORT).show();
+                    SharedPreferences.Editor editor = sp.edit();
                     editor.clear();
                     //      editor.clear();////
                     editor.commit();
                     Intent intent = new Intent();
-                    intent.putExtra("roles","buyer");
+                    intent.putExtra("roles", "buyer");
                     intent.setClass(MainActivity.this, LoginUserActivity.class);
                     startActivity(intent);
-                }else {
-                    username=sp.getString("name","");
-                    if (username!=""){
+                } else {
+                    username = sp.getString("name", "");
+                    if (username != "") {
                         mTabHost.setCurrentTab(4);
-                    }else {
-                        SharedPreferences.Editor editor=sp.edit();
+                        boolean openNetwork = isOpenNetwork();
+                        if (openNetwork) {
+                        } else {
+                            networkConnections = false;
+                            Toast.makeText(MainActivity.this, "暂时没有网络连接,请检查您的网络设置", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        SharedPreferences.Editor editor = sp.edit();
                         editor.clear();
                         //      editor.clear();
                         editor.commit();
                         Intent intent = new Intent();
-                        intent.putExtra("roles","buyer");
+                        intent.putExtra("roles", "buyer");
                         intent.setClass(MainActivity.this, LoginUserActivity.class);
                         startActivity(intent);
                     }
@@ -134,33 +188,37 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
             }
         });
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        getChildLogin();
+        getChildLogin(savedInstanceState);
     }
+
     //购物车按钮---判断是否登陆过，没登录跳的登陆界面
-    private void getChildLogin(){
+    private void getChildLogin(final Bundle savedInstanceState) {
         mTabHost.getTabWidget().getChildTabViewAt(2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sp=getSharedPreferences("sumao",Context.MODE_PRIVATE);
-                username=sp.getString("name","");
-                Log.e("TAG","usernam===="+username);
-                if(!unique.equals("false")){
+                sp = getSharedPreferences("sumao", Context.MODE_PRIVATE);
+                username = sp.getString("name", "");
+                if (!unique.equals("false")) {
                     mTabHost.setCurrentTab(2);
-                }else {
+                    boolean openNetwork = isOpenNetwork();
+                    if (openNetwork) {
+                    } else {
+                        networkConnections = false;
+                        Toast.makeText(MainActivity.this, "暂时没有网络连接,请检查您的网络设置", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
                     Intent intent = new Intent();
-                    intent.putExtra("roles","buyer");
+                    intent.putExtra("roles", "buyer");
                     intent.putExtra("cart1", 9);
-
                     intent.setClass(MainActivity.this, LoginUserActivity.class);
                     startActivity(intent);
                 }
             }
         });
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
     private View getTabItemView(int i) {
-        View view = mLayoutInflater.inflate(R.layout.tab_item_view,null);
+        View view = mLayoutInflater.inflate(R.layout.tab_item_view, null);
         ImageView iv = ((ImageView) view.findViewById(R.id.iv_tab_itmem_view_picture));
         TextView tv = ((TextView) view.findViewById(R.id.iv_tab_itmem_view_character));
         iv.setBackgroundResource(mImageArray.get(i));
@@ -191,21 +249,21 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
         mTextArray.add("购物车");
         mTextArray.add("帮助");
         mTextArray.add("我的塑贸");
+
+        fragmentTag = new String[]{"PagerOne", "PagerTwo", "PagerThree", "PagerFour", "PagerFive"};
     }
 
-//    返回键的操作
+    //    返回键的操作
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode==KeyEvent.KEYCODE_BACK&&event.getAction()==KeyEvent.ACTION_DOWN)
-        {
-            if (System.currentTimeMillis()-exitTime>2000)
-            {
-                Toast.makeText(this,"再按一次退出程序",Toast.LENGTH_SHORT).show();
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+            if (System.currentTimeMillis() - exitTime > 2000) {
+                Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
                 exitTime = System.currentTimeMillis();
-            }else {
+            } else {
                 finish();
             }
-            return  true;
+            return true;
         }
         return super.onKeyDown(keyCode, event);
     }
@@ -227,19 +285,19 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    if(error == EMError.USER_REMOVED){
+                    if (error == EMError.USER_REMOVED) {
                         //账号被移除
                         DemoHelper.getInstance().logout(true, null);
-                        if(ChatActivity.activityInstance != null){
+                        if (ChatActivity.activityInstance != null) {
                             ChatActivity.activityInstance.finish();
                         }
-                    }else if(error == EMError.CONNECTION_CONFLICT){
+                    } else if (error == EMError.CONNECTION_CONFLICT) {
                         //账号在其他地方登录
                         DemoHelper.getInstance().logout(true, null);
-                        if(ChatActivity.activityInstance != null){
+                        if (ChatActivity.activityInstance != null) {
                             ChatActivity.activityInstance.finish();
                         }
-                    }else{
+                    } else {
                         //连接不到服务器
 
                     }
@@ -249,7 +307,9 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
         }
 
     }
+
     private BroadcastReceiver internalDebugReceiver;
+
     /**
      * 内部测试代码，开发者请忽略
      */
@@ -259,7 +319,7 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
             @Override
             public void onReceive(Context context, Intent intent) {
                 DemoHelper.getInstance().logout(true, null);
-                if(ChatActivity.activityInstance != null){
+                if (ChatActivity.activityInstance != null) {
                     ChatActivity.activityInstance.finish();
                 }
             }
@@ -279,7 +339,7 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(connectionListener != null){
+        if (connectionListener != null) {
             EMChatManager.getInstance().removeConnectionListener(connectionListener);
         }
         try {
@@ -288,61 +348,72 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
         }
     }
 
-//非点击购物车按钮，点击其他时跳转回来时；
-    private void showCart(){
-        SharedPreferences share=getSharedPreferences("sumao",Context.MODE_PRIVATE);
-        String str=share.getString("name","");
-        if (str!=""){
+    //非点击购物车按钮，点击其他时跳转回来时；
+    private void showCart(Bundle savedInstanceState) {
+        SharedPreferences share = getSharedPreferences("sumao", Context.MODE_PRIVATE);
+        String str = share.getString("name", "");
+        if (str != "") {
             mTabHost.setCurrentTab(2);
-        }else {
+            boolean openNetwork = isOpenNetwork();
+            if (openNetwork) {
+            } else {
+                networkConnections = false;
+                Toast.makeText(MainActivity.this, "暂时没有网络连接,请检查您的网络设置", Toast.LENGTH_SHORT).show();
+            }
+        } else {
             Intent intent = new Intent();
             intent.putExtra("cart1", 9);
-            intent.putExtra("roles","buyer");
+            intent.putExtra("roles", "buyer");
             intent.setClass(MainActivity.this, LoginUserActivity.class);
             startActivity(intent);
             MainActivity.this.finish();
         }
     }
-    private void showIntent(){
-        int num=getIntent().getIntExtra("cart",0);
-        Log.e("TAG","num====="+num);
-        switch (num)
-        {
+
+    private void showIntent(Bundle savedInstanceState) {
+        int num = getIntent().getIntExtra("cart", 0);
+        Log.e("TAG", "num=====" + num);
+        switch (num) {
             case 1:
-                showCart();
+                showCart(savedInstanceState);
                 break;
             case 3:
-//                GlobalVariable.FLAG = true;
-//                mTabHost.setCurrentTab(3);
-                sp=getSharedPreferences("sumao",Context.MODE_PRIVATE);
-                username=sp.getString("name","");
-                Log.e("TAG","username11111-----"+username);
-                if (username!=""){
+                sp = getSharedPreferences("sumao", Context.MODE_PRIVATE);
+                username = sp.getString("name", "");
+                Log.e("TAG", "username11111-----" + username);
+                if (username != "") {
                     mTabHost.setCurrentTab(4);
-                }else {
+                    boolean openNetwork = isOpenNetwork();
+                    if (openNetwork) {
+                    } else {
+                        networkConnections = false;
+                        Toast.makeText(MainActivity.this, "暂时没有网络连接,请检查您的网络设置", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
                     Intent intent = new Intent();
                     intent.setClass(MainActivity.this, LoginUserActivity.class);
-                    intent.putExtra("roles","buyer");
+                    intent.putExtra("roles", "buyer");
                     startActivity(intent);
                     MainActivity.this.finish();
                 }
                 break;
             case 4:
-                showCart();
+                showCart(savedInstanceState);
                 break;
             default:
                 break;
 
         }
     }
+
     @Override
     protected void onResume() {
         super.onResume();
         DemoHelper.getInstance().pushActivity(this);
         //register the event listener when enter the foreground
         EMChatManager.getInstance().registerEventListener(this,
-                new EMNotifierEvent.Event[] { EMNotifierEvent.Event.EventNewMessage,
-                        EMNotifierEvent.Event.EventOfflineMessage });
+                new EMNotifierEvent.Event[]{EMNotifierEvent.Event.EventNewMessage,
+                        EMNotifierEvent.Event.EventOfflineMessage});
         //Jpush推送
         JPushInterface.onResume(this);
 //        getUnique();
@@ -381,8 +452,8 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
 
     @Override
     protected void onNewIntent(Intent intent) {
-         id = intent.getIntExtra("cart",0);
-        Log.d("id",id+"------------>");
+        id = intent.getIntExtra("cart", 0);
+        Log.d("id", id + "------------>");
 
     }
 
@@ -415,7 +486,7 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
 
     public String getUnique() {
         editor = sp.edit();
-        RequestParams unique_rp = new RequestParams(SuMaoConstant.SUMAO_IP+"/rest/model/atg/rest/SessionConfirmationActor/getSessionConfirmationNumber");
+        RequestParams unique_rp = new RequestParams(SuMaoConstant.SUMAO_IP + "/rest/model/atg/rest/SessionConfirmationActor/getSessionConfirmationNumber");
         x.http().post(unique_rp, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
@@ -453,6 +524,22 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
         return unique;
     }
 
+    public boolean isOpenNetwork() {
+        ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connManager.getActiveNetworkInfo();
+
+        if (networkInfo != null) {
+            //2.获取当前网络连接的类型信息
+            int networkType = networkInfo.getType();
+            if (ConnectivityManager.TYPE_WIFI == networkType) {
+                //当前为wifi网络
+            } else if (ConnectivityManager.TYPE_MOBILE == networkType) {
+                //当前为mobile网络
+            }
+            return connManager.getActiveNetworkInfo().isAvailable();
+        }
+        return false;
+    }
 
 }
 

@@ -45,7 +45,6 @@ import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.LoginUser
 import com.silianchuangye.sumao.success.utils.Loding;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -123,6 +122,9 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
     private String cl_baozhj;
     private String percent;
     private String cl_id;
+    private TextView group_amount_et;
+    private GroupBuyingDetailBean groupBuyingDetailBean;
+    private LinearLayout remarks_rl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -194,7 +196,11 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
         bianliang = (TextView) findViewById(R.id.min_variable_et);
 //        总价
         tv_item_cart_all_price = (TextView) findViewById(R.id.tv_item_cart_all_price);
-
+//        成团量
+        group_amount_et = ((TextView) findViewById(R.id.group_amount_et));
+//        备注
+        remarks_rl = ((LinearLayout) findViewById(R.id.remarks_rl));
+        remarks_rl.setVisibility(View.GONE);
         cangku = (TextView) findViewById(R.id.warehouse_address_et);
         way = (TextView) findViewById(R.id.delivery_mode_et);
         type = (TextView) findViewById(R.id.classification_pre_sale_et);
@@ -316,15 +322,13 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
                     intent.putExtra("state", state);
                     startActivity(intent);
                 } else if (position == 1) {
-                    Intent intent = new Intent(GroupBuyingSuccessActivity.this, JoinActivity.class);
-                    intent.putExtra("id", result);
-                    intent.putExtra("state", state);
-                    startActivity(intent);
+                    groupBuyingDetailPresenter.getTheRecordResult(result);
+
 
                 } else if (position == 2) {
                     Intent intent = new Intent(GroupBuyingSuccessActivity.this, VesselThreeActivity.class);
                     intent.putExtra("title", "团购");
-                    intent.putExtra("cl_attribute", cl_attribute);
+                    intent.putExtra("auctionDetailBean", groupBuyingDetailBean);
                     intent.putExtra("contract", path);
                     startActivity(intent);
 
@@ -356,7 +360,7 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
 
     public void getinfo(String result) {
         Gson gson = new Gson();
-        GroupBuyingDetailBean groupBuyingDetailBean = gson.fromJson(result,GroupBuyingDetailBean.class);
+        groupBuyingDetailBean = gson.fromJson(result,GroupBuyingDetailBean.class);
         cl_baozhj = groupBuyingDetailBean.getCl_baozhj();
         cl_id = groupBuyingDetailBean.getCl_id();
         NumberFormat nf = NumberFormat.getPercentInstance();
@@ -369,7 +373,7 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
         percent = String.format("%.4f", Double.parseDouble(number.toString()));
         try {
             JSONObject obj = new JSONObject(result);
-            String utilDate = obj.getString("utilDate");
+            String utilDate = groupBuyingDetailBean.getUtilDate();
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             long time = 0l;
             try {
@@ -381,15 +385,15 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            name.setText(obj.getString("cl_mingcheng"));
-            strprice = obj.getString("cl_jine");
-            price.setText(obj.getString("cl_jine"));
+            name.setText(groupBuyingDetailBean.getCl_mingcheng());
+            strprice = groupBuyingDetailBean.getCl_jine();
+            price.setText(strprice);
             if (result.contains("cl_zongliang")) {
-                count.setText(obj.getString("cl_zongliang"));
+                count.setText(groupBuyingDetailBean.getCl_zongliang());
             } else {
                 count.setText("");
             }
-            cl_gongsiId = obj.getString("cl_gongsiId");
+            cl_gongsiId = groupBuyingDetailBean.getCl_gongsiId();
             layoutContent_auction.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -402,52 +406,55 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
                     startActivity(intentHX);
                 }
             });
-            qigou.setText(obj.getString("cl_qigou"));
+            group_amount_et.setText(groupBuyingDetailBean.getCl_groupQuantity());
+            qigou.setText(groupBuyingDetailBean.getCl_qigou());
             tv_item_cart_buy_num.setText(qigou.getText().toString());
             tv_item_cart_all_price.setText(String.format("%.2f",Double.parseDouble(tv_item_cart_buy_num.getText().toString())*Double.parseDouble(price.getText().toString())));
-            strbianliang = obj.getString("cl_xbianliang");
-            bianliang.setText(obj.getString("cl_xbianliang"));
-            cangku.setText(obj.getString("cl_cangku"));
-            String fangshi = obj.getString("cl_fangshi");
+            strbianliang = groupBuyingDetailBean.getCl_xbianliang();
+            bianliang.setText(strbianliang);
+            cangku.setText(groupBuyingDetailBean.getCl_cangku());
+            String fangshi = groupBuyingDetailBean.getCl_fangshi().toString();
             String str = fangshi.substring(2, fangshi.length() - 2);
             way.setText(str);
-            type.setText(obj.getString("cl_fenlei"));
+            type.setText(groupBuyingDetailBean.getCl_fenlei());
 //                            String bian=obj.getString("cl_xbianjia");
 //                            bianjia.setText(obj.getString("cl_xbianjia"));//最小变价
-            add.setText(obj.getString("cl_diqu"));
-            comm.setText(obj.getString("cl_gongsi"));
+            add.setText(groupBuyingDetailBean.getCl_diqu());
+            comm.setText(groupBuyingDetailBean.getCl_gongsi());
 //
-            String shuxing = obj.getString("cl_attribute");
-            JSONArray array = new JSONArray(shuxing);
-            for (int i = 0; i < array.length(); i++) {
-                JSONObject obj_array = array.getJSONObject(i);
-                GoodsInStockDetailBean.ClAttributeBean attribute = new GoodsInStockDetailBean.ClAttributeBean();
-                attribute.setAttrName(obj_array.getString("attrName"));
-                attribute.setAttrValue(obj_array.getString("attrValue"));
-                cl_attribute.add(attribute);
+            List<GoodsInStockDetailBean.ClAttributeBean> cl_attribute = groupBuyingDetailBean.getCl_attribute();
+            for (int i = 0; i < cl_attribute.size(); i++) {
+                GoodsInStockDetailBean.ClAttributeBean attribute =cl_attribute.get(i);
+                attribute.setAttrName(attribute.getAttrName());
+                attribute.setAttrValue(attribute.getAttrValue());
+                this.cl_attribute.add(attribute);
             }
-            path = obj.getString("contract");
-            bili = obj.getString("cl_baozhj");
-            // jiezhishijian=obj.getString("");
-            jiezhishijian = "2016-09-09 12:00";
-            can_gku = obj.getString("cl_cangku");
+            path = groupBuyingDetailBean.getContract();
+            bili = groupBuyingDetailBean.getCl_baozhj();
+            if (groupBuyingDetailBean.getDepositDeadline() == null){
+                jiezhishijian = "";
+            }else {
+                jiezhishijian = groupBuyingDetailBean.getDepositDeadline();
+            }
+
+            can_gku = groupBuyingDetailBean.getCl_cangku();
             if (result.contains("addressDetail")) {
-                xiangxi = obj.getString("addressDetail");
+                xiangxi = groupBuyingDetailBean.getAddressDetail();
             } else {
                 xiangxi = "";
             }
-            kaishishijian = obj.getString("cl_shijian");
-            jieshushijian = obj.getString("cl_shijianend");
-            tuan_start = obj.getString("groupStartDate");
-            tuan_end = obj.getString("groupEndDate");
-            String sumAddQty = obj.getString("sumAddQty");//数量
-            String groupPercent = obj.getString("groupPercent");//比例
+            kaishishijian = groupBuyingDetailBean.getCl_shijian();
+            jieshushijian = groupBuyingDetailBean.getCl_shijianend();
+            tuan_start = groupBuyingDetailBean.getGroupStartDate();
+            tuan_end = groupBuyingDetailBean.getGroupEndDate();
+            String sumAddQty = groupBuyingDetailBean.getSumAddQty();//数量
+            String groupPercent = groupBuyingDetailBean.getGroupPercent();//比例
 
             int i = (int) (Double.valueOf(groupPercent) * 100);
             tv_pro_now.setText("当前成团量为 : " + i + "%");
-            tv_all_num.setText(obj.getString("cl_zongliang") + "t");
+            tv_all_num.setText(groupBuyingDetailBean.getCl_zongliang() + "t");
             pbDemo.setProgress(i);
-            String state = obj.getString("section");
+            String state = groupBuyingDetailBean.getSection();
             Log.e("TAG", "state=" + state);
             if (state.equals("2")) {
                 tv_tuangou_line.setVisibility(View.VISIBLE);
@@ -572,6 +579,7 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
 
     //获取银行列表接口
     public void getinfo_Bank() {
+        Loding.show(this,"加载中...",true,null);
         groupBuyingDetailPresenter.getBankListResult(cl_id);
     }
 
@@ -591,6 +599,7 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
         tv_pop_price.setText(price.getText().toString());
 //        String baozhengjin=Double.valueOf(str)*Double.valueOf(str2)+"";
 //        tv_pop_price.setText(Double.valueOf(str)*Double.valueOf(str2)+"");
+
         tv_pop_num.setText(count.getText().toString());//剩余数量
         tv_pop_fenlei.setText(type.getText().toString());
         tv_pop_start_num.setText(qigou.getText().toString());
@@ -777,6 +786,8 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
         }
     }
 
+
+
     //    支付保证金接口
     public void zhifu_baozhengjin(String amountOfMarginRequired, String platform) {
         Loding.show(this, "保证金支付中...", false, null);
@@ -789,6 +800,14 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
         SharedPreferences sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
         String _dynSessConf = sp.getString("unique", "");
         groupBuyingDetailPresenter.getPaymentSecurityResult(depositAmount, productId, paymentPlatform, _dynSessConf);
+    }
+
+//    我的参团记录
+    @Override
+    public void setTheRecordResult(String result) {
+        Intent intent = new Intent(GroupBuyingSuccessActivity.this, JoinActivity.class);
+        intent.putExtra("result", result);
+        startActivity(intent);
     }
     @Override
     public void onClick(View v) {

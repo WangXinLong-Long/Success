@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.silianchuangye.sumao.success.R;
@@ -76,6 +77,15 @@ public class AuctionListViewAdapter extends BaseAdapter {
             viewHolder.tv_commpany = (TextView) convertView.findViewById(R.id.tv_auction_commAdress);
 //        竞拍标示
             viewHolder.iv_way = (ImageView) convertView.findViewById(R.id.iv_auction_icon);
+//            开始时间
+            viewHolder.start_data = ((TextView) convertView.findViewById(R.id.start_data));
+//            结束时间
+            viewHolder.end_data = ((TextView) convertView.findViewById(R.id.end_data));
+//            开始和结束的RelativeLayout
+            viewHolder.end_data_rl = ((RelativeLayout) convertView.findViewById(R.id.end_data_rl));
+            viewHolder.start_data_rl = ((RelativeLayout) convertView.findViewById(R.id.start_data_rl));
+//           时间上面的分割线
+            viewHolder.time_rl = ((RelativeLayout) convertView.findViewById(R.id.time_rl));
             convertView.setTag(viewHolder);
         } else {
             viewHolder = ((ViewHolder) convertView.getTag());
@@ -90,19 +100,35 @@ public class AuctionListViewAdapter extends BaseAdapter {
         if (startTimeMill == null) {
             startTimeMill = "0";
         }
+        String endTimeMill = list.get(position).getEndDate();
+        if (endTimeMill == null) {
+            endTimeMill = "0";
+        }
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日 hh:mm:mm");
-        String data = simpleDateFormat.format(Double.parseDouble(startTimeMill));
+        String startData = simpleDateFormat.format(Double.parseDouble(startTimeMill));
+        String endData = simpleDateFormat.format(Double.parseDouble(endTimeMill));
         if (state == null || state.equals("0")) {
             //竞拍未开始
-            viewHolder.tv_kaishi.setText("开始时间:");
-            viewHolder.startTime.setText(data);
+            viewHolder.tv_kaishi.setText("竞拍未开始");
+            viewHolder.start_data.setText(startData);
+            viewHolder.end_data.setText(endData);
+            viewHolder.end_data_rl.setVisibility(View.VISIBLE);
+            viewHolder.start_data_rl.setVisibility(View.VISIBLE);
+            viewHolder.time_rl.setVisibility(View.VISIBLE);
         } else if (state.equals("1")) {
             //正在竞拍
-            viewHolder.tv_kaishi.setText("正在竞拍:");
-            viewHolder.startTime.setText(data);
+            viewHolder.tv_kaishi.setText("正在竞拍");
+            viewHolder.start_data.setText(startData);
+            viewHolder.end_data.setText(endData);
+            viewHolder.end_data_rl.setVisibility(View.VISIBLE);
+            viewHolder.start_data_rl.setVisibility(View.VISIBLE);
+            viewHolder.time_rl.setVisibility(View.VISIBLE);
         } else if (state.equals("2")) {
             //竞拍结束
             viewHolder.startTime.setText("");
+            viewHolder.end_data_rl.setVisibility(View.GONE);
+            viewHolder.start_data_rl.setVisibility(View.GONE);
+            viewHolder.time_rl.setVisibility(View.GONE);
         }
 
         //icon.setImageResource(Integer.parseInt(list.get(position).get("icon").toString()));
@@ -164,5 +190,15 @@ public class AuctionListViewAdapter extends BaseAdapter {
         TextView tv_commpany;
         //        竞拍标示
         ImageView iv_way;
+        //        开始时间
+        TextView start_data;
+        //        结束时间
+        TextView end_data;
+        //        开始和结束的RelativeLayout
+        RelativeLayout start_data_rl;
+        RelativeLayout end_data_rl;
+        //        上面的分割线
+        RelativeLayout time_rl;
+
     }
 }

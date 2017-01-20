@@ -294,7 +294,12 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
         warehouse_address_et.setText(preSaleDetailBean.getCl_ckdizhi());
         //       交货方式
         StringBuilder sb = new StringBuilder();
-        int jhfssize = preSaleDetailBean.getCl_jhfangshi().size();
+        int jhfssize = 0;
+        if (preSaleDetailBean.getCl_jhfangshi() == null) {
+            jhfssize = 0;
+        } else {
+            jhfssize = preSaleDetailBean.getCl_jhfangshi().size();
+        }
         for (int i = 0; i < jhfssize; i++) {
             sb.append(preSaleDetailBean.getCl_jhfangshi().get(i));
             if (i != jhfssize - 1) {
@@ -415,7 +420,7 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
                                 } else if (Double.valueOf(edt_num.getText().toString()) > Double.valueOf(surplus_amount_et.getText().toString())) {
                                     Toast.makeText(this, "购买数量不能大于剩余数量", Toast.LENGTH_SHORT).show();
                                 } else {
-                            Popupwindow();
+                                    Popupwindow();
 //                                backgroundAlpha(0.5f);
                                 }
                             }
@@ -575,9 +580,9 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
     @Override
     public void setBankListResult(String result) {
         Loding.dis();
-        if (result.contains("No Bank Info")){
+        if (result.contains("No Bank Info")) {
             Toast.makeText(this, "该商品暂不支持银行付款", Toast.LENGTH_SHORT).show();
-        }else {
+        } else {
             backgroundAlpha(0.5f);
             View view = getLayoutInflater().inflate(R.layout.pop_yushou, null);
             popupWindow = new PopupWindow(findViewById(R.id.parent), ActionBarOverlayLayout.LayoutParams.MATCH_PARENT,

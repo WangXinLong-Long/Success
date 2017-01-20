@@ -43,6 +43,7 @@ public class VesselOneActivity extends AppCompatActivity {
     private LinearLayout layout_action, layout_not_action;
     private RelativeLayout layout_action_end;
     private Button bt_jinpai_colse;
+    private TextView title_vessel_one;
 
 
     @Override
@@ -59,6 +60,9 @@ public class VesselOneActivity extends AppCompatActivity {
                 VesselOneActivity.this.finish();
             }
         });
+//        标题
+        title_vessel_one = ((TextView) findViewById(R.id.title_vessel_one));
+
         ivShop_vessel_one = (ImageView) findViewById(R.id.ivShop_vessel_one);
         ivShop_vessel_one.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,6 +75,7 @@ public class VesselOneActivity extends AppCompatActivity {
         String uCompany = getIntent().getStringExtra("U_company");
         String type_way = getIntent().getStringExtra("type_way");
         String productId = getIntent().getStringExtra("productId");
+        title_vessel_one.setText(type_way);
         list = new ArrayList<Fragment>();
 //        实时行情
         RealTimeMarketFragment realTimeMarketFragment = new RealTimeMarketFragment();

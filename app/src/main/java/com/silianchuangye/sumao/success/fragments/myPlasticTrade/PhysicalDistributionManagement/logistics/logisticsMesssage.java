@@ -2,12 +2,12 @@ package com.silianchuangye.sumao.success.fragments.myPlasticTrade.PhysicalDistri
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.media.Image;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -71,17 +71,28 @@ public class logisticsMesssage extends AppCompatActivity implements View.OnClick
         tv_date_end.setOnClickListener(this);
         img_logistics_title_bar_back.setOnClickListener(this);
     }
-    private void show(){
+//    判断是否为按back键
+    private void show(boolean back){
+
         Intent intent=new Intent();
-        intent.putExtra("message",edt.getText().toString());
+        if (back){
+            intent.putExtra("message","");
+        }else {
+            intent.putExtra("message",edt.getText().toString());
+        }
         if(buy.equals("1")) {
             if (str.equals("收货联系人")) {
                 setResult(0, intent);
             } else if (str.equals("联系方式")) {
                 setResult(1, intent);
             } else if (str.equals("期望提货时间")) {
-                intent.putExtra("message1", tv_date_start.getText().toString());
-                intent.putExtra("message2",tv_date_end.getText().toString());
+                if (back){
+                    intent.putExtra("message1","");
+                    intent.putExtra("message2","");
+                }else {
+                    intent.putExtra("message1", tv_date_start.getText().toString());
+                    intent.putExtra("message2",tv_date_end.getText().toString());
+                }
                 setResult(2, intent);
             } else if (str.equals("收货公司")) {
                 setResult(3, intent);
@@ -238,7 +249,7 @@ public class logisticsMesssage extends AppCompatActivity implements View.OnClick
                                 tv_tishi.setVisibility(View.VISIBLE);
                                 Toast.makeText(logisticsMesssage.this, "提货时间应该至少大于交货的开始时间", Toast.LENGTH_SHORT).show();
                             }else{
-                                show();
+                                show(false);
                             }
                         } catch (ParseException e) {
                             e.printStackTrace();
@@ -274,7 +285,7 @@ public class logisticsMesssage extends AppCompatActivity implements View.OnClick
                                 tv_tishi.setText("期望提货结束时间应该至少大于交货的开始时间");
                                 tv_tishi.setVisibility(View.VISIBLE);
                             }else{
-                                show();
+                                show(false);
                             }
                         } catch (ParseException e) {
                             e.printStackTrace();
@@ -296,7 +307,7 @@ public class logisticsMesssage extends AppCompatActivity implements View.OnClick
                                 || tv_title_logistics.getText().toString().equals("托运联系人")
                                 || tv_title_logistics.getText().toString().equals("收货公司")
                                 ) {
-                            show();
+                            show(false);
                         } else {
                             tv_tishi.setText("填写内容不能为空");
                             tv_tishi.setVisibility(View.VISIBLE);
@@ -313,7 +324,7 @@ public class logisticsMesssage extends AppCompatActivity implements View.OnClick
                                 tv_tishi.setText("身份证号不合理");
                                 tv_tishi.setVisibility(View.VISIBLE);
                             }else{
-                                show();
+                                show(false);
                             }
                         }else if(tv_title_logistics.getText().toString().equals("提货车号")){
                             //汽车牌号正则表达式
@@ -326,7 +337,7 @@ public class logisticsMesssage extends AppCompatActivity implements View.OnClick
                                 tv_tishi.setText("车牌号不合理");
                                 tv_tishi.setVisibility(View.VISIBLE);
                             }else{
-                                show();
+                                show(false);
                             }
                         }else if(tv_title_logistics.getText().toString().equals("联系方式")){
                             //汽车牌号正则表达式
@@ -339,15 +350,24 @@ public class logisticsMesssage extends AppCompatActivity implements View.OnClick
                                 tv_tishi.setText("手机号不合理");
                                 tv_tishi.setVisibility(View.VISIBLE);
                             }else{
-                                show();
+                                show(false);
                             }
                         }else {
-                            show();
+                            show(false);
                         }
                     }
                 }
 //
                 break;
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN){
+            boolean back = true;
+            show(back);
+        }
+        return true;
     }
 }

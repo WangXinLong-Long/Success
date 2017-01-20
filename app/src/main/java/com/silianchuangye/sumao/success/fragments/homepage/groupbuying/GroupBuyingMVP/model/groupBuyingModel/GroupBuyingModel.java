@@ -12,15 +12,17 @@ import org.xutils.x;
  */
 public class GroupBuyingModel implements IGroupBuyingModel{
     boolean updateOrLoad;
-
-    public GroupBuyingModel(boolean updateOrLoad) {
+String pageNum;
+    public GroupBuyingModel(boolean updateOrLoad,String pageNum) {
         this.updateOrLoad = updateOrLoad;
+        this.pageNum = pageNum;
     }
 
     @Override
     public void getGroupBuyingResult(final GroupBuyingCallback callback) {
         String url= SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/catalog/ProductCatalogActor/groupProductlist";
         RequestParams rp=new RequestParams(url);
+        rp.addBodyParameter("pageNum",pageNum);
         LogUtils.log("团购的RUL--->"+rp);
         x.http().post(rp, new Callback.CommonCallback<String>() {
             @Override

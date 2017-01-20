@@ -648,6 +648,11 @@
             android:screenOrientation="portrait" />
         <activity android:name=".fragments.pagerFourMVP.pagerFourDetail.PagerFourDetailActivity"
             android:screenOrientation="portrait"/>
+        <receiver android:name=".utils.NetWorkChangeBroadcastReceiver">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

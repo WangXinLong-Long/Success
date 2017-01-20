@@ -9,20 +9,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
-import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.xutils.common.Callback;
-import org.xutils.http.RequestParams;
-import org.xutils.x;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -35,10 +30,9 @@ public class JoinActivity extends AppCompatActivity {
     private List<Map<String, Object>> list;
     private ImageView ivBack, ivSearch;
     private ListView lvDemo;
-    private String shangpinId;
+    private String result;
     private LinearLayout layout;
     private String state;
-    private RelativeLayout layout_not_action, layout_Bottom_action, relative_tuangou_end;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,108 +44,61 @@ public class JoinActivity extends AppCompatActivity {
     }
 
     public void init() {
-        layout_not_action = (RelativeLayout) findViewById(R.id.layout_not_action);
-        layout_Bottom_action = (RelativeLayout) findViewById(R.id.layout_Bottom_action);
-        relative_tuangou_end = (RelativeLayout) findViewById(R.id.relative_tuangou_end);
         Bundle bundle = getIntent().getExtras();
-        shangpinId = bundle.getString("id");
-        state = bundle.getString("state");
-        if (state.equals("团购未开始")) {
-            layout_not_action.setVisibility(View.VISIBLE);
-            layout_Bottom_action.setVisibility(View.GONE);
-            relative_tuangou_end.setVisibility(View.GONE);
-
-
-        } else if (state.equals("团购已开始")) {
-            layout_Bottom_action.setVisibility(View.VISIBLE);
-            layout_not_action.setVisibility(View.GONE);
-            relative_tuangou_end.setVisibility(View.GONE);
-
-        } else if (state.equals("团购已结束")) {
-            relative_tuangou_end.setVisibility(View.GONE);
-            layout_Bottom_action.setVisibility(View.GONE);
-            layout_not_action.setVisibility(View.GONE);
-
-        }
-        Log.d("商品的编号", shangpinId);
+        result = bundle.getString("result");
         lvDemo = (ListView) findViewById(R.id.lvDemo);
         layout = (LinearLayout) findViewById(R.id.layout_center);
         list = new ArrayList<Map<String, Object>>();
         ivBack = (ImageView) findViewById(R.id.ivBack);
-        getData();
+        getData(result);
 
     }
 
-    public void getData() {
-        String url = SuMaoConstant.SUMAO_IP + "rest/model/atg/commerce/catalog/ProductCatalogActor/groupHistory";
-        RequestParams requestParams = new RequestParams(url);
-        requestParams.addParameter("productId", shangpinId);
-        x.http().post(requestParams, new Callback.CommonCallback<String>() {
-            @Override
-            public void onSuccess(String result) {
-                Log.d("实时行情的result", result);
-                if (result.contains("createDate")) {
-                    layout.setVisibility(View.VISIBLE);
-                    try {
-                        JSONObject obj_result = new JSONObject(result);
-                        String info = obj_result.getString("history");
-                        JSONArray array = new JSONArray(info);
+    public void getData(String result) {
+        if (result.contains("createDate")) {
+            layout.setVisibility(View.VISIBLE);
+            try {
+                JSONObject obj_result = new JSONObject(result);
+                String info = obj_result.getString("history");
+                JSONArray array = new JSONArray(info);
 
-                        for (int i = 0; i < array.length(); i++) {
-                            JSONObject obj_info = array.getJSONObject(i);
-                            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日 hh:mm:mm");
-                            String data = simpleDateFormat.format(obj_info.getString("createDate"));
+                for (int i = 0; i < array.length(); i++) {
+                    JSONObject obj_info = array.getJSONObject(i);
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日 hh:mm:mm");
+                    String data = simpleDateFormat.format(obj_info.getString("createDate"));
 
-                            Map<String, Object> map = new Hashtable<String, Object>();
+                    Map<String, Object> map = new Hashtable<String, Object>();
 //
-                            map.put("bianhao", obj_info.getString("index"));
+                    map.put("bianhao", obj_info.getString("index"));
 
-                            map.put("shuliang", obj_info.getString("addQty"));
+                    map.put("shuliang", obj_info.getString("addQty"));
 
-                            map.put("time", data);
-                            list.add(map);
+                    map.put("time", data);
+                    list.add(map);
 
-                        }
-
-
-                        Log.d("list的值", list.toString());
-                        GridAdpater adapter = new GridAdpater(JoinActivity.this, list, R.layout.itemtuangou,
-                                new String[]{"bianhao", "shuliang", "time"},
-                                new int[]{
-                                        R.id.tv_bianhao,
-
-                                        R.id.tv_shuliang,
-
-                                        R.id.tv_time
-                                });
-                        lvDemo.setAdapter(adapter);
-
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    layout.setVisibility(View.GONE);
-                    Toast.makeText(JoinActivity.this, "暂无人竞拍该商品", Toast.LENGTH_SHORT).show();
                 }
 
+
+                Log.d("list的值", list.toString());
+                GridAdpater adapter = new GridAdpater(JoinActivity.this, list, R.layout.itemtuangou,
+                        new String[]{"bianhao", "shuliang", "time"},
+                        new int[]{
+                                R.id.tv_bianhao,
+
+                                R.id.tv_shuliang,
+
+                                R.id.tv_time
+                        });
+                lvDemo.setAdapter(adapter);
+
+
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-
-            }
-
-            @Override
-            public void onCancelled(CancelledException cex) {
-
-            }
-
-            @Override
-            public void onFinished() {
-
-            }
-        });
+        } else {
+            layout.setVisibility(View.GONE);
+            Toast.makeText(JoinActivity.this, "暂无人竞拍该商品", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void event() {

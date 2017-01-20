@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.silianchuangye.sumao.success.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,12 +20,15 @@ public class TextGrideViewAdapter extends BaseAdapter {
     private Context context;
     private LayoutInflater inflater;
 
-    public TextGrideViewAdapter(List<String> list, Context context) {
-        this.list = list;
+    public TextGrideViewAdapter( Context context) {
+        this.list = new ArrayList<>();
         this.context = context;
         inflater = LayoutInflater.from(context);
     }
 
+    public void addData(List<String> list){
+        this.list.addAll(list);
+    }
     @Override
     public int getCount() {
         if (list != null) {
@@ -54,7 +58,11 @@ public class TextGrideViewAdapter extends BaseAdapter {
         } else {
             holder = ((ViewHolder) convertView.getTag());
         }
-        holder.textView.setText(list.get(position));
+        if (list.get(position) == null){
+            holder.textView.setText("什么鬼");
+        }else {
+            holder.textView.setText(list.get(position));
+        }
         return convertView;
     }
 

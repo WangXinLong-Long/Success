@@ -10,45 +10,60 @@ import java.util.List;
  */
 public class GroupBuyingDetailBean implements Serializable {
 
+    private List<GoodsInStockDetailBean.ClAttributeBean> cl_attribute;
+
+    public List<GoodsInStockDetailBean.ClAttributeBean> getCl_attribute() {
+        return cl_attribute;
+    }
+
+    public void setCl_attribute(List<GoodsInStockDetailBean.ClAttributeBean> cl_attribute) {
+        this.cl_attribute = cl_attribute;
+    }
+
     /**
      * groupPercent : 0.8571428571
      * cl_jifen : 1
-     * cl_cpid : sku1440064
+     * cl_cpid : sku1440062
+     * cl_groupQuantity : 40
      * cl_gongsiId : 100001
+     * contractTemplatePath : /mnt/template/auction_product.ftl
      * cl_baozhj : 5.0%
      * cl_gongsi : 北京橡胶
-     * addressDetail : 清河北路440号
      * cl_fangshi : ["自提"]
      * utilDate : 2017-01-11 00:00:00
      * cl_jine : 5
      * cl_qigou : 20
-     * cl_zongliang : 110.0
+     * cl_zongliang : 130.0
      * groupStartDate : 1484064000000
      * cl_fenlei : SBS胶
-     * groupEndDate : 1484841600000
+     * groupEndDate : 1484928000000
+     * gradeNumber : YH-792E
      * securedOfSection : saledOff
+     * yingyong : SBS胶
      * cl_xbianliang : 20
-     * cl_mingcheng : 巴陵YH-791
+     * cl_mingcheng : 巴陵YH-792E
      * contract : /mnt/template/auction_product.htm
      * section : 2
-     * cl_id : prod1560077
+     * cl_id : prod1560075
      * cl_shijian : 1484150400000
      * cl_type : groupProduct
-     * cl_shijianend : 1484323200000
-     * cl_attribute : [{"attrName":"熔体质量流动速率","attrValue":"null"},{"attrName":"300%定伸应力（Mpa）","attrValue":"null"},{"attrName":"挥发分（%（m/m））","attrValue":"null"},{"attrName":"总苯乙烯含量","attrValue":"null"},{"attrName":"行业分类","attrValue":"null"},{"attrName":"拉伸强度（Mpa）","attrValue":"null"},{"attrName":"扯断伸长率（%）","attrValue":"null"}]
-     * cl_diqu : 临沂市
-     * cl_cangku : 中央储备粮临沂直属库
+     * cl_shijianend : 1484928000000
+     * manufacturer : 巴陵石化
+     * cl_diqu : 其他
+     * cl_cangku : 上游配送库-西北
      * cl_guojia : 中国
+     * group : 中石化
      * sumAddQty : 60.0
      */
 
     private String groupPercent;
     private String cl_jifen;
     private String cl_cpid;
+    private String cl_groupQuantity;
     private String cl_gongsiId;
+    private String contractTemplatePath;
     private String cl_baozhj;
     private String cl_gongsi;
-    private String addressDetail;
     private String utilDate;
     private String cl_jine;
     private String cl_qigou;
@@ -56,7 +71,9 @@ public class GroupBuyingDetailBean implements Serializable {
     private String groupStartDate;
     private String cl_fenlei;
     private String groupEndDate;
+    private String gradeNumber;
     private String securedOfSection;
+    private String yingyong;
     private String cl_xbianliang;
     private String cl_mingcheng;
     private String contract;
@@ -65,12 +82,31 @@ public class GroupBuyingDetailBean implements Serializable {
     private String cl_shijian;
     private String cl_type;
     private String cl_shijianend;
+    private String manufacturer;
     private String cl_diqu;
     private String cl_cangku;
     private String cl_guojia;
+    private String group;
     private String sumAddQty;
+    private String addressDetail;
+    private String depositDeadline;
     private List<String> cl_fangshi;
-    private List<GoodsInStockDetailBean.ClAttributeBean> cl_attribute;
+
+    public String getDepositDeadline() {
+        return depositDeadline;
+    }
+
+    public void setDepositDeadline(String depositDeadline) {
+        this.depositDeadline = depositDeadline;
+    }
+
+    public String getAddressDetail() {
+        return addressDetail;
+    }
+
+    public void setAddressDetail(String addressDetail) {
+        this.addressDetail = addressDetail;
+    }
 
     public String getGroupPercent() {
         return groupPercent;
@@ -104,6 +140,14 @@ public class GroupBuyingDetailBean implements Serializable {
         this.cl_gongsiId = cl_gongsiId;
     }
 
+    public String getContractTemplatePath() {
+        return contractTemplatePath;
+    }
+
+    public void setContractTemplatePath(String contractTemplatePath) {
+        this.contractTemplatePath = contractTemplatePath;
+    }
+
     public String getCl_baozhj() {
         return cl_baozhj;
     }
@@ -120,14 +164,6 @@ public class GroupBuyingDetailBean implements Serializable {
         this.cl_gongsi = cl_gongsi;
     }
 
-    public String getAddressDetail() {
-        return addressDetail;
-    }
-
-    public void setAddressDetail(String addressDetail) {
-        this.addressDetail = addressDetail;
-    }
-
     public String getUtilDate() {
         return utilDate;
     }
@@ -135,7 +171,6 @@ public class GroupBuyingDetailBean implements Serializable {
     public void setUtilDate(String utilDate) {
         this.utilDate = utilDate;
     }
-
 
     public String getCl_zongliang() {
         return cl_zongliang;
@@ -145,6 +180,7 @@ public class GroupBuyingDetailBean implements Serializable {
         this.cl_zongliang = cl_zongliang;
     }
 
+
     public String getCl_fenlei() {
         return cl_fenlei;
     }
@@ -153,12 +189,29 @@ public class GroupBuyingDetailBean implements Serializable {
         this.cl_fenlei = cl_fenlei;
     }
 
+
+    public String getGradeNumber() {
+        return gradeNumber;
+    }
+
+    public void setGradeNumber(String gradeNumber) {
+        this.gradeNumber = gradeNumber;
+    }
+
     public String getSecuredOfSection() {
         return securedOfSection;
     }
 
     public void setSecuredOfSection(String securedOfSection) {
         this.securedOfSection = securedOfSection;
+    }
+
+    public String getYingyong() {
+        return yingyong;
+    }
+
+    public void setYingyong(String yingyong) {
+        this.yingyong = yingyong;
     }
 
     public String getCl_mingcheng() {
@@ -201,6 +254,14 @@ public class GroupBuyingDetailBean implements Serializable {
         this.cl_type = cl_type;
     }
 
+    public String getManufacturer() {
+        return manufacturer;
+    }
+
+    public void setManufacturer(String manufacturer) {
+        this.manufacturer = manufacturer;
+    }
+
     public String getCl_diqu() {
         return cl_diqu;
     }
@@ -225,6 +286,14 @@ public class GroupBuyingDetailBean implements Serializable {
         this.cl_guojia = cl_guojia;
     }
 
+    public String getGroup() {
+        return group;
+    }
+
+    public void setGroup(String group) {
+        this.group = group;
+    }
+
     public String getSumAddQty() {
         return sumAddQty;
     }
@@ -241,12 +310,12 @@ public class GroupBuyingDetailBean implements Serializable {
         this.cl_fangshi = cl_fangshi;
     }
 
-    public List<GoodsInStockDetailBean.ClAttributeBean> getCl_attribute() {
-        return cl_attribute;
+    public String getCl_groupQuantity() {
+        return cl_groupQuantity;
     }
 
-    public void setCl_attribute(List<GoodsInStockDetailBean.ClAttributeBean> cl_attribute) {
-        this.cl_attribute = cl_attribute;
+    public void setCl_groupQuantity(String cl_groupQuantity) {
+        this.cl_groupQuantity = cl_groupQuantity;
     }
 
     public String getCl_jine() {

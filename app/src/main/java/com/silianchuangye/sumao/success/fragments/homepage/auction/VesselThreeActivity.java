@@ -12,7 +12,9 @@ import android.widget.TextView;
 
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.MyPageAdapter;
+import com.silianchuangye.sumao.success.fragments.homepage.auction.AuctionMVP.bean.AuctionDetailBean;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.bean.GoodsInStockDetailBean;
+import com.silianchuangye.sumao.success.fragments.homepage.groupbuying.groupBuyingDetailMVP.bean.GroupBuyingDetailBean;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 
 import java.io.Serializable;
@@ -29,6 +31,8 @@ public class VesselThreeActivity extends AppCompatActivity {
     private  List<GoodsInStockDetailBean.ClAttributeBean> cl_attribute;
     private TextView activity_vessel_three_title;
     private String contract;
+    private AuctionDetailBean auctionDetailBean;
+    private GroupBuyingDetailBean groupBuyingDetailBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,12 +45,28 @@ public class VesselThreeActivity extends AppCompatActivity {
         String title = intent.getStringExtra("title");
 //        合同
         contract = intent.getStringExtra("contract");
+//        竞拍详情的数据
+        if (title.equals("团购")){
+
+            groupBuyingDetailBean = (GroupBuyingDetailBean) intent.getSerializableExtra("auctionDetailBean");
+        }else {
+            auctionDetailBean = (AuctionDetailBean) intent.getSerializableExtra("auctionDetailBean");
+        }
+
         LogUtils.log(contract+"-------WXL合同页VesselThreeActivity");
         LogUtils.log("VesselThreeActivity--->cl_attribute:"+cl_attribute);
         activity_vessel_three_title.setText(title);
 
         Bundle bundle = new Bundle();
         bundle.putSerializable("cl_attribute",(Serializable) cl_attribute);
+        if (title.equals("团购")){
+            bundle.putString("type","group");
+            bundle.putSerializable("auctionDetailBean", groupBuyingDetailBean);
+
+        }else {
+            bundle.putString("type","auction");
+            bundle.putSerializable("auctionDetailBean", auctionDetailBean);
+        }
         ParameterFragment pf =  new ParameterFragment();
         pf.setArguments(bundle);
 
