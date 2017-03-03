@@ -88,7 +88,7 @@
                 android:verticalSpacing="@dimen/x2"></com.silianchuangye.sumao.success.custom.CustomGridView>
             <!--分类-->
             <RelativeLayout
-                android:id="@+id/classification"
+                android:id="@+id/classification1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/area_detail"
@@ -121,7 +121,7 @@
                 android:id="@+id/classification_detail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/classification"
+                android:layout_below="@id/classification1"
                 android:layout_marginTop="@dimen/x2"
                 android:horizontalSpacing="@dimen/x2"
                 android:numColumns="5"

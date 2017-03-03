@@ -7,14 +7,14 @@
     tools:context=".fragments.myPlasticTrade.login.LoginUserActivity">
 
     <TextView
-        android:clickable="true"
         android:id="@+id/tv_title_bar_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/x17"
+        android:clickable="true"
         android:paddingLeft="30sp"
         android:paddingTop="7sp"
-        android:text="" />
+        android:text=""
+        android:textSize="@dimen/x17" />
 
     <ImageView
         android:id="@+id/iv_title_bar_back"
@@ -38,8 +38,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:text="忘记密码"
 
+            android:text="忘记密码"
             android:textColor="#B3B3B3" />
 
         <Button
@@ -70,8 +70,8 @@
             android:layout_marginBottom="@dimen/activity_horizontal_margin"
             android:background="@drawable/login_background"
             android:hint="请输入验证码"
-            android:textSize="13sp"
-            android:paddingRight="50dp" />
+            android:paddingRight="50dp"
+            android:textSize="13sp" />
 
         <ImageView
             android:id="@+id/verification_code"
@@ -91,9 +91,9 @@
             android:layout_above="@id/verification_code"
             android:layout_marginBottom="@dimen/activity_horizontal_margin"
             android:background="@drawable/login_background"
+            android:hint="密码"
             android:inputType="textPassword"
-            android:textSize="13sp"
-            android:hint="密码" />
+            android:textSize="13sp" />
 
         <EditText
             android:id="@+id/et_account_login"
@@ -102,8 +102,8 @@
             android:layout_above="@id/et_pass_login"
             android:layout_marginBottom="@dimen/activity_horizontal_margin"
             android:background="@drawable/login_background"
-            android:textSize="13sp"
-            android:hint="账号" />
+            android:hint="账号"
+            android:textSize="13sp" />
 
         <CheckBox
             android:id="@+id/checkbox1"

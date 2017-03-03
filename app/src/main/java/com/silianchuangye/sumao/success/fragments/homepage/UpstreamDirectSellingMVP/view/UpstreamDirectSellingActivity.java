@@ -1,15 +1,14 @@
 package com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.view;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.UpstreamDirectDetailMVP.view.UpstreamDirectSellingDetailsActivity;
@@ -59,12 +58,12 @@ public class UpstreamDirectSellingActivity extends AppCompatActivity implements 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String sessionId = getSharedPreferences("sumao",MODE_PRIVATE).getString("unique","");
-                if(sessionId.equals("false")){
-                    Toast.makeText(UpstreamDirectSellingActivity.this,"请登录后进行操作",Toast.LENGTH_LONG).show();
-                }else {
+//                if(sessionId.equals("false")){
+//                    Toast.makeText(UpstreamDirectSellingActivity.this,"请登录后进行操作",Toast.LENGTH_LONG).show();
+//                }else {
 
                     upstreamDirectSellingPresenter.getUpstreamDirectSellingDetail(sessionId,idList.get(position),nameList.get(position));
-                }
+//                }
             }
         });
     }

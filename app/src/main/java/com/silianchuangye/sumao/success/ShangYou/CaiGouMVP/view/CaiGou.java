@@ -186,8 +186,8 @@ public class CaiGou extends AppCompatActivity implements OnClickListener, Adapte
         img_pop_back = (ImageView) popView.findViewById(R.id.img_create_logistics_back1);
         edt_pop_name = (EditText) popView.findViewById(R.id.tv_pop_customer_num);//产品名称
         edt_pop_cangku = (EditText) popView.findViewById(R.id.tv_pop_customer_name);//仓库名称
-        start_pop_date = (TextView) popView.findViewById(R.id.tv_pop_customer_sheng);//计划开始日期
-        end_pop_date = (TextView) popView.findViewById(R.id.tv_pop_customer_shi);//计划结束日期
+        start_pop_date = (TextView) popView.findViewById(R.id.demand_start_time);//计划开始日期
+        end_pop_date = (TextView) popView.findViewById(R.id.demand_end_time);//计划结束日期
         tv_state_pop = (TextView) popView.findViewById(R.id.tv_pop_customer_qu);//提报状态
         tv_pop_peisong = (TextView) popView.findViewById(R.id.tv_pop_customer_zhuangtai);//配送方式
         lv_start_date = (ListView) popView.findViewById(R.id.lv_sheng);//开始日期下
@@ -198,7 +198,7 @@ public class CaiGou extends AppCompatActivity implements OnClickListener, Adapte
         linear2 = (LinearLayout) popView.findViewById(R.id.linear2);
         linear_sheng = (LinearLayout) popView.findViewById(R.id.linear_sheng);
         linear_shi = (LinearLayout) popView.findViewById(R.id.linear_shi);
-        linear_qu = (LinearLayout) popView.findViewById(R.id.linear_qu);
+        linear_qu = (LinearLayout) popView.findViewById(R.id.mention_state_ll);
         img_pop_back.setOnClickListener(this);
         tv_pop_canle.setOnClickListener(this);
         linear2.setOnClickListener(this);
@@ -279,7 +279,7 @@ public class CaiGou extends AppCompatActivity implements OnClickListener, Adapte
                     int month = d.get(Calendar.MONTH);
                     int day = d.get(Calendar.DAY_OF_MONTH);
 //获得日历中的 year month day
-                    DatePickerDialog dlg = new DatePickerDialog(this, new MyClick1(), year, month-1, day);
+                    DatePickerDialog dlg = new DatePickerDialog(this, new MyClick1(), year, month, day);
                     DatePicker datePicker = dlg.getDatePicker();
                     try {
                         datePicker.setMaxDate(new SimpleDateFormat("yyyy-MM-dd").parse(end_pop_date.getText().toString())
@@ -326,7 +326,7 @@ public class CaiGou extends AppCompatActivity implements OnClickListener, Adapte
                 HideLv(lv_peisong);
                 HideLv(lv_state);
                 break;
-            case R.id.linear_qu:
+            case R.id.mention_state_ll:
                 ShowLv(lv_state);
                 HideLv(lv_end_date);
                 HideLv(lv_peisong);

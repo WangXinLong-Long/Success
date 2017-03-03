@@ -406,8 +406,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".fragments.homepage.auction.openAuction.openAuctionView.OpenAuctionActivity"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
             android:name=".fragments.homepage.auction.VesselOneActivity"
             android:screenOrientation="portrait" />
@@ -558,8 +558,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".fragments.homepage.groupbuying.groupBuyingDetailMVP.view.GroupBuyingSuccessActivity"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
             android:name=".fragments.homepage.groupbuying.RuleActivity"
             android:screenOrientation="portrait" />
@@ -634,25 +634,74 @@
         <activity
             android:name="com.easemob.easeui.ui.EaseShowBigImageActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide"></activity>
+            android:theme="@style/horizontal_slide" />
         <!-- 下载文件 -->
         <activity
             android:name="com.easemob.easeui.ui.EaseShowNormalFileActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide"></activity>
+            android:theme="@style/horizontal_slide" />
         <activity
             android:name=".fragments.homepage.pagerOneGridViewDetailActivity.PagerOneGridViewDetailActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".fragments.pagerTwoMVP.pagerTwoChilds.informationDetailsMVP.InformationDetailsActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".fragments.pagerFourMVP.pagerFourDetail.PagerFourDetailActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".fragments.pagerFourMVP.pagerFourDetail.PagerFourDetailActivity"
+            android:screenOrientation="portrait" />
+
         <receiver android:name=".utils.NetWorkChangeBroadcastReceiver">
             <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
+
+        <activity
+            android:name=".fragments.myPlasticTrade.OrderManagement.SpotOrder.SpotOrderMVP.view.informationView.PaymentInformationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".fragments.myPlasticTrade.OrderManagement.SpotOrder.SpotOrderMVP.view.informationView.InvoiceInformationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".fragments.myPlasticTrade.OrderManagement.SpotOrder.SpotOrderMVP.view.informationView.ContractInformationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".fragments.myPlasticTrade.demandPlanning.PlanPresentationMVP.view.PlanPresentationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".fragments.myPlasticTrade.demandPlanning.PlanQueryMVP.view.PlanQueryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".fragments.myPlasticTrade.demandPlanning.planQuery.ViewOriginalPlanActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".fragments.myPlasticTrade.qurchaseQualification.PurchaseQualificationMVP.view.PurchaseQualificationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".fragments.myPlasticTrade.qurchaseQualification.purchaseQualificationDetail.PurchaseQualificationDetailMVP.PurchaseQualificationDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".fragments.myPlasticTrade.qurchaseQualification.purchaseQualificationDetail.DataDetailsActivity"
+            android:screenOrientation="portrait" />
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="image.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+        <activity android:name=".fragments.myPlasticTrade.login.forgetPassword.ForgetPasswordActivity" />
+        <activity android:name=".fragments.myPlasticTrade.login.forgetPassword.phonePassword.view.PhonePasswordActivity" />
+        <activity android:name=".fragments.myPlasticTrade.login.forgetPassword.MailboxPasswordActivity" />
+        <activity android:name=".fragments.myPlasticTrade.login.forgetPassword.RetrievePasswordActivity" />
+        <activity android:name=".fragments.myPlasticTrade.EnterpriseCapitalAccountManagement.AccountBalanceActivity" />
+        <activity android:name=".fragments.myPlasticTrade.OrderManagement.SpotOrder.SpotOrderMVP.view.informationView.ViewScannerActivity" />
+        <activity android:name=".fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.Logistics" />
+        <activity android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoPicture.FirmInfoPictureMVP.UniformSocialCreditCode"></activity>
     </application>
 
 </manifest>

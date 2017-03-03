@@ -117,7 +117,7 @@
     </RelativeLayout>
 
     <TextView
-        android:id="@+id/split_line"
+        android:id="@+id/split_line11"
         android:layout_width="match_parent"
         android:layout_height="@dimen/x1"
         android:layout_below="@id/selection_condition"
@@ -127,7 +127,7 @@
         android:id="@+id/refresh_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/split_line">
+        android:layout_below="@id/split_line11">
 
         <com.jingchen.pulltorefresh.PullableListView
             android:id="@+id/pre_sale_listView"

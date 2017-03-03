@@ -584,6 +584,7 @@
                     android:layout_marginBottom="@dimen/x5"
                     android:layout_marginLeft="@dimen/x150"
                     android:layout_toRightOf="@id/delivery_mode_et"
+                    android:visibility="gone"
                     android:text="地区:"
                     android:textSize="@dimen/x10" />
 

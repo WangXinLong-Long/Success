@@ -114,7 +114,7 @@ public class RegisterPicture extends AppCompatActivity implements View.OnClickLi
         LogUtils.log("number1----->"+number1);
         dialog = new ProgressDialog(this);
         dialog.setTitle("提示");
-        dialog.setMessage("正在上传…………");
+        dialog.setMessage("正在上传...");
         dialog.setIcon(R.mipmap.logo);
         dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         dialog.setCancelable(false);

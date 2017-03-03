@@ -28,7 +28,7 @@
             android:layout_marginRight="@dimen/x10"
             android:src="@mipmap/my_sumao_iv_order" />
         <TextView
-            android:id="@+id/state"
+            android:id="@+id/state1"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_toLeftOf="@id/customer_approval_item_detail"
@@ -177,7 +177,7 @@
 
             <TextView
                 android:id="@+id/purchasingQualification1"
-                android:layout_toRightOf="@+id/state1"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/x110"

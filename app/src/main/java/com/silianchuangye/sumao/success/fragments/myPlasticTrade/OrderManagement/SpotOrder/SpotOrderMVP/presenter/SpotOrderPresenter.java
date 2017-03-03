@@ -9,6 +9,15 @@ import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInSt
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.SpotOrder.SpotOrderMVP.model.ISpotOrderModel;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.SpotOrder.SpotOrderMVP.model.SpotOrderCallback;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.SpotOrder.SpotOrderMVP.model.SpotOrderModel;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.SpotOrder.SpotOrderMVP.model.contractInformationModel.ContractInformationCallback;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.SpotOrder.SpotOrderMVP.model.contractInformationModel.ContractInformationModel;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.SpotOrder.SpotOrderMVP.model.contractInformationModel.IContractInformationModel;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.SpotOrder.SpotOrderMVP.model.invoiceInformationModel.IInvoiceInformationModel;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.SpotOrder.SpotOrderMVP.model.invoiceInformationModel.InvoiceInformationCallback;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.SpotOrder.SpotOrderMVP.model.invoiceInformationModel.InvoiceInformationModel;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.SpotOrder.SpotOrderMVP.model.paymentInformationModel.IPaymentInformationModel;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.SpotOrder.SpotOrderMVP.model.paymentInformationModel.PaymentInformationCallback;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.SpotOrder.SpotOrderMVP.model.paymentInformationModel.PaymentInformationModel;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.SpotOrder.SpotOrderMVP.view.ISpotOrderView;
 
 /**
@@ -51,6 +60,39 @@ public class SpotOrderPresenter {
             @Override
             public void callbakcPayment(String result,String orderIds) {
                 spotOrderView.getPaymentResult(result,orderIds);
+            }
+        });
+    }
+
+//    获取付款信息的内容
+    public void getPaymentInformationResult(String orderId,String _dynSessConf){
+        IPaymentInformationModel paymentInformationModel = new PaymentInformationModel(orderId,_dynSessConf);
+        paymentInformationModel.getPaymentInformationResult(new PaymentInformationCallback() {
+            @Override
+            public void callbackPaymentInformation(String result) {
+                spotOrderView.setPaymentInformationInActivity(result);
+            }
+        });
+    }
+
+//    获取发票信息
+    public void getInvoiceInformationResult(String orderId, String _dynSessConf) {
+        IInvoiceInformationModel invoiceInformationModel = new InvoiceInformationModel(orderId,_dynSessConf);
+        invoiceInformationModel.getInvoiceInformationResult(new InvoiceInformationCallback() {
+            @Override
+            public void callbackInvoiceInformation(String result) {
+                spotOrderView.setInvoiceInformationInActivity(result);
+            }
+        });
+    }
+
+//    合同信息
+    public void getContractInformationResult(String orderId, String _dynSessConf) {
+        IContractInformationModel contractInformationModel = new ContractInformationModel(orderId,_dynSessConf);
+        contractInformationModel.getContractInformationResult(new ContractInformationCallback() {
+            @Override
+            public void callbackContractInformation(String result) {
+                spotOrderView.setContractInformationInActivity(result);
             }
         });
     }

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.silianchuangye.sumao.success.fragments.myPlasticTrade.EnterpriseCapitalAccountManagement.AccountBalanceActivity">
+
+    <include
+        android:id="@+id/title"
+        layout="@layout/child_title_bar" />
+
+    <RelativeLayout
+        android:id="@+id/current_account_amount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title"
+        android:layout_marginTop="@dimen/x2"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_margin="@dimen/x10"
+            android:text="当前账户总金额" />
+
+        <TextView
+            android:id="@+id/current_account_amount_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="@dimen/x10"
+            android:text="**"
+            android:textColor="@color/red" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/current_account_available_balance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/current_account_amount"
+        android:layout_marginTop="@dimen/x1"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_margin="@dimen/x10"
+            android:text="当前账户可用余额" />
+
+        <TextView
+            android:id="@+id/current_account_available_balance_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="@dimen/x10"
+            android:text="**"
+            android:textColor="@color/red" />
+    </RelativeLayout>
+
+</RelativeLayout>

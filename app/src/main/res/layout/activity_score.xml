@@ -22,7 +22,7 @@
 
         />
     <TextView
-        android:id="@+id/state"
+        android:id="@+id/state1"
         android:layout_centerHorizontal="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -36,7 +36,7 @@
         android:id="@+id/btSave_password_update"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/state"
+        android:layout_below="@id/state1"
         android:layout_marginLeft="@dimen/x10"
         android:layout_marginRight="@dimen/x10"
         android:layout_marginTop="@dimen/x10"

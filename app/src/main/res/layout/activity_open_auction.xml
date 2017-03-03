@@ -593,33 +593,40 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/x4"
-                android:background="#EEEEF3"></LinearLayout>
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/remark">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/x4"
+                    android:background="#EEEEF3"/>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/x35"
-                android:background="#fff"
-                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/x35"
+                    android:background="#fff"
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/x10"
-                    android:layout_marginTop="@dimen/x7"
-                    android:text="产品备注:"
-                    android:textColor="#F9B05A"
-                    android:textSize="16sp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/x10"
+                        android:layout_marginTop="@dimen/x7"
+                        android:text="产品备注:"
+                        android:textColor="#F9B05A"
+                        android:textSize="16sp" />
 
-                <TextView
-                    android:id="@+id/tvRemark_auction"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/x7"
-                    android:text="******************************"
-                    android:textColor="#F9B05A"
-                    android:textSize="16sp" />
+                    <TextView
+                        android:id="@+id/tvRemark_auction"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/x7"
+                        android:text="******************************"
+                        android:textColor="#F9B05A"
+                        android:textSize="16sp" />
+                </LinearLayout>
             </LinearLayout>
+
             <!--竞拍数量和竞拍价格-->
             <LinearLayout
                 android:id="@+id/bidding_parameters"

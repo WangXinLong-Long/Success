@@ -1,0 +1,494 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/title"
+        layout="@layout/child_title_bar" />
+
+    <RelativeLayout
+        android:id="@+id/original_plan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/demand_or_order"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/x7"
+            android:layout_marginLeft="@dimen/x10"
+            android:layout_marginTop="@dimen/x7"
+            android:text="需求或订单："
+            android:textSize="@dimen/x15" />
+
+
+        <TextView
+            android:id="@+id/demand_or_order_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/x7"
+            android:layout_marginTop="@dimen/x7"
+            android:layout_toRightOf="@id/demand_or_order"
+            android:textSize="@dimen/x15" />
+
+        <Button
+            android:id="@+id/copy_button"
+            android:layout_width="@dimen/x36"
+            android:layout_height="@dimen/x20"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="@dimen/x7"
+            android:layout_marginRight="@dimen/x10"
+            android:layout_marginTop="@dimen/x7"
+            android:background="@drawable/text_corner"
+            android:text="复制"
+            android:textColor="#59BEE9"
+            android:textSize="12sp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/split_line"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x1"
+            android:layout_below="@id/demand_or_order_number"
+            android:layout_marginBottom="@dimen/x7"
+            android:background="@color/gray_type" />
+        <!--需求-->
+        <RelativeLayout
+            android:id="@+id/demand"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/split_line"
+            android:paddingBottom="@dimen/x7"
+            android:paddingLeft="@dimen/x7"
+            android:paddingRight="@dimen/x7">
+
+            <TextView
+                android:id="@+id/demand_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/x7"
+                android:layout_marginLeft="@dimen/x3"
+                android:text="需求日期:" />
+
+            <TextView
+                android:id="@+id/demand_date_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/demand_date"
+                android:text="~~" />
+
+            <TextView
+                android:id="@+id/date_of_presentation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="提报日期:" />
+
+            <TextView
+                android:id="@+id/date_of_presentation_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/date_of_presentation"
+                android:text="~~" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/x1"
+                android:layout_below="@id/demand_date"
+                android:background="@color/gray_type" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/classification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/demand"
+            android:layout_marginLeft="@dimen/x10"
+            android:text="分类:" />
+
+        <TextView
+            android:id="@+id/classification_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/demand"
+            android:layout_toRightOf="@id/classification" />
+
+        <TextView
+            android:id="@+id/product_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/demand"
+            android:layout_centerHorizontal="true"
+
+            android:text="产品名称:" />
+
+        <TextView
+            android:id="@+id/product_name_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/demand"
+            android:layout_toRightOf="@id/product_name"
+            android:text="~~" />
+
+        <TextView
+            android:id="@+id/price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/classification"
+            android:layout_marginLeft="@dimen/x10"
+            android:text="价格(元/吨):" />
+
+        <TextView
+            android:id="@+id/price_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/classification"
+            android:layout_toRightOf="@id/price"
+            android:text="~~" />
+
+        <TextView
+            android:id="@+id/number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/classification"
+            android:layout_centerHorizontal="true"
+            android:text="数量(吨):" />
+
+        <TextView
+            android:id="@+id/number_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/classification"
+            android:layout_toRightOf="@id/number"
+            android:text="~~" />
+
+        <TextView
+            android:id="@+id/amount_of_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/price"
+            android:layout_marginLeft="@dimen/x10"
+            android:text="金额(元):" />
+
+        <TextView
+            android:id="@+id/amount_of_money_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/price"
+            android:layout_toRightOf="@id/amount_of_money"
+            android:text="~~" />
+
+        <TextView
+            android:id="@+id/warehouse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/product_name"
+            android:layout_below="@id/price"
+            android:text="仓库:" />
+
+        <TextView
+            android:id="@+id/warehouse_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/price"
+            android:layout_toRightOf="@id/warehouse"
+            android:text="~~" />
+
+        <TextView
+            android:id="@+id/logistics_information"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/amount_of_money"
+            android:layout_marginLeft="@dimen/x10"
+            android:text="物流信息:" />
+
+        <TextView
+            android:id="@+id/logistics_information_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/amount_of_money"
+            android:layout_toRightOf="@id/logistics_information"
+            android:text="~~" />
+
+        <TextView
+            android:id="@+id/seller_enterprise"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/amount_of_money"
+            android:layout_centerHorizontal="true"
+            android:text="卖方企业:" />
+
+        <TextView
+            android:id="@+id/seller_enterprise_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/amount_of_money"
+            android:layout_toRightOf="@id/seller_enterprise"
+            android:text="~~" />
+
+        <TextView
+            android:id="@+id/state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/logistics_information"
+            android:layout_marginBottom="@dimen/x7"
+            android:layout_marginLeft="@dimen/x10"
+            android:text="状态:" />
+
+        <TextView
+            android:id="@+id/state_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/logistics_information"
+            android:layout_toRightOf="@id/state"
+            android:text="~~" />
+    </RelativeLayout>
+
+
+    <!---->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/original_plan"
+        android:layout_marginTop="@dimen/x10"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/demand_or_order1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/x7"
+            android:layout_marginLeft="@dimen/x10"
+            android:layout_marginTop="@dimen/x7"
+            android:text="需求或订单："
+            android:textSize="@dimen/x15" />
+
+
+        <TextView
+            android:id="@+id/demand_or_order_number1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/x7"
+            android:layout_marginTop="@dimen/x7"
+            android:layout_toRightOf="@id/demand_or_order1"
+            android:textSize="@dimen/x15" />
+
+        <Button
+            android:id="@+id/copy_button1"
+            android:layout_width="@dimen/x36"
+            android:layout_height="@dimen/x20"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="@dimen/x7"
+            android:layout_marginRight="@dimen/x10"
+            android:layout_marginTop="@dimen/x7"
+            android:background="@drawable/text_corner"
+            android:text="复制"
+            android:textColor="#59BEE9"
+            android:textSize="12sp"
+
+            />
+
+        <TextView
+            android:id="@+id/split_line11"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x1"
+            android:layout_below="@id/demand_or_order_number1"
+            android:layout_marginBottom="@dimen/x7"
+            android:background="@color/gray_type" />
+        <!--需求-->
+        <RelativeLayout
+            android:id="@+id/demand1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/split_line11"
+            android:paddingBottom="@dimen/x7"
+            android:paddingLeft="@dimen/x7"
+            android:paddingRight="@dimen/x7"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/demand_date1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/x7"
+                android:layout_marginLeft="@dimen/x3"
+                android:text="需求日期:" />
+
+            <TextView
+                android:id="@+id/demand_date_num1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/demand_date1"
+                android:text="~~" />
+
+            <TextView
+                android:id="@+id/date_of_presentation1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="提报日期:" />
+
+            <TextView
+                android:id="@+id/date_of_presentation_num1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/date_of_presentation1"
+                android:text="~~" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/x1"
+                android:layout_below="@id/demand_date1"
+                android:background="@color/gray_type" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/classification1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/demand1"
+            android:layout_marginLeft="@dimen/x10"
+            android:text="分类:" />
+
+        <TextView
+            android:id="@+id/classification_content1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/demand1"
+            android:layout_toRightOf="@id/classification1" />
+
+        <TextView
+            android:id="@+id/product_name1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/demand1"
+            android:layout_centerHorizontal="true"
+
+            android:text="产品名称:" />
+
+        <TextView
+            android:id="@+id/product_name_content1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/demand1"
+            android:layout_toRightOf="@id/product_name1"
+            android:text="~~" />
+
+        <TextView
+            android:id="@+id/price1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/classification1"
+            android:layout_marginLeft="@dimen/x10"
+            android:text="价格(元/吨):" />
+
+        <TextView
+            android:id="@+id/price_content1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/classification1"
+            android:layout_toRightOf="@id/price1"
+            android:text="~~" />
+
+        <TextView
+            android:id="@+id/number1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/classification1"
+            android:layout_centerHorizontal="true"
+            android:text="数量(吨):" />
+
+        <TextView
+            android:id="@+id/number_content1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/classification1"
+            android:layout_toRightOf="@id/number1"
+            android:text="~~" />
+
+        <TextView
+            android:id="@+id/amount_of_money1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/price1"
+            android:layout_marginLeft="@dimen/x10"
+            android:text="金额(元):" />
+
+        <TextView
+            android:id="@+id/amount_of_money_content1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/price1"
+            android:layout_toRightOf="@id/amount_of_money1"
+            android:text="~~" />
+
+        <TextView
+            android:id="@+id/warehouse1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/product_name1"
+            android:layout_below="@id/price1"
+            android:text="仓库:" />
+
+        <TextView
+            android:id="@+id/warehouse_content1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/price1"
+            android:layout_toRightOf="@id/warehouse1"
+            android:text="~~" />
+
+        <TextView
+            android:id="@+id/logistics_information1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/amount_of_money1"
+            android:layout_marginLeft="@dimen/x10"
+            android:text="物流信息:" />
+
+        <TextView
+            android:id="@+id/logistics_information_content1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/amount_of_money1"
+            android:layout_toRightOf="@id/logistics_information1"
+            android:text="~~" />
+
+        <TextView
+            android:id="@+id/seller_enterprise1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/amount_of_money1"
+            android:layout_centerHorizontal="true"
+            android:text="卖方企业:" />
+
+        <TextView
+            android:id="@+id/seller_enterprise_content1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/amount_of_money1"
+            android:layout_toRightOf="@id/seller_enterprise1"
+            android:text="~~" />
+
+        <TextView
+            android:id="@+id/state1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/logistics_information1"
+            android:layout_marginBottom="@dimen/x7"
+            android:layout_marginLeft="@dimen/x10"
+            android:text="状态:" />
+
+        <TextView
+            android:id="@+id/state_content1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/logistics_information1"
+            android:layout_toRightOf="@id/state1"
+            android:text="~~" />
+    </RelativeLayout>
+
+</RelativeLayout>

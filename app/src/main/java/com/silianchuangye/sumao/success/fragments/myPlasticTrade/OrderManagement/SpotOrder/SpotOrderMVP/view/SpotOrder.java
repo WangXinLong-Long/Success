@@ -38,11 +38,15 @@ import com.silianchuangye.sumao.success.dialog.Error_Dialog;
 import com.silianchuangye.sumao.success.dialog.Ok_Dialog;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.OpenAuction;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.PayMentsOrderMVP.bean.BankListBean;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.OrderDetails.OrderDetailsMVP.view.OrderDetailsActivity;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.SpotOrder.SpotOrderMVP.bean.ContractInformation;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.SpotOrder.SpotOrderMVP.presenter.SpotOrderPresenter;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.SpotOrder.SpotOrderMVP.view.informationView.ContractInformationActivity;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.SpotOrder.SpotOrderMVP.view.informationView.InvoiceInformationActivity;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.SpotOrder.SpotOrderMVP.view.informationView.PaymentInformationActivity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.SpotOrder.preSell.presellallFragmentMVP.bean.PreSellAllBean;
 import com.silianchuangye.sumao.success.model.SpotOrderModel;
 import com.silianchuangye.sumao.success.utils.Loding;
+import com.silianchuangye.sumao.success.utils.LogUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -107,11 +111,23 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
     private TextView tv;
     private ArrayList<OpenAuction> list_pop;
     private String count_price;
+    private ImageView order_status_order_details;
+    private TextView tv_xianqing_type;
+    private RelativeLayout paymentInformation;
+    private RelativeLayout invoiceInformation;
+    private RelativeLayout contractInformation;
+    private RelativeLayout logisticsInformation;
+    private String zhifu_unique;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_to_be_paid);
+        SharedPreferences sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+        zhifu_unique = sp.getString("unique", "");
+        LogUtils.log("zhifu_unique-->"+zhifu_unique);
+
+        LogUtils.log("onCreate--->");
         spotOrderPresenter = new SpotOrderPresenter(this);
         initView();
         orderBean = (PreSellAllBean.OrderBean) getIntent().getSerializableExtra("OrderBean");
@@ -123,12 +139,10 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
         bt_zhifu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    Popupwindow();
-                    backgroundAlpha(0.5f);
+                Popupwindow();
             }
         });
     }
-
 
 
     //    初始化控件
@@ -180,14 +194,31 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
         tv_title_bar_title.setTextColor(Color.WHITE);
 //      倒计时
         count_down_tv = ((TextView) findViewById(R.id.count_down_tv));
+//        显示支付状态的图标
+        order_status_order_details = ((ImageView) findViewById(R.id.order_status_order_details));
+//        什么类型的商品
+        tv_xianqing_type = ((TextView) findViewById(R.id.tv_xianqing_type));
+//        付款信息
+        paymentInformation = ((RelativeLayout) findViewById(R.id.bottom1));
+        paymentInformation.setOnClickListener(this);
+//        发票信息
+        invoiceInformation = ((RelativeLayout) findViewById(R.id.bottom2));
+        invoiceInformation.setOnClickListener(this);
+//        合同信息
+        contractInformation = ((RelativeLayout) findViewById(R.id.bottom3));
+        contractInformation.setOnClickListener(this);
+//        物流信息
+        logisticsInformation = ((RelativeLayout) findViewById(R.id.bottom4));
+        logisticsInformation.setOnClickListener(this);
     }
-//    设置值
+
+    //    设置值
     public void setValue(PreSellAllBean.OrderBean orderBean) {
 
         spotOrderAdapter.addData(orderBean);
         String state = orderBean.getState();
 //        除了待支付，其他的都不显示倒计时
-        if (state.equals("SUBMITTED")){//待支付
+        if (state.equals("SUBMITTED")) {//待支付
             tv_title_bar_title.setText("待支付");
             state2.setText("待支付");
             count_down_tv.setVisibility(View.VISIBLE);
@@ -195,31 +226,31 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
             List<PreSellAllBean.OrderBean.ClBean> cl = orderBean.getCl();
             double total = 0;
             for (int i = 0; i < cl.size(); i++) {
-               double amount =  Double.parseDouble(cl.get(i).getCl_amount());
-                total+=amount;
+                double amount = Double.parseDouble(cl.get(i).getCl_amount());
+                total += amount;
             }
             bottom_money2.setText(String.valueOf(total));
-        }else if (state.equals("PAYMENT_COMPLETION")){//货款已支付
+        } else if (state.equals("PAYMENT_COMPLETION")) {//货款已支付
             tv_title_bar_title.setText("货款已支付");
             state2.setText("货款已支付");
             count_down_tv.setVisibility(View.GONE);
-        }else if (state.equals("DEPOSIT_ERROR")){//保证金解冻失败
+        } else if (state.equals("DEPOSIT_ERROR")) {//保证金解冻失败
             count_down_tv.setVisibility(View.GONE);
             tv_title_bar_title.setText("保证金解冻失败");
             state2.setText("保证金解冻失败");
-        }else if (state.equals("DEPOSIT_SUCCESS")){//保证金解冻成功
+        } else if (state.equals("DEPOSIT_SUCCESS")) {//保证金解冻成功
             count_down_tv.setVisibility(View.GONE);
             tv_title_bar_title.setText("保证金解冻成功");
             state2.setText("保证金解冻成功");
-        }else if (state.equals("QUOTED")){//已支付
+        } else if (state.equals("QUOTED")) {//已支付
             tv_title_bar_title.setText("已支付");
             state2.setText("已支付");
             count_down_tv.setVisibility(View.GONE);
-        }else if (state.equals("REMOVED")){//已取消
+        } else if (state.equals("REMOVED")) {//已取消
             tv_title_bar_title.setText("已取消");
             state2.setText("已取消");
             count_down_tv.setVisibility(View.GONE);
-        }else if (state.equals("CHANGED")){//已变更
+        } else if (state.equals("CHANGED")) {//已变更
             tv_title_bar_title.setText("已变更");
             state2.setText("已变更");
             count_down_tv.setVisibility(View.GONE);
@@ -239,29 +270,35 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
         long countDownTime = 0;
 //        订单类型
         String type = orderBean.getType();
-        if (type.equals("fixedPricingOrder")){//现货
+        if (type.equals("fixedPricingOrder")) {//现货
             type2.setText("现货");
-            long countDown = (Long.parseLong(orderBean.getSubmittedDate())+1000*3600)-System.currentTimeMillis();
-              countDownTime = countDown>0?countDown:0;
-        }else if (type.equals("openAuctionOrder")){//公开竞拍
+            tv_xianqing_type.setText("现货");
+            long countDown = (Long.parseLong(orderBean.getSubmittedDate()) + 1000 * 3600) - System.currentTimeMillis();
+            countDownTime = countDown > 0 ? countDown : 0;
+        } else if (type.equals("openAuctionOrder")) {//公开竞拍
             type2.setText("公开竞拍");
-            long countDown = (calendar.getTimeInMillis())-Long.parseLong(orderBean.getSubmittedDate());
-            countDownTime = countDown>0?countDown:(calendar.getTimeInMillis()+24*60*60*1000)-Long.parseLong(orderBean.getSubmittedDate());
-        }else if (type.equals("sealedAuctionOrder")){//密封竞拍
+            tv_xianqing_type.setText("公开竞拍");
+            long countDown = (calendar.getTimeInMillis()) - Long.parseLong(orderBean.getSubmittedDate());
+            countDownTime = countDown > 0 ? countDown : (calendar.getTimeInMillis() + 24 * 60 * 60 * 1000) - Long.parseLong(orderBean.getSubmittedDate());
+        } else if (type.equals("sealedAuctionOrder")) {//密封竞拍
             type2.setText("密封竞拍");
-            long countDown = (calendar.getTimeInMillis())-Long.parseLong(orderBean.getSubmittedDate());
-            countDownTime = countDown>0?countDown:(calendar.getTimeInMillis()+24*60*60*1000)-Long.parseLong(orderBean.getSubmittedDate());
-        }else if (type.equals("integratePurchaseOrder")){//团购
+            tv_xianqing_type.setText("密封竞拍");
+            long countDown = (calendar.getTimeInMillis()) - Long.parseLong(orderBean.getSubmittedDate());
+            countDownTime = countDown > 0 ? countDown : (calendar.getTimeInMillis() + 24 * 60 * 60 * 1000) - Long.parseLong(orderBean.getSubmittedDate());
+        } else if (type.equals("integratePurchaseOrder")) {//团购
             type2.setText("团购");
-            long countDown = (calendar.getTimeInMillis())-Long.parseLong(orderBean.getSubmittedDate());
-            countDownTime = countDown>0?countDown:(calendar.getTimeInMillis()+24*60*60*1000)-Long.parseLong(orderBean.getSubmittedDate());
-        }else if (type.equals("forwardPricingOrder")){//预售
+            tv_xianqing_type.setText("团购");
+            long countDown = (calendar.getTimeInMillis()) - Long.parseLong(orderBean.getSubmittedDate());
+            countDownTime = countDown > 0 ? countDown : (calendar.getTimeInMillis() + 24 * 60 * 60 * 1000) - Long.parseLong(orderBean.getSubmittedDate());
+        } else if (type.equals("forwardPricingOrder")) {//预售
             type2.setText("预售");
-            countDownTime = Long.parseLong(orderBean.getCl().get(0).getPaymentEndDate())- Long.parseLong(orderBean.getSubmittedDate());
-        }else if (type.equals("scheduleOrder")){//计划订单
+            tv_xianqing_type.setText("预售");
+            countDownTime = Long.parseLong(orderBean.getCl().get(0).getPaymentEndDate()) - Long.parseLong(orderBean.getSubmittedDate());
+        } else if (type.equals("scheduleOrder")) {//计划订单
             type2.setText("计划订单");
-            long countDown = (calendar.getTimeInMillis())-Long.parseLong(orderBean.getSubmittedDate());
-            countDownTime = countDown>0?countDown:(calendar.getTimeInMillis()+24*60*60*1000)-Long.parseLong(orderBean.getSubmittedDate());
+            tv_xianqing_type.setText("计划订单");
+            long countDown = (calendar.getTimeInMillis()) - Long.parseLong(orderBean.getSubmittedDate());
+            countDownTime = countDown > 0 ? countDown : (calendar.getTimeInMillis() + 24 * 60 * 60 * 1000) - Long.parseLong(orderBean.getSubmittedDate());
         }
         mc = new MyCount(countDownTime, 1000);
         mc.start();
@@ -269,12 +306,30 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
         buyer2.setText(orderBean.getOwner());
 //        状态
         company2.setText(orderBean.getCl().get(0).getCl_gongsi());
-
+        if (state.equals("SUBMITTED")) {//待支付
+            order_status_order_details.setImageResource(R.mipmap.to_pay_the_picture);
+        } else if (state.equals("PAYMENT_COMPLETION")) {//货款已支付
+            order_status_order_details.setImageResource(R.mipmap.completed_order);
+        } else if (state.equals("DEPOSIT_ERROR")) {//保证金解冻失败
+            order_status_order_details.setImageResource(R.mipmap.completed_order);
+        } else if (state.equals("DEPOSIT_SUCCESS")) {//保证金解冻成功
+            order_status_order_details.setImageResource(R.mipmap.completed_order);
+        } else if (state.equals("QUOTED")) {//已支付
+            order_status_order_details.setImageResource(R.mipmap.completed_order);
+        } else if (state.equals("REMOVED")) {//已取消
+            order_status_order_details.setImageResource(R.mipmap.no_order_form);
+        } else if (state.equals("CHANGED")) {//已变更
+            order_status_order_details.setImageResource(R.mipmap.no_order_form);
+        }
     }
 
     @Override
     public void onClick(View v) {
+        String orderId = orderBean.getOrderId();
+        String _dynSessConf = zhifu_unique;
+        Intent intent = new Intent();
         switch (v.getId()) {
+
             case R.id.iv_title_bar_back:
                 finish();
                 break;
@@ -284,14 +339,32 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
                 break;
 //            待支付方详情
             case R.id.order_amount:
-                Intent intent = new Intent();
-                intent.putExtra("orderBean", orderBean);
-                intent.setClass(this, OrderDetailsActivity.class);
-                startActivity(intent);
+                LogUtils.log("点击进入详情");
                 break;
+//            付款信息
+            case R.id.bottom1:
+
+                spotOrderPresenter.getPaymentInformationResult(orderId, _dynSessConf);
+
+                break;
+//            发票信息
+            case R.id.bottom2:
+                spotOrderPresenter.getInvoiceInformationResult(orderId, _dynSessConf);
+
+                break;
+//            合同信息
+            case R.id.bottom3:
+                spotOrderPresenter.getContractInformationResult(orderId, _dynSessConf);
+
+                break;
+//            物流信息
+            case R.id.bottom4:
+//                intent.setClass(this, LogisticsInformationActivity.class);
+//                startActivity(intent);
+                break;
+
         }
     }
-
 
 
     /*定义一个倒计时的内部类*/
@@ -335,6 +408,7 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
         Loding.show(this, "加载中...", false, null);
         spotOrderPresenter.getBankListFromService(order, orderId);
     }
+
     @Override
     public void setBankListResult(String result) {
         Loding.dis();
@@ -490,6 +564,42 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
         }
     }
 
+    //    获取付款信息的内容
+    @Override
+    public void setPaymentInformationInActivity(String result) {
+
+        Intent intent = new Intent();
+        intent.setClass(this, PaymentInformationActivity.class);
+        intent.putExtra("result",result);
+        startActivity(intent);
+    }
+
+//    发票信息
+    @Override
+    public void setInvoiceInformationInActivity(String result) {
+        Intent intent = new Intent();
+        intent.setClass(this, InvoiceInformationActivity.class);
+        intent.putExtra("result",result);
+        startActivity(intent);
+    }
+
+//    合同信息
+    @Override
+    public void setContractInformationInActivity(String result) {
+
+        if (!result.contains("cl_hturl")){
+            Toast.makeText(SpotOrder.this, "暂时没有生成合同", Toast.LENGTH_SHORT).show();
+        }else {
+            Gson gson = new Gson();
+            ContractInformation contractInformation = gson.fromJson(result, ContractInformation.class);
+            Intent intent = new Intent();
+            intent.setClass(this, ContractInformationActivity.class);
+            intent.putExtra("contract",contractInformation.getCl_hturl());
+            startActivity(intent);
+        }
+
+    }
+
     //    进行支付请求
     public void getzhifu(String bankId) {
 //TODO
@@ -502,8 +612,7 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
             }
         }
         String a = stringBuffer.toString();
-        SharedPreferences sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
-        String zhifu_unique = sp.getString("unique", "");
+
         String orderIds = a;
         String platform = bankId;
         String _dynSessConf = zhifu_unique;

@@ -88,6 +88,7 @@
     </RelativeLayout>
 
     <TextView
+        android:textColor="@color/red"
         android:id="@+id/residual_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

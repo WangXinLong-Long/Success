@@ -102,6 +102,8 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
     private PreSaleDetailBean preSaleDetailBean;
     private String contractString;
     private boolean canPayTheMargin;
+    private TextView payment_deadline_et;
+    private LinearLayout remark;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -205,8 +207,12 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
         margin_proportion_et = ((TextView) findViewById(R.id.margin_proportion_et));
         //        产品备注
         pre_sale_detail_remark = ((TextView) findViewById(R.id.pre_sale_detail_remark));
+//        货款支付截止时间
+        payment_deadline_et = (TextView) findViewById(R.id.payment_deadline_et);
+        remark = (LinearLayout) findViewById(R.id.remark);
         //购买数量
         edt_num = (EditText) findViewById(R.id.tv_item_cart_buy_num);
+
         //        TODO !!!
         edt_num.addTextChangedListener(new TextWatcher() {
             @Override
@@ -274,6 +280,12 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
     }
 
     public void setPreSaleDetailData(PreSaleDetailBean preSaleDetailBean) {
+        if (preSaleDetailBean.getCl_cpbeizhu() == null) {
+            remark.setVisibility(View.GONE);
+        } else {
+            remark.setVisibility(View.VISIBLE);
+            pre_sale_detail_remark.setText(preSaleDetailBean.getCl_cpbeizhu());
+        }
         //        兰州石化7042
         tvName_auction.setText(preSaleDetailBean.getCl_mingcheng());
         //        6000
@@ -286,8 +298,9 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
         purchase_quantity_et.setText(preSaleDetailBean.getCl_qigou());
         //        最小变量单位
         min_variable_et.setText(preSaleDetailBean.getCl_xiaobian());
+        payment_deadline_et.setText(/*preSaleDetailBean.getCl_xiaobian()*/"~~");
         //       交货时间
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日 ");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         delivery_time_et.setText(simpleDateFormat.format(Double.parseDouble(preSaleDetailBean.getDeliveryPeriodStart() + "")));
         delivery_time_et_end.setText(simpleDateFormat.format(Double.parseDouble(preSaleDetailBean.getDeliveryPeriodEnd() + "")));
         //       仓库地址
@@ -318,7 +331,7 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
         //      保证金比例
         margin_proportion_et.setText(preSaleDetailBean.getCl_baozhj());
         //        产品备注
-//        pre_sale_detail_remark.setText(preSaleDetailBean.get);
+
         contractString = preSaleDetailBean.getContract();
         //        获取产品参数
         cl_attribute = preSaleDetailBean.getCl_attribute();
@@ -364,8 +377,8 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
             case R.id.pre_sale_sale_detail_detail:
                 intent.setClass(PreSaleDetailActivity.this, VesselThreeActivity.class);
                 intent.putExtra("title", "预售");
-//                TODO 预售合同
-                intent.putExtra("contract", "www.baidu.com");
+                intent.putExtra("contract", preSaleDetailBean.getContract());
+                intent.putExtra("auctionDetailBean", preSaleDetailBean);
                 intent.putExtra("cl_attribute", cl_attribute);
                 startActivity(intent);
                 break;

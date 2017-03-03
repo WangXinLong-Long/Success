@@ -23,11 +23,31 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/my_sumao_background">
+                <RelativeLayout
+                    android:id="@+id/sport_order_order_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:padding="@dimen/x5">
 
-
+                    <TextView
+                        android:id="@+id/tv_xianqing_type"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:text=""
+                        android:textColor="@color/btn_blue_normal"
+                        android:textSize="@dimen/x15" />
+                </RelativeLayout>
+                <ImageView
+                    android:id="@+id/order_status_order_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/x70"
+                    android:layout_below="@id/sport_order_order_details"
+                    android:src="@mipmap/to_pay_the_picture" />
                 <RelativeLayout
                     android:id="@+id/countdown"
-
+                    android:layout_below="@id/order_status_order_details"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/x5"
@@ -40,7 +60,7 @@
                         android:layout_centerInParent="true"
                         android:padding="@dimen/x5"
                         android:textColor="@color/countdown_textview_yellow"
-                        android:textSize="@dimen/x20" />
+                        android:textSize="@dimen/x15" />
                 </RelativeLayout>
 
 
@@ -79,21 +99,14 @@
                         android:layout_width="@dimen/x36"
                         android:layout_height="@dimen/x20"
                         android:layout_centerVertical="true"
-                        android:layout_marginRight="@dimen/x5"
-                        android:layout_toLeftOf="@+id/iv_More"
+                        android:layout_marginRight="@dimen/x10"
                         android:background="@drawable/text_corner"
                         android:text="复制"
+                        android:layout_alignParentRight="true"
                         android:textColor="#59BEE9"
                         android:textSize="12sp" />
 
-                    <ImageView
-                        android:id="@+id/iv_More"
-                        android:layout_width="@dimen/x15"
-                        android:layout_height="@dimen/x15"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="@dimen/x10"
-                        android:src="@mipmap/my_sumao_iv_order" />
+
                 </RelativeLayout>
                 <!--<LinearLayout
                     android:layout_width="match_parent"
@@ -279,7 +292,7 @@
                     android:layout_marginTop="@dimen/x5">
 
 
-                    <!--<RelativeLayout
+                    <RelativeLayout
                         android:id="@+id/bottom1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -291,7 +304,7 @@
                             android:paddingBottom="@dimen/x5"
                             android:paddingLeft="@dimen/x10"
                             android:paddingTop="@dimen/x5"
-                            android:text="@string/Cancel_order"
+                            android:text="付款信息"
                             android:textColor="@color/textColor_expandable_listview_show"
                             android:textSize="@dimen/x17" />
 
@@ -302,13 +315,14 @@
                             android:layout_centerVertical="true"
                             android:layout_marginRight="@dimen/x10"
                             android:src="@mipmap/my_sumao_iv_order" />
-                    </RelativeLayout>-->
+                    </RelativeLayout>
 
                     <RelativeLayout
                         android:id="@+id/bottom2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/x1"
+                        android:layout_below="@id/bottom1"
                         android:background="@color/white"
                         android:paddingBottom="@dimen/x5"
                         android:paddingTop="@dimen/x5">
@@ -319,7 +333,7 @@
                             android:paddingBottom="@dimen/x5"
                             android:paddingLeft="@dimen/x10"
                             android:paddingTop="@dimen/x5"
-                            android:text="@string/Contract_information"
+                            android:text="发票信息"
                             android:textColor="@color/textColor_expandable_listview_show"
                             android:textSize="@dimen/x15" />
 
@@ -348,7 +362,35 @@
                             android:paddingBottom="@dimen/x5"
                             android:paddingLeft="@dimen/x10"
                             android:paddingTop="@dimen/x5"
-                            android:text="@string/Distribution_plan"
+                            android:text="合同信息"
+                            android:textColor="@color/textColor_expandable_listview_show"
+                            android:textSize="@dimen/x15" />
+
+                        <ImageView
+                            android:layout_width="@dimen/x15"
+                            android:layout_height="@dimen/x15"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="@dimen/x10"
+                            android:src="@mipmap/my_sumao_iv_order" />
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:id="@+id/bottom4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/bottom3"
+                        android:layout_marginTop="@dimen/x1"
+                        android:background="@color/white"
+                        android:paddingBottom="@dimen/x5"
+                        android:paddingTop="@dimen/x5">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingBottom="@dimen/x5"
+                            android:paddingLeft="@dimen/x10"
+                            android:paddingTop="@dimen/x5"
+                            android:text="物流信息"
                             android:textColor="@color/textColor_expandable_listview_show"
                             android:textSize="@dimen/x15" />
 
@@ -364,8 +406,8 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/x55"
-                        android:layout_below="@id/bottom3"
-                        android:text="  " />
+                        android:layout_below="@id/bottom4"
+                        android:text="" />
                 </RelativeLayout>
             </RelativeLayout>
         </LinearLayout>

@@ -1,50 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="title_buyer">
-        <item>订单管理</item>
+        <item>交易管理</item>
+        <item>需求计划</item>
         <item>物流管理</item>
-        <item>个人信息</item>
-        <item>企业信息</item>
-        <item>企业资金账户管理</item>
+        <item>资金账户</item>
+        <item>资质管理</item>
+        <item>账户及权限管理</item>
+        <item>企业信息管理</item>
+        <item>消息通知</item>
     </string-array>
+    <string-array name="child1_buyer">
+        <item>现货订单</item>
+        <item>预售订单</item>
+        <!-- <item>客服订单</item>-->
+    </string-array>
+    <string-array name="demand_planning">
+        <item>计划提报</item>
+        <item>计划查询</item>
+    </string-array>
+    <string-array name="child2_buyer">
+        <item>物流需求</item>
+        <item>物流订单</item>
+    </string-array>
+    <string-array name="child5_buyer">
+        <item>注册易宝</item>
+        <item>账户余额</item>
+        <!--<item>账户金额明细</item>-->
+    </string-array>
+    <string-array name="qualification_management">
+        <item>购买资质申请</item>
+    </string-array>
+    <string-array name="child3_buyer">
+        <item>账户信息管理</item>
+        <item>密码修改</item>
+        <item>子账户管理</item>
+        <!--<item>资讯订阅</item>-->
+    </string-array>
+    <string-array name="child4_buyer">
+        <item>企业信息</item>
+        <item>收货地址管理</item>
+        <item>开票信息管理</item>
+        <!--<item>企业等级和积分</item>-->
+    </string-array>
+    <string-array name="message_notification">
+        <item>通知列表</item>
+    </string-array>
+
+
 
     <string-array name="title_seller">
         <item>竞拍管理</item>
         <item>计划管理</item>
         <item>产品管理</item>
     </string-array>
-
-    <string-array name="child1_buyer">
-        <item>现货订单</item>
-        <item>预售订单</item>
-       <!-- <item>客服订单</item>-->
-    </string-array>
-
-    <string-array name="child2_buyer">
-        <item>创建物流需求</item>
-        <item>查看物流需求</item>
-    </string-array>
-
-    <string-array name="child3_buyer">
-        <item>用户信息</item>
-        <item>密码修改</item>
-        <item>资讯订阅</item>
-    </string-array>
-
-    <string-array name="child4_buyer">
-        <item>企业信息</item>
-        <item>企业用户管理</item>
-        <item>收货地址</item>
-        <item>开票信息</item>
-        <!--<item>企业等级和积分</item>-->
-    </string-array>
-
-    <string-array name="child5_buyer">
-        <item>资金账户信息</item>
-
-       <!--TODO <item>账户金额明细</item>-->
-    </string-array>
-
     <string-array name="child1_seller">
         <item>报价查询</item>
         <item>竞拍结果查看</item>
@@ -52,9 +61,7 @@
     <string-array name="child2_seller">
         <item>日需求计划查看</item>
         <item>月需求计划查看</item>
-
     </string-array>
-
     <string-array name="child3_seller">
         <item>在售商品查询</item>
     </string-array>

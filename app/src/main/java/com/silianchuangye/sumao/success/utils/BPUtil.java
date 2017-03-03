@@ -81,7 +81,8 @@ public class BPUtil {
         }
 
         for (int i = 0; i < line_number; i++) {
-            drawLine(c, paint);
+//            屏蔽了干扰线
+//            drawLine(c, paint);
         }
 
         c.save( Canvas.ALL_SAVE_FLAG );//保存
@@ -117,9 +118,14 @@ public class BPUtil {
     }
 
     private int randomColor(int rate) {
-        int red = random.nextInt(256) / rate;
-        int green = random.nextInt(256) / rate;
-        int blue = random.nextInt(256) / rate;
+        //产生随机颜色
+//        int red = random.nextInt(256) / rate;
+//        int green = random.nextInt(256) / rate;
+//        int blue = random.nextInt(256) / rate;
+//        产生固定的颜色
+        int red = 147 / rate;
+        int green = 137 / rate;
+        int blue = 127 / rate;
         return Color.rgb(red, green, blue);
     }
 

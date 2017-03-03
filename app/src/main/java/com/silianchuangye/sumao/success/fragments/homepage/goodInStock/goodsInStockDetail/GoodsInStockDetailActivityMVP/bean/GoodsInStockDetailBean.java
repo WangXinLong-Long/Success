@@ -69,9 +69,18 @@ public class GoodsInStockDetailBean implements Serializable {
     private String cl_diqu;
     private String cl_cangku;
     private String cl_guojia;
+    private String cl_cpbeizhu;
     private List<String> cl_jhfangshi;
     private List<ClAttributeBean> cl_attribute;
     private List<RecentlyViewedProductBean> recentlyViewedProduct;
+
+    public String getCl_cpbeizhu() {
+        return cl_cpbeizhu;
+    }
+
+    public void setCl_cpbeizhu(String cl_cpbeizhu) {
+        this.cl_cpbeizhu = cl_cpbeizhu;
+    }
 
     public String getMstEbsSkuInfoId() {
         return mstEbsSkuInfoId;

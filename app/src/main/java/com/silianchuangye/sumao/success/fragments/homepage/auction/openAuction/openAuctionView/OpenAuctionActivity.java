@@ -143,6 +143,7 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
     private boolean needToPayTheMargin;
     private String depositDeadline;
     private TextView tvOpen_auction;
+    private LinearLayout remark;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -217,6 +218,7 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
         company = (TextView) findViewById(R.id.company_et);
 //        产品备注
         tvRemark_auction = (TextView) findViewById(R.id.tvRemark_auction);
+        remark = (LinearLayout) findViewById(R.id.remark);
 //        登录
         bt_Login = (Button) findViewById(R.id.btLogin_auction);
 //        注册
@@ -287,7 +289,7 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
                     if (Double.parseDouble(depositDeadline) - 10 * 1000 - System.currentTimeMillis() < 0) {
                         Toast.makeText(OpenAuctionActivity.this, "对不起，已过该商品的保证金支付时间", Toast.LENGTH_SHORT).show();
                     } else {
-                        Popupwindow();
+                        alreadyBaoZhengJin(true);
                     }
 
                 } else if (bt_jinpai_colse.getText().toString().equals("立即报价")) {
@@ -330,7 +332,7 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
                     if (Double.parseDouble(depositDeadline) - System.currentTimeMillis() < 0) {
                         Toast.makeText(OpenAuctionActivity.this, "对不起，已超过保证金支付时间,不能继续支付保证金", Toast.LENGTH_SHORT).show();
                     } else {
-                        Popupwindow();
+                        alreadyBaoZhengJin(true);
                     }
 
                 }
@@ -418,6 +420,7 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
                         Intent intent = new Intent(OpenAuctionActivity.this, VesselTwoActivity.class);
                         intent.putExtra("auctionDetailBean", auctionDetailBean);
                         intent.putExtra("zhifujine", zhifujine);
+                        intent.putExtra("auctionMode", type_way);
                         startActivity(intent);
                     } else if (position == 2) {
                         Intent intent = new Intent(OpenAuctionActivity.this, VesselThreeActivity.class);
@@ -521,7 +524,7 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
                 //没有登录或者注册，最高标价
                 Layout_Button_no_login.setVisibility(View.VISIBLE);
                 layout_Message.setVisibility(View.VISIBLE);
-                tv_Message.setText("竞拍结束，保证金未支付");
+                tv_Message.setText("竞拍结束");
                 Layout_info.setVisibility(View.GONE);
             } else {
                 Layout_info.setVisibility(View.VISIBLE);
@@ -546,6 +549,12 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
         cangkuaddress.setText(auctionDetailBean.getCl_xbianjia());
 //        公司
         company.setText(auctionDetailBean.getCl_gongsi());
+        if (auctionDetailBean.getCl_cpbeizhu() == null){
+            remark.setVisibility(View.GONE);
+        }else {
+            remark.setVisibility(View.VISIBLE);
+            tvRemark_auction.setText(auctionDetailBean.getCl_cpbeizhu());
+        }
         StringBuffer stringBuffer = new StringBuffer();
         for (int i = 0; i < auctionDetailBean.getCl_fangshi().size(); i++) {
             if (i == auctionDetailBean.getCl_fangshi().size() - 1) {
@@ -904,6 +913,7 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
 
 
     public void Popupwindow() {
+
         getinfo_Bank();
     }
 
@@ -976,11 +986,14 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
     }
 
     //      获取已支付的保证金金额
-    public void alreadyBaoZhengJin() {
+    public void alreadyBaoZhengJin(boolean needShowPopupWindow) {
         String productId = id_value;
         SharedPreferences sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
         String _dynSessConf = sp.getString("unique", "");
         openAuctionPresenter.getAmountPaidedResult(productId, _dynSessConf);
+        if (needShowPopupWindow){
+            Popupwindow();
+        }
     }
 
     //    公开竞拍报价
@@ -1278,6 +1291,7 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
 //            竞拍失败
             LogUtils.log("走这里--->3");
             tv_result.setText(promptLanguage);
+            LogUtils.log("tv_Message--->"+openAuctionStateBean.getMsg());
             tv_Message.setText(openAuctionStateBean.getMsg());
         }
 //       显示参与竞拍按钮
@@ -1301,7 +1315,7 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
                     }
                     bt_jinpai_colse.setVisibility(View.GONE);
                     Layout_Button_Open.setVisibility(View.VISIBLE);
-                    alreadyBaoZhengJin();
+                    alreadyBaoZhengJin(false);
 //            不需要支付保证金
                 } else {
                     LogUtils.log("走这里--->8的else");
@@ -1323,7 +1337,7 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
                     }
                     bt_jinpai_colse.setText("支付保证金");
                     Layout_Button_close.setVisibility(View.VISIBLE);
-                    alreadyBaoZhengJin();
+                    alreadyBaoZhengJin(false);
 //            不需要支付保证金
                 } else {
                     LogUtils.log("走这里--->11");

@@ -69,11 +69,11 @@ public class RegisterValueActivity extends AppCompatActivity {
             ed_content_value.setText(content);
         }
         title_Bar(title);
-        if (!content.equals("")) {
+        if (content.equals("")) {
             tv_a.setVisibility(View.VISIBLE);
-            if (title.equals("企业名称")){
+            if (title.equals("企业名称")) {
                 tv_a.setVisibility(View.GONE);
-            }else {
+            } else {
                 tv_a.setText("6-16个字符,可由中英文,数字,'-','_'组成");
             }
 
@@ -87,9 +87,11 @@ public class RegisterValueActivity extends AppCompatActivity {
             ed_content_value.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
         } else if (title.equals("地址详情")) {
             tv_a.setText("6-16个字符,可由中英文,数字,'-','_'组成");
-        } else if (title.equals("登录账号")){
+        } else if (title.equals("登录账号")) {
             tv_a.setText("登录账号不能为纯数字，不能包含特殊字符");
-        }else {
+        } else if (title.equals("传真号")) {
+            ed_content_value.setInputType(InputType.TYPE_CLASS_NUMBER);
+        } else {
             tv_a.setText("6-16个字符,可由中英文,数字,'-','_'组成");
         }
 
@@ -99,7 +101,7 @@ public class RegisterValueActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String regEx = "[`~!@#$%^&*()_\\-+=|{}':;',\\[\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？\\s]";
                 Pattern p = Pattern.compile(regEx);
-                Matcher m = p.matcher(ed_content_value.getText().toString());
+                Matcher matcher = p.matcher(ed_content_value.getText().toString());
 //                需要进行网络请求
                 if (title.equals("登录账号")) {
                     type = "login";
@@ -112,19 +114,26 @@ public class RegisterValueActivity extends AppCompatActivity {
                     tv_a.setText(title + "不能为空");
                     tv_a.setTextColor(Color.RED);
                     LogUtils.log("tv_a------->" + tv_a.getText().toString() + "<---");
-                } else if (ed_content_value.getText().toString().length()<6){
+                } /*else if (ed_content_value.getText().toString().length() < 6&&!title.equals("姓名")) {
                     tv_a.setText("6-16个字符,可由中英文,数字组成");
+                    tv_a.setVisibility(View.VISIBLE);
                     tv_a.setTextColor(Color.RED);
-
-                }else if (title.equals("登录账号")&&ed_content_value.getText().toString().matches("^[0-9]*$")){
+                    LogUtils.log("监测字符长度--->！姓名");
+                } */else if (ed_content_value.getText().toString().length() < 2&&title.equals("姓名")) {
+                    tv_a.setText("姓名不符合规则");
+                    tv_a.setVisibility(View.VISIBLE);
+                    tv_a.setTextColor(Color.RED);
+                    LogUtils.log("监测字符长度--->姓名");
+                } else if (title.equals("登录账号") && ed_content_value.getText().toString().matches("^[0-9]*$")) {
                     tv_a.setText("登录账号不能为纯数字，不能包含特殊字符");
                     tv_a.setTextColor(Color.RED);
-
-                }else if (title.equals("登录账号")&&m.find()){
+                    tv_a.setVisibility(View.VISIBLE);
+                } else if (title.equals("登录账号") && matcher.find()) {
                     tv_a.setText("登录账号不能为纯数字，不能包含特殊字符");
                     tv_a.setTextColor(Color.RED);
-
-                }else if (type == "login" || type == "mail") {
+                    tv_a.setVisibility(View.VISIBLE);
+                } else if (type == "login" || type == "mail") {
+                    LogUtils.log("邮箱或用户名的校验--->");
                     toDetermineWhetherOrNotToRegister(type, ed_content_value.getText().toString().trim());
                 } else {
                     LogUtils.log("走这里---->");

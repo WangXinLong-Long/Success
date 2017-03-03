@@ -1,8 +1,10 @@
 package com.silianchuangye.sumao.success.fragments.myPlasticTrade.EnterpriseCapitalAccountManagement;
 
+import android.content.Intent;
 import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -20,12 +22,23 @@ public class FundInfoActivity extends AppCompatActivity {
     Button sv_title_bar_serachView;
     TextView tv_title_bar_title,tv,tvUpdate;
     RelativeLayout layoutTop,add_address_rl;
+    private Button btrig_fund_info;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fund_info);
         title_Bar();
+//        立即注册平安易宝
+        btrig_fund_info = ((Button) findViewById(R.id.btrig_fund_info));
+        btrig_fund_info.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse("https://ebank.sdb.com.cn/corporbank/perRegedit.do?MainAcctId=0032100392263"));
+                startActivity(intent);
+            }
+        });
     }
 
     public void title_Bar(){

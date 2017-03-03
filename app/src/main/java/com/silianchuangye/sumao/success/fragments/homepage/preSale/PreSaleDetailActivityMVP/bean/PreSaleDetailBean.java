@@ -53,7 +53,61 @@ public class PreSaleDetailBean implements Serializable{
     private String cl_shuliang;
     private String cl_xiaobian;
     private String cl_jiner;
+    private String cl_cpbeizhu;
+    private String paymentEndDate;
+    private String gradeNumber;
+    private String yingyong;
+    private String country;
+    private String group;
     private List<String> cl_jhfangshi;
+
+    public String getGroup() {
+        return group;
+    }
+
+    public void setGroup(String group) {
+        this.group = group;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getGradeNumber() {
+        return gradeNumber;
+    }
+
+    public void setGradeNumber(String gradeNumber) {
+        this.gradeNumber = gradeNumber;
+    }
+
+    public String getYingyong() {
+        return yingyong;
+    }
+
+    public void setYingyong(String yingyong) {
+        this.yingyong = yingyong;
+    }
+
+    public String getCl_cpbeizhu() {
+        return cl_cpbeizhu;
+    }
+
+    public void setCl_cpbeizhu(String cl_cpbeizhu) {
+        this.cl_cpbeizhu = cl_cpbeizhu;
+    }
+
+    public String getPaymentEndDate() {
+        return paymentEndDate;
+    }
+
+    public void setPaymentEndDate(String paymentEndDate) {
+        this.paymentEndDate = paymentEndDate;
+    }
 
     public ArrayList<GoodsInStockDetailBean.ClAttributeBean> getCl_attribute() {
         return cl_attribute;

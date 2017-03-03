@@ -73,7 +73,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/x30"
             android:layout_marginTop="@dimen/x10"
-            android:text="竞拍单价:"
+            android:text="团购价格:"
 
             />
         <!--团购单价-->
@@ -102,7 +102,7 @@
             android:layout_below="@+id/tv_auction_startPrice"
             android:layout_marginLeft="@dimen/x30"
             android:layout_marginTop="@dimen/x5"
-            android:text="竞拍总量:" />
+            android:text="团购总量:" />
         <!--团购总量-->
         <TextView
             android:id="@+id/tv_auction_number"

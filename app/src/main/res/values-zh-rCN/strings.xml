@@ -131,14 +131,14 @@
     <string name="my_sumao_the_order_number">订单编号:</string>
     <string name="my_sumao_amount_of">金额:</string>
     <string name="type">类型:</string>
-    <string name="buyer">采购员:</string>
+    <string name="buyer">下单人:</string>
     <string name="state">状态:</string>
     <string name="company">公司:</string>
     <string name="contact_customer_service">联系客服</string>
     <string name="univalent">产品单价(元/吨):</string>
     <string name="number">数量(吨):</string>
     <string name="enterprise">生产企业:</string>
-    <string name="totalMoney">全额(元):</string>
+    <string name="totalMoney">金额(元):</string>
     <string name="warehouse">仓库:</string>
     <string name="account_login">账号登录</string>
     <string name="login_password">登录密码</string>

@@ -5,6 +5,7 @@ import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSelling
 import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.model.UpstreamDirectSellingDetailModel.UpstreamDirectSellingDetailCallback;
 import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.model.UpstreamDirectSellingDetailModel.UpstreamDirectSellingDetailModel;
 import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.view.IUpstreamDirectSellingView;
+import com.silianchuangye.sumao.success.utils.loginStatusUtils.AspectJLoginStatus;
 
 /**
  * Created by Administrator on 2016/9/8 0008.
@@ -16,7 +17,7 @@ IUpstreamDirectSellingView upstreamDirectSellingView ;
     public UpstreamDirectSellingPresenter(IUpstreamDirectSellingView upstreamDirectSellingView) {
         this.upstreamDirectSellingView = upstreamDirectSellingView;
     }
-
+    @AspectJLoginStatus("")
     public void getUpstreamDirectSellingDetail(String id, String sellerCompanyId,String title){
         IUpstreamDirectSellingDetailModel upstreamDirectSellingDetailModel = new UpstreamDirectSellingDetailModel( id,  sellerCompanyId,title);
         upstreamDirectSellingDetailModel.getUpstreamDirectSellingDetailInfo(new UpstreamDirectSellingDetailCallback() {

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/my_sumao_background"
+    android:id="@+id/root_view"
+    tools:context="com.silianchuangye.sumao.success.fragments.myPlasticTrade.qurchaseQualification.purchaseQualificationDetail.DataDetailsActivity">
+
+    <include
+        android:id="@+id/title"
+        layout="@layout/child_title_bar_three" />
+
+    <EditText
+        android:id="@+id/modify_information"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title"
+        android:layout_marginBottom="@dimen/x5"
+        android:layout_marginLeft="@dimen/x15"
+        android:layout_marginRight="@dimen/x15"
+        android:layout_marginTop="@dimen/x15"
+        android:background="@drawable/edit_background" />
+
+    <TextView
+        android:layout_below="@id/modify_information"
+        android:id="@+id/prompt_information"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/x15"
+        android:text="@string/prompt_information"
+        android:textColor="@color/red"
+        android:textSize="@dimen/x10"
+        android:visibility="gone" />
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="match_parent"
+        android:layout_margin="20dp"
+        android:layout_height="300dp"
+        android:layout_below="@id/modify_information"
+        />
+
+    <Button
+        android:id="@+id/upload_scan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/x15"
+        android:background="@drawable/button_background_blue"
+        android:text="上传扫描件"
+        android:textColor="@color/white"
+        android:layout_alignParentBottom="true"
+        android:textSize="@dimen/x15" />
+</RelativeLayout>

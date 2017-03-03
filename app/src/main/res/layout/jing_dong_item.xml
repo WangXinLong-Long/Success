@@ -16,7 +16,7 @@
         android:layout_height="@dimen/x25"
         android:padding="@dimen/x3"
         android:text="内蒙"
-        android:textSize="@dimen/x15"
+        android:textSize="@dimen/x10"
         android:gravity="center"
         android:background="@drawable/button_back_gray"
         />

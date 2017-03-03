@@ -36,10 +36,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation.CaptureActivity;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoPicture.FirmInfoPictureMVP.UniformSocialCreditCode;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoPicture.FirmInfoPictureMVP.presenter.FirmInfoPicturePresenter;
 import com.silianchuangye.sumao.success.utils.FTPUtils;
-import com.silianchuangye.sumao.success.utils.FileTool;
+import com.silianchuangye.sumao.success.utils.FavFTPUtil;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 import com.zhy.m.permission.MPermissions;
@@ -132,7 +132,7 @@ public class FirmInfoPictureActivity extends AppCompatActivity implements IFirmI
         setContentView(R.layout.activity_firm_info_picture);
         dialog = new ProgressDialog(this);
         dialog.setTitle("提示");
-        dialog.setMessage("正在上传…………");
+        dialog.setMessage("正在上传...");
         dialog.setIcon(R.mipmap.logo);
         dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         dialog.setCancelable(false);
@@ -146,7 +146,9 @@ public class FirmInfoPictureActivity extends AppCompatActivity implements IFirmI
                 /**
                  * 首先要获取权限
                  */
-                MPermissions.requestPermissions(FirmInfoPictureActivity.this, REQUEST_PERMISSION_CAMERA_QR_CODE, PERMISSIONS);
+                Intent intent = new Intent(FirmInfoPictureActivity.this, UniformSocialCreditCode.class);
+                startActivityForResult(intent, 8);
+//                MPermissions.requestPermissions(FirmInfoPictureActivity.this, REQUEST_PERMISSION_CAMERA_QR_CODE, PERMISSIONS);
 
             }
         });
@@ -162,9 +164,9 @@ public class FirmInfoPictureActivity extends AppCompatActivity implements IFirmI
         bt_getNumber.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MPermissions.requestPermissions(FirmInfoPictureActivity.this, REQUEST_PERMISSION_CAMERA_QR_CODE, PERMISSIONS);
-//                Intent intent = new Intent(FirmInfoPictureActivity.this, CaptureActivity.class);
-//                startActivityForResult(intent, 8);
+                Intent intent = new Intent(FirmInfoPictureActivity.this, UniformSocialCreditCode.class);
+                startActivityForResult(intent, 8);
+//                MPermissions.requestPermissions(FirmInfoPictureActivity.this, REQUEST_PERMISSION_CAMERA_QR_CODE, PERMISSIONS);
             }
         });
         btSave = (Button) findViewById(R.id.bt_save_register_value);
@@ -193,17 +195,20 @@ public class FirmInfoPictureActivity extends AppCompatActivity implements IFirmI
                         @Override
                         public void run() {
                             Message msg = new Message();
+//                              public static final String pathname = "/docs/";
+//                               String filename = System.currentTimeMillis() + "image.jpg";
                             LogUtils.log("图片地址--->" + SuMaoConstant.pathname + filename);
-//                            flag = FavFTPUtil.uploadFileFromProduction(SuMaoConstant.hostname, SuMaoConstant.port,
-//                                    SuMaoConstant.username, SuMaoConstant.password,SuMaoConstant.pathname, filename, filePath);
-                            try {
-                                FileInputStream in = new FileInputStream(new File(filePath));
-                                 flag = FileTool.uploadFile(SuMaoConstant.hostname, SuMaoConstant.port,
-                                        SuMaoConstant.username, SuMaoConstant.password, SuMaoConstant.pathname, filename, in);
-                                System.out.println(flag);
-                            } catch (FileNotFoundException e) {
-                                e.printStackTrace();
-                            }
+                            LogUtils.log("图片本机地址--->" + filePath);
+                            flag = FavFTPUtil.uploadFileFromProduction(SuMaoConstant.hostname, SuMaoConstant.port,
+                                    SuMaoConstant.username, SuMaoConstant.password, SuMaoConstant.pathname, filename, filePath);
+//                            try {
+//                                FileInputStream in = new FileInputStream(new File(filePath));
+//                                 flag = FileTool.uploadFile(SuMaoConstant.hostname, SuMaoConstant.port,
+//                                        SuMaoConstant.username, SuMaoConstant.password, SuMaoConstant.pathname, filename, in);
+//                                System.out.println(flag);
+//                            } catch (FileNotFoundException e) {
+//                                e.printStackTrace();
+//                            }
 
                             LogUtils.log("flag-->" + flag);
                             msg.what = 1;
@@ -220,7 +225,6 @@ public class FirmInfoPictureActivity extends AppCompatActivity implements IFirmI
     }
 
     //设置背景透明
-
     public void backgroundAlpha(float bgAlpha) {
         WindowManager.LayoutParams lp = getWindow().getAttributes();
         lp.alpha = bgAlpha; //0.0-1.0
@@ -368,8 +372,9 @@ public class FirmInfoPictureActivity extends AppCompatActivity implements IFirmI
 
     @PermissionGrant(REQUEST_PERMISSION_CAMERA_QR_CODE)
     public void requestCameraQRSuccess() {
-        Intent intent = new Intent(FirmInfoPictureActivity.this, CaptureActivity.class);
-        startActivityForResult(intent, 8);
+
+//        Intent intent = new Intent(FirmInfoPictureActivity.this, CaptureActivity.class);
+//        startActivityForResult(intent, 8);
     }
 
     @PermissionDenied(REQUEST_PERMISSION_CAMERA_QR_CODE)
@@ -391,82 +396,85 @@ public class FirmInfoPictureActivity extends AppCompatActivity implements IFirmI
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         ContentResolver resolver = this.getContentResolver();
-
-        if (requestCode == 0) {
-            prompt.setVisibility(View.INVISIBLE);
-            if (data == null) {
-                return;
-            } else {
-                try {
-                    mcontent = readStream(resolver.openInputStream(Uri.parse(getUrl(data))));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-//                因为在小米手机6.01的系统上不能将取到的图片展示出来，所以怀疑是手机版本API的问题，暂时的解决办法是这样，判断版本号
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    try {
-                        Uri originalUri = data.getData(); // 获得图片的uri
-                        bitmap = MediaStore.Images.Media.getBitmap(resolver, originalUri);
+        if (resultCode == RESULT_OK) {
 
 
-                        int width = ivPictrue.getMeasuredWidth();
-                        int heigh = ivPictrue.getMeasuredHeight();
-                        LogUtils.log("width---->" + width + "heigh------->" + heigh);
-                        LogUtils.log("originalUri.toString()---->" + originalUri.toString());
-                        int picwidth = bitmap.getWidth();
-                        int pichigh = bitmap.getHeight();
-                        LogUtils.log("picwidth---->" + picwidth + "pichigh------->" + pichigh);
-                        double x = ((picwidth * 1.0) / width) > ((pichigh * 1.0) / heigh) ? ((picwidth * 1.0) / width) : ((pichigh * 1.0) / heigh);
-                        //使用系统的一个工具类，参数列表为 Bitmap Width,Height  这里使用压缩后显示，否则在华为手机上ImageView 没有显示
-                        ivPictrue.setImageBitmap(ThumbnailUtils.extractThumbnail(bitmap, (int) (picwidth / x), (int) (pichigh / x)));
-//                        这里这个路径，就是图片的路径，在上传服务器的时候需要用到
-                        String file = originalUri.toString();
-                        int positon = file.indexOf("//");
-                        LogUtils.log("positon---->" + positon);
-                        filePath = file.substring(positon + 2);
-                        LogUtils.log("filePath---->" + filePath);
-
-                    } catch (IOException e) {
-                        Log.e("TAG-->Error", e.toString());
-                    } finally {
-                        return;
-                    }
+            if (requestCode == 0) {
+                prompt.setVisibility(View.INVISIBLE);
+                if (data == null) {
+                    return;
                 } else {
-                    //将字节数组转换为ImageView可调用的Bitmap对象
-                    bitmap = getPicFromBytes(mcontent, null);
-                    if (getUrl(data) != null && !getUrl(data).equals("")) {
-                        ivPictrue.setImageBitmap(bitmap);
-                        path = getUrl(data);
-                        filePath = path.toString();
-                        LogUtils.log("filePath非6.0---->" + filePath);
-                        Log.d("正确的存储路径", getUrl(data));
-                    } else {
-                        ////把得到的图片绑定在控件上显示
-                        Log.d("错误的存储路径", getUrl(data));
+                    try {
+                        mcontent = readStream(resolver.openInputStream(Uri.parse(getUrl(data))));
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
+//                因为在小米手机6.01的系统上不能将取到的图片展示出来，所以怀疑是手机版本API的问题，暂时的解决办法是这样，判断版本号
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        try {
+                            Uri originalUri = data.getData(); // 获得图片的uri
+                            bitmap = MediaStore.Images.Media.getBitmap(resolver, originalUri);
+
+
+                            int width = ivPictrue.getMeasuredWidth();
+                            int heigh = ivPictrue.getMeasuredHeight();
+                            LogUtils.log("width---->" + width + "heigh------->" + heigh);
+                            LogUtils.log("originalUri.toString()---->" + originalUri.toString());
+                            int picwidth = bitmap.getWidth();
+                            int pichigh = bitmap.getHeight();
+                            LogUtils.log("picwidth---->" + picwidth + "pichigh------->" + pichigh);
+                            double x = ((picwidth * 1.0) / width) > ((pichigh * 1.0) / heigh) ? ((picwidth * 1.0) / width) : ((pichigh * 1.0) / heigh);
+                            //使用系统的一个工具类，参数列表为 Bitmap Width,Height  这里使用压缩后显示，否则在华为手机上ImageView 没有显示
+                            ivPictrue.setImageBitmap(ThumbnailUtils.extractThumbnail(bitmap, (int) (picwidth / x), (int) (pichigh / x)));
+//                        这里这个路径，就是图片的路径，在上传服务器的时候需要用到
+                            String file = originalUri.toString();
+                            int positon = file.indexOf("//");
+                            LogUtils.log("positon---->" + positon);
+                            filePath = file.substring(positon + 2);
+                            LogUtils.log("filePath---->" + filePath);
+
+                        } catch (IOException e) {
+                            Log.e("TAG-->Error", e.toString());
+                        } finally {
+                            return;
+                        }
+                    } else {
+                        //将字节数组转换为ImageView可调用的Bitmap对象
+                        bitmap = getPicFromBytes(mcontent, null);
+                        if (getUrl(data) != null && !getUrl(data).equals("")) {
+                            ivPictrue.setImageBitmap(bitmap);
+                            path = getUrl(data);
+                            filePath = path.toString();
+                            LogUtils.log("filePath非6.0---->" + filePath);
+                            Log.d("正确的存储路径", getUrl(data));
+                        } else {
+                            ////把得到的图片绑定在控件上显示
+                            Log.d("错误的存储路径", getUrl(data));
+                        }
+                    }
+
                 }
+
+            } else if (requestCode == TAKE_PICTURE) {
+                prompt.setVisibility(View.INVISIBLE);
+                intent = data;
+                MPermissions.requestPermissions(FirmInfoPictureActivity.this, REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE_CODE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                File newFile = insertFileToSd(file);
+                LogUtils.log("test------------->newFile:" + newFile.toString());
+                filePath = newFile.toString();
+                LogUtils.log("filePath---->" + filePath);
+                Bitmap copyBitmap = getBitmapByBytes(newFile);
+                LogUtils.log("得到copyBitmap:---->");
+
+                ivPictrue.setImageBitmap(copyBitmap);
+            } else if (requestCode == 8) {
+                prompt.setVisibility(View.INVISIBLE);
+                String result = data.getStringExtra("result");
+                Log.d("条形码", result);
+                tvinfoValue_firm_info_pictrue.setText(result);
+
 
             }
-
-        } else if (requestCode == TAKE_PICTURE) {
-            prompt.setVisibility(View.INVISIBLE);
-            intent = data;
-            MPermissions.requestPermissions(FirmInfoPictureActivity.this, REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE_CODE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-            File newFile = insertFileToSd(file);
-            LogUtils.log("test------------->newFile:" + newFile.toString());
-            filePath = newFile.toString();
-            LogUtils.log("filePath---->" + filePath);
-            Bitmap copyBitmap = getBitmapByBytes(newFile);
-            LogUtils.log("得到copyBitmap:---->");
-
-            ivPictrue.setImageBitmap(copyBitmap);
-        } else if (requestCode == 8) {
-            prompt.setVisibility(View.INVISIBLE);
-            String result = data.getStringExtra("result");
-            Log.d("条形码", result);
-            tvinfoValue_firm_info_pictrue.setText(result);
-
-
         }
     }
 
@@ -604,7 +612,7 @@ public class FirmInfoPictureActivity extends AppCompatActivity implements IFirmI
         iv_title_bar_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                finish();
             }
         });
     }

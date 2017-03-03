@@ -41,6 +41,7 @@ public class VesselTwoActivity extends AppCompatActivity {
     private RelativeLayout layout_action_end;
     private Button bt_jinpai_colse;
     private AuctionDetailBean auctionDetailBean;
+    private String auctionMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +54,7 @@ public class VesselTwoActivity extends AppCompatActivity {
         LinearLayout Layout_Button_vessel_two = (LinearLayout) findViewById(R.id.Layout_Button_vessel_two);
         Layout_Button_vessel_two.setVisibility(View.GONE);
         auctionDetailBean = (AuctionDetailBean)getIntent().getSerializableExtra("auctionDetailBean");
+        auctionMode = getIntent().getStringExtra("auctionMode");
         String zhifujine = getIntent().getStringExtra("zhifujine");
 
         lv_vessel_tow= (ListView) findViewById(R.id.lv_vessel_tow);
@@ -64,12 +66,12 @@ public class VesselTwoActivity extends AppCompatActivity {
         }else {
             map1.put("value",auctionDetailBean.getCl_baozhj());
         }
-        map1.put("text","支付保证金比例");
+        map1.put("text","保证金比例");
 
         list.add(map1);
 
         Map<String,Object> map2=new Hashtable<String,Object>();
-        map2.put("text","支付保证金截止时间");
+        map2.put("text","保证金支付截止时间");
         if (auctionDetailBean.getCl_baozhj().equals("%")){
             map2.put("value","--");
         }else {
@@ -77,7 +79,7 @@ public class VesselTwoActivity extends AppCompatActivity {
         }
         list.add(map2);
         Map<String,Object> map3=new Hashtable<String,Object>();
-        map3.put("text","支付保证金金额");
+        map3.put("text","当前保证金金额保证金金额");
         if (auctionDetailBean.getCl_baozhj().equals("%")){
             map3.put("value","--");
         }else {
@@ -101,8 +103,8 @@ public class VesselTwoActivity extends AppCompatActivity {
         map6.put("value",new SimpleDateFormat("yyyy-MM-dd").format(Double.parseDouble(auctionDetailBean.getCl_shijian()))+"至"+new SimpleDateFormat("yyyy-MM-dd").format(Double.parseDouble(auctionDetailBean.getCl_shijianend())));
         list.add(map6);
         Map<String,Object> map7=new Hashtable<String,Object>();
-        map7.put("text","竞价方式");
-        map7.put("value","竞价方式");
+        map7.put("text","竞拍方式");
+        map7.put("value",auctionMode);
         list.add(map7);
         Map<String,Object> map8=new Hashtable<String,Object>();
         map8.put("text","竞拍时间");
@@ -153,7 +155,7 @@ public class VesselTwoActivity extends AppCompatActivity {
             delayRule = "在竞拍产品剩余数量小于起购量时，竞拍进入倒计时， \n" +
                     "当新报价改变了实时行情时， \n" +
                     "再次触发倒计时 \n" +
-                    "1 分钟 ";
+                    delayTimeLength;
         }
         Map<String,Object> map11=new Hashtable<String,Object>();
         map11.put("text","延长时间");

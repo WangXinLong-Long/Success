@@ -13,6 +13,7 @@ import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.AuctionMVP.bean.AuctionDetailBean;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.bean.GoodsInStockDetailBean;
 import com.silianchuangye.sumao.success.fragments.homepage.groupbuying.groupBuyingDetailMVP.bean.GroupBuyingDetailBean;
+import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.bean.PreSaleDetailBean;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 
 import java.util.ArrayList;
@@ -29,6 +30,8 @@ public class ParameterFragment extends Fragment {
     private AuctionDetailBean auctionDetailBean;
     private String type;
     private GroupBuyingDetailBean groupBuyingDetailBean;
+    private GoodsInStockDetailBean goodsInStockDetailBean;
+    private PreSaleDetailBean preSaleDetailBean;
 
 
     public ParameterFragment() {
@@ -47,6 +50,10 @@ public class ParameterFragment extends Fragment {
         type = bundle.getString("type");
         if (type.equals("group")) {
             groupBuyingDetailBean = (GroupBuyingDetailBean) bundle.getSerializable("auctionDetailBean");
+        } else if(type.equals("goodsInStock")){
+            goodsInStockDetailBean = (GoodsInStockDetailBean) bundle.getSerializable("auctionDetailBean");
+        }  else if(type.equals("preSale")){
+            preSaleDetailBean = (PreSaleDetailBean) bundle.getSerializable("auctionDetailBean");
         } else {
             auctionDetailBean = (AuctionDetailBean) bundle.getSerializable("auctionDetailBean");
         }
@@ -86,6 +93,18 @@ public class ParameterFragment extends Fragment {
             } else {
                 map1.put("value", groupBuyingDetailBean.getCl_mingcheng());
             }
+        }else if (type.equals("goodsInStock")) {
+            if (goodsInStockDetailBean.getCl_mingcheng() == null) {
+                map1.put("value", "~~");
+            } else {
+                map1.put("value", goodsInStockDetailBean.getCl_mingcheng());
+            }
+        }else if (type.equals("preSale")) {
+            if (preSaleDetailBean.getCl_mingcheng() == null) {
+                map1.put("value", "~~");
+            } else {
+                map1.put("value", preSaleDetailBean.getCl_mingcheng());
+            }
         }
         list.add(map1);
         Map<String, Object> map2 = new Hashtable<>();
@@ -98,6 +117,18 @@ public class ParameterFragment extends Fragment {
             } else {
                 map2.put("value", groupBuyingDetailBean.getCl_fenlei());
             }
+        }else if (type.equals("goodsInStock")) {
+            if (goodsInStockDetailBean.getCl_fenlei() == null) {
+                map2.put("value", "~~");
+            } else {
+                map2.put("value", goodsInStockDetailBean.getCl_fenlei());
+            }
+        }else if (type.equals("preSale")) {
+            if (preSaleDetailBean.getCl_fenlei() == null) {
+                map2.put("value", "~~");
+            } else {
+                map2.put("value", preSaleDetailBean.getCl_fenlei());
+            }
         }
         list.add(map2);
         Map<String, Object> map3 = new Hashtable<>();
@@ -106,6 +137,10 @@ public class ParameterFragment extends Fragment {
             map3.put("value", auctionDetailBean.getYingyong());
         } else if (type.equals("group")) {
             map3.put("value", groupBuyingDetailBean.getYingyong());
+        }else if (type.equals("goodsInStock")) {
+            map3.put("value", goodsInStockDetailBean.getCl_yingyong());
+        }else if (type.equals("preSale")) {
+            map3.put("value", preSaleDetailBean.getYingyong());
         }
         list.add(map3);
         Map<String, Object> map4 = new Hashtable<>();
@@ -114,6 +149,10 @@ public class ParameterFragment extends Fragment {
             map4.put("value", auctionDetailBean.getGradeNumber());
         } else if (type.equals("group")) {
             map4.put("value", groupBuyingDetailBean.getGradeNumber());
+        }else if (type.equals("goodsInStock")) {
+            map4.put("value", goodsInStockDetailBean.getCl_paihao());
+        }else if (type.equals("preSale")) {
+            map4.put("value", preSaleDetailBean.getGradeNumber());
         }
         list.add(map4);
         Map<String, Object> map5 = new Hashtable<>();
@@ -127,6 +166,20 @@ public class ParameterFragment extends Fragment {
 
                 map5.put("value", groupBuyingDetailBean.getCl_guojia());
             }
+        }else if (type.equals("goodsInStock")) {
+            if (goodsInStockDetailBean.getCl_guojia() == null) {
+                map5.put("value", "~~");
+            } else {
+
+                map5.put("value", goodsInStockDetailBean.getCl_guojia());
+            }
+        }else if (type.equals("preSale")) {
+            if (preSaleDetailBean.getCountry() == null) {
+                map5.put("value", "~~");
+            } else {
+
+                map5.put("value", preSaleDetailBean.getCountry());
+            }
         }
         list.add(map5);
         Map<String, Object> map6 = new Hashtable<>();
@@ -139,10 +192,22 @@ public class ParameterFragment extends Fragment {
                 map6.put("value", auctionDetailBean.getGroup());
             }
         } else if (type.equals("group")) {
-            if (groupBuyingDetailBean.getCl_gongsi() == null) {
+            if (groupBuyingDetailBean.getGroup() == null) {
                 map6.put("value", "--");
             } else {
                 map6.put("value", groupBuyingDetailBean.getCl_gongsi());
+            }
+        }else if (type.equals("goodsInStock")) {
+            if (goodsInStockDetailBean.getCl_gongsi() == null) {
+                map6.put("value", "--");
+            } else {
+                map6.put("value", goodsInStockDetailBean.getCl_gongsi());
+            }
+        }else if (type.equals("preSale")) {
+            if (preSaleDetailBean.getGroup() == null) {
+                map6.put("value", "--");
+            } else {
+                map6.put("value", preSaleDetailBean.getGroup());
             }
         }
         list.add(map6);
@@ -152,6 +217,10 @@ public class ParameterFragment extends Fragment {
             map7.put("value", auctionDetailBean.getManufacturer());
         } else if (type.equals("group")) {
             map7.put("value", groupBuyingDetailBean.getManufacturer());
+        } else if (type.equals("goodsInStock")) {
+            map7.put("value", goodsInStockDetailBean.getCl_scqiye());
+        } else if (type.equals("preSale")) {
+            map7.put("value", preSaleDetailBean.getManufacturer());
         }
         list.add(map7);
 

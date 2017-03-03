@@ -43,7 +43,7 @@ public class ScoreActivity extends AppCompatActivity implements View.OnClickList
         //返回
         ImageView back = (ImageView) findViewById(R.id.iv_child_title_bar_back);
         back.setOnClickListener(this);
-        state = (TextView) findViewById(R.id.state);
+        state = (TextView) findViewById(R.id.state1);
         LayerDrawable ld_stars = (LayerDrawable) mRatingBar.getProgressDrawable();
         ld_stars.getDrawable(2).setColorFilter(Color.parseColor("#F7931E"), PorterDuff.Mode.SRC_ATOP);
         mRatingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {

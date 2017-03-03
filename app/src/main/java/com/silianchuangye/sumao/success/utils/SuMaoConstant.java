@@ -39,12 +39,14 @@ public class SuMaoConstant {
     //    上传文件：存放图片服务器IP
     public static final String hostname = "192.168.32.126";
     //    存放图片服务端口
-    public static final int port = 21;
+    public static final int port = 22;
     //    FTP 用户名
     public static final String username = "mobile";
     //    FTP 密码
     public static final String password = "Mm123456";
     //    存放目录
     public static final String pathname = "/mnt/docs/";
+//    平安银行注册界面
+//    https://ebank.sdb.com.cn/corporbank/perRegedit.do?MainAcctId=0032100392263
 
 }

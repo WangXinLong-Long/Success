@@ -15,6 +15,7 @@ import com.silianchuangye.sumao.success.adapter.MyPageAdapter;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.AuctionMVP.bean.AuctionDetailBean;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.bean.GoodsInStockDetailBean;
 import com.silianchuangye.sumao.success.fragments.homepage.groupbuying.groupBuyingDetailMVP.bean.GroupBuyingDetailBean;
+import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.bean.PreSaleDetailBean;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 
 import java.io.Serializable;
@@ -33,6 +34,8 @@ public class VesselThreeActivity extends AppCompatActivity {
     private String contract;
     private AuctionDetailBean auctionDetailBean;
     private GroupBuyingDetailBean groupBuyingDetailBean;
+    private GoodsInStockDetailBean goodsInStockDetailBean;
+    private PreSaleDetailBean preSaleDetailBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +52,10 @@ public class VesselThreeActivity extends AppCompatActivity {
         if (title.equals("团购")){
 
             groupBuyingDetailBean = (GroupBuyingDetailBean) intent.getSerializableExtra("auctionDetailBean");
+        }else if(title.equals("现货")){
+            goodsInStockDetailBean = (GoodsInStockDetailBean) intent.getSerializableExtra("auctionDetailBean");
+        }else if(title.equals("预售")){
+            preSaleDetailBean = (PreSaleDetailBean) intent.getSerializableExtra("auctionDetailBean");
         }else {
             auctionDetailBean = (AuctionDetailBean) intent.getSerializableExtra("auctionDetailBean");
         }
@@ -63,6 +70,12 @@ public class VesselThreeActivity extends AppCompatActivity {
             bundle.putString("type","group");
             bundle.putSerializable("auctionDetailBean", groupBuyingDetailBean);
 
+        }else if(title.equals("现货")){
+            bundle.putString("type","goodsInStock");
+            bundle.putSerializable("auctionDetailBean", goodsInStockDetailBean);
+        }else if(title.equals("预售")){
+            bundle.putString("type","preSale");
+            bundle.putSerializable("auctionDetailBean", preSaleDetailBean);
         }else {
             bundle.putString("type","auction");
             bundle.putSerializable("auctionDetailBean", auctionDetailBean);

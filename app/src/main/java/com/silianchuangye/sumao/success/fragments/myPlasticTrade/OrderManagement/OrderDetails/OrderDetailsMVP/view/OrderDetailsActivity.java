@@ -131,22 +131,17 @@ public class OrderDetailsActivity  extends Activity implements IOrderDetailsView
 //        订单类型
         String type = orderBean.getType();
         if (type.equals("fixedPricingOrder")){//现货
-            univalent2.setText("现货");
+//            univalent2.setText("现货");
             tv_xianqing_type.setText("现货");
         }else if (type.equals("openAuctionOrder")){//公开竞拍
-            univalent2.setText("公开竞拍");
             tv_xianqing_type.setText("公开竞拍");
         }else if (type.equals("sealedAuctionOrder")){//密封竞拍
-            univalent2.setText("密封竞拍");
             tv_xianqing_type.setText("密封竞拍");
         }else if (type.equals("integratePurchaseOrder")){//团购
-            univalent2.setText("团购");
             tv_xianqing_type.setText("团购");
         }else if (type.equals("forwardPricingOrder")){//预售
-            univalent2.setText("预售");
             tv_xianqing_type.setText("预售");
         }else if (type.equals("scheduleOrder")){//计划订单
-            univalent2.setText("计划订单");
             tv_xianqing_type.setText("计划订单");
         }
 //        订单状态

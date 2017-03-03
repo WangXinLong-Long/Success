@@ -50,7 +50,7 @@ public class CustomerApprovalAdapter  extends BaseAdapter {
             holder = new ViewHolder();
             convertView = inflater.inflate(R.layout.customer_approval_item,null);
             holder.title = ((TextView) convertView.findViewById(R.id.title));
-            holder.state = ((TextView) convertView.findViewById(R.id.state));
+            holder.state = ((TextView) convertView.findViewById(R.id.state1));
             holder.number = ((TextView) convertView.findViewById(R.id.number2));
             holder.typeOfEnterprise = ((TextView) convertView.findViewById(R.id.typeOfEnterprise2));
             holder.customerStatus = ((TextView) convertView.findViewById(R.id.customerStatus2));

@@ -106,8 +106,16 @@ public class AuctionDetailBean implements Serializable {
     private String auctionRuleType;
     private String cl_cangku;
     private String group;
+    private String cl_cpbeizhu;
     private List<String> cl_fangshi;
 
+    public String getCl_cpbeizhu() {
+        return cl_cpbeizhu;
+    }
+
+    public void setCl_cpbeizhu(String cl_cpbeizhu) {
+        this.cl_cpbeizhu = cl_cpbeizhu;
+    }
 
     public String getCl_jifen() {
         return cl_jifen;

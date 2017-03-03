@@ -9,4 +9,13 @@ public interface ISpotOrderView {
     void setBankListResult(String result);
 
     void getPaymentResult(String result, String orderIds);
+
+//    付款信息
+    void setPaymentInformationInActivity(String result);
+
+//    发票信息
+    void setInvoiceInformationInActivity(String result);
+
+//    合同信息
+    void setContractInformationInActivity(String result);
 }

@@ -24,6 +24,7 @@ import com.silianchuangye.sumao.success.MainActivity;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.SellerManagementPlatform.SellerManagementPlatformActivity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.bean.LoginUserInfoBean;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.forgetPassword.ForgetPasswordActivity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.RegisterPhoneMVP.RegisterPhoneView.RegisterPhoneActivity;
 import com.silianchuangye.sumao.success.utils.BPUtil;
 import com.silianchuangye.sumao.success.utils.GlobalVariable;
@@ -37,7 +38,7 @@ import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
-public class LoginUserActivity extends AppCompatActivity {
+public class LoginUserActivity extends AppCompatActivity implements View.OnClickListener {
     ImageView iv_title_bar_logo,
             iv_title_bar_back,
             iv_title_bar_service,
@@ -49,7 +50,6 @@ public class LoginUserActivity extends AppCompatActivity {
     private EditText et_account_login;
     private EditText et_pass_login;
     private Button tv_register, bt_Login;
-    private TextView tv_findpass;
     public static SQLiteDatabase db;
     private String name;
     private String password;
@@ -109,6 +109,8 @@ public class LoginUserActivity extends AppCompatActivity {
 //          忘记密码
         TextView forgetPassword = (TextView) findViewById(R.id.tv_findpass_login);
         forgetPassword.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
+        forgetPassword.setClickable(true);
+        forgetPassword.setOnClickListener(this);
 //          验证码
         verification_code = ((ImageView) findViewById(R.id.verification_code));
         verification_code.setImageBitmap(BPUtil.getInstance().createBitmap());
@@ -160,10 +162,9 @@ public class LoginUserActivity extends AppCompatActivity {
 
             }
         });
+
 //        注册
         tv_register = (Button) findViewById(R.id.tv_register_login);
-//        忘记密码
-        tv_findpass = (TextView) findViewById(R.id.tv_findpass_login);
 //        注册跳转
         tv_register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -172,18 +173,9 @@ public class LoginUserActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-//        找回密码操作
-        tv_findpass.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //跳转找回密码界面
-//                Log.d("跳进了","买卖方交换界面");
-//                Intent intent=new Intent(LoginUserActivity.this,LoginActivity.class);
-//                startActivity(intent);
-            }
-        });
         mainActivityInteger = getIntent().getIntExtra("cart1", 0);
     }
+
 
     //    检测验证码的正确性
     TextWatcher mTextWatcher = new TextWatcher() {
@@ -223,6 +215,16 @@ public class LoginUserActivity extends AppCompatActivity {
         }
 
     };
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.tv_findpass_login:
+                Intent intent = new Intent(LoginUserActivity.this, ForgetPasswordActivity.class);
+                startActivity(intent);
+                break;
+        }
+    }
 
     //      账号和密码的正则表达式判断
     class EditTextWitcher implements TextWatcher {

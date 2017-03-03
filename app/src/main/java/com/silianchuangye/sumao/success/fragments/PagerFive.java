@@ -11,23 +11,24 @@ import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.PhysicalDistributionManagement.ViewLogisticsDemands.ViewLogisticsDemandMVP.view.ViewLogisticsDemand;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.createLogisticsMVP.view.CreateLogistics;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.InvoiceInformationMVP.view.InvoiceInformation;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.ReceiptAddressMVP.view.ReceiptAddress;
+import com.silianchuangye.sumao.success.R;
+import com.silianchuangye.sumao.success.adapter.ExpandableListViewAdapter;
+import com.silianchuangye.sumao.success.custom.CustomExpandableListView;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.EnterpriseCapitalAccountManagement.AccountBalanceActivity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.EnterpriseCapitalAccountManagement.FundInfoActivity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.EnterpriseCapitalAccountManagement.SearchMoney;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.goodsInStock.OrderGoodsActivity;
-import com.silianchuangye.sumao.success.R;
-
-import com.silianchuangye.sumao.success.adapter.ExpandableListViewAdapter;
-import com.silianchuangye.sumao.success.custom.CustomExpandableListView;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.Logistics;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.CompanyUserActivity;
-
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.InvoiceInformationMVP.view.InvoiceInformation;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoMVP.view.FirmInfoActivity;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.ReceiptAddressMVP.view.ReceiptAddress;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.demandPlanning.PlanPresentationMVP.view.PlanPresentationActivity;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.demandPlanning.PlanQueryMVP.view.PlanQueryActivity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.personalInformation.InformationSubscription;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.personalInformation.PasswordUpdate;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.personalInformation.UserInformation;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.qurchaseQualification.PurchaseQualificationMVP.view.PurchaseQualificationActivity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.setting.SettingMVP.view.SettingActivity;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 
@@ -106,7 +107,7 @@ public class PagerFive extends BasePager {
                     intent.setClass(context, OrderGoodsActivity.class);
                     intent.putExtra("title", "客服订单");
                     startActivity(intent);
-                } else if (sela.getChild(groupPosition, childPosition).toString().equals("用户信息")) {
+                } else if (sela.getChild(groupPosition, childPosition).toString().equals("账户信息管理")) {
                     Intent intent = new Intent();
                     intent.setClass(context, UserInformation.class);
                     startActivity(intent);
@@ -117,34 +118,41 @@ public class PagerFive extends BasePager {
                 } else if (sela.getChild(groupPosition, childPosition).toString().equals("密码修改")) {
                     Intent intent = new Intent(context, PasswordUpdate.class);
                     startActivity(intent);
-                } else if (sela.getChild(groupPosition, childPosition).toString().equals("收货地址")) {
+                } else if (sela.getChild(groupPosition, childPosition).toString().equals("收货地址管理")) {
                     Intent intent = new Intent(context, ReceiptAddress.class);
                     startActivity(intent);
-                } else if (sela.getChild(groupPosition, childPosition).toString().equals("企业用户管理")) {
+                } else if (sela.getChild(groupPosition, childPosition).toString().equals("子账户管理")) {
                     Intent intent = new Intent(context, CompanyUserActivity.class);
                     startActivity(intent);
                 } else if (sela.getChild(groupPosition, childPosition).toString().equals("企业信息")) {
                     Intent intent = new Intent(context, FirmInfoActivity.class);
                     startActivity(intent);
-                } else if (sela.getChild(groupPosition, childPosition).toString().equals("开票信息")) {
+                } else if (sela.getChild(groupPosition, childPosition).toString().equals("开票信息管理")) {
                     Intent intent = new Intent(context, InvoiceInformation.class);
 
                     startActivity(intent);
-                } else if (sela.getChild(groupPosition, childPosition).toString().equals("资金账户信息")) {
+                } else if (sela.getChild(groupPosition, childPosition).toString().equals("注册易宝")) {
                     Intent intent = new Intent(context, FundInfoActivity.class);
-
+                    startActivity(intent);
+                } else if (sela.getChild(groupPosition, childPosition).toString().equals("账户余额")) {
+                    Intent intent = new Intent(context, AccountBalanceActivity.class);
                     startActivity(intent);
                 } else if (sela.getChild(groupPosition, childPosition).toString().equals("账户金额明细")) {
                     Intent intent = new Intent(context, SearchMoney.class);
 
                     startActivity(intent);
-                } else if (sela.getChild(groupPosition, childPosition).toString().equals("创建物流需求")) {
-                    Intent intent = new Intent(context, CreateLogistics.class);
-
+                } else if (sela.getChild(groupPosition, childPosition).toString().equals("物流需求")) {
+                    Intent intent = new Intent(context,Logistics.class);
                     startActivity(intent);
-                } else if (sela.getChild(groupPosition, childPosition).toString().equals("查看物流需求")) {
-                    Intent intent = new Intent(context, ViewLogisticsDemand.class);
 
+                }else if (sela.getChild(groupPosition, childPosition).toString().equals("计划提报")) {
+                    Intent intent = new Intent(context, PlanPresentationActivity.class);
+                    startActivity(intent);
+                }else if (sela.getChild(groupPosition, childPosition).toString().equals("计划查询")) {
+                    Intent intent = new Intent(context, PlanQueryActivity.class);
+                    startActivity(intent);
+                }else if (sela.getChild(groupPosition, childPosition).toString().equals("购买资质申请")) {
+                    Intent intent = new Intent(context, PurchaseQualificationActivity.class);
                     startActivity(intent);
                 }
 

@@ -191,7 +191,7 @@
                 android:layout_width="@dimen/x86"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/x70"
-                android:background="@mipmap/a"></ListView>
+                android:background="@mipmap/a"/>
         </RelativeLayout>
         <RelativeLayout
             android:id="@+id/relative_lv2"
@@ -207,7 +207,7 @@
                 android:layout_width="@dimen/x86"
                 android:layout_marginRight="@dimen/x10"
                 android:layout_height="wrap_content"
-                ></ListView>
+                />
         </RelativeLayout>
         <RelativeLayout
             android:layout_below="@id/relative3"
@@ -222,7 +222,7 @@
                 android:layout_width="@dimen/x86"
                 android:layout_marginLeft="80dp"
                 android:layout_height="wrap_content"
-                ></ListView>
+                />
         </RelativeLayout>
     </RelativeLayout>
     <LinearLayout

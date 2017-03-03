@@ -85,6 +85,7 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
     private ArrayList<String> supplier1;
     private SupplierBean supplierBean;
     private RelativeLayout selection_condition;
+    private ImageView iv_screen_title_bar_back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -180,7 +181,8 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
                 categoryNames, appNames, gradeNums*/));
         pre_sale_listView.setOnItemClickListener(this);
 
-
+        iv_screen_title_bar_back = ((ImageView) findViewById(R.id.iv_screen_title_bar_back));
+        iv_screen_title_bar_back.setOnClickListener(this);
     }
 
     @Override
@@ -226,6 +228,10 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
 //            筛选
             case R.id.iv_screen_title_bar_search:
                 screenPopupWindow(lists);
+                break;
+
+            case R.id.iv_screen_title_bar_back:
+                finish();
                 break;
 
         }

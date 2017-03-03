@@ -96,8 +96,8 @@ public class CustomerParent extends AppCompatActivity implements View.OnClickLis
         tv_pop_canle= (TextView) popView.findViewById(R.id.tv_pop_customer_canler);
         tv_pop_type= (TextView) popView.findViewById(R.id.tv_pop_customer_type);
         tv_pop_num= (EditText) popView.findViewById(R.id.tv_pop_customer_num);
-        tv_pop_sheng= (TextView) popView.findViewById(R.id.tv_pop_customer_sheng);
-        tv_pop_shi= (TextView) popView.findViewById(R.id.tv_pop_customer_shi);
+        tv_pop_sheng= (TextView) popView.findViewById(R.id.demand_start_time);
+        tv_pop_shi= (TextView) popView.findViewById(R.id.demand_start_time);
         tv_pop_qu= (TextView) popView.findViewById(R.id.tv_pop_customer_qu);
         edt_pop_name= (EditText) popView.findViewById(R.id.tv_pop_customer_name);
         tv_pop_zhuangtai= (TextView) popView.findViewById(R.id.tv_pop_customer_zhuangtai);
@@ -121,7 +121,7 @@ public class CustomerParent extends AppCompatActivity implements View.OnClickLis
         linear5= (LinearLayout) popView.findViewById(R.id.linear5);
         linear_sheng= (LinearLayout) popView.findViewById(R.id.linear_sheng);
         linear_shi= (LinearLayout) popView.findViewById(R.id.linear_shi);
-        linear_qu= (LinearLayout) popView.findViewById(R.id.linear_qu);
+        linear_qu= (LinearLayout) popView.findViewById(R.id.mention_state_ll);
         linear1.setOnClickListener(this);
         linear2.setOnClickListener(this);
         linear3.setOnClickListener(this);
@@ -194,7 +194,7 @@ public class CustomerParent extends AppCompatActivity implements View.OnClickLis
                 HideLv(lv_maifang);
                 HideLv(lv_customer);
                 break;
-            case R.id.linear_qu:
+            case R.id.mention_state_ll:
                 ShowLv(lv_qu);
                 HideLv(lv_sheng);
                 HideLv(lv_type);

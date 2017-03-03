@@ -54,7 +54,6 @@ public class ContractFragment extends Fragment {
                 return true;
             }
         });
-//        contract_web_view
         return view;
     }
 

@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -18,8 +17,6 @@ import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.silianchuangye.sumao.success.HX.ui.LoginActivity;
-import com.silianchuangye.sumao.success.MainActivity;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.ShangYou.DayPlanInfo;
 import com.silianchuangye.sumao.success.ShangYou.PlanDayMVP.Bean.DeliveryMethods;
@@ -32,7 +29,6 @@ import com.silianchuangye.sumao.success.adapter.DayPlanAdapter;
 import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.UpstreamDirectSellingDetailMVP.VipProductList;
 import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.bean.vipProductBean.VipProduct;
 import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.bean.vipProductBean.VipProductBean;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.LoginUserActivity;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
@@ -116,7 +112,6 @@ public class PlanDay extends Fragment implements OnClickListener, IPlanDayView {
             productName = vipProducts.get(i).getProductName();
             vipProductsIDList.add(vipProductsID);
             productNameList.add(productName);
-
         }
         lv_day_plan = (ExpandableListView) v.findViewById(R.id.lv_day_plan);
         btn_day_plan_add = (Button) v.findViewById(R.id.btn_day_plan_add);

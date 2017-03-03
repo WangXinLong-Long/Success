@@ -95,6 +95,7 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
     private TextView tv_jian;
     private TextView tv_jia;
     private TextView purchase_quantity_et;
+    private LinearLayout remark_ll;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -168,6 +169,8 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
         company_et = ((TextView) findViewById(R.id.company_et));
 //        产品备注
         tvRemark_auction = ((TextView) findViewById(R.id.tvRemark_auction));
+//        产品备注的LinearLayout
+        remark_ll = ((LinearLayout) findViewById(R.id.remark_ll));
 //        联系客服
         layoutContent_auction = ((LinearLayout) findViewById(R.id.layoutContent_auction));
 
@@ -194,6 +197,7 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
                 intent.setClass(GoodsInStockDetailActivity.this, VesselThreeActivity.class);
                 intent.putExtra("title", "现货");
                 intent.putExtra("contract", goodsInStockDetailBean.getContract());
+                intent.putExtra("auctionDetailBean", goodsInStockDetailBean);
                 LogUtils.log(goodsInStockDetailBean.getContract() + "-------WXL");
                 startActivity(intent);
                 break;
@@ -368,7 +372,7 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
 //        交货结束时间
         delivery_time_et_end.setText("至" + simpleDateFormat.format(Double.parseDouble(goodsInStockDetailBean.getCl_shijianend() + "")));
 //        仓库地址
-        warehouse_address_et.setText(goodsInStockDetailBean.getCl_cangku() + "");
+        warehouse_address_et.setText(goodsInStockDetailBean.getCl_dizhi() + "");
         StringBuilder sb = new StringBuilder();
         int jhfssize = 0;
         if (goodsInStockDetailBean.getCl_jhfangshi() == null) {
@@ -394,7 +398,12 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
 //        公司
         company_et.setText(goodsInStockDetailBean.getCl_gongsi());
 //        产品备注
-        tvRemark_auction.setText(goodsInStockDetailBean.getCl_jifen());
+        if (goodsInStockDetailBean.getCl_cpbeizhu()==null){
+            remark_ll.setVisibility(View.GONE);
+        }else {
+            tvRemark_auction.setText(goodsInStockDetailBean.getCl_cpbeizhu());
+        }
+
 //        总价格
         double x = (Double.parseDouble(et_number.getText().toString())) * (Double.parseDouble(tvPrice_auction.getText().toString()));
         LogUtils.log(x + "<---WXL");

@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.myPlasticTrade.qurchaseQualification.purchaseQualificationDetail.PurchaseQualificationDetailMVP.PurchaseQualificationDetailActivity">
+
+    <include
+        android:id="@id/title"
+        layout="@layout/child_title_bar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/title">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:id="@+id/customer_application_rl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="@dimen/x5"
+                android:background="@color/white">
+
+                <TextView
+                    android:id="@+id/customer_application_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:padding="@dimen/x7"
+                    android:text="客户申请"
+                    android:textColor="@color/orange" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/state"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/customer_application_rl"
+                android:layout_marginTop="@dimen/x5"
+                android:background="@color/white">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/x70"
+                    android:padding="@dimen/x10" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/enterprise_additional_information"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/state"
+                android:layout_marginTop="@dimen/x5"
+                android:background="@color/white">
+
+                <TextView
+                    android:id="@+id/enterprise_additional_information_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="@dimen/x5"
+                    android:layout_marginTop="@dimen/x5"
+                    android:text="企业附加信息"
+                    android:textColor="@color/btn_blue_normal" />
+
+                <TextView
+                    android:id="@+id/split_line1"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/x1"
+                    android:layout_below="@id/enterprise_additional_information_tv"
+                    android:layout_marginBottom="@dimen/x7"
+                    android:background="@color/gray_type" />
+
+                <RelativeLayout
+                    android:id="@+id/corporate_name_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/split_line1"
+                    android:layout_marginBottom="@dimen/x7">
+
+                    <TextView
+                        android:id="@+id/corporate_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/x10"
+                        android:text="企业法人姓名" />
+
+                    <ImageView
+                        android:id="@+id/corporate_name_image"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginBottom="@dimen/x5"
+                        android:layout_marginLeft="@dimen/x5"
+                        android:layout_marginRight="@dimen/x10"
+                        android:src="@mipmap/my_sumao_iv_order" />
+
+                    <TextView
+                        android:id="@+id/corporate_name_content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toLeftOf="@id/corporate_name_image"
+                        android:hint="填写姓名并上传身份证"
+                        android:gravity="end"/>
+                </RelativeLayout>
+
+
+                <TextView
+                    android:id="@+id/split_line2"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/x1"
+                    android:layout_below="@id/corporate_name_rl"
+                    android:layout_marginBottom="@dimen/x7"
+                    android:layout_marginLeft="@dimen/x7"
+                    android:layout_marginRight="@dimen/x7"
+                    android:background="@color/gray_type" />
+                <!---->
+                <RelativeLayout
+                    android:id="@+id/customer_bank_license_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/split_line2"
+                    android:layout_marginBottom="@dimen/x7">
+
+                    <TextView
+                        android:id="@+id/customer_bank_license"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/x10"
+                        android:text="客户银行许可证" />
+
+                    <ImageView
+                        android:id="@+id/customer_bank_license_image"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginBottom="@dimen/x5"
+                        android:layout_marginLeft="@dimen/x5"
+                        android:layout_marginRight="@dimen/x10"
+                        android:src="@mipmap/my_sumao_iv_order" />
+
+                    <TextView
+                        android:id="@+id/customer_bank_license_content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toLeftOf="@id/customer_bank_license_image"
+                        android:hint="请上传银行卡扫描件"
+                        android:gravity="end"/>
+                </RelativeLayout>
+
+
+                <TextView
+                    android:id="@+id/split_line3"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/x1"
+                    android:layout_below="@id/customer_bank_license_rl"
+                    android:layout_marginBottom="@dimen/x7"
+                    android:layout_marginLeft="@dimen/x7"
+                    android:layout_marginRight="@dimen/x7"
+                    android:background="@color/gray_type" />
+                <!---->
+                <RelativeLayout
+                    android:id="@+id/annual_demand_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/split_line3"
+                    android:layout_marginBottom="@dimen/x7">
+
+                    <TextView
+                        android:id="@+id/annual_demand"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/x10"
+                        android:text="年需求量" />
+
+                    <TextView
+                        android:id="@+id/annual_demand_content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="@dimen/x10"
+                        android:hint="吨/年"
+                        android:gravity="end"
+                        />
+                </RelativeLayout>
+
+
+                <TextView
+                    android:id="@+id/split_line4"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/x1"
+                    android:layout_below="@id/annual_demand_rl"
+                    android:layout_marginBottom="@dimen/x7"
+                    android:layout_marginLeft="@dimen/x7"
+                    android:layout_marginRight="@dimen/x7"
+                    android:background="@color/gray_type" />
+                <!---->
+                <RelativeLayout
+                    android:id="@+id/number_of_employees_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/split_line4"
+                    android:layout_marginBottom="@dimen/x7">
+
+                    <TextView
+                        android:id="@+id/number_of_employees"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/x10"
+                        android:text="从业人员数量" />
+
+                    <TextView
+                        android:id="@+id/number_of_employees_content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="@dimen/x10"
+                        android:hint="人"
+                        android:gravity="end"/>
+                </RelativeLayout>
+
+
+                <TextView
+                    android:id="@+id/split_line5"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/x1"
+                    android:layout_below="@id/number_of_employees_rl"
+                    android:layout_marginBottom="@dimen/x7"
+                    android:layout_marginLeft="@dimen/x7"
+                    android:layout_marginRight="@dimen/x7"
+                    android:background="@color/gray_type" />
+            </RelativeLayout>
+            <!---->
+            <RelativeLayout
+                android:id="@+id/responsible_for_contact_information_with_the_resource_side"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/enterprise_additional_information"
+                android:layout_marginTop="@dimen/x5"
+                android:background="@color/white">
+
+
+                <TextView
+                    android:id="@+id/responsible_for_contact_information_with_the_resource_side_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="@dimen/x5"
+                    android:layout_marginTop="@dimen/x5"
+                    android:text="负责与资源方联系的联系人信息"
+                    android:textColor="@color/btn_blue_normal" />
+
+                <TextView
+                    android:id="@+id/split_line6"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/x1"
+                    android:layout_below="@id/responsible_for_contact_information_with_the_resource_side_tv"
+                    android:layout_marginBottom="@dimen/x7"
+                    android:background="@color/gray_type" />
+
+                <RelativeLayout
+                    android:id="@+id/name_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/split_line6"
+                    android:layout_marginBottom="@dimen/x7">
+
+                    <TextView
+                        android:id="@+id/name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/x10"
+                        android:text="姓名" />
+
+                    <ImageView
+                        android:id="@+id/name_image"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginLeft="@dimen/x5"
+                        android:layout_marginRight="@dimen/x10"
+                        android:src="@mipmap/my_sumao_iv_order" />
+
+                    <TextView
+                        android:id="@+id/name_content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toLeftOf="@id/name_image"
+                        android:hint="填写姓名并上传身份证"
+                        android:gravity="end"/>
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/split_line7"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/x1"
+                    android:layout_below="@id/name_rl"
+                    android:layout_marginBottom="@dimen/x7"
+                    android:layout_marginLeft="@dimen/x7"
+                    android:layout_marginRight="@dimen/x7"
+                    android:background="@color/gray_type" />
+                <!---->
+                <RelativeLayout
+                    android:id="@+id/mailbox_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/split_line7"
+                    android:layout_marginBottom="@dimen/x7">
+
+                    <TextView
+                        android:id="@+id/mailbox"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/x10"
+                        android:text="邮箱" />
+
+                    <TextView
+                        android:id="@+id/mailbox_content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="@dimen/x10"
+                        android:hint="请填写邮箱号"
+                        android:gravity="end"/>
+                </RelativeLayout>
+
+
+                <TextView
+                    android:id="@+id/split_line8"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/x1"
+                    android:layout_below="@id/mailbox_rl"
+                    android:layout_marginBottom="@dimen/x7"
+                    android:layout_marginLeft="@dimen/x7"
+                    android:layout_marginRight="@dimen/x7"
+                    android:background="@color/gray_type" />
+                <!---->
+                <RelativeLayout
+                    android:id="@+id/telephone_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/split_line8"
+                    android:layout_marginBottom="@dimen/x7">
+
+                    <TextView
+                        android:id="@+id/telephone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/x10"
+                        android:text="手机号" />
+
+                    <TextView
+                        android:id="@+id/telephone_content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="@dimen/x10"
+                        android:hint="请填写手机号"
+                        android:gravity="end"/>
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/split_line9"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/x1"
+                    android:layout_below="@id/telephone_rl"
+                    android:layout_marginBottom="@dimen/x7"
+                    android:layout_marginLeft="@dimen/x7"
+                    android:layout_marginRight="@dimen/x7"
+                    android:background="@color/gray_type" />
+                <!---->
+
+                <RelativeLayout
+                    android:id="@+id/fax_number_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/split_line9"
+                    android:layout_marginBottom="@dimen/x7">
+
+                    <TextView
+                        android:id="@+id/fax_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/x10"
+                        android:text="传真号" />
+
+                    <TextView
+                        android:id="@+id/fax_number_content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="@dimen/x10"
+                        android:hint="请填写传真号"
+                        android:gravity="end"/>
+                </RelativeLayout>
+
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/prompt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/red"
+                android:textSize="@dimen/x10"
+                android:layout_below="@id/responsible_for_contact_information_with_the_resource_side"
+                />
+            <Button
+                android:id="@+id/submit_button"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/x35"
+                android:layout_below="@id/prompt"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="@dimen/x10"
+                android:background="@drawable/button_background_blue"
+                android:text="提交审核"
+                android:textColor="@color/selley_lv" />
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>

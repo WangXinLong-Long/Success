@@ -14,6 +14,8 @@ public class NetWorkChangeBroadcastReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+//        CameraManager cameraManager = (CameraManager) context.getSystemService(Context.CAMERA_SERVICE);
+
 
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         //移动数据  
