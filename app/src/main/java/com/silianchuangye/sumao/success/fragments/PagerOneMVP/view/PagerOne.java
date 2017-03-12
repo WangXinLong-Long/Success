@@ -420,11 +420,19 @@ public class PagerOne extends BasePager implements IPagerOneView {
     @Override
     public void setUpstreamDirectSellingInActivity(UpstreamDirectorySellingBean upstreamDirectorySellingBean) {
         Loding.dis();
+        SharedPreferences sp=mActivity.getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+        String unique=sp.getString("unique","");
+        if (unique.equals("false")||unique==""||unique==null){
+            Intent intent=new Intent(mActivity, LoginUserActivity.class);
+            intent.putExtra("roles","buyer");
+            startActivity(intent);
+        }else{
         Intent intent = new Intent();
         intent.setClass(mActivity, UpstreamDirectSellingActivity.class);
         intent.putExtra("upstreamDirectorySellingBean", upstreamDirectorySellingBean);
         LogUtils.log("upstreamDirectorySellingBean" + upstreamDirectorySellingBean.getInfo());
         startActivity(intent);
+        }
     }
 
     //将请求下来的值设置到Adapter中

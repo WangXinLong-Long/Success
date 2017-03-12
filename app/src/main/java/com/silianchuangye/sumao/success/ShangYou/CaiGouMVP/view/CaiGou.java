@@ -3,12 +3,16 @@ package com.silianchuangye.sumao.success.ShangYou.CaiGouMVP.view;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.ActionBarOverlayLayout;
+import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
@@ -23,6 +27,9 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.ShangYou.CaiGouMVP.bean.CaiGouBean;
 import com.silianchuangye.sumao.success.ShangYou.CaiGouMVP.presenter.CaiGouPresenter;
@@ -83,6 +90,11 @@ public class CaiGou extends AppCompatActivity implements OnClickListener, Adapte
     String logisticsID = "";//物流ID
     private List<String> logisticsNameIDList;
     private Bundle bundle1;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +103,7 @@ public class CaiGou extends AppCompatActivity implements OnClickListener, Adapte
         Intent intent = getIntent();
         vipProductBean = (VipProductBean) intent.getSerializableExtra("vipProductBean");
         sellerCompanyId = intent.getStringExtra("sellerCompanyId");
+
         initDate();
         img_create_logistics_back = (ImageView) findViewById(R.id.img_create_logistics_back);
         img_create_logistics_search = (ImageView) findViewById(R.id.img_create_logistics_search);
@@ -106,7 +119,10 @@ public class CaiGou extends AppCompatActivity implements OnClickListener, Adapte
         presenter = new CaiGouPresenter(this);
         sessionID = getSharedPreferences("sumao", MODE_PRIVATE).getString("unique", "");
         presenter.requestSeePlanDate("1", "10", sellerCompanyId, sessionID, "", "", "", "", "", "");
-
+        // initView();
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     private void initDate() {
@@ -130,6 +146,7 @@ public class CaiGou extends AppCompatActivity implements OnClickListener, Adapte
     }
 
     private void initView() {
+        caiGouBeans = new CaiGouBean();
         bundle1 = new Bundle();
         bundle1.putSerializable("caiGouBeans", caiGouBeans);
         bundle1.putString("sellerCompanyId", sellerCompanyId);
@@ -158,6 +175,8 @@ public class CaiGou extends AppCompatActivity implements OnClickListener, Adapte
 
         vpDemo.setAdapter(adapter);
         tlDemo.setupWithViewPager(vpDemo);
+        //  tlDemo.setTabMode(tlDemo.MODE_SCROLLABLE);
+
         img_create_logistics_search.setVisibility(View.GONE);
         tlDemo.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -181,7 +200,46 @@ public class CaiGou extends AppCompatActivity implements OnClickListener, Adapte
 
             }
         });
-        popView = View.inflate(this, R.layout.plan_popwindow, null);
+        //  popView = View.inflate(this, R.layout.plan_popwindow, null);
+
+        LogUtils.log("走完initView");
+    }
+
+
+    private void ShowLv(ListView lv) {
+        if (lv == lv_state) {
+            popList.clear();
+            popList.addAll(planStateList);
+        } else if (lv == lv_peisong) {
+            popList.clear();
+            popList.addAll(logisticsNameList);
+        }
+        lv.setVisibility(View.VISIBLE);
+        pop_adapter = new ArrayAdapter<String>(this, R.layout.item_pop_lv, R.id.tv_pop_lv, popList);
+        lv.setAdapter(pop_adapter);
+    }
+
+    private void HideLv(ListView lv) {
+        lv.setVisibility(View.GONE);
+    }
+
+    private void showPop() {
+        View popView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.plan_popwindow, null);
+        final PopupWindow popupWindow = new PopupWindow(findViewById(R.id.all), ActionBarOverlayLayout.LayoutParams.MATCH_PARENT, ActionBarOverlayLayout.LayoutParams.WRAP_CONTENT);
+        TextView tv_name= (TextView) popView.findViewById(R.id.name);
+        tv_name.setText("产品名称:");
+
+        TextView tv_Time= (TextView) popView.findViewById(R.id.Time);
+        tv_Time.setText("计划日期:");
+        TextView tv_sheng= (TextView) popView.findViewById(R.id.sheng);
+        tv_sheng.setText("至");
+        TextView tv_state= (TextView) popView.findViewById(R.id.state);
+        tv_state.setText("提报状态:");
+        TextView tv_cangku= (TextView) popView.findViewById(R.id.cangku);
+        tv_cangku.setText("仓库名称:");
+        TextView tv_way= (TextView) popView.findViewById(R.id.way);
+        tv_way.setText("配送方式:");
+
         tv_pop_canle = (TextView) popView.findViewById(R.id.tv_create_logistics_search);
         img_pop_back = (ImageView) popView.findViewById(R.id.img_create_logistics_back1);
         edt_pop_name = (EditText) popView.findViewById(R.id.tv_pop_customer_num);//产品名称
@@ -210,34 +268,12 @@ public class CaiGou extends AppCompatActivity implements OnClickListener, Adapte
         lv_end_date.setOnItemClickListener(this);
         lv_start_date.setOnItemClickListener(this);
         btn_pop_customer_search.setOnClickListener(this);
-        LogUtils.log("走完initView");
-    }
-
-
-    private void ShowLv(ListView lv) {
-        if (lv == lv_state) {
-            popList.clear();
-            popList.addAll(planStateList);
-        } else if (lv == lv_peisong) {
-            popList.clear();
-            popList.addAll(logisticsNameList);
-        }
-        lv.setVisibility(View.VISIBLE);
-        pop_adapter = new ArrayAdapter<String>(this, R.layout.item_pop_lv, R.id.tv_pop_lv, popList);
-        lv.setAdapter(pop_adapter);
-    }
-
-    private void HideLv(ListView lv) {
-        lv.setVisibility(View.GONE);
-    }
-
-    private void showPop() {
-
-        int w = getWindowManager().getDefaultDisplay().getWidth();
-        popView.measure(0, 0);
-        popupWindow = new PopupWindow(popView, w, popView.getMeasuredHeight());
+        popupWindow.setContentView(popView);
+        popupWindow.setTouchable(true);
         popupWindow.setBackgroundDrawable(new BitmapDrawable());
+        popupWindow.setOutsideTouchable(true);
         popupWindow.setFocusable(true);
+
         popupWindow.showAtLocation(img_create_logistics_search, Gravity.TOP, 0, 0);
         popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
@@ -245,6 +281,7 @@ public class CaiGou extends AppCompatActivity implements OnClickListener, Adapte
                 backgroundAlpha(1f);
             }
         });
+
     }
 
     public void backgroundAlpha(float bgAlpha) {
@@ -366,19 +403,6 @@ public class CaiGou extends AppCompatActivity implements OnClickListener, Adapte
         }
     }
 
-    class MyClick implements DatePickerDialog.OnDateSetListener {
-        @Override
-        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            end_pop_date.setText(year + "-" + monthOfYear + "-" + dayOfMonth);
-        }
-    }
-    class MyClick1 implements DatePickerDialog.OnDateSetListener {
-        @Override
-        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            start_pop_date.setText(year + "-" + monthOfYear + "-" + dayOfMonth);
-        }
-    }
-
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         switch (parent.getId()) {
@@ -403,8 +427,27 @@ public class CaiGou extends AppCompatActivity implements OnClickListener, Adapte
 
     @Override
     public void setSeePlanInFragment(CaiGouBean caiGouBean) {
+        Log.d("为什么不走", "为什么不走");
         caiGouBeans = caiGouBean;
         initView();
+    }
+
+
+
+
+
+    class MyClick implements DatePickerDialog.OnDateSetListener {
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            end_pop_date.setText(year + "-" + monthOfYear + "-" + dayOfMonth);
+        }
+    }
+
+    class MyClick1 implements DatePickerDialog.OnDateSetListener {
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            start_pop_date.setText(year + "-" + monthOfYear + "-" + dayOfMonth);
+        }
     }
 
 

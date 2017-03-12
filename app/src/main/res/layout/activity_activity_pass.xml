@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context="com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.forgetPassword.ActivityPass">
+
+    <include
+        android:id="@+id/layout_title_bar"
+        layout="@layout/child_title_bar">
+
+    </include>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/layout_title_bar"
+        >
+        <ImageView
+            android:layout_width="@dimen/x50"
+            android:layout_height="@dimen/x50"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/x30"
+            android:src="@mipmap/ok_icon"
+            android:id="@+id/iv_ok_icon"
+            />
+        <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/textColor_expandable_listview_show"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:layout_marginTop="@dimen/x15"
+        android:layout_below="@+id/iv_ok_icon"
+        android:text="恭喜你,密码修改成功！"
+            android:id="@+id/tv_success"
+        />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:textSize="18sp"
+            android:layout_marginTop="@dimen/x5"
+            android:layout_below="@+id/tv_success"
+            android:text="您的密码已修改成功,请登录!"
+            android:id="@+id/tiaozhuan"
+            />
+        <Button
+            android:layout_below="@+id/tiaozhuan"
+            android:layout_width="@dimen/x100"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="登录账号"
+            android:background="@color/textColor_expandable_listview_show"
+            android:layout_marginTop="@dimen/x5"
+            android:textColor="#fff"
+            android:id="@+id/bt_login"
+            />
+
+    </RelativeLayout>
+</RelativeLayout>

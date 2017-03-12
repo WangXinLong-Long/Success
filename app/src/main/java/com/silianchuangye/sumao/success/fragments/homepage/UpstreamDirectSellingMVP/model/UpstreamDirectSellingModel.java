@@ -17,7 +17,7 @@ import org.xutils.x;
  */
 public class UpstreamDirectSellingModel implements IUpstreamDirectSellingModel {
     String sessionId;
-String url = SuMaoConstant.SUMAO_IP+"/rest/model/com/sumao/mobile/order/purchase/PlanOrderActor/directEnterpriseDetail";
+    String url = SuMaoConstant.SUMAO_IP+"/rest/model/com/sumao/mobile/order/purchase/PlanOrderActor/directEnterpriseDetail";
     public UpstreamDirectSellingModel(String sessionId) {
         this.sessionId = sessionId;
     }

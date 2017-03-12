@@ -94,12 +94,12 @@ public class SeePlan extends Fragment implements ISeePlanView{
         adapter=new SeePlanAdapter(getActivity(),planOrderList);
         lv.setAdapter(adapter);
         planOrderList.clear();
-        planOrderList.addAll( CaiGouBean.getPlanOrderList());
+        //planOrderList.addAll(CaiGouBean.getPlanOrderList());
         adapter.notifyDataSetChanged();
 //        getActivity().
         seePlanPresenter = new SeePlanPresenter(this);
 
-//        initDate();
+    //    initDate();
         return  v;
     }
 

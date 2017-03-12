@@ -504,6 +504,7 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
                 refrashPrice();
                 id = list.get(position).getCommerceItemId().toString();
                 id_String.add(id);
+
             } else {
                 refrashPrice();
                 holder.Img_select.setImageResource(R.mipmap.cart_select_null);
@@ -522,6 +523,11 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
             holder.Img_del.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if (checked[position]){
+                        checked[position] = !checked[position];
+                        call.Call(position);
+                    }
+
                     AlertDialog.Builder dialog = new AlertDialog.Builder(ctx);
                     dialog.setTitle("确定要删除该商品吗？");
                     dialog.setPositiveButton("取消", new DialogInterface.OnClickListener() {
@@ -545,6 +551,10 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
                         }
                     });
                     dialog.create().show();
+//                    if (checked[position]){
+//                        refrashPrice();
+//                        holder.Img_select.setImageResource(R.mipmap.cart_select_null);
+//                    }
 
 
                 }
@@ -587,11 +597,19 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
                         str = "0";
                     }
                     float num = Float.parseFloat(str);
+
                     num = num + 1;
+
+
                     if (num >= Float.parseFloat(kucong_value)) {
+                        //num=num;
                         holder.relative_item_cart.setVisibility(View.VISIBLE);
                         holder.Tv_no_much.setText("产品库存为" + num + "吨");
-//                        dialog.show();
+                        dialog.show();
+//                        SharedPreferences sp=getActivity().getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+//                        SharedPreferences.Editor editor=sp.edit();
+//                        editor.putInt("position",position);
+//                        editor.putFloat("number",num);
                     }
                     if (num < Float.parseFloat(kucong_value) && num >= 0) {
                         holder.relative_item_cart.setVisibility(View.GONE);

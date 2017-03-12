@@ -1,8 +1,11 @@
 package com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.view;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -16,6 +19,7 @@ import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSelling
 import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.bean.UpstreamDirectorySellingBean;
 import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.bean.vipProductBean.VipProductBean;
 import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.presenter.UpstreamDirectSellingPresenter;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.LoginUserActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +33,8 @@ public class UpstreamDirectSellingActivity extends AppCompatActivity implements 
     private UpstreamDirectorySellingBean upstreamDirectorySellingBean;
     private List<EnterprisesItem> enterprisesItem;
     private List<String> idList;
+    private List<String> nameList;
+    private VipProductBean vipProductBean=new VipProductBean();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,37 +52,45 @@ public class UpstreamDirectSellingActivity extends AppCompatActivity implements 
         iv_child_title_bar_back = ((ImageView) findViewById(R.id.iv_child_title_bar_back));
         iv_child_title_bar_back.setOnClickListener(this);
 //        添加加载数据
-        final List<String> nameList = new ArrayList<>();
+        nameList= new ArrayList<>();
         idList = new ArrayList<>();
         for (int i = 0; i < enterprisesItem.size(); i++) {
-            nameList.add(enterprisesItem.get(i).getSellerCompanyName());
+
             idList.add(enterprisesItem.get(i).getSellerCompanyId());
+            Log.d("id的值是",enterprisesItem.get(i).getSellerCompanyId());
+            nameList.add(enterprisesItem.get(i).getSellerCompanyName());
+            Log.d("name的值是",enterprisesItem.get(i).getSellerCompanyName());
         }
-        ArrayAdapter<String> upstreamadapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,nameList);
+        ArrayAdapter<String> upstreamadapter = new ArrayAdapter<String>(UpstreamDirectSellingActivity.this,android.R.layout.simple_list_item_1,nameList);
+       // ArrayAdapter<String> adapter=new ArrayAdapter<String>()
         upstream_listview.setAdapter(upstreamadapter);
         upstream_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String sessionId = getSharedPreferences("sumao",MODE_PRIVATE).getString("unique","");
-//                if(sessionId.equals("false")){
-//                    Toast.makeText(UpstreamDirectSellingActivity.this,"请登录后进行操作",Toast.LENGTH_LONG).show();
-//                }else {
 
-                    upstreamDirectSellingPresenter.getUpstreamDirectSellingDetail(sessionId,idList.get(position),nameList.get(position));
-//                }
+                Log.d("要传id的值",idList.get(position));
+                Log.d("要传title的值",nameList.get(position));
+
+                     upstreamDirectSellingPresenter.getUpstreamDirectSellingDetail(sessionId,idList.get(position).toString(),nameList.get(position).toString());
+               // }
+
             }
         });
     }
 
     @Override
     public void getUpstreamDirectSellingDetailInfo(VipProductBean vipProductBean,String sellerCompanyId,String title) {
+        Log.d("这个方法有没有走","这个方法有没有走");
 
-        Intent intent = new Intent();
-        intent.setClass(this,UpstreamDirectSellingDetailsActivity.class);
-        intent.putExtra("vipProductBean",vipProductBean);
-        intent.putExtra("sellerCompanyId",sellerCompanyId);
-        intent.putExtra("title",title);
-        startActivity(intent);
+            Intent intent = new Intent();
+            intent.setClass(UpstreamDirectSellingActivity.this, UpstreamDirectSellingDetailsActivity.class);
+            intent.putExtra("vipProductBean", vipProductBean);
+            intent.putExtra("sellerCompanyId", sellerCompanyId);
+            intent.putExtra("title", title);
+            startActivity(intent);
+
+
     }
 
 

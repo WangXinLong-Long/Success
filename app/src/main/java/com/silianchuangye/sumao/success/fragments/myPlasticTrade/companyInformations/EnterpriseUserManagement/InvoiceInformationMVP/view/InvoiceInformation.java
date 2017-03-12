@@ -68,7 +68,7 @@ public class InvoiceInformation extends Activity implements View.OnClickListener
         setContentView(R.layout.activity_invoice_information);
         initView();
         initListener();
-        invoiceInformationPresenter = new InvoiceInformationPresenter(this);
+        //invoiceInformationPresenter = new InvoiceInformationPresenter(this);
         addAddressPresenter = new AddAddressPresenter(this);
 
         SharedPreferences sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
@@ -81,7 +81,7 @@ public class InvoiceInformation extends Activity implements View.OnClickListener
             }
         });
         LogUtils.log("开票信息-->");
-        invoiceInformationPresenter.getInvoiceInformationToBean(sessionId);
+       // invoiceInformationPresenter.getInvoiceInformationToBean(sessionId);
     }
 
     void initView() {
@@ -216,20 +216,20 @@ public class InvoiceInformation extends Activity implements View.OnClickListener
                 break;
             case R.id.save_modify_info:
 //                保存按钮
-                invoiceInformationPresenter.saveModifyInvoiceInformation(
-                        duty_paragraph.getText().toString().trim(),
-                        invoice_information_address.getText().toString().trim(),
-                        invoice_information_telephone.getText().toString().trim(),
-                        invoice_information_bank_account.getText().toString().trim(),
-                        invoice_information_account_number_tv.getText().toString().trim(),
-                        bill_mailing_address_name_tv.getText().toString().trim(),
-                        bill_mailing_address_telephone_tv.getText().toString().trim(),
-                        bill_mailing_address_fix_telephone_tv.getText().toString().trim(),
-                        sb.substring(0, 4).toString(), sb.substring(0, 6).toString(), sb.toString().toString(),
-                        bill_mailing_address_mailing_address_tv_detail.getText().toString().trim(),
-                        bill_mailing_address_zip_code_tv.getText().toString().trim(),
-                        sessionId
-                        );
+//                invoiceInformationPresenter.saveModifyInvoiceInformation(
+//                        duty_paragraph.getText().toString().trim(),
+//                        invoice_information_address.getText().toString().trim(),
+//                        invoice_information_telephone.getText().toString().trim(),
+//                        invoice_information_bank_account.getText().toString().trim(),
+//                        invoice_information_account_number_tv.getText().toString().trim(),
+//                        bill_mailing_address_name_tv.getText().toString().trim(),
+//                        bill_mailing_address_telephone_tv.getText().toString().trim(),
+//                        bill_mailing_address_fix_telephone_tv.getText().toString().trim(),
+//                        sb.substring(0, 4).toString(), sb.substring(0, 6).toString(), sb.toString().toString(),
+//                        bill_mailing_address_mailing_address_tv_detail.getText().toString().trim(),
+//                        bill_mailing_address_zip_code_tv.getText().toString().trim(),
+//                        sessionId
+//                        );
                 break;
 //            修改邮寄地址
             case R.id.bill_mailing_address_mailing_address_rl:

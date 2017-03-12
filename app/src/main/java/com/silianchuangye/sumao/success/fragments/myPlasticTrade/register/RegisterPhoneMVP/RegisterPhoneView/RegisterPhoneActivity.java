@@ -1,6 +1,8 @@
 package com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.RegisterPhoneMVP.RegisterPhoneView;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -40,6 +42,7 @@ public class RegisterPhoneActivity extends AppCompatActivity implements IRegiste
     private RegisterPhonePresenter registerPhonePresenter;
     private String yanzhen = "";
     private CountDownTimerUtils mCountDownTimerUtils;
+    private String unique="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,18 +98,26 @@ public class RegisterPhoneActivity extends AppCompatActivity implements IRegiste
 
                     Toast.makeText(RegisterPhoneActivity.this, "您输入的手机号不符合规则" + et_phone_register.getText().toString().length(), Toast.LENGTH_SHORT).show();
                 } else {
-
                     registerPhonePresenter.sendRegisterPhoneToServer(et_phone_register.getText().toString());
                 }
             }
         });
+
         tv_next_register = (Button) findViewById(R.id.tv_next_register);
         tv_next_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(RegisterPhoneActivity.this, RegisterActivity.class);
-                intent.putExtra("phone", et_phone_register.getText().toString());
-                startActivity(intent);
+//
+                SharedPreferences sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+                unique=sp.getString("unique","");
+                if (editText.getText().toString().equals(unique)){
+                    Intent intent = new Intent(RegisterPhoneActivity.this, RegisterActivity.class);
+                    intent.putExtra("phone", et_phone_register.getText().toString());
+                    startActivity(intent);
+
+                }else {
+                    Toast.makeText(RegisterPhoneActivity.this, "您输入的验证码不正确，请重新输入！", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -165,7 +176,7 @@ public class RegisterPhoneActivity extends AppCompatActivity implements IRegiste
                     result = restAPI.sendTemplateSMS(et_phone_register.getText().toString(), "36882", new String[]{yanzhen, "2"});
                     System.out.println("SDKTestSendTemplateSMS result=" + result);
                     if ("000000".equals(result.get("statusCode"))) {
-                        //正常返回输出data包体信息（map）
+                     //   正常返回输出data包体信息（map）
                         HashMap<String, Object> data = (HashMap<String, Object>) result.get("data");
                         Set<String> keySet = data.keySet();
                         for (String key : keySet) {
@@ -182,6 +193,10 @@ public class RegisterPhoneActivity extends AppCompatActivity implements IRegiste
                 }
             }).start();
             Toast.makeText(this, yanzhen, Toast.LENGTH_LONG).show();
+            SharedPreferences sp=getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+            SharedPreferences.Editor editor=sp.edit();
+            editor.putString("yanzhen",yanzhen);
+            editor.commit();
         } else {
             Toast.makeText(this, "该手机号已注册", Toast.LENGTH_SHORT).show();
         }

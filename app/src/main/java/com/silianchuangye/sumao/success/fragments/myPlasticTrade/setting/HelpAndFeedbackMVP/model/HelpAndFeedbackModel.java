@@ -1,5 +1,7 @@
 package com.silianchuangye.sumao.success.fragments.myPlasticTrade.setting.HelpAndFeedbackMVP.model;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.setting.HelpAndFeedbackMVP.bean.HelpAndFeedbackBean;
 import com.silianchuangye.sumao.success.utils.LogUtils;
@@ -43,6 +45,7 @@ public class HelpAndFeedbackModel implements IHelpAndFeedbackModel {
 //            e.printStackTrace();
 //        }
 //        rp.setBodyContent(jsonObject.toString());
+        Log.d("aaaaaaaaaa",""+rp);
         LogUtils.log(rp.getBodyContent()+"..."+rp.getUri()+"..."+rp.getCharset()+"...");
         x.http().request(HttpMethod.POST, rp, new Callback.CommonCallback<String>() {
             private HelpAndFeedbackBean helpAndFeedbackBean;

@@ -37,7 +37,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CreateLogisticsNeed extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener, IAddAddress, ICreateLogisticsNeedView {
+public class CreateLogisticsNeed extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener
+      //  , IAddAddress, ICreateLogisticsNeedView
+{
     private ImageView img_logistics_title_back, img_logistics_need_select_xunbang,
             img_logistics_need_select_buy, img_logistics_need_select_maifang;
     private TextView tv_logistics_need_canle;
@@ -68,7 +70,7 @@ public class CreateLogisticsNeed extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_logistics_need);
 //
-        createLogisticsNeedPresenter = new CreateLogisticsNeedPresenter(this);
+        //createLogisticsNeedPresenter = new CreateLogisticsNeedPresenter(this);
         num = getIntent().getDoubleExtra("num", -100);
         Log.e("TAG", "num--" + num);
         cangku = getIntent().getStringExtra("cangku");
@@ -313,30 +315,30 @@ public class CreateLogisticsNeed extends AppCompatActivity implements View.OnCli
         sb.append(address);
         address_num = sb.toString();
         Log.e("TAG", "address_num1111111111" + address_num);
-        AddAddressPresenter presenter = new AddAddressPresenter(CreateLogisticsNeed.this);
-        presenter.setDetailAddress(sb.substring(0, 4), sb.substring(0, 6), sb.toString());
+       // AddAddressPresenter presenter = new AddAddressPresenter(CreateLogisticsNeed.this);
+       // presenter.setDetailAddress(sb.substring(0, 4), sb.substring(0, 6), sb.toString());
     }
 
-    @Override
-    public void setAddressInText(String address) {
-        tv_logistics_need_give_address.setText(address);
-    }
-
-    @Override
-    public void sendAddAddressToServerSuccess() {
-
-    }
-
-    @Override
-    public void sendAddAddressToServerFaild() {
-
-    }
-
-    @Override
-    public void sendAddAddressToServer() {
-
-    }
-
+    //@Override
+//    public void setAddressInText(String address) {
+//        tv_logistics_need_give_address.setText(address);
+//    }
+//
+//    @Override
+//    public void sendAddAddressToServerSuccess() {
+//
+//    }
+//
+//    @Override
+//    public void sendAddAddressToServerFaild() {
+//
+//    }
+//
+//    @Override
+//    public void sendAddAddressToServer() {
+//
+//    }
+//
 
     private class MyReciver extends BroadcastReceiver {
         @Override
@@ -490,12 +492,12 @@ public class CreateLogisticsNeed extends AppCompatActivity implements View.OnCli
         String deliveryer = list2.get(1).tv_three;
         String remarks = list2.get(5).tv_three;
         if (strType.equals("自提")) {
-            String shippingMethod = "pickUp";
-            createLogisticsNeedPresenter.getCreateBuyerSelfLogisticsNeedResult(quantity, commerceJso,
-                    shippingMethod, shippingDat,
-                    deliveryerTe, idCard,
-                    wareHouse, licensePlateNo,
-                    deliveryer, remarks);
+//            String shippingMethod = "pickUp";
+//            createLogisticsNeedPresenter.getCreateBuyerSelfLogisticsNeedResult(quantity, commerceJso,
+//                    shippingMethod, shippingDat,
+//                    deliveryerTe, idCard,
+//                    wareHouse, licensePlateNo,
+//                    deliveryer, remarks);
         } else {
             String commerceJson = megList;
 
@@ -511,43 +513,44 @@ public class CreateLogisticsNeed extends AppCompatActivity implements View.OnCli
             String repeiptCompany = list.get(3).tv_three;
             String shippingContact = list.get(4).tv_three;
             if (strType.equals("卖家配送")) {
-                String shippingMethod = "seller";
-                createLogisticsNeedPresenter.getCreateDistributionLogisticsNeedResult(quantity, commerceJson,
-                        shippingMethod, provinceId,
-                        cityId, countyId,
-                        contactPhone, pickUpDateStart,
-                        pickUpDateEnd, shippingContactTel,
-                        detailAddress, contactPerson,
-                        repeiptCompany, shippingContact);
+//                String shippingMethod = "seller";
+//                createLogisticsNeedPresenter.getCreateDistributionLogisticsNeedResult(quantity, commerceJson,
+//                        shippingMethod, provinceId,
+//                        cityId, countyId,
+//                        contactPhone, pickUpDateStart,
+//                        pickUpDateEnd, shippingContactTel,
+//                        detailAddress, contactPerson,
+//                        repeiptCompany, shippingContact);
             } else {
-                String shippingMethod = "xunbang";
-                createLogisticsNeedPresenter.getCreateDistributionLogisticsNeedResult(quantity, commerceJson,
-                        shippingMethod, provinceId,
-                        cityId, countyId,
-                        contactPhone, pickUpDateStart,
-                        pickUpDateEnd, shippingContactTel,
-                        detailAddress, contactPerson,
-                        repeiptCompany, shippingContact);
-            }
+//                String shippingMethod = "xunbang";
+//                createLogisticsNeedPresenter.getCreateDistributionLogisticsNeedResult(quantity, commerceJson,
+//                        shippingMethod, provinceId,
+//                        cityId, countyId,
+//                        contactPhone, pickUpDateStart,
+//                        pickUpDateEnd, shippingContactTel,
+//                        detailAddress, contactPerson,
+//                        repeiptCompany, shippingContact);
+//            }
 
         }
 
     }
 
     //    创建物流需求后
-    @Override
-    public void getCreateLogisticsDemandResult(String result) {
-        try {
-            JSONObject job = new JSONObject(result);
-            String status = job.getString("status");
-            if (status.equals("YES")) {
-                Toast.makeText(CreateLogisticsNeed.this, "创建物流订单成功", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(CreateLogisticsNeed.this, ViewLogisticsDemand.class);
-                startActivity(intent);
-                finish();
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
+//    @Override
+//    public void getCreateLogisticsDemandResult(String result) {
+//        try {
+//            JSONObject job = new JSONObject(result);
+//            String status = job.getString("status");
+//            if (status.equals("YES")) {
+//                Toast.makeText(CreateLogisticsNeed.this, "创建物流订单成功", Toast.LENGTH_SHORT).show();
+//                Intent intent = new Intent(CreateLogisticsNeed.this, ViewLogisticsDemand.class);
+//                startActivity(intent);
+//                finish();
+//            }
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//    }
+}
 }

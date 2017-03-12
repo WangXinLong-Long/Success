@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.qurchaseQualification.purchaseQualificationDetail.DataDetailsActivity;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.qurchaseQualification.purchaseQualificationDetail.PurchaseQualificationDetailMVP.presenter.PurchaseQualificationDetailPresenter;
+//import com.silianchuangye.sumao.success.fragments.myPlasticTrade.qurchaseQualification.purchaseQualificationDetail.PurchaseQualificationDetailMVP.presenter.PurchaseQualificationDetailPresenter;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.qurchaseQualification.purchaseQualificationDetail.PurchaseQualificationDetailMVP.view.IPurchaseQualificationDetailView;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 
@@ -60,9 +60,9 @@ public class PurchaseQualificationDetailActivity extends AppCompatActivity imple
         setContentView(R.layout.activity_purchase_qualification_detail);
 //        上游资源方id
         id = getIntent().getStringExtra("id");
-        PurchaseQualificationDetailPresenter purchaseQualificationDetailPresenter = new PurchaseQualificationDetailPresenter(this);
+        //PurchaseQualificationDetailPresenter purchaseQualificationDetailPresenter = new PurchaseQualificationDetailPresenter(this);
         dynSessConf = getSharedPreferences("sumao", Activity.MODE_PRIVATE).getString("unique", "");
-        purchaseQualificationDetailPresenter.getAuditStatus(dynSessConf,id);
+        //purchaseQualificationDetailPresenter.getAuditStatus(dynSessConf,id);
         findView();
     }
 

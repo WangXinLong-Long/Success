@@ -1,5 +1,7 @@
 package com.silianchuangye.sumao.success.ShangYou.PlanDayMVP.model.SubmissionPlanModel;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.silianchuangye.sumao.success.ShangYou.PlanDayMVP.Bean.PlanDayBean;
 import com.silianchuangye.sumao.success.utils.LogUtils;
@@ -59,6 +61,7 @@ public class SubmissionPlanModel implements ISubmissionPlanModel {
             e.printStackTrace();
         }
         rp.setBodyContent(jsonObject.toString());
+        Log.d("查看计划",""+rp);
         x.http().request(HttpMethod.POST, rp, new Callback.CommonCallback<String>() {
             private PlanDayBean planDayBean;
 

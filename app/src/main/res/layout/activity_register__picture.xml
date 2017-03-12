@@ -1,49 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    tools:context=".fragments.myPlasticTrade.register.RegisterPicture">
-    <ImageView
-        android:id="@+id/picture"
-        android:background="@color/white"
+    android:orientation="vertical"
+    >
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/y300" />
+        android:layout_height="@dimen/x50"
+        android:id="@+id/layout_title"
+        android:background="@color/btn_register_normal"
+
+        >
+        <ImageView
+            android:layout_width="@dimen/x20"
+            android:layout_height="@dimen/x20"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/x10"
+            android:src="@mipmap/back"
+            android:id="@+id/ivback"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_Title"
+            android:textColor="#fff"
+            android:layout_centerInParent="true"
+            android:text="统一社会信用代码"
+            />
+    </RelativeLayout>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x40"
+        android:layout_marginLeft="@dimen/x10"
+        android:layout_marginRight="@dimen/x10"
+        android:background="#fff"
+        android:layout_marginTop="@dimen/x5"
+        android:id="@+id/ed_number"
+        />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x40"
+        android:layout_marginLeft="@dimen/x10"
+        android:layout_marginRight="@dimen/x10"
+        android:background="@color/btn_register_normal"
+        android:textColor="#fff"
+        android:text="上传图片"
+        android:layout_marginTop="@dimen/x5"
+        android:id="@+id/bt_upload"
+        />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="请上传图片"
-        android:textColor="@color/red"
-        android:layout_below="@id/picture"
-        android:id="@+id/prompt"
+        android:id="@+id/tv_Name"
         android:visibility="gone"
+        android:textColor="@color/btn_blue_normal"
+        android:textSize="14sp"
+        android:layout_marginLeft="@dimen/x10"
+        android:text="11111"
         />
-    <include
-        layout="@layout/child_title_bar"/>
 
     <Button
-        android:id="@+id/save"
-        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:layout_marginLeft="@dimen/x15"
-        android:layout_marginRight="@dimen/x15"
-        android:background="@drawable/button_background_blue"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/x40"
+        android:layout_marginLeft="@dimen/x10"
+        android:layout_marginRight="@dimen/x10"
+        android:background="@color/btn_register_normal"
+        android:textColor="#fff"
         android:text="保存"
-        android:textColor="@color/white"
-        android:layout_marginTop="@dimen/x1"
-        />
-    <Button
-        android:id="@+id/get_picture"
-        android:layout_width="match_parent"
-        android:layout_marginLeft="@dimen/x15"
-        android:layout_marginRight="@dimen/x15"
-        android:background="@drawable/button_background_blue"
-        android:layout_height="wrap_content"
-        android:text="上传照片"
-        android:textColor="@color/white"
-        android:layout_above="@id/save"
+        android:layout_marginTop="@dimen/x25"
+        android:id="@+id/bt_save"
         />
 
-</RelativeLayout>
+
+
+</LinearLayout>

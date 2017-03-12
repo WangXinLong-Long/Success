@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/selley_lv">
+    android:id="@+id/all"
+    android:background="#fff">
 
     <RelativeLayout
         android:id="@+id/relative_create_logistics_top"
@@ -53,6 +54,7 @@
             android:layout_marginRight="@dimen/x7"
             android:background="@drawable/juxing"
             android:gravity="center_vertical"
+            android:textColor="#222"
             android:paddingLeft="@dimen/x7" />
 
         <TextView
@@ -60,7 +62,11 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@id/tv_pop_customer_num"
-            android:text="产品名称 : " />
+            android:text="产品名称 : "
+
+            android:id="@+id/name"
+            android:textColor="#222"
+            />
     </RelativeLayout>
 
     <RelativeLayout
@@ -92,6 +98,7 @@
                 android:layout_height="@dimen/x30"
                 android:layout_centerVertical="true"
                 android:gravity="center_vertical"
+                android:textColor="#222"
                 android:paddingLeft="@dimen/x5" />
 
             <ImageView
@@ -106,6 +113,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@id/linear_shi"
+            android:textColor="#222"
             android:text="至" />
 
         <LinearLayout
@@ -122,6 +130,7 @@
                 android:layout_height="@dimen/x30"
                 android:layout_centerVertical="true"
                 android:gravity="center_vertical"
+                android:textColor="#222"
                 android:paddingLeft="@dimen/x5" />
 
             <ImageView
@@ -135,7 +144,9 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@id/linear_sheng"
-            android:text="计划日期 : " />
+            android:id="@+id/Time"
+            android:textColor="#222"
+            android:text="计划日期:" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -160,6 +171,7 @@
                 android:layout_height="@dimen/x30"
                 android:layout_centerVertical="true"
                 android:gravity="center_vertical"
+                android:textColor="#222"
                 android:paddingLeft="@dimen/x3" />
 
             <ImageView
@@ -173,7 +185,9 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@id/mention_state_ll"
-            android:text="提报状态 : " />
+            android:id="@+id/state"
+            android:textColor="#222"
+            android:text="提报状态:" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -191,14 +205,17 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/x7"
             android:background="@drawable/juxing"
+            android:textColor="#222"
             android:gravity="center_vertical" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:id="@+id/cangku"
+            android:textColor="#222"
             android:layout_toLeftOf="@id/tv_pop_customer_name"
-            android:text="仓库名称 : " />
+            android:text="仓库名称:" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -224,6 +241,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:gravity="center_vertical"
+                android:textColor="#222"
                 android:paddingLeft="@dimen/x7" />
 
             <ImageView
@@ -237,7 +255,9 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@id/linear2"
-            android:text="配送方式 : " />
+            android:id="@+id/way"
+            android:textColor="#222"
+            android:text="配送方式:" />
     </RelativeLayout>
 
     <View

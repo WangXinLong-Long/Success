@@ -78,7 +78,7 @@ public class LoginUserActivity extends AppCompatActivity implements View.OnClick
 //        卖家登录
         sellerLogin = ((CheckBox) findViewById(R.id.checkbox2));
 //        买家登录
-        buyerLogin = ((CheckBox) findViewById(R.id.checkbox1));
+      buyerLogin = ((CheckBox) findViewById(R.id.checkbox1));
 
         sellerLogin.setOnClickListener(new View.OnClickListener() {
             @Override
