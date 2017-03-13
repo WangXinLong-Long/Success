@@ -15,7 +15,7 @@ public class AnalysisFragmentModel implements IAnalysisFragmentModel {
 
     @Override
     public void getAnalysisFragmentResult(final AnalysisFragmentCallback callback) {
-        String url = SuMaoConstant.SUMAO_IP + "/rest/model/atg/commerce/news/NewsAnalyzeActor/NewsDataList";
+        String url = SuMaoConstant.SUMAO_IP + "/rest/model/atg/commerce/news/NewsAnalyzeActor/NewsAnalyzeDateList";
         RequestParams rp = new RequestParams(url);
 //        if (dateType!=null){
 //            rp.addParameter("dateType",dateType);
@@ -24,7 +24,7 @@ public class AnalysisFragmentModel implements IAnalysisFragmentModel {
             @Override
             public void onSuccess(String result) {
                 Log.d("资讯分析的result--->", result);
-                callback.callbackAnalysisFragmentResult(  result);
+                callback.callbackAnalysisFragmentResult(result);
             }
 
             @Override

@@ -61,8 +61,10 @@ public class ListViewDataAdapter extends BaseAdapter {
         } else {
             viewHolder = ((ViewHolder) convertView.getTag());
         }
+//        viewHolder.title.setText(pagerTwoDataListViewBeens.get(position).getDataname());
+//        viewHolder.time.setText(pagerTwoDataListViewBeens.get(position).getDataname());
         viewHolder.title.setText(pagerTwoDataListViewBeens.get(position).getDataname());
-        viewHolder.time.setText(pagerTwoDataListViewBeens.get(position).getDataname());
+        viewHolder.time.setText(pagerTwoDataListViewBeens.get(position).getDatatime());
         return convertView;
     }
 

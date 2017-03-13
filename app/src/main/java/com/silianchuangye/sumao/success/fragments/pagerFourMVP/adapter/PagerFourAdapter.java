@@ -1,6 +1,7 @@
 package com.silianchuangye.sumao.success.fragments.pagerFourMVP.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,43 +19,48 @@ import java.util.List;
  * Created by Jobs Created on 2016/12/27.
  */
 public class PagerFourAdapter extends BaseExpandableListAdapter {
-    List<List<AboutSuMaoBean.NewsItemBean>> child;
-    List<String> group;
-    Context context;
+//    List<List<AboutSuMaoBean.NewsItemBean>> child;
+//    List<String> group;
+//    Context context;
+//    LayoutInflater inflater;
+
     LayoutInflater inflater;
+    Context context;
+    String[] title;
+    String[][] content;
     public PagerFourAdapter( Context context) {
-        this.child = new ArrayList<>();
-        this.group = new ArrayList<>();
+//        this.child = new ArrayList<>();
+//        this.group = new ArrayList<>();
         this.context = context;
         inflater = LayoutInflater.from(context);
-    }
-    public void addGroupData(List<String> data){
-        group.addAll(data);
-    }
+        title = context.getResources().getStringArray(R.array.group_bangzhu);
+        Log.d("title的值",title.toString());
+        content = new String[][]{
+                context.getResources().getStringArray(R.array.child_zhinan),
+                context.getResources().getStringArray(R.array.child_help)
 
-    public void addChildData(List<List<AboutSuMaoBean.NewsItemBean>> data){
-        child.addAll(data);
+        };
     }
 
 
     @Override
     public int getGroupCount() {
-        return group.size();
+        return title.length;
     }
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return child.get(groupPosition).size();
+        return content[groupPosition].length;
     }
 
     @Override
     public Object getGroup(int groupPosition) {
-        return group.get(groupPosition);
+        return title[groupPosition];
     }
 
     @Override
-    public AboutSuMaoBean.NewsItemBean getChild(int groupPosition, int childPosition) {
-        return child.get(groupPosition).get(childPosition);
+    public Object getChild(int groupPosition, int childPosition) {
+        return content[groupPosition][childPosition];
     }
 
     @Override
@@ -92,6 +98,7 @@ public class PagerFourAdapter extends BaseExpandableListAdapter {
             groupHolder.img.setBackgroundResource(R.mipmap.my_sumao_iv_detail_show);
             groupHolder.txt.setTextColor(context.getResources().getColor(R.color.textColor_expandable_listview_show));
         }
+       // groupHolder.txt.setText(getGroup(groupPosition).toString());
         groupHolder.txt.setText(getGroup(groupPosition).toString());
         return convertView;
     }
@@ -107,7 +114,8 @@ public class PagerFourAdapter extends BaseExpandableListAdapter {
         } else {
             itemHolder = (ItemHolder) convertView.getTag();
         }
-        itemHolder.txt.setText(getChild(groupPosition, childPosition).getCaption());
+       // itemHolder.txt.setText(getChild(groupPosition, childPosition).getCaption());
+        itemHolder.txt.setText(getChild(groupPosition, childPosition).toString());
         return convertView;
     }
 

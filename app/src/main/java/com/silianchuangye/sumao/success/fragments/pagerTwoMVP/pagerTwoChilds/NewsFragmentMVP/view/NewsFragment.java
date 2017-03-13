@@ -12,11 +12,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.silianchuangye.sumao.success.R;
+import com.silianchuangye.sumao.success.fragments.pagerTwoMVP.PagerTwoView.NewsActivity;
 import com.silianchuangye.sumao.success.fragments.pagerTwoMVP.pagerTwoChilds.NewsFragmentMVP.adapter.ListViewDataAdapter;
 import com.silianchuangye.sumao.success.fragments.pagerTwoMVP.pagerTwoChilds.NewsFragmentMVP.bean.NewsFragmentBean;
 import com.silianchuangye.sumao.success.fragments.pagerTwoMVP.pagerTwoChilds.NewsFragmentMVP.presenter.NewsFragmentPresenter;
@@ -37,6 +39,7 @@ public class NewsFragment extends Fragment implements INewsFragmentView{
     private ListViewDataAdapter listViewAdapter;
     private List<NewsFragmentBean.InBean> in;
     private BroadcastReceiver netReceiver;
+   // private GridView dateType;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,9 +50,12 @@ public class NewsFragment extends Fragment implements INewsFragmentView{
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.data_fragment,container,false);
+        view = inflater.inflate(R.layout.analysis_fragment,container,false);
 
         newsFragmentPresenter = new NewsFragmentPresenter(this);
+//
+//        dateType= (GridView) view.findViewById(R.id.dateType);
+//        dateType.setVisibility(View.GONE);
 //        列表内容
         listViewData = ((ListView) view.findViewById(R.id.list_view_data));
         listViewData.setOnItemClickListener(new MyAdapterItemClickListener());
@@ -87,6 +93,11 @@ public class NewsFragment extends Fragment implements INewsFragmentView{
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             switch (parent.getId()) {
                 case R.id.list_view_data:
+                    Intent intent=new Intent(getActivity(), NewsActivity.class);
+                    intent.putExtra("title",in.get(position).getIn_xwbt());
+                    intent.putExtra("id",in.get(position).getIn_xwid());
+                    intent.putExtra("time",in.get(position).getIn_xwtime());
+                    startActivity(intent);
                     Toast.makeText(getActivity(), "List--->" + in.get(position).getIn_xwid(), Toast.LENGTH_SHORT).show();
                     break;
 

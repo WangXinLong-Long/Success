@@ -109,7 +109,7 @@ public class RegisterPhoneActivity extends AppCompatActivity implements IRegiste
             public void onClick(View v) {
 //
                 SharedPreferences sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
-                unique=sp.getString("unique","");
+                unique=sp.getString("yanzhen","");
                 if (editText.getText().toString().equals(unique)){
                     Intent intent = new Intent(RegisterPhoneActivity.this, RegisterActivity.class);
                     intent.putExtra("phone", et_phone_register.getText().toString());

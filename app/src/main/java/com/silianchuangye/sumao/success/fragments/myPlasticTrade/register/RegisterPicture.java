@@ -135,7 +135,7 @@ public class RegisterPicture extends AppCompatActivity {
                                Bitmap bitmap=BitmapFactory.decodeFile(filepath);
                                fileCode=BitmapToString(bitmap);
                                Log.d("图片编码",fileCode);
-                               Toast.makeText(RegisterPicture.this, ""+fileCode, Toast.LENGTH_SHORT).show();
+//                               Toast.makeText(RegisterPicture.this, ""+fileCode, Toast.LENGTH_SHORT).show();
                                rp.addParameter("file", fileCode);
                            }
 

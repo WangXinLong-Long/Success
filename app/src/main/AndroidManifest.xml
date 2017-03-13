@@ -703,7 +703,9 @@
         <activity android:name=".fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.Logistics" />
         <activity android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoPicture.FirmInfoPictureMVP.UniformSocialCreditCode" />
         <activity android:name=".fragments.myPlasticTrade.login.forgetPassword.ActivityPass" />
-        <activity android:name=".fragments.myPlasticTrade.messagePush.view.MessagePushActivity"></activity>
+        <activity android:name=".fragments.myPlasticTrade.messagePush.view.MessagePushActivity" />
+        <activity android:name=".fragments.pagerFourMVP.view.ChildPageActivity" />
+        <activity android:name=".fragments.pagerTwoMVP.PagerTwoView.NewsActivity"></activity>
     </application>
 
 </manifest>

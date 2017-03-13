@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="@dimen/x35">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_item"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/x10"
+
+        android:textColor="#222"
+        />
+    <ImageView
+        android:layout_width="@dimen/x20"
+        android:layout_height="@dimen/x20"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/x5"
+        android:src="@mipmap/my_sumao_iv_order"
+        android:layout_centerVertical="true"
+
+        />
+
+
+
+</RelativeLayout>

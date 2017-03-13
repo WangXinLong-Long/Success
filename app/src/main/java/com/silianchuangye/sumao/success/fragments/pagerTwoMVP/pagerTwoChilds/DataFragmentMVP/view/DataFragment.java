@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.silianchuangye.sumao.success.R;
+import com.silianchuangye.sumao.success.fragments.pagerTwoMVP.PagerTwoView.NewsActivity;
 import com.silianchuangye.sumao.success.fragments.pagerTwoMVP.pagerTwoChilds.DataFragmentMVP.adapter.ListViewDataAdapter;
 import com.silianchuangye.sumao.success.fragments.pagerTwoMVP.pagerTwoChilds.DataFragmentMVP.adapter.PagerTwoTextGrideViewAdapter;
 import com.silianchuangye.sumao.success.fragments.pagerTwoMVP.pagerTwoChilds.DataFragmentMVP.bean.PagerTwoDataGridViewBean;
@@ -118,7 +119,12 @@ public class DataFragment extends Fragment implements IDataFragmentView {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             switch (parent.getId()) {
                 case R.id.list_view_data:
-                    Toast.makeText(getActivity(), "List--->" + in.get(position).getDataid(), Toast.LENGTH_SHORT).show();
+                    Intent intent=new Intent(getActivity(), NewsActivity.class);
+                    intent.putExtra("title",in.get(position).getDataname());
+                    intent.putExtra("id",in.get(position).getDataid());
+                    intent.putExtra("time",in.get(position).getDatatime());
+                    startActivity(intent);
+                   // Toast.makeText(getActivity(), "List--->" + in.get(position).getDataid(), Toast.LENGTH_SHORT).show();
                     break;
 
                 case R.id.dateType:

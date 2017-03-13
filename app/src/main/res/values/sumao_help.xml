@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="group_bangzhu">
+        <item>塑贸指南</item>
+        <item>客服帮助</item>
+
+    </string-array>
+    <string-array name="child_zhinan">
+        <item>关于塑贸</item>
+        <item>网站基本说明</item>
+        <item>菜单栏目说明</item>
+        <item>搜索说明</item>
+        <item>主要流程</item>
+        <item>重大提示</item>
+        <item>系统管理</item>
+
+        <!-- <item>客服订单</item>-->
+    </string-array>
+    <string-array name="child_help">
+        <item>常见问题</item>
+        <item>行业知识</item>
+        <item>客服电话</item>
+    </string-array>
+
+</resources>

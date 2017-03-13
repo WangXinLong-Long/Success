@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.jingchen.pulltorefresh.PullToRefreshLayout;
 import com.silianchuangye.sumao.success.R;
+import com.silianchuangye.sumao.success.fragments.pagerTwoMVP.PagerTwoView.NewsActivity;
 import com.silianchuangye.sumao.success.fragments.pagerTwoMVP.pagerTwoChilds.InformationPageFragmentMVP.adapter.PagerTwoInformationPageListViewAdapter;
 import com.silianchuangye.sumao.success.fragments.pagerTwoMVP.pagerTwoChilds.InformationPageFragmentMVP.bean.PagerTwoInformationPageBean;
 import com.silianchuangye.sumao.success.fragments.pagerTwoMVP.pagerTwoChilds.InformationPageFragmentMVP.presenter.InformationPageFragmentPresenter;
@@ -80,7 +81,12 @@ public class InformationPageFragment extends Fragment implements IInformationPag
                 Toast.makeText(getActivity(),
                         " Click on " + in.get(position).getNewsid(),
                         Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getActivity(), InformationDetailsActivity.class);
+//                Intent intent = new Intent(getActivity(), InformationDetailsActivity.class);
+//                startActivity(intent);intent
+                Intent intent=new Intent(getActivity(), NewsActivity.class);
+                intent.putExtra("id",in.get(position).getNewsid());
+                intent.putExtra("title",in.get(position).getNewsname());
+                intent.putExtra("time",in.get(position).getNewstime());
                 startActivity(intent);
 
             }
