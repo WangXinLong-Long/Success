@@ -494,7 +494,8 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
             holder.Tv_price.setText(list.get(position).getSalePrice());
             holder.Tv_qiye.setText(list.get(position).getManufacturer());
             holder.Tv_company.setText(list.get(position).getSalesCompanyDisplayName());
-            holder.Edt_buy_num.setText(list.get(position).getQuantity());
+            holder.Edt_buy_num.setText(Float.parseFloat(list.get(position).getQuantity())+"");
+            Log.d("数量",list.get(position).getQuantity());
             holder.Tv_all_price.setText(list.get(position).getAmount() + "元");
             dialog = new Cart_MyDialog(ctx, holder.Tv_name.getText().toString(), kucong_value);
             //选中与不选中

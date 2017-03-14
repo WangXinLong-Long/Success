@@ -76,10 +76,10 @@ public class PopupWindowAdaptrer extends BaseAdapter{
         }else{
             viewHolder.iv_select_null.setImageResource(R.mipmap.cart_select_null);
         }
-
-        if (data.get(position).tv_Name == "昆仑银行"){
-            viewHolder.iv_select_null.setImageResource(R.mipmap.cart_no);
-        }
+//昆仑银行事不可选的
+//        if (data.get(position).tv_Name == "昆仑银行"){
+//            viewHolder.iv_select_null.setImageResource(R.mipmap.cart_no);
+//        }
         return convertView;
     }
     class ViewHolder{

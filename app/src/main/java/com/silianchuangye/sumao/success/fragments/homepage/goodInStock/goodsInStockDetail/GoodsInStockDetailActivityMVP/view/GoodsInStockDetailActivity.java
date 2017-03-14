@@ -7,6 +7,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -37,9 +38,14 @@ import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInSt
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.LoginUserActivity;
 import com.silianchuangye.sumao.success.fragments.shoppingCart.dialog.Cart_MyDialog;
 import com.silianchuangye.sumao.success.utils.LogUtils;
+import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
 
 import java.io.Serializable;
 import java.text.DecimalFormat;
@@ -96,11 +102,22 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
     private TextView tv_jia;
     private TextView purchase_quantity_et;
     private LinearLayout remark_ll;
+    private Button bt_Colse;
+    private LinearLayout layout_gongneng;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goods_in_stock_detail);
+        bt_Colse= (Button) findViewById(R.id.bt_Colse);
+        layout_gongneng= (LinearLayout) findViewById(R.id.layout_gongneng);
+        new Thread(){
+            @Override
+            public void run() {
+                super.run();
+                openOrClose();
+            }
+        }.start();
 
         activityiIntent = getIntent();
         goodsInStockDetailBean = (GoodsInStockDetailBean) activityiIntent.getSerializableExtra("goodsInStockDetailBean");
@@ -109,6 +126,8 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
         getGoodsInStockDetailData(goodsInStockDetailBean);
         initListener();
         goodsInStockDetailPresenter = new GoodsInStockDetailPresenter(this);
+
+
 
     }
 
@@ -227,19 +246,13 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
                     Toast.makeText(GoodsInStockDetailActivity.this, "请登录后进行操作", Toast.LENGTH_SHORT).show();
                     Intent intent1  = new Intent(this, LoginUserActivity.class);
                     intent1.putExtra("roles", "buyer");
-
                     startActivity(intent1);
                 } else {
-                    if (System.currentTimeMillis() > Long.parseLong(goodsInStockDetailBean.getCl_xiajiaend())
-                            || System.currentTimeMillis() > Long.parseLong(goodsInStockDetailBean.getCl_shijianend())) {
-                        Toast.makeText(this, "产品已下架", Toast.LENGTH_SHORT).show();
-                    } else {
-
-                        getPurchase(unique);
-                    }
+                    jurisdiction(goodsInStockDetailBean.getCl_id(),"购买",unique);
+//
                 }
                 break;
-//             加入购物车：
+            // 加入购物车：
             case R.id.join_shopping_cart:
                 SharedPreferences sp1 = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
                 String unique1 = sp1.getString("unique", "");
@@ -248,17 +261,8 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
                     intent1.putExtra("roles", "buyer");
                     startActivity(intent1);
                 } else {
-                    if (System.currentTimeMillis() > Long.parseLong(goodsInStockDetailBean.getCl_xiajiaend())
-                            || System.currentTimeMillis() > Long.parseLong(goodsInStockDetailBean.getCl_shijianend())) {
-                        Toast.makeText(this, "产品已下架", Toast.LENGTH_SHORT).show();
-                    }else {
-                        image.setVisibility(View.VISIBLE);
-                        Animation animation = AnimationUtils.loadAnimation(this, R.anim.joincartanim);
-                        animation.setFillAfter(true);
-                        image.startAnimation(animation);
-                        //Toast.makeText(this,"加入购物车成功",Toast.LENGTH_SHORT).show();
-                        join_gouwuche();
-                    }
+                    jurisdiction(goodsInStockDetailBean.getCl_id(),"加入购物车",unique1);
+
 
                 }
 //
@@ -274,8 +278,16 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
             case R.id.img_item_cart_buy_add:
                 str = et_number.getText().toString();
                 num = Integer.valueOf(str);
-                num++;
-                et_number.setText("" + num);
+
+                if (num>=Float.parseFloat(goodsInStockDetailBean.getCl_shuliang())){
+//                    Cart_MyDialog diolog=new Cart_MyDialog(GoodsInStockDetailActivity.this,goodsInStockDetailBean.getCl_mingcheng(),goodsInStockDetailBean.getCl_shuliang());
+//                    diolog.show();
+                    et_number.setText(goodsInStockDetailBean.getCl_shuliang());
+                }else{
+                    num++;
+                    et_number.setText("" + num);
+                }
+
                 break;
             case R.id.layoutContent_auction:
                 Intent intentHX = new Intent();
@@ -471,20 +483,143 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
                 || System.currentTimeMillis() > Long.parseLong(goodsInStockDetailBean.getCl_shijianend())) {
             buy_immediately.setBackgroundColor(getResources().getColor(R.color.gray));
             join_shopping_cart.setBackgroundColor(getResources().getColor(R.color.gray));
+            Toast.makeText(this, "该商品已下架", Toast.LENGTH_SHORT).show();
         }
 
+    }
+    public void openOrClose(){
+        String url= SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/order/myorder/OrderPaymentInfo/colsedChecker";
+        RequestParams rp=new RequestParams(url);
+        x.http().post(rp, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.d("开闭式接口返回的值",result);
+                try {
+                    JSONObject jsonObject=new JSONObject(result);
+                    String open=jsonObject.getString("results");
+                    Log.d("open的值",open);
+                    if (open.equals("false")){
+                        bt_Colse.setVisibility(View.VISIBLE);
+                        layout_gongneng.setVisibility(View.GONE);
+                    }else{
+                        Log.d("走的else","走的else");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+    }
+
+    public void jurisdiction(String pId, final String choose, final String unique){
+        String url=SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/userprofiling/PurchaseJurisdictionCheckActor/PurchaseResult";
+        RequestParams rp=new RequestParams(url);
+        rp.addParameter("productId",pId);
+        x.http().post(rp, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.d("判断用户是否有权限购买改商品",result);
+                try {
+                    JSONObject jsonObject=new JSONObject(result);
+                    String jurisdiction=jsonObject.getString("cl_allow");
+                    if (jurisdiction.equals("0")){
+                        //用户有权限购买
+                        Log.d("用户有权利购买","用户有权利购买");
+                        if (choose.equals("购买")){
+                            if (System.currentTimeMillis() > Long.parseLong(goodsInStockDetailBean.getCl_xiajiaend())
+                                    || System.currentTimeMillis() > Long.parseLong(goodsInStockDetailBean.getCl_shijianend())) {
+                                Toast.makeText(GoodsInStockDetailActivity.this, "产品已下架", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(this, "产品已下架", Toast.LENGTH_SHORT).show();
+                            } else {
+                                getPurchase(unique);
+                            }
+                        }else if (choose.equals("加入购物车")){
+                            if (System.currentTimeMillis() > Long.parseLong(goodsInStockDetailBean.getCl_xiajiaend())
+                                    || System.currentTimeMillis() > Long.parseLong(goodsInStockDetailBean.getCl_shijianend())) {
+                                Toast.makeText(GoodsInStockDetailActivity.this, "产品已下架", Toast.LENGTH_SHORT).show();
+                            }else {
+                                image.setVisibility(View.VISIBLE);
+                                Animation animation = AnimationUtils.loadAnimation(GoodsInStockDetailActivity.this, R.anim.joincartanim);
+                                animation.setFillAfter(true);
+                                image.startAnimation(animation);
+                                //Toast.makeText(this,"加入购物车成功",Toast.LENGTH_SHORT).show();
+                                join_gouwuche();
+                            }
+                        }
+                    }else if (jurisdiction.equals("2")){
+                        //用户没有权限购买
+                        Toast.makeText(GoodsInStockDetailActivity.this, "该用户没有权限购买改产品", Toast.LENGTH_SHORT).show();
+                    }else if (jurisdiction.equals("1")){
+                        Toast.makeText(GoodsInStockDetailActivity.this, "无上游资源方购买资质", Toast.LENGTH_SHORT).show();
+                    }else if (jurisdiction.equals("3")){
+                        Toast.makeText(GoodsInStockDetailActivity.this, "该用户没有登录", Toast.LENGTH_SHORT).show();
+                        Intent intent1  = new Intent(GoodsInStockDetailActivity.this, LoginUserActivity.class);
+                        intent1.putExtra("roles", "buyer");
+                        startActivity(intent1);
+
+                    }else if (jurisdiction.equals("4")){
+                       // Toast.makeText(GoodsInStockDetailActivity.this, "没有在购买期限内,不能购买", Toast.LENGTH_SHORT).show();
+                    }else if (jurisdiction.equals("5")){
+                        Toast.makeText(GoodsInStockDetailActivity.this, "csc审核没有通过", Toast.LENGTH_SHORT).show();
+                    }else if (jurisdiction.equals("6")){
+                        Toast.makeText(GoodsInStockDetailActivity.this, "企业财务员无权购买该产品", Toast.LENGTH_SHORT).show();
+                    }else if (jurisdiction.equals("7")){
+                        Toast.makeText(GoodsInStockDetailActivity.this, "库存小于购买量", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
     }
 
 
     public void join_gouwuche() {
+        Log.d("进来这个方法","进来这个方法");
         String productId = goodsInStockDetailBean.getCl_id();
-        String quantity = Integer.parseInt(et_number.getText().toString()) * 1000 + "";
+        Log.d("选择框的值",et_number.getText().toString());
+        String quantity = Integer.parseInt(et_number.getText().toString())*1000+"";
+//        Log.d("库存的值",Integer.parseInt(et_number.getText().toString())+"");
+//        Log.d("库存的值",Float.parseFloat(et_number.getText().toString())*1000+"");
+      //  quantity=quantity.substring(0,quantity.length()-2);
         String skuId = sku_id;
         SharedPreferences sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
-        String unique = sp.getString("unique", "");
+        String unique = sp.getString("unique","");
         String _dynSessConf = unique;
         goodsInStockDetailPresenter.joinToCart(productId, quantity, skuId, _dynSessConf);
-        // rp.addParameter("");
+
     }
 
     public void getPurchase(String unique) {

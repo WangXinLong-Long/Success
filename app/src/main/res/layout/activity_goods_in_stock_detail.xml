@@ -596,6 +596,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentBottom="true"
+            android:id="@+id/layout_gongneng"
             android:weightSum="2">
 
             <RelativeLayout
@@ -629,6 +630,15 @@
                 android:textStyle="bold" />
 
         </LinearLayout>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x50"
+            android:layout_alignParentBottom="true"
+            android:background="@color/gray_normal"
+            android:text="已闭市"
+            android:visibility="gone"
+            android:id="@+id/bt_Colse"
+            ></Button>
 
     </RelativeLayout>
 

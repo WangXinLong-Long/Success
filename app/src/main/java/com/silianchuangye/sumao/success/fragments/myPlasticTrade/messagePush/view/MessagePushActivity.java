@@ -71,35 +71,7 @@ public class MessagePushActivity extends AppCompatActivity implements View.OnCli
         //groupBuyingPresenter.getGroupBuyingResult("1",updateOrLoad);
         messagePushPresenter.getMessagePushResult("1",updateOrLoad,unique);
     }
-//    public void getinfo(){
-//        SharedPreferences sp=getSharedPreferences("sumao", Activity.MODE_PRIVATE);
-//        String unique=sp.getString("unique","");
-//        RequestParams rp=new RequestParams(SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/order/myorder/OrderPaymentInfo/noticeList");
-//        rp.addParameter("_dynSessConf",unique);
-//        rp.addParameter("page",1);
-//        x.http().post(rp, new Callback.CommonCallback<String>() {
-//            @Override
-//            public void onSuccess(String result) {
-//                Log.d("返回值",result);
-//
-//            }
-//
-//            @Override
-//            public void onError(Throwable ex, boolean isOnCallback) {
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(CancelledException cex) {
-//
-//            }
-//
-//            @Override
-//            public void onFinished() {
-//
-//            }
-//        });
-//    }
+
 
     @Override
     public void onClick(View v) {
@@ -164,6 +136,7 @@ public class MessagePushActivity extends AppCompatActivity implements View.OnCli
 //        GroupBuyingListBean groupBuyingListBean = gson.fromJson(result, GroupBuyingListBean.class);
 //        list.addAll(groupBuyingListBean.getProd());
         MessagePush messagePush=gson.fromJson(result,MessagePush.class);
+        Log.d("查看list的是否有值",messagePush.getList().toString());
         list.addAll(messagePush.getList());
         Log.d("list的列表","list列表"+list.toString());
         adapter.clearData();

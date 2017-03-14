@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -85,7 +86,14 @@ public class PaymentsOrder extends Activity implements View.OnClickListener, IPa
     private PaymentsOrderPresenter paymentsOrderPresenter;
     private List<Orders.OrderIdListBean> orderList;
     private Callback.Cancelable cancelable;
-
+    private String orderId;
+    private boolean choose;
+    private boolean click=false;
+    private int position1;
+    private TextView tv_Count;
+    private TextView tv_money;
+    private RelativeLayout layout_money;
+    private String servicesFree;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -185,8 +193,8 @@ public class PaymentsOrder extends Activity implements View.OnClickListener, IPa
 //        Bundle bundle = getIntent().getExtras();
 //        list_id = bundle.getStringArrayList("id");
 
-        String orderId = orderList.get(position).getOrderId();
-        list_order.add(orderId);
+        orderId = orderList.get(position).getOrderId();
+       // list_order.add(orderId);
         String order = null;
         Loding.show(this, "加载中...", false, null);
         paymentsOrderPresenter.getBankListFromService(order, orderId);
@@ -194,22 +202,19 @@ public class PaymentsOrder extends Activity implements View.OnClickListener, IPa
 
     //    进行支付请求
     public void getzhifu(String bankId) {
-//TODO
-        StringBuffer stringBuffer = new StringBuffer();
-        for (int i = 0; i < list_order.size(); i++) {
-            if (i == list_order.size() - 1) {
-                stringBuffer.append(list_order.get(i));
-            } else {
-                stringBuffer.append(list_order.get(i) + ",");
-            }
-        }
-        String a = stringBuffer.toString();
+    //TODO
+       // StringBuffer stringBuffer = new StringBuffer();
+        Log.d("订单编号的返回值",orderId.toString());
+
         SharedPreferences sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
         String zhifu_unique = sp.getString("unique", "");
-        String orderIds = a;
+        String orderIds = orderId;
         String platform = bankId;
         String _dynSessConf = zhifu_unique;
         Loding.show(this, "正在进行支付...", true, null);
+        Log.d("订单编号",orderIds);
+        Log.d("银行编号",platform);
+
         paymentsOrderPresenter.getPaymentInfoFromService(orderIds, platform, _dynSessConf);
     }
 
@@ -232,6 +237,9 @@ public class PaymentsOrder extends Activity implements View.OnClickListener, IPa
             tv = (TextView) view.findViewById(R.id.tvPrice_popupwindow_auction);
             et = (EditText) view.findViewById(R.id.etZhifu_auction);
             lv = (ListView) view.findViewById(R.id.lv_popupwindow_auction);
+            tv_Count= (TextView) view.findViewById(R.id.tv_Count);
+            tv_money= (TextView) view.findViewById(R.id.tv_money);
+            layout_money= (RelativeLayout) view.findViewById(R.id.layout_money);
             TextView count_Price = (TextView) view.findViewById(R.id.count_Price);
             // final List<OpenAuction> list_pop=new ArrayList<OpenAuction>();
 
@@ -244,11 +252,24 @@ public class PaymentsOrder extends Activity implements View.OnClickListener, IPa
             popupWindow.setFocusable(true);
 
             if (result.contains("balance")) {
+                Log.d("是否有服务费",result);
                 list_pop = new ArrayList<OpenAuction>();
                 Gson gson = new Gson();
                 BankListBean bankListBean = gson.fromJson(result, BankListBean.class);
                 List<BankListBean.BankResultBean> bankResults = bankListBean.getBankResult();
                 count_price = bankListBean.getBalance();
+                tv_Count.setText(count_price);
+                try {
+                    JSONObject jsonObject=new JSONObject(result);
+                    servicesFree=jsonObject.getString("serviceFee");
+                    if (servicesFree.equals("0")){
+                        layout_money.setVisibility(View.GONE);
+                    }
+                    tv_money.setText(servicesFree);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 //                JSONObject obj_Bank = new JSONObject(message);
                 for (int i = 0; i < bankResults.size(); i++) {
                     if (bankResults.get(i).getOpenedAccount().equals("true")) {
@@ -296,20 +317,21 @@ public class PaymentsOrder extends Activity implements View.OnClickListener, IPa
                     backgroundAlpha(1f);
                 }
             });
-            count_Price.setText(count_price);
+            count_Price.setText((Integer.parseInt(count_price)+Integer.parseInt(servicesFree))+"");
 //        立即支付
             bt.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
-                    for (int i = 0; i < list_pop.size(); i++) {
-                        if (list_pop.get(i).Flag) {
-                            //支付订单的接口
-                            getzhifu(list_pop.get(i).message);
-                            popupWindow.dismiss();
-                        } else if (i == list_pop.size() - 1) {
-                            Toast.makeText(PaymentsOrder.this, "请选择的银行进行付款", Toast.LENGTH_SHORT).show();
-                        }
+                   // 判断是否选择银行
+                    if (click && choose){
+                        Log.d("用户选择了银行","是的");
+                        getzhifu(list_pop.get(position1).message);
+                        popupWindow.dismiss();
+
+                    }else{//提示用户选择银行列表
+                        Log.d("用户选择了银行","不是的");
+                        Toast.makeText(PaymentsOrder.this, "请选择银行进行付款", Toast.LENGTH_SHORT).show();
                     }
 
 
@@ -318,20 +340,32 @@ public class PaymentsOrder extends Activity implements View.OnClickListener, IPa
             lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    if (list_pop.get(position).tv_Name.equals("昆仑银行")) {
-                        Toast.makeText(PaymentsOrder.this, "昆仑银行需要进行网关支付", Toast.LENGTH_SHORT).show();
-                    } else {
+                    //if (list_pop.get(position).tv_Name.equals("昆仑银行")) {
+                      //  Toast.makeText(PaymentsOrder.this, "昆仑银行需要进行网关支付", Toast.LENGTH_SHORT).show();
+                    //} else {
+                    position1=position;
+                        click=true;
                         if (parent.getId() == lv.getId()) {
                             for (int i = 0; i < list_pop.size(); i++) {
                                 Log.d("Listview的item", position + "");
                                 if (i != position) {
                                     list_pop.get(i).Flag = false;
+                                    choose=false;
+//                                   if (choose){
+//                                       Log.d("choose是","true");
+//                                   }else{
+//                                       Log.d("choose是","false");
+//                                   }
+
                                 }
                             }
                             list_pop.get(position).Flag = !list_pop.get(position).Flag;
+                            if (list_pop.get(position).Flag){
+                                choose=true;
+                            }
                             adapter1.notifyDataSetChanged();
                         }
-                    }
+                   // }
 
                 }
             });
