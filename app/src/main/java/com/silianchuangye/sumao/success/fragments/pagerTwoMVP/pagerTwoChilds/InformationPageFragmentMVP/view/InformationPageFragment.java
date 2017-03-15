@@ -24,6 +24,7 @@ import com.silianchuangye.sumao.success.fragments.pagerTwoMVP.pagerTwoChilds.Inf
 import com.silianchuangye.sumao.success.fragments.pagerTwoMVP.pagerTwoChilds.informationDetailsMVP.InformationDetailsActivity;
 import com.silianchuangye.sumao.success.utils.NetWorkChangeBroadcastReceiver;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 
@@ -86,7 +87,10 @@ public class InformationPageFragment extends Fragment implements IInformationPag
                 Intent intent=new Intent(getActivity(), NewsActivity.class);
                 intent.putExtra("id",in.get(position).getNewsid());
                 intent.putExtra("title",in.get(position).getNewsname());
-                intent.putExtra("time",in.get(position).getNewstime());
+                //intent.putExtra("time",in.get(position).getNewstime());
+                intent.putExtra("time",new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Double.parseDouble(in.get(position).getNewstime())));
+                intent.putExtra("number",in.get(position).getNewsnum());
+                intent.putExtra("from",in.get(position).getNewsfrom());
                 startActivity(intent);
 
             }

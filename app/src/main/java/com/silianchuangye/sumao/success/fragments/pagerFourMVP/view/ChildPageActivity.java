@@ -1,5 +1,6 @@
 package com.silianchuangye.sumao.success.fragments.pagerFourMVP.view;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +11,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.silianchuangye.sumao.success.R;
+import com.silianchuangye.sumao.success.fragments.pagerFourMVP.pagerFourDetail.PagerFourDetailActivity;
+import com.silianchuangye.sumao.success.fragments.pagerTwoMVP.pagerTwoChilds.informationDetailsMVP.InformationDetailsActivity;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
 import org.json.JSONArray;
@@ -32,6 +35,7 @@ public class ChildPageActivity extends AppCompatActivity {
     private ListView lv_Holp;
     private ArrayAdapter<String> adapter;
     private String url;
+    private String newsid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,12 +75,19 @@ public class ChildPageActivity extends AppCompatActivity {
         lv_Holp.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String newsid=list_id.get(position).toString();
+                newsid=list_id.get(position).toString();
                 if (type.equals("塑贸指南")){
                     url= SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/news/SumaoNewsActor/selectDetailDroplet";
                 }else if (type.equals("客服帮助")){
                     url=SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/news/SumaoNewsActor/selectDetailDroplet";
                 }
+                new Thread(){
+                    @Override
+                    public void run() {
+                        super.run();
+                        getInfo(newsid);
+                    }
+                }.start();
             }
         });
 
@@ -89,7 +100,10 @@ public class ChildPageActivity extends AppCompatActivity {
         x.http().post(rp, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Log.d("fanhuizhi",result);
+                //Log.d("fanhuizhi",result);
+                Intent intent=new Intent(ChildPageActivity.this,PagerFourDetailActivity.class);
+                intent.putExtra("result",result);
+                startActivity(intent);
             }
 
             @Override

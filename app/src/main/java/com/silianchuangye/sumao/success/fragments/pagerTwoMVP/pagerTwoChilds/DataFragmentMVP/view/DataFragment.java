@@ -25,6 +25,7 @@ import com.silianchuangye.sumao.success.fragments.pagerTwoMVP.pagerTwoChilds.Dat
 import com.silianchuangye.sumao.success.fragments.pagerTwoMVP.pagerTwoChilds.DataFragmentMVP.presenter.DataFragmentPresenter;
 import com.silianchuangye.sumao.success.utils.NetWorkChangeBroadcastReceiver;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -122,7 +123,10 @@ public class DataFragment extends Fragment implements IDataFragmentView {
                     Intent intent=new Intent(getActivity(), NewsActivity.class);
                     intent.putExtra("title",in.get(position).getDataname());
                     intent.putExtra("id",in.get(position).getDataid());
-                    intent.putExtra("time",in.get(position).getDatatime());
+                  //  intent.putExtra("time",in.get(position).getDatatime());
+                    intent.putExtra("time",new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Double.parseDouble(in.get(position).getDatatime())));
+                    intent.putExtra("number","abc");
+                    intent.putExtra("from","abc");
                     startActivity(intent);
                    // Toast.makeText(getActivity(), "List--->" + in.get(position).getDataid(), Toast.LENGTH_SHORT).show();
                     break;

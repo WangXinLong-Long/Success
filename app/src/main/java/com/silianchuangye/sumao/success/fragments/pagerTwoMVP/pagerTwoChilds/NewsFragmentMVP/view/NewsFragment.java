@@ -24,6 +24,7 @@ import com.silianchuangye.sumao.success.fragments.pagerTwoMVP.pagerTwoChilds.New
 import com.silianchuangye.sumao.success.fragments.pagerTwoMVP.pagerTwoChilds.NewsFragmentMVP.presenter.NewsFragmentPresenter;
 import com.silianchuangye.sumao.success.utils.NetWorkChangeBroadcastReceiver;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 
@@ -96,7 +97,10 @@ public class NewsFragment extends Fragment implements INewsFragmentView{
                     Intent intent=new Intent(getActivity(), NewsActivity.class);
                     intent.putExtra("title",in.get(position).getIn_xwbt());
                     intent.putExtra("id",in.get(position).getIn_xwid());
-                    intent.putExtra("time",in.get(position).getIn_xwtime());
+                   // intent.putExtra("time",in.get(position).getIn_xwtime());
+                    intent.putExtra("time",new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Double.parseDouble(in.get(position).getIn_xwtime())));
+                    intent.putExtra("number","abc");
+                    intent.putExtra("from","abc");
                     startActivity(intent);
                     Toast.makeText(getActivity(), "List--->" + in.get(position).getIn_xwid(), Toast.LENGTH_SHORT).show();
                     break;

@@ -20,6 +20,9 @@ import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.setting.ImageActivity;
 import com.silianchuangye.sumao.success.fragments.pagerFourMVP.pagerFourDetail.bean.PagerFourDetailBean;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
 
 public class PagerFourDetailActivity extends AppCompatActivity implements View.OnClickListener{
@@ -28,11 +31,20 @@ public class PagerFourDetailActivity extends AppCompatActivity implements View.O
     private JavaScriptInterface javascriptInterface;
     private WebSettings webSettings;
     private PagerFourDetailBean pagerFourDetailBean;
+    private String Result;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pager_four_detail);
+        Bundle bundle=getIntent().getExtras();
+        String fanhui=bundle.getString("result");
+        try {
+            JSONObject jsonObject=new JSONObject(fanhui);
+            Result=jsonObject.getString("content");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 //        Intent intent = getIntent();
         pagerFourDetailBean = (PagerFourDetailBean)  getIntent().getSerializableExtra("pagerFourDetailBean");
 //        String haha = getIntent().getStringExtra("haha");
@@ -42,10 +54,10 @@ public class PagerFourDetailActivity extends AppCompatActivity implements View.O
         title.setVisibility(View.GONE);
 
         TextView time = (TextView) findViewById(R.id.time_text);
-        time.setText(""+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Double.parseDouble(pagerFourDetailBean.getUpdateDate().getTime())));
+       // time.setText(""+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Double.parseDouble(pagerFourDetailBean.getUpdateDate().getTime())));
 
         TextView from = (TextView) findViewById(R.id.from_text);
-        from.setText(pagerFourDetailBean.getSource());
+      //  from.setText(pagerFourDetailBean.getSource());
 
         mWebView = (WebView) findViewById(R.id.webView);
         initData();
@@ -75,18 +87,16 @@ public class PagerFourDetailActivity extends AppCompatActivity implements View.O
         mWebView.setWebChromeClient(new MyWebChromeClient());
         //添加监听
         mWebView.addJavascriptInterface(javascriptInterface, "imagelistner");
+        mWebView.loadDataWithBaseURL(null,Result, "text/html", "utf-8", null);
 
 //        talkWithNet1();
-        talkWithNet2();
-    }
-
-
-
-    private void talkWithNet2() {
-        String content = pagerFourDetailBean.getContent();
-        mWebView.loadDataWithBaseURL(null, content, "text/html", "utf-8", null);
+       // talkWithNet2();
 
     }
+
+
+
+
 
 
 

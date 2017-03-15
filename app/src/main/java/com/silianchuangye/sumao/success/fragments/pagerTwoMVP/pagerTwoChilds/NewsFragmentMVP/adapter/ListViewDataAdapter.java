@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.pagerTwoMVP.pagerTwoChilds.NewsFragmentMVP.bean.NewsFragmentBean;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,7 +63,8 @@ public class ListViewDataAdapter extends BaseAdapter {
             viewHolder = ((ViewHolder) convertView.getTag());
         }
         viewHolder.title.setText(pagerTwoDataListViewBeens.get(position).getIn_xwbt());
-        viewHolder.time.setText(pagerTwoDataListViewBeens.get(position).getIn_xwtime());
+        viewHolder.time.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Double.parseDouble(pagerTwoDataListViewBeens.get(position).getIn_xwtime())));
+        //viewHolder.time.setText(pagerTwoDataListViewBeens.get(position).getIn_xwtime());
         return convertView;
     }
 

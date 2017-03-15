@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -35,7 +36,10 @@ import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
@@ -96,13 +100,21 @@ public class AnalysisFragment extends Fragment {
                     String array=jsonObject.getString("in");
                     JSONArray jsonArray=new JSONArray(array);
                     list=new ArrayList<Map<String, Object>>();
+
                     for (int i=0;i<jsonArray.length();i++){
                         JSONObject object=jsonArray.getJSONObject(i);
-                        Map<String,Object> map=new Hashtable<String, Object>();
-                        map.put("id",object.getString("in_in_zxid"));
-                        map.put("title",object.getString("in_zxbt"));
-                        map.put("time",object.getString("in_zxtime"));
-                        list.add(map);
+
+
+                            Map<String,Object> map=new Hashtable<String, Object>();
+                            map.put("id",object.getString("in_in_zxid"));
+                            map.put("title",object.getString("in_zxbt"));
+                           // map.put("time",object.getString("in_zxtime"));
+                            map.put("time",new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Double.parseDouble(object.getString("in_zxtime"))));
+
+                            list.add(map);
+
+
+
                     }
                     SimpleAdapter adapter=new SimpleAdapter(getActivity(),list,R.layout.data_list_view_adapter
                     ,new String[]{"title","time"},new int[]{R.id.title_text_view,R.id.time_text_view});
@@ -164,6 +176,8 @@ public class AnalysisFragment extends Fragment {
                      intent.putExtra("title",list.get(position).get("title").toString());
                      intent.putExtra("id",list.get(position).get("id").toString());
                      intent.putExtra("time",list.get(position).get("time").toString());
+                     intent.putExtra("number","abc");
+                     intent.putExtra("from","abc");
                      startActivity(intent);
                     //Toast.makeText(getActivity(), "List--->" + in.get(position).getDataid(), Toast.LENGTH_SHORT).show();
                     break;

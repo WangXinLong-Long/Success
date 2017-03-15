@@ -1,6 +1,7 @@
 package com.silianchuangye.sumao.success.fragments.pagerTwoMVP.pagerTwoChilds.DataFragmentMVP.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +11,10 @@ import android.widget.TextView;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.pagerTwoMVP.pagerTwoChilds.DataFragmentMVP.bean.PagerTwoDataListViewBean;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -61,10 +65,14 @@ public class ListViewDataAdapter extends BaseAdapter {
         } else {
             viewHolder = ((ViewHolder) convertView.getTag());
         }
-//        viewHolder.title.setText(pagerTwoDataListViewBeens.get(position).getDataname());
-//        viewHolder.time.setText(pagerTwoDataListViewBeens.get(position).getDataname());
-        viewHolder.title.setText(pagerTwoDataListViewBeens.get(position).getDataname());
-        viewHolder.time.setText(pagerTwoDataListViewBeens.get(position).getDatatime());
+
+            viewHolder.title.setText(pagerTwoDataListViewBeens.get(position).getDataname());
+           // viewHolder.time.setText(pagerTwoDataListViewBeens.get(position).getDatatime());
+            viewHolder.time.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Double.parseDouble(pagerTwoDataListViewBeens.get(position).getDatatime())));
+
+
+
+
         return convertView;
     }
 
