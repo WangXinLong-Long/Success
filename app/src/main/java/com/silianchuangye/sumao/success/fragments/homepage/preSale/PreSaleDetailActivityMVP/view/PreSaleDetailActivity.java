@@ -42,9 +42,13 @@ import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetail
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.LoginUserActivity;
 import com.silianchuangye.sumao.success.utils.Loding;
 import com.silianchuangye.sumao.success.utils.LogUtils;
+import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -104,17 +108,16 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
     private boolean canPayTheMargin;
     private TextView payment_deadline_et;
     private LinearLayout remark;
+    private Button payment_security_closeMerket;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-//
         setContentView(R.layout.activity_pre_sale_detail);
         Intent intent = getIntent();
         skuId = intent.getStringExtra("skuId");
         LogUtils.log("skuId---->" + skuId);
+        payment_security_closeMerket= (Button) findViewById(R.id.payment_security_closeMerket);
         preSaleDetailBean = (PreSaleDetailBean) intent.getSerializableExtra("preSaleDetailBean");
         productId = preSaleDetailBean.getCl_id();
         Calendar calendar = Calendar.getInstance();
@@ -157,6 +160,13 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
             }
         });
         initView();
+        new Thread(){
+            @Override
+            public void run() {
+                super.run();
+                booleanMarket();
+            }
+        }.start();
         initListener();
         setPreSaleDetailData(preSaleDetailBean);
     }
@@ -423,25 +433,15 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
                     intent1.putExtra("roles", "buyer");
                     startActivityForResult(intent1, 0);
                 } else {
-                    if (canPayTheMargin) {//根据预售日历的情况，判断是否可以支付保证金
-                        if (riliDate != null) {
-                            if (edt_num.getText().toString().equals("")) {
-                                Toast.makeText(this, "购买数量不能为空", Toast.LENGTH_SHORT).show();
-                            } else {
-                                if (Double.valueOf(edt_num.getText().toString()) < Double.valueOf(purchase_quantity_et.getText().toString())) {
-                                    Toast.makeText(this, "购买数量不能小于起购量", Toast.LENGTH_SHORT).show();
-                                } else if (Double.valueOf(edt_num.getText().toString()) > Double.valueOf(surplus_amount_et.getText().toString())) {
-                                    Toast.makeText(this, "购买数量不能大于剩余数量", Toast.LENGTH_SHORT).show();
-                                } else {
-                                    Popupwindow();
-//                                backgroundAlpha(0.5f);
-                                }
-                            }
-
+                    //在这里首先判断客户是否有权限
+                    new Thread(){
+                        @Override
+                        public void run() {
+                            super.run();
+                            booleanJurisdiction(productId);
                         }
-                    } else {
-                        Toast.makeText(PreSaleDetailActivity.this, "该产品暂无预售日期", Toast.LENGTH_SHORT).show();
-                    }
+                    }.start();
+
                 }
                 break;
             case R.id.layoutService:
@@ -449,6 +449,77 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
                 break;
 
         }
+    }
+    //判断用户是否有权限购买
+    public void booleanJurisdiction(String Id){
+        String url=SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/userprofiling/PurchaseJurisdictionCheckActor/PurchaseResult";
+        RequestParams rp=new RequestParams(url);
+        rp.addParameter("productId",Id);
+        x.http().post(rp, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.d("用户是否有权限",result);
+                try {
+                    JSONObject jsonObject=new JSONObject(result);
+                    String allow=jsonObject.getString("cl_allow");
+                    Log.d("用户权限的返回值",result);
+                    if (allow.equals("0")){
+                        //没有权限问题，可以放心购买
+                        if (canPayTheMargin) {//根据预售日历的情况，判断是否可以支付保证金
+                            if (riliDate != null) {
+                                if (edt_num.getText().toString().equals("")) {
+                                    Toast.makeText(PreSaleDetailActivity.this, "购买数量不能为空", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    if (Double.valueOf(edt_num.getText().toString()) < Double.valueOf(purchase_quantity_et.getText().toString())) {
+                                        Toast.makeText(PreSaleDetailActivity.this, "购买数量不能小于起购量", Toast.LENGTH_SHORT).show();
+                                    } else if (Double.valueOf(edt_num.getText().toString()) > Double.valueOf(surplus_amount_et.getText().toString())) {
+                                        Toast.makeText(PreSaleDetailActivity.this, "购买数量不能大于剩余数量", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Popupwindow();
+//                                backgroundAlpha(0.5f);
+                                    }
+                                }
+
+                            }
+                        } else {
+                            Toast.makeText(PreSaleDetailActivity.this, "该产品暂无预售日期", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }else if (allow.equals("1")){
+                        Toast.makeText(PreSaleDetailActivity.this, "该用户无上游资源方购买资质", Toast.LENGTH_SHORT).show();
+                    }else if (allow.equals("2")){
+                        Toast.makeText(PreSaleDetailActivity.this, "黑名单不能购买", Toast.LENGTH_SHORT).show();
+                    }else if (allow.equals("3")){
+                        Toast.makeText(PreSaleDetailActivity.this, "用户没有登录", Toast.LENGTH_SHORT).show();
+                    }else if (allow.equals("4")){
+                        Toast.makeText(PreSaleDetailActivity.this, "没有在购买期限内，不能购买", Toast.LENGTH_SHORT).show();
+                    }else if(allow.equals("5")){
+                        Toast.makeText(PreSaleDetailActivity.this, "csc审核没有通过", Toast.LENGTH_SHORT).show();
+                    }else if (allow.equals("6")){
+                        Toast.makeText(PreSaleDetailActivity.this, "企业财务员无权购买产品", Toast.LENGTH_SHORT).show();
+                    }else if (allow.equals("7")){
+                        Toast.makeText(PreSaleDetailActivity.this, "库存小于购买量", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
     }
 
     //设置背景透明
@@ -462,8 +533,6 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
 
     public void Popupwindow() {
         getinfo_Bank();
-
-
     }
 
     public void getinfo_Bank() {
@@ -624,6 +693,7 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
 
                 if (result.contains("amount")) {
                     List<PreSaleBondBean.BankListBean> bankList = preSaleBondBean.getBankList();
+                    list1.clear();
                     for (int i = 0; i < bankList.size(); i++) {
                         OpenAuction auction = new OpenAuction();
                         auction.tv_money = bankList.get(i).getBalance();
@@ -642,8 +712,10 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
                             auction.iv_icon = R.mipmap.jianshe;
                             auction.tv_Name = "中国建设银行";
                         }
-                        list1.clear();
+                        Log.d("银行对象",""+auction.tv_Name);
+                        //list1.clear();
                         list1.add(auction);
+                        Log.d("银行列表",list1.toString());
 
                     }
                     adapter = new PopupWindowAdaptrer(list1, PreSaleDetailActivity.this);
@@ -715,5 +787,43 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    //判断是否开闭市
+    public void booleanMarket(){
+        String url= SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/order/myorder/OrderPaymentInfo/colsedChecker";
+        RequestParams rp=new RequestParams(url);
+        x.http().post(rp, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.d("预售是否闭市场",""+result);
+                if (result.contains("true")){
+                    //支付按钮不能点
+                    payment_security.setVisibility(View.VISIBLE);
+                    payment_security_closeMerket.setVisibility(View.GONE);
+                    Log.d("现在是开市","现在是开市");
+                }else if (result.contains("false")){
+                    payment_security.setVisibility(View.GONE);
+                    payment_security_closeMerket.setVisibility(View.VISIBLE);
+                    Log.d("现在是关闭市","现在是关闭市");
+
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
     }
 }

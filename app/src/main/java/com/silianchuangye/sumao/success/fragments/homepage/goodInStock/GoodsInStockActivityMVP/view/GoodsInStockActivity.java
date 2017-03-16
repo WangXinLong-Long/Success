@@ -459,11 +459,11 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (smClList.get(position).getIn_leixing().equals("现货")||smClList.get(position).getIn_leixing().equals("fixedProduct")) {
             String cl_id = smClList.get(position).getIn_id();
-            Toast.makeText(this, "走现货,id为" + cl_id, Toast.LENGTH_SHORT).show();
+          //  Toast.makeText(this, "走现货,id为" + cl_id, Toast.LENGTH_SHORT).show();
             LogUtils.log("走现货,id为" + cl_id);
             goodsInStockActivityPresenter.getGoodInStockDetailInfo(cl_id);
         } else if (smClList.get(position).getIn_leixing().equals("预售")){
-            Toast.makeText(this, "走预售", Toast.LENGTH_SHORT).show();
+          //  Toast.makeText(this, "走预售", Toast.LENGTH_SHORT).show();
             String productId = smClList.get(position).getIn_id();
             String skuId = smClList.get(position).getIn_cpid();
             String cl_jiner = smClList.get(position).getIn_prix();

@@ -8,7 +8,7 @@ import java.util.List;
  */
 public class MessagePush implements Serializable {
     private String pageCount;
-    private List<Message> list;
+    private List<NoticeList> noticeList;
 
     public String getPageCount() {
         return pageCount;
@@ -18,50 +18,68 @@ public class MessagePush implements Serializable {
         this.pageCount = pageCount;
     }
 
-    public List<Message> getList() {
-        return list;
+    public List<NoticeList> getNoticeList() {
+        return noticeList;
     }
 
-    public void setList(List<Message> list) {
-        this.list = list;
+    public void setNoticeList(List<NoticeList> noticeList) {
+        this.noticeList = noticeList;
     }
 
-    public static class Message implements Serializable{
-        private String MessageId;
-        private String MessageType;
-        private String MessageTime;
-        private String MessageTitle;
+    public static class NoticeList implements Serializable{
+        private String id;
+        private String images;
+        private String sendTime;
+        private String sendType;
+        private String status;
+        private String title;
 
-        public String getMessageId() {
-            return MessageId;
+        public String getImages() {
+            return images;
         }
 
-        public void setMessageId(String messageId) {
-            MessageId = messageId;
+        public void setImages(String images) {
+            this.images = images;
         }
 
-        public String getMessageType() {
-            return MessageType;
+        public String getId() {
+            return id;
         }
 
-        public void setMessageType(String messageType) {
-            MessageType = messageType;
+        public void setId(String id) {
+            this.id = id;
         }
 
-        public String getMessageTime() {
-            return MessageTime;
+        public String getSendTime() {
+            return sendTime;
         }
 
-        public void setMessageTime(String messageTime) {
-            MessageTime = messageTime;
+        public void setSendTime(String sendTime) {
+            this.sendTime = sendTime;
         }
 
-        public String getMessageTitle() {
-            return MessageTitle;
+        public String getSendType() {
+            return sendType;
         }
 
-        public void setMessageTitle(String messageTitle) {
-            MessageTitle = messageTitle;
+        public void setSendType(String sendType) {
+            this.sendType = sendType;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public String getStatus() {
+            return status;
+        }
+
+        public void setStatus(String status) {
+            this.status = status;
         }
     }
 }

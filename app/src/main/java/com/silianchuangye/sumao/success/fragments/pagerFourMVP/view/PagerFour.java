@@ -151,7 +151,7 @@ public class PagerFour extends BasePager {
 
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("infoType","常见问题");
+            jsonObject.put("infoType",name);
             Log.d("name的值",name);
         } catch (JSONException e) {
             e.printStackTrace();

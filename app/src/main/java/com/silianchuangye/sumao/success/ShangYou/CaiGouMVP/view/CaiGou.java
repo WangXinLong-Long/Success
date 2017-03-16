@@ -119,6 +119,7 @@ public class CaiGou extends AppCompatActivity implements OnClickListener, Adapte
         presenter = new CaiGouPresenter(this);
         sessionID = getSharedPreferences("sumao", MODE_PRIVATE).getString("unique", "");
         presenter.requestSeePlanDate("1", "10", sellerCompanyId, sessionID, "", "", "", "", "", "");
+
         // initView();
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.

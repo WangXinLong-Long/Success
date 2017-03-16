@@ -13,25 +13,48 @@ import com.silianchuangye.sumao.success.fragments.myPlasticTrade.messagePush.vie
  * Created by junjun on 2017/3/11.
  */
 public class MessagePushPresenter {
-    private IMessagePushView iMessagePushView;
-    private Context context;
+     IMessagePushView iMessagePushView;
+    // Context context;
 
 
-
-    public void MessagePushPresenter(IMessagePushView iMessagePushView){
-        this.iMessagePushView=iMessagePushView;
+    public MessagePushPresenter(IMessagePushView iMessagePushView) {
+        this.iMessagePushView = iMessagePushView;
     }
 
+
+
     public void getMessagePushResult(String pageNum, boolean UpdateOrLoad, final String unique){
-        IMessagePushMedol iMessagePushMedol=new MessagePushMedol(pageNum,UpdateOrLoad,unique);
+
+        final IMessagePushMedol iMessagePushMedol=new MessagePushMedol(pageNum,UpdateOrLoad,unique);
 
         iMessagePushMedol.getMesssagePush(new MessagePushcallback() {
             @Override
-            public void callbackMessagePush(String pageNum, boolean updateOrload) {
-              //  iMessagePushView.setMessagePushResult);
-                iMessagePushView.setMessagePushResult(pageNum,updateOrload,unique);
+            public void callbackMessagePush(String result, boolean updateOrload) {
+                iMessagePushView.setMessagePushResult(result,updateOrload);
             }
+//            @Override
+//            public void callbackMessagePush(String pageNum, boolean updateOrload) {
+//              //  iMessagePushView.setMessagePushResult);
+//                iMessagePushView.setMessagePushResult(pageNum,updateOrload,unique);
+//            }
+
+//            @Override
+//            public void callbackMessagePush(String result) {
+//              //  iMessagePushView.setMessagePushResult);
+//                iMessagePushView.setMessagePushResult(result,updateOrload,unique);
+//            }
+
+
         });
 
+    }
+    public void getMessagePushForselect(String pageNum,boolean UpdateLoad,String unique,String Id,String type,String title,String startData,String endData){
+        IMessagePushMedol getMessage=new MessagePushMedol(pageNum,UpdateLoad,unique,Id,type,title,startData,endData);
+        getMessage.getMesssagePushForselect(new MessagePushcallback() {
+            @Override
+            public void callbackMessagePush(String result, boolean updateOrload) {
+                iMessagePushView.setMessagePushResult(result,updateOrload);
+            }
+        });
     }
 }

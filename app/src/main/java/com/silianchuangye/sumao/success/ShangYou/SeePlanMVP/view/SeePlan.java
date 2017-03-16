@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -94,7 +95,10 @@ public class SeePlan extends Fragment implements ISeePlanView{
         adapter=new SeePlanAdapter(getActivity(),planOrderList);
         lv.setAdapter(adapter);
         planOrderList.clear();
-        //planOrderList.addAll(CaiGouBean.getPlanOrderList());
+       // planOrderList.addAll(CaiGouBean.getPlanOrderList());
+        //Log.d("验证怎么不成功",CaiGouBean.getPlanOrderList().toString());
+        Log.d("验证不成功怎么","加油");
+        planOrderList.addAll(CaiGouBean.getPlanOrderList());
         adapter.notifyDataSetChanged();
 //        getActivity().
         seePlanPresenter = new SeePlanPresenter(this);
@@ -127,6 +131,7 @@ public class SeePlan extends Fragment implements ISeePlanView{
     public void getSeePlanInfoInFragment(CaiGouBean caiGouBean,String pageNum, String planStartDate,
                                          String planEndDate, String planState, String warehouseName,
                                          String logisticsID) {
+        Log.d("进来了","进来");
         if (pageNum.equals("1")){
             planOrderList.clear();
         }
@@ -136,6 +141,7 @@ public class SeePlan extends Fragment implements ISeePlanView{
         this.planState = planState;
         this.warehouseName = warehouseName;
         this.logisticsID = logisticsID;
+        Log.d("aaa验证",caiGouBean.getVipPlanOrder().getPlanOrderList().size()+"aaa");
         planOrderList.addAll(caiGouBean.getVipPlanOrder().getPlanOrderList());
         adapter.notifyDataSetChanged();
     }

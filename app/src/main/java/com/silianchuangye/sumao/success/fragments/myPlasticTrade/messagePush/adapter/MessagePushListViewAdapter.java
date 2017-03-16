@@ -21,20 +21,20 @@ import java.util.List;
  */
 public class MessagePushListViewAdapter extends BaseAdapter {
     private Context context;
-    private List<MessagePush.Message> list;
+    private List<MessagePush.NoticeList> list;
 
-    public MessagePushListViewAdapter(Context context,List<MessagePush.Message> list){
+    public MessagePushListViewAdapter(Context context,List<MessagePush.NoticeList> list){
         this.context=context;
      //   list=new ArrayList<>();
         this.list=list;
 
     }
-    public void addData(List<MessagePush.Message> data) {
-        list.addAll(data);
+    public void addData(List<MessagePush.NoticeList> list) {
+        this.list.addAll(list);
     }
 
     public void clearData() {
-        list.clear();
+        this.list.clear();
     }
 
 
@@ -63,13 +63,20 @@ public class MessagePushListViewAdapter extends BaseAdapter {
         View view= LayoutInflater.from(context).inflate(R.layout.item_message_push,null);
         TextView tv_Number= (TextView) view.findViewById(R.id.tv_Number_value);
         TextView tv_Type= (TextView) view.findViewById(R.id.tv_Type);
-        TextView tv_Title= (TextView) view.findViewById(R.id.tv_title);
+        TextView tv_Title= (TextView) view.findViewById(R.id.tv_Title);
         RelativeLayout layout_More= (RelativeLayout) view.findViewById(R.id.layout_More);
-        tv_Number.setText(list.get(position).getMessageId());
+        tv_Number.setText(list.get(position).getId().toString());
         Log.d("编号",tv_Number.getText().toString()+"编号");
+//        tv_Type.setText(list.get(position).getSendType());
+//        tv_Title.setText(list.get(position).getTitle());
+        if (list.get(position).getSendType().equals("0")){
+            tv_Type.setText("塑贸通知");
+        }else if (list.get(position).getSendType().equals("1")){
+            tv_Type.setText("企业信息修改");
+        }
+       // tv_Type.setText(list.get(position).getSendType().toString());
+        tv_Title.setText(list.get(position).getTitle().toString());
 
-        tv_Type.setText(list.get(position).getMessageType());
-        tv_Title.setText(list.get(position).getMessageTitle());
 
 
         layout_More.setOnClickListener(new View.OnClickListener() {

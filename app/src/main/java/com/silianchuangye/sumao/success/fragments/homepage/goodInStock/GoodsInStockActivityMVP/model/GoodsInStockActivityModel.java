@@ -1,5 +1,7 @@
 package com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.model;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.bean.GoodsInStockActivityBean;
 import com.silianchuangye.sumao.success.utils.Loding;
@@ -27,7 +29,7 @@ public class GoodsInStockActivityModel implements IGoodsInStockActivityModel {
     String groups;//牌号
     String pageNum;//当前页码
     String updateOrLoad;
-String searchField = "";
+    String searchField = "";
     public GoodsInStockActivityModel(String groups,String pattern, String regions, String provinces, String cities,
                                      String categoryNames, String appNames, String gradeNums, String pageNum, String updateOrLoad) {
         this.groups = groups;
@@ -55,6 +57,7 @@ String searchField = "";
         try {
             if (regions != null) {
                 jsonObject.put("regions", regions);
+                Log.d("地区","地区"+regions);
                 searchField = "地区"+regions;
 
             }

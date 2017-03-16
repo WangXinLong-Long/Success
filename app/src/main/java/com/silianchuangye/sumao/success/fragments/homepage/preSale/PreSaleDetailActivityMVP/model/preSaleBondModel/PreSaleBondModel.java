@@ -21,7 +21,8 @@ public class PreSaleBondModel implements IPreSaleBondModel{
 
     @Override
     public void getPresaleBondResult(final PreSaleBondCallback callback) {
-        String url = SuMaoConstant.SUMAO_IP + "/rest/model/atg/commerce/catalog/ProductCatalogActor/availableBank";
+        String url = SuMaoConstant.SUMAO_IP+  "/rest/model/atg/commerce/catalog/ProductCatalogActor/availableBank";
+        //String url = SuMaoConstant.SUMAO_IP + "/rest/model/atg/commerce/catalog/ProductCatalogActor/availableBank";
         RequestParams rp = new RequestParams(url);
         rp.addParameter("productId", productId);
 //        rp.addParameter("skuId", skuId);
