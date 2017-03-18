@@ -5,4 +5,6 @@ package com.silianchuangye.sumao.success.ShangYou.PlanDayMVP.model.SubmissionPla
  */
 public interface ISubmissionPlanModel {
     void sendSubmisssionPlan(SubmissionPlanCallback callback);
+
+
 }

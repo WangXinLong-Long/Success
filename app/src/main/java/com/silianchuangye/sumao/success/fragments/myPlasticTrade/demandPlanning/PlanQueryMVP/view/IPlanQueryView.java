@@ -5,4 +5,6 @@ package com.silianchuangye.sumao.success.fragments.myPlasticTrade.demandPlanning
  */
 public interface IPlanQueryView {
 
+    void setPlan(String result,boolean update);
+
 }

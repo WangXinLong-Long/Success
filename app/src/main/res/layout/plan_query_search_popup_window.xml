@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white">
-
+    <!--产品名称-->
     <RelativeLayout
         android:id="@+id/product_name_rl"
         android:layout_width="match_parent"
@@ -28,7 +28,7 @@
             android:layout_toLeftOf="@id/product_name"
             android:text="产品名称 : " />
     </RelativeLayout>
-
+    <!--仓库名称-->
     <RelativeLayout
         android:id="@+id/warehouse_name_rl"
         android:layout_width="match_parent"
@@ -62,7 +62,7 @@
         android:layout_below="@id/warehouse_name_rl"
         android:layout_marginTop="@dimen/x7">
 
-        <EditText
+       <!-- <EditText
             android:id="@+id/seller_enterprise"
             android:layout_width="@dimen/x240"
             android:layout_height="@dimen/x30"
@@ -71,13 +71,35 @@
             android:layout_marginRight="@dimen/x7"
             android:background="@drawable/juxing"
             android:gravity="center_vertical"
-            android:paddingLeft="@dimen/x7" />
+            android:paddingLeft="@dimen/x7" />-->
+        <LinearLayout
+            android:id="@+id/layout_seller_enterprise"
+            android:layout_width="@dimen/x240"
+            android:layout_height="@dimen/x30"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/x7"
+            android:background="@drawable/juxing"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/seller_enterprise"
+                android:layout_width="@dimen/x210"
+                android:layout_height="@dimen/x30"
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/x3" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/drop_down" />
+        </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/seller_enterprise"
+            android:layout_toLeftOf="@id/layout_seller_enterprise"
             android:text="企业卖方 : " />
     </RelativeLayout>
 
@@ -88,7 +110,7 @@
         android:layout_below="@id/seller_enterprise_rl"
         android:layout_marginTop="@dimen/x7">
 
-        <EditText
+      <!--  <EditText
             android:id="@+id/demand_number"
             android:layout_width="@dimen/x240"
             android:layout_height="@dimen/x30"
@@ -97,14 +119,37 @@
             android:layout_marginRight="@dimen/x7"
             android:background="@drawable/juxing"
             android:gravity="center_vertical"
-            android:paddingLeft="@dimen/x7" />
+            android:paddingLeft="@dimen/x7" />-->
+
+        <LinearLayout
+            android:id="@+id/mention_logistc_ll"
+            android:layout_width="@dimen/x240"
+            android:layout_height="@dimen/x30"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/x7"
+            android:background="@drawable/juxing"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/demand_number"
+                android:layout_width="@dimen/x210"
+                android:layout_height="@dimen/x30"
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/x3" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/drop_down" />
+        </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/demand_number"
-            android:text="需求编号 : " />
+            android:layout_toLeftOf="@id/mention_logistc_ll"
+            android:text="   物流: " />
     </RelativeLayout>
 
     <RelativeLayout
@@ -253,7 +298,24 @@
         android:layout_marginLeft="@dimen/x75"
         android:layout_marginRight="@dimen/x7"
         android:background="@drawable/juxing"
-
+        android:visibility="gone" />
+    <ListView
+        android:id="@+id/wuliu_lv"
+        android:layout_width="@dimen/x240"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/demand_number_rl"
+        android:layout_marginLeft="@dimen/x75"
+        android:layout_marginRight="@dimen/x7"
+        android:background="@drawable/juxing"
+        android:visibility="gone" />
+    <ListView
+        android:id="@+id/qiye_lv"
+        android:layout_width="@dimen/x240"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/seller_enterprise_rl"
+        android:layout_marginLeft="@dimen/x75"
+        android:layout_marginRight="@dimen/x7"
+        android:background="@drawable/juxing"
         android:visibility="gone" />
 
     <LinearLayout

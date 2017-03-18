@@ -1,21 +1,29 @@
 package com.silianchuangye.sumao.success.fragments.myPlasticTrade.demandPlanning.PlanPresentationMVP.view;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.ShangYou.DayPlanInfo;
 import com.silianchuangye.sumao.success.adapter.DayPlanAdapter;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.demandPlanning.PlanPresentationMVP.presenter.PlanPresentationPresenter;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.demandPlanning.planType.ProductNameActivity;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.demandPlanning.planType.TypeActivity;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.demandPlanning.planType.WarehouseActivity;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -40,16 +48,42 @@ public class PlanPresentationActivity extends AppCompatActivity implements View.
     private DayPlanAlert alert;
     private PlanPresentationPresenter planPresentationPresenter;
 
+    private ImageView iv_child_title_bar_back;
+    private TextView tv_child_title_bar_title;
+    private String price="";
+    private String number="";
+    private String remark="";
+    private String sellerCompanyId="";
+    private String sellerCompanyName="";
+    private String productId="";
+    private String productName="";
+    private String warehouseId="";
+    private String warehouseName="";
+    private String wayId="";
+    private String wayName="";
+    private String date;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_plan_presentation);
         planPresentationPresenter = new PlanPresentationPresenter(this);
-        lv_day_plan = (ExpandableListView) findViewById(R.id.lv_day_plan);
+        tv_child_title_bar_title= (TextView) findViewById(R.id.tv_child_title_bar_title);
+        tv_child_title_bar_title.setText("计划提交");
+        iv_child_title_bar_back= (ImageView) findViewById(R.id.iv_child_title_bar_back);
+        iv_child_title_bar_back.setOnClickListener(this);
+         lv_day_plan = (ExpandableListView) findViewById(R.id.lv_day_plan);
         btn_day_plan_add = (Button) findViewById(R.id.btn_day_plan_add);
         btn_day_plan_tijiao = (Button) findViewById(R.id.btn_day_plan_tijiao);
         btn_day_plan_tijiao.setOnClickListener(this);
         btn_day_plan_add.setOnClickListener(this);
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d("进入了onStart方法","进来了");
         group = new ArrayList<>();
         list = new ArrayList<List<DayPlanInfo>>();
         initDate();
@@ -75,21 +109,74 @@ public class PlanPresentationActivity extends AppCompatActivity implements View.
                     groupPositionPublic = groupPosition;
                     onClickPlanDate(groupPosition);
                 } else if (adapter.getChild(groupPosition, childPosition).getLevel().equals("产品名称")) {
-                    Toast.makeText(PlanPresentationActivity.this, "产品名称", Toast.LENGTH_SHORT).show();
-                } else if (adapter.getChild(groupPosition, childPosition).getLevel().equals("数量（吨）")) {
-                    Toast.makeText(PlanPresentationActivity.this, "数量", Toast.LENGTH_SHORT).show();
+                    Log.d("上游资源方ID",sellerCompanyId+"asd");
+                    // Toast.makeText(PlanPresentationActivity.this, "产品名称", Toast.LENGTH_SHORT).show();
+                    if (sellerCompanyId!=""){
+                        Intent intent=new Intent(PlanPresentationActivity.this, ProductNameActivity.class);
+                        intent.putExtra("title","产品名称");
+                        intent.putExtra("sellerCompanyId",sellerCompanyId);
+
+                        //startActivity(intent);
+                        startActivityForResult(intent,2);
+
+                    }else{
+                        Toast.makeText(PlanPresentationActivity.this, "请先选择卖方企业", Toast.LENGTH_SHORT).show();
+                    }
+
+                } else if (adapter.getChild(groupPosition, childPosition).getLevel().equals("购买数量(吨)")) {
+                    // Toast.makeText(PlanPresentationActivity.this, "数量", Toast.LENGTH_SHORT).show();
+                    Intent intent=new Intent(PlanPresentationActivity.this,ValueActivity.class);
+                    intent.putExtra("title","购买数量");
+                    intent.putExtra("id",5);
+
+                    startActivityForResult(intent,5);
                 } else if (adapter.getChild(groupPosition, childPosition).getLevel().equals("仓库")) {
-                    Toast.makeText(PlanPresentationActivity.this, "仓库", Toast.LENGTH_SHORT).show();
+                    if (productId!=""){
+                    Intent intent=new Intent(PlanPresentationActivity.this, WarehouseActivity.class);
+                    intent.putExtra("title","仓库");
+                    intent.putExtra("productId",productId);
+                        intent.putExtra("position",3);
+                    startActivityForResult(intent,3);
+                    }else{
+                        Toast.makeText(PlanPresentationActivity.this, "请先选择产品", Toast.LENGTH_SHORT).show();
+                    }
+
                 } else if (adapter.getChild(groupPosition, childPosition).getLevel().equals("配送方式")) {
+                    if (productId!=""){
+                        Intent intent=new Intent(PlanPresentationActivity.this, WarehouseActivity.class);
+                        intent.putExtra("title","配送方式");
+                        intent.putExtra("productId",productId);
+                        intent.putExtra("position",6);
+                        startActivityForResult(intent,6);
+                    }else{
+                        Toast.makeText(PlanPresentationActivity.this, "请先选择产品", Toast.LENGTH_SHORT).show();
+                    }
+
                     Toast.makeText(PlanPresentationActivity.this, "配送方式", Toast.LENGTH_SHORT).show();
                 } else if (adapter.getChild(groupPosition, childPosition).getLevel().equals("备注")) {
-                    Toast.makeText(PlanPresentationActivity.this, "备注", Toast.LENGTH_SHORT).show();
+                    Intent intent=new Intent(PlanPresentationActivity.this,ValueActivity.class);
+                    intent.putExtra("title","备注");
+                    intent.putExtra("id",7);
+                    //setResult(7,intent);
+                    startActivityForResult(intent,7);
+                    //Toast.makeText(PlanPresentationActivity.this, "备注", Toast.LENGTH_SHORT).show();
                 } else if (adapter.getChild(groupPosition, childPosition).getLevel().equals("")) {
                     Toast.makeText(PlanPresentationActivity.this, "删除的是：" + groupPosition + "组。" + "--childPosition" + childPosition + "位置", Toast.LENGTH_SHORT).show();
                     list.remove(groupPosition);
                     group.remove(groupPosition);
                     adapter.notifyDataSetChanged();
+                }else if (adapter.getChild(groupPosition,childPosition).getLevel().equals("卖方企业")){
+                    //卖方企业的跳转界面
+                    Intent intent=new Intent(PlanPresentationActivity.this, TypeActivity.class);
+                    intent.putExtra("title","卖方企业");
+                    startActivityForResult(intent,0);
+                }else if (adapter.getChild(groupPosition,childPosition).getLevel().equals("购买价格(元/吨)")){
+                    Intent intent=new Intent(PlanPresentationActivity.this,ValueActivity.class);
+                    intent.putExtra("title","购买价格");
+                    intent.putExtra("id",4);
+                    startActivityForResult(intent,4);
                 }
+
 
                 return true;
             }
@@ -97,17 +184,54 @@ public class PlanPresentationActivity extends AppCompatActivity implements View.
         alert = new DayPlanAlert(this);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (resultCode){
+            case 0:
+                sellerCompanyId=data.getStringExtra("id");
+                sellerCompanyName=data.getStringExtra("name");
+               // Log.d("值",data.getStringExtra("name"));
+                break;
+            case 2:
+                productId=data.getStringExtra("id");
+                productName=data.getStringExtra("name");
+                break;
+            case 3:
+                warehouseId=data.getStringExtra("id");
+                warehouseName=data.getStringExtra("name");
+                break;
+            case 4:
+                price=data.getStringExtra("content");
+                break;
+            case 5:
+                number=data.getStringExtra("content");
+                break;
+            case 6:
+                wayId=data.getStringExtra("id");
+                wayName=data.getStringExtra("name");
+                break;
+            case 7:
+                remark=data.getStringExtra("content");
+                break;
+
+        }
+    }
+
+    /**
+     * 将数据添加到List列表中
+     */
     private void initDate() {
             lists = new ArrayList<DayPlanInfo>();
-            lists.add(new DayPlanInfo("卖方企业", "", "~~"));
-            lists.add(new DayPlanInfo("需求日期", "", "~~"));
-            lists.add(new DayPlanInfo("产品名称", "", "~~"));
-            lists.add(new DayPlanInfo("仓库", "", "~~"));
-            lists.add(new DayPlanInfo("购买价格(元/吨)", "", "~~"));
-            lists.add(new DayPlanInfo("购买数量(吨)", "", "~~"));
-            lists.add(new DayPlanInfo("配送方式", "", "~~"));
-            lists.add(new DayPlanInfo("备注", "", "~~"));
-            lists.add(new DayPlanInfo("", "删除计划", "~~"));
+            lists.add(new DayPlanInfo("卖方企业", "", sellerCompanyName));
+            lists.add(new DayPlanInfo("需求日期", "", " "));
+            lists.add(new DayPlanInfo("产品名称", "", productName));
+            lists.add(new DayPlanInfo("仓库", "", warehouseName));
+            lists.add(new DayPlanInfo("购买价格(元/吨)", "", price));
+            lists.add(new DayPlanInfo("购买数量(吨)", "", number));
+            lists.add(new DayPlanInfo("配送方式", "", wayName));
+            lists.add(new DayPlanInfo("备注", "", remark));
+            lists.add(new DayPlanInfo("", "删除计划", ""));
             list.add(lists);
             group.add("");
     }
@@ -115,7 +239,10 @@ public class PlanPresentationActivity extends AppCompatActivity implements View.
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btn_day_plan_add:
+//            case R.id.iv_child_title_bar_back:
+//                PlanPresentationActivity.this.finish();
+//                break;
+            case R.id.btn_day_plan_add://添加新计划
                 for (int i = 0; i < list.size(); i++) {
                     flag = false;
                     if (list.get(i).get(0).getDelete() == "" || list.get(i).get(0).getDelete().isEmpty()) {
@@ -146,57 +273,77 @@ public class PlanPresentationActivity extends AppCompatActivity implements View.
                 }
                 if (!flag) {
 
-
                     lists = new ArrayList<DayPlanInfo>();
-                    lists.add(new DayPlanInfo("卖方企业", "", "~~"));
-                    lists.add(new DayPlanInfo("需求日期", "", "~~"));
-                    lists.add(new DayPlanInfo("产品名称", "", "~~"));
-                    lists.add(new DayPlanInfo("仓库", "", "~~"));
-                    lists.add(new DayPlanInfo("购买价格(元/吨)", "", "~~"));
-                    lists.add(new DayPlanInfo("购买数量(吨)", "", "~~"));
-                    lists.add(new DayPlanInfo("配送方式", "", "~~"));
-                    lists.add(new DayPlanInfo("备注", "", "~~"));
-                    lists.add(new DayPlanInfo("", "删除计划", "~~"));
+                    lists.add(new DayPlanInfo("卖方企业", "", sellerCompanyName));
+                    lists.add(new DayPlanInfo("需求日期", "", " "));
+                    lists.add(new DayPlanInfo("产品名称", "", productName));
+                    lists.add(new DayPlanInfo("仓库", "", warehouseName));
+                    lists.add(new DayPlanInfo("购买价格(元/吨)", "", price));
+                    lists.add(new DayPlanInfo("购买数量(吨)", "", number));
+                    lists.add(new DayPlanInfo("配送方式", "", wayName));
+                    lists.add(new DayPlanInfo("备注", "", remark));
+                    lists.add(new DayPlanInfo("", "删除计划", ""));
                     list.add(lists);
                     group.add("");
+//                    lists = new ArrayList<DayPlanInfo>();
+//                    lists.add(new DayPlanInfo("卖方企业", "", "~~"));
+//                    lists.add(new DayPlanInfo("需求日期", "", "~~"));
+//                    lists.add(new DayPlanInfo("产品名称", "", "~~"));
+//                    lists.add(new DayPlanInfo("仓库", "", "~~"));
+//                    lists.add(new DayPlanInfo("购买价格(元/吨)", "", "~~"));
+//                    lists.add(new DayPlanInfo("购买数量(吨)", "", "~~"));
+//                    lists.add(new DayPlanInfo("配送方式", "", "~~"));
+//                    lists.add(new DayPlanInfo("备注", "", "~~"));
+//                    lists.add(new DayPlanInfo("", "删除计划", "~~"));
+//                    list.add(lists);
+//                    group.add("");
                     adapter.notifyDataSetChanged();
                     for (int i = 0; i < group.size(); i++) {
                         lv_day_plan.expandGroup(i);
                     }
                 }
                 break;
-            case R.id.btn_day_plan_tijiao:
+            case R.id.btn_day_plan_tijiao://计划提交
                 for (int i = 0; i < list.size(); i++) {
                     flag = false;
                     if (list.get(i).get(0).getDelete() == "" || list.get(i).get(0).getDelete().isEmpty()) {
-                        TOAST("卖方企业");
+                        //TOAST("卖方企业");
+                        Toast.makeText(PlanPresentationActivity.this, "请填写卖方企业", Toast.LENGTH_SHORT).show();
                         flag = true;
                     } else if (list.get(i).get(1).getDelete() == "" || list.get(i).get(1).getDelete().isEmpty()) {
-                        TOAST("需求日期");
+                       // TOAST("需求日期");
+                        Toast.makeText(PlanPresentationActivity.this, "请填写需求日期", Toast.LENGTH_SHORT).show();
                         flag = true;
                     } else if (list.get(i).get(2).getDelete() == "" || list.get(i).get(2).getDelete().isEmpty()) {
-                        TOAST("请填写产品名称");
+                       // TOAST("请填写产品名称");
+                        Toast.makeText(PlanPresentationActivity.this, "请填写产品名称", Toast.LENGTH_SHORT).show();
                         flag = true;
                     } else if (list.get(i).get(3).getDelete() == "" || list.get(i).get(3).getDelete().isEmpty()) {
-                        TOAST("请选择仓库");
+                        //TOAST("请选择仓库");
+                        Toast.makeText(PlanPresentationActivity.this, "请选择仓库", Toast.LENGTH_SHORT).show();
                         flag = true;
                     } else if (list.get(i).get(4).getDelete() == "" || list.get(i).get(4).getDelete().isEmpty()) {
-                        TOAST("请选择购买价格");
+                        //TOAST("请选择购买价格");
+                        Toast.makeText(PlanPresentationActivity.this, "请选择购买价格", Toast.LENGTH_SHORT).show();
                         flag = true;
                     } else if (list.get(i).get(5).getDelete() == "" || list.get(i).get(5).getDelete().isEmpty()) {
-                        TOAST("请填写购买数量");
+                       // TOAST("请填写购买数量");
+                        Toast.makeText(PlanPresentationActivity.this, "请填写购买数量", Toast.LENGTH_SHORT).show();
                         flag = true;
                     }else if (list.get(i).get(6).getDelete() == "" || list.get(i).get(6).getDelete().isEmpty()) {
-                        TOAST("请填写配送方式");
+                        //TOAST("请填写配送方式");
+                        Toast.makeText(PlanPresentationActivity.this, "请填写配送方式", Toast.LENGTH_SHORT).show();
                         flag = true;
                     }else if (list.get(i).get(7).getDelete() == "" || list.get(i).get(7).getDelete().isEmpty()) {
-                        TOAST("请填写备注");
+                       // TOAST("请填写备注");
+                        Toast.makeText(PlanPresentationActivity.this, "请填写备注", Toast.LENGTH_SHORT).show();
                         flag = true;
                     }
                 }
                 if (!flag) {
                     if (PlanPresentationActivity.this.getSharedPreferences("sumao", Context.MODE_PRIVATE).getString("unique", "").equals("false")) {
-                        TOAST("请登陆后进行操作");
+                       // TOAST("请登陆后进行操作");
+                        Toast.makeText(PlanPresentationActivity.this, "请登陆后进行操作", Toast.LENGTH_SHORT).show();
                         /*Intent intent = new Intent();
                         intent.setClass(getActivity(), LoginUserActivity.class);
                         intent.putExtra("roles", "buyer");
@@ -219,9 +366,10 @@ public class PlanPresentationActivity extends AppCompatActivity implements View.
 //                        String wareHouse = wareHouseIdLists.get(i).get(position);
 //                        String delivery = deliveryMethodIdLists.get(i).get(deliveryMethodNameLists.get(i).indexOf(list.get(i).get(4).getDelete()));
 //                        String remark = list.get(i).get(5).getDelete();
-
-                            planPresentationPresenter.setSubmitPlan(/*date, name, wareHouse, number, delivery, remark, productId, getActivity().getSharedPreferences("sumao", Context.MODE_PRIVATE).getString("unique", "")*/);
-
+                           // planPresentationPresenter.setSubmitPlan(/*date, name, wareHouse, number, delivery, remark, productId, getActivity().getSharedPreferences("sumao", Context.MODE_PRIVATE).getString("unique", "")*/);
+                            SharedPreferences sp=getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+                            String unique=sp.getString("unique","");
+                            planPresentationPresenter.setSubmitPlan(sellerCompanyId,date,productId,productName,warehouseId,number,wayId,remark,unique);
                         }
 //                        alert.show();
                     }
@@ -229,11 +377,15 @@ public class PlanPresentationActivity extends AppCompatActivity implements View.
 
                 }
                 break;
+            case R.id.iv_child_title_bar_back:
+                PlanPresentationActivity.this.finish();
+                break;
         }
     }
     public void TOAST(String s) {
         Toast.makeText(PlanPresentationActivity.this, s, Toast.LENGTH_SHORT).show();
     }
+
     private void onClickPlanDate(int position) {
         Calendar d = Calendar.getInstance(Locale.CHINA);
 //创建一个日历引用d，通过静态方法getInstance() 从指定时区 Locale.CHINA 获得一个日期实例
@@ -253,18 +405,35 @@ public class PlanPresentationActivity extends AppCompatActivity implements View.
 
     @Override
     public void getSubmitResults(String result) {
+        Log.d("计划提交的返回值",""+result);
+        if (result.contains("success")) {
+            alert.dismiss();
+            TOAST("上传成功");
+            for (int i = 0; i < list.size(); i++) {
+                list.remove(i);
+                group.remove(i);
+                adapter.notifyDataSetChanged();
+            }
+        } else {
+            alert.dismiss();
+            TOAST("上传失败");
+        }
+
 
     }
 
     class MyClick implements DatePickerDialog.OnDateSetListener {
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            list.get(groupPositionPublic).set(0, new DayPlanInfo("计划日期", "", year + "-" + monthOfYear + "-" + dayOfMonth));
+            //list.get(groupPositionPublic).get()
+            int month=monthOfYear+1;
+             date=year + "-" +month + "-" + dayOfMonth;
+            list.get(groupPositionPublic).set(1, new DayPlanInfo("需求日期", "", year + "-" +month + "-" + dayOfMonth));
             adapter.notifyDataSetChanged();
         }
     }
 
-
+    //提交时弹出的Dialog
     class DayPlanAlert extends AlertDialog implements View.OnClickListener {
         private ImageView img;
         private Button btn_canle;
@@ -312,8 +481,10 @@ public class PlanPresentationActivity extends AppCompatActivity implements View.
 //                        String wareHouse = wareHouseIdLists.get(i).get(position);
 //                        String delivery = deliveryMethodIdLists.get(i).get(deliveryMethodNameLists.get(i).indexOf(list.get(i).get(4).getDelete()));
 //                        String remark = list.get(i).get(5).getDelete();
-
-                        planPresentationPresenter.setSubmitPlan(/*date, name, wareHouse, number, delivery, remark, productId, getActivity().getSharedPreferences("sumao", Context.MODE_PRIVATE).getString("unique", "")*/);
+                        SharedPreferences sp=getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+                        String unique=sp.getString("unique","");
+                        planPresentationPresenter.setSubmitPlan(sellerCompanyId,date,productId,productName,warehouseId,number,warehouseId,remark,unique);
+                        //planPresentationPresenter.setSubmitPlan(/*date, name, wareHouse, number, delivery, remark, productId, getActivity().getSharedPreferences("sumao", Context.MODE_PRIVATE).getString("unique", "")*/);
 
                     }
                     break;

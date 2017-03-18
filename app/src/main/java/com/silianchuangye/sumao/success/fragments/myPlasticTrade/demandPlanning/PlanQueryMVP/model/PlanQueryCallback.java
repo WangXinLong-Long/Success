@@ -4,5 +4,5 @@ package com.silianchuangye.sumao.success.fragments.myPlasticTrade.demandPlanning
  * Created by Jobs Created on 2017/2/10.
  */
 public interface PlanQueryCallback {
-    void callbackPlanQueryResult(String result);
+    void callbackPlanQueryResult(String result,boolean updateLoad);
 }

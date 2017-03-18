@@ -26,6 +26,8 @@ public class SubmissionPlanModel implements ISubmissionPlanModel {
     String notes;
     String productId;
     String _dynSessConf;
+    String qiye;
+    String price;
 
     String url = SuMaoConstant.SUMAO_IP+"/rest/model/com/sumao/mobile/order/purchase/PlanOrderActor/demandScheduleInOrder";
 
@@ -61,6 +63,7 @@ public class SubmissionPlanModel implements ISubmissionPlanModel {
             e.printStackTrace();
         }
         rp.setBodyContent(jsonObject.toString());
+        Log.d("提交计划的传值",jsonObject.toString());
         Log.d("查看计划",""+rp);
         x.http().request(HttpMethod.POST, rp, new Callback.CommonCallback<String>() {
             private PlanDayBean planDayBean;
@@ -90,4 +93,6 @@ public class SubmissionPlanModel implements ISubmissionPlanModel {
         });
 //
     }
+
+
 }

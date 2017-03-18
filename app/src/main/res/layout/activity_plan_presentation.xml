@@ -4,6 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.myPlasticTrade.demandPlanning.PlanPresentationMVP.view.PlanPresentationActivity">
+
+    <include
+        android:id="@+id/layout_plan_titlebar"
+        layout="@layout/child_title_bar"></include>
     <LinearLayout
         android:id="@+id/linear_day_plan"
         android:layout_width="match_parent"
@@ -38,6 +42,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/linear_day_plan"
+        android:layout_below="@+id/layout_plan_titlebar"
         android:layout_marginTop="@dimen/x10">
 
     </ExpandableListView>

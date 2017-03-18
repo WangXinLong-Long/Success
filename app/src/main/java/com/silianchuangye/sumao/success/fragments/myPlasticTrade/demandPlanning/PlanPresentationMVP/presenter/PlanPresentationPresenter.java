@@ -15,14 +15,15 @@ public class PlanPresentationPresenter {
     public PlanPresentationPresenter(IPlanPresentationView planPresentationView) {
         this.planPresentationView = planPresentationView;
     }
-    @AspectJLoginStatus("")
-    public void setSubmitPlan(){
-        IPlanPresentationModel planPresentationModel = new PlanPresentationModel();
-        planPresentationModel.getPlanPresentationResuls(new PlanPresentationCallback() {
+
+    public void setSubmitPlan(String sellerCompanyId,String scheduleDate,String productId,String productName,String warehouseID,String planOrderQuantity,String logisticsID,String notes,String _dynSessConf ){
+       IPlanPresentationModel iPlanPresentationModel=new PlanPresentationModel(scheduleDate,productId,productName,warehouseID,planOrderQuantity,logisticsID,notes,_dynSessConf,sellerCompanyId);
+        iPlanPresentationModel.getPlanPresentationResuls(new PlanPresentationCallback() {
             @Override
             public void CallbackPlanPresentationResuls(String result) {
                 planPresentationView.getSubmitResults(result);
             }
         });
+
     }
 }

@@ -118,9 +118,9 @@ public class CaiGou extends AppCompatActivity implements OnClickListener, Adapte
         listFragment.add(see);
         presenter = new CaiGouPresenter(this);
         sessionID = getSharedPreferences("sumao", MODE_PRIVATE).getString("unique", "");
-        presenter.requestSeePlanDate("1", "10", sellerCompanyId, sessionID, "", "", "", "", "", "");
+        //presenter.requestSeePlanDate("1", "10", sellerCompanyId, sessionID, "", "", "", "", "", "");
 
-        // initView();
+         initView();
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
@@ -226,7 +226,7 @@ public class CaiGou extends AppCompatActivity implements OnClickListener, Adapte
 
     private void showPop() {
         View popView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.plan_popwindow, null);
-        final PopupWindow popupWindow = new PopupWindow(findViewById(R.id.all), ActionBarOverlayLayout.LayoutParams.MATCH_PARENT, ActionBarOverlayLayout.LayoutParams.WRAP_CONTENT);
+         popupWindow = new PopupWindow(findViewById(R.id.all), ActionBarOverlayLayout.LayoutParams.MATCH_PARENT, ActionBarOverlayLayout.LayoutParams.WRAP_CONTENT);
         TextView tv_name= (TextView) popView.findViewById(R.id.name);
         tv_name.setText("产品名称:");
 
@@ -392,7 +392,7 @@ public class CaiGou extends AppCompatActivity implements OnClickListener, Adapte
 //                see
                 new SeePlanPresenter(see).requestSeePlanDate("1", "10", sellerCompanyId, sessionID, productName, planStartDate, planEndDate, planState, warehouseName, logisticsID);
 
-//                presenter.requestSeePlanDate("1","10",sellerCompanyId,sessionID,productName,planStartDate,planEndDate,planState,warehouseName,logisticsID);
+                presenter.requestSeePlanDate("1","10",sellerCompanyId,sessionID,productName,planStartDate,planEndDate,planState,warehouseName,logisticsID);
                 popupWindow.dismiss();
                 break;
             case R.id.tv_create_logistics_search:
@@ -428,7 +428,6 @@ public class CaiGou extends AppCompatActivity implements OnClickListener, Adapte
 
     @Override
     public void setSeePlanInFragment(CaiGouBean caiGouBean) {
-        Log.d("为什么不走", "为什么不走");
         caiGouBeans = caiGouBean;
         initView();
     }

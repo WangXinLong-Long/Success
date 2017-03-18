@@ -705,7 +705,11 @@
         <activity android:name=".fragments.myPlasticTrade.login.forgetPassword.ActivityPass" />
         <activity android:name=".fragments.myPlasticTrade.messagePush.view.MessagePushActivity" />
         <activity android:name=".fragments.pagerFourMVP.view.ChildPageActivity" />
-        <activity android:name=".fragments.pagerTwoMVP.PagerTwoView.NewsActivity"></activity>
+        <activity android:name=".fragments.pagerTwoMVP.PagerTwoView.NewsActivity" />
+        <activity android:name=".fragments.myPlasticTrade.demandPlanning.PlanPresentationMVP.view.ValueActivity" />
+        <activity android:name=".fragments.myPlasticTrade.demandPlanning.planType.TypeActivity" />
+        <activity android:name=".fragments.myPlasticTrade.demandPlanning.planType.ProductNameActivity" />
+        <activity android:name=".fragments.myPlasticTrade.demandPlanning.planType.WarehouseActivity"></activity>
     </application>
 
 </manifest>

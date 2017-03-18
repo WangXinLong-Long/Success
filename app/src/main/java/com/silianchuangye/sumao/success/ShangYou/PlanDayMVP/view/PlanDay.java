@@ -89,6 +89,7 @@ public class PlanDay extends Fragment implements OnClickListener, IPlanDayView {
     private String number;
     private String remarks;
     private boolean flag;
+    //private String date;
     private PlanDayPresenter planDayPresenter;
 
     public PlanDay() {
@@ -258,6 +259,7 @@ public class PlanDay extends Fragment implements OnClickListener, IPlanDayView {
 
     @Override
     public void returnSubmissionPlanState(String result) {
+        LogUtils.log("返回的result"+result);
         if (result.contains("success")) {
             alert.dismiss();
             TOAST("上传成功");
@@ -298,7 +300,9 @@ public class PlanDay extends Fragment implements OnClickListener, IPlanDayView {
     class MyClick implements DatePickerDialog.OnDateSetListener {
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            list.get(groupPositionPublic).set(0, new DayPlanInfo("计划日期", "", year + "-" + monthOfYear + "-" + dayOfMonth));
+            int month=monthOfYear+1;
+           //  date=year + "-" + month + "-" + dayOfMonth;
+            list.get(groupPositionPublic).set(0, new DayPlanInfo("计划日期", "", year + "-" + month + "-" + dayOfMonth));
             adapter.notifyDataSetChanged();
         }
     }
@@ -532,8 +536,8 @@ public class PlanDay extends Fragment implements OnClickListener, IPlanDayView {
                         String wareHouse = wareHouseIdLists.get(i).get(position);
                         String delivery = deliveryMethodIdLists.get(i).get(deliveryMethodNameLists.get(i).indexOf(list.get(i).get(4).getDelete()));
                         String remark = list.get(i).get(5).getDelete();
-
-                        planDayPresenter.SubmissionPlan(date, name, wareHouse, number, delivery, remark, productId, getActivity().getSharedPreferences("sumao", Context.MODE_PRIVATE).getString("unique", ""));
+                       // planDayPresenter.Submi
+                        planDayPresenter.SubmissionPlan(date, selectedName, wareHouse, number, delivery, remark, productId, getActivity().getSharedPreferences("sumao", Context.MODE_PRIVATE).getString("unique", ""));
 
                     }
                     break;

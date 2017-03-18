@@ -91,17 +91,11 @@ public class SeePlan extends Fragment implements ISeePlanView{
         warehouseName = arguments.getString("warehouseName",warehouseName);
         logisticsID = arguments.getString("logisticsID",logisticsID);
         CaiGouBean = caiGouBeans.getVipPlanOrder();
+        Log.d("值",""+planOrderList.size());
 
-        adapter=new SeePlanAdapter(getActivity(),planOrderList);
-        lv.setAdapter(adapter);
-        planOrderList.clear();
-       // planOrderList.addAll(CaiGouBean.getPlanOrderList());
-        //Log.d("验证怎么不成功",CaiGouBean.getPlanOrderList().toString());
-        Log.d("验证不成功怎么","加油");
-        planOrderList.addAll(CaiGouBean.getPlanOrderList());
-        adapter.notifyDataSetChanged();
 //        getActivity().
         seePlanPresenter = new SeePlanPresenter(this);
+        seePlanPresenter.requestSeePlanDate("1","10","","","","","","","","");
 
     //    initDate();
         return  v;
@@ -142,7 +136,13 @@ public class SeePlan extends Fragment implements ISeePlanView{
         this.warehouseName = warehouseName;
         this.logisticsID = logisticsID;
         Log.d("aaa验证",caiGouBean.getVipPlanOrder().getPlanOrderList().size()+"aaa");
+        planOrderList.clear();
         planOrderList.addAll(caiGouBean.getVipPlanOrder().getPlanOrderList());
+        adapter=new SeePlanAdapter(getActivity(),planOrderList);
+        lv.setAdapter(adapter);
+        Log.d("验证怎么不成功",CaiGouBean.getPlanOrderList().toString());
+        Log.d("验证不成功怎么","加油");
+//        planOrderList.addAll(CaiGouBean.getPlanOrderList());
         adapter.notifyDataSetChanged();
     }
 

@@ -18,6 +18,7 @@ public class PlanDayPresenter {
     public PlanDayPresenter(IPlanDayView planDayView) {
         this.planDayView = planDayView;
     }
+
     public void getPlanDayWarehouse(String sessionID,String productId){
         IWarehouseModel warehouseModel = new WarehouseModel(sessionID,productId);
         warehouseModel.getWarehouseInfo(new WarehouseCallback() {
