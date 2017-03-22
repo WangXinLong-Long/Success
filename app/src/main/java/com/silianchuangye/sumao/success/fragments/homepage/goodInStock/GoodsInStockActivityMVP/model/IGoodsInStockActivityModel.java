@@ -5,4 +5,6 @@ package com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInS
  */
 public interface IGoodsInStockActivityModel {
     void getGoodsInStockActivityResult(GoodsInStockActivityCallback callback);
+
+    void getGoodsInStockResultForSearch(GoodsInStockActivityCallback callback);
 }

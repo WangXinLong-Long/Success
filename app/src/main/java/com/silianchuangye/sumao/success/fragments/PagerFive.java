@@ -19,6 +19,7 @@ import com.silianchuangye.sumao.success.fragments.myPlasticTrade.EnterpriseCapit
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.EnterpriseCapitalAccountManagement.SearchMoney;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.goodsInStock.OrderGoodsActivity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.Logistics;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.accountmeneger.Account_Activity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.CompanyUserActivity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.InvoiceInformationMVP.view.InvoiceInformation;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoMVP.view.FirmInfoActivity;
@@ -140,9 +141,12 @@ public class PagerFive extends BasePager {
                     startActivity(intent);
                 } else if (sela.getChild(groupPosition, childPosition).toString().equals("账户金额明细")) {
                     Intent intent = new Intent(context, SearchMoney.class);
-
                     startActivity(intent);
-                } else if (sela.getChild(groupPosition, childPosition).toString().equals("物流需求")) {
+                }else if (sela.getChild(groupPosition,childPosition).toString().equals("账户管理")){
+                    Intent intent=new Intent(context, Account_Activity.class);
+                    startActivity(intent);
+
+                }else if (sela.getChild(groupPosition, childPosition).toString().equals("物流需求")) {
                     Intent intent = new Intent(context,Logistics.class);
                     startActivity(intent);
 

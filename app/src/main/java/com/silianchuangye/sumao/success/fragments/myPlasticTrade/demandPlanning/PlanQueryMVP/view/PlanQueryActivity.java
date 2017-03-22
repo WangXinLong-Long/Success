@@ -84,8 +84,8 @@ public class PlanQueryActivity extends AppCompatActivity implements IPlanQueryVi
     private Button bt_Search;
     private EditText product_name;
     private EditText warehouse_name;
-    private TextView seller_enterprise;
-    private TextView demand_number;
+    private EditText seller_enterprise;
+    private EditText demand_number;
     private TextView tv_pop_customer_qu;
     private String state;
     private ListView lv_wuliu,lv_qiye;
@@ -156,20 +156,8 @@ public class PlanQueryActivity extends AppCompatActivity implements IPlanQueryVi
                     mentionStateListView.setVisibility(View.VISIBLE);
                 }
                 break;
-            case R.id.mention_logistc_ll:
-                if (lv_wuliu.getVisibility() == View.VISIBLE) {
-                    lv_wuliu.setVisibility(View.GONE);
-                } else {
-                    lv_wuliu.setVisibility(View.VISIBLE);
-                }
-                break;
-            case R.id.layout_seller_enterprise:
-                if (lv_qiye.getVisibility() == View.VISIBLE) {
-                    lv_qiye.setVisibility(View.GONE);
-                } else {
-                    lv_qiye.setVisibility(View.VISIBLE);
-                }
-                break;
+
+
 
 
             case R.id.out_of_popupwindow:
@@ -182,6 +170,7 @@ public class PlanQueryActivity extends AppCompatActivity implements IPlanQueryVi
                 showStartDataDialog();
                 break;
             case R.id.search_button:
+                popupWindow.dismiss();
                 if (tv_pop_customer_qu.getText().toString().equals("已确定")){
                     state="confirmed";
                 }else if (tv_pop_customer_qu.getText().toString().equals("待确定")){
@@ -191,7 +180,7 @@ public class PlanQueryActivity extends AppCompatActivity implements IPlanQueryVi
                 }
                 Log.d("提报状态的值",state+"");
                 planQueryPresenter.getList("1","10",product_name.getText().toString(),demand_start_time.getText().toString(),demand_end_time.getText().toString()
-                        ,state,warehouse_name.getText().toString(),wuliu,qiye,unique,true);
+                        ,state,warehouse_name.getText().toString(),demand_number.getText().toString(),seller_enterprise.getText().toString(),unique,true);
                 break;
 
         }
@@ -261,28 +250,55 @@ public class PlanQueryActivity extends AppCompatActivity implements IPlanQueryVi
         try {
             Log.d("result的值",result);
             JSONObject jsonObject=new JSONObject(result);
-            String vipPlanOrder=jsonObject.getString("vipPlanOrder");
-            Log.d("vipPlanOrder的值",vipPlanOrder);
-            JSONObject jsonplanOrderList=new JSONObject(vipPlanOrder);
-            String planOrderList=jsonplanOrderList.getString("planOrderList");
-            Log.d("planOrderList的值",planOrderList);
-            JSONArray jsonArray=new JSONArray(planOrderList);
+            String vipPlanOrder=jsonObject.getString("planOrderListlist");
+//            Log.d("vipPlanOrder的值",vipPlanOrder);
+//            JSONObject jsonplanOrderList=new JSONObject(vipPlanOrder);
+//            String planOrderList=jsonplanOrderList.getString("planOrderList");
+//            Log.d("planOrderList的值",planOrderList);
+            JSONArray jsonArray=new JSONArray(vipPlanOrder);
             for (int i=0;i<jsonArray.length();i++){
                 JSONObject info=jsonArray.getJSONObject(i);
+                Log.d("info的值",""+info.toString());
                 Map<String ,Object> map=new Hashtable<String,Object>();
-                map.put("logisticsChangeName",info.getString("logisticsChangeName"));
-                map.put("productNameChange",info.getString("productNameChange"));
                 map.put("warehouseName",info.getString("warehouseName"));
                 map.put("scheduleDateChange",info.getString("scheduleDateChange"));
-                map.put("warehouseChangeName",info.getString("warehouseChangeName"));
                 map.put("scheduleDate",info.getString("scheduleDate"));
                 map.put("demandScheduleState",info.getString("demandScheduleState"));
                 map.put("logisticsName",info.getString("logisticsName"));
                 map.put("planID",info.getString("planID"));
                 map.put("quantity",info.getString("quantity"));
-                map.put("quantityChange",info.getString("productName"));
                 map.put("productName",info.getString("productName"));
-                map.put("orderId",info.getString("orderId"));
+
+                map.put("sellerEnterpriseName",info.getString("sellerEnterpriseName"));
+                if (info.toString().contains("productNameChange")){
+                    map.put("productNameChange",info.getString("productNameChange"));
+                }
+                if (info.toString().contains("logisticsChangeName")){
+                    map.put("logisticsChangeName",info.getString("logisticsChangeName"));
+                }
+                if (info.toString().contains("quantityChange")){
+                    map.put("quantityChange",info.getString("quantityChange"));
+                }
+                if (info.toString().contains("warehouseChangeName")){
+                    map.put("warehouseChangeName",info.getString("warehouseChangeName"));
+                }
+                if (info.toString().contains("preAmount")){
+                    map.put("preAmount",info.getString("preAmount"));
+                }
+                if (info.toString().contains("prePirce")){
+                    map.put("prePirce",info.getString("prePirce"));
+                }
+                if (info.toString().contains("price")){
+                    map.put("price",info.getString("price"));
+                }
+                if (info.toString().contains("amount")){
+                    map.put("amount",info.getString("amount"));
+                }
+                if (info.toString().contains("orderId")){
+                    map.put("orderId",info.getString("orderId"));
+                }
+
+
                 list_plan_order.add(map);
                 Log.d("list的值",list_plan_order.size()+"aa");
             }
@@ -334,70 +350,70 @@ public class PlanQueryActivity extends AppCompatActivity implements IPlanQueryVi
         mentionStateList.add("待确定");
         mentionStateList.add("已取消");
        // list_wuliu=new ArrayList<>();
-        new Thread(){
-            @Override
-            public void run() {
-                super.run();
-                getQiye();
-            }
-        }.start();
-        list_wuliu=new ArrayList<>();
-        list_wuliu.add("自提");
-        list_wuliyId=new ArrayList<>();
-        list_wuliyId.add(" ");
+//        new Thread(){
+//            @Override
+//            public void run() {
+//                super.run();
+//              //  getQiye();
+//            }
+//        }.start();
+//        list_wuliu=new ArrayList<>();
+//        list_wuliu.add("自提");
+//        list_wuliyId=new ArrayList<>();
+//        list_wuliyId.add(" ");
 
 
     }
-    public void getQiye(){
-        String url=SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/order/demand/DemandActor/directEnterpriseDetailStore";
-        RequestParams rp=new RequestParams(url);
-        rp.addParameter("_dynSessConf",unique);
-        x.http().post(rp, new Callback.CommonCallback<String>() {
-            @Override
-            public void onSuccess(String result) {
-                Log.d("上游资源的返回值",result);
-                try {
-                    JSONObject jsonObject=new JSONObject(result);
-                    String enterprisesItem=jsonObject.getString("enterprisesItem");
-                    JSONArray jsonArray=new JSONArray(enterprisesItem);
-                    list_qiye=new ArrayList<>();
-                    list_qiyeId=new ArrayList<String>();
-                    for (int i=0;i<jsonArray.length();i++){
-                        JSONObject info=jsonArray.getJSONObject(i);
-                        list_qiye.add(info.getString("sellerCompanyName"));
-                        list_qiyeId.add(info.getString("sellerCompanyId"));
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-
-            }
-
-            @Override
-            public void onCancelled(CancelledException cex) {
-
-            }
-
-            @Override
-            public void onFinished() {
-
-            }
-        });
-    }
+//    public void getQiye(){
+//        String url=SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/order/demand/DemandActor/directEnterpriseDetailStore";
+//        RequestParams rp=new RequestParams(url);
+//        rp.addParameter("_dynSessConf",unique);
+//        x.http().post(rp, new Callback.CommonCallback<String>() {
+//            @Override
+//            public void onSuccess(String result) {
+//                Log.d("上游资源的返回值",result);
+//                try {
+//                    JSONObject jsonObject=new JSONObject(result);
+//                    String enterprisesItem=jsonObject.getString("enterprisesItem");
+//                    JSONArray jsonArray=new JSONArray(enterprisesItem);
+//                    list_qiye=new ArrayList<>();
+//                    list_qiyeId=new ArrayList<String>();
+//                    for (int i=0;i<jsonArray.length();i++){
+//                        JSONObject info=jsonArray.getJSONObject(i);
+//                        list_qiye.add(info.getString("sellerCompanyName"));
+//                        list_qiyeId.add(info.getString("sellerCompanyId"));
+//                    }
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//
+//            @Override
+//            public void onError(Throwable ex, boolean isOnCallback) {
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(CancelledException cex) {
+//
+//            }
+//
+//            @Override
+//            public void onFinished() {
+//
+//            }
+//        });
+//    }
 
     private void initPopupWindow() {
         popupWindowView = View.inflate(this, R.layout.plan_query_search_popup_window, null);
 //        提报状态
         mentionState = ((LinearLayout) popupWindowView.findViewById(R.id.mention_state_ll));
 //        提报状态的ListView
-        mention_logistc_ll= (LinearLayout) popupWindowView.findViewById(R.id.mention_logistc_ll);
-        mention_logistc_ll.setOnClickListener(this);
-        layout_seller_enterprise= (LinearLayout) popupWindowView.findViewById(R.id.layout_seller_enterprise);
-        layout_seller_enterprise.setOnClickListener(this);
+//        mention_logistc_ll= (LinearLayout) popupWindowView.findViewById(R.id.mention_logistc_ll);
+//        mention_logistc_ll.setOnClickListener(this);
+//        layout_seller_enterprise= (LinearLayout) popupWindowView.findViewById(R.id.layout_seller_enterprise);
+//        layout_seller_enterprise.setOnClickListener(this);
         mentionStateListView = ((ListView) popupWindowView.findViewById(R.id.mention_state_lv));
         outOfPopupWindow =(LinearLayout) popupWindowView.findViewById(R.id.out_of_popupwindow);
         demand_end_time_rl =(LinearLayout) popupWindowView.findViewById(R.id.demand_end_time_rl);//结束的日历dialog
@@ -414,15 +430,15 @@ public class PlanQueryActivity extends AppCompatActivity implements IPlanQueryVi
         bt_Search.setOnClickListener(this);
         product_name= (EditText) popupWindowView.findViewById(R.id.product_name);
         warehouse_name= (EditText) popupWindowView.findViewById(R.id.warehouse_name);
-        demand_number= (TextView) popupWindowView.findViewById(R.id.demand_number);
-        seller_enterprise= (TextView) popupWindowView.findViewById(R.id.seller_enterprise);
+        demand_number= (EditText) popupWindowView.findViewById(R.id.demand_number);
+        seller_enterprise= (EditText) popupWindowView.findViewById(R.id.seller_enterprise);
         tv_pop_customer_qu= (TextView) popupWindowView.findViewById(R.id.tv_pop_customer_qu);
-        lv_qiye= (ListView) popupWindowView.findViewById(R.id.qiye_lv);
-        ArrayAdapter adapter_qiye=new ArrayAdapter(PlanQueryActivity.this,R.layout.item_pop_lv,R.id.tv_pop_lv, list_qiye);
-        lv_qiye.setAdapter(adapter_qiye);
-        lv_wuliu= (ListView) popupWindowView.findViewById(R.id.wuliu_lv);
-        ArrayAdapter adapter_wuliu=new ArrayAdapter(PlanQueryActivity.this,R.layout.item_pop_lv,R.id.tv_pop_lv,list_wuliu);
-        lv_qiye.setAdapter(adapter_wuliu);
+//        lv_qiye= (ListView) popupWindowView.findViewById(R.id.qiye_lv);
+//        ArrayAdapter adapter_qiye=new ArrayAdapter(PlanQueryActivity.this,R.layout.item_pop_lv,R.id.tv_pop_lv, list_qiye);
+//        lv_qiye.setAdapter(adapter_qiye);
+//        lv_wuliu= (ListView) popupWindowView.findViewById(R.id.wuliu_lv);
+//        ArrayAdapter adapter_wuliu=new ArrayAdapter(PlanQueryActivity.this,R.layout.item_pop_lv,R.id.tv_pop_lv,list_wuliu);
+//        lv_qiye.setAdapter(adapter_wuliu);
         mentionStateListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -430,22 +446,22 @@ public class PlanQueryActivity extends AppCompatActivity implements IPlanQueryVi
                 mentionStateListView.setVisibility(View.GONE);
             }
         });
-        lv_qiye.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                seller_enterprise.setText(list_qiye.get(position).toString());
-                lv_qiye.setVisibility(View.GONE);
-                qiye=list_qiyeId.get(position).toString();
-            }
-        });
-        lv_wuliu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                demand_number.setText(list_wuliu.get(position).toString());
-                lv_wuliu.setVisibility(View.GONE);
-                wuliu=list_wuliyId.get(position).toString();
-            }
-        });
+//        lv_qiye.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                seller_enterprise.setText(list_qiye.get(position).toString());
+//                lv_qiye.setVisibility(View.GONE);
+//                qiye=list_qiyeId.get(position).toString();
+//            }
+//        });
+//        lv_wuliu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                demand_number.setText(list_wuliu.get(position).toString());
+//                lv_wuliu.setVisibility(View.GONE);
+//                wuliu=list_wuliyId.get(position).toString();
+//            }
+//        });
     }
 
 
@@ -472,7 +488,7 @@ public class PlanQueryActivity extends AppCompatActivity implements IPlanQueryVi
                     //messagePushPresenter.getMessagePushForselect("","","","","","1",updateOrLoad,unique);
                     //planQueryPresenter.getList("1","10",product_name.getText().toString(),demand_start_time.getText().toString(),demand_end_time.getText().toString()
                            // ,state,warehouse_name.getText().toString(),"物流id","上游资源方",unique,updateOrLoad);
-                    planQueryPresenter.getList("1","10","","","","","","","",unique,true);
+                    planQueryPresenter.getList(pageNum,"10","","","","","","","",unique,updateOrLoad);
                     pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
                 }
             }.sendEmptyMessageDelayed(0, 3000);
@@ -492,7 +508,7 @@ public class PlanQueryActivity extends AppCompatActivity implements IPlanQueryVi
 //                            ,state,warehouse_name.getText().toString(),"物流id","上游资源方",unique,updateOrLoad);
                     //messagePushPresenter.getMessagePushResult(pageNum,updateOrLoad,unique);
                     //groupBuyingPresenter.getGroupBuyingResult(pageNum,updateOrLoad);
-                    planQueryPresenter.getList("1","10","","","","","","","",unique,true);
+                    planQueryPresenter.getList(pageNum,"10","","","","","","","",unique,true);
                     pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
                 }
             }.sendEmptyMessageDelayed(0, 3000);

@@ -69,22 +69,22 @@ public class PreSale extends Activity implements View.OnClickListener, AdapterVi
         provinceList = dbHelper.getProvince();
         preSalePresenter = new PreSalePresenter(this);
 //        交易模式
-        tradingPatterns = ((RelativeLayout) findViewById(R.id.supplier_patterns_rl));
-        tradingPatterns.setOnClickListener(this);
+//        tradingPatterns = ((RelativeLayout) findViewById(R.id.supplier_patterns_rl));
+//        tradingPatterns.setOnClickListener(this);
 //        地区
-        region = ((RelativeLayout) findViewById(R.id.region_rl));
-        region.setOnClickListener(this);
+//        region = ((RelativeLayout) findViewById(R.id.region_rl));
+//        region.setOnClickListener(this);
 //        分类
-        classification = ((RelativeLayout) findViewById(R.id.classification_rl));
-        classification.setOnClickListener(this);
+//        classification = ((RelativeLayout) findViewById(R.id.classification_rl));
+//        classification.setOnClickListener(this);
 //        应用
-        application = ((RelativeLayout) findViewById(R.id.application_rl));
-        application.setOnClickListener(this);
+//        application = ((RelativeLayout) findViewById(R.id.application_rl));
+//        application.setOnClickListener(this);
 
 //        筛选
-        screen = ((ImageView) findViewById(R.id.iv_screen_title_bar_search));
-        screen.setVisibility(View.VISIBLE);
-        screen.setOnClickListener(this);
+//        screen = ((ImageView) findViewById(R.id.iv_screen_title_bar_search));
+//        screen.setVisibility(View.VISIBLE);
+//        screen.setOnClickListener(this);
 
 //
         initData();
@@ -114,27 +114,27 @@ public class PreSale extends Activity implements View.OnClickListener, AdapterVi
     public void onClick(View v) {
         switch (v.getId()) {
 //            交易模式
-            case R.id.supplier_patterns_rl:
-//                这里填写类型（交易模式、分类、应用、牌号）
-                showTradingPatternPopupWindow("trading", datas);
-                break;
+//            case R.id.supplier_patterns_rl:
+////                这里填写类型（交易模式、分类、应用、牌号）
+//                showTradingPatternPopupWindow("trading", datas);
+//                break;
 //            地区
-            case R.id.region_rl:
-                showPopMenu();
-                break;
+//            case R.id.region_rl:
+//                showPopMenu();
+//                break;
 //            分类
-            case R.id.classification_rl:
-                showTradingPatternPopupWindow("classification", classification1);
-                break;
+//            case R.id.classification_rl:
+//                showTradingPatternPopupWindow("classification", classification1);
+//                break;
 //            应用
-            case R.id.application_rl:
-                showTradingPatternPopupWindow("application", application1);
-                break;
+//            case R.id.application_rl:
+//                showTradingPatternPopupWindow("application", application1);
+//                break;
 
 //            筛选
-            case R.id.iv_screen_title_bar_search:
-                screenPopupWindow(lists);
-                break;
+//            case R.id.iv_screen_title_bar_search:
+//                screenPopupWindow(lists);
+//                break;
 
         }
     }

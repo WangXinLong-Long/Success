@@ -45,18 +45,19 @@ public class ScreenPopupWindowView extends RelativeLayout implements View.OnClic
         GridView regionGrid = (GridView) findViewById(R.id.region_grid);//地区
         GridView classificationGrid = (GridView) findViewById(R.id.classification_grid);//分类
         GridView applicationGrid = (GridView) findViewById(R.id.application_grid);//应用
-        tv_screen_title_bar_title = (EditText) findViewById(R.id.tv_screen_title_bar_title);
+
+       // tv_screen_title_bar_title = (EditText) findViewById(R.id.tv_screen_title_bar_title);
         Button completed = (Button) findViewById(R.id.completed);//完成按钮
         Button reset = (Button) findViewById(R.id.reset);//重置按钮
         completed.setOnClickListener(this);
         reset.setOnClickListener(this);
 
-        TextView regionMoreTv = (TextView) findViewById(R.id.region_more_tv);
-        TextView classificationMoreTv = (TextView) findViewById(R.id.classification_more_tv);
-        TextView applicationMoreTv = (TextView) findViewById(R.id.application_more_tv);
-        regionMoreTv.setOnClickListener(this);
-        classificationMoreTv.setOnClickListener(this);
-        applicationMoreTv.setOnClickListener(this);
+//        TextView regionMoreTv = (TextView) findViewById(R.id.region_more_tv);
+//        TextView classificationMoreTv = (TextView) findViewById(R.id.classification_more_tv);
+//        TextView applicationMoreTv = (TextView) findViewById(R.id.application_more_tv);
+//        regionMoreTv.setOnClickListener(this);
+//        classificationMoreTv.setOnClickListener(this);
+//        applicationMoreTv.setOnClickListener(this);
 
 //        地区
         regionAdpter = new MultiselectPopupWindowGrideViewAdpter(context);
@@ -117,21 +118,21 @@ public class ScreenPopupWindowView extends RelativeLayout implements View.OnClic
             case R.id.reset:
                 resetMethod();
                 break;
-            case R.id.region_more_tv:
-                regionAdpter.clearData();
-                regionAdpter.setData(data.get(0));
-                regionAdpter.notifyDataSetChanged();
-                break;
-            case R.id.classification_more_tv:
-                classifcationAdpter.clearData();
-                classifcationAdpter.setData(data.get(1));
-                classifcationAdpter.notifyDataSetChanged();
-                break;
-            case R.id.application_more_tv:
-                applicationAdpter.clearData();
-                applicationAdpter.setData(data.get(2));
-                applicationAdpter.notifyDataSetChanged();
-                break;
+//            case R.id.region_more_tv:
+//                regionAdpter.clearData();
+//                regionAdpter.setData(data.get(0));
+//                regionAdpter.notifyDataSetChanged();
+//                break;
+//            case R.id.classification_more_tv:
+//                classifcationAdpter.clearData();
+//                classifcationAdpter.setData(data.get(1));
+//                classifcationAdpter.notifyDataSetChanged();
+//                break;
+//            case R.id.application_more_tv:
+//                applicationAdpter.clearData();
+//                applicationAdpter.setData(data.get(2));
+//                applicationAdpter.notifyDataSetChanged();
+//                break;
 
         }
     }

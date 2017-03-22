@@ -126,7 +126,7 @@ public class RegisterPicture extends AppCompatActivity {
                         RequestParams rp = new RequestParams(SuMaoConstant.SUMAO_IP + "/rest/model/atg/commerce/order/myorder/OrderPaymentInfo/fileUpload");
                             SharedPreferences sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
                            fileCode=sp.getString("filename","");
-                        Log.d("fileCode",fileCode);
+                            Log.d("fileCode",fileCode);
                            if (fileCode!=null && fileCode!="") {
                                rp.addParameter("file", fileCode);
                            }else{

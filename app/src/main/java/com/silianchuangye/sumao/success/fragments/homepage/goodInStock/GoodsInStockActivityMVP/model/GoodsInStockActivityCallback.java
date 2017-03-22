@@ -1,6 +1,7 @@
 package com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.model;
 
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.bean.GoodsInStockActivityBean;
+import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.view.GoodsInStockActivity;
 
 /**
  * Created by Administrator on 2016/8/12 0012.
@@ -8,4 +9,6 @@ import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInSt
 public interface GoodsInStockActivityCallback {
 
     void callbackInGoodsInStockActivity(GoodsInStockActivityBean goodsInStockActivityBean,String updateOrLoad,String searchField);
+
+
 }

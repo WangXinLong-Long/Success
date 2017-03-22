@@ -9,7 +9,7 @@
         android:id="@+id/pre_sale_title"
         layout="@layout/screen_title_bar" />
 
-    <RelativeLayout
+   <!-- <RelativeLayout
         android:id="@+id/selection_condition"
         android:layout_width="match_parent"
         android:layout_height="@dimen/x40"
@@ -114,13 +114,13 @@
 
 
         </LinearLayout>
-    </RelativeLayout>
+    </RelativeLayout>-->
 
     <TextView
         android:id="@+id/split_line11"
         android:layout_width="match_parent"
         android:layout_height="@dimen/x1"
-        android:layout_below="@id/selection_condition"
+        android:layout_below="@id/pre_sale_title"
         android:background="@color/my_sumao_background" />
 
     <com.jingchen.pulltorefresh.PullToRefreshLayout

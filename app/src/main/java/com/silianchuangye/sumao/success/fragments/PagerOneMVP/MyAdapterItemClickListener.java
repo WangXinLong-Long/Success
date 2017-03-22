@@ -2,6 +2,7 @@ package com.silianchuangye.sumao.success.fragments.PagerOneMVP;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Toast;
@@ -41,6 +42,7 @@ public class MyAdapterItemClickListener implements android.widget.AdapterView.On
             case R.id.area_detail:
                 Toast.makeText(context,lists.get(position)+"",Toast.LENGTH_SHORT).show();
                 regions = lists.get(position)+"";
+                Log.d("diqu的值",regions);
                 break;
 
             case R.id.classification_detail:

@@ -36,6 +36,15 @@ IGoodsInStockActivityView goodsInStockActivityView;
             }
         });
     }
+    public void getGoodsInStockForsearch(boolean fenlei, boolean diqu, boolean shengchan, boolean yingyong, String feileiString, String productName, String title, String warehouseName){
+        IGoodsInStockActivityModel goodsInStockActivityModel=new GoodsInStockActivityModel(fenlei,diqu,shengchan,yingyong,feileiString,productName,title,warehouseName);
+        goodsInStockActivityModel.getGoodsInStockResultForSearch(new GoodsInStockActivityCallback() {
+            @Override
+            public void callbackInGoodsInStockActivity(GoodsInStockActivityBean goodsInStockActivityBean, String updateOrLoad, String searchField) {
+                goodsInStockActivityView.setDataInActivity(goodsInStockActivityBean,updateOrLoad);
+            }
+        });
+    }
 
     public void getGoodInStockDetailInfo(String cl_id){
         IGoodsInStockDetailModel goodsInStockDetailModel = new GoodsInStockDetailModel(cl_id);

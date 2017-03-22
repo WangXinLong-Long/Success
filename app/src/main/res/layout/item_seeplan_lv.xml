@@ -34,6 +34,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/x10"
             android:text="查看原计划"
+            android:visibility="gone"
             android:textColor="@color/selley_lv"
             android:background="@drawable/button_background_blue"
             android:layout_alignParentRight="true"/>

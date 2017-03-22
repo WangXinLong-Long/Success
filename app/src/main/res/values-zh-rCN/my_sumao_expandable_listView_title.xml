@@ -24,8 +24,8 @@
         <item>物流订单</item>
     </string-array>
     <string-array name="child5_buyer">
-        <item>注册易宝</item>
-        <item>账户余额</item>
+        <item>账户管理</item>
+       <!-- <item>账户余额</item>-->
         <!--<item>账户金额明细</item>-->
     </string-array>
     <string-array name="qualification_management">

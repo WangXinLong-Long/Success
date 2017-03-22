@@ -437,7 +437,7 @@ public class MessagePushActivity extends AppCompatActivity implements View.OnCli
                     int num = Integer.parseInt(pageNum) + 1;
                     pageNum = num + "";
                     boolean updateOrLoad = false;
-                    messagePushPresenter.getMessagePushResult(pageNum,updateOrLoad,unique);
+                    messagePushPresenter.getMessagePushResult(pageNum,true,unique);
                     //groupBuyingPresenter.getGroupBuyingResult(pageNum,updateOrLoad);
                     pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
                 }

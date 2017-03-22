@@ -39,6 +39,7 @@ import com.silianchuangye.sumao.success.fragments.PagerOneMVP.bean.Classificatio
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.bean.SupplierBean;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.presenter.PagerOnePresenter;
 import com.silianchuangye.sumao.success.fragments.SearchActivityMVP.view.SearchActivity;
+import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.UpstreamDirectDetailMVP.bean.DirectSellingBean;
 import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.bean.UpstreamDirectorySellingBean;
 import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.view.UpstreamDirectSellingActivity;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.AuctionMVP.view.AuctionActivity;
@@ -54,6 +55,7 @@ import com.silianchuangye.sumao.success.utils.Loding;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.MarqueeView;
 import com.silianchuangye.sumao.success.utils.NetWorkChangeBroadcastReceiver;
+import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 import com.silianchuangye.sumao.success.utils.ThreeLevelLindage.Area;
 import com.silianchuangye.sumao.success.utils.ThreeLevelLindage.DBHelper;
 import com.silianchuangye.sumao.success.utils.scrollviewAD.MyGallery;
@@ -61,6 +63,9 @@ import com.silianchuangye.sumao.success.utils.scrollviewAD.MyGallery;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -109,6 +114,15 @@ public class PagerOne extends BasePager implements IPagerOneView {
     private SupplierBean supplierBean;
     private GridView supplierDetail;
     private BroadcastReceiver netReceiver;
+    private DirectSellingBean directSellingBean;
+    private List<String> areaList;
+    private List<String> areaListId;
+    private List<String> classificationList;
+    private List<String > yingyongId;
+    private List<String> applicationList;
+    private List<String > ShengchanId;
+    private List<String> supplierBeanList;
+    private List<String> fenlei_List;
 
     @Override
     public void myClickSearch() {
@@ -130,6 +144,68 @@ public class PagerOne extends BasePager implements IPagerOneView {
         SharedPreferences sp = getActivity().getSharedPreferences("sumao", Activity.MODE_PRIVATE);
         String zhanghao = sp.getString("zhanghao", "");
         Log.d("账号的值", zhanghao);
+        areaGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(mActivity, GoodsInStockActivity.class);
+                intent.putExtra("title", "地区");
+                intent.putExtra("id",areaListId.get(position).toString());
+                intent.putExtra("goodsInStockActivityBean", goodsInStockActivityBean);
+                intent.putExtra("classificationBean", classificationBean);
+                intent.putExtra("applicationBean", applicationBean);
+                intent.putExtra("supplierBean", supplierBean);
+                //Log.d("传过去有的值",searchField+goodsInStockActivityBean+classificationBean+applicationBean+supplierBean+"");
+                startActivity(intent);
+            }
+        });
+        //yingyong
+        classificationGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(mActivity, GoodsInStockActivity.class);
+                intent.putExtra("title", "应用");
+                intent.putExtra("id",yingyongId.get(position).toString());
+                intent.putExtra("goodsInStockActivityBean", goodsInStockActivityBean);
+                intent.putExtra("classificationBean", classificationBean);
+                intent.putExtra("applicationBean", applicationBean);
+                intent.putExtra("supplierBean", supplierBean);
+                //Log.d("传过去有的值",searchField+goodsInStockActivityBean+classificationBean+applicationBean+supplierBean+"");
+                startActivity(intent);
+            }
+        });
+        //shangchan
+        applicationDetail.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(mActivity, GoodsInStockActivity.class);
+                intent.putExtra("title", "生产商");
+                intent.putExtra("id",ShengchanId.get(position).toString());
+                intent.putExtra("goodsInStockActivityBean", goodsInStockActivityBean);
+                intent.putExtra("classificationBean", classificationBean);
+                intent.putExtra("applicationBean", applicationBean);
+                intent.putExtra("supplierBean", supplierBean);
+                //Log.d("传过去有的值",searchField+goodsInStockActivityBean+classificationBean+applicationBean+supplierBean+"");
+                startActivity(intent);
+            }
+        });
+        supplierDetail.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(mActivity, GoodsInStockActivity.class);
+                intent.putExtra("title", "分类");
+                intent.putExtra("id",fenlei_List.get(position).toString());
+                intent.putExtra("goodsInStockActivityBean", goodsInStockActivityBean);
+                intent.putExtra("classificationBean", classificationBean);
+                intent.putExtra("applicationBean", applicationBean);
+                intent.putExtra("supplierBean", supplierBean);
+                //Log.d("传过去有的值",searchField+goodsInStockActivityBean+classificationBean+applicationBean+supplierBean+"");
+                startActivity(intent);
+            }
+        });
+
+
+
+
     }
 
     public void getResult(String productId) {
@@ -389,6 +465,7 @@ public class PagerOne extends BasePager implements IPagerOneView {
         } else if (transactionType.equals("预售")) {
             intent.putExtra("title", "预售");
         }
+        intent.putExtra("id","abc");
         intent.putExtra("goodsInStockActivityBean", goodsInStockActivityBean);
         intent.putExtra("classificationBean", classificationBean);
         intent.putExtra("applicationBean", applicationBean);
@@ -408,6 +485,7 @@ public class PagerOne extends BasePager implements IPagerOneView {
         } else if (transactionType.equals("预售")) {
             intent.putExtra("title", "预售");
         }
+        intent.putExtra("id","abc");
         intent.putExtra("goodsInStockActivityBean", goodsInStockActivityBean);
         intent.putExtra("classificationBean", classificationBean);
         intent.putExtra("applicationBean", applicationBean);
@@ -455,42 +533,213 @@ public class PagerOne extends BasePager implements IPagerOneView {
         ArrayList<Area> provinceList = new DBHelper(getActivity().getApplicationContext()).getProvince();
 //        Loding.dis();
         this.applicationBean = applicationBean;
-        List<String> areaList = new ArrayList<>();
-        List<String> classificationList = new ArrayList<>();
-        List<String> applicationList = new ArrayList<>();
-        List<String> supplierBeanList = new ArrayList<>();
-        for (int i = 0; i < classificationBean.getIn_flname().size(); i++) {
-            classificationList.add(classificationBean.getIn_flname().get(i));
-        }
-        for (int i = 0; i < applicationBean.getIn_yyname().size(); i++) {
-            applicationList.add(applicationBean.getIn_yyname().get(i));
-        }
-        for (int i = 0; i < provinceList.size(); i++) {
-            areaList.add(provinceList.get(i).getName());
-        }
-        for (int i = 0; i < supplierBean.getIn_gysname().size(); i++) {
-            supplierBeanList.add(supplierBean.getIn_gysname().get(i));
-        }
-        TextGrideViewAdapter areaAdapter = new TextGrideViewAdapter(getActivity());
-        areaAdapter.addData(areaList);
-        TextGrideViewAdapter classificationAdapter = new TextGrideViewAdapter(getActivity());
-        classificationAdapter.addData(classificationList);
-        TextGrideViewAdapter applicationAdapter = new TextGrideViewAdapter(getActivity());
-        applicationAdapter.addData(applicationList);
-        TextGrideViewAdapter supplierAdapter = new TextGrideViewAdapter(getActivity());
-        supplierAdapter.addData(supplierBeanList);
+        areaList= new ArrayList<>();
+        classificationList= new ArrayList<>();
+        applicationList= new ArrayList<>();
+        supplierBeanList = new ArrayList<>();
+//        for (int i = 0; i < classificationBean.getIn_flname().size(); i++) {
+//            classificationList.add(classificationBean.getIn_flname().get(i));
+//        }
+        new Thread(){
+            @Override
+            public void run() {
+                super.run();
+                get_area();
+                get_yingyong();
+                get_shengchan();
+                get_fenlei();
+            }
+        }.start();
 
-        areaGridView.setAdapter(areaAdapter);
-        classificationGridView.setAdapter(classificationAdapter);
-//        应用的GridView
-        applicationDetail.setAdapter(applicationAdapter);
-//        供应商的GrideView
-        supplierDetail.setAdapter(supplierAdapter);
+//        for (int i = 0; i < applicationBean.getIn_yyname().size(); i++) {
+//            applicationList.add(applicationBean.getIn_yyname().get(i));
+//        }
+//        for (int i = 0; i < provinceList.size(); i++) {
+//            areaList.add(provinceList.get(i).getName());
+//        }
+//        for (int i = 0; i < supplierBean.getIn_gysname().size(); i++) {
+//            supplierBeanList.add(supplierBean.getIn_gysname().get(i));
+//        }
 
-        areaGridView.setOnItemClickListener(new MyAdapterItemClickListener(getActivity(), areaList, pagerOnePresenter));
-        classificationGridView.setOnItemClickListener(new MyAdapterItemClickListener(getActivity(), classificationList, pagerOnePresenter));
-        applicationDetail.setOnItemClickListener(new MyAdapterItemClickListener(getActivity(), applicationList, pagerOnePresenter));
-        supplierDetail.setOnItemClickListener(new MyAdapterItemClickListener(getActivity(), supplierBeanList, pagerOnePresenter));
+
+
+
+        //Log.d("地区的list",areaList.size()+"");
+//        areaGridView.setOnItemClickListener(new MyAdapterItemClickListener(getActivity(), areaList, pagerOnePresenter));
+//        classificationGridView.setOnItemClickListener(new MyAdapterItemClickListener(getActivity(), classificationList, pagerOnePresenter));
+//        applicationDetail.setOnItemClickListener(new MyAdapterItemClickListener(getActivity(), applicationList, pagerOnePresenter));
+//        supplierDetail.setOnItemClickListener(new MyAdapterItemClickListener(getActivity(), supplierBeanList, pagerOnePresenter));
+
+    }
+
+    public void get_area(){
+        String url= SuMaoConstant.SUMAO_IP+"/rest/model/atg/endeca/HomeActor/EndecaAppRegion";
+        RequestParams rp=new RequestParams(url);
+        x.http().post(rp, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.d("分类的返回值",result);
+                try {
+                    areaListId=new ArrayList<String>();
+                    JSONObject jsonObject=new JSONObject(result);
+                    String object_fenlei=jsonObject.getString("cl");
+                    JSONArray array_Fenlei=new JSONArray(object_fenlei);
+                    for (int i=0;i<array_Fenlei.length();i++){
+                        JSONObject ob_fl=array_Fenlei.getJSONObject(i);
+                        areaList.add(ob_fl.getString("cl_name"));
+                        areaListId.add(ob_fl.getString("cl_id"));
+                    }
+                    Log.d("area的值",areaList.size()+"条");
+                    TextGrideViewAdapter areaAdapter = new TextGrideViewAdapter(getActivity());
+                    areaAdapter.addData(areaList);
+                    areaGridView.setAdapter(areaAdapter);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+    }
+
+    public void get_yingyong(){
+        String url= SuMaoConstant.SUMAO_IP+"/rest/model/atg/endeca/HomeActor/EndecaAppApplication";
+        RequestParams rp=new RequestParams(url);
+        x.http().post(rp, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.d("分类的返回值",result);
+                try {
+                    yingyongId=new ArrayList<String>();
+                    JSONObject jsonObject=new JSONObject(result);
+                    String object_fenlei=jsonObject.getString("cl");
+                    JSONArray array_Fenlei=new JSONArray(object_fenlei);
+                    for (int i=0;i<array_Fenlei.length();i++){
+                        JSONObject ob_fl=array_Fenlei.getJSONObject(i);
+                        classificationList.add(ob_fl.getString("cl_name"));
+                        yingyongId.add(ob_fl.getString("cl_id"));
+                    }
+                    TextGrideViewAdapter classificationAdapter = new TextGrideViewAdapter(getActivity());
+                    classificationAdapter.addData(classificationList);
+                    classificationGridView.setAdapter(classificationAdapter);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+    }
+
+    public void get_shengchan(){
+        String url= SuMaoConstant.SUMAO_IP+"/rest/model/atg/endeca/HomeActor/EndecaAppSupplier";
+        RequestParams rp=new RequestParams(url);
+        x.http().post(rp, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.d("分类的返回值",result);
+                try {
+                    ShengchanId=new ArrayList<String>();
+                    JSONObject jsonObject=new JSONObject(result);
+                    String object_fenlei=jsonObject.getString("cl");
+                    JSONArray array_Fenlei=new JSONArray(object_fenlei);
+                    for (int i=0;i<array_Fenlei.length();i++){
+                        JSONObject ob_fl=array_Fenlei.getJSONObject(i);
+                        applicationList.add(ob_fl.getString("cl_name"));
+                        ShengchanId.add(ob_fl.getString("cl_id"));
+                    }
+                    TextGrideViewAdapter applicationAdapter = new TextGrideViewAdapter(getActivity());
+                    applicationAdapter.addData(applicationList);
+                    applicationDetail.setAdapter(applicationAdapter);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+    }
+
+    public void get_fenlei(){
+        String url= SuMaoConstant.SUMAO_IP+"/rest/model/atg/endeca/HomeActor/EndecaAppCategory";
+        RequestParams rp=new RequestParams(url);
+        x.http().post(rp, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.d("分类的返回值",result);
+                try {
+                    fenlei_List=new ArrayList<String>();
+                    JSONObject jsonObject=new JSONObject(result);
+                    String object_fenlei=jsonObject.getString("cl");
+                    JSONArray array_Fenlei=new JSONArray(object_fenlei);
+                    for (int i=0;i<array_Fenlei.length();i++){
+                        JSONObject ob_fl=array_Fenlei.getJSONObject(i);
+                        supplierBeanList.add(ob_fl.getString("cl_name"));
+                        fenlei_List.add(ob_fl.getString("cl_id"));
+                    }
+                    TextGrideViewAdapter supplierAdapter = new TextGrideViewAdapter(getActivity());
+                    supplierAdapter.addData(supplierBeanList);
+
+                    supplierDetail.setAdapter(supplierAdapter);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
     }
 
     @Override
@@ -555,10 +804,12 @@ public class PagerOne extends BasePager implements IPagerOneView {
         String transactionType = "现货";
         Intent intent = new Intent(mActivity, GoodsInStockActivity.class);
         intent.putExtra("title", searchField);
+        intent.putExtra("id","abc");
         intent.putExtra("goodsInStockActivityBean", goodsInStockActivityBean);
         intent.putExtra("classificationBean", classificationBean);
         intent.putExtra("applicationBean", applicationBean);
         intent.putExtra("supplierBean", supplierBean);
+        Log.d("传过去有的值",searchField+goodsInStockActivityBean+classificationBean+applicationBean+supplierBean+"");
         startActivity(intent);
     }
 

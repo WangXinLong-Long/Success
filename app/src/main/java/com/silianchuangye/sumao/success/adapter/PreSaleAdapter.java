@@ -1,6 +1,7 @@
 package com.silianchuangye.sumao.success.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,7 @@ public class PreSaleAdapter extends BaseAdapter {
         preSaleModels.addAll(data);
     }
 public void clearData(){
+    Log.d("走这个方法了","走这个方法了");
     preSaleModels.clear();
 }
     @Override

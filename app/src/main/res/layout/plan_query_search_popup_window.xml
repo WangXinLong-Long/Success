@@ -62,7 +62,7 @@
         android:layout_below="@id/warehouse_name_rl"
         android:layout_marginTop="@dimen/x7">
 
-       <!-- <EditText
+        <EditText
             android:id="@+id/seller_enterprise"
             android:layout_width="@dimen/x240"
             android:layout_height="@dimen/x30"
@@ -71,8 +71,8 @@
             android:layout_marginRight="@dimen/x7"
             android:background="@drawable/juxing"
             android:gravity="center_vertical"
-            android:paddingLeft="@dimen/x7" />-->
-        <LinearLayout
+            android:paddingLeft="@dimen/x7" />
+       <!-- <LinearLayout
             android:id="@+id/layout_seller_enterprise"
             android:layout_width="@dimen/x240"
             android:layout_height="@dimen/x30"
@@ -93,13 +93,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@mipmap/drop_down" />
-        </LinearLayout>
+        </LinearLayout>-->
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/layout_seller_enterprise"
+            android:layout_toLeftOf="@id/seller_enterprise"
             android:text="企业卖方 : " />
     </RelativeLayout>
 
@@ -110,7 +110,7 @@
         android:layout_below="@id/seller_enterprise_rl"
         android:layout_marginTop="@dimen/x7">
 
-      <!--  <EditText
+        <EditText
             android:id="@+id/demand_number"
             android:layout_width="@dimen/x240"
             android:layout_height="@dimen/x30"
@@ -119,211 +119,211 @@
             android:layout_marginRight="@dimen/x7"
             android:background="@drawable/juxing"
             android:gravity="center_vertical"
-            android:paddingLeft="@dimen/x7" />-->
+            android:paddingLeft="@dimen/x7" />
 
-        <LinearLayout
-            android:id="@+id/mention_logistc_ll"
-            android:layout_width="@dimen/x240"
-            android:layout_height="@dimen/x30"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/x7"
-            android:background="@drawable/juxing"
-            android:orientation="horizontal">
+        <!--  <LinearLayout
+              android:id="@+id/mention_logistc_ll"
+              android:layout_width="@dimen/x240"
+              android:layout_height="@dimen/x30"
+              android:layout_alignParentRight="true"
+              android:layout_marginRight="@dimen/x7"
+              android:background="@drawable/juxing"
+              android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/demand_number"
-                android:layout_width="@dimen/x210"
-                android:layout_height="@dimen/x30"
-                android:layout_centerVertical="true"
-                android:gravity="center_vertical"
-                android:paddingLeft="@dimen/x3" />
+              <TextView
+                  android:id="@+id/demand_number"
+                  android:layout_width="@dimen/x210"
+                  android:layout_height="@dimen/x30"
+                  android:layout_centerVertical="true"
+                  android:gravity="center_vertical"
+                  android:paddingLeft="@dimen/x3" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/drop_down" />
-        </LinearLayout>
+              <ImageView
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:src="@mipmap/drop_down" />
+          </LinearLayout>-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/mention_logistc_ll"
-            android:text="   物流: " />
-    </RelativeLayout>
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_centerVertical="true"
+              android:layout_toLeftOf="@id/demand_number"
+              android:text="需求编号: " />
+      </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/demand_date"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/x30"
-        android:layout_below="@id/demand_number_rl"
-        android:layout_marginTop="@dimen/x7">
+      <RelativeLayout
+          android:id="@+id/demand_date"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/x30"
+          android:layout_below="@id/demand_number_rl"
+          android:layout_marginTop="@dimen/x7">
 
-        <TextView
-            android:id="@+id/tv_pop_customer_Shi"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/x7" />
+          <TextView
+              android:id="@+id/tv_pop_customer_Shi"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignParentRight="true"
+              android:layout_centerVertical="true"
+              android:layout_marginRight="@dimen/x7" />
 
-        <LinearLayout
-            android:id="@+id/demand_end_time_rl"
-            android:layout_width="@dimen/x115"
-            android:layout_height="@dimen/x30"
-            android:layout_toLeftOf="@id/tv_pop_customer_Shi"
-            android:background="@drawable/juxing"
-            android:orientation="horizontal">
+          <LinearLayout
+              android:id="@+id/demand_end_time_rl"
+              android:layout_width="@dimen/x115"
+              android:layout_height="@dimen/x30"
+              android:layout_toLeftOf="@id/tv_pop_customer_Shi"
+              android:background="@drawable/juxing"
+              android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/demand_end_time"
-                android:layout_width="@dimen/x83"
-                android:layout_height="@dimen/x30"
-                android:layout_centerVertical="true"
-                android:gravity="center_vertical"
-                android:paddingLeft="@dimen/x5" />
+              <TextView
+                  android:id="@+id/demand_end_time"
+                  android:layout_width="@dimen/x83"
+                  android:layout_height="@dimen/x30"
+                  android:layout_centerVertical="true"
+                  android:gravity="center_vertical"
+                  android:paddingLeft="@dimen/x5" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:src="@mipmap/drop_down" />
-        </LinearLayout>
+              <ImageView
+                  android:layout_width="wrap_content"
+                  android:layout_height="match_parent"
+                  android:src="@mipmap/drop_down" />
+          </LinearLayout>
 
-        <TextView
-            android:id="@+id/sheng"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/demand_end_time_rl"
-            android:text="至" />
+          <TextView
+              android:id="@+id/sheng"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_centerVertical="true"
+              android:layout_toLeftOf="@id/demand_end_time_rl"
+              android:text="至" />
 
-        <LinearLayout
-            android:id="@+id/demand_start_time_rl"
-            android:layout_width="@dimen/x110"
-            android:layout_height="@dimen/x30"
-            android:layout_toLeftOf="@id/sheng"
-            android:background="@drawable/juxing"
-            android:orientation="horizontal">
+          <LinearLayout
+              android:id="@+id/demand_start_time_rl"
+              android:layout_width="@dimen/x110"
+              android:layout_height="@dimen/x30"
+              android:layout_toLeftOf="@id/sheng"
+              android:background="@drawable/juxing"
+              android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/demand_start_time"
-                android:layout_width="@dimen/x78"
-                android:layout_height="@dimen/x30"
-                android:layout_centerVertical="true"
-                android:gravity="center_vertical"
-                android:paddingLeft="@dimen/x5" />
+              <TextView
+                  android:id="@+id/demand_start_time"
+                  android:layout_width="@dimen/x78"
+                  android:layout_height="@dimen/x30"
+                  android:layout_centerVertical="true"
+                  android:gravity="center_vertical"
+                  android:paddingLeft="@dimen/x5" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/drop_down" />
-        </LinearLayout>
+              <ImageView
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:src="@mipmap/drop_down" />
+          </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/demand_start_time_rl"
-            android:text="需求日期 : " />
-    </RelativeLayout>
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_centerVertical="true"
+              android:layout_toLeftOf="@id/demand_start_time_rl"
+              android:text="需求日期 : " />
+      </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/mention_state"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/x30"
-        android:layout_below="@id/demand_date"
-        android:layout_marginTop="@dimen/x7">
+      <RelativeLayout
+          android:id="@+id/mention_state"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/x30"
+          android:layout_below="@id/demand_date"
+          android:layout_marginTop="@dimen/x7">
 
-        <LinearLayout
-            android:id="@+id/mention_state_ll"
-            android:layout_width="@dimen/x110"
-            android:layout_height="@dimen/x30"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/x135"
-            android:background="@drawable/juxing"
-            android:orientation="horizontal">
+          <LinearLayout
+              android:id="@+id/mention_state_ll"
+              android:layout_width="@dimen/x110"
+              android:layout_height="@dimen/x30"
+              android:layout_alignParentRight="true"
+              android:layout_marginRight="@dimen/x135"
+              android:background="@drawable/juxing"
+              android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/tv_pop_customer_qu"
-                android:layout_width="@dimen/x80"
-                android:layout_height="@dimen/x30"
-                android:layout_centerVertical="true"
-                android:gravity="center_vertical"
-                android:paddingLeft="@dimen/x3" />
+              <TextView
+                  android:id="@+id/tv_pop_customer_qu"
+                  android:layout_width="@dimen/x80"
+                  android:layout_height="@dimen/x30"
+                  android:layout_centerVertical="true"
+                  android:gravity="center_vertical"
+                  android:paddingLeft="@dimen/x3" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/drop_down" />
-        </LinearLayout>
+              <ImageView
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:src="@mipmap/drop_down" />
+          </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/mention_state_ll"
-            android:text="提报状态 : " />
-    </RelativeLayout>
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_centerVertical="true"
+              android:layout_toLeftOf="@id/mention_state_ll"
+              android:text="提报状态 : " />
+      </RelativeLayout>
 
-    <TextView
-        android:id="@+id/split_line"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/x1"
-        android:layout_below="@id/mention_state"
-        android:layout_marginTop="@dimen/x20"
-        android:background="@color/gray_type" />
+      <TextView
+          android:id="@+id/split_line"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/x1"
+          android:layout_below="@id/mention_state"
+          android:layout_marginTop="@dimen/x20"
+          android:background="@color/gray_type" />
 
-    <RelativeLayout
-        android:id="@+id/bottom_rl"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/split_line">
-    <Button
-        android:id="@+id/search_button"
-        android:layout_width="@dimen/x145"
-        android:layout_height="@dimen/x35"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/x7"
-        android:layout_marginTop="@dimen/x3"
-        android:background="@drawable/button_background_blue"
-        android:text="立即查询"
-        android:textColor="@color/selley_lv" />
-        </RelativeLayout>
+      <RelativeLayout
+          android:id="@+id/bottom_rl"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_below="@id/split_line">
+      <Button
+          android:id="@+id/search_button"
+          android:layout_width="@dimen/x145"
+          android:layout_height="@dimen/x35"
+          android:layout_centerHorizontal="true"
+          android:layout_marginBottom="@dimen/x7"
+          android:layout_marginTop="@dimen/x3"
+          android:background="@drawable/button_background_blue"
+          android:text="立即查询"
+          android:textColor="@color/selley_lv" />
+          </RelativeLayout>
 
-    <ListView
-        android:id="@+id/mention_state_lv"
-        android:layout_width="@dimen/x110"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/mention_state"
-        android:layout_marginLeft="@dimen/x75"
-        android:layout_marginRight="@dimen/x7"
-        android:background="@drawable/juxing"
-        android:visibility="gone" />
-    <ListView
-        android:id="@+id/wuliu_lv"
-        android:layout_width="@dimen/x240"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/demand_number_rl"
-        android:layout_marginLeft="@dimen/x75"
-        android:layout_marginRight="@dimen/x7"
-        android:background="@drawable/juxing"
-        android:visibility="gone" />
-    <ListView
-        android:id="@+id/qiye_lv"
-        android:layout_width="@dimen/x240"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/seller_enterprise_rl"
-        android:layout_marginLeft="@dimen/x75"
-        android:layout_marginRight="@dimen/x7"
-        android:background="@drawable/juxing"
-        android:visibility="gone" />
+      <ListView
+          android:id="@+id/mention_state_lv"
+          android:layout_width="@dimen/x110"
+          android:layout_height="wrap_content"
+          android:layout_below="@id/mention_state"
+          android:layout_marginLeft="@dimen/x75"
+          android:layout_marginRight="@dimen/x7"
+          android:background="@drawable/juxing"
+          android:visibility="gone" />
+      <ListView
+          android:id="@+id/wuliu_lv"
+          android:layout_width="@dimen/x240"
+          android:layout_height="wrap_content"
+          android:layout_below="@id/demand_number_rl"
+          android:layout_marginLeft="@dimen/x75"
+          android:layout_marginRight="@dimen/x7"
+          android:background="@drawable/juxing"
+          android:visibility="gone" />
+      <ListView
+          android:id="@+id/qiye_lv"
+          android:layout_width="@dimen/x240"
+          android:layout_height="wrap_content"
+          android:layout_below="@id/seller_enterprise_rl"
+          android:layout_marginLeft="@dimen/x75"
+          android:layout_marginRight="@dimen/x7"
+          android:background="@drawable/juxing"
+          android:visibility="gone" />
 
-    <LinearLayout
-        android:id="@+id/out_of_popupwindow"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/x300"
-        android:layout_below="@id/bottom_rl"
-        android:alpha="0.5"
-        android:background="@color/dingdanpopwindow_Bottombg"
-        android:orientation="vertical"></LinearLayout>
-</RelativeLayout>
+      <LinearLayout
+          android:id="@+id/out_of_popupwindow"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/x300"
+          android:layout_below="@id/bottom_rl"
+          android:alpha="0.5"
+          android:background="@color/dingdanpopwindow_Bottombg"
+          android:orientation="vertical"></LinearLayout>
+  </RelativeLayout>

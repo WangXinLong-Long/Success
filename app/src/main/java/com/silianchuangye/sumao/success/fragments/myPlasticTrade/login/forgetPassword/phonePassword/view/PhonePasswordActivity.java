@@ -79,7 +79,7 @@ public class PhonePasswordActivity extends AppCompatActivity implements View.OnC
         telephone_num.setOnClickListener(this);
 
 //        计时器，30s内不能发送验证码
-        mCountDownTimerUtils = new CountDownTimerUtils(bt_get_register, 30000, 1000);
+        mCountDownTimerUtils = new CountDownTimerUtils(bt_get_register, 60000, 1000);
 
     }
 

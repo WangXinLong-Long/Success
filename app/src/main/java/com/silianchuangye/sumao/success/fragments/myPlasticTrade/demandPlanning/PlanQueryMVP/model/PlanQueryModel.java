@@ -18,21 +18,21 @@ public class PlanQueryModel implements IPlanQueryModel {
     private String planStartDate;
     private String planEndDate;
     private String planState;
-    private String warehouseName;
-    private String logisticsID;
+    private String enterpriseName;
+    private String demandId;
     private String sellerEnterpriseId;
     private String _dynSessConf;
     private boolean updateLoad;
 
-    public PlanQueryModel(String pageNum, String pageSize, String productName, String planStartDate, String planEndDate, String planState, String warehouseName, String logisticsID, String sellerEnterpriseId, String _dynSessConf, boolean updateLoad) {
+    public PlanQueryModel(String pageNum, String pageSize, String productName, String planStartDate, String planEndDate, String planState, String enterpriseName, String demandId, String sellerEnterpriseId, String _dynSessConf, boolean updateLoad) {
         this.pageNum = pageNum;
         this.pageSize = pageSize;
         this.productName = productName;
         this.planStartDate = planStartDate;
         this.planEndDate = planEndDate;
         this.planState = planState;
-        this.warehouseName = warehouseName;
-        this.logisticsID = logisticsID;
+        this.enterpriseName = enterpriseName;
+        this.demandId = demandId;
         this.sellerEnterpriseId = sellerEnterpriseId;
         this._dynSessConf = _dynSessConf;
         this.updateLoad = updateLoad;
@@ -42,7 +42,7 @@ public class PlanQueryModel implements IPlanQueryModel {
     public void getPlanQueryResult(final PlanQueryCallback callback) {
 //        String result = null;
 //        callback.callbackPlanQueryResult(result);
-        String url= SuMaoConstant.SUMAO_IP+"/rest/model/com/sumao/mobile/order/purchase/PlanOrderActor/vipPlanOrderSearch";
+        String url= SuMaoConstant.SUMAO_IP+"/rest/model/com/sumao/mobile/order/purchase/PlanOrderActor/vipPlanOrderQuery";
         RequestParams rp=new RequestParams(url);
         rp.addParameter("pageNum",pageNum);
         rp.addParameter("pageSize",pageSize);
@@ -50,8 +50,8 @@ public class PlanQueryModel implements IPlanQueryModel {
         rp.addParameter("planStartDate",planStartDate);
         rp.addParameter("planEndDate",planEndDate);
         rp.addParameter("planState",planState);
-        rp.addParameter("warehouseName",warehouseName);
-        rp.addParameter("logisticsID",logisticsID);
+        rp.addParameter("enterpriseName",enterpriseName);
+        rp.addParameter("demandId",demandId);
         rp.addParameter("sellerEnterpriseId",sellerEnterpriseId);
         rp.addParameter("_dynSessConf",_dynSessConf);
         Log.d("查询的rp",rp+"");

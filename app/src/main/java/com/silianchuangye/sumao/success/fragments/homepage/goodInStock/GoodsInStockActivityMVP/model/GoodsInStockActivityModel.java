@@ -19,6 +19,14 @@ import org.xutils.x;
  * Created by Administrator on 2016/8/12 0012.
  */
 public class GoodsInStockActivityModel implements IGoodsInStockActivityModel {
+    boolean fenlei;
+    boolean diqu;
+    boolean shengchan;
+    boolean yingyong;
+    String feileiString;
+    String productName;
+    String warehouseName;
+    String title;
     String pattern;//交易模式
     String regions;//    大区
     String provinces;//省
@@ -30,7 +38,21 @@ public class GoodsInStockActivityModel implements IGoodsInStockActivityModel {
     String pageNum;//当前页码
     String updateOrLoad;
     String searchField = "";
-    public GoodsInStockActivityModel(String groups,String pattern, String regions, String provinces, String cities,
+    String urlSearch;
+    private GoodsInStockActivityBean goodsInStockActivityBean;
+
+    public GoodsInStockActivityModel(boolean fenlei, boolean diqu, boolean shengchan, boolean yingyong, String feileiString, String productName, String title, String warehouseName) {
+        this.fenlei = fenlei;
+        this.diqu = diqu;
+        this.shengchan = shengchan;
+        this.yingyong = yingyong;
+        this.feileiString = feileiString;
+        this.productName = productName;
+        this.title = title;
+        this.warehouseName = warehouseName;
+    }
+
+    public GoodsInStockActivityModel(String groups, String pattern, String regions, String provinces, String cities,
                                      String categoryNames, String appNames, String gradeNums, String pageNum, String updateOrLoad) {
         this.groups = groups;
         this.pattern = pattern;
@@ -89,11 +111,12 @@ public class GoodsInStockActivityModel implements IGoodsInStockActivityModel {
             e.printStackTrace();
         }
         requestParams.setBodyContent(jsonObject.toString());
+        Log.d("传入的参数",jsonObject.toString());
         LogUtils.log("首页：现货requestParams--->" + requestParams + "<---首页：现货requestParams");
         try {
             x.http().request(HttpMethod.POST, requestParams, new Callback.CacheCallback<String>() {
 
-                private GoodsInStockActivityBean goodsInStockActivityBean;
+
 
                 @Override
                 public boolean onCache(String result) {
@@ -129,6 +152,56 @@ public class GoodsInStockActivityModel implements IGoodsInStockActivityModel {
             e.printStackTrace();
             LogUtils.log("--------->" + "3.2+printStackTrace" + e.toString() + "<-----------");
         }
+    }
+
+    @Override
+    public void getGoodsInStockResultForSearch(final GoodsInStockActivityCallback callback) {
+        urlSearch=SuMaoConstant.SUMAO_IP+"/rest/model/atg/endeca/HomeActor/EndecaAppScreenResult";
+        if (!fenlei&&!diqu&&!shengchan&&!yingyong){
+            if (title.equals("现货")){
+                urlSearch+="?N=0&Nr=product.type:fixedProduct";
+            }else if (title.equals("预售")){
+                urlSearch+="?N=0&Nr=product.type:forward-pricing-product";
+            }
+        }else{
+            urlSearch+=feileiString;
+        }
+        if (productName.length()>0){
+            urlSearch+="&alias="+productName;
+        }
+        if (warehouseName.length()>0){
+            urlSearch+="&wareHouse="+warehouseName;
+        }
+        urlSearch+="&No=0";
+        Log.d("查询的url",urlSearch);
+        RequestParams rp=new RequestParams(urlSearch);
+
+        x.http().get(rp, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.d("查询的返回值",result);
+                Gson gson = new Gson();
+                goodsInStockActivityBean = gson.fromJson(result, GoodsInStockActivityBean.class);
+                callback.callbackInGoodsInStockActivity(goodsInStockActivityBean,updateOrLoad,"");
+
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+
     }
 
 

@@ -86,7 +86,7 @@ public class RegisterPhoneActivity extends AppCompatActivity implements IRegiste
 //        editText.setInputType();
         //获取验证码按钮
         bt_get_register = (TextView) findViewById(R.id.bt_get_register);
-        mCountDownTimerUtils = new CountDownTimerUtils(bt_get_register, 30000, 1000);
+        mCountDownTimerUtils = new CountDownTimerUtils(bt_get_register, 60000, 1000);
         /**
          * 获取验证码
          */

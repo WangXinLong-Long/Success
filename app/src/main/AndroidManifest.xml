@@ -709,7 +709,12 @@
         <activity android:name=".fragments.myPlasticTrade.demandPlanning.PlanPresentationMVP.view.ValueActivity" />
         <activity android:name=".fragments.myPlasticTrade.demandPlanning.planType.TypeActivity" />
         <activity android:name=".fragments.myPlasticTrade.demandPlanning.planType.ProductNameActivity" />
-        <activity android:name=".fragments.myPlasticTrade.demandPlanning.planType.WarehouseActivity"></activity>
+        <activity android:name=".fragments.myPlasticTrade.demandPlanning.planType.WarehouseActivity" />
+        <activity android:name=".fragments.myPlasticTrade.accountmeneger.Account_Activity" />
+        <activity android:name=".fragments.myPlasticTrade.accountmeneger.inganActivity" />
+        <activity android:name=".fragments.myPlasticTrade.accountmeneger.KunlunActivity" />
+        <activity android:name=".fragments.myPlasticTrade.accountmeneger.JiansheActivity" />
+        <activity android:name=".fragments.myPlasticTrade.demandPlanning.SearchplanActivity"></activity>
     </application>
 
 </manifest>
