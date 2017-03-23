@@ -69,13 +69,16 @@ public class CompanyUserDutyActivity extends AppCompatActivity {
                 x.http().post(rp, new Callback.CommonCallback<String>() {
                     @Override
                     public void onSuccess(String result) {
+                        Log.d("jiaose de zhuangtai ",""+result);
                         try {
                             JSONObject obj_result = new JSONObject(result);
                             String message=obj_result.getString("roleType");
                             JSONArray array=new JSONArray(message);
                             for (int i=0;i<array.length();i++){
                                 JSONObject info=array.getJSONObject(i);
-                                list.add(info.getString("displayName"));
+                                if (info.toString().contains("displayName")) {
+                                    list.add(info.getString("displayName"));
+                                }
                             }
                             ListViewAdapter adapter=new ListViewAdapter(CompanyUserDutyActivity.this,list);
                             lvDemo.setAdapter(adapter);
@@ -197,17 +200,6 @@ public class CompanyUserDutyActivity extends AppCompatActivity {
             holder.cb_check.setOnClickListener(new View.OnClickListener() {
 
                 public void onClick(View v) {
-                    //ames.get(position).toString()=list.get(position).toString();
-                   // names.add(list.get(position).toString());
-//                    if (isAdd){
-//                        name=list.get(position).toString();
-//                        names.add(name);
-//                        isAdd=false;
-//                        Log.d("真的数据是",names.toString());
-//                    }else{
-//                        names.remove(list.get(position).toString());
-//                        Log.d("假的数据是",names.toString());
-//                    }
                     Log.d("选中状态",holder.cb_check.isChecked()+"");
                     if (holder.cb_check.isChecked()==true){
                         names.add(list.get(position).toString());

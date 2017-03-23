@@ -12,13 +12,19 @@ import org.xutils.x;
  * Created by Jobs Created on 2016/12/27.
  */
 public class NewsFragmentModel implements INewsFragmentModel {
+    private String dateType;
+
+    public NewsFragmentModel(String dateType) {
+        this.dateType = dateType;
+    }
+
     @Override
     public void getNewsFragmentResult(final NewsFragmentCallback callback) {
         String url = SuMaoConstant.SUMAO_IP + "/rest/model/atg/commerce/news/NewsAnalyzeActor/SumaoNewsList";
         RequestParams rp = new RequestParams(url);
-//        if (dateType!=null){
-//            rp.addParameter("dateType",dateType);
-//        }
+        if (dateType!=null){
+            rp.addParameter("searchDate",dateType);
+        }
         x.http().post(rp, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {

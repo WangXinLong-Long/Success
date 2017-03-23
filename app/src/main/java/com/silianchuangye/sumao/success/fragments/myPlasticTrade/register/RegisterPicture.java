@@ -79,6 +79,7 @@ public class RegisterPicture extends AppCompatActivity {
     String title=null;
     EditText ed_number;
     String fileCode=null;
+    private String tupian;
     // 创建一个以当前时间为名称的文件
     File tempFile = new File(Environment.getExternalStorageDirectory(),getPhotoFileName());
     @Override
@@ -118,6 +119,7 @@ public class RegisterPicture extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.d("点击事件","进来了");
+                tupian=getPhotoFileName();
                 //上传图片
                 new Thread(){
                     @Override
@@ -129,6 +131,9 @@ public class RegisterPicture extends AppCompatActivity {
                             Log.d("fileCode",fileCode);
                            if (fileCode!=null && fileCode!="") {
                                rp.addParameter("file", fileCode);
+                               SharedPreferences.Editor editor=sp.edit();
+                               editor.remove("fileCode");
+                               editor.commit();
                            }else{
                                Log.d("判断","进来了");
                                Log.d("相册的路径",filepath);
@@ -140,8 +145,8 @@ public class RegisterPicture extends AppCompatActivity {
                            }
 
                             Log.d("文件",fileCode+"");
-                            rp.addParameter("fileName", getPhotoFileName());
-                            Log.d("名称",getPhotoFileName());
+                            rp.addParameter("fileName", tupian);
+                            Log.d("名称",tupian);
                             Log.d("aaa",rp.getUri().toString());
                             x.http().post(rp, new Callback.CommonCallback<String>() {
                                 @Override
@@ -155,7 +160,7 @@ public class RegisterPicture extends AppCompatActivity {
                                     Intent intent = new Intent();
                                     //Intent intent = new Intent();
                                     intent.putExtra("value", ed_number.getText().toString());
-                                    intent.putExtra("picturePath", "/mnt/"+getPhotoFileName());
+                                    intent.putExtra("picturePath", "/mnt/docs"+tupian);
                                     setResult(number1, intent);
                                     RegisterPicture.this.finish();
 

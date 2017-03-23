@@ -16,8 +16,8 @@ public class NewsFragmentPresenter {
     }
 
 //    获取新闻页面中内容
-    public  void getNewsFragmentResult(){
-        INewsFragmentModel newsFragmentModel = new NewsFragmentModel();
+    public  void getNewsFragmentResult(String dateType){
+        INewsFragmentModel newsFragmentModel = new NewsFragmentModel(dateType);
         newsFragmentModel.getNewsFragmentResult(new NewsFragmentCallback() {
             @Override
             public void callbackNewsFragmentResult(String result) {

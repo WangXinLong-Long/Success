@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,7 +75,7 @@ public class NewsFragment extends Fragment implements INewsFragmentView{
 
     private void initData() {
         String dateType = null;
-        newsFragmentPresenter.getNewsFragmentResult();
+        newsFragmentPresenter.getNewsFragmentResult("");
 
     }
 
@@ -111,8 +112,10 @@ public class NewsFragment extends Fragment implements INewsFragmentView{
 
 
     public void searchData(int year, int monthOfYear, int dayOfMonth) {
-        Toast.makeText(getActivity(), "在新闻页面中操作", Toast.LENGTH_SHORT).show();
-        view.setBackgroundColor(Color.RED);
+
+        String dateType = year+"-"+(monthOfYear)+"-"+dayOfMonth;
+        Log.d("新聞中選擇的時間",dateType);
+        newsFragmentPresenter.getNewsFragmentResult(dateType);
     }
 
     //      监听广播
@@ -127,7 +130,7 @@ public class NewsFragment extends Fragment implements INewsFragmentView{
                     Toast.makeText(context, "暂时没有网络,请检查您的网络设置", Toast.LENGTH_SHORT).show();
                 }else {
                     //                    1表示有
-                    newsFragmentPresenter.getNewsFragmentResult();
+                    newsFragmentPresenter.getNewsFragmentResult("");
                 }
             }
         };

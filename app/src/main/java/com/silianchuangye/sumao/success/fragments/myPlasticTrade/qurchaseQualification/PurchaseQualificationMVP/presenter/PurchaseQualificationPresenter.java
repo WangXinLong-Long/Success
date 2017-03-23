@@ -15,8 +15,8 @@ public class PurchaseQualificationPresenter {
         this.purchaseQualificationView = purchaseQualificationView;
     }
 
-    public void getPurchaseQualificationDetail(){
-        IPurchaseQualificationModel purchaseQualificationModel = new PurchaseQualificationModel();
+    public void getPurchaseQualificationDetail(String unique){
+        IPurchaseQualificationModel purchaseQualificationModel = new PurchaseQualificationModel(unique);
         purchaseQualificationModel.getPurchaseQualificationResult(new PurchaseQualificationCallback() {
             @Override
             public void callbackPurchaseQualificationResult(String result) {

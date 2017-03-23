@@ -24,14 +24,14 @@ public class DataFragmentModel implements IDataFragmentModel {
         String url = SuMaoConstant.SUMAO_IP + "/rest/model/atg/commerce/news/NewsAnalyzeActor/NewsDataList";
         RequestParams rp = new RequestParams(url);
         if (dateType!=null){
-            rp.addParameter("dateType",dateType);
+            rp.addParameter("searchDate",dateType);
         }
             x.http().post(rp, new Callback.CommonCallback<String>() {
                 @Override
                 public void onSuccess(String result) {
                     Log.d("资讯数据的result--->", result);
 
-                    callback.callbackDataFragmentResult(  result);
+                    callback.callbackDataFragmentResult(result);
 
 
                 }

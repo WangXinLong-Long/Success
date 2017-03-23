@@ -163,7 +163,7 @@ public class PagerOne extends BasePager implements IPagerOneView {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(mActivity, GoodsInStockActivity.class);
-                intent.putExtra("title", "应用");
+                intent.putExtra("title", "分类");
                 intent.putExtra("id",yingyongId.get(position).toString());
                 intent.putExtra("goodsInStockActivityBean", goodsInStockActivityBean);
                 intent.putExtra("classificationBean", classificationBean);
@@ -178,7 +178,7 @@ public class PagerOne extends BasePager implements IPagerOneView {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(mActivity, GoodsInStockActivity.class);
-                intent.putExtra("title", "生产商");
+                intent.putExtra("title", "应用");
                 intent.putExtra("id",ShengchanId.get(position).toString());
                 intent.putExtra("goodsInStockActivityBean", goodsInStockActivityBean);
                 intent.putExtra("classificationBean", classificationBean);
@@ -192,7 +192,7 @@ public class PagerOne extends BasePager implements IPagerOneView {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(mActivity, GoodsInStockActivity.class);
-                intent.putExtra("title", "分类");
+                intent.putExtra("title", "供应商");
                 intent.putExtra("id",fenlei_List.get(position).toString());
                 intent.putExtra("goodsInStockActivityBean", goodsInStockActivityBean);
                 intent.putExtra("classificationBean", classificationBean);
@@ -615,7 +615,7 @@ public class PagerOne extends BasePager implements IPagerOneView {
         });
     }
 
-    public void get_yingyong(){
+    public void get_fenlei(){
         String url= SuMaoConstant.SUMAO_IP+"/rest/model/atg/endeca/HomeActor/EndecaAppApplication";
         RequestParams rp=new RequestParams(url);
         x.http().post(rp, new Callback.CommonCallback<String>() {
@@ -635,6 +635,51 @@ public class PagerOne extends BasePager implements IPagerOneView {
                     TextGrideViewAdapter classificationAdapter = new TextGrideViewAdapter(getActivity());
                     classificationAdapter.addData(classificationList);
                     classificationGridView.setAdapter(classificationAdapter);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+    }
+
+    public void get_yingyong(){
+        String url= SuMaoConstant.SUMAO_IP+"/rest/model/atg/endeca/HomeActor/EndecaAppSupplier";
+        RequestParams rp=new RequestParams(url);
+        x.http().post(rp, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.d("分类的返回值",result);
+                try {
+                    ShengchanId=new ArrayList<String>();
+                    JSONObject jsonObject=new JSONObject(result);
+                    String object_fenlei=jsonObject.getString("cl");
+                    JSONArray array_Fenlei=new JSONArray(object_fenlei);
+                    for (int i=0;i<array_Fenlei.length();i++){
+                        JSONObject ob_fl=array_Fenlei.getJSONObject(i);
+                        applicationList.add(ob_fl.getString("cl_name"));
+                        ShengchanId.add(ob_fl.getString("cl_id"));
+                    }
+                    TextGrideViewAdapter supplierAdapter = new TextGrideViewAdapter(getActivity());
+                    supplierAdapter.addData(applicationList);
+                    supplierDetail.setAdapter(supplierAdapter);
+
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -658,48 +703,6 @@ public class PagerOne extends BasePager implements IPagerOneView {
     }
 
     public void get_shengchan(){
-        String url= SuMaoConstant.SUMAO_IP+"/rest/model/atg/endeca/HomeActor/EndecaAppSupplier";
-        RequestParams rp=new RequestParams(url);
-        x.http().post(rp, new Callback.CommonCallback<String>() {
-            @Override
-            public void onSuccess(String result) {
-                Log.d("分类的返回值",result);
-                try {
-                    ShengchanId=new ArrayList<String>();
-                    JSONObject jsonObject=new JSONObject(result);
-                    String object_fenlei=jsonObject.getString("cl");
-                    JSONArray array_Fenlei=new JSONArray(object_fenlei);
-                    for (int i=0;i<array_Fenlei.length();i++){
-                        JSONObject ob_fl=array_Fenlei.getJSONObject(i);
-                        applicationList.add(ob_fl.getString("cl_name"));
-                        ShengchanId.add(ob_fl.getString("cl_id"));
-                    }
-                    TextGrideViewAdapter applicationAdapter = new TextGrideViewAdapter(getActivity());
-                    applicationAdapter.addData(applicationList);
-                    applicationDetail.setAdapter(applicationAdapter);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-
-            }
-
-            @Override
-            public void onCancelled(CancelledException cex) {
-
-            }
-
-            @Override
-            public void onFinished() {
-
-            }
-        });
-    }
-
-    public void get_fenlei(){
         String url= SuMaoConstant.SUMAO_IP+"/rest/model/atg/endeca/HomeActor/EndecaAppCategory";
         RequestParams rp=new RequestParams(url);
         x.http().post(rp, new Callback.CommonCallback<String>() {
@@ -716,10 +719,12 @@ public class PagerOne extends BasePager implements IPagerOneView {
                         supplierBeanList.add(ob_fl.getString("cl_name"));
                         fenlei_List.add(ob_fl.getString("cl_id"));
                     }
-                    TextGrideViewAdapter supplierAdapter = new TextGrideViewAdapter(getActivity());
-                    supplierAdapter.addData(supplierBeanList);
 
-                    supplierDetail.setAdapter(supplierAdapter);
+
+
+                    TextGrideViewAdapter applicationAdapter = new TextGrideViewAdapter(getActivity());
+                    applicationAdapter.addData(supplierBeanList);
+                    applicationDetail.setAdapter(applicationAdapter);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

@@ -66,7 +66,7 @@ public class ListViewDataAdapter extends BaseAdapter {
             viewHolder = ((ViewHolder) convertView.getTag());
         }
 
-            viewHolder.title.setText(pagerTwoDataListViewBeens.get(position).getDataname());
+             viewHolder.title.setText(pagerTwoDataListViewBeens.get(position).getDataname());
            // viewHolder.time.setText(pagerTwoDataListViewBeens.get(position).getDatatime());
             viewHolder.time.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Double.parseDouble(pagerTwoDataListViewBeens.get(position).getDatatime())));
 

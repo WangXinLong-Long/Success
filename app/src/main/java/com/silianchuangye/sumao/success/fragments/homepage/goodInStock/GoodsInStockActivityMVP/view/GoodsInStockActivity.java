@@ -181,7 +181,7 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
             adapter.addData(smClList);
             adapter.notifyDataSetChanged();
             initData();
-        } else if (title.contains("分类")|| title.contains("应用")|| title.contains("生产商")||title.contains("地区")){
+        } else if (title.contains("分类")|| title.contains("应用")|| title.contains("供应商")||title.contains("地区")){
             searchProductName("0");
         }
         else {
@@ -464,13 +464,13 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
                 urlSearch+="?N=0&Nr=product.type:fixedProduct";
             }else if (title.equals("预售")){
                 urlSearch+="?N=0&Nr=product.type:forward-pricing-product";
-            }else if (title.equals("地区")||title.equals("分类")||title.equals("生产商")||title.equals("应用")){
+            }else if (title.equals("地区")||title.equals("分类")||title.equals("供应商")||title.equals("应用")){
                 urlSearch+=fenleiString;
             }
         }else{
             urlSearch+=fenleiString;
         }
-        if (!title.equals("地区")&&!title.equals("分类")&&!title.equals("生产商")&&!title.equals("应用")){
+        if (!title.equals("地区")&&!title.equals("分类")&&!title.equals("供应商")&&!title.equals("应用")){
             if (et_productName.getText().toString().length()>0){
                 urlSearch+="&alias="+et_productName.getText().toString();
             }

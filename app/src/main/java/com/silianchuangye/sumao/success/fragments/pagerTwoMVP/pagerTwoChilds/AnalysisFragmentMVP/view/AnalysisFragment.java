@@ -188,7 +188,10 @@ public class AnalysisFragment extends Fragment {
     }
 
     public void searchData(int year, int monthOfYear, int dayOfMonth) {
-        Toast.makeText(getActivity(), "在分析页面中操作", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getActivity(), "在分析页面中操作", Toast.LENGTH_SHORT).show();
+        String time=year+"-"+(monthOfYear)+"-"+dayOfMonth;
+           Log.d("分析的值",time);
+        getAnalysis(time);
     }
 
 

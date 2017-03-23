@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -102,6 +103,9 @@ public class DataFragment extends Fragment implements IDataFragmentView {
 
     public void searchData(int year, int monthOfYear, int dayOfMonth) {
         Toast.makeText(getActivity(), "" + year + "-" + monthOfYear + "-" + dayOfMonth + "在数据中搜索", Toast.LENGTH_SHORT).show();
+        String dateType = year+"-"+(monthOfYear)+"-"+dayOfMonth;
+        Log.d("在數據中選擇的時間",""+dateType);
+        dataFragmentPresenter.getDataFragmentResult(dateType);
     }
 
     //    从网络加载数据

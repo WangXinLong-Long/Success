@@ -13,10 +13,17 @@ import org.xutils.x;
  * Created by Jobs Created on 2017/2/13.
  */
 public class PurchaseQualificationModel implements IPurchaseQualificationModel {
+    private String unique;
+
+    public PurchaseQualificationModel(String unique) {
+        this.unique = unique;
+    }
+
     @Override
     public void getPurchaseQualificationResult(final PurchaseQualificationCallback callback) {
         String url = SuMaoConstant.SUMAO_IP + "/rest/model/atg/userprofiling/ProfileActor/getOrg";
         RequestParams requestParams = new RequestParams(url);
+        requestParams.addParameter("_dynSessConf",unique);
         x.http().post(requestParams, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {

@@ -1,9 +1,12 @@
 package com.silianchuangye.sumao.success.fragments.myPlasticTrade.demandPlanning.PlanQueryMVP.adapter;
 
+import android.app.Activity;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Paint;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +24,7 @@ import com.silianchuangye.sumao.success.fragments.myPlasticTrade.demandPlanning.
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.demandPlanning.SearchplanActivity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.demandPlanning.planQuery.ViewOriginalPlanActivity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +38,7 @@ public class PlanQueryAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private Button bt_search;
     private int number;
+    String id;
 //    private List<PlanBean.PlanOrderList> list;
     public PlanQueryAdapter(Context context,List<Map<String,Object>> list) {
         this.context = context;
@@ -71,7 +76,7 @@ public class PlanQueryAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder = null;
         number=position;
         if (convertView == null) {
@@ -115,74 +120,15 @@ public class PlanQueryAdapter extends BaseAdapter {
         }
 
         viewHolder.demand_or_order_number.setText(list.get(position).get("planID").toString());
-       if (list.get(position).toString().contains("orderId")) {
-           viewHolder.demand_or_order.setText(list.get(position).get("orderId").toString());
-           Log.d("订单号的值",list.get(position).get("orderId").toString());
-           bt_search.setVisibility(View.VISIBLE);
-           bt_search.setOnClickListener(new View.OnClickListener() {
-               @Override
-               public void onClick(View v) {
-                   Intent intent=new Intent(context, SearchplanActivity.class);
-                   intent.putExtra("PlanOrderList",list.get(number).toString());
-                   context.startActivity(intent);
-               }
-           });
-       }else {
-           Log.d("进的事else","else");
-           viewHolder.demand_or_order.setText(" ");
-           bt_search.setVisibility(View.GONE);
-       }
 
         viewHolder.demand_date_num.setText(list.get(position).get("scheduleDateChange").toString());
         viewHolder.date_of_presentation_num.setText(list.get(position).get("scheduleDate").toString());
         viewHolder.classification_content.setText(" ");
-        String state=list.get(position).get("demandScheduleState").toString();
+        final String state=list.get(position).get("demandScheduleState").toString();
         viewHolder.qiye.setText(list.get(position).get("sellerEnterpriseName").toString());
         if (state.equals("confirmed")){
             viewHolder.zhuangtai.setText("已确认");
-//            if (list.get(position).toString().contains("productNameChange")){
-//                viewHolder.product_name_content.setText(list.get(position).get("productNameChange").toString());
-//            }else{
-//                viewHolder.product_name_content.setText( list.get(position).get("productName").toString());
-//            }
-//            if (list.get(position).toString().contains("price")){
-//                viewHolder.price_content1.setText(list.get(position).get("price").toString());
-//            }else{
-//                if (list.get(position).toString().contains("prePirce")&&!list.get(position).get("prePirce").toString().equals("")){
-//                    viewHolder.price_content1.setText(list.get(position).get("prePirce").toString());
-//                }else{
-//                   // viewHolder.price_content1.setText(" ");
-//                   // viewHolder.price_content1.setVisibility(View.GONE);
-//                }
-//            }
-//            if (list.get(position).toString().contains("quantityChange")){
-//                if(!list.get(position).get("quantityChange").toString().equals("")){
-//                    viewHolder.number.setText(list.get(position).get("quantityChange").toString());
-//                }
 //
-//            }else{
-//                viewHolder.number.setText(list.get(position).get("quantity").toString());
-//            }
-//            if (list.get(position).toString().contains("amount")){
-//                viewHolder.money.setText(list.get(position).get("amount").toString());
-//            }else{
-//                if (list.get(position).toString().contains("preAmount")&&!list.get(position).get("preAmount").toString().equals("")){
-//                    viewHolder.money.setText(list.get(position).get("preAmount").toString());
-//                }else{
-//                    //viewHolder.money.setVisibility(View.GONE);
-//                }
-//            }
-//            if (list.get(position).toString().contains("warehouseChangeName")){
-//                viewHolder.warehouse.setText(list.get(position).get("warehouseChangeName").toString());
-//            }else{
-//                viewHolder.warehouse.setText(list.get(position).get("warehouseName").toString());
-//            }
-//            if (list.get(position).toString().contains("logisticsChangeName")){
-//                viewHolder.wuliu.setText(list.get(position).get("logisticsChangeName").toString());
-//            }else{
-//                viewHolder.wuliu.setText(list.get(position).get("logisticsName").toString());
-//
-//            }
 
             viewHolder.copy_button.setTextColor(context.getResources().getColor(R.color.btn_blue_normal));
            // bt_search.setVisibility(View.VISIBLE);
@@ -225,6 +171,106 @@ public class PlanQueryAdapter extends BaseAdapter {
         }
         viewHolder.warehouse.setText(list.get(position).get("warehouseName").toString());
         viewHolder.wuliu.setText(list.get(position).get("logisticsName").toString());
+
+        if (list.get(position).toString().contains("orderId")) {
+            id=list.get(position).get("orderId").toString();
+            viewHolder.demand_or_order.setText(id);
+            Log.d("订单号的值",list.get(position).get("orderId").toString());
+            Log.d("订单号的值",id);
+            bt_search.setVisibility(View.VISIBLE);
+            bt_search.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d("剪輯的值",""+list.get(position).toString());
+//                    SharedPreferences sp=context.getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+//                    SharedPreferences.Editor editor=sp.edit();
+//                    editor.put
+                    Intent intent=new Intent(context, SearchplanActivity.class);
+                   // intent.putExtra("PlanOrderList", list.get(position).toString());
+                    intent.putExtra("riqi",list.get(number).get("scheduleDate").toString());
+                    intent.putExtra("name",list.get(number).get("productName").toString());
+                    intent.putExtra("cangku",list.get(number).get("warehouseName").toString());
+                    intent.putExtra("number",list.get(number).get("quantity").toString());
+                    intent.putExtra("logisticsName",list.get(number).get("logisticsName").toString());
+                    if (list.get(position).toString().contains("orderId")&&!list.get(position).toString().equals("")){
+                        intent.putExtra("orderId",id);
+                    }else{
+                        intent.putExtra("orderId"," ");
+                    }
+                    intent.putExtra("state",state);
+                    if (list.get(position).toString().contains("scheduleDateChange")&&!list.get(position).get("scheduleDateChange").toString().equals("")){
+                        intent.putExtra("riqinew",list.get(number).get("scheduleDateChange").toString());
+                    }else{
+                        intent.putExtra("riqinew",list.get(number).get("scheduleDate").toString());
+                    }
+
+                    if (list.get(position).toString().contains("productNameChange")){
+                        String nameNew=list.get(position).get("productNameChange").toString();
+                        if (nameNew!=null&&nameNew!=""&&!nameNew.equals("")) {
+                            // viewHolder.product_name_content.setText(list.get(position).get("productNameChange").toString());
+                            intent.putExtra("nameNew", list.get(number).get("productNameChange").toString());
+                        }else{
+                            intent.putExtra("nameNew",list.get(number).get("productName").toString());
+                        }
+            }else{
+                        intent.putExtra("nameNew",list.get(number).get("productName").toString());
+
+            }
+
+            if (!list.get(position).toString().contains("quantityChange")){
+                String shuliang=list.get(number).get("quantity").toString();
+                intent.putExtra("numberNew",shuliang);
+
+            }else{
+                String numberNew=list.get(position).get("quantityChange").toString();
+//                viewHolder.number.setText(list.get(position).get("quantity").toString());
+                Log.d("變化后的值",numberNew);
+                if (!numberNew.equals("")||numberNew!=""||numberNew!=null){
+                       Log.d("變化后的值",numberNew);
+                      intent.putExtra("numberNew",numberNew);
+                }else{
+
+                    intent.putExtra("numberNew",list.get(number).get("quantity").toString());
+                }
+            }
+
+            if (!list.get(position).toString().contains("warehouseChangeName")){
+//                viewHolder.warehouse.setText(list.get(position).get("warehouseChangeName").toString());
+                intent.putExtra("cangkuNew",list.get(number).get("warehouseName").toString());
+            }else{
+                String cangkuNew=list.get(position).get("warehouseChangeName").toString();
+//                viewHolder.warehouse.setText(list.get(position).get("warehouseName").toString());
+                if (cangkuNew!=null||!cangkuNew.equals("")||cangkuNew!=""){
+                    intent.putExtra("cangkuNew",cangkuNew);
+                }else{
+                    intent.putExtra("cangkuNew",list.get(number).get("warehouseName").toString());
+                }
+
+            }
+            if (!list.get(position).toString().contains("logisticsChangeName")){
+                intent.putExtra("wayNew",list.get(number).get("logisticsName").toString());
+//                viewHolder.wuliu.setText(list.get(position).get("logisticsChangeName").toString());
+            }else {
+//                viewHolder.wuliu.setText(list.get(position).get("logisticsName").toString());
+                String wayNew=list.get(position).get("logisticsChangeName").toString();
+                if (wayNew!=null||!wayNew.equals("")||wayNew!=""){
+                    intent.putExtra("wayNew",wayNew);
+                }else{
+                    intent.putExtra("wayNew",list.get(number).get("logisticsName").toString());
+                }
+
+
+            }
+
+
+                    context.startActivity(intent);
+                }
+            });
+        }else {
+            Log.d("进的事else","else");
+            viewHolder.demand_or_order.setText(" ");
+            bt_search.setVisibility(View.GONE);
+        }
 
 
         return convertView;

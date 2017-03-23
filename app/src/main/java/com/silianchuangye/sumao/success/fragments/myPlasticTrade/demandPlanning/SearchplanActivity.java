@@ -16,6 +16,9 @@ import com.silianchuangye.sumao.success.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.List;
+import java.util.Map;
+
 public class SearchplanActivity extends AppCompatActivity implements View.OnClickListener {
     private TextView tv_search_see_plan_title;
     private ImageView img_search_see_plan_back;
@@ -36,84 +39,140 @@ public class SearchplanActivity extends AppCompatActivity implements View.OnClic
     private Button btn_seeplan_copy;
 
     private String result;
+    private String riqi;
+    private String name;
+    private String cangku;
+    private String number;
+    private String way;
+    private String nameNew;
+    private String numberNew;
+    private String cangkuNew;
+    private String wayNew;
+    private String riqinew;
+    private String orderId;
+    private String state;
+   private List<Map<String,Object>> resulr_list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_see_plan);
         Bundle bundle=getIntent().getExtras();
-        result=bundle.getString("PlanOrderList");
-        Log.d("resultd的值",result);
+     //   resulr_list=(List<Map<String,Object>>)bundle.getString("PlanOrderList");
+       // Log.d("resultd的值",result);
+        riqi=bundle.getString("riqi");
+        name=bundle.getString("name");
+        cangku=bundle.getString("cangku");
+        number=bundle.getString("number");
+        way=bundle.getString("logisticsName");
+        riqinew=bundle.getString("riqinew");
+        nameNew=bundle.getString("nameNew");
+        cangkuNew=bundle.getString("cangkuNew");
+        wayNew=bundle.getString("wayNew");
+        numberNew=bundle.getString("numberNew");
+        state=bundle.getString("state");
+        orderId=bundle.getString("orderId");
         tv_seeplan_right_date_old= (TextView) findViewById(R.id.tv_seeplan_right_date_old);
+        tv_seeplan_right_date_old.setText(riqi);
         tv_seeplan_right_name_old= (TextView) findViewById(R.id.tv_seeplan_right_name_old);
+        tv_seeplan_right_name_old.setText(name);
         tv_seeplan_right_cangku_old= (TextView) findViewById(R.id.tv_seeplan_right_cangku_old);
+        tv_seeplan_right_cangku_old.setText(cangku);
         tv_seeplan_right_num_old= (TextView) findViewById(R.id.tv_seeplan_right_num_old);
+        tv_seeplan_right_num_old.setText(number);
         tv_seeplan_right_peisong_old= (TextView) findViewById(R.id.tv_seeplan_right_peisong_old);
+        tv_seeplan_right_peisong_old.setText(way);
         tv_search_see_plan_title= (TextView) findViewById(R.id.tv_search_see_plan_title);
         tv_seeplan_right_date= (TextView) findViewById(R.id.tv_seeplan_right_date);
+        tv_seeplan_right_date.setText(riqinew);
         tv_seeplan_right_name= (TextView) findViewById(R.id.tv_seeplan_right_name);
+        tv_seeplan_right_name.setText(nameNew);
         tv_seeplan_right_cangku= (TextView) findViewById(R.id.tv_seeplan_right_cangku);
+        tv_seeplan_right_cangku.setText(cangkuNew);
         tv_seeplan_right_num= (TextView) findViewById(R.id.tv_seeplan_right_num);
+        tv_seeplan_right_num.setText(numberNew);
         tv_seeplan_right_peisong= (TextView) findViewById(R.id.tv_seeplan_right_peisong);
+        tv_seeplan_right_peisong.setText(wayNew);
         tv_seeplan_right_state= (TextView) findViewById(R.id.tv_seeplan_right_state);
+        if (state.equals("confirmed")){
+            tv_seeplan_right_state.setText("已确定");
+        }else if (state.equals("Pending")){
+            tv_seeplan_right_state.setText("待确定");
+        }else if (state.equals("canceled")){
+            tv_seeplan_right_state.setText("已取消");
+        }
+       // tv_seeplan_right_state.setText(state);
         tv_search_see_plan_title.setText("查看原计划");
         img_search_see_plan_back= (ImageView) findViewById(R.id.img_search_see_plan_back);
         btn_seeplan_copy= (Button) findViewById(R.id.btn_seeplan_copy);
         tv_seeplan_right_dingdannum= (TextView) findViewById(R.id.tv_seeplan_right_dingdannum);
-        try {
-            JSONObject jsonObject=new JSONObject(result);
+        tv_seeplan_right_dingdannum.setText(orderId);
 
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+       // getinfo();
+//    }}
+    }
+
+    public void getinfo(){
+
+            Log.d("传过来的result的值",resulr_list.toString());
+            //JSONObject jsonObject=new JSONObject(result);
             if (result.contains("orderId")){
-                Log.d("订单的id",jsonObject.getString("orderId"));
-                tv_seeplan_right_dingdannum.setText(jsonObject.getString("orderId"));
+                Log.d("订单的id",resulr_list.get(0).get("orderId").toString());
+                String orderId=resulr_list.get(0).get("orderId").toString();
+                tv_seeplan_right_dingdannum.setText(orderId);
             }
-
-            tv_seeplan_right_date_old.setText(jsonObject.getString("scheduleDate"));
-            Log.d("日期",jsonObject.getString("scheduleDate"));
-            tv_seeplan_right_name_old.setText(jsonObject.getString("productName"));
-            tv_seeplan_right_cangku_old.setText(jsonObject.getString("warehouseName"));
-            tv_seeplan_right_num_old.setText(jsonObject.getString("quantity"));
-            tv_seeplan_right_peisong_old.setText(jsonObject.getString("logisticsName"));
+            tv_seeplan_right_date_old.setText(resulr_list.get(0).get("scheduleDate").toString());
+            Log.d("日期",resulr_list.get(0).get("scheduleDate").toString());
+            tv_seeplan_right_name_old.setText(resulr_list.get(0).get("productName").toString());
+            tv_seeplan_right_cangku_old.setText(resulr_list.get(0).get("warehouseName").toString());
+            tv_seeplan_right_num_old.setText(resulr_list.get(0).get("quantity").toString());
+            tv_seeplan_right_peisong_old.setText(resulr_list.get(0).get("logisticsName").toString());
             if (result.contains("scheduleDateChange")){
-                tv_seeplan_right_date.setText(jsonObject.getString("scheduleDateChange"));
+                tv_seeplan_right_date.setText(resulr_list.get(0).get("scheduleDateChange").toString());
             }else{
-                tv_seeplan_right_date.setText(jsonObject.getString("scheduleDate"));
+                tv_seeplan_right_date.setText(resulr_list.get(0).get("scheduleDate").toString());
             }
             if (result.contains("productNameChange")){
-                tv_seeplan_right_name.setText(jsonObject.getString("productNameChange"));
+                tv_seeplan_right_name.setText(resulr_list.get(0).get("productNameChange").toString());
             }else{
-                tv_seeplan_right_name.setText(jsonObject.getString("productName"));
+                tv_seeplan_right_name.setText(resulr_list.get(0).get("productName").toString());
             }
             if (result.contains("warehouseChangeName")){
-                tv_seeplan_right_cangku.setText(jsonObject.getString("warehouseChangeName"));
+                tv_seeplan_right_cangku.setText(resulr_list.get(0).get("warehouseChangeName").toString());
             }else{
-                tv_seeplan_right_cangku.setText(jsonObject.getString("warehouseName"));
+                tv_seeplan_right_cangku.setText(resulr_list.get(0).get("warehouseName").toString());
             }
             if (result.contains("quantityChange")){
-                tv_seeplan_right_num.setText(jsonObject.getString("quantityChange"));
+                tv_seeplan_right_num.setText(resulr_list.get(0).get("quantityChange").toString());
             }else{
-                tv_seeplan_right_num.setText(jsonObject.getString("quantity"));
+                tv_seeplan_right_num.setText(resulr_list.get(0).get("quantity").toString());
             }
             if (result.contains("logisticsChangeName")){
-                tv_seeplan_right_peisong.setText(jsonObject.getString("logisticsChangeName"));
+                tv_seeplan_right_peisong.setText(resulr_list.get(0).get("logisticsChangeName").toString());
             }else{
-                tv_seeplan_right_peisong.setText(jsonObject.getString("logisticsName"));
+                tv_seeplan_right_peisong.setText(resulr_list.get(0).get("logisticsName").toString());
             }
-            if (result.contains("demandScheduleState")){
-                if (jsonObject.getString("demandScheduleState").equals("confirmed")){
+            if (resulr_list.contains("demandScheduleState")){
+               ///String state=jsonObject.getString("demandScheduleState").toString();
+                String state=resulr_list.get(0).get("demandScheduleState").toString();
+
+                if (state.equals("confirmed")){
                     //已经确认
                     tv_seeplan_right_state.setText("已确认");
-                }else if (jsonObject.getString("demandScheduleState").equals("Pending")){
+                }else if (state.equals("Pending")){
                     //待确认
                     tv_seeplan_right_state.setText("待确认");
-                }else if (jsonObject.getString("demandScheduleState").equals("canceled")){
+                }else if (state.equals("canceled")){
                     //已经取消
                     tv_seeplan_right_state.setText("已确认");
                 }
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
 
     }
 

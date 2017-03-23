@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/selley_bg"
+    android:background="#fff"
     tools:context="com.silianchuangye.sumao.success.ShangYou.SearchSeePlan">
     <RelativeLayout
         android:layout_width="match_parent"
@@ -52,7 +52,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:text="2016-1-23"
+            android:textColor="#222"
             android:layout_toRightOf="@id/tv_seeplan_left_date_old"/>
         <TextView
             android:id="@+id/tv_seeplan_left_name_old"
@@ -66,8 +66,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:textColor="#222"
             android:layout_toRightOf="@id/tv_seeplan_left_name_old"
-            android:text="dff"/>
+            />
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
@@ -84,7 +85,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:text=""
+android:textColor="#222"
             android:layout_toRightOf="@id/tv_seeplan_left_cangku_old"/>
         <TextView
             android:id="@+id/tv_seeplan_left_num_old"
@@ -98,8 +99,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:textColor="#222"
             android:layout_toRightOf="@id/tv_seeplan_left_num_old"
-            android:text="dff"/>
+            />
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
@@ -116,7 +118,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:text="2016-1-23"
+android:textColor="#222"
             android:layout_toRightOf="@id/tv_seeplan_left_peisong_old"/>
 
     </RelativeLayout>
@@ -146,7 +148,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:text=""
+android:textColor="#222"
             android:layout_toRightOf="@id/tv_seeplan_left_date"/>
         <TextView
             android:id="@+id/tv_seeplan_left_name"
@@ -160,8 +162,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:textColor="#222"
             android:layout_toRightOf="@id/tv_seeplan_left_name"
-            android:text="dff"/>
+            />
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
@@ -178,7 +181,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:text=""
+            android:textColor="#222"
+
             android:layout_toRightOf="@id/tv_seeplan_left_cangku"/>
         <TextView
             android:id="@+id/tv_seeplan_left_num"
@@ -192,8 +196,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:textColor="#222"
             android:layout_toRightOf="@id/tv_seeplan_left_num"
-            android:text=""/>
+            />
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
@@ -210,7 +215,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:text=""
+android:textColor="#222"
             android:layout_toRightOf="@id/tv_seeplan_left_peisong"/>
         <TextView
             android:id="@+id/tv_seeplan_left_state"
@@ -224,8 +229,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:textColor="#222"
             android:layout_toRightOf="@id/tv_seeplan_left_state"
-            android:text="dff"/>
+            />
     </RelativeLayout>
     <View
         android:id="@+id/line_searchseeplan"
@@ -248,7 +254,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/tv_seeplan_left_dingdannum"
-            android:text=""
+android:textColor="#222"
             android:layout_centerVertical="true"/>
         <Button
             android:id="@+id/btn_seeplan_copy"

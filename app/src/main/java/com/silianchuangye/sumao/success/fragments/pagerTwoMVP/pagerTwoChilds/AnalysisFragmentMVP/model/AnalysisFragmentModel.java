@@ -13,6 +13,7 @@ import org.xutils.x;
  */
 public class AnalysisFragmentModel implements IAnalysisFragmentModel {
 
+
     @Override
     public void getAnalysisFragmentResult(final AnalysisFragmentCallback callback) {
         String url = SuMaoConstant.SUMAO_IP + "/rest/model/atg/commerce/news/NewsAnalyzeActor/NewsAnalyzeDateList";
