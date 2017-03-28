@@ -28,6 +28,7 @@ public class PaymentSecurityModel implements IPaymentAuctionSecurityModel {
     public void getPaymentSecurityResult(final PaymentSecurityCallback callback) {
 
         String url = SuMaoConstant.SUMAO_IP + "/rest/model/atg/commerce/payment/OrderPayment/auctionDeposit";
+       // String uri=  SuMaoConstant.SUMAO_IP+"  /rest/model/atg/commerce/payment/OrderPayment/auctionDeposit";
         RequestParams rp = new RequestParams(url);
         rp.addParameter("depositAmount", depositAmount);
         rp.addParameter("productId", productId);

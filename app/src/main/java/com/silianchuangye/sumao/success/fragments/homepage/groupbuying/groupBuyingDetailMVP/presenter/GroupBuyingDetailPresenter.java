@@ -1,5 +1,7 @@
 package com.silianchuangye.sumao.success.fragments.homepage.groupbuying.groupBuyingDetailMVP.presenter;
 
+import android.util.Log;
+
 import com.silianchuangye.sumao.success.fragments.homepage.auction.openAuction.openAuctionModel.paymentSecurityModel.IPaymentAuctionSecurityModel;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.openAuction.openAuctionModel.paymentSecurityModel.PaymentSecurityCallback;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.openAuction.openAuctionModel.paymentSecurityModel.PaymentSecurityModel;
@@ -27,6 +29,7 @@ public class GroupBuyingDetailPresenter {
         preSaleBondModel.getPresaleBondResult(new PreSaleBondCallback() {
             @Override
             public void callbakcPreSale(String result) {
+                Log.d("获取银行列表",result);
                 groupBuyingDetailView.setBankListResult(result);
             }
         });

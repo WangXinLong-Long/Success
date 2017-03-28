@@ -22,6 +22,8 @@ public class AmountPaidedModel implements IAmountPaidedModel {
     @Override
     public void getAmountPaidedResult(final AmountPaidedCallback callback) {
         String url = SuMaoConstant.SUMAO_IP + "/rest/model/atg/commerce/catalog/ProductCatalogActor/AuctionDeposit";
+                                                 //rest/model/atg/commerce/payment/OrderPayment/auctionDeposit
+        ///rest/model/atg/commerce/catalog/ProductCatalogActor/AuctionDeposit
         RequestParams rp = new RequestParams(url);
         rp.addParameter("productId", productId);
         rp.addParameter("_dynSessConf", _dynSessConf);

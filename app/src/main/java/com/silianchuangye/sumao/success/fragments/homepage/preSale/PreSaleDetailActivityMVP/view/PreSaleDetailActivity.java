@@ -109,6 +109,7 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
     private TextView payment_deadline_et;
     private LinearLayout remark;
     private Button payment_security_closeMerket;
+    private String unique;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,6 +121,7 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
         payment_security_closeMerket= (Button) findViewById(R.id.payment_security_closeMerket);
         preSaleDetailBean = (PreSaleDetailBean) intent.getSerializableExtra("preSaleDetailBean");
         productId = preSaleDetailBean.getCl_id();
+
         Calendar calendar = Calendar.getInstance();
         calendarlist = new ArrayList<>();
 //        从服务器获取数据
@@ -169,6 +171,14 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
         }.start();
         initListener();
         setPreSaleDetailData(preSaleDetailBean);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        SharedPreferences sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+        unique = sp.getString("unique", "");
+        Log.d("unique的值",unique);
     }
 
     private void initListener() {
@@ -426,12 +436,13 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
                 /**
                  * 这里需要弹出popupWindow，即支付的弹出窗
                  */
-                SharedPreferences sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
-                String unique = sp.getString("unique", "");
+
                 if (unique.equals("false") || unique.equals("")) {
                     Intent intent1 = new Intent(PreSaleDetailActivity.this, LoginUserActivity.class);
                     intent1.putExtra("roles", "buyer");
-                    startActivityForResult(intent1, 0);
+//                    intent1.putExtra("position",101);
+//                    startActivityForResult(intent1, 101);
+                    startActivity(intent1);
                 } else {
                     //在这里首先判断客户是否有权限
                     new Thread(){
@@ -450,6 +461,16 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
 
         }
     }
+
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (requestCode==101){
+//            unique=data.getStringExtra("unique");
+//            Log.d("返回过的unique",unique);
+//        }
+//    }
+
     //判断用户是否有权限购买
     public void booleanJurisdiction(String Id){
         String url=SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/userprofiling/PurchaseJurisdictionCheckActor/PurchaseResult";

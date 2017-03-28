@@ -46,6 +46,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/x70"
+                    android:src="@mipmap/commit"
                     android:padding="@dimen/x10" />
             </RelativeLayout>
 

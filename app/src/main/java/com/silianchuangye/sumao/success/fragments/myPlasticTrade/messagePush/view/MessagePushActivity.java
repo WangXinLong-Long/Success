@@ -89,6 +89,7 @@ public class MessagePushActivity extends AppCompatActivity implements View.OnCli
     String logisticsID = "";//物流ID
     private List<String> logisticsNameIDList;
     private PopupWindow popupWindow;
+    private String sendId;
 
 
    // private GroupBuyingListViewAdapter adapter;
@@ -116,6 +117,14 @@ public class MessagePushActivity extends AppCompatActivity implements View.OnCli
 
         addData();
         layoutPull.setOnPullListener(new GroupBuyingListViewPullListener());
+//        pullList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Intent intent=new Intent(MessagePushActivity.this,MessageDetailsActivity.class);
+//                intent.putExtra("sendId",);
+//
+//            }
+//        });
 
 
     }
@@ -368,6 +377,7 @@ public class MessagePushActivity extends AppCompatActivity implements View.OnCli
         if (result.contains("title")){
             MessagePush messagePush=gson.fromJson(result,MessagePush.class);
             Log.d("查看list的是否有值",messagePush.getNoticeList().toString());
+
             noticeList.addAll(messagePush.getNoticeList());
             Log.d("list的列表","list列表"+noticeList.size());
             adapter=new MessagePushListViewAdapter(this,noticeList);

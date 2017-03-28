@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/x50"
         android:id="@+id/layout_title"
-        android:background="@color/btn_register_normal"
+        android:background="@color/textColor_expandable_listview_show"
 
         >
         <ImageView
@@ -42,7 +42,7 @@
         android:layout_height="@dimen/x40"
         android:layout_marginLeft="@dimen/x10"
         android:layout_marginRight="@dimen/x10"
-        android:background="@color/btn_register_normal"
+        android:background="@drawable/button_background_blue"
         android:textColor="#fff"
         android:text="上传图片"
         android:layout_marginTop="@dimen/x5"
@@ -53,18 +53,19 @@
         android:layout_height="wrap_content"
         android:id="@+id/tv_Name"
         android:visibility="gone"
-        android:textColor="@color/btn_blue_normal"
+        android:textColor="@color/textColor_expandable_listview_show"
         android:textSize="14sp"
         android:layout_marginLeft="@dimen/x10"
         android:text="11111"
-        />
+        >
+        </TextView>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="@dimen/x40"
         android:layout_marginLeft="@dimen/x10"
         android:layout_marginRight="@dimen/x10"
-        android:background="@color/btn_register_normal"
+        android:background="@drawable/button_background_blue"
         android:textColor="#fff"
         android:text="保存"
         android:layout_marginTop="@dimen/x25"

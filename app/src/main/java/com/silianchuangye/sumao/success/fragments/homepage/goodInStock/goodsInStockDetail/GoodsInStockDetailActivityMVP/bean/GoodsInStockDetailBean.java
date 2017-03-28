@@ -405,4 +405,6 @@ public class GoodsInStockDetailBean implements Serializable {
             this.cl_id = cl_id;
         }
     }
+
+
 }

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -22,6 +23,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.gson.Gson;
 import com.silianchuangye.sumao.success.HX.Constant;
 import com.silianchuangye.sumao.success.HX.ui.LoginActivity;
@@ -104,14 +108,16 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
     private LinearLayout remark_ll;
     private Button bt_Colse;
     private LinearLayout layout_gongneng;
+    private String unique;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goods_in_stock_detail);
-        bt_Colse= (Button) findViewById(R.id.bt_Colse);
-        layout_gongneng= (LinearLayout) findViewById(R.id.layout_gongneng);
-        new Thread(){
+        bt_Colse = (Button) findViewById(R.id.bt_Colse);
+        layout_gongneng = (LinearLayout) findViewById(R.id.layout_gongneng);
+        new Thread() {
             @Override
             public void run() {
                 super.run();
@@ -122,11 +128,10 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
         activityiIntent = getIntent();
         goodsInStockDetailBean = (GoodsInStockDetailBean) activityiIntent.getSerializableExtra("goodsInStockDetailBean");
 
-        initView();
-        getGoodsInStockDetailData(goodsInStockDetailBean);
-        initListener();
-        goodsInStockDetailPresenter = new GoodsInStockDetailPresenter(this);
+        //initView();
 
+//        SharedPreferences sp1 = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+//        unique = sp1.getString("unique", "");
 
 
     }
@@ -240,28 +245,32 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
 //            立即购买：
             case R.id.buy_immediately:
                 int type = 1;
-                SharedPreferences sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
-                String unique = sp.getString("unique", "");
+
                 if (unique.equals("false")) {
                     Toast.makeText(GoodsInStockDetailActivity.this, "请登录后进行操作", Toast.LENGTH_SHORT).show();
-                    Intent intent1  = new Intent(this, LoginUserActivity.class);
+                    Intent intent1 = new Intent(this, LoginUserActivity.class);
                     intent1.putExtra("roles", "buyer");
+                    intent1.putExtra("position", 100);
                     startActivity(intent1);
+                    //  startActivityForResult(intent1, 100);
                 } else {
-                    jurisdiction(goodsInStockDetailBean.getCl_id(),"购买",unique);
+                    jurisdiction(goodsInStockDetailBean.getCl_id(), "购买", unique);
 //
                 }
                 break;
             // 加入购物车：
             case R.id.join_shopping_cart:
-                SharedPreferences sp1 = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
-                String unique1 = sp1.getString("unique", "");
-                if (unique1.equals("false")) {
-                    Intent intent1  = new Intent(this, LoginUserActivity.class);
+//                SharedPreferences sp1 = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+//                String unique1 = sp1.getString("unique", "");
+                if (unique.equals("false")) {
+                    Intent intent1 = new Intent(this, LoginUserActivity.class);
                     intent1.putExtra("roles", "buyer");
+                    intent1.putExtra("position", 100);
+
+                   // startActivityForResult(intent1, 100);
                     startActivity(intent1);
                 } else {
-                    jurisdiction(goodsInStockDetailBean.getCl_id(),"加入购物车",unique1);
+                    jurisdiction(goodsInStockDetailBean.getCl_id(), "加入购物车", unique);
 
 
                 }
@@ -279,11 +288,11 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
                 str = et_number.getText().toString();
                 num = Integer.valueOf(str);
 
-                if (num>=Float.parseFloat(goodsInStockDetailBean.getCl_shuliang())){
+                if (num >= Float.parseFloat(goodsInStockDetailBean.getCl_shuliang())) {
 //                    Cart_MyDialog diolog=new Cart_MyDialog(GoodsInStockDetailActivity.this,goodsInStockDetailBean.getCl_mingcheng(),goodsInStockDetailBean.getCl_shuliang());
 //                    diolog.show();
                     et_number.setText(goodsInStockDetailBean.getCl_shuliang());
-                }else{
+                } else {
                     num++;
                     et_number.setText("" + num);
                 }
@@ -304,58 +313,70 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
         }
     }
 
-    private void showPopupWindow(final int num) {
-        popupWindowView = View.inflate(this, R.layout.buy_immediately_popup_window, null);
-        SharedPreferences sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
-        String unique = sp.getString("unique", "");
-        new Thread() {
-            @Override
-            public void run() {
-                super.run();
-//                getPurchase();
-            }
-        }.start();
-        img_item_cart_buy_sub = ((TextView) popupWindowView.findViewById(R.id.img_item_cart_buy_sub));
-        img_item_cart_buy_add = ((TextView) popupWindowView.findViewById(R.id.img_item_cart_buy_add));
-        tv_item_cart_buy_num = ((TextView) popupWindowView.findViewById(R.id.tv_item_cart_buy_num));
-        determine_buy_immediately_button = ((Button) popupWindowView.findViewById(R.id.determine_buy_immediately_button));
-        img_item_cart_buy_sub.setOnClickListener(this);
-        img_item_cart_buy_add.setOnClickListener(this);
-//        点击确定按钮
-        determine_buy_immediately_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                当立即购买时：
-                if (num == 1) {
 
-                    popupWindow.dismiss();
-                } else if (num == 2)//当加入购物车时
-                {
-                    /**
-                     * 在购物车创建订单的操作在这里执行
-                     */
+//      @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//          super.onActivityResult(requestCode, resultCode, data);
+//          if (resultCode == 100) {
+//              unique = data.getStringExtra("unique");
+//              Log.d("返回过来的unique", unique);
+//          }
+//      }
+//
 
 
-                    popupWindow.dismiss();
-                }
-            }
-        });
-        popupWindowView.measure(0, 0);
-        int w = getWindowManager().getDefaultDisplay().getWidth();
-        popupWindow = new PopupWindow(popupWindowView, w, popupWindowView.getMeasuredHeight());
-        popupWindow.setFocusable(true);
-        popupWindow.setBackgroundDrawable(new BitmapDrawable());
-//        popupWindow.setAnimationStyle(R.style.PopupAnimation);
-        popupWindow.showAtLocation(buy_immediately, Gravity.BOTTOM, 0, 0);
-        popupWindow.update();
-        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-            @Override
-            public void onDismiss() {
-                backgroundAlpha(1f);
-            }
-        });
-
-    }
+//    private void showPopupWindow(final int num) {
+//        popupWindowView = View.inflate(this, R.layout.buy_immediately_popup_window, null);
+//        SharedPreferences sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+//        String unique = sp.getString("unique", "");
+//        new Thread() {
+//            @Override
+//            public void run() {
+//                super.run();
+////                getPurchase();
+//            }
+//        }.start();
+//        img_item_cart_buy_sub = ((TextView) popupWindowView.findViewById(R.id.img_item_cart_buy_sub));
+//        img_item_cart_buy_add = ((TextView) popupWindowView.findViewById(R.id.img_item_cart_buy_add));
+//        tv_item_cart_buy_num = ((TextView) popupWindowView.findViewById(R.id.tv_item_cart_buy_num));
+//        determine_buy_immediately_button = ((Button) popupWindowView.findViewById(R.id.determine_buy_immediately_button));
+//        img_item_cart_buy_sub.setOnClickListener(this);
+//        img_item_cart_buy_add.setOnClickListener(this);
+////        点击确定按钮
+//        determine_buy_immediately_button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+////                当立即购买时：
+//                if (num == 1) {
+//
+//                    popupWindow.dismiss();
+//                } else if (num == 2)//当加入购物车时
+//                {
+//                    /**
+//                     * 在购物车创建订单的操作在这里执行
+//                     */
+//
+//
+//                    popupWindow.dismiss();
+//                }
+//            }
+//        });
+//        popupWindowView.measure(0, 0);
+//        int w = getWindowManager().getDefaultDisplay().getWidth();
+//        popupWindow = new PopupWindow(popupWindowView, w, popupWindowView.getMeasuredHeight());
+//        popupWindow.setFocusable(true);
+//        popupWindow.setBackgroundDrawable(new BitmapDrawable());
+////        popupWindow.setAnimationStyle(R.style.PopupAnimation);
+//        popupWindow.showAtLocation(buy_immediately, Gravity.BOTTOM, 0, 0);
+//        popupWindow.update();
+//        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+//            @Override
+//            public void onDismiss() {
+//                backgroundAlpha(1f);
+//            }
+//        });
+//
+//    }
 
     public void backgroundAlpha(float bgAlpha) {
         WindowManager.LayoutParams lp = GoodsInStockDetailActivity.this.getWindow().getAttributes();
@@ -374,7 +395,7 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
 //        剩余数量
         surplus_amount_et.setText(goodsInStockDetailBean.getCl_shuliang());
 //        起购量
-        purchase_quantity_et.setText(goodsInStockDetailBean.getCl_qigou()+"吨");
+        purchase_quantity_et.setText(goodsInStockDetailBean.getCl_qigou() + "吨");
 //        最小变量单位
         min_variable_et.setText(goodsInStockDetailBean.getCl_xiaobian() + "吨");
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -410,9 +431,9 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
 //        公司
         company_et.setText(goodsInStockDetailBean.getCl_gongsi());
 //        产品备注
-        if (goodsInStockDetailBean.getCl_cpbeizhu()==null){
+        if (goodsInStockDetailBean.getCl_cpbeizhu() == null) {
             remark_ll.setVisibility(View.GONE);
-        }else {
+        } else {
             tvRemark_auction.setText(goodsInStockDetailBean.getCl_cpbeizhu());
         }
 
@@ -487,22 +508,23 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
         }
 
     }
-    public void openOrClose(){
-        String url= SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/order/myorder/OrderPaymentInfo/colsedChecker";
-        RequestParams rp=new RequestParams(url);
+
+    public void openOrClose() {
+        String url = SuMaoConstant.SUMAO_IP + "/rest/model/atg/commerce/order/myorder/OrderPaymentInfo/colsedChecker";
+        RequestParams rp = new RequestParams(url);
         x.http().post(rp, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Log.d("开闭式接口返回的值",result);
+                Log.d("开闭式接口返回的值", result);
                 try {
-                    JSONObject jsonObject=new JSONObject(result);
-                    String open=jsonObject.getString("results");
-                    Log.d("open的值",open);
-                    if (open.equals("false")){
+                    JSONObject jsonObject = new JSONObject(result);
+                    String open = jsonObject.getString("results");
+                    Log.d("open的值", open);
+                    if (open.equals("false")) {
                         bt_Colse.setVisibility(View.VISIBLE);
                         layout_gongneng.setVisibility(View.GONE);
-                    }else{
-                        Log.d("走的else","走的else");
+                    } else {
+                        Log.d("走的else", "走的else");
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -528,21 +550,21 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
         });
     }
 
-    public void jurisdiction(String pId, final String choose, final String unique){
-        String url=SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/userprofiling/PurchaseJurisdictionCheckActor/PurchaseResult";
-        RequestParams rp=new RequestParams(url);
-        rp.addParameter("productId",pId);
+    public void jurisdiction(String pId, final String choose, final String unique) {
+        String url = SuMaoConstant.SUMAO_IP + "/rest/model/atg/commerce/userprofiling/PurchaseJurisdictionCheckActor/PurchaseResult";
+        RequestParams rp = new RequestParams(url);
+        rp.addParameter("productId", pId);
         x.http().post(rp, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Log.d("判断用户是否有权限购买改商品",result);
+                Log.d("判断用户是否有权限购买改商品", result);
                 try {
-                    JSONObject jsonObject=new JSONObject(result);
-                    String jurisdiction=jsonObject.getString("cl_allow");
-                    if (jurisdiction.equals("0")){
+                    JSONObject jsonObject = new JSONObject(result);
+                    String jurisdiction = jsonObject.getString("cl_allow");
+                    if (jurisdiction.equals("0")) {
                         //用户有权限购买
-                        Log.d("用户有权利购买","用户有权利购买");
-                        if (choose.equals("购买")){
+                        Log.d("用户有权利购买", "用户有权利购买");
+                        if (choose.equals("购买")) {
                             if (System.currentTimeMillis() > Long.parseLong(goodsInStockDetailBean.getCl_xiajiaend())
                                     || System.currentTimeMillis() > Long.parseLong(goodsInStockDetailBean.getCl_shijianend())) {
                                 Toast.makeText(GoodsInStockDetailActivity.this, "产品已下架", Toast.LENGTH_SHORT).show();
@@ -550,11 +572,11 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
                             } else {
                                 getPurchase(unique);
                             }
-                        }else if (choose.equals("加入购物车")){
+                        } else if (choose.equals("加入购物车")) {
                             if (System.currentTimeMillis() > Long.parseLong(goodsInStockDetailBean.getCl_xiajiaend())
                                     || System.currentTimeMillis() > Long.parseLong(goodsInStockDetailBean.getCl_shijianend())) {
                                 Toast.makeText(GoodsInStockDetailActivity.this, "产品已下架", Toast.LENGTH_SHORT).show();
-                            }else {
+                            } else {
                                 image.setVisibility(View.VISIBLE);
                                 Animation animation = AnimationUtils.loadAnimation(GoodsInStockDetailActivity.this, R.anim.joincartanim);
                                 animation.setFillAfter(true);
@@ -563,24 +585,24 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
                                 join_gouwuche();
                             }
                         }
-                    }else if (jurisdiction.equals("2")){
+                    } else if (jurisdiction.equals("2")) {
                         //用户没有权限购买
                         Toast.makeText(GoodsInStockDetailActivity.this, "该用户没有权限购买改产品", Toast.LENGTH_SHORT).show();
-                    }else if (jurisdiction.equals("1")){
+                    } else if (jurisdiction.equals("1")) {
                         Toast.makeText(GoodsInStockDetailActivity.this, "无上游资源方购买资质", Toast.LENGTH_SHORT).show();
-                    }else if (jurisdiction.equals("3")){
+                    } else if (jurisdiction.equals("3")) {
                         Toast.makeText(GoodsInStockDetailActivity.this, "该用户没有登录", Toast.LENGTH_SHORT).show();
-                        Intent intent1  = new Intent(GoodsInStockDetailActivity.this, LoginUserActivity.class);
+                        Intent intent1 = new Intent(GoodsInStockDetailActivity.this, LoginUserActivity.class);
                         intent1.putExtra("roles", "buyer");
                         startActivity(intent1);
 
-                    }else if (jurisdiction.equals("4")){
-                       // Toast.makeText(GoodsInStockDetailActivity.this, "没有在购买期限内,不能购买", Toast.LENGTH_SHORT).show();
-                    }else if (jurisdiction.equals("5")){
+                    } else if (jurisdiction.equals("4")) {
+                        // Toast.makeText(GoodsInStockDetailActivity.this, "没有在购买期限内,不能购买", Toast.LENGTH_SHORT).show();
+                    } else if (jurisdiction.equals("5")) {
                         Toast.makeText(GoodsInStockDetailActivity.this, "csc审核没有通过", Toast.LENGTH_SHORT).show();
-                    }else if (jurisdiction.equals("6")){
+                    } else if (jurisdiction.equals("6")) {
                         Toast.makeText(GoodsInStockDetailActivity.this, "企业财务员无权购买该产品", Toast.LENGTH_SHORT).show();
-                    }else if (jurisdiction.equals("7")){
+                    } else if (jurisdiction.equals("7")) {
                         Toast.makeText(GoodsInStockDetailActivity.this, "库存小于购买量", Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
@@ -607,16 +629,16 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
 
 
     public void join_gouwuche() {
-        Log.d("进来这个方法","进来这个方法");
+        Log.d("进来这个方法", "进来这个方法");
         String productId = goodsInStockDetailBean.getCl_id();
-        Log.d("选择框的值",et_number.getText().toString());
-        String quantity = Integer.parseInt(et_number.getText().toString())*1000+"";
+        Log.d("选择框的值", et_number.getText().toString());
+        String quantity = Integer.parseInt(et_number.getText().toString()) * 1000 + "";
 //        Log.d("库存的值",Integer.parseInt(et_number.getText().toString())+"");
 //        Log.d("库存的值",Float.parseFloat(et_number.getText().toString())*1000+"");
-      //  quantity=quantity.substring(0,quantity.length()-2);
+        //  quantity=quantity.substring(0,quantity.length()-2);
         String skuId = sku_id;
         SharedPreferences sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
-        String unique = sp.getString("unique","");
+        String unique = sp.getString("unique", "");
         String _dynSessConf = unique;
         goodsInStockDetailPresenter.joinToCart(productId, quantity, skuId, _dynSessConf);
 
@@ -638,7 +660,7 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
             Orders orders = gson.fromJson(result, Orders.class);
             Intent intent = new Intent();
             intent.putExtra("type", "fix");
-            intent.putExtra("fix",(Serializable) orders.getOrderIdList());
+            intent.putExtra("fix", (Serializable) orders.getOrderIdList());
             intent.setClass(GoodsInStockDetailActivity.this, PaymentsOrder.class);
             startActivity(intent);
         }
@@ -665,5 +687,18 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
         }
     }
 
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        SharedPreferences sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+        unique = sp.getString("unique", "");
+        initView();
+        getGoodsInStockDetailData(goodsInStockDetailBean);
+        initListener();
+        goodsInStockDetailPresenter = new GoodsInStockDetailPresenter(this);
+
+
+    }
 
 }

@@ -28,12 +28,12 @@ public class GroupBuyingPresenter {
         });
     }
 
-    public void getGroupBuyingDetailResult(String productId,String state){
-        IGroupBuyingDetailResultModel groupBuyingDetailResultModel = new GroupBuyingDetailResultModel( productId,state);
+    public void getGroupBuyingDetailResult(String productId, String state, String result){
+        IGroupBuyingDetailResultModel groupBuyingDetailResultModel = new GroupBuyingDetailResultModel(productId,state,result);
         groupBuyingDetailResultModel.getGroupBuyingDetailResultResult(new GroupBuyingDetailResultCallback() {
             @Override
             public void callbackGroupBuyingDetailResult(String result,String state) {
-                groupBuyingView.setGroupBuyingDetailResult(result,state);
+                groupBuyingView.setGroupBuyingDetailResult(result,state,result);
             }
         });
     }

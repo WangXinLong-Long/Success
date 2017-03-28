@@ -13,10 +13,14 @@ import org.xutils.x;
 public class GroupBuyingDetailResultModel implements IGroupBuyingDetailResultModel {
     private String productId;
     private String state;
+    private String result;
+    private String securedOfSection;
 
-    public GroupBuyingDetailResultModel(String productId,String state) {
+    public GroupBuyingDetailResultModel( String productId, String state, String result) {
+
         this.productId = productId;
         this.state = state;
+        this.result = result;
     }
 
     @Override

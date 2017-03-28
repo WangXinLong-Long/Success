@@ -99,6 +99,7 @@ public class RegisterPicture extends AppCompatActivity {
         bt_save= (Button) findViewById(R.id.bt_save);
         tv_Name= (TextView) findViewById(R.id.tv_Name);
         layout_title= (RelativeLayout) findViewById(R.id.layout_title);
+        tv_Name.setText(title);
     }
     public void event(){
         ivBack.setOnClickListener(new View.OnClickListener() {
@@ -156,6 +157,7 @@ public class RegisterPicture extends AppCompatActivity {
 
                                 @Override
                                 public void onSuccess(String result) {
+                                    Log.d("上穿陈功的返回值",result);
                                     //  Intent intent=new Intent();
                                     Intent intent = new Intent();
                                     //Intent intent = new Intent();
@@ -185,7 +187,7 @@ public class RegisterPicture extends AppCompatActivity {
 
             }
         });
-        tv_Name.setText(title);
+
 
     }
 

@@ -96,7 +96,7 @@ public class GroupBuyingListViewAdapter extends BaseAdapter {
         String startData = simpleDateFormat.format(Double.parseDouble(list.get(position).getGroupStartDate().toString()));
         viewHolder.start_data.setText(startData);
         viewHolder.end_data.setText(endData);
-        viewHolder.tv_final_num.setText("最终成团量 : " + list.get(position).getCl_groupQuantity() + "T");
+        viewHolder.tv_final_num.setText("交易总量:" + list.get(position).getSumAddQty() + "吨");
         if (list.get(position).getRuning().equals("true")) {//正在团购
             viewHolder.iv_icon.setImageResource(R.mipmap.underwey);
             viewHolder.tv_StartTime.setVisibility(View.VISIBLE);
@@ -114,13 +114,27 @@ public class GroupBuyingListViewAdapter extends BaseAdapter {
             viewHolder.start_data_rl.setVisibility(View.VISIBLE);
             viewHolder.tv_StartTime.setText("团购未开始");
         } else if (list.get(position).getRuning().equals("end")) {//团购已结束
-            viewHolder.iv_icon.setImageResource(R.mipmap.tuangou);
-            viewHolder.bt_join.setBackgroundColor(context.getResources().getColor(R.color.gray));
-            viewHolder.tv_StartTime.setVisibility(View.GONE);
-            viewHolder.tv_final_num.setVisibility(View.VISIBLE);
-            viewHolder.bt_join.setText("团购结束");
-            viewHolder.end_data_rl.setVisibility(View.GONE);
-            viewHolder.start_data_rl.setVisibility(View.GONE);
+
+            if (list.get(position).getResult().equals("gone")) {
+                viewHolder.iv_icon.setImageResource(R.mipmap.tuangou);
+                viewHolder.bt_join.setBackgroundColor(context.getResources().getColor(R.color.gray));
+                viewHolder.tv_StartTime.setVisibility(View.GONE);
+                viewHolder.tv_final_num.setVisibility(View.GONE);
+                viewHolder.bt_join.setText("未成团");
+                viewHolder.end_data_rl.setVisibility(View.VISIBLE);
+                viewHolder.start_data_rl.setVisibility(View.VISIBLE);
+                //viewHolder.tv_StartTime
+            }else {
+                viewHolder.iv_icon.setImageResource(R.mipmap.tuangou);
+                viewHolder.bt_join.setBackgroundColor(context.getResources().getColor(R.color.gray));
+                viewHolder.tv_StartTime.setVisibility(View.GONE);
+                viewHolder.tv_final_num.setVisibility(View.VISIBLE);
+                viewHolder.bt_join.setText("团购结束");
+                viewHolder.end_data_rl.setVisibility(View.VISIBLE);
+                viewHolder.start_data_rl.setVisibility(View.VISIBLE);
+            }
+
+
         }
 
         return convertView;

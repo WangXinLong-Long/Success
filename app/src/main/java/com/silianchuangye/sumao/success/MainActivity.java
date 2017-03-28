@@ -68,10 +68,11 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
     String username = "";
     SharedPreferences sp;
     private SharedPreferences.Editor editor;
-    private String unique = "false";
+    //private String unique = "false";
     public static MainActivity instancefinish;
     boolean networkConnections = false;
     private String[] fragmentTag;
+    private String unique;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,15 +80,22 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
         setContentView(R.layout.activity_main);
 
 
-        sp = getSharedPreferences("sumao", Context.MODE_PRIVATE);
+
         instancefinish = this;
 //      初始化数据
         initData();
 //      初始化组件
-        getUnique();
+       // getUnique();
         initView(savedInstanceState);
         init();
         showIntent(savedInstanceState);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        sp = getSharedPreferences("sumao", Context.MODE_PRIVATE);
+        unique=sp.getString("unique","");
     }
 
     private void initView(final Bundle savedInstanceState) {
@@ -150,16 +158,16 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
         mTabHost.getTabWidget().getChildTabViewAt(4).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                String unique = sp.getString("unique","");
-                unique = getUnique();
+
+
                 if (unique.equals("false")) {
                     Toast.makeText(MainActivity.this, "请登录", Toast.LENGTH_SHORT).show();
                     SharedPreferences.Editor editor = sp.edit();
                     editor.clear();
-                    //      editor.clear();////
                     editor.commit();
                     Intent intent = new Intent();
                     intent.putExtra("roles", "buyer");
+                    intent.putExtra("cart1", 10);
                     intent.setClass(MainActivity.this, LoginUserActivity.class);
                     startActivity(intent);
                 } else {
@@ -179,6 +187,7 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
                         editor.commit();
                         Intent intent = new Intent();
                         intent.putExtra("roles", "buyer");
+                        intent.putExtra("cart1", 10);
                         intent.setClass(MainActivity.this, LoginUserActivity.class);
                         startActivity(intent);
                     }
@@ -196,22 +205,55 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
         mTabHost.getTabWidget().getChildTabViewAt(2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sp = getSharedPreferences("sumao", Context.MODE_PRIVATE);
-                username = sp.getString("name", "");
-                if (!unique.equals("false")) {
-                    mTabHost.setCurrentTab(2);
-                    boolean openNetwork = isOpenNetwork();
-                    if (openNetwork) {
-                    } else {
-                        networkConnections = false;
-                        Toast.makeText(MainActivity.this, "暂时没有网络连接,请检查您的网络设置", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
+//                sp = getSharedPreferences("sumao", Context.MODE_PRIVATE);
+//                username = sp.getString("name", "");
+//                if (!unique.equals("false")||unique!=null||unique!=""||!unique.equals("")) {
+//                    mTabHost.setCurrentTab(2);
+//                    boolean openNetwork = isOpenNetwork();
+//                    if (openNetwork) {
+//                    } else {
+//                        networkConnections = false;
+//                        Toast.makeText(MainActivity.this, "暂时没有网络连接,请检查您的网络设置", Toast.LENGTH_SHORT).show();
+//                    }
+//                } else {
+//                    Intent intent = new Intent();
+//                    intent.putExtra("roles", "buyer");
+//                    intent.putExtra("cart1", 9);
+//                    intent.setClass(MainActivity.this, LoginUserActivity.class);
+//                    startActivity(intent);
+//                }
+                if (unique.equals("false")) {
+                    Toast.makeText(MainActivity.this, "请登录", Toast.LENGTH_SHORT).show();
+                    SharedPreferences.Editor editor = sp.edit();
+                    editor.clear();
+                    //      editor.clear();////
+                    editor.commit();
                     Intent intent = new Intent();
                     intent.putExtra("roles", "buyer");
                     intent.putExtra("cart1", 9);
                     intent.setClass(MainActivity.this, LoginUserActivity.class);
                     startActivity(intent);
+                } else {
+                    username = sp.getString("name", "");
+                    if (username != "") {
+                        mTabHost.setCurrentTab(2);
+                        boolean openNetwork = isOpenNetwork();
+                        if (openNetwork) {
+                        } else {
+                            networkConnections = false;
+                            Toast.makeText(MainActivity.this, "暂时没有网络连接,请检查您的网络设置", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        SharedPreferences.Editor editor = sp.edit();
+                        editor.clear();
+                        //      editor.clear();
+                        editor.commit();
+                        Intent intent = new Intent();
+                        intent.putExtra("roles", "buyer");
+                        intent.putExtra("cart1", 9);
+                        intent.setClass(MainActivity.this, LoginUserActivity.class);
+                        startActivity(intent);
+                    }
                 }
             }
         });
@@ -484,45 +526,45 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
 
     }
 
-    public String getUnique() {
-        editor = sp.edit();
-        RequestParams unique_rp = new RequestParams(SuMaoConstant.SUMAO_IP + "/rest/model/atg/rest/SessionConfirmationActor/getSessionConfirmationNumber");
-        x.http().post(unique_rp, new Callback.CommonCallback<String>() {
-            @Override
-            public void onSuccess(String result) {
-                try {
-                    JSONObject object = new JSONObject(result);
-                    unique = object.getString("sessionConfirmationNumber");
-                    Log.d("unique", "unique" + unique);
-                    /**
-                     * 把唯一标识储存在SharedPreferences
-                     */
-                    editor.putString("unique", unique);
-                    editor.commit();
-                } catch (Exception e) {
-                    Log.d("exception", "解析唯一标识时错误！");
-                }
-
-            }
-
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-
-            }
-
-            @Override
-            public void onCancelled(CancelledException cex) {
-
-            }
-
-            @Override
-            public void onFinished() {
-
-            }
-        });
-
-        return unique;
-    }
+//    public String getUnique() {
+//        editor = sp.edit();
+//        RequestParams unique_rp = new RequestParams(SuMaoConstant.SUMAO_IP + "/rest/model/atg/rest/SessionConfirmationActor/getSessionConfirmationNumber");
+//        x.http().post(unique_rp, new Callback.CommonCallback<String>() {
+//            @Override
+//            public void onSuccess(String result) {
+//                try {
+//                    JSONObject object = new JSONObject(result);
+//                    unique = object.getString("sessionConfirmationNumber");
+//                    Log.d("unique", "unique" + unique);
+//                    /**
+//                     * 把唯一标识储存在SharedPreferences
+//                     */
+//                    editor.putString("unique", unique);
+//                    editor.commit();
+//                } catch (Exception e) {
+//                    Log.d("exception", "解析唯一标识时错误！");
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onError(Throwable ex, boolean isOnCallback) {
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(CancelledException cex) {
+//
+//            }
+//
+//            @Override
+//            public void onFinished() {
+//
+//            }
+//        });
+//
+//        return unique;
+//    }
 
     public boolean isOpenNetwork() {
         ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);

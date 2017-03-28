@@ -513,6 +513,8 @@ public class PagerOne extends BasePager implements IPagerOneView {
         }
     }
 
+
+
     //将请求下来的值设置到Adapter中
     @Override
     public void setGrideViewDataInActivity() {

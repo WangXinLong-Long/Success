@@ -81,8 +81,7 @@ public class PurchaseQualificationActivity extends AppCompatActivity implements 
                 Log.d("判断状态的返回值",""+result);
                 try {
                     JSONObject object=new JSONObject(result);
-                    String booleancommit=object.getString("result");
-                    if (booleancommit.equals("true")){
+                    String booleancommit=object.getString("state");
                         if (object.getString("state").equals("待审核")){
                             //已经提交过
                             Intent intent = new Intent(PurchaseQualificationActivity.this, WaitActivity.class);
@@ -98,17 +97,15 @@ public class PurchaseQualificationActivity extends AppCompatActivity implements 
                             intent.putExtra("state","未通过");
 
                             startActivity(intent);
+                        }else{
+                            //没有提交过
+                            Intent intent = new Intent(PurchaseQualificationActivity.this, PurchaseQualificationDetailActivity.class);
+                            intent.putExtra("id",id);
+                            startActivity(intent);
                         }
 
 
 
-                    }else if (booleancommit.equals("false")){
-
-                        //没有提交过
-                        Intent intent = new Intent(PurchaseQualificationActivity.this, PurchaseQualificationDetailActivity.class);
-                        intent.putExtra("id",id);
-                        startActivity(intent);
-                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

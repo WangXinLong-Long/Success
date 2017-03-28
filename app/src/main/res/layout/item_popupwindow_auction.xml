@@ -91,7 +91,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/x10"
-                android:text="贷款总额:"
+                android:text="货款总额:"
                 android:id="@+id/tv_A"
                 />
             <TextView
@@ -100,6 +100,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/x3"
                 android:id="@+id/tv_Count"
+                android:layout_toRightOf="@+id/tv_A"
                 android:layout_alignRight="@+id/tv_A"
                 />
         </RelativeLayout>

@@ -1,6 +1,7 @@
 package com.silianchuangye.sumao.success.fragments.myPlasticTrade.messagePush.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.homepage.groupbuying.GroupBuyingMVP.bean.GroupBuyingListBean;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.messagePush.bean.MessagePush;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.messagePush.view.MessageDetailsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +59,7 @@ public class MessagePushListViewAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         Log.d("进来getView方法","进来getView方法");
         //View view=View.inflate(context, R.layout.item_message_push,null);
         View view= LayoutInflater.from(context).inflate(R.layout.item_message_push,null);
@@ -83,6 +85,11 @@ public class MessagePushListViewAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 //跳转界面
+                Intent intent=new Intent(context, MessageDetailsActivity.class);
+                intent.putExtra("sendId",list.get(position).getId().toString());
+                context.startActivity(intent);
+
+
             }
         });
         return view;

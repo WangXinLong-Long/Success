@@ -67,6 +67,8 @@ public class LoginUserActivity extends AppCompatActivity implements View.OnClick
     private boolean verificationCode;
     private CheckBox sellerLogin;
     private CheckBox buyerLogin;
+    private int position;
+    private String Session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +98,9 @@ public class LoginUserActivity extends AppCompatActivity implements View.OnClick
                 roles = "buyer";
             }
         });
+        Bundle bundle=getIntent().getExtras();
+        position=bundle.getInt("position");
+
 
 //        对账号和密码进行校验
         et_account_login = (EditText) findViewById(R.id.et_account_login);
@@ -293,6 +298,7 @@ public class LoginUserActivity extends AppCompatActivity implements View.OnClick
             @Override
             public void onClick(View v) {
                 LoginUserActivity.this.finish();
+
             }
         });
         tv_title_bar_back.setOnClickListener(new View.OnClickListener() {
@@ -345,17 +351,49 @@ public class LoginUserActivity extends AppCompatActivity implements View.OnClick
                                 LogUtils.log("Jobs Created--->" + result);
                                 try {
                                     JSONObject object = new JSONObject(result);
-                                    String unique = object.getString("sessionConfirmationNumber");
+                                    Session = object.getString("sessionConfirmationNumber");
                                     /**
                                      * 把唯一标识储存在SharedPreferences
                                      */
-                                    editor.putString("unique", unique);
-                                    Log.d("唯一标识----------->", unique);
+                                    editor.putString("unique", Session);
+                                    editor.commit();
+                                    Log.d("唯一标识----------->", Session);
+
                                 } catch (Exception e) {
                                     Log.d("exception", "解析唯一标识时错误！");
                                 }
+                                Log.d("mainActivityInteger的树枝",""+mainActivityInteger);
+                                Loding.dis();
+                                //接收mainactivity传递过来的参数
+                                if (mainActivityInteger == 9) {
+                                    Intent intent = new Intent();
+                                    intent.putExtra("cart", 4);
+                                    intent.setClass(LoginUserActivity.this, MainActivity.class);
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    startActivity(intent);
+                                } else if (mainActivityInteger==10){
+                                    Intent intent = new Intent();
+                                    intent.setClass(LoginUserActivity.this, MainActivity.class);
+                                    intent.putExtra("cart", 3);
+                                    intent.putExtra("name", name);
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    startActivity(intent);
+                                }else{
+                                    Log.d("session的树枝",Session);
+                                    Intent intent=new Intent();
+                                    intent.putExtra("unique",Session);
+                                    setResult(position,intent);
 
+
+                                }
+
+                                GlobalVariable.FLAG = true;
+                                LoginUserActivity.this.finish();
                             }
+
+
+
+
 
                             @Override
                             public void onError(Throwable ex, boolean isOnCallback) {
@@ -385,25 +423,6 @@ public class LoginUserActivity extends AppCompatActivity implements View.OnClick
                     /**
                      * 把姓名储存在SharedPreferences
                      */
-
-                    Loding.dis();
-                    //接收mainactivity传递过来的参数
-                    if (mainActivityInteger == 9) {
-                        Intent intent = new Intent();
-                        intent.putExtra("cart", 4);
-                        intent.setClass(LoginUserActivity.this, MainActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(intent);
-                    } else {
-                        Intent intent = new Intent();
-                        intent.setClass(LoginUserActivity.this, MainActivity.class);
-                        intent.putExtra("cart", 3);
-                        intent.putExtra("name", name);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(intent);
-                    }
-                    GlobalVariable.FLAG = true;
-                    LoginUserActivity.this.finish();
                 }
 
 

@@ -80,7 +80,7 @@ public class GroupBuyingActivity extends AppCompatActivity implements IGroupBuyi
         lv_group_buying.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                groupBuyingPresenter.getGroupBuyingDetailResult(list.get(position).getId(), list.get(position).getRuning());
+                groupBuyingPresenter.getGroupBuyingDetailResult(list.get(position).getId(), list.get(position).getRuning(),list.get(position).getResult());
 
             }
         });
@@ -102,14 +102,27 @@ public class GroupBuyingActivity extends AppCompatActivity implements IGroupBuyi
     }
 
     @Override
-    public void setGroupBuyingDetailResult(String result, String state) {
+    public void setGroupBuyingDetailResult(String result, String state,String result2) {
         Intent intent = new Intent(GroupBuyingActivity.this, GroupBuyingSuccessActivity.class);
         if (state.equals("true")) {
             intent.putExtra("state", "团购已开始");
+            intent.putExtra("result2","abc");
+           // intent.putExtra("productOff","false");
         } else if (state.equals("false")) {
             intent.putExtra("state", "团购未开始");
-        } else {
-            intent.putExtra("state", "团购已结束");
+            intent.putExtra("result2","abc");
+            //intent.putExtra("productOff","false");
+        } else if (state.equals("end")){
+                if (result2.equals("gone")) {
+                    intent.putExtra("state", "团购结束");
+                    intent.putExtra("result2", "未成团");
+                   // intent.putExtra("productOff","false");
+                } else {
+                    intent.putExtra("state", "团购结束");
+                    intent.putExtra("result2", "已成团");
+                    //intent.putExtra("productOff","false");
+                }
+
         }
         intent.putExtra("result", result);
         startActivity(intent);

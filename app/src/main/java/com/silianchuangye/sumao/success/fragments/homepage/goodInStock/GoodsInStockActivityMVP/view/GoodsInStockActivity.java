@@ -185,7 +185,7 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
             searchProductName("0");
         }
         else {
-            selection_condition.setVisibility(View.GONE);
+//            selection_condition.setVisibility(View.GONE);
             smClList = new ArrayList<GoodsInStockActivityBean.InBean>();
             DirectSellingBean directSellingBean = (DirectSellingBean) getIntent().getSerializableExtra("directSellingBean");
 

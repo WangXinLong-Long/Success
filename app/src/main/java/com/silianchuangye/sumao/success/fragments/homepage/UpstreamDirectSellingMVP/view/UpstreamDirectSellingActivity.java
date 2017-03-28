@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.UpstreamDirectDetailMVP.view.UpstreamDirectSellingDetailsActivity;
@@ -20,6 +21,11 @@ import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSelling
 import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.bean.vipProductBean.VipProductBean;
 import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.presenter.UpstreamDirectSellingPresenter;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.LoginUserActivity;
+import com.silianchuangye.sumao.success.utils.SuMaoConstant;
+
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +41,9 @@ public class UpstreamDirectSellingActivity extends AppCompatActivity implements 
     private List<String> idList;
     private List<String> nameList;
     private VipProductBean vipProductBean=new VipProductBean();
+    private String Id;
+    String name;
+    String sessionId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,16 +73,52 @@ public class UpstreamDirectSellingActivity extends AppCompatActivity implements 
         ArrayAdapter<String> upstreamadapter = new ArrayAdapter<String>(UpstreamDirectSellingActivity.this,android.R.layout.simple_list_item_1,nameList);
        // ArrayAdapter<String> adapter=new ArrayAdapter<String>()
         upstream_listview.setAdapter(upstreamadapter);
+
         upstream_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String sessionId = getSharedPreferences("sumao",MODE_PRIVATE).getString("unique","");
 
+                Id=idList.get(position).toString();
+                name=nameList.get(position).toString();
                 Log.d("要传id的值",idList.get(position));
                 Log.d("要传title的值",nameList.get(position));
-
-                     upstreamDirectSellingPresenter.getUpstreamDirectSellingDetail(sessionId,idList.get(position).toString(),nameList.get(position).toString());
+                booleanPower(Id,name);
+                   //
                // }
+
+            }
+        });
+    }
+    public void  booleanPower(final String Id, final String name){
+        sessionId= getSharedPreferences("sumao",MODE_PRIVATE).getString("unique","");
+        String url= SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/userprofiling/PurchaseJurisdictionCheckActor/PurchaseResultCid";
+        url=url+"?sellerCompanyId="+Id+"&productId";
+       // rp.addParameter("sellerCompanyId",Id);
+        Log.d("上游的url",url.toString());
+        RequestParams rp=new RequestParams(url);
+        x.http().post(rp, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.d("上游直銷的返回值",result);
+                if (result.contains("0")){
+                    upstreamDirectSellingPresenter.getUpstreamDirectSellingDetail(sessionId,Id,name);
+                }else if (result.contains("1")){
+                    Toast.makeText(UpstreamDirectSellingActivity.this, "该用户没有进入上游直销的权限", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
 
             }
         });

@@ -9,7 +9,6 @@ import java.util.List;
  * Created by Jobs Created on 2017/1/13.
  */
 public class GroupBuyingDetailBean implements Serializable {
-
     private List<GoodsInStockDetailBean.ClAttributeBean> cl_attribute;
 
     public List<GoodsInStockDetailBean.ClAttributeBean> getCl_attribute() {

@@ -9,12 +9,14 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ActionBarOverlayLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -30,6 +32,9 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.gson.Gson;
 import com.silianchuangye.sumao.success.HX.Constant;
 import com.silianchuangye.sumao.success.HX.ui.LoginActivity;
@@ -144,12 +149,23 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
     private String depositDeadline;
     private TextView tvOpen_auction;
     private LinearLayout remark;
+    private LinearLayout line_top, line_bottom, line_centent;
+    private ListView lvdemo_result;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_open_auction);
         openAuctionPresenter = new OpenAuctionPresenter(this);
+        line_top = (LinearLayout) findViewById(R.id.line_top);
+        line_bottom = (LinearLayout) findViewById(R.id.line_bottom);
+        line_centent = (LinearLayout) findViewById(R.id.line_content);
+        lvdemo_result = (ListView) findViewById(R.id.Lv_infoSeccess);
         auctionDetailBean = ((AuctionDetailBean) getIntent().getSerializableExtra("auctionDetailBean"));
         depositDeadline = auctionDetailBean.getDepositDeadline().getTime();
         //      保证金比例
@@ -276,7 +292,9 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
             public void onClick(View v) {
                 Intent intent = new Intent(OpenAuctionActivity.this, LoginUserActivity.class);
                 intent.putExtra("roles", "buyer");
-                startActivity(intent);
+                intent.putExtra("position", 103);
+                //startActivity(intent);
+                startActivityForResult(intent, 103);
             }
         });
         //公开竞拍的按钮
@@ -346,7 +364,7 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
                     Toast.makeText(OpenAuctionActivity.this, "对不起，竞拍开始前未支付保证金,不能报价", Toast.LENGTH_SHORT).show();
                 } else {
                     if (type_way.equals("公开竞拍")) {
-                        if (Double.parseDouble(bid_price_num.getText().toString()) <= Double.parseDouble(myOfferBean.getMyPrice().get(0).getBidPrice()) &&
+                        if (Double.parseDouble(bid_price_num.getText().toString()) <= Double.parseDouble(myOfferBean.getMyPrice().get(0).getBidPrice().toString()) &&
                                 Double.parseDouble(tv_item_cart_buy_num.getText().toString()) <= Double.parseDouble(myOfferBean.getMyPrice().get(0).getBidQut())) {
                             if (Double.parseDouble(bid_price_num.getText().toString()) <= Double.parseDouble(myOfferBean.getMyPrice().get(0).getBidPrice())) {
                                 Toast.makeText(OpenAuctionActivity.this, "竞拍单价必须大于等于您当前的自报价。", Toast.LENGTH_SHORT).show();
@@ -437,7 +455,7 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
 //      Jobs Created 联系客服
         contactCustomerService = ((LinearLayout) findViewById(R.id.layoutService));
 
-        setValue();
+    //    setValue();
 
         IntentFilter filter = new IntentFilter();
         filter.addAction("finishOpenAuction");
@@ -456,12 +474,18 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
         }
 
 
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
+
+
+
 
     private void setValue() {
 //        竞拍的状态
         status = auctionDetailBean.getStatus();
-//        判断用户是否登录
+
         String name = "";
         if (!getSharedPreferences("sumao", Activity.MODE_PRIVATE).getString("unique", "").equals("false"))
             name = getSharedPreferences("sumao", Activity.MODE_PRIVATE).getString("name", "");
@@ -470,6 +494,7 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
         } else {
             state = "yes";
         }
+
         //        获取ProductID
         id_value = auctionDetailBean.getCl_id();
         LogUtils.log("status--->" + status);
@@ -549,9 +574,9 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
         cangkuaddress.setText(auctionDetailBean.getCl_xbianjia());
 //        公司
         company.setText(auctionDetailBean.getCl_gongsi());
-        if (auctionDetailBean.getCl_cpbeizhu() == null){
+        if (auctionDetailBean.getCl_cpbeizhu() == null) {
             remark.setVisibility(View.GONE);
-        }else {
+        } else {
             remark.setVisibility(View.VISIBLE);
             tvRemark_auction.setText(auctionDetailBean.getCl_cpbeizhu());
         }
@@ -684,9 +709,9 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
                     tv_item_cart_buy_num.setSelection(sheng.getText().toString().length());
 
                 }
-                if (Double.parseDouble(tv_item_cart_buy_num.getText().toString()) == Double.parseDouble(sheng.getText().toString())){
+                if (Double.parseDouble(tv_item_cart_buy_num.getText().toString()) == Double.parseDouble(sheng.getText().toString())) {
                     img_item_cart_buy_add.setTextColor(Color.RED);
-                }else {
+                } else {
                     img_item_cart_buy_add.setTextColor(Color.BLACK);
                 }
 //              如果没有支付过保证金，判断报价和量是否都大于起拍量
@@ -714,7 +739,7 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
                             img_item_cart_buy_sub.setTextColor(Color.BLACK);
                         }
                     } else {
-                        if (Double.parseDouble(tv_item_cart_buy_num.getText().toString()) < Double.parseDouble(qigou.getText().toString())){
+                        if (Double.parseDouble(tv_item_cart_buy_num.getText().toString()) < Double.parseDouble(qigou.getText().toString())) {
                             tv_item_cart_buy_num.setText(qigou.getText().toString());
                         }
 
@@ -759,32 +784,32 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
                     if (!status.equals("2")) {
                         if (realTimeQuotesIncludeMyOffer) {
                             bid_price_num.setText(myOfferBean.getMyPrice().get(0).getBidPrice());
-                            if (Double.parseDouble(bid_price_num.getText().toString()) == Double.parseDouble(myOfferBean.getMyPrice().get(0).getBidPrice())){
+                            if (Double.parseDouble(bid_price_num.getText().toString()) == Double.parseDouble(myOfferBean.getMyPrice().get(0).getBidPrice())) {
                                 bid_price_sub.setTextColor(Color.RED);
-                            }else {
+                            } else {
                                 bid_price_sub.setTextColor(Color.BLACK);
                             }
                         } else {
                             if (myOfferBean.getMybidQut() == null) {
                                 if (Double.parseDouble(bid_price_num.getText().toString()) < Double.parseDouble(price.getText().toString()))
                                     bid_price_num.setText(price.getText().toString());
-                                if (Double.parseDouble(bid_price_num.getText().toString()) == Double.parseDouble(price.getText().toString())){
+                                if (Double.parseDouble(bid_price_num.getText().toString()) == Double.parseDouble(price.getText().toString())) {
                                     bid_price_sub.setTextColor(Color.RED);
-                                }else {
+                                } else {
                                     bid_price_sub.setTextColor(Color.BLACK);
                                 }
                             } else if (myOfferBean.getMybidQut().equals("0")) {
                                 bid_price_num.setText(price.getText().toString());
-                                if (Double.parseDouble(bid_price_num.getText().toString()) == Double.parseDouble(price.getText().toString())){
+                                if (Double.parseDouble(bid_price_num.getText().toString()) == Double.parseDouble(price.getText().toString())) {
                                     bid_price_sub.setTextColor(Color.RED);
-                                }else {
+                                } else {
                                     bid_price_sub.setTextColor(Color.BLACK);
                                 }
                             } else {
                                 bid_price_num.setText(realTimeMardet.getAuctionPricelist().get(realTimeMardet.getAuctionPricelist().size() - 1).getBidPrice());
-                                if (Double.parseDouble(bid_price_num.getText().toString()) == Double.parseDouble(realTimeMardet.getAuctionPricelist().get(realTimeMardet.getAuctionPricelist().size() - 1).getBidPrice())){
+                                if (Double.parseDouble(bid_price_num.getText().toString()) == Double.parseDouble(realTimeMardet.getAuctionPricelist().get(realTimeMardet.getAuctionPricelist().size() - 1).getBidPrice())) {
                                     bid_price_sub.setTextColor(Color.RED);
-                                }else {
+                                } else {
                                     bid_price_sub.setTextColor(Color.BLACK);
                                 }
                             }
@@ -792,9 +817,9 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
                     } else {
                         bid_price_num.setText(price.getText().toString());
                         bid_price_num.setSelection(price.getText().toString().length());
-                        if (Double.parseDouble(bid_price_num.getText().toString()) == Double.parseDouble(price.getText().toString())){
+                        if (Double.parseDouble(bid_price_num.getText().toString()) == Double.parseDouble(price.getText().toString())) {
                             bid_price_sub.setTextColor(Color.RED);
-                        }else {
+                        } else {
                             bid_price_sub.setTextColor(Color.BLACK);
                         }
                     }
@@ -834,9 +859,9 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
                         bid_price_num.setText((price.getText().toString()));
                         bid_price_num.setSelection(price.getText().toString().length());
                     }
-                    if (Double.parseDouble(bid_price_num.getText().toString()) == Double.parseDouble(price.getText().toString())){
+                    if (Double.parseDouble(bid_price_num.getText().toString()) == Double.parseDouble(price.getText().toString())) {
                         bid_price_sub.setTextColor(Color.RED);
-                    }else {
+                    } else {
                         bid_price_sub.setTextColor(Color.BLACK);
                     }
 //              如果有支付过保证金，当大于起拍价时，可以提交成功
@@ -844,34 +869,34 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
                     if (realTimeQuotesIncludeMyOffer) {
                         if (Double.parseDouble(bid_price_num.getText().toString()) < Double.parseDouble(myOfferBean.getMyPrice().get(0).getBidPrice()))
                             bid_price_num.setText(myOfferBean.getMyPrice().get(0).getBidPrice());
-                        if (Double.parseDouble(bid_price_num.getText().toString()) == Double.parseDouble(myOfferBean.getMyPrice().get(0).getBidPrice())){
+                        if (Double.parseDouble(bid_price_num.getText().toString()) == Double.parseDouble(myOfferBean.getMyPrice().get(0).getBidPrice())) {
                             bid_price_sub.setTextColor(Color.RED);
-                        }else {
+                        } else {
                             bid_price_sub.setTextColor(Color.BLACK);
                         }
                     } else {
                         if (myOfferBean.getMybidQut() == null) {
                             if (Double.parseDouble(bid_price_num.getText().toString()) < Double.parseDouble(price.getText().toString()))
                                 bid_price_num.setText(price.getText().toString());
-                            if (Double.parseDouble(bid_price_num.getText().toString()) == Double.parseDouble(price.getText().toString())){
+                            if (Double.parseDouble(bid_price_num.getText().toString()) == Double.parseDouble(price.getText().toString())) {
                                 bid_price_sub.setTextColor(Color.RED);
-                            }else {
+                            } else {
                                 bid_price_sub.setTextColor(Color.BLACK);
                             }
                         } else if (myOfferBean.getMybidQut().equals("0")) {
                             if (Double.parseDouble(bid_price_num.getText().toString()) < Double.parseDouble(price.getText().toString()))
                                 bid_price_num.setText(price.getText().toString());
-                            if (Double.parseDouble(bid_price_num.getText().toString()) == Double.parseDouble(price.getText().toString())){
+                            if (Double.parseDouble(bid_price_num.getText().toString()) == Double.parseDouble(price.getText().toString())) {
                                 bid_price_sub.setTextColor(Color.RED);
-                            }else {
+                            } else {
                                 bid_price_sub.setTextColor(Color.BLACK);
                             }
                         } else {
                             if (Double.parseDouble(bid_price_num.getText().toString()) < Double.parseDouble(realTimeMardet.getAuctionPricelist().get(realTimeMardet.getAuctionPricelist().size() - 1).getBidPrice()))
                                 bid_price_num.setText(realTimeMardet.getAuctionPricelist().get(realTimeMardet.getAuctionPricelist().size() - 1).getBidPrice());
-                            if (Double.parseDouble(bid_price_num.getText().toString()) == Double.parseDouble(realTimeMardet.getAuctionPricelist().get(realTimeMardet.getAuctionPricelist().size() - 1).getBidPrice())){
+                            if (Double.parseDouble(bid_price_num.getText().toString()) == Double.parseDouble(realTimeMardet.getAuctionPricelist().get(realTimeMardet.getAuctionPricelist().size() - 1).getBidPrice())) {
                                 bid_price_sub.setTextColor(Color.RED);
-                            }else {
+                            } else {
                                 bid_price_sub.setTextColor(Color.BLACK);
                             }
                         }
@@ -991,7 +1016,7 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
         SharedPreferences sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
         String _dynSessConf = sp.getString("unique", "");
         openAuctionPresenter.getAmountPaidedResult(productId, _dynSessConf);
-        if (needShowPopupWindow){
+        if (needShowPopupWindow) {
             Popupwindow();
         }
     }
@@ -1032,6 +1057,8 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
             View view = getLayoutInflater().inflate(R.layout.item_popupwindow_auction, null);
             paymentSecurityPopupWindow = new PopupWindow(findViewById(R.id.parent), ActionBarOverlayLayout.LayoutParams.MATCH_PARENT, ActionBarOverlayLayout.LayoutParams.WRAP_CONTENT);
             paymentSecurityPopupWindow.setContentView(view);
+            LinearLayout layout_four = (LinearLayout) view.findViewById(R.id.layout_four);
+            layout_four.setVisibility(View.GONE);
             paidDeposit = (TextView) view.findViewById(R.id.tvPrice_popupwindow_auction);
             paidDeposit.setText(zhifujine);
             amountOfMarginRequired = (EditText) view.findViewById(R.id.etZhifu_auction);
@@ -1231,6 +1258,7 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
     public void setAuctionResultResult(String result) {
         Gson gson = new Gson();
         BiddingesultsBean biddingesultsBean = gson.fromJson(result, BiddingesultsBean.class);
+        Log.d("竞拍结果的返回值", result);
         user_success.setVisibility(View.VISIBLE);
         tv_result.setText("竞拍成功");
         price_auction = biddingesultsBean.getBidPrice();
@@ -1291,7 +1319,7 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
 //            竞拍失败
             LogUtils.log("走这里--->3");
             tv_result.setText(promptLanguage);
-            LogUtils.log("tv_Message--->"+openAuctionStateBean.getMsg());
+            LogUtils.log("tv_Message--->" + openAuctionStateBean.getMsg());
             tv_Message.setText(openAuctionStateBean.getMsg());
         }
 //       显示参与竞拍按钮
@@ -1522,6 +1550,16 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
             ((Activity) context).finish();
         }
     };
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        setValue();
+
+    }
+
+
+
 
     /*定义一个倒计时的内部类*/
     class MyCount extends CountDownTimer {

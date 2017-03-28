@@ -65,9 +65,9 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
     private String name;
     private String email;
     private String phone;
-    private SharedPreferences sp;
+
     private Spinner sp_firm_info;
-    private SharedPreferences.Editor editor;
+   // private SharedPreferences.Editor editor;
     private String unique;
     String Login;
     private RequestParams rp;
@@ -141,9 +141,9 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
     private TextView unified_social_credit_code_name;
     private List<RegisterFirmList> registerFirmLists;
     private RegisterFirmListAdapter registerFirmListAdapter;
-    private String value1 = "123654";
-    private String value2 = "123654";
-    private String value3 = "123654";
+    private String value1 = "";
+    private String value2 = "";
+    private String value3 = "";
     private String nachuirenzhaopian="";
 
     /**
@@ -244,19 +244,19 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
                     if (position == 0) {
                         intent.setClass(RegisterFirmActivity.this,RegisterPicture.class);
                        // intent.setClass(RegisterFirmActivity.this, FirmInfoPictureActivity.class);//营业执照号
-                        intent.putExtra("name", registerFirmLists.get(position).getName());
+                        intent.putExtra("name", "营业执照号");
                         intent.putExtra("number", 9);
                         startActivityForResult(intent, 9);
                     } else if (position == 1) {
                         intent.setClass(RegisterFirmActivity.this,RegisterPicture.class);
                       //  intent.setClass(RegisterFirmActivity.this, FirmInfoPictureActivity.class);//        组织机构代码
-                        intent.putExtra("name", registerFirmLists.get(position).getName());
+                        intent.putExtra("name","组织机构代码");
                         intent.putExtra("number", 10);
                         startActivityForResult(intent, 10);
                     } else if (position == 2) {
                         intent.setClass(RegisterFirmActivity.this,RegisterPicture.class);
                         //intent.setClass(RegisterFirmActivity.this, FirmInfoPictureActivity.class);//        税务登记号
-                        intent.putExtra("name", registerFirmLists.get(position).getName());
+                        intent.putExtra("name", "税务登记号");
                         intent.putExtra("number", 11);
                         startActivityForResult(intent, 11);
                     }
@@ -264,7 +264,7 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
                 } else if (zhuce_leixingLevel.equals("5")) {
                     intent.setClass(RegisterFirmActivity.this,RegisterPicture.class);
                    // intent.setClass(RegisterFirmActivity.this, FirmInfoPictureActivity.class);//        统一社会信用代码
-                    intent.putExtra("name", registerFirmLists.get(position).getName());
+                    intent.putExtra("name", "统一社会信用代码");
                     intent.putExtra("number", 15);
                     startActivityForResult(intent, 15);
                 } else {
@@ -363,11 +363,11 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
             jsonObject.put("cl_zhengjian", zhuce_leixingLevel);//企业注册证件
             jsonObject.put("cl_nashuiren", naShuiRenLevel);//纳税人类型
             jsonObject.put("cl_leixing", leixingLevel);//企业类型
-            if (value1.trim()!=null)
+            if (value1.trim()!=null&&value1.trim()!=""&&!value1.trim().equals(""))
             jsonObject.put("cl_zhizhao", value1.trim());//企业营业执照
-            if (value2.trim()!=null)
+            if (value2.trim()!=null&&value2.trim()!=""&&value2.trim().equals(""))
             jsonObject.put("cl_jigou", value2.trim());//组织机构代码
-            if (value3.trim()!=null)
+            if (value3.trim()!=null&&value3.trim()!=""&&!value3.equals(""))
             jsonObject.put("cl_shuiwu", value3.trim());//税务登记号
 
             jsonObject.put("cl_login", account);//登录账号
@@ -379,23 +379,28 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
             jsonObject.put("cl_applyType", applicationAsSMLevel);//申请成为(买方)
             jsonObject.put("cl_entName", name_of_enterprise_legal_person_image.getText().toString().trim());//企业法人
             jsonObject.put("cl_taxNum",  value3.trim());//税号
-            sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
-            String unique123 = sp.getString("unique", "");
-            jsonObject.put("_dynSessConf", unique123);
-            if (picturePath1 != null)
+//            sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+//            String unique123 = sp.getString("unique", "");
+//            jsonObject.put("_dynSessConf", unique123);
+            if (picturePath1 != null&&picturePath1!=""&&!picturePath1.equals(""))
             jsonObject.put("cl_zhizhaoimage", picturePath1);//营业执照图片路劲
-            if (picturePath2 != null)
+            if (picturePath2 != null&&picturePath2!=""&&!picturePath2.equals(""))
             jsonObject.put("cl_jigouimage", picturePath2);//组织机构代码图片路劲
-            if (picturePath3 != null)
+            if (picturePath3 != null&&picturePath3!=""&&!picturePath3.equals(""))
             jsonObject.put("cl_shuiwuimage", picturePath3);//税务登记号图片路劲
            //if (picturePath4 != null)
             jsonObject.put("cl_nashuirenimage", nachuirenzhaopian);//纳税人图片路劲
+            jsonObject.put("createSuccessURL","createSuccessURL");
+            jsonObject.put("createErrorURL","createErrorURL");
 
-
+            SharedPreferences sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+            SharedPreferences.Editor editor=sp.edit();
+            editor.putString("name",name);
+            editor.commit();
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Log.d("ceshi",jsonObject.toString());
+        Log.d("test",jsonObject.toString());
         rp.setBodyContent(jsonObject.toString());
 
         LogUtils.log("注册的URL--->" + rp);
@@ -742,7 +747,9 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
                         SharedPreferences.Editor editor=sp.edit();
                         editor.putString("unique",unique);
                         editor.commit();
+
                         Intent intent=new Intent(RegisterFirmActivity.this, FirmInfoActivity.class);
+                        intent.putExtra("resource","注册");
                         startActivity(intent);
 
                     } catch (JSONException e) {

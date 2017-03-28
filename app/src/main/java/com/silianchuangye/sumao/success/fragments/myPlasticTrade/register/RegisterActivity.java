@@ -76,7 +76,7 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(RegisterActivity.this, "邮箱为空", Toast.LENGTH_SHORT).show();
                 } else {
                     Intent intent = new Intent(RegisterActivity.this, RegisterFirmActivity.class);
-                    intent.putExtra("account", password.trim());
+                    intent.putExtra("account",account.trim());
                     intent.putExtra("pass",password.trim());
                     intent.putExtra("repass",rePassword.trim() );
                     intent.putExtra("name", name.trim() );

@@ -716,7 +716,9 @@
         <activity android:name=".fragments.myPlasticTrade.accountmeneger.JiansheActivity" />
         <activity android:name=".fragments.myPlasticTrade.demandPlanning.SearchplanActivity" />
         <activity android:name=".fragments.myPlasticTrade.qurchaseQualification.purchaseQualificationDetail.WaitActivity" />
-        <activity android:name=".fragments.myPlasticTrade.qurchaseQualification.purchaseQualificationDetail.ResultActivity"></activity>
+        <activity android:name=".fragments.myPlasticTrade.qurchaseQualification.purchaseQualificationDetail.ResultActivity" />
+        <activity android:name=".fragments.myPlasticTrade.messagePush.view.MessageDetailsActivity" />
+        <activity android:name=".fragments.myPlasticTrade.messagePush.view.MActivity"></activity>
     </application>
 
 </manifest>

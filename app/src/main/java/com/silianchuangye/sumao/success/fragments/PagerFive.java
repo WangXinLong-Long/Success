@@ -128,7 +128,9 @@ public class PagerFive extends BasePager {
                     startActivity(intent);
                 } else if (sela.getChild(groupPosition, childPosition).toString().equals("企业信息")) {
                     Intent intent = new Intent(context, FirmInfoActivity.class);
+                    intent.putExtra("resource","我的sumao");
                     startActivity(intent);
+//                   intent startActivityForResult(intent,105);
                 } else if (sela.getChild(groupPosition, childPosition).toString().equals("开票信息管理")) {
                     Intent intent = new Intent(context, InvoiceInformation.class);
 
