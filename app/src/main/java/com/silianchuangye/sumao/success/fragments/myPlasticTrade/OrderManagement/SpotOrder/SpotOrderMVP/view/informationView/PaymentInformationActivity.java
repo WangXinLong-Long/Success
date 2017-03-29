@@ -2,6 +2,7 @@ package com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagemen
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -46,6 +47,7 @@ public class PaymentInformationActivity extends AppCompatActivity implements Vie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment_information);
         String result = getIntent().getStringExtra("result");
+        Log.d("result的值",result);
         Gson gson = new Gson();
         paymentInformationBean = gson.fromJson(result, PaymentInformationBean.class);
 
@@ -139,8 +141,11 @@ public class PaymentInformationActivity extends AppCompatActivity implements Vie
                 if (inBean.getCl_type().equals("payTail")) {
                     //                    货款记录
                     capital.setText(inBean.getAmount());
-                    frozen_date_number.setText(inBean.getCl_yidrq());
-                    frozen_time_number.setText(inBean.getCl_yidsj());
+                    //frozen_date_number.setText(inBean.getCl_yidrq());
+                    frozen_date_number.setText(new SimpleDateFormat("yyyy-MM-dd").
+                            format(Double.parseDouble(inBean.getCl_yidrq())));
+                    //frozen_time_number.setText(inBean.getCl_yidsj());
+                    frozen_time_number.setText(new SimpleDateFormat("HH:mm:ss").format(Double.parseDouble(inBean.getCl_yidsj())));
                 }
             }
 

@@ -83,6 +83,7 @@ public class FirmInfoTypeActivity extends AppCompatActivity implements IFirmInfo
     private String fileBianma=null;
     private String filepath=null;
     private String fileCode=null;
+    private String tupian;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,19 +153,24 @@ public class FirmInfoTypeActivity extends AppCompatActivity implements IFirmInfo
                                 Log.d("fileCode",fileCode);
                                 if (fileCode!=null && fileCode!="") {
                                     rp.addParameter("file", fileCode);
+                                    SharedPreferences sp1=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+                                    SharedPreferences.Editor editor=sp1.edit();
+                                    editor.remove("filename");
+                                    editor.commit();
+
                                 }else{
                                     Log.d("判断","进来了");
                                     Log.d("相册的路径",filepath);
                                     Bitmap bitmap=BitmapFactory.decodeFile(filepath);
                                     fileCode=BitmapToString(bitmap);
                                     Log.d("图片编码",fileCode);
-                                    Toast.makeText(FirmInfoTypeActivity.this, ""+fileCode, Toast.LENGTH_SHORT).show();
+                                   // Toast.makeText(FirmInfoTypeActivity.this, ""+fileCode, Toast.LENGTH_SHORT).show();
                                     rp.addParameter("file", fileCode);
                                 }
 
                                 Log.d("文件",fileCode+"");
-                                rp.addParameter("fileName", getPhotoFileName());
-                                Log.d("名称",getPhotoFileName());
+                                rp.addParameter("fileName", tupian);
+                                Log.d("名称",tupian);
                                 Log.d("aaa",rp.getUri().toString());
                                 x.http().post(rp, new Callback.CommonCallback<String>() {
                                     @Override
@@ -185,7 +191,7 @@ public class FirmInfoTypeActivity extends AppCompatActivity implements IFirmInfo
                                         Intent intent = new Intent();
                                         intent.putExtra("name", name);
                                         intent.putExtra("level",level);
-                                        intent.putExtra("picturePath","/mnt/"+getPhotoFileName());
+                                        intent.putExtra("picturePath","/mnt/dosc/"+tupian);
                                         FirmInfoTypeActivity.this.setResult(RESULT_OK, intent);
                                         FirmInfoTypeActivity.this.finish();
 
@@ -344,7 +350,8 @@ public class FirmInfoTypeActivity extends AppCompatActivity implements IFirmInfo
                     return;
                 }
                 prompt.setVisibility(View.VISIBLE);
-                prompt.setText(getPhotoFileName());
+                tupian=getPhotoFileName();
+                prompt.setText(tupian);
                 Bitmap photo = data.getParcelableExtra("data");
                 fileBianma=BitmapToString(photo);
                 SharedPreferences sp=getSharedPreferences("sumao", Activity.MODE_PRIVATE);
@@ -359,7 +366,8 @@ public class FirmInfoTypeActivity extends AppCompatActivity implements IFirmInfo
                 //Uri uri = data.getData();
                 // startPhotoZoom(data.getData(), 150);
                 prompt.setVisibility(View.VISIBLE);
-                prompt.setText(getPhotoFileName());
+                tupian=getPhotoFileName();
+                prompt.setText(tupian);
 
                 Uri uri = data.getData();
                 try {

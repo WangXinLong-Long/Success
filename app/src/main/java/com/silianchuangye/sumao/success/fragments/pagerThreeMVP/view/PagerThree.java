@@ -606,13 +606,15 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
                         //num=num;
                         holder.relative_item_cart.setVisibility(View.VISIBLE);
                         holder.Tv_no_much.setText("产品库存为" + num + "吨");
-                        dialog.show();
+                        //dialog.show();
+
+
 //                        SharedPreferences sp=getActivity().getSharedPreferences("sumao",Activity.MODE_PRIVATE);
 //                        SharedPreferences.Editor editor=sp.edit();
 //                        editor.putInt("position",position);
 //                        editor.putFloat("number",num);
                     }
-                    if (num < Float.parseFloat(kucong_value) && num >= 0) {
+                    if (num <= Float.parseFloat(kucong_value) && num >= 0) {
                         holder.relative_item_cart.setVisibility(View.GONE);
                         holder.Edt_buy_num.setText("" + num);
                         number = num;
@@ -678,7 +680,7 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
                     if (i >= Float.parseFloat(kucong_value)) {
                         holder.relative_item_cart.setVisibility(View.VISIBLE);
                         holder.Tv_no_much.setText("产品库存为" + i + "吨");
-                        dialog.show();
+                       // dialog.show();
                     } else {
                         holder.relative_item_cart.setVisibility(View.GONE);
                     }

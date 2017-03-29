@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,6 +74,7 @@ public class MyOfferFragment extends Fragment implements IMyOfferView {
     }
 
     public void getData(String result) {
+        Log.d("我的报价的返回值",result);
         adapter.clearData();
         list.clear();
         if (result.contains("myPrice")) {

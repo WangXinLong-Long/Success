@@ -133,7 +133,7 @@ public class RegisterPicture extends AppCompatActivity {
                            if (fileCode!=null && fileCode!="") {
                                rp.addParameter("file", fileCode);
                                SharedPreferences.Editor editor=sp.edit();
-                               editor.remove("fileCode");
+                               editor.remove("filename");
                                editor.commit();
                            }else{
                                Log.d("判断","进来了");
@@ -162,7 +162,8 @@ public class RegisterPicture extends AppCompatActivity {
                                     Intent intent = new Intent();
                                     //Intent intent = new Intent();
                                     intent.putExtra("value", ed_number.getText().toString());
-                                    intent.putExtra("picturePath", "/mnt/docs"+tupian);
+                                    intent.putExtra("picturePath", "/mnt/docs/"+tupian);
+                                    Log.d("chuangu","");
                                     setResult(number1, intent);
                                     RegisterPicture.this.finish();
 

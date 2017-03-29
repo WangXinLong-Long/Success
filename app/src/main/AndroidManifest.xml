@@ -718,7 +718,8 @@
         <activity android:name=".fragments.myPlasticTrade.qurchaseQualification.purchaseQualificationDetail.WaitActivity" />
         <activity android:name=".fragments.myPlasticTrade.qurchaseQualification.purchaseQualificationDetail.ResultActivity" />
         <activity android:name=".fragments.myPlasticTrade.messagePush.view.MessageDetailsActivity" />
-        <activity android:name=".fragments.myPlasticTrade.messagePush.view.MActivity"></activity>
+        <activity android:name=".fragments.myPlasticTrade.messagePush.view.MActivity" />
+        <activity android:name=".fragments.myPlasticTrade.OrderManagement.SpotOrder.SpotOrderMVP.view.ShowPictureActivity"></activity>
     </application>
 
 </manifest>

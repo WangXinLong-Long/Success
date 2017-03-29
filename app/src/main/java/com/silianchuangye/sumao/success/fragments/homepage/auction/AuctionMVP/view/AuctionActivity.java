@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -157,6 +158,8 @@ public class AuctionActivity extends AppCompatActivity implements IAuctionView {
 
     @Override
     public void setOpenAuctionOrSealedBidResult(String result, String type_way) {
+        Log.d("竞拍产品的详情",""+result);
+        Log.d("type_way",type_way);
         Gson gson = new Gson();
         AuctionDetailBean auctionDetailBean = gson.fromJson(result, AuctionDetailBean.class);
         Intent intent = new Intent(this, OpenAuctionActivity.class);

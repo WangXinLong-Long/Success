@@ -22,6 +22,7 @@ public class AuctionResultModel implements IAuctionResultModel {
     @Override
     public void getAuctionResultResult(final AuctionResultCallback callback) {
         String url = SuMaoConstant.SUMAO_IP + "/rest/model/atg/commerce/catalog/ProductCatalogActor/englishAuctionResult";
+      //  String url = SuMaoConstant.SUMAO_IP + "/rest/model/atg/commerce/catalog/ProductCatalogActor/englishAuctionResult";
         RequestParams rp = new RequestParams(url);
         rp.addParameter("productId", productId);
         rp.addParameter("_dynSessConf", _dynSessConf);

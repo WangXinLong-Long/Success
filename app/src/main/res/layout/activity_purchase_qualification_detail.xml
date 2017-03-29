@@ -48,7 +48,34 @@
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/x70"
                     android:src="@mipmap/rig"
+                    android:id="@+id/iv_jieguo"
                     android:padding="@dimen/x10" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/iv_jieguo"
+                    android:layout_marginLeft="@dimen/x40"
+                    android:text="填写申请"
+                    android:id="@+id/tv_tianxie"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/iv_jieguo"
+                    android:layout_toRightOf="@+id/tv_tianxie"
+                    android:layout_marginLeft="@dimen/x40"
+                    android:text="正在审核"
+                    android:id="@+id/tv_shenhe"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/iv_jieguo"
+                    android:layout_toRightOf="@+id/tv_shenhe"
+                    android:layout_marginLeft="@dimen/x40"
+                    android:text="审核通过"
+                    android:id="@+id/tv_Result"
+                    />
             </RelativeLayout>
 
             <RelativeLayout
@@ -188,6 +215,7 @@
                         android:hint="吨/年"
                         android:gravity="end"
                         />
+
                 </RelativeLayout>
 
 
@@ -223,6 +251,16 @@
                         android:layout_marginRight="@dimen/x10"
                         android:hint="人"
                         android:gravity="end"/>
+                    <com.silianchuangye.sumao.success.custom.CustomListView
+                        android:layout_width="@dimen/x70"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="@dimen/x10"
+                        android:gravity="end"
+                        android:id="@+id/lvdemo"
+                        android:visibility="gone"
+                        android:layout_below="@+id/number_of_employees_content"
+                        ></com.silianchuangye.sumao.success.custom.CustomListView>
                 </RelativeLayout>
 
 

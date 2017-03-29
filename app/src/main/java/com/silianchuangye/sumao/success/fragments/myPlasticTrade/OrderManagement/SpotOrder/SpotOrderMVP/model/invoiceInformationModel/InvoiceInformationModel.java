@@ -23,6 +23,7 @@ public class InvoiceInformationModel implements IInvoiceInformationModel {
     @Override
     public void getInvoiceInformationResult(final InvoiceInformationCallback callback) {
         String url = SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/order/myorder/OrderPaymentInfo/checkInfo";
+        //String url=  SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/order/myorder/OrderPaymentInfo/checkInfo"
         RequestParams requestParams = new RequestParams(url);
         requestParams.addParameter("orderId",orderId);
         requestParams.addParameter("_dynSessConf",_dynSessConf);

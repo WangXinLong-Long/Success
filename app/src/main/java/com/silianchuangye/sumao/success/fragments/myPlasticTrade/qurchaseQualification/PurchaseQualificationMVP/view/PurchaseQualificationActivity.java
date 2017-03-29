@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.silianchuangye.sumao.success.R;
@@ -81,28 +82,35 @@ public class PurchaseQualificationActivity extends AppCompatActivity implements 
                 Log.d("判断状态的返回值",""+result);
                 try {
                     JSONObject object=new JSONObject(result);
-                    String booleancommit=object.getString("state");
-                        if (object.getString("state").equals("待审核")){
+                    if (!result.contains("state")){
+                        Toast.makeText(PurchaseQualificationActivity.this, "该用户没有通过审核,无法进行该操作！", Toast.LENGTH_SHORT).show();
+//                        Intent intent = new Intent(PurchaseQualificationActivity.this, PurchaseQualificationDetailActivity.class);
+//                        intent.putExtra("id", id);
+//                        startActivity(intent);
+                    }else {
+                        String booleancommit=object.getString("state");
+                        if (object.getString("state").equals("待审核")) {
                             //已经提交过
                             Intent intent = new Intent(PurchaseQualificationActivity.this, WaitActivity.class);
-                            intent.putExtra("id",id);
-                            intent.putExtra("result",result);
+                            intent.putExtra("id", id);
+                            intent.putExtra("result", result);
                             startActivity(intent);
-                        }else if (object.getString("state").equals("有")){
-                            Intent intent=new Intent(PurchaseQualificationActivity.this, ResultActivity.class);
-                            intent.putExtra("state","已通过");
+                        } else if (object.getString("state").equals("有")) {
+                            Intent intent = new Intent(PurchaseQualificationActivity.this, ResultActivity.class);
+                            intent.putExtra("state", "已通过");
                             startActivity(intent);
-                        }else if (object.getString("state").equals("无")){
-                            Intent intent=new Intent(PurchaseQualificationActivity.this, ResultActivity.class);
-                            intent.putExtra("state","未通过");
-
+                        } else if (object.getString("state").equals("无")) {
+                            Intent intent = new Intent(PurchaseQualificationActivity.this, ResultActivity.class);
+                            intent.putExtra("state", "未通过");
                             startActivity(intent);
-                        }else{
+                        } else {
+                            Log.d("进来", "进来没有");
                             //没有提交过
                             Intent intent = new Intent(PurchaseQualificationActivity.this, PurchaseQualificationDetailActivity.class);
-                            intent.putExtra("id",id);
+                            intent.putExtra("id", id);
                             startActivity(intent);
                         }
+                    }
 
 
 

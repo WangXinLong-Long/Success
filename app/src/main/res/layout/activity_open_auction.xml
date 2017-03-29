@@ -34,10 +34,156 @@
 
     </RelativeLayout>
 
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/layout_anniu"
+        >
+        <!--支付保证金和立即竞拍-->
+        <RelativeLayout
+            android:id="@+id/Layout_Button_Open"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x50"
+            android:layout_alignParentBottom="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:weightSum="2">
+
+                <Button
+                    android:id="@+id/btZhifu_auction"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="#29ABE2"
+                    android:text="支付保证金"
+                    android:textColor="#fff"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/bt_jinpai"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="#0071BC"
+                    android:text="立即报价"
+                    android:textColor="#fff"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </RelativeLayout>
+        <!--支付保证金-->
+        <RelativeLayout
+            android:id="@+id/Layout_Button_close"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x50"
+            android:layout_alignParentBottom="true"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true">
+                <Button
+                    android:id="@+id/bt_jinpai_colse"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#0071BC"
+                    android:text="支付保证金"
+                    android:textColor="#fff"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+        </RelativeLayout>
+        <!--参加竞拍-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x50"
+            android:layout_alignParentBottom="true"
+            android:id="@+id/participate_in_the_auction_ll"
+            android:visibility="gone"
+            >
+            <Button
+                android:id="@+id/participate_in_the_auction"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#0071BC"
+                android:text="参与竞拍"
+                android:textColor="#fff"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+        <!--未登录-->
+        <RelativeLayout
+            android:id="@+id/Layout_Button_no_login"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x50"
+            android:layout_alignParentBottom="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:weightSum="2">
+
+                <Button
+                    android:id="@+id/btLogin_auction"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="#29ABE2"
+                    android:text="登录"
+                    android:textColor="#fff"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/bt_Reg_Auction"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="#0071BC"
+                    android:text="注册"
+                    android:textColor="#fff"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </RelativeLayout>
+        <!--竞拍已结束-->
+        <RelativeLayout
+            android:id="@+id/Layout_info"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x40"
+            android:visibility="gone"
+            android:layout_alignParentBottom="true"
+            android:background="#999999">
+
+            <TextView
+                android:id="@+id/tv_Result"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="竞拍已结束"
+                android:textColor="#6E6E6E"
+                android:textSize="20sp" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
     <ScrollView
+        android:layout_below="@+id/layoutTop_auction"
+        android:layout_above="@+id/layout_anniu"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/layoutTop_auction"
+        android:id="@+id/layout_scroll"
+        android:visibility="visible"
+
         android:focusable="true">
 
         <LinearLayout
@@ -45,6 +191,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
+            android:focusable="true"
+            android:visibility="visible"
 
             >
 
@@ -721,41 +869,41 @@
                         android:layout_marginLeft="@dimen/x10"
                         android:text="竞拍价格:" />
 
-                      <TextView
-                          android:id="@+id/bid_price_sub"
-                          android:layout_width="@dimen/x25"
-                          android:layout_height="@dimen/x25"
-                          android:layout_centerVertical="true"
-                          android:layout_marginLeft="@dimen/x10"
-                          android:layout_toRightOf="@id/bid_price"
-                          android:background="@drawable/cart_num"
-                          android:gravity="center"
-                          android:src="@mipmap/ic_launcher"
-                          android:text="-"
-                          android:textSize="20sp" />
+                    <TextView
+                        android:id="@+id/bid_price_sub"
+                        android:layout_width="@dimen/x25"
+                        android:layout_height="@dimen/x25"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/x10"
+                        android:layout_toRightOf="@id/bid_price"
+                        android:background="@drawable/cart_num"
+                        android:gravity="center"
+                        android:src="@mipmap/ic_launcher"
+                        android:text="-"
+                        android:textSize="20sp" />
 
-                      <EditText
-                          android:id="@+id/bid_price_num"
-                          android:layout_width="@dimen/x50"
-                          android:layout_height="@dimen/x25"
-                          android:layout_centerVertical="true"
-                          android:layout_toRightOf="@id/bid_price_sub"
-                          android:background="@drawable/juxing"
-                          android:gravity="center"
-                          android:inputType="numberDecimal"
-                          android:singleLine="true"/>
+                    <EditText
+                        android:id="@+id/bid_price_num"
+                        android:layout_width="@dimen/x50"
+                        android:layout_height="@dimen/x25"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@id/bid_price_sub"
+                        android:background="@drawable/juxing"
+                        android:gravity="center"
+                        android:inputType="numberDecimal"
+                        android:singleLine="true"/>
 
-                      <TextView
-                          android:id="@+id/bid_price_add"
-                          android:layout_width="@dimen/x25"
-                          android:layout_height="@dimen/x25"
-                          android:layout_centerVertical="true"
-                          android:layout_toRightOf="@id/bid_price_num"
-                          android:background="@drawable/cart_num"
-                          android:gravity="center"
-                          android:src="@mipmap/ic_launcher"
-                          android:text="+"
-                          android:textSize="20sp" />
+                    <TextView
+                        android:id="@+id/bid_price_add"
+                        android:layout_width="@dimen/x25"
+                        android:layout_height="@dimen/x25"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@id/bid_price_num"
+                        android:background="@drawable/cart_num"
+                        android:gravity="center"
+                        android:src="@mipmap/ic_launcher"
+                        android:text="+"
+                        android:textSize="20sp" />
 
                     <!--  <TextView
                           android:id="@+id/my_price"
@@ -984,11 +1132,11 @@
                     android:textColor="@color/white" />
             </RelativeLayout>
 
-
             <RelativeLayout
                 android:id="@+id/layout_Message"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/x60"
+                android:visibility="gone"
                 android:layout_marginTop="@dimen/x8"
                 android:background="#fff">
 
@@ -1002,11 +1150,13 @@
             </RelativeLayout>
             <!--可以删除  -->
             <RelativeLayout
+                android:visibility="gone"
                 android:id="@+id/layout_non"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/x50"
                 android:background="#EEEEF3" />
             <!--竞拍结束、竞拍成功，用户没有参与竞拍-->
+            <!-- -->
             <RelativeLayout
                 android:id="@+id/layout_one"
                 android:layout_width="match_parent"
@@ -1118,6 +1268,8 @@
 
 
             </RelativeLayout>
+
+            <!--要显示的列表项目-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/x1"
@@ -1222,6 +1374,9 @@
                         />
                 </RelativeLayout>
             </LinearLayout>
+
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/x1"
@@ -1242,136 +1397,4 @@
                 ></com.silianchuangye.sumao.success.custom.CustomListView>
         </LinearLayout>
     </ScrollView>
-
-    <RelativeLayout
-        android:id="@+id/Layout_Button_Open"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/x50"
-        android:layout_alignParentBottom="true">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentBottom="true"
-            android:weightSum="2">
-
-            <Button
-                android:id="@+id/btZhifu_auction"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="#29ABE2"
-                android:text="支付保证金"
-                android:textColor="#fff"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/bt_jinpai"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="#0071BC"
-                android:text="立即报价"
-                android:textColor="#fff"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-        </LinearLayout>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/Layout_Button_close"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/x50"
-        android:layout_alignParentBottom="true"
-        android:visibility="gone">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentBottom="true">
-            <Button
-                android:id="@+id/bt_jinpai_colse"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#0071BC"
-                android:text="支付保证金"
-                android:textColor="#fff"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-    </RelativeLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/x50"
-        android:layout_alignParentBottom="true"
-        android:id="@+id/participate_in_the_auction_ll"
-        android:visibility="gone"
-        >
-        <Button
-            android:id="@+id/participate_in_the_auction"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#0071BC"
-            android:text="参与竞拍"
-            android:textColor="#fff"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-    </LinearLayout>
-    <!--未登录-->
-    <RelativeLayout
-        android:id="@+id/Layout_Button_no_login"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/x50"
-        android:layout_alignParentBottom="true">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentBottom="true"
-            android:weightSum="2">
-
-            <Button
-                android:id="@+id/btLogin_auction"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="#29ABE2"
-                android:text="登录"
-                android:textColor="#fff"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/bt_Reg_Auction"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="#0071BC"
-                android:text="注册"
-                android:textColor="#fff"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-        </LinearLayout>
-    </RelativeLayout>
-    <!--竞拍已结束-->
-    <RelativeLayout
-        android:id="@+id/Layout_info"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/x40"
-        android:layout_alignParentBottom="true"
-        android:background="#999999">
-
-        <TextView
-            android:id="@+id/tv_Result"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="竞拍已结束"
-            android:textColor="#6E6E6E"
-            android:textSize="20sp" />
-    </RelativeLayout>
-
-
 </RelativeLayout>

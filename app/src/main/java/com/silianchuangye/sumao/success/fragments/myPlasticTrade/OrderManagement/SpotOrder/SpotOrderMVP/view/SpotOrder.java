@@ -350,7 +350,11 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
 //            发票信息
             case R.id.bottom2:
                 spotOrderPresenter.getInvoiceInformationResult(orderId, _dynSessConf);
-
+//                Intent intent_fapiao = new Intent();
+//                intent_fapiao.setClass(this, InvoiceInformationActivity.class);
+//                intent_fapiao.putExtra("id",orderId);
+//                intent_fapiao.putExtra("unique",_dynSessConf);
+//                startActivity(intent_fapiao);
                 break;
 //            合同信息
             case R.id.bottom3:

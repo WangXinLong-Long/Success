@@ -47,7 +47,34 @@
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/x70"
                     android:src="@mipmap/commit"
+                    android:id="@+id/iv_jieguo"
                     android:padding="@dimen/x10" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/iv_jieguo"
+                    android:layout_marginLeft="@dimen/x40"
+                    android:text="填写申请"
+                    android:id="@+id/tv_tianxie"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/iv_jieguo"
+                    android:layout_toRightOf="@+id/tv_tianxie"
+                    android:layout_marginLeft="@dimen/x40"
+                    android:text="正在审核"
+                    android:id="@+id/tv_shenhe"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/iv_jieguo"
+                    android:layout_toRightOf="@+id/tv_shenhe"
+                    android:layout_marginLeft="@dimen/x40"
+                    android:text="审核通过"
+                    android:id="@+id/tv_Result"
+                    />
             </RelativeLayout>
 
             <RelativeLayout

@@ -244,9 +244,11 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
                     startActivity(intent);
                     //startActivityForResult(intent, 102);
                 } else {
+                    //进行用户是否有权限购买判断
+                    booleanZizhi();
                     //弹出popwindow
-//                    showPopWindow();
-                    showpop();
+
+
 //                    backgroundAlpha(0.5f);
                 }
 
@@ -346,6 +348,58 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
 //        }
 //    }
 
+    public void booleanZizhi(){
+        String url=SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/userprofiling/PurchaseJurisdictionCheckActor/PurchaseResult";
+        RequestParams requestParams=new RequestParams(url);
+        requestParams.addParameter("productId",cl_id);
+        x.http().post(requestParams, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.d("用户是否有参与团购的权限",result);
+                if (result.contains("0")){
+                    showpop();
+                }else if (result.contains("1")){
+                    Toast.makeText(GroupBuyingSuccessActivity.this, "该用户无上游资源方购买资质", Toast.LENGTH_SHORT).show();
+
+                }else if (result.contains("2")){
+                    Toast.makeText(GroupBuyingSuccessActivity.this, "黑名单不能购买", Toast.LENGTH_SHORT).show();
+
+                }else if (result.contains("3")){
+                    Toast.makeText(GroupBuyingSuccessActivity.this, "未登入", Toast.LENGTH_SHORT).show();
+
+                }else if (result.contains("4")){
+                    Toast.makeText(GroupBuyingSuccessActivity.this, "没有在购买期限内，不能购买", Toast.LENGTH_SHORT).show();
+
+                }else if (result.contains("5")){
+                    Toast.makeText(GroupBuyingSuccessActivity.this, "csc审核没有通过", Toast.LENGTH_SHORT).show();
+
+                }else if (result.contains("6")){
+                    Toast.makeText(GroupBuyingSuccessActivity.this, "企业财务员无权购买产品", Toast.LENGTH_SHORT).show();
+
+                }else if(result.contains("7")){
+                    Toast.makeText(GroupBuyingSuccessActivity.this, "库存小于购买量", Toast.LENGTH_SHORT).show();
+
+                }
+
+
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+    }
     public void booleanOpenorclose() {
         String url = SuMaoConstant.SUMAO_IP + "/rest/model/atg/commerce/order/myorder/OrderPaymentInfo/colsedChecker";
         RequestParams rp = new RequestParams(url);
@@ -505,6 +559,12 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
                         );
                         gvDemo.setAdapter(adapter_grid);
                         adapter_grid.notifyDataSetChanged();
+                        gvDemo.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                            }
+                        });
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

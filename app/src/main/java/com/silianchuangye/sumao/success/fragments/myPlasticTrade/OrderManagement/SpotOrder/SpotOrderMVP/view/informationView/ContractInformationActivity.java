@@ -2,6 +2,7 @@ package com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagemen
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -48,6 +49,8 @@ public class ContractInformationActivity extends AppCompatActivity implements Vi
             }
         });
         contract_web_view.loadUrl(SuMaoConstant.SUMAO_CONTRACT_IP+contract);
+        LogUtils.log(SuMaoConstant.SUMAO_CONTRACT_IP+contract);
+        Log.d("合同的路径",SuMaoConstant.SUMAO_CONTRACT_IP+contract);
     }
 
     @Override
