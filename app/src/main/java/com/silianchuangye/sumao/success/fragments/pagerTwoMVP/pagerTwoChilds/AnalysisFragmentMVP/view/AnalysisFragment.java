@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
@@ -53,11 +54,15 @@ public class AnalysisFragment extends Fragment {
     private ListView listViewData;
    // private ListViewDataAdapter listViewAdapter;
     private DataFragmentPresenter dataFragmentPresenter;
-    private List<PagerTwoDataListViewBean.InBean> in;
-   // private List<NewsFragmentBean.InBean> in;
+  //  private List<PagerTwoDataListViewBean.InBean> in;
+  //  private List<> in;
+    //private List<PagerTwoDataListViewBean.InBean> in;
     private AnalysisFragmentPresenter analysisFragmentPresenter;
     private BroadcastReceiver netReceiver;
     private List<Map<String,Object>> list;
+    private SimpleAdapter adapter;
+    private com.silianchuangye.sumao.success.fragments.pagerTwoMVP.pagerTwoChilds.NewsFragmentMVP.adapter.ListViewDataAdapter listViewAdapter;
+    private List<NewsFragmentBean.InBean> in;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -74,12 +79,6 @@ public class AnalysisFragment extends Fragment {
 //        列表内容
         listViewData = ((ListView) view.findViewById(R.id.list_view_data));
         listViewData.setOnItemClickListener(new MyAdapterItemClickListener());
-
-//        listViewAdapter = new ListViewDataAdapter(getActivity());
-//        listViewData.setAdapter(listViewAdapter);
-
-//        加载数据
-        //initData();
         getAnalysis("");
 
         return view;
@@ -91,39 +90,41 @@ public class AnalysisFragment extends Fragment {
         if (time!=""||time!=null){
           rp.addParameter("searchDate",time);
         }
+        Log.d("资讯分析的rp",rp+"");
         x.http().post(rp, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Log.d("result",result);
+                Log.d("资讯分析的result",result);
                 try {
-                    JSONObject jsonObject=new JSONObject(result);
-                    String array=jsonObject.getString("in");
-                    JSONArray jsonArray=new JSONArray(array);
-                    list=new ArrayList<Map<String, Object>>();
-
-                    for (int i=0;i<jsonArray.length();i++){
-                        JSONObject object=jsonArray.getJSONObject(i);
-
-
-                            Map<String,Object> map=new Hashtable<String, Object>();
-                            map.put("id",object.getString("in_in_zxid"));
-                            map.put("title",object.getString("in_zxbt"));
-                           // map.put("time",object.getString("in_zxtime"));
-                            map.put("time",new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Double.parseDouble(object.getString("in_zxtime"))));
-
+                    list = new ArrayList<Map<String, Object>>();
+                    if (result.contains("in")) {
+                        JSONObject jsonObject = new JSONObject(result);
+                        String array = jsonObject.getString("in");
+                        JSONArray jsonArray = new JSONArray(array);
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject object = jsonArray.getJSONObject(i);
+                            Map<String, Object> map = new Hashtable<String, Object>();
+                            map.put("id", object.getString("in_in_zxid"));
+                            map.put("title", object.getString("in_zxbt"));
+                            // map.put("time",object.getString("in_zxtime"));
+                            map.put("time", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Double.parseDouble(object.getString("in_zxtime"))));
                             list.add(map);
+                        }
 
-
-
+                    }else {
+                        list.clear();
+                        adapter.notifyDataSetChanged();
                     }
-                    SimpleAdapter adapter=new SimpleAdapter(getActivity(),list,R.layout.data_list_view_adapter
-                    ,new String[]{"title","time"},new int[]{R.id.title_text_view,R.id.time_text_view});
+                    adapter= new SimpleAdapter(getActivity(), list, R.layout.data_list_view_adapter
+                            , new String[]{"title", "time"},
+                            new int[]{R.id.title_text_view, R.id.time_text_view});
                     listViewData.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+
             }
 
             @Override
@@ -148,25 +149,6 @@ public class AnalysisFragment extends Fragment {
 
 
 
-    private void initData() {
-        String dateType = null;
-        analysisFragmentPresenter.getAnalysisFragmentResult();
-
-    }
-
-
-    //    从网络加载数据
-//    @Override
-//    public void setAnalysisFragmentResult(String result) {
-//        Gson gson = new Gson();
-//        PagerTwoDataListViewBean pagerTwoDataListViewBean = gson.fromJson(result, PagerTwoDataListViewBean.class);
-//        in = pagerTwoDataListViewBean.getIn();
-//        listViewAdapter.clearData();
-//        listViewAdapter.addPagerTwoDataListViewBeens(in);
-//        listViewAdapter.notifyDataSetChanged();
-//
-//    }
-
     class MyAdapterItemClickListener implements AdapterView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -179,6 +161,7 @@ public class AnalysisFragment extends Fragment {
                      intent.putExtra("number","abc");
                      intent.putExtra("from","abc");
                      intent.putExtra("dianzan","abc");
+                     intent.putExtra("laiyuan","分析");
                      startActivity(intent);
                     //Toast.makeText(getActivity(), "List--->" + in.get(position).getDataid(), Toast.LENGTH_SHORT).show();
                     break;
@@ -215,5 +198,7 @@ public class AnalysisFragment extends Fragment {
         IntentFilter filter = new IntentFilter(NetWorkChangeBroadcastReceiver.NET_CHANGE);
         getActivity().registerReceiver(netReceiver,filter);
     }
+
+
 
 }

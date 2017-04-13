@@ -6,6 +6,7 @@ import android.content.Context;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.ImageView;
@@ -36,6 +37,7 @@ public class PagerTwo extends BasePager {
     private AnalysisFragment analysisFragment;
     private NewsFragment newsFragment;
     private BroadcastReceiver netReceiver;
+    private ImageView remove;
     @Override
     public void initDate() {
 
@@ -48,6 +50,7 @@ public class PagerTwo extends BasePager {
         context = mActivity;
 //
         calendarImageView = ((ImageView) view.findViewById(R.id.calendar_view));
+        remove= (ImageView) view.findViewById(R.id.remove);
 //        初始化四个Fragment
         InformationPageFragment informationPageFragment = new InformationPageFragment();
         dataFragment = new DataFragment();
@@ -83,9 +86,11 @@ public class PagerTwo extends BasePager {
             public void onTabSelected(TabLayout.Tab tab) {
                 if (tabLayout.getSelectedTabPosition() == 0) {
                     view.findViewById(R.id.calendar_view).setVisibility(View.INVISIBLE);
+                    remove.setVisibility(View.INVISIBLE);
                     viewPager.setCurrentItem(tab.getPosition());
                 } else {
                     view.findViewById(R.id.calendar_view).setVisibility(View.VISIBLE);
+                    remove.setVisibility(View.VISIBLE);
                     viewPager.setCurrentItem(tab.getPosition());
                 }
             }
@@ -100,11 +105,27 @@ public class PagerTwo extends BasePager {
 
             }
         });
+        remove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (viewPager.getCurrentItem() == 1) {
+                    //dataFragment.searchData(year,monthOfYear,dayOfMonth);
+                    dataFragment.info();
+                }else if (viewPager.getCurrentItem() == 2){
+                    //analysisFragment.searchData(year,monthOfYear,dayOfMonth);
+                    analysisFragment.getAnalysis("");
+
+                }else if(viewPager.getCurrentItem() == 3){
+                    //newsFragment.searchData(year,monthOfYear,dayOfMonth);
+                    newsFragment.initData();
+                }
+            }
+        });
 
         calendarImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "当前的位置为：" + viewPager.getCurrentItem(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), "当前的位置为：" + viewPager.getCurrentItem(), Toast.LENGTH_SHORT).show();
                 Calendar c = Calendar.getInstance();
                 // 直接创建一个DatePickerDialog对话框实例，并将它显示出来
                 new DatePickerDialog(getActivity(),
@@ -118,6 +139,7 @@ public class PagerTwo extends BasePager {
                                     dataFragment.searchData(year,monthOfYear,dayOfMonth);
                                 }else if (viewPager.getCurrentItem() == 2){
                                     analysisFragment.searchData(year,monthOfYear,dayOfMonth);
+
                                 }else if(viewPager.getCurrentItem() == 3){
                                     newsFragment.searchData(year,monthOfYear,dayOfMonth);
                                 }

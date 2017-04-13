@@ -276,7 +276,7 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
             SharedPreferences.Editor editor = sp.edit();
             editor.clear();
             editor.commit();
-            Toast.makeText(ctx, "登录已超时，请重新登录", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ctx, "请重新登录", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(mActivity, MainActivity.class);
             intent.putExtra("roles", "buyer");
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

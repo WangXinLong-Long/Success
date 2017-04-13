@@ -238,6 +238,7 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
             @Override
             public void onClick(View v) {
                 if (unique.equals("false")) {
+                    tuichu();
                     Intent intent = new Intent(GroupBuyingSuccessActivity.this, LoginUserActivity.class);
                     intent.putExtra("roles", "buyer");
                     intent.putExtra("position", 102);
@@ -347,7 +348,48 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
 //            Log.d("返回过来的之",unique);
 //        }
 //    }
+public void tuichu(){
+    RequestParams  rp=new RequestParams(SuMaoConstant.SUMAO_IP+"/rest/model/atg/userprofiling/ProfileActor/logout");
+    SharedPreferences sp=getSharedPreferences("sumao",0);
+    //SharedPreferences sp1=g
+    String unique=sp.getString("unique","默认值");
+    rp.addParameter("_dynSessConf",unique);
+    Log.d("退出时的唯一标识",unique);
+    x.http().post(rp, new Callback.CommonCallback<String>() {
+        @Override
+        public void onSuccess(String result) {
+            SharedPreferences sp=getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+            SharedPreferences.Editor editor=sp.edit();
+            editor.clear();
+            //      editor.clear();
+            editor.commit();
+            //Toast.makeText(context, "用户名称已删除", Toast.LENGTH_SHORT).show();
 
+//                                            SettingActivity.this.finish();
+
+//                                        }
+        }
+
+        @Override
+        public void onError(Throwable ex, boolean isOnCallback) {
+
+        }
+
+        @Override
+        public void onCancelled(CancelledException cex) {
+
+        }
+
+        @Override
+        public void onFinished() {
+
+        }
+    });
+//                            }
+//                        }.start();
+
+
+}
     public void booleanZizhi(){
         String url=SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/userprofiling/PurchaseJurisdictionCheckActor/PurchaseResult";
         RequestParams requestParams=new RequestParams(url);

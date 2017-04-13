@@ -102,21 +102,29 @@ public class DataFragment extends Fragment implements IDataFragmentView {
     }
 
     public void searchData(int year, int monthOfYear, int dayOfMonth) {
-        Toast.makeText(getActivity(), "" + year + "-" + monthOfYear + "-" + dayOfMonth + "在数据中搜索", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getActivity(), "" + year + "-" + monthOfYear + "-" + dayOfMonth + "在数据中搜索", Toast.LENGTH_SHORT).show();
         String dateType = year+"-"+(monthOfYear)+"-"+dayOfMonth;
         Log.d("在數據中選擇的時間",""+dateType);
         dataFragmentPresenter.getDataFragmentResult(dateType);
+    }
+    public void info(){
+        dataFragmentPresenter.getDataFragmentResult(null);
     }
 
     //    从网络加载数据
     @Override
     public void setDataInDataFragmentView(String result) {
-        Gson gson = new Gson();
-        PagerTwoDataListViewBean pagerTwoDataListViewBean = gson.fromJson(result, PagerTwoDataListViewBean.class);
-        in = pagerTwoDataListViewBean.getIn();
-        listViewAdapter.clearData();
-        listViewAdapter.addPagerTwoDataListViewBeens(in);
-        listViewAdapter.notifyDataSetChanged();
+        if (result.contains("in")) {
+            Gson gson = new Gson();
+            PagerTwoDataListViewBean pagerTwoDataListViewBean = gson.fromJson(result, PagerTwoDataListViewBean.class);
+            in = pagerTwoDataListViewBean.getIn();
+            listViewAdapter.clearData();
+            listViewAdapter.addPagerTwoDataListViewBeens(in);
+            listViewAdapter.notifyDataSetChanged();
+        }else {
+            listViewAdapter.clearData();
+            listViewAdapter.notifyDataSetChanged();
+        }
     }
 
     class MyAdapterItemClickListener implements AdapterView.OnItemClickListener {
@@ -132,6 +140,7 @@ public class DataFragment extends Fragment implements IDataFragmentView {
                     intent.putExtra("number","abc");
                     intent.putExtra("from","abc");
                     intent.putExtra("dianzan","abc");
+                    intent.putExtra("laiyuan","数据");
                     startActivity(intent);
                    // Toast.makeText(getActivity(), "List--->" + in.get(position).getDataid(), Toast.LENGTH_SHORT).show();
                     break;

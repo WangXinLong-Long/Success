@@ -53,8 +53,8 @@ public class InformationPageFragment extends Fragment implements IInformationPag
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.information_pagefragment, container, false);
-        ptrl = ((PullToRefreshLayout) view.findViewById(R.id.refresh_view));
-
+       // ptrl = ((PullToRefreshLayout) view.findViewById(R.id.refresh_view));
+        listView = (ListView) view.findViewById(R.id.pre_sale_listView);
         return view;
     }
 
@@ -89,6 +89,7 @@ public class InformationPageFragment extends Fragment implements IInformationPag
                 intent.putExtra("number",in.get(position).getNewsnum());
                 intent.putExtra("from",in.get(position).getNewsfrom());
                 intent.putExtra("dianzan",in.get(position).getThumupCount());
+                intent.putExtra("laiyuan","首页");
                 startActivity(intent);
 
             }
@@ -101,8 +102,8 @@ public class InformationPageFragment extends Fragment implements IInformationPag
        // onCreate(null);
         informationPageFragmentPresenter = new InformationPageFragmentPresenter(this);
         // 此处设置下拉刷新或上拉加载更多监听器
-        ptrl.setOnPullListener(new PagerTwoInformationPagePullListener());
-        listView = (ListView) ptrl.getPullableView();
+       // ptrl.setOnPullListener(new PagerTwoInformationPagePullListener());
+
         initListView();
 
     }

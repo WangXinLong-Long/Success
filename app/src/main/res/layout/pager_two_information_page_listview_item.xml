@@ -83,7 +83,7 @@
 
         android:layout_toRightOf="@id/count"
         android:layout_alignParentBottom="true"
-        android:src="@mipmap/ic_launcher"
+        android:src="@mipmap/dianzanblue"
         android:paddingBottom="@dimen/x5"/>
 
     <TextView

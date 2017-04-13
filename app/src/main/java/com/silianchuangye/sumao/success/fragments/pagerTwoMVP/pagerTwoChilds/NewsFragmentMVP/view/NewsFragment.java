@@ -73,21 +73,26 @@ public class NewsFragment extends Fragment implements INewsFragmentView{
 
 
 
-    private void initData() {
+    public void initData() {
         String dateType = null;
-        newsFragmentPresenter.getNewsFragmentResult("");
+        newsFragmentPresenter.getNewsFragmentResult(dateType);
 
     }
 
     //    从网络加载数据
     @Override
     public void setNewsFragmentResult(String result) {
-        Gson gson = new Gson();
-        NewsFragmentBean newsFragmentBean = gson.fromJson(result, NewsFragmentBean.class);
-        in = newsFragmentBean.getIn();
-        listViewAdapter.clearData();
-        listViewAdapter.addPagerTwoDataListViewBeens(in);
-        listViewAdapter.notifyDataSetChanged();
+        if (result.contains("in")) {
+            Gson gson = new Gson();
+            NewsFragmentBean newsFragmentBean = gson.fromJson(result, NewsFragmentBean.class);
+            in = newsFragmentBean.getIn();
+            listViewAdapter.clearData();
+            listViewAdapter.addPagerTwoDataListViewBeens(in);
+            listViewAdapter.notifyDataSetChanged();
+        }else {
+            listViewAdapter.clearData();
+            listViewAdapter.notifyDataSetChanged();
+        }
     }
 
     class MyAdapterItemClickListener implements AdapterView.OnItemClickListener {
@@ -103,6 +108,7 @@ public class NewsFragment extends Fragment implements INewsFragmentView{
                     intent.putExtra("number","abc");
                     intent.putExtra("from","abc");
                     intent.putExtra("dianzan","abc");
+                    intent.putExtra("laiyuan","新闻");
                     startActivity(intent);
                     Toast.makeText(getActivity(), "List--->" + in.get(position).getIn_xwid(), Toast.LENGTH_SHORT).show();
                     break;

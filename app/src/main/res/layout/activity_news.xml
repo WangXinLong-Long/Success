@@ -13,7 +13,7 @@
           android:layout_height="@dimen/x100"
           android:id="@+id/layout_titleAndtime"
           android:layout_below="@+id/layout_title"
-          android:background="@color/gray_normal"
+          android:background="@color/gray_type"
           >
           <TextView
               android:layout_width="wrap_content"
@@ -50,62 +50,34 @@
               android:layout_height="wrap_content"
               android:text="浏览量:"
               android:id="@+id/tv_ab"
-              android:layout_marginLeft="@dimen/x10"
+              android:layout_marginLeft="@dimen/x5"
               />
           <TextView
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:id="@+id/tv_num"
-              android:layout_marginLeft="@dimen/x3"
+
               />
-              </LinearLayout>
-              <LinearLayout
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:orientation="horizontal">
+
+
           <TextView
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text="来源:"
               android:id="@+id/tv_ac"
-              android:layout_marginLeft="@dimen/x10"
+              android:layout_marginLeft="@dimen/x5"
               />
           <TextView
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:id="@+id/tv_from"
-              android:layout_marginLeft="@dimen/x3"
+
               />
-                  <TextView
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:text="点赞:"
-                      android:id="@+id/tv_ad"
-                      android:layout_marginLeft="@dimen/x10"
-                      />
-                  <TextView
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:id="@+id/tv_dianzan"
-                      android:layout_marginLeft="@dimen/x3"
-                      />
+
+
               </LinearLayout>
           </LinearLayout>
-          <RelativeLayout
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_below="@id/tv_Title"
-              android:id="@+id/layout_center"
-              android:layout_marginTop="@dimen/x20"
-              >
-              <TextView
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:id="@+id/tv_Time2"
-                  android:layout_marginTop="@dimen/x10"
-                  android:layout_centerHorizontal="true"
-                  />
-          </RelativeLayout>
+
 
       </RelativeLayout>
     <RelativeLayout
@@ -114,20 +86,46 @@
         android:layout_below="@+id/layout_titleAndtime"
         android:background="#fff"
         >
+        <WebView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/wb_Content"
+            />
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/gray_type"
+        >
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_Content"
+            android:id="@+id/tv_tishi"
+            android:layout_marginTop="@dimen/x5"
+
             />
         <ImageView
             android:layout_width="@dimen/x20"
             android:layout_height="@dimen/x20"
-            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/tv_tishi"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="@dimen/x5"
             android:id="@+id/iv_dianzan"
-            android:src="@mipmap/ic_launcher"
+            android:src="@mipmap/dianzangray"
             android:visibility="gone"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_dianzan"
+            android:layout_below="@+id/tv_tishi"
+            android:layout_marginLeft="@dimen/x3"
+            android:layout_toRightOf="@+id/iv_dianzan"
+            android:visibility="gone"
+            android:layout_marginBottom="@dimen/x1"
+
             />
     </RelativeLayout>
 </RelativeLayout>

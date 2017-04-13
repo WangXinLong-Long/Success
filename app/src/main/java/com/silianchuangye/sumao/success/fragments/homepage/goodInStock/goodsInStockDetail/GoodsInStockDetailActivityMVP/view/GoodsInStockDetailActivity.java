@@ -248,6 +248,7 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
 
                 if (unique.equals("false")) {
                     Toast.makeText(GoodsInStockDetailActivity.this, "请登录后进行操作", Toast.LENGTH_SHORT).show();
+                    tuichu();
                     Intent intent1 = new Intent(this, LoginUserActivity.class);
                     intent1.putExtra("roles", "buyer");
                     intent1.putExtra("position", 100);
@@ -263,6 +264,7 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
 //                SharedPreferences sp1 = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
 //                String unique1 = sp1.getString("unique", "");
                 if (unique.equals("false")) {
+                    tuichu();
                     Intent intent1 = new Intent(this, LoginUserActivity.class);
                     intent1.putExtra("roles", "buyer");
                     intent1.putExtra("position", 100);
@@ -311,6 +313,48 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
             default:
                 break;
         }
+    }
+    public void tuichu(){
+        RequestParams  rp=new RequestParams(SuMaoConstant.SUMAO_IP+"/rest/model/atg/userprofiling/ProfileActor/logout");
+        SharedPreferences sp=getSharedPreferences("sumao",0);
+        //SharedPreferences sp1=g
+        String unique=sp.getString("unique","默认值");
+        rp.addParameter("_dynSessConf",unique);
+        Log.d("退出时的唯一标识",unique);
+        x.http().post(rp, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                SharedPreferences sp=getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+                SharedPreferences.Editor editor=sp.edit();
+                editor.clear();
+                //      editor.clear();
+                editor.commit();
+                //Toast.makeText(context, "用户名称已删除", Toast.LENGTH_SHORT).show();
+
+//                                            SettingActivity.this.finish();
+
+//                                        }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+//                            }
+//                        }.start();
+
+
     }
 
 

@@ -26,6 +26,7 @@ public class DataFragmentModel implements IDataFragmentModel {
         if (dateType!=null){
             rp.addParameter("searchDate",dateType);
         }
+        Log.d("资讯中数据的返回值",rp+"");
             x.http().post(rp, new Callback.CommonCallback<String>() {
                 @Override
                 public void onSuccess(String result) {

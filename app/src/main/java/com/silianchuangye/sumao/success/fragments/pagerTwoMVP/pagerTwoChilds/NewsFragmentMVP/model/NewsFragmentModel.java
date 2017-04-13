@@ -25,12 +25,13 @@ public class NewsFragmentModel implements INewsFragmentModel {
         if (dateType!=null){
             rp.addParameter("searchDate",dateType);
         }
+        Log.d("资讯中新闻的rp",rp+"");
         x.http().post(rp, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
                 Log.d("资讯新闻的result--->", result);
 
-                callback.callbackNewsFragmentResult(  result);
+                callback.callbackNewsFragmentResult(result);
 
 
             }

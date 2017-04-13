@@ -4,16 +4,13 @@
     android:layout_height="match_parent"
     android:padding="@dimen/x5">
 
-    <com.jingchen.pulltorefresh.PullToRefreshLayout
-        android:id="@+id/refresh_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <com.jingchen.pulltorefresh.PullableListView
+
+        <ListView
             android:id="@+id/pre_sale_listView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:dividerHeight="@dimen/x5"
             android:divider="@color/selley_bg"
-            ></com.jingchen.pulltorefresh.PullableListView>
-    </com.jingchen.pulltorefresh.PullToRefreshLayout>
+            ></ListView>
+
 </LinearLayout>
