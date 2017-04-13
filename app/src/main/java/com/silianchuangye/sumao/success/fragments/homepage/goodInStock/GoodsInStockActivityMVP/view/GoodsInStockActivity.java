@@ -131,7 +131,7 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
     String urlSearch;
     GoodsInStockActivityBean goodsInStockActivityBean;
     private TextView cancel_tv;
-
+    int page=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -170,17 +170,20 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
         pre_sale_listView = ((ListView) prl.getPullableView());
         LogUtils.log("标题是--->"+title);
         if (title.equals("现货") || title.equals("预售")) {
-            GoodsInStockActivityBean goodsInStockActivityBean = (GoodsInStockActivityBean) intent.getSerializableExtra("goodsInStockActivityBean");
-            applicationBean = (ApplicationBean) intent.getSerializableExtra("applicationBean");
-            classificationBean = ((ClassificationBean) intent.getSerializableExtra("classificationBean"));
-            supplierBean = ((SupplierBean) intent.getSerializableExtra("supplierBean"));
-            smClList.addAll(goodsInStockActivityBean.getIn());
-            LogUtils.log(smClList.size() + "--------------WXL");
-            adapter = new PreSaleAdapter(this);
-            pre_sale_listView.setAdapter(adapter);
-            adapter.addData(smClList);
-            adapter.notifyDataSetChanged();
-            initData();
+//            goodsInStockActivityPresenter.getGoodsInStockInfo(groups, pattern, regions, provinces, cities,
+//                    categoryNames, appNames, gradeNums, "0", "update");
+//            GoodsInStockActivityBean goodsInStockActivityBean = (GoodsInStockActivityBean) intent.getSerializableExtra("goodsInStockActivityBean");
+//            applicationBean = (ApplicationBean) intent.getSerializableExtra("applicationBean");
+//            classificationBean = ((ClassificationBean) intent.getSerializableExtra("classificationBean"));
+//            supplierBean = ((SupplierBean) intent.getSerializableExtra("supplierBean"));
+//            smClList.addAll(goodsInStockActivityBean.getIn());
+//            LogUtils.log(smClList.size() + "--------------WXL");
+//            adapter = new PreSaleAdapter(this);
+//            pre_sale_listView.setAdapter(adapter);
+//            adapter.addData(smClList);
+//            adapter.notifyDataSetChanged();
+//            initData();
+            searchProductName("0");
         } else if (title.contains("分类")|| title.contains("应用")|| title.contains("供应商")||title.contains("地区")){
             searchProductName("0");
         }
@@ -210,8 +213,8 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
             adapter.addData(smClList);
         }
         //        上啦加载，下拉刷新的监听
-        prl.setOnPullListener(new PagerOneGoodsInStockActivityListPullListener(/*goodsInStockActivityPresenter, pattern, regions, provinces, cities,
-                categoryNames, appNames, gradeNums*/));
+
+        prl.setOnPullListener(new InStockActivityListPullListener());
         pre_sale_listView.setOnItemClickListener(this);
 
         iv_screen_title_bar_back = ((ImageView) findViewById(R.id.iv_screen_title_bar_back));
@@ -470,7 +473,7 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
         }else{
             urlSearch+=fenleiString;
         }
-        if (!title.equals("地区")&&!title.equals("分类")&&!title.equals("供应商")&&!title.equals("应用")){
+        if (!title.equals("地区")&&!title.equals("分类")&&!title.equals("供应商")&&!title.equals("应用")&&!title.equals("现货")&&!title.equals("预售")){
             if (et_productName.getText().toString().length()>0){
                 urlSearch+="&alias="+et_productName.getText().toString();
             }
@@ -486,22 +489,25 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
         x.http().get(rp, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                if (smClList.size()>0){
-                smClList.clear();
-                adapter.clearData();
-                adapter.notifyDataSetChanged();
-                }
+//                if (smClList.size()>0){
+//                smClList.clear();
+////                adapter.clearData();
+////                adapter.notifyDataSetChanged();
+//                }
                 Log.d("查询的返回值",result);
-                Gson gson = new Gson();
-                goodsInStockActivityBean = gson.fromJson(result, GoodsInStockActivityBean.class);
-                //callback.callbackInGoodsInStockActivity(goodsInStockActivityBean,updateOrLoad,"");
-                smClList.addAll(goodsInStockActivityBean.getIn());
-                LogUtils.log(smClList.size() + "--------------WXL");
-                adapter = new PreSaleAdapter(GoodsInStockActivity.this);
-                pre_sale_listView.setAdapter(adapter);
-                adapter.addData(smClList);
-                adapter.notifyDataSetChanged();
-                prl.setOnPullListener(new InStockActivityListPullListener());
+                if (result.contains("in")) {
+                    Gson gson = new Gson();
+                    goodsInStockActivityBean = gson.fromJson(result, GoodsInStockActivityBean.class);
+                    //callback.callbackInGoodsInStockActivity(goodsInStockActivityBean,updateOrLoad,"");
+
+                    LogUtils.log(smClList.size() + "--------------WXL");
+                    adapter = new PreSaleAdapter(GoodsInStockActivity.this);
+                    pre_sale_listView.setAdapter(adapter);
+                    smClList.addAll(goodsInStockActivityBean.getIn());
+                    adapter.clearData();
+                    adapter.addData(smClList);
+                    adapter.notifyDataSetChanged();
+                }// prl.setOnPullListener(new InStockActivityListPullListener());
             }
 
             @Override
@@ -810,39 +816,43 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
     }
 
     public class PagerOneGoodsInStockActivityListPullListener implements PullToRefreshLayout.OnPullListener {
-        String pageNum = "1";
-
+        String pageNum = "0";
+       // searchProductName()
 
         @Override
         public void onRefresh(final PullToRefreshLayout pullToRefreshLayout) {
-            pageNum = "1";
-            if (tv_screen_title_bar_title.getText().toString().equals("现货")) {
-                pattern = "fixedProduct";
-            } else if (tv_screen_title_bar_title.getText().toString().equals("预售")) {
-                pattern = "forward-pricing-product";
-            }
-            goodsInStockActivityPresenter.getGoodsInStockInfo(groups, pattern, regions, provinces, cities,
-                    categoryNames, appNames, gradeNums, pageNum, "update");
+//            pageNum = "1";
+//            if (tv_screen_title_bar_title.getText().toString().equals("现货")) {
+//                pattern = "fixedProduct";
+//            } else if (tv_screen_title_bar_title.getText().toString().equals("预售")) {
+//                pattern = "forward-pricing-product";
+//            }
+//            goodsInStockActivityPresenter.getGoodsInStockInfo(groups, pattern, regions, provinces, cities,
+//                    categoryNames, appNames, gradeNums, pageNum, "update");
 
+            searchProductName(pageNum);
             // 千万别忘了告诉控件刷新完毕了哦！
             pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
         }
 
         @Override
         public void onLoadMore(final PullToRefreshLayout pullToRefreshLayout) {
-            if (tv_screen_title_bar_title.getText().toString().equals("现货")) {
-                pattern = "fixedProduct";
-            } else if (tv_screen_title_bar_title.getText().toString().equals("预售")) {
-                pattern = "forward-pricing-product";
-            }
+//            if (tv_screen_title_bar_title.getText().toString().equals("现货")) {
+//                pattern = "fixedProduct";
+//            } else if (tv_screen_title_bar_title.getText().toString().equals("预售")) {
+//                pattern = "forward-pricing-product";
+//            }
             new Handler() {
                 @Override
                 public void handleMessage(Message msg) {
-                    String updateOrLoad = "load";
-                    int num = Integer.parseInt(pageNum) + 1;
+                    //String updateOrLoad = "load";
+                    Log.d("走这个方法了下拉加载数据","走这个方法了");
+                    int num = (Integer.parseInt(pageNum) + 1)*10;
                     pageNum = num + "";
-                    goodsInStockActivityPresenter.getGoodsInStockInfo(groups, pattern, regions, provinces, cities,
-                            categoryNames, appNames, gradeNums, pageNum, updateOrLoad);
+                    Log.d("页数的值",""+pageNum);
+                    searchProductName("10");
+//                    goodsInStockActivityPresenter.getGoodsInStockInfo(groups, pattern, regions, provinces, cities,
+//                            categoryNames, appNames, gradeNums, pageNum, updateOrLoad);
                     // 千万别忘了告诉控件加载完毕了哦！
                     pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
                 }
@@ -859,11 +869,11 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
         @Override
         public void onRefresh(final PullToRefreshLayout pullToRefreshLayout) {
             number = "0";
-            if (tv_screen_title_bar_title.getText().toString().equals("现货")) {
-                pattern = "fixedProduct";
-            } else if (tv_screen_title_bar_title.getText().toString().equals("预售")) {
-                pattern = "forward-pricing-product";
-            }
+//            if (tv_screen_title_bar_title.getText().toString().equals("现货")) {
+//                pattern = "fixedProduct";
+//            } else if (tv_screen_title_bar_title.getText().toString().equals("预售")) {
+//                pattern = "forward-pricing-product";
+//            }
             searchProductName(number);
 //            goodsInStockActivityPresenter.getGoodsInStockInfo(groups, pattern, regions, provinces, cities,
 //                    categoryNames, appNames, gradeNums, pageNum, "update");
@@ -874,22 +884,29 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
 
         @Override
         public void onLoadMore(final PullToRefreshLayout pullToRefreshLayout) {
-            if (tv_screen_title_bar_title.getText().toString().equals("现货")) {
-                pattern = "fixedProduct";
-            } else if (tv_screen_title_bar_title.getText().toString().equals("预售")) {
-                pattern = "forward-pricing-product";
-            }
+//            if (tv_screen_title_bar_title.getText().toString().equals("现货")) {
+//                pattern = "fixedProduct";
+//            } else if (tv_screen_title_bar_title.getText().toString().equals("预售")) {
+//                pattern = "forward-pricing-product";
+//            }
             new Handler() {
                 @Override
                 public void handleMessage(Message msg) {
-                    String updateOrLoad = "load";
-                    int num = Integer.parseInt(number) + 1;
-                    number = num + "";
+                    //String updateOrLoad = "load";
+
+                    int num = page + 1;
+                    Log.d("下一页number的值",""+num);
+                    page=num;
+                    number = page*10 + "";
+                    Log.d("number的值",number+"");
                     searchProductName(number);
 //                    goodsInStockActivityPresenter.getGoodsInStockInfo(groups, pattern, regions, provinces, cities,
 //                            categoryNames, appNames, gradeNums, pageNum, updateOrLoad);
                     // 千万别忘了告诉控件加载完毕了哦！
-                    pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
+                   // pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
+
+                    //Ceshi
+                    pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
                 }
             }.sendEmptyMessageDelayed(0, 3000);
         }

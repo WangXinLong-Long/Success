@@ -63,6 +63,7 @@
         android:id="@+id/layout_center_Type"
         android:layout_width="match_parent"
         android:layout_height="@dimen/x40"
+        android:visibility="gone"
         android:layout_below="@id/layout_Top_Type"
         android:background="#E6E6E6">
 
@@ -185,9 +186,11 @@
             android:id="@+id/refresh_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/x5"
             >
         <com.jingchen.pulltorefresh.PullableListView
             android:id="@+id/lv_Type"
+
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:divider="#EFEEF4"

@@ -40,7 +40,7 @@ public class MyOfferResultModel implements IMyOfferResultModel {
         RequestParams rp = new RequestParams(url);
         rp.addParameter("productId", productId);
         rp.addParameter("_dynSessConf", _dynSessConf);
-        LogUtils.log("公开竞拍/密封竞拍 我的报价URL---->" + rp);
+        //LogUtils.log("公开竞拍/密封竞拍 我的报价URL---->" + rp);
         x.http().post(rp, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {

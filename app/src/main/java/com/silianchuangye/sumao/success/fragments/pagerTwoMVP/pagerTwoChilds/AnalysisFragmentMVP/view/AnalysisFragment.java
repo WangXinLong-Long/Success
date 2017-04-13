@@ -178,6 +178,7 @@ public class AnalysisFragment extends Fragment {
                      intent.putExtra("time",list.get(position).get("time").toString());
                      intent.putExtra("number","abc");
                      intent.putExtra("from","abc");
+                     intent.putExtra("dianzan","abc");
                      startActivity(intent);
                     //Toast.makeText(getActivity(), "List--->" + in.get(position).getDataid(), Toast.LENGTH_SHORT).show();
                     break;

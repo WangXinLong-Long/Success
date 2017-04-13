@@ -53,8 +53,8 @@ public class OpenAuctionPresenter {
     }
 
     //    公开竞拍报价
-    public void getOpenBiddingResult(String productId, String bidPrice, String bidQuantity, String _dynSessConf) {
-        IOpenBiddingModel openBiddingModel = new OpenBiddingModel(productId, bidPrice, bidQuantity, _dynSessConf);
+    public void getOpenBiddingResult(String productId, String bidPrice, String bidQuantity, String _dynSessConf,String qigou) {
+        IOpenBiddingModel openBiddingModel = new OpenBiddingModel(productId, bidPrice, bidQuantity, _dynSessConf,qigou);
         openBiddingModel.getOpenBiddingResult(new OpenBiddingCallback() {
             @Override
             public void callbackOpenBidding(String result) {
@@ -64,8 +64,8 @@ public class OpenAuctionPresenter {
     }
 
     //    密封竞拍报价
-    public void getSealedBidResult(String productId, String bidPrice, String bidQuantity, String _dynSessConf) {
-        ISealedBidModel sealedBidModel = new SealedBidModel(productId, bidPrice, bidQuantity, _dynSessConf);
+    public void getSealedBidResult(String productId, String bidPrice, String bidQuantity, String _dynSessConf,String qigou) {
+        ISealedBidModel sealedBidModel = new SealedBidModel(productId, bidPrice, bidQuantity, _dynSessConf,qigou);
         sealedBidModel.getSealedBidResult(new SealedBidCallback() {
             @Override
             public void callbackSealedBid(String result) {

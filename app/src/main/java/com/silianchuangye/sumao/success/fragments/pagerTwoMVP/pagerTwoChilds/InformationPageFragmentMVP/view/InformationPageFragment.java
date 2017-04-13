@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -52,11 +54,6 @@ public class InformationPageFragment extends Fragment implements IInformationPag
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.information_pagefragment, container, false);
         ptrl = ((PullToRefreshLayout) view.findViewById(R.id.refresh_view));
-        informationPageFragmentPresenter = new InformationPageFragmentPresenter(this);
-        // 此处设置下拉刷新或上拉加载更多监听器
-        ptrl.setOnPullListener(new PagerTwoInformationPagePullListener());
-        listView = (ListView) ptrl.getPullableView();
-        initListView();
 
         return view;
     }
@@ -91,14 +88,46 @@ public class InformationPageFragment extends Fragment implements IInformationPag
                 intent.putExtra("time",new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Double.parseDouble(in.get(position).getNewstime())));
                 intent.putExtra("number",in.get(position).getNewsnum());
                 intent.putExtra("from",in.get(position).getNewsfrom());
+                intent.putExtra("dianzan",in.get(position).getThumupCount());
                 startActivity(intent);
 
             }
         });
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+       // onCreate(null);
+        informationPageFragmentPresenter = new InformationPageFragmentPresenter(this);
+        // 此处设置下拉刷新或上拉加载更多监听器
+        ptrl.setOnPullListener(new PagerTwoInformationPagePullListener());
+        listView = (ListView) ptrl.getPullableView();
+        initListView();
 
+    }
+   /**
+            * 下拉刷新与上拉加载更多监听器
+    */
+    public class PagerTwoInformationPagePullListener implements PullToRefreshLayout.OnPullListener {
+        @Override
+        public void onRefresh(final PullToRefreshLayout pullToRefreshLayout) {
+            // 千万别忘了告诉控件刷新完毕了哦！
+            pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
+        }
 
+        @Override
+        public void onLoadMore(final PullToRefreshLayout pullToRefreshLayout) {
+            // 加载更多操作
+            new Handler() {
+                @Override
+                public void handleMessage(Message msg) {
+                    // 千万别忘了告诉控件加载完毕了哦！
+                    pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
+                }
+            }.sendEmptyMessageDelayed(0, 5000);
+        }
+    }
 
     @Override
     public void setInformationPageFragmentData(String result) {

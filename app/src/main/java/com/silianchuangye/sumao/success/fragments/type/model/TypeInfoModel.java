@@ -24,8 +24,13 @@ public class TypeInfoModel implements ITypeInfoModel {
     int Nrpp;
     int No;
     String Ntt;
+    private String keyword;
 
-    public TypeInfoModel(String region2, String classification2, String application2, String tradingMethod, int nrpp, int no,String Ntt) {
+    public TypeInfoModel(String keyword) {
+        this.keyword = keyword;
+    }
+
+    public TypeInfoModel(String region2, String classification2, String application2, String tradingMethod, int nrpp, int no, String Ntt) {
         this.region2 = region2;
         this.classification2 = classification2;
         this.application2 = application2;
@@ -38,50 +43,13 @@ public class TypeInfoModel implements ITypeInfoModel {
     @Override
     public void searchMessageFromServer(final TypeInfoCallback callback) {
 //      /rest/model/atg/commerce/catalog/ProductCatalogActor/researchProduct
-        String url = SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/catalog/ProductCatalogActor/researchProduct";
-        String params = "";
-        String params1 = "";
-        if(region2!=null && !region2.equals("") ){
-            if(params.equals("")){
-                params += region2;
-            }else {
-                params += "+"+region2;
-            }
-        }
-        if(classification2!=null && !classification2.equals("")){
-            if(params.equals("")){
-                params += classification2;
-            }else {
-                params += "+"+classification2;
-            }
-        }
-        if(application2!=null && !application2.equals("")){
-            if(params.equals("")){
-                params += application2;
-            }else {
-                params += "+"+application2;
-            }
-        }
-        if(tradingMethod!=null && !tradingMethod.equals("")){
-            if(params.equals("")){
-                params += tradingMethod;
-            }else {
-                params += "+"+tradingMethod;
-            }
-        }
-        if (Ntt!=null&&!Ntt.equals("")){
-            params1 = "Ntt="+Ntt;
-        }
-        if (params1!=null&&!params1.equals("")){
+        String url = SuMaoConstant.SUMAO_IP+"/rest/model/atg/endeca/HomeActor/EndecaAppScreenResult";
 
-            url=url+"?"+params1+"&N="+params;
-        }else{
-            url = url+"?N="+params;
-        }
         LogUtils.log("URL----->"+url+"<-----URL");
         RequestParams requestParams = new RequestParams(url);
-        requestParams.addParameter("Nrpp",Nrpp+"");
-        requestParams.addParameter("No",No+"");
+//        requestParams.addParameter("Nrpp",Nrpp+"");
+//        requestParams.addParameter("No",No+"");No
+        requestParams.addParameter("keyword",keyword);
         Log.e("TAG","request-------"+requestParams);
         try {
             x.http().request(HttpMethod.POST, requestParams, new Callback.CacheCallback<String>() {

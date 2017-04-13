@@ -3,6 +3,7 @@ package com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellin
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.sax.StartElementListener;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.ShangYou.CaiGouMVP.view.CaiGou;
+import com.silianchuangye.sumao.success.ShangYou.gonggao.oticeActivity;
 import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.UpstreamDirectDetailMVP.bean.DirectSellingBean;
 import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.UpstreamDirectDetailMVP.presenter.UpstreamDirectDetailPresenter;
 import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.bean.vipProductBean.VipProductBean;
@@ -29,6 +31,7 @@ public class UpstreamDirectSellingDetailsActivity extends AppCompatActivity impl
     private VipProductBean vipProductBean;
     private String sellerCompanyId;
     private UpstreamDirectDetailPresenter upstreamDirectDetailPresenter;
+    private RelativeLayout auction_session_gongga;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +55,10 @@ public class UpstreamDirectSellingDetailsActivity extends AppCompatActivity impl
 //        采购计划
         procurement_planning_rl = ((RelativeLayout) findViewById(R.id.procurement_planning_rl));
         iv_child_title_bar_back.setOnClickListener(this);
+        //上游公告
+        auction_session_gongga= (RelativeLayout) findViewById(R.id.auction_session_gongga);
+        auction_session_gongga.setOnClickListener(this);
+
         procurement_planning_rl.setOnClickListener(this);
         direct_selling_rl.setOnClickListener(this);
         iv_child_title_bar_back.setOnClickListener(this);
@@ -80,7 +87,13 @@ public class UpstreamDirectSellingDetailsActivity extends AppCompatActivity impl
                 upstreamDirectDetailPresenter.getAuctionSessionResult("1",sellerCompanyId,getSharedPreferences("sumao",Activity.MODE_PRIVATE).getString("unique",""));
 
                 break;
+            case R.id.auction_session_gongga:
+                //上游公告
+                Intent intent1=new Intent(UpstreamDirectSellingDetailsActivity.this, oticeActivity.class);
+                intent1.putExtra("orgCode",sellerCompanyId);
+                startActivity(intent1);
 
+                break;
         }
     }
 

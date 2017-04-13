@@ -16,12 +16,14 @@ public class SealedBidModel implements ISealedBidModel {
     private String bidPrice;
     private String bidQuantity;
     private String _dynSessConf;
+    private String qigou;
 
-    public SealedBidModel(String productId, String bidPrice, String bidQuantity, String _dynSessConf) {
+    public SealedBidModel(String productId, String bidPrice, String bidQuantity, String _dynSessConf,String qigou) {
         this.productId = productId;
         this.bidPrice = bidPrice;
         this.bidQuantity = bidQuantity;
         this._dynSessConf = _dynSessConf;
+        this.qigou=qigou;
     }
 
     @Override
@@ -33,6 +35,7 @@ public class SealedBidModel implements ISealedBidModel {
         rp.addParameter("bidPrice", bidPrice);
         rp.addParameter("bidQuantity",bidQuantity);
         rp.addParameter("_dynSessConf", _dynSessConf);
+        rp.addParameter("bidMinQuantity",qigou);
         LogUtils.log("密封报价参数--->"+ productId+"---"+bidPrice+"---"+bidQuantity+"---"+_dynSessConf);
         LogUtils.log("密封报价URL--->"+ rp);
         x.http().post(rp, new Callback.CommonCallback<String>() {

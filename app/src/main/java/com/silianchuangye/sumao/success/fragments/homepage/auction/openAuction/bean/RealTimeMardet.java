@@ -29,9 +29,18 @@ public class RealTimeMardet implements Serializable {
 
         private String bidPrice;
         private String submitDate;
+        private String dealQut;
         private String bidQut;
         private String buyerId;
         private String formatSequenceNum;
+
+        public String getDealQut() {
+            return dealQut;
+        }
+
+        public void setDealQut(String dealQut) {
+            this.dealQut = dealQut;
+        }
 
         public String getBidPrice() {
             return bidPrice;

@@ -19,8 +19,8 @@ public class TypeInfoPresenter {
         this.typeInfoView = typeInfoView;
     }
 
-    public void getSearchFromSever(String region2,String classification2,String application2,String tradingMethod,int Nrpp,int No,String Ntt) {
-        TypeInfoModel typeInfoModel = new TypeInfoModel(region2, classification2, application2,tradingMethod, Nrpp, No,Ntt);
+    public void getSearchFromSever (String keyword){
+        TypeInfoModel typeInfoModel = new TypeInfoModel(keyword);
         typeInfoModel.searchMessageFromServer(new TypeInfoCallback() {
             @Override
             public void callbackTypeInfo(SearchActivityBean searchActivityBean) {

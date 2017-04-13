@@ -32,9 +32,10 @@ public class AuctionActivity extends AppCompatActivity implements IAuctionView {
     private List<String> order_id;
     private List<String> SKUID;
     private ArrayList<Map<String, Object>> list_message;
-
+    AuctionDetailBean auctionDetailBean;
     private String name_Auction;
     private String SellId;
+    private String proType;
 
     private String id, namechuanpin, startTime = "", endTime, startPrice, count, cangku, company, state, type;
     private int currentPage = 1;
@@ -100,9 +101,14 @@ public class AuctionActivity extends AppCompatActivity implements IAuctionView {
         } else if (lists.get(position).getType().equals("sealedAuctionProduct")) {
             type_way = "密封报价";
         }
-        String proType = lists.get(position).getType();
+        proType = lists.get(position).getType();
         auctionPresenter.getOpenAuctionOrSealedBid(type_way, productId, proType);
-
+//        Intent intent = new Intent(this, OpenAuctionActivity.class);
+//        intent.putExtra("auctionDetailBean", auctionDetailBean);
+//        intent.putExtra("type_way", type_way);
+//        intent.putExtra("proType",proType);
+//        intent.putExtra("productId",productId);
+//        startActivity(intent);
     }
 
     public void getAddData(String result) {
@@ -160,12 +166,16 @@ public class AuctionActivity extends AppCompatActivity implements IAuctionView {
     public void setOpenAuctionOrSealedBidResult(String result, String type_way) {
         Log.d("竞拍产品的详情",""+result);
         Log.d("type_way",type_way);
-        Gson gson = new Gson();
-        AuctionDetailBean auctionDetailBean = gson.fromJson(result, AuctionDetailBean.class);
-        Intent intent = new Intent(this, OpenAuctionActivity.class);
-        intent.putExtra("auctionDetailBean", auctionDetailBean);
+//        Gson gson = new Gson();
+//        AuctionDetailBean auctionDetailBean = gson.fromJson(result, AuctionDetailBean.class);
+        Intent intent = new Intent(AuctionActivity.this, OpenAuctionActivity.class);
+        //intent.putExtra("auctionDetailBean", auctionDetailBean);
+        intent.putExtra("result",result);
         intent.putExtra("type_way", type_way);
+        intent.putExtra("proType",proType);
         startActivity(intent);
+        //Log.d("变价单位",""+auctionDetailBean.getCl_xbianjia());
+
     }
 
 

@@ -82,4 +82,30 @@ android:layout_marginTop="@dimen/x5"
             android:layout_marginRight="@dimen/x5"
             />
     </RelativeLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x1"
+        android:background="@color/my_sumao_background"/>
+    <RelativeLayout
+        android:id="@+id/auction_session_gongga"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/x10"
+            android:paddingBottom="@dimen/x10"
+            android:text="上游公告"
+            android:layout_marginLeft="@dimen/x15"
+            />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/x15"
+            android:src="@mipmap/my_sumao_iv_order"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/x5"
+            />
+    </RelativeLayout>
 </LinearLayout>

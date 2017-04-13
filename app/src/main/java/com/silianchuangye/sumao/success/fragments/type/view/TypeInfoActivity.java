@@ -36,8 +36,13 @@ import com.silianchuangye.sumao.success.custom.CustomGridView;
 import com.silianchuangye.sumao.success.fragments.SearchActivityMVP.bean.Cls;
 import com.silianchuangye.sumao.success.fragments.SearchActivityMVP.bean.SearchActivityBean;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.openAuction.openAuctionView.OpenAuctionActivity;
+import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.bean.GoodsInStockActivityBean;
+import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.presenter.GoodsInStockActivityPresenter;
+import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.view.IGoodsInStockActivityView;
+import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.bean.GoodsInStockDetailBean;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.view.GoodsInStockDetailActivity;
 import com.silianchuangye.sumao.success.fragments.homepage.groupbuying.groupBuyingDetailMVP.view.GroupBuyingSuccessActivity;
+import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.bean.PreSaleDetailBean;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.view.PreSaleDetailActivity;
 import com.silianchuangye.sumao.success.fragments.type.TypeInfoActivityAdapter;
 import com.silianchuangye.sumao.success.fragments.type.presenter.TypeInfoPresenter;
@@ -57,7 +62,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-public class TypeInfoActivity extends AppCompatActivity implements OnClickListener, ITypeInfoView {
+public class TypeInfoActivity extends AppCompatActivity implements OnClickListener, ITypeInfoView,IGoodsInStockActivityView {
     private ListView lv_Type;
     private List<Cls> list;
     private TypeInfoActivityAdapter adapter;
@@ -102,6 +107,7 @@ public class TypeInfoActivity extends AppCompatActivity implements OnClickListen
     private String application2 = "";
     private int Nrpp = 10;
     private int No = 0;
+    private GoodsInStockActivityPresenter goodsInStockActivityPresenter;
     ArrayList<String> mArrayList;
     private View view;
     TypeInfoPresenter typeInfoPresenter;
@@ -147,6 +153,8 @@ public class TypeInfoActivity extends AppCompatActivity implements OnClickListen
         Intent intent = getIntent();
         searchActivityBean = (SearchActivityBean) intent.getSerializableExtra("searchActivityBean");
         Ntt = intent.getStringExtra("Ntt");
+        //goodsInStockActivityPresenter=new GoodsInStockActivityPresenter()
+        goodsInStockActivityPresenter = new GoodsInStockActivityPresenter(this);
 //        分类列表
         classificationMap = searchActivityBean.getSort();
 //        应用列表
@@ -186,8 +194,8 @@ public class TypeInfoActivity extends AppCompatActivity implements OnClickListen
                 if (total.equals("0")) {
                     Toast.makeText(TypeInfoActivity.this, "没有可供筛选的条件", Toast.LENGTH_LONG).show();
                 } else {
-                    popupwindow_shaixuan();
-                    init_popupwindowView();
+//                    popupwindow_shaixuan();
+//                    init_popupwindowView();
                 }
 
             }
@@ -223,7 +231,7 @@ public class TypeInfoActivity extends AppCompatActivity implements OnClickListen
                     classification = "";
                     application = "";
                     tradingmethod = "";
-                    typeInfoPresenter.getSearchFromSever(region, classification, application, tradingmethod, Nrpp, No, Ntt);
+                    typeInfoPresenter.getSearchFromSever(Ntt);
                     InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.toggleSoftInput(0,InputMethodManager.HIDE_NOT_ALWAYS);
                 }
@@ -336,18 +344,26 @@ public class TypeInfoActivity extends AppCompatActivity implements OnClickListen
 
 
                 }else if(type .equals("fixedProduct")){//现货
-                    Intent intent = new Intent();
-                    intent.putExtra("cl_id", list.get(position).getCl_id());
-                    intent.setClass(TypeInfoActivity.this, GoodsInStockDetailActivity.class);
-                    startActivity(intent);
+//                    Intent intent = new Intent();
+//                    intent.putExtra("cl_id", list.get(position).getCl_id());
+//                    intent.setClass(TypeInfoActivity.this, GoodsInStockDetailActivity.class);
+//                    startActivity(intent);
+                    String cl_id =cl.get(position).getCl_id();
+                    //Toast.makeText(this, "走现货,id为" + cl_id, Toast.LENGTH_SHORT).show();
+                    LogUtils.log("走现货,id为" + cl_id);
+                      goodsInStockActivityPresenter.getGoodInStockDetailInfo(cl_id);
                 }else if(type .equals("forward-pricing-product")){//预售
-                    Intent intent = new Intent();
-                    //        产品编号
-                    intent.putExtra("productId",list.get(position).getCl_id());
-                    //        skuId
-                    intent.putExtra("skuId",list.get(position).getCl_cpid());
-                    intent.setClass(TypeInfoActivity.this, PreSaleDetailActivity.class);
-                    startActivity(intent);
+//                    Intent intent = new Intent();
+//                    //        产品编号
+//                    intent.putExtra("productId",list.get(position).getCl_id());
+//                    //        skuId
+//                    intent.putExtra("skuId",list.get(position).getCl_cpid());
+//                    intent.setClass(TypeInfoActivity.this, PreSaleDetailActivity.class);
+//                    startActivity(intent);
+                    String productId = cl.get(position).getCl_id();
+                    String skuId = cl.get(position).getCl_cpid();
+                    String cl_jiner = cl.get(position).getCl_jine();
+                    goodsInStockActivityPresenter.getPreSaleDetailInfo(productId, skuId, cl_jiner);
                 }else if(type .equals("sealedAuctionProduct")){//密封竞拍
                     /*
                     管俊需要写跳转
@@ -560,293 +576,293 @@ public class TypeInfoActivity extends AppCompatActivity implements OnClickListen
 
     }
 
-    private void init_popupwindowView() {
-        view.measure(0, 0);
-        int width = getWindowManager().getDefaultDisplay().getWidth();
-        int heigh = view.getMeasuredHeight() > getWindowManager().getDefaultDisplay().getHeight() ? getWindowManager().getDefaultDisplay().getHeight() : view.getMeasuredHeight();
-        popupWindow = new PopupWindow(view, width, 1600);
-        popupWindow.setFocusable(true);
-        popupWindow.setBackgroundDrawable(new BitmapDrawable());
-        popupWindow.showAsDropDown(layout_center_Type, 0, 0);
-
-    }
+//    private void init_popupwindowView() {
+//        view.measure(0, 0);
+//        int width = getWindowManager().getDefaultDisplay().getWidth();
+//        int heigh = view.getMeasuredHeight() > getWindowManager().getDefaultDisplay().getHeight() ? getWindowManager().getDefaultDisplay().getHeight() : view.getMeasuredHeight();
+//        popupWindow = new PopupWindow(view, width, 1600);
+//        popupWindow.setFocusable(true);
+//        popupWindow.setBackgroundDrawable(new BitmapDrawable());
+//        popupWindow.showAsDropDown(layout_center_Type, 0, 0);
+//
+//    }
 
     /**
      * 筛选的popupwindow
      */
-    public void popupwindow_shaixuan() {
-        //点击完一遍筛选后，在进行点击，就会导致角标越界异常，497行，--》tradingmethod = number4.get(name4.indexOf(paihao));
-//      需要重置对应的选中文字
-        paihao = "";
-        address = "";
-        fenlei= "";
-        yingyong= "";
-        view = View.inflate(this, R.layout.item_shaixuan, null);
-/**
- * 分类
- */
-        final CustomGridView gv_Apple_Type = (CustomGridView) view.findViewById(R.id.gv_Apple_Type);
-        if (classificationMap != null) {
-            number1.clear();
-            name1.clear();
+//    public void popupwindow_shaixuan() {
+//        //点击完一遍筛选后，在进行点击，就会导致角标越界异常，497行，--》tradingmethod = number4.get(name4.indexOf(paihao));
+////      需要重置对应的选中文字
+//        paihao = "";
+//        address = "";
+//        fenlei= "";
+//        yingyong= "";
+//        view = View.inflate(this, R.layout.item_shaixuan, null);
+///**
+// * 分类
+// */
+//        final CustomGridView gv_Apple_Type = (CustomGridView) view.findViewById(R.id.gv_Apple_Type);
+//        if (classificationMap != null) {
+//            number1.clear();
+//            name1.clear();
+//
+//            Iterator<Map.Entry<String, String>> iterator = classificationMap.entrySet().iterator();
+//            while (iterator.hasNext()) {
+//                Map.Entry<String, String> entry = iterator.next();
+//                String key = entry.getKey();
+//                String value = entry.getValue();
+//                name1.add(key.toString());
+//                number1.add(value.toString());
+//            }
+//
+//        }else {
+//            number1.clear();
+//            name1.clear();
+//        }
+//
+//        adpater4 = new GridViewAdapter(name1);
+//        gv_Apple_Type.setAdapter(adpater4);
+//        gv_Apple_Type.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                adpater4.setSelectedPosition(position);
+//                adpater4.notifyDataSetChanged();
+//                fenlei = name1.get(position).toString();
+//                LogUtils.log("分类-->"+fenlei);
+//            }
+//        });
+//
+//        /**
+//         * 交易模式
+//         */
+//        final CustomGridView gv_Number_Type = (CustomGridView) view.findViewById(R.id.gv_Number_Type);
+//        if (tradingPatternsMap != null) {
+//            number4.clear();
+//            name4.clear();
+//
+//            Iterator<Map.Entry<String, String>> iterator = tradingPatternsMap.entrySet().iterator();
+//            while (iterator.hasNext()) {
+//                Map.Entry<String, String> entry = iterator.next();
+//                String key = types.get(entry.getKey());
+//                String value = entry.getValue();
+//                name4.add(key);
+//                number4.add(value);
+//            }
+//        }else {
+//            number4.clear();
+//            name4.clear();
+//        }
+//        adpater1 = new GridViewAdapter(name4);
+//        gv_Number_Type.setAdapter(adpater1);
+//        gv_Number_Type.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                adpater1.setSelectedPosition(position);
+//                adpater1.notifyDataSetChanged();
+//                paihao = name4.get(position).toString();
+//                LogUtils.log("交易模式-->"+paihao);
+//            }
+//        });
+//
+//        /**
+//         * 应用
+//         */
+//        final CustomGridView gv_Address_Type = (CustomGridView) view.findViewById(R.id.gv_Address_Type);
+//        if (applicationMap != null) {
+//            number2.clear();
+//            name2.clear();
+//
+//            Iterator<Map.Entry<String, String>> iterator = applicationMap.entrySet().iterator();
+//            while (iterator.hasNext()) {
+//                Map.Entry<String, String> entry = iterator.next();
+//                String key = entry.getKey();
+//                String value = entry.getValue();
+//                name2.add(key);
+//                number2.add(value);
+//            }
+//        }else {
+//            number2.clear();
+//            name2.clear();
+//        }
+//        adpater2 = new GridViewAdapter(name2);
+//        gv_Address_Type.setAdapter(adpater2);
+//        gv_Address_Type.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                adpater2.setSelectedPosition(position);
+//                adpater2.notifyDataSetChanged();
+//                yingyong = name2.get(position).toString();
+//                LogUtils.log("应用-->"+yingyong);
+//            }
+//        });
+//        /**
+//         * 地区
+//         */
+//        final CustomGridView gv_Firm_Type = (CustomGridView) view.findViewById(R.id.gv_Firm_Type);
+//        if (regionMap != null) {
+//            number3.clear();
+//            name3.clear();
+//
+//            Iterator<Map.Entry<String, String>> iterator = regionMap.entrySet().iterator();
+//            while (iterator.hasNext()) {
+//                Map.Entry<String, String> entry = iterator.next();
+//                String key = entry.getKey();
+//                String value = entry.getValue();
+//                name3.add(key);
+//                number3.add(value);
+//            }
+//        }else {
+//            number3.clear();
+//            name3.clear();
+//        }
+//        adpater3 = new GridViewAdapter(name3);
+//        gv_Firm_Type.setAdapter(adpater3);
+//        gv_Firm_Type.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                adpater3.setSelectedPosition(position);
+//                adpater3.notifyDataSetInvalidated();
+//                address = name3.get(position).toString();
+//                LogUtils.log("地区-->"+address);
+//            }
+//        });
+//
+//        /**
+//         * 重置按钮
+//         */
+//        Button bt_reset = (Button) view.findViewById(R.id.bt_reset);
+//        bt_reset.setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Log.d("令所选的为空", "null");
+//                adpater1.setSelectedPosition(-1);
+//                adpater1.notifyDataSetChanged();
+//                adpater2.setSelectedPosition(-1);
+//                adpater2.notifyDataSetChanged();
+//                adpater3.setSelectedPosition(-1);
+//                adpater3.notifyDataSetChanged();
+//                adpater4.setSelectedPosition(-1);
+//                adpater4.notifyDataSetChanged();
+//                Log.d("令所选的为空", address + fenlei + yingyong + paihao);
+//            }
+//        });
+//        /**
+//         * 完成按钮
+//         */
+//        Button bt_finish = (Button) view.findViewById(R.id.bt_finish);
+//        bt_finish.setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//
+//                Log.d("根据所选的进行筛选", "");
+////                地区、分类、应用、交易模式
+//                if (address.equals("") || address.isEmpty()) {
+//                    region = "";
+//                } else {
+//                    region = regionMap.get(address);
+//                }
+//
+//                if (fenlei .equals("") || fenlei.isEmpty()) {
+//                    classification = "";
+//                } else {
+//                    classification = classificationMap.get(fenlei);
+//                }
+//
+//                if (yingyong .equals("") || yingyong.isEmpty()) {
+//                    application = "";
+//                } else {
+//                    application = applicationMap.get(yingyong);
+//                }
+//
+//                if (paihao.equals("")  || paihao.isEmpty()) {
+//                    tradingmethod = "";
+//                } else {
+//                    tradingmethod = number4.get(name4.indexOf(paihao));
+//                }
+//                if (list != null) {
+//                    lists.clear();
+//                    list.clear();
+//                }
+//                Nrpp = 10;
+//                No = 0;
+//                typeInfoPresenter.getSearchFromSever(Ntt);
+//
+//
+//                LogUtils.log("参数-->" + address + fenlei + yingyong + paihao);
+//                LogUtils.log("参数-->" + region + classification + application + tradingmethod);
+//                popupWindow.dismiss();
+//            }
+//
+//        });
+//
+//
+//    }
 
-            Iterator<Map.Entry<String, String>> iterator = classificationMap.entrySet().iterator();
-            while (iterator.hasNext()) {
-                Map.Entry<String, String> entry = iterator.next();
-                String key = entry.getKey();
-                String value = entry.getValue();
-                name1.add(key.toString());
-                number1.add(value.toString());
-            }
+//    public boolean isAbc(String str) {
+//        while (true) {
+//
+//            for (int i = 0; i < str.length(); i++) {
+//                if ((str.charAt(i) <= 'Z' && str.charAt(i) >= 'A')
+//                        || (str.charAt(i) <= 'z' && str.charAt(i) >= 'a')) {
+//                    //System.out.println(str.charAt(i) + "是字母");
+//                    return true;
+//                }
+//                return false;
+//            }
+//        }
 
-        }else {
-            number1.clear();
-            name1.clear();
-        }
-
-        adpater4 = new GridViewAdapter(name1);
-        gv_Apple_Type.setAdapter(adpater4);
-        gv_Apple_Type.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                adpater4.setSelectedPosition(position);
-                adpater4.notifyDataSetChanged();
-                fenlei = name1.get(position).toString();
-                LogUtils.log("分类-->"+fenlei);
-            }
-        });
-
-        /**
-         * 交易模式
-         */
-        final CustomGridView gv_Number_Type = (CustomGridView) view.findViewById(R.id.gv_Number_Type);
-        if (tradingPatternsMap != null) {
-            number4.clear();
-            name4.clear();
-
-            Iterator<Map.Entry<String, String>> iterator = tradingPatternsMap.entrySet().iterator();
-            while (iterator.hasNext()) {
-                Map.Entry<String, String> entry = iterator.next();
-                String key = types.get(entry.getKey());
-                String value = entry.getValue();
-                name4.add(key);
-                number4.add(value);
-            }
-        }else {
-            number4.clear();
-            name4.clear();
-        }
-        adpater1 = new GridViewAdapter(name4);
-        gv_Number_Type.setAdapter(adpater1);
-        gv_Number_Type.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                adpater1.setSelectedPosition(position);
-                adpater1.notifyDataSetChanged();
-                paihao = name4.get(position).toString();
-                LogUtils.log("交易模式-->"+paihao);
-            }
-        });
-
-        /**
-         * 应用
-         */
-        final CustomGridView gv_Address_Type = (CustomGridView) view.findViewById(R.id.gv_Address_Type);
-        if (applicationMap != null) {
-            number2.clear();
-            name2.clear();
-
-            Iterator<Map.Entry<String, String>> iterator = applicationMap.entrySet().iterator();
-            while (iterator.hasNext()) {
-                Map.Entry<String, String> entry = iterator.next();
-                String key = entry.getKey();
-                String value = entry.getValue();
-                name2.add(key);
-                number2.add(value);
-            }
-        }else {
-            number2.clear();
-            name2.clear();
-        }
-        adpater2 = new GridViewAdapter(name2);
-        gv_Address_Type.setAdapter(adpater2);
-        gv_Address_Type.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                adpater2.setSelectedPosition(position);
-                adpater2.notifyDataSetChanged();
-                yingyong = name2.get(position).toString();
-                LogUtils.log("应用-->"+yingyong);
-            }
-        });
-        /**
-         * 地区
-         */
-        final CustomGridView gv_Firm_Type = (CustomGridView) view.findViewById(R.id.gv_Firm_Type);
-        if (regionMap != null) {
-            number3.clear();
-            name3.clear();
-
-            Iterator<Map.Entry<String, String>> iterator = regionMap.entrySet().iterator();
-            while (iterator.hasNext()) {
-                Map.Entry<String, String> entry = iterator.next();
-                String key = entry.getKey();
-                String value = entry.getValue();
-                name3.add(key);
-                number3.add(value);
-            }
-        }else {
-            number3.clear();
-            name3.clear();
-        }
-        adpater3 = new GridViewAdapter(name3);
-        gv_Firm_Type.setAdapter(adpater3);
-        gv_Firm_Type.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                adpater3.setSelectedPosition(position);
-                adpater3.notifyDataSetInvalidated();
-                address = name3.get(position).toString();
-                LogUtils.log("地区-->"+address);
-            }
-        });
-
-        /**
-         * 重置按钮
-         */
-        Button bt_reset = (Button) view.findViewById(R.id.bt_reset);
-        bt_reset.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("令所选的为空", "null");
-                adpater1.setSelectedPosition(-1);
-                adpater1.notifyDataSetChanged();
-                adpater2.setSelectedPosition(-1);
-                adpater2.notifyDataSetChanged();
-                adpater3.setSelectedPosition(-1);
-                adpater3.notifyDataSetChanged();
-                adpater4.setSelectedPosition(-1);
-                adpater4.notifyDataSetChanged();
-                Log.d("令所选的为空", address + fenlei + yingyong + paihao);
-            }
-        });
-        /**
-         * 完成按钮
-         */
-        Button bt_finish = (Button) view.findViewById(R.id.bt_finish);
-        bt_finish.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-                Log.d("根据所选的进行筛选", "");
-//                地区、分类、应用、交易模式
-                if (address.equals("") || address.isEmpty()) {
-                    region = "";
-                } else {
-                    region = regionMap.get(address);
-                }
-
-                if (fenlei .equals("") || fenlei.isEmpty()) {
-                    classification = "";
-                } else {
-                    classification = classificationMap.get(fenlei);
-                }
-
-                if (yingyong .equals("") || yingyong.isEmpty()) {
-                    application = "";
-                } else {
-                    application = applicationMap.get(yingyong);
-                }
-
-                if (paihao.equals("")  || paihao.isEmpty()) {
-                    tradingmethod = "";
-                } else {
-                    tradingmethod = number4.get(name4.indexOf(paihao));
-                }
-                if (list != null) {
-                    lists.clear();
-                    list.clear();
-                }
-                Nrpp = 10;
-                No = 0;
-                typeInfoPresenter.getSearchFromSever(region, classification, application, tradingmethod, Nrpp, No, Ntt);
-
-
-                LogUtils.log("参数-->" + address + fenlei + yingyong + paihao);
-                LogUtils.log("参数-->" + region + classification + application + tradingmethod);
-                popupWindow.dismiss();
-            }
-
-        });
-
-
-    }
-
-    public boolean isAbc(String str) {
-        while (true) {
-
-            for (int i = 0; i < str.length(); i++) {
-                if ((str.charAt(i) <= 'Z' && str.charAt(i) >= 'A')
-                        || (str.charAt(i) <= 'z' && str.charAt(i) >= 'a')) {
-                    //System.out.println(str.charAt(i) + "是字母");
-                    return true;
-                }
-                return false;
-            }
-        }
-
-    }
+    //}
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
 //            分类
-            case R.id.tv_pattern_Type:
-
-                if (classificationMap != null || total.equals("0")) {
-                    //                初始化数据
-                    initListPopupWindowView("分类");
-                    //                显示listView
-                    showListPopupWindow();
-                } else {
-                    Toast.makeText(this, "暂无其他分类", Toast.LENGTH_SHORT).show();
-                }
-                break;
-//            应用
-            case R.id.tv_apple_Type_for_Type:
-
-                if (applicationMap != null || total.equals("0")) {
-                    //                初始化数据
-                    initListPopupWindowView("应用");
-                    //                显示listView
-                    showListPopupWindow();
-                } else {
-                    Toast.makeText(this, "暂无其他应用", Toast.LENGTH_SHORT).show();
-                }
-                break;
-//            交易模式的popupwindow
-            case R.id.tv_type_Type:
-                if (tradingPatternsMap != null || total.equals("0")) {
-                    //                初始化数据
-                    initListPopupWindowView("交易模式");
-                    //                显示listView
-                    showListPopupWindow();
-                } else {
-                    Toast.makeText(this, "暂无其他交易模式", Toast.LENGTH_SHORT).show();
-                }
-                break;
-//            地区的popupwindow
-            case R.id.tv_address_Type:
-                if (regionMap != null || total.equals("0")) {
-                    //                初始化数据
-                    initListPopupWindowView("地区");
-                    //                显示listView
-                    showListPopupWindow();
-                } else {
-                    Toast.makeText(this, "暂无其他地区", Toast.LENGTH_SHORT).show();
-                }
-                break;
+//            case R.id.tv_pattern_Type:
+//
+//                if (classificationMap != null || total.equals("0")) {
+//                    //                初始化数据
+//                    initListPopupWindowView("分类");
+//                    //                显示listView
+//                    showListPopupWindow();
+//                } else {
+//                    Toast.makeText(this, "暂无其他分类", Toast.LENGTH_SHORT).show();
+//                }
+//                break;
+////            应用
+//            case R.id.tv_apple_Type_for_Type:
+//
+//                if (applicationMap != null || total.equals("0")) {
+//                    //                初始化数据
+//                    initListPopupWindowView("应用");
+//                    //                显示listView
+//                    showListPopupWindow();
+//                } else {
+//                    Toast.makeText(this, "暂无其他应用", Toast.LENGTH_SHORT).show();
+//                }
+//                break;
+////            交易模式的popupwindow
+//            case R.id.tv_type_Type:
+//                if (tradingPatternsMap != null || total.equals("0")) {
+//                    //                初始化数据
+//                    initListPopupWindowView("交易模式");
+//                    //                显示listView
+//                    showListPopupWindow();
+//                } else {
+//                    Toast.makeText(this, "暂无其他交易模式", Toast.LENGTH_SHORT).show();
+//                }
+//                break;
+////            地区的popupwindow
+//            case R.id.tv_address_Type:
+//                if (regionMap != null || total.equals("0")) {
+//                    //                初始化数据
+//                    initListPopupWindowView("地区");
+//                    //                显示listView
+//                    showListPopupWindow();
+//                } else {
+//                    Toast.makeText(this, "暂无其他地区", Toast.LENGTH_SHORT).show();
+//                }
+//                break;
 
         }
     }
@@ -888,6 +904,28 @@ public class TypeInfoActivity extends AppCompatActivity implements OnClickListen
         }
     }
 
+    @Override
+    public void setDataInActivity(GoodsInStockActivityBean goodsInStockActivityBean, String updateOrLoad) {
+
+    }
+
+    @Override
+    public void getGoodsInStockDetailData(GoodsInStockDetailBean goodsInStockDetailBean) {
+        Intent intent = new Intent();
+        intent.putExtra("goodsInStockDetailBean", goodsInStockDetailBean);
+        intent.setClass(this, GoodsInStockDetailActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void getPreSaleDetailData(PreSaleDetailBean preSaleDetailBean, String sku) {
+        Intent intent = new Intent();
+        intent.putExtra("preSaleDetailBean", preSaleDetailBean);
+       // intent.putExtra("skuId", skuId);
+        intent.setClass(this, PreSaleDetailActivity.class);
+        startActivity(intent);
+    }
+
 
     //    上拉刷新，下拉加载的监听
     private class MyPullToRefreshListener implements PullToRefreshLayout.OnPullListener {
@@ -903,7 +941,7 @@ public class TypeInfoActivity extends AppCompatActivity implements OnClickListen
                     }
                     Nrpp = 10;
                     No = 0;
-                    typeInfoPresenter.getSearchFromSever(region, classification, application, tradingmethod, Nrpp, No, Ntt);
+                    typeInfoPresenter.getSearchFromSever(Ntt);
                     pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
                     adapter.notifyDataSetChanged();
 
@@ -921,7 +959,7 @@ public class TypeInfoActivity extends AppCompatActivity implements OnClickListen
                 public void handleMessage(Message msg) {
                     super.handleMessage(msg);
 
-                    typeInfoPresenter.getSearchFromSever(region, classification, application, tradingmethod, Nrpp, No + Nrpp, Ntt);
+                    typeInfoPresenter.getSearchFromSever( Ntt);
                     pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
                     adapter.notifyDataSetChanged();
 
@@ -1065,7 +1103,7 @@ public class TypeInfoActivity extends AppCompatActivity implements OnClickListen
                     lists.clear();
                     Nrpp = 10;
                     No = 0;
-                    typeInfoPresenter.getSearchFromSever(region, classification, application, tradingmethod, Nrpp, No, Ntt);
+                    typeInfoPresenter.getSearchFromSever(Ntt);
                 } else if (s.equals("分类")) {
                     tv_pattern_Type.setText(popupWindowListViewAdpter.getItem(position));
                     classification = number.get(position);
@@ -1073,7 +1111,7 @@ public class TypeInfoActivity extends AppCompatActivity implements OnClickListen
                     lists.clear();
                     Nrpp = 10;
                     No = 0;
-                    typeInfoPresenter.getSearchFromSever(region, classification, application, tradingmethod, Nrpp, No, Ntt);
+                    typeInfoPresenter.getSearchFromSever( Ntt);
                     lv_Type.postInvalidate();
 
                 } else if (s.equals("应用")) {
@@ -1083,7 +1121,7 @@ public class TypeInfoActivity extends AppCompatActivity implements OnClickListen
                     lists.clear();
                     Nrpp = 10;
                     No = 0;
-                    typeInfoPresenter.getSearchFromSever(region, classification, application, tradingmethod, Nrpp, No, Ntt);
+                    typeInfoPresenter.getSearchFromSever(Ntt);
 
                 } else if (s.equals("交易模式")) {
                     tv_type_Type.setText(popupWindowListViewAdpter.getItem(position));
@@ -1093,7 +1131,7 @@ public class TypeInfoActivity extends AppCompatActivity implements OnClickListen
                     lists.clear();
                     Nrpp = 10;
                     No = 0;
-                    typeInfoPresenter.getSearchFromSever(region, classification, application, tradingmethod, Nrpp, No, Ntt);
+                    typeInfoPresenter.getSearchFromSever( Ntt);
                 }
                 listPopupWindow.dismiss();
             }

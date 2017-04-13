@@ -345,6 +345,7 @@ public class LoginUserActivity extends AppCompatActivity implements View.OnClick
                         sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
                         editor = sp.edit();
                         RequestParams unique_rp = new RequestParams(SuMaoConstant.SUMAO_IP + "/rest/model/atg/rest/SessionConfirmationActor/getSessionConfirmationNumber");
+                       // Log.d("获取session",""+rp);
                         x.http().post(unique_rp, new CommonCallback<String>() {
                             @Override
                             public void onSuccess(String result) {

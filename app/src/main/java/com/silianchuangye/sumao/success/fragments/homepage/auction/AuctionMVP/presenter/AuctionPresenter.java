@@ -33,7 +33,7 @@ public class AuctionPresenter {
     }
     //      请求公开竞拍或者密封报价的数据
     public void getOpenAuctionOrSealedBid(String type_way, String productId,String proType) {
-        IOpenAuctionOrSealedBidModel openAuctionOrSealedBidModel = new OpenAuctionOrSealedBidModel( type_way,  productId, proType);
+        IOpenAuctionOrSealedBidModel openAuctionOrSealedBidModel = new OpenAuctionOrSealedBidModel(type_way,  productId, proType);
         openAuctionOrSealedBidModel.getOpenAuctionOrSealedBidResult(new OpenAuctionOrSealedBidCallback() {
             @Override
             public void callbackOpenAuctionOrSealedBidResult(String result,String type_way) {

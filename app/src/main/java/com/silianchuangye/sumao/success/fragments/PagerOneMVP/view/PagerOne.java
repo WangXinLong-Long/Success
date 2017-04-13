@@ -255,7 +255,7 @@ public class PagerOne extends BasePager implements IPagerOneView {
                         //Toast.makeText(mActivity, "点击了团购按钮", Toast.LENGTH_SHORT).show();
                     } else if (list.get(position).get("icon").equals(R.mipmap.goods)) {
                         //Toast.makeText(mActivity, "点击了现货按钮", Toast.LENGTH_SHORT).show();
-                        Loding.show(mActivity, "加载中...", true, null);
+                      //  Loding.show(mActivity, "加载中...", true, null);
                         String pattern = "fixedProduct";
                         String regions = null;
                         String provinces = null;
@@ -266,12 +266,22 @@ public class PagerOne extends BasePager implements IPagerOneView {
                         String groups = null;
                         String pageNum = "1";
                         String updateOrLoad = "update";
-                        pagerOnePresenter.getGoodsInStockInfo(groups, pattern, regions, provinces, cities,
-                                categoryNames, appNames, gradeNums, pageNum, updateOrLoad);
+                        Intent intent = new Intent(mActivity, GoodsInStockActivity.class);
+                        intent.putExtra("title", "现货");
+                        intent.putExtra("id","abc");
+                        intent.putExtra("goodsInStockActivityBean", goodsInStockActivityBean);
+                        intent.putExtra("classificationBean", classificationBean);
+                        intent.putExtra("applicationBean", applicationBean);
+                        intent.putExtra("supplierBean", supplierBean);
+                        //Log.d("传过去有的值",searchField+goodsInStockActivityBean+classificationBean+applicationBean+supplierBean+"");
+                        startActivity(intent);
+//                        pagerOnePresenter .getGoodsInStockInfo(groups, pattern, regions, provinces, cities,
+//                                categoryNames, appNames, gradeNums, pageNum, updateOrLoad);
+
 
                     } else if (list.get(position).get("icon").equals(R.mipmap.presell)) {
                         //Toast.makeText(mActivity, "点击了预售按钮", Toast.LENGTH_SHORT).show();
-                        Loding.show(mActivity, "加载中...", true, null);
+                     //   Loding.show(mActivity, "加载中...", true, null);
                         String pattern = "forward-pricing-product";
                         String regions = null;
                         String provinces = null;
@@ -280,8 +290,17 @@ public class PagerOne extends BasePager implements IPagerOneView {
                         String appNames = null;
                         String gradeNums = null;
                         String pageNum = "1";
-                        pagerOnePresenter.getPreSaleInfo(pattern, regions, provinces, cities,
-                                categoryNames, appNames, gradeNums, pageNum, "update");
+                        Intent intent = new Intent(mActivity, GoodsInStockActivity.class);
+                        intent.putExtra("title", "预售");
+                        intent.putExtra("id","abc");
+                        intent.putExtra("goodsInStockActivityBean", goodsInStockActivityBean);
+                        intent.putExtra("classificationBean", classificationBean);
+                        intent.putExtra("applicationBean", applicationBean);
+                        intent.putExtra("supplierBean", supplierBean);
+                        startActivity(intent);
+//                        pagerOnePresenter.getPreSaleInfo(pattern, regions, provinces, cities,
+//                                categoryNames, appNames, gradeNums, pageNum, "update");
+                        //pagerOnePresenter.getGoodsInStockForsearch();
 
                     } else if (list.get(position).get("icon").equals(R.mipmap.adwords)) {
                         //Toast.makeText(mActivity, "点击了竞拍按钮", Toast.LENGTH_SHORT).show();

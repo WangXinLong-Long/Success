@@ -34,6 +34,15 @@ public class PagerTwoInformationPageBean implements Serializable {
         private String newspri;
         private String newsid;
         private String newsnum;
+        private String thumupCount;
+
+        public String getThumupCount() {
+            return thumupCount;
+        }
+
+        public void setThumupCount(String thumupCount) {
+            this.thumupCount = thumupCount;
+        }
 
         public String getNewsfrom() {
             return newsfrom;

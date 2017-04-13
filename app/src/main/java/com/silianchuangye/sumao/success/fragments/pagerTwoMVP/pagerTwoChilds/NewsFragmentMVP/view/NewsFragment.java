@@ -102,6 +102,7 @@ public class NewsFragment extends Fragment implements INewsFragmentView{
                     intent.putExtra("time",new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Double.parseDouble(in.get(position).getIn_xwtime())));
                     intent.putExtra("number","abc");
                     intent.putExtra("from","abc");
+                    intent.putExtra("dianzan","abc");
                     startActivity(intent);
                     Toast.makeText(getActivity(), "List--->" + in.get(position).getIn_xwid(), Toast.LENGTH_SHORT).show();
                     break;

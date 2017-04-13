@@ -108,6 +108,15 @@ public class AuctionDetailBean implements Serializable {
     private String group;
     private String cl_cpbeizhu;
     private List<String> cl_fangshi;
+    private String depositFlag;
+
+    public String getDepositFlag() {
+        return depositFlag;
+    }
+
+    public void setDepositFlag(String depositFlag) {
+        this.depositFlag = depositFlag;
+    }
 
     public String getCl_cpbeizhu() {
         return cl_cpbeizhu;

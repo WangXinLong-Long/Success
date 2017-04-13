@@ -12,12 +12,15 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ActionBarOverlayLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -43,6 +46,8 @@ import com.silianchuangye.sumao.success.adapter.PopupWindowAdaptrer;
 import com.silianchuangye.sumao.success.dialog.Error_Dialog;
 import com.silianchuangye.sumao.success.dialog.Ok_Dialog;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.AuctionMVP.bean.AuctionDetailBean;
+import com.silianchuangye.sumao.success.fragments.homepage.auction.AuctionMVP.presenter.AuctionPresenter;
+import com.silianchuangye.sumao.success.fragments.homepage.auction.AuctionMVP.view.IAuctionView;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.OpenAuction;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.VesselOneActivity;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.VesselThreeActivity;
@@ -78,8 +83,10 @@ import java.util.Calendar;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
-public class OpenAuctionActivity extends AppCompatActivity implements IOpenAuctionView, View.OnClickListener {
+public class OpenAuctionActivity extends AppCompatActivity implements IOpenAuctionView, View.OnClickListener{
     private ListView lv_auction;
     private List<Map<String, Object>> list;
     private Button btZhifu_auction, bt_jinpai, bt_non_jingpai, bt_jinpai_colse;
@@ -88,13 +95,14 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
     private ListView lv;
     private ImageView ivBack;
     private PopupWindow popupWindow;
-    private String id_value, type_way;
+    private String id_value="" , type_way;
     private Button bt_Login, bt_Reg;
     private RelativeLayout Layout_Button_Open, Layout_Button_close, layout_non, Layout_Button_no_login;
     private PopupWindowAdaptrer adapter1;
     private TextView tvRemark_auction;
     private List<OpenAuction> list1;
     private String path;
+    String u_clientID;
     //    判断是否登录的状态
     private String state;
     private String name, danjia;
@@ -116,7 +124,7 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
     private EditText ed_shuzhi_number;
     private TextView tv_chanpinshuliang;
     private OpenAuctionPresenter openAuctionPresenter;
-    private AuctionDetailBean auctionDetailBean;
+  //  private AuctionDetailBean auctionDetailBean;
     private Button payImmediately;
     private ArrayList<OpenAuction> list_pop;
     private List<String> list_order = new ArrayList<String>();
@@ -158,6 +166,21 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
     private SharedPreferences sp;
     private String unique;
     private boolean isbaizhengjin;
+    private AuctionPresenter auctionPresenter;
+    AuctionDetailBean auctionDetailBean;
+    private String shishiprice;
+    private String shishinumber;
+    private String shishicjnumber;
+    private String shishicunzai;
+    private String proType;
+    private Handler handler;
+    private Timer timer;
+    private TimerTask task;
+    private boolean iscunhuan=false;
+
+
+
+
 
 
     @Override
@@ -165,31 +188,36 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
         super.onCreate(savedInstanceState);
         setContentView(R.layout.open_aution);
         openAuctionPresenter = new OpenAuctionPresenter(this);
+        Bundle bundle=getIntent().getExtras();
+
+        String result=bundle.getString("result");
+        Log.d("传过来的result",""+result);
+        Gson gson=new Gson();
+        auctionDetailBean = gson.fromJson(result, AuctionDetailBean.class);
+
+
         line_top = (LinearLayout) findViewById(R.id.line_top);
         line_bottom = (LinearLayout) findViewById(R.id.line_bottom);
         line_centent = (LinearLayout) findViewById(R.id.line_content);
         lvdemo_result = (ListView) findViewById(R.id.Lv_infoSeccess);
-        auctionDetailBean = ((AuctionDetailBean) getIntent().getSerializableExtra("auctionDetailBean"));
-        //Log.d("","")
-        depositDeadline = auctionDetailBean.getDepositDeadline().getTime();
-        //      保证金比例
-        String str = auctionDetailBean.getCl_baozhj();
-        LogUtils.log("需要支付保证金比例--->" + str);
-//        是否需要支付保证金
-        needToPayTheMargin = !str.equals("%");
-        LogUtils.log("是否需要支付保证金--->" + needToPayTheMargin);
-        if (needToPayTheMargin) {
-            NumberFormat nf = NumberFormat.getPercentInstance();
-            try {
-                m = nf.parse(str);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            percent = String.format("%.4f", Double.parseDouble(m.toString()));
+
+        Log.d("竞拍的详情",auctionDetailBean.getAddressDetail()+"");
+        if (auctionDetailBean.getDepositDeadline().getTime()==null||auctionDetailBean.getDepositDeadline().getTime().equals("")||auctionDetailBean.getDepositDeadline().getTime()==""){
+
+                depositDeadline = auctionDetailBean.getDepositDeadline().getTime();
+            Log.d("剩余时间",depositDeadline+"");
+
+
         }
 
 //        竞拍方式（公开竞拍、密封报价）
         type_way = (getIntent().getStringExtra("type_way"));
+        id_value=auctionDetailBean.getCl_id();
+        productId = auctionDetailBean.getCl_id();
+        proType=getIntent().getStringExtra("proType");
+
+
+
 //        标题
         tvOpen_auction = ((TextView) findViewById(R.id.tvOpen_auction));
 //        最高竞拍价
@@ -279,14 +307,16 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
         // bt_non_jingpai= (Button) findViewById(R.id.bt_non_jingpai);
         ivBack = (ImageView) findViewById(R.id.ivBack);
 
-        id_value=auctionDetailBean.getCl_id();
 
+       // openAuctionPresenter.getRealTimeQuotes(productId, true);
+//返回当前页面
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 OpenAuctionActivity.this.finish();
             }
         });
+        //注册
         bt_Reg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -294,6 +324,7 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
                 startActivity(intent);
             }
         });
+        //登录
         bt_Login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -310,28 +341,32 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
             public void onClick(View v) {
                 if (bt_jinpai_colse.getText().toString().equals("支付保证金")) {
                     LogUtils.log("支付保证金--->");
-                    String depositDeadline = auctionDetailBean.getDepositDeadline().getTime();
-//                    if (Double.parseDouble(depositDeadline) - 10 * 1000 - System.currentTimeMillis() < 0) {
-//                        Toast.makeText(OpenAuctionActivity.this, "对不起，已过该商品的保证金支付时间", Toast.LENGTH_SHORT).show();
-//                    } else {
+                    depositDeadline = auctionDetailBean.getDepositDeadline().getTime();
+
                         alreadyBaoZhengJin(true);
-                    //}
+
 
                 } else if (bt_jinpai_colse.getText().toString().equals("立即报价")) {
                     if (type_way.equals("公开竞拍")) {
+                        Log.d("公开竞拍的立即报价","公开竞拍的立即报价");
+                        //gongkai_baojia();
                         openAuctionPresenter.getRealTimeQuotes(productId, true);
 
                     } else {
+                        Log.d("密封竞拍的立即报价","密封竞拍的立即报价");
                         mifeng_baojia();
                     }
                 }
             }
         });
+        //参与竞拍
         participate_in_the_auction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                participate_in_the_auction_ll.setVisibility(View.GONE);
-                Layout_Button_close.setVisibility(View.VISIBLE);
+                if (participate_in_the_auction.getText().toString().equals("参与竞拍")){
+                    canyujingpai();
+                }
+
             }
         });
 //
@@ -359,18 +394,14 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
                 SharedPreferences sp = getSharedPreferences("sumao", Context.MODE_PRIVATE);
                 String name = sp.getString("name", "");
                 if (name.equals("")) {
-                    Toast.makeText(OpenAuctionActivity.this, "请登录后进行操作", Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(OpenAuctionActivity.this, "请登录后进行操作", Toast.LENGTH_SHORT).show();
                 } else {
-//                    if (Double.parseDouble(depositDeadline) - System.currentTimeMillis() < 0) {
-//                        Toast.makeText(OpenAuctionActivity.this, "对不起，已超过保证金支付时间,不能继续支付保证金", Toast.LENGTH_SHORT).show();
-//                    } else {
                         alreadyBaoZhengJin(true);
-                   // }
-
                 }
 
             }
         });
+
         bt_jinpai.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -378,20 +409,18 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
                     Toast.makeText(OpenAuctionActivity.this, "对不起，竞拍开始前未支付保证金,不能报价", Toast.LENGTH_SHORT).show();
                 } else {
                     if (type_way.equals("公开竞拍")) {
-                        if (Double.parseDouble(bid_price_num.getText().toString()) <= Double.parseDouble(myOfferBean.getMyPrice().get(0).getBidPrice().toString()) &&
-                                Double.parseDouble(tv_item_cart_buy_num.getText().toString()) <= Double.parseDouble(myOfferBean.getMyPrice().get(0).getBidQut())) {
-                            if (Double.parseDouble(bid_price_num.getText().toString()) <= Double.parseDouble(myOfferBean.getMyPrice().get(0).getBidPrice())) {
-                                Toast.makeText(OpenAuctionActivity.this, "竞拍单价必须大于等于您当前的自报价。", Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(OpenAuctionActivity.this, "您当前输入的数量不能小于等于已在实时行情中的数量。", Toast.LENGTH_SHORT).show();
-                            }
+                        if (Double.parseDouble(bid_price_num.getText().toString()) <= Double.parseDouble(shishiprice) &&
+
+                       Double.parseDouble(tv_item_cart_buy_num.getText().toString()) <= Double.parseDouble(shishicjnumber)) {
+//
+                         Toast.makeText(OpenAuctionActivity.this, "您当前输入的数量不能小于等于已在实时行情中的数量。", Toast.LENGTH_SHORT).show();
+
                         } else {
+                            alreadyBaoZhengJin(false);
+                            Log.d("进来yijing支付金额",zhifujine+"");//他应该实施获取
+                            Log.d("进来需要jiao的保证金金额",""+String.format("%.2f", Double.parseDouble(all_price_num.getText().toString()) * Double.parseDouble(percent + "")));
                             if (Double.parseDouble(zhifujine) < Double.parseDouble(String.format("%.2f", Double.parseDouble(all_price_num.getText().toString()) * Double.parseDouble(percent + "")))) {
                                 Toast.makeText(OpenAuctionActivity.this, "保证金余额不足，请您续交保证金", Toast.LENGTH_SHORT).show();
-
-                                //追加保证金
-                               // zhifu_baozhengjin();
-                                gongkai_baojia();
                             } else {
                                 gongkai_baojia();
                             }
@@ -473,23 +502,31 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
 //      Jobs Created 联系客服
         contactCustomerService = ((LinearLayout) findViewById(R.id.layoutService));
 
-    //    setValue();
+
 
         IntentFilter filter = new IntentFilter();
         filter.addAction("finishOpenAuction");
         registerReceiver(broadcastReceiver, filter);
 
-        productId = auctionDetailBean.getCl_id();
+
         if (type_way.equals("公开竞拍")) {
-            Loding.show(this, "加载中...", false, null);
-            openAuctionPresenter.getRealTimeQuotes(productId, false);
+            Log.d("这是公开竞拍","公开竞拍");
+            shishihangqingSelect();
+           // Loding.show(this, "加载中...", false, null);
+            //这里先注视一下
+           //openAuctionPresenter.getRealTimeQuotes(id_value, false);
         } else {
-            String type = auctionDetailBean.getCl_type();
+            //String type = auctionDetailBean.getCl_type();
             SharedPreferences sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
             String _dynSessConf = sp.getString("unique", "");
+            Log.d("只是我的报价","我的报价");
+            setValue();
+            fuzhi();
+            openAuctionPresenter.getMyOfferResult(_dynSessConf, productId, type_way, false);
 //        我的报价
-            Loding.show(this, "加载中...", false, null);
-            openAuctionPresenter.getMyOfferResult(_dynSessConf, productId, type, false);
+           // Loding.show(this, "加载中...", false, null);
+            //这里先注shi测试一下效果
+
         }
 
 
@@ -567,7 +604,8 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
                     String allow=jsonObject.getString("cl_allow");
                     if (allow.equals("0")){
                         //没有权限问题可以放心购买
-                        setValue();
+
+                        isSuccessorFail(needToPayTheMargin);
                     }else if (allow.equals("1")){
                         //无上游资源方购买资质
                         Toast.makeText(OpenAuctionActivity.this, "无上游资源方购买资质", Toast.LENGTH_SHORT).show();
@@ -650,7 +688,10 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
             auctionResult();
         }
 
-//        String name = "";
+
+    }
+    public void fuzhi(){
+      //        String name = "";
 //        if (!getSharedPreferences("sumao", Activity.MODE_PRIVATE).getString("unique", "").equals("false"))
 //            name = getSharedPreferences("sumao", Activity.MODE_PRIVATE).getString("name", "");
 //        if (name.equals("")) {
@@ -703,7 +744,7 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
 //            }
 ////      竞拍结束
 //        } else if (status.equals("2")) {
-          //  tvTime.setText("竞拍已结束");
+        //  tvTime.setText("竞拍已结束");
 //            tvTimeValue.setText("");
 //            bt_jinpai.setBackgroundColor(getResources().getColor(R.color.gray_type));
 //            Layout_Button_close.setVisibility(View.GONE);
@@ -763,17 +804,17 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
 
         //cl_attribute.addAll();
 //                Jobs Created 联系客服跳转
-        contactCustomerService.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intentHX = new Intent();
-                intentHX.setClass(OpenAuctionActivity.this, LoginActivity.class);
-                intentHX.putExtra(Constant.MESSAGE_TO_INTENT_EXTRA, Constant.MESSAGE_TO_DEFAULT);
-//                传入卖家id
-                intentHX.putExtra(Constant.IM_SERVICE_NUMBER, cl_gongsiId);
-                startActivity(intentHX);
-            }
-        });
+//        contactCustomerService.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intentHX = new Intent();
+//                intentHX.setClass(OpenAuctionActivity.this, LoginActivity.class);
+//                intentHX.putExtra(Constant.MESSAGE_TO_INTENT_EXTRA, Constant.MESSAGE_TO_DEFAULT);
+////                传入卖家id
+//                intentHX.putExtra(Constant.IM_SERVICE_NUMBER, cl_gongsiId);
+//                startActivity(intentHX);
+//            }
+//        });
 //        购买数量
         tv_item_cart_buy_num = ((EditText) findViewById(R.id.tv_item_cart_buy_num));
 
@@ -792,17 +833,52 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
 
         //        竞拍价格
         bid_price_num = ((EditText) findViewById(R.id.bid_price_num));
-
-        tv_item_cart_buy_num.setText(qigou.getText().toString());
-        if (Double.parseDouble(tv_item_cart_buy_num.getText().toString()) == Double.parseDouble(qigou.getText().toString())) {
-            img_item_cart_buy_sub.setTextColor(Color.RED);
-        } else {
-            img_item_cart_buy_sub.setTextColor(Color.BLACK);
-        }
-        bid_price_num.setText(price.getText().toString());
         //        竞拍总价
         all_price_num = ((TextView) findViewById(R.id.all_price_num));
-//       购买数量
+        sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+        //shishicunzai=sp.getBoolean("shishicunzai",false);
+        shishicunzai=sp.getString("shishicunzai","");
+        Log.d("解析的值 ",""+shishicunzai+"我想睡觉");
+        if (type_way.equals("公开竞拍")) {
+            if (shishicunzai.equals("true")) {
+                tv_item_cart_buy_num.setText(shishinumber);
+                bid_price_num.setText(shishiprice);
+                all_price_num.setText(Double.parseDouble(shishicjnumber) * Double.parseDouble(shishiprice) + "");
+
+            } else {
+                tv_item_cart_buy_num.setText(qigou.getText().toString());
+                bid_price_num.setText(price.getText().toString());
+                all_price_num.setText(Double.parseDouble(qigou.getText().toString()) * Double.parseDouble(price.getText().toString()) + "");
+            }
+            if (Double.parseDouble(tv_item_cart_buy_num.getText().toString()) == Double.parseDouble(qigou.getText().toString())) {
+                img_item_cart_buy_sub.setTextColor(Color.RED);
+            } else if (Double.parseDouble(tv_item_cart_buy_num.getText().toString())==Double.parseDouble(shishicjnumber)){
+                img_item_cart_buy_sub.setTextColor(Color.RED);
+
+            }else{
+                img_item_cart_buy_sub.setTextColor(Color.BLACK);
+            }
+        }else{
+
+            tv_item_cart_buy_num.setText(qigou.getText().toString());
+            bid_price_num.setText(price.getText().toString());
+            all_price_num.setText(Double.parseDouble(qigou.getText().toString()) * Double.parseDouble(price.getText().toString()) + "");
+            if (Double.parseDouble(tv_item_cart_buy_num.getText().toString()) == Double.parseDouble(qigou.getText().toString())) {
+                img_item_cart_buy_sub.setTextColor(Color.RED);
+            } else if (Double.parseDouble(tv_item_cart_buy_num.getText().toString())==Double.parseDouble(shishicjnumber)){
+                img_item_cart_buy_sub.setTextColor(Color.RED);
+
+            }else{
+                img_item_cart_buy_sub.setTextColor(Color.BLACK);
+            }
+        }
+
+
+
+
+
+
+        //购买数量的改变
         tv_item_cart_buy_num.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -811,280 +887,394 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.length() == 0) {
-                    if (!status.equals("2")) {
-                        if (realTimeQuotesIncludeMyOffer) {
-                            tv_item_cart_buy_num.setText(myOfferBean.getMyPrice().get(0).getBidQut());
-                            if (Double.parseDouble(tv_item_cart_buy_num.getText().toString()) == Double.parseDouble(myOfferBean.getMyPrice().get(0).getBidQut())) {
-                                img_item_cart_buy_sub.setTextColor(Color.RED);
-                            } else {
-                                img_item_cart_buy_sub.setTextColor(Color.BLACK);
-                            }
-                        } else {
-                            tv_item_cart_buy_num.setText(qigou.getText().toString());
-                            tv_item_cart_buy_num.setSelection(qigou.getText().toString().length());
-                            if (Double.parseDouble(tv_item_cart_buy_num.getText().toString()) == Double.parseDouble(qigou.getText().toString())) {
-                                img_item_cart_buy_sub.setTextColor(Color.RED);
-                            } else {
-                                img_item_cart_buy_sub.setTextColor(Color.BLACK);
-                            }
-                        }
-                    } else {
-                        tv_item_cart_buy_num.setText(qigou.getText().toString());
-                        tv_item_cart_buy_num.setSelection(qigou.getText().toString().length());
-                        if (Double.parseDouble(tv_item_cart_buy_num.getText().toString()) == Double.parseDouble(qigou.getText().toString())) {
-                            img_item_cart_buy_sub.setTextColor(Color.RED);
-                        } else {
-                            img_item_cart_buy_sub.setTextColor(Color.BLACK);
-                        }
-                    }
 
-                }
-                if (s.toString().contains(".")) {
-                    if (s.length() - 1 - s.toString().indexOf(".") > 3) {
-                        s = s.toString().subSequence(0,
-                                s.toString().indexOf(".") + 4);
-                        tv_item_cart_buy_num.setText(s);
-                        tv_item_cart_buy_num.setSelection(s.length());
-                    }
-                }
-                if (s.toString().trim().substring(0).equals(".")) {
-                    s = "0" + s;
-                    tv_item_cart_buy_num.setText(s);
-                    tv_item_cart_buy_num.setSelection(3);
-                }
-
-                if (s.toString().startsWith("0")
-                        && s.toString().trim().length() > 1) {
-                    if (!s.toString().substring(1, 2).equals(".")) {
-                        tv_item_cart_buy_num.setText(s.subSequence(1, s.length()));
-                        tv_item_cart_buy_num.setSelection(1);
-                        return;
-                    }
-                }
 
             }
 
             @Override
             public void afterTextChanged(Editable s) {
+//                if (!s.toString().equals("")) {
+//                    if (!shishicunzai.equals("true")) {
+//                        if (Double.parseDouble(s.toString()) < Double.parseDouble(qigou.getText().toString())) {
+//                            tv_item_cart_buy_num.setText(qigou.getText().toString());
+//                            tv_item_cart_buy_num.setSelection(qigou.getText().toString().length());
+//                            img_item_cart_buy_sub.setTextColor(Color.RED);
+//                            img_item_cart_buy_add.setTextColor(Color.BLACK);
+//                        } else if (Double.parseDouble(s.toString()) > Double.parseDouble(sheng.getText().toString())) {
+//                            tv_item_cart_buy_num.setText(sheng.getText().toString());
+//                            tv_item_cart_buy_num.setSelection(sheng.getText().toString().length());
+//                            img_item_cart_buy_add.setTextColor(Color.RED);
+//                            img_item_cart_buy_sub.setTextColor(Color.BLACK);
+//                        }else {
+//                            tv_item_cart_buy_num.setText(s.toString());
+//                            tv_item_cart_buy_num.setSelection(s.toString().length());
+//                        }
+//                    } else {
+//                        if (Double.parseDouble(s.toString()) < Double.parseDouble(shishicjnumber)) {
+//                            tv_item_cart_buy_num.setText(shishicjnumber);
+//                            tv_item_cart_buy_num.setSelection(shishicjnumber.length());
+//                            img_item_cart_buy_sub.setTextColor(Color.RED);
+//                        } else if (Double.parseDouble(s.toString()) > Double.parseDouble(sheng.getText().toString())) {
+//                            tv_item_cart_buy_num.setText(sheng.getText().toString());
+//                            tv_item_cart_buy_num.setSelection(sheng.getText().toString().length());
+//                            img_item_cart_buy_add.setTextColor(Color.RED);
+//                        }else {
+//                            tv_item_cart_buy_num.setText(s.toString());
+//                            tv_item_cart_buy_num.setSelection(s.toString().length());
+//                        }
+//                    }
+                //  }
 
-                if (Double.parseDouble(tv_item_cart_buy_num.getText().toString()) > Double.parseDouble(sheng.getText().toString())) {
-                    tv_item_cart_buy_num.setText((sheng.getText().toString()));
-                    tv_item_cart_buy_num.setSelection(sheng.getText().toString().length());
-
-                }
-                if (Double.parseDouble(tv_item_cart_buy_num.getText().toString()) == Double.parseDouble(sheng.getText().toString())) {
-                    img_item_cart_buy_add.setTextColor(Color.RED);
-                } else {
-                    img_item_cart_buy_add.setTextColor(Color.BLACK);
-                }
-//              如果没有支付过保证金，判断报价和量是否都大于起拍量
-                if (Double.parseDouble(zhifujine) == 0 && needToPayTheMargin) {
-                    if (Double.parseDouble(tv_item_cart_buy_num.getText().toString()) < Double.parseDouble(qigou.getText().toString())) {
-                        tv_item_cart_buy_num.setText((qigou.getText().toString()));
-                        tv_item_cart_buy_num.setSelection(qigou.getText().toString().length());
-
-                    }
-                    if (Double.parseDouble(tv_item_cart_buy_num.getText().toString()) == Double.parseDouble(qigou.getText().toString())) {
-                        img_item_cart_buy_sub.setTextColor(Color.RED);
-                    } else {
-                        img_item_cart_buy_sub.setTextColor(Color.BLACK);
-                    }
-//              如果有支付过保证金，当大于起拍量时，可以提交成功
-                } else {
-                    if (realTimeQuotesIncludeMyOffer) {
-                        if (Double.parseDouble(tv_item_cart_buy_num.getText().toString()) < Double.parseDouble(myOfferBean.getMyPrice().get(0).getBidQut())) {
-                            tv_item_cart_buy_num.setText(myOfferBean.getMyPrice().get(0).getBidQut());
-                        }
-
-                        if (Double.parseDouble(tv_item_cart_buy_num.getText().toString()) == Double.parseDouble(myOfferBean.getMyPrice().get(0).getBidQut())) {
-                            img_item_cart_buy_sub.setTextColor(Color.RED);
-                        } else {
-                            img_item_cart_buy_sub.setTextColor(Color.BLACK);
-                        }
-                    } else {
-                        if (Double.parseDouble(tv_item_cart_buy_num.getText().toString()) < Double.parseDouble(qigou.getText().toString())) {
-                            tv_item_cart_buy_num.setText(qigou.getText().toString());
-                        }
-
-                        if (Double.parseDouble(tv_item_cart_buy_num.getText().toString()) == Double.parseDouble(qigou.getText().toString())) {
-                            img_item_cart_buy_sub.setTextColor(Color.RED);
-                        } else {
-                            img_item_cart_buy_sub.setTextColor(Color.BLACK);
-                        }
-                    }
-
-                }
-
-                if (!tv_item_cart_buy_num.getText().toString().equals("")) {
-                    double num = (Double.parseDouble(tv_item_cart_buy_num.getText().toString()));
-                    double price_num = (Double.parseDouble(bid_price_num.getText().toString()));
-                    double x = num * price_num;
-                    DecimalFormat df = new DecimalFormat("#.##");
-                    all_price_num.setText(df.format(x) + "");
-
-                }
-                LogUtils.log(bianjiadanwei.getText().toString() + "<---");
-                if ((Double.parseDouble(tv_item_cart_buy_num.getText().toString()) - Double.parseDouble(qigou.getText().toString())) % Double.parseDouble(bianjiadanwei.getText().toString()) != 0) {
-                    DecimalFormat df = new DecimalFormat("#");
-                    double number = Double.parseDouble(tv_item_cart_buy_num.getText().toString()) / Double.parseDouble(bianjiadanwei.getText().toString());
-                    double priceNum = (Integer.parseInt(df.format(number)) * Double.parseDouble(bianjiadanwei.getText().toString())) + Double.parseDouble(qigou.getText().toString());
-                    String priceString = (priceNum + "");
-                    tv_item_cart_buy_num.setText(priceString);
-                    tv_item_cart_buy_num.setSelection(priceString.length());
-                }
+//                if (){
+//                        Log.d("elseif","else if");
+//
+//                    }
+//                if (Double.parseDouble(tv_item_cart_buy_num.getText().toString()) > Double.parseDouble(sheng.getText().toString())) {
+//
+//               // }
+//                }else{
+//                    SharedPreferences sharedPreferences=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+//                    shishicunzai=sharedPreferences.getString("shishicunzai","");
+//                    if (shishicunzai.equals("true")){
+//                        Log.d("true","true");
+//                        //和实施行情的数据比较
+//                        if (Double.parseDouble(tv_item_cart_buy_num.getText().toString())<Double.parseDouble(shishicjnumber)){
+//                            tv_item_cart_buy_num.setText(shishicjnumber);
+//                            tv_item_cart_buy_num.setSelection(shishicjnumber.length());
+//                            img_item_cart_buy_sub.setTextColor(Color.BLACK);
+//                        }
+//                    }else if (Double.parseDouble(tv_item_cart_buy_num.getText().toString()) > Double.parseDouble(sheng.getText().toString())){
+//                        Log.d("elseif","else if");
+//                        tv_item_cart_buy_num.setText(sheng.getText().toString());
+//                        tv_item_cart_buy_num.setSelection(sheng.getText().toString().length());
+//                        img_item_cart_buy_add.setTextColor(Color.RED);
+//                    }
+//                    else{
+//                        //和汽狗亮比较
+//                        Log.d("else","else");
+//                        if (Double.parseDouble(tv_item_cart_buy_num.getText().toString())<Double.parseDouble(qigou.getText().toString())){
+//                            tv_item_cart_buy_num.setText(qigou.getText().toString());
+//                            tv_item_cart_buy_num.setSelection(qigou.getText().toString().length());
+//                            img_item_cart_buy_sub.setTextColor(Color.BLACK);
+//                        }
+//                    }
             }
+
+            // }
+            // }
         });
-//       竞拍价格
-        bid_price_num.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        // if (Double.parseDouble(bid_price_num.getText().toString())==Double.parseDouble())
 
-            }
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.length() == 0) {
-                    if (!status.equals("2")) {
-                        if (realTimeQuotesIncludeMyOffer) {
-                            bid_price_num.setText(myOfferBean.getMyPrice().get(0).getBidPrice());
-                            if (Double.parseDouble(bid_price_num.getText().toString()) == Double.parseDouble(myOfferBean.getMyPrice().get(0).getBidPrice())) {
-                                bid_price_sub.setTextColor(Color.RED);
-                            } else {
-                                bid_price_sub.setTextColor(Color.BLACK);
-                            }
-                        } else {
-                            if (myOfferBean.getMybidQut() == null) {
-                                if (Double.parseDouble(bid_price_num.getText().toString()) < Double.parseDouble(price.getText().toString()))
-                                    bid_price_num.setText(price.getText().toString());
-                                if (Double.parseDouble(bid_price_num.getText().toString()) == Double.parseDouble(price.getText().toString())) {
-                                    bid_price_sub.setTextColor(Color.RED);
-                                } else {
-                                    bid_price_sub.setTextColor(Color.BLACK);
-                                }
-                            } else if (myOfferBean.getMybidQut().equals("0")) {
-                                bid_price_num.setText(price.getText().toString());
-                                if (Double.parseDouble(bid_price_num.getText().toString()) == Double.parseDouble(price.getText().toString())) {
-                                    bid_price_sub.setTextColor(Color.RED);
-                                } else {
-                                    bid_price_sub.setTextColor(Color.BLACK);
-                                }
-                            } else {
-                                bid_price_num.setText(realTimeMardet.getAuctionPricelist().get(realTimeMardet.getAuctionPricelist().size() - 1).getBidPrice());
-                                if (Double.parseDouble(bid_price_num.getText().toString()) == Double.parseDouble(realTimeMardet.getAuctionPricelist().get(realTimeMardet.getAuctionPricelist().size() - 1).getBidPrice())) {
-                                    bid_price_sub.setTextColor(Color.RED);
-                                } else {
-                                    bid_price_sub.setTextColor(Color.BLACK);
-                                }
-                            }
-                        }
-                    } else {
-                        bid_price_num.setText(price.getText().toString());
-                        bid_price_num.setSelection(price.getText().toString().length());
-                        if (Double.parseDouble(bid_price_num.getText().toString()) == Double.parseDouble(price.getText().toString())) {
-                            bid_price_sub.setTextColor(Color.RED);
-                        } else {
-                            bid_price_sub.setTextColor(Color.BLACK);
-                        }
-                    }
-
-                }
-                if (s.toString().contains(".")) {
-
-                    if (s.length() - 1 - s.toString().indexOf(".") > 3) {
-                        s = s.toString().subSequence(0,
-                                s.toString().indexOf(".") + 4);
-                        bid_price_num.setText(s);
-                        bid_price_num.setSelection(s.length());
-                    }
-                }
-                if (s.toString().trim().substring(0).equals(".")) {
-                    s = "0" + s;
-                    bid_price_num.setText(s);
-                    bid_price_num.setSelection(3);
-                }
-
-                if (s.toString().startsWith("0")
-                        && s.toString().trim().length() > 1) {
-                    if (!s.toString().substring(1, 2).equals(".")) {
-                        bid_price_num.setText(s.subSequence(1, s.length()));
-                        bid_price_num.setSelection(1);
-                        return;
-                    }
-                }
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-//              如果没有支付过保证金，都是数字的时候，判断报价和量是否都大于起拍价
-                if (Double.parseDouble(zhifujine) == 0 && needToPayTheMargin) {
-                    if (Double.parseDouble(bid_price_num.getText().toString()) < Double.parseDouble(price.getText().toString())) {
-                        bid_price_num.setText((price.getText().toString()));
-                        bid_price_num.setSelection(price.getText().toString().length());
-                    }
-                    if (Double.parseDouble(bid_price_num.getText().toString()) == Double.parseDouble(price.getText().toString())) {
-                        bid_price_sub.setTextColor(Color.RED);
-                    } else {
-                        bid_price_sub.setTextColor(Color.BLACK);
-                    }
-//              如果有支付过保证金，当大于起拍价时，可以提交成功
-                } else {
-                    if (realTimeQuotesIncludeMyOffer) {
-                        if (Double.parseDouble(bid_price_num.getText().toString()) < Double.parseDouble(myOfferBean.getMyPrice().get(0).getBidPrice()))
-                            bid_price_num.setText(myOfferBean.getMyPrice().get(0).getBidPrice());
-                        if (Double.parseDouble(bid_price_num.getText().toString()) == Double.parseDouble(myOfferBean.getMyPrice().get(0).getBidPrice())) {
-                            bid_price_sub.setTextColor(Color.RED);
-                        } else {
-                            bid_price_sub.setTextColor(Color.BLACK);
-                        }
-                    } else {
-                        if (myOfferBean.getMybidQut() == null) {
-                            if (Double.parseDouble(bid_price_num.getText().toString()) < Double.parseDouble(price.getText().toString()))
-                                bid_price_num.setText(price.getText().toString());
-                            if (Double.parseDouble(bid_price_num.getText().toString()) == Double.parseDouble(price.getText().toString())) {
-                                bid_price_sub.setTextColor(Color.RED);
-                            } else {
-                                bid_price_sub.setTextColor(Color.BLACK);
-                            }
-                        } else if (myOfferBean.getMybidQut().equals("0")) {
-                            if (Double.parseDouble(bid_price_num.getText().toString()) < Double.parseDouble(price.getText().toString()))
-                                bid_price_num.setText(price.getText().toString());
-                            if (Double.parseDouble(bid_price_num.getText().toString()) == Double.parseDouble(price.getText().toString())) {
-                                bid_price_sub.setTextColor(Color.RED);
-                            } else {
-                                bid_price_sub.setTextColor(Color.BLACK);
-                            }
-                        } else {
-                            if (Double.parseDouble(bid_price_num.getText().toString()) < Double.parseDouble(realTimeMardet.getAuctionPricelist().get(realTimeMardet.getAuctionPricelist().size() - 1).getBidPrice()))
-                                bid_price_num.setText(realTimeMardet.getAuctionPricelist().get(realTimeMardet.getAuctionPricelist().size() - 1).getBidPrice());
-                            if (Double.parseDouble(bid_price_num.getText().toString()) == Double.parseDouble(realTimeMardet.getAuctionPricelist().get(realTimeMardet.getAuctionPricelist().size() - 1).getBidPrice())) {
-                                bid_price_sub.setTextColor(Color.RED);
-                            } else {
-                                bid_price_sub.setTextColor(Color.BLACK);
-                            }
-                        }
-                    }
-                }
-
-                if (!bid_price_num.getText().toString().equals("")) {
-                    double num = (Double.parseDouble(tv_item_cart_buy_num.getText().toString()));
-                    double price_num = (Double.parseDouble(bid_price_num.getText().toString()));
-                    double x = num * price_num;
-                    DecimalFormat df = new DecimalFormat("#.##");
-                    all_price_num.setText(df.format(x) + "");
-
-                }
-                if ((Double.parseDouble(bid_price_num.getText().toString()) - Double.parseDouble(price.getText().toString())) % Double.parseDouble(cangkuaddress.getText().toString()) != 0) {
-                    DecimalFormat df = new DecimalFormat("#");
-                    double number = Integer.parseInt(df.format(Double.parseDouble(bid_price_num.getText().toString()) / Double.parseDouble(cangkuaddress.getText().toString()))) + 1;
-                    double priceNum = (Integer.parseInt(df.format(number)) * Double.parseDouble(cangkuaddress.getText().toString())) + Double.parseDouble(price.getText().toString());
-                    String priceString = (priceNum + "");
-                    bid_price_num.setText(priceString);
-                    bid_price_num.setSelection(priceString.length());
-                }
-            }
-        });
+////       购买数量
+//        tv_item_cart_buy_num.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//               // tv_item_cart_buy_num.setText("");
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//            Log.d("正在改变",""+s.toString());
+//
+//                if (s.length() == 0) {
+//                    if (!status.equals("2")) {
+//                        SharedPreferences sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+//                        shishicunzai=sp.getString("shishicunzai","");
+//                        if (shishicunzai.equals("true")) {
+//                            tv_item_cart_buy_num.setText(shishinumber);
+//                            tv_item_cart_buy_num.setSelection(1);
+//                            if (Double.parseDouble(tv_item_cart_buy_num.getText().toString()) == Double.parseDouble(shishinumber)) {
+//                                img_item_cart_buy_sub.setTextColor(Color.RED);
+//                            } else {
+//                                img_item_cart_buy_sub.setTextColor(Color.BLACK);
+//                            }
+//                        } else {
+//                            tv_item_cart_buy_num.setText(qigou.getText().toString());
+//                            tv_item_cart_buy_num.setSelection(qigou.getText().toString().length());
+//                            if (Double.parseDouble(tv_item_cart_buy_num.getText().toString()) == Double.parseDouble(qigou.getText().toString())) {
+//                                img_item_cart_buy_sub.setTextColor(Color.RED);
+//                            } else {
+//                                img_item_cart_buy_sub.setTextColor(Color.BLACK);
+//                            }
+//                        }
+//                    } else {
+//                        tv_item_cart_buy_num.setText(qigou.getText().toString());
+//                        tv_item_cart_buy_num.setSelection(qigou.getText().toString().length());
+//                        if (Double.parseDouble(tv_item_cart_buy_num.getText().toString()) == Double.parseDouble(qigou.getText().toString())) {
+//                            img_item_cart_buy_sub.setTextColor(Color.RED);
+//                        } else {
+//                            img_item_cart_buy_sub.setTextColor(Color.BLACK);
+//                        }
+//                    }
+//
+//                }
+//                if (s.toString().contains(".")) {
+//                    if (s.length() - 1 - s.toString().indexOf(".") > 3) {
+//                        s = s.toString().subSequence(0,
+//                                s.toString().indexOf(".") + 4);
+//                        tv_item_cart_buy_num.setText(s);
+//                        tv_item_cart_buy_num.setSelection(s.length());
+//                    }
+//                }
+//                if (s.toString().trim().substring(0).equals(".")) {
+//                    s = "0" + s;
+//                    tv_item_cart_buy_num.setText(s);
+//                    tv_item_cart_buy_num.setSelection(3);
+//                }
+//
+//                if (s.toString().startsWith("0")
+//                        && s.toString().trim().length() > 1) {
+//                    if (!s.toString().substring(1, 2).equals(".")) {
+//                        tv_item_cart_buy_num.setText(s.subSequence(1, s.length()));
+//                        tv_item_cart_buy_num.setSelection(1);
+//                        return;
+//                    }
+//                }
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//            Log.d("改变后的值",s.toString()+"");
+//
+//                if (Double.parseDouble(tv_item_cart_buy_num.getText().toString()) > Double.parseDouble(sheng.getText().toString())) {
+//                    tv_item_cart_buy_num.setText((sheng.getText().toString()));
+//                    tv_item_cart_buy_num.setSelection(sheng.getText().toString().length());
+//
+//                }
+//                if (Double.parseDouble(tv_item_cart_buy_num.getText().toString()) == Double.parseDouble(sheng.getText().toString())) {
+//                    img_item_cart_buy_add.setTextColor(Color.RED);
+//                } else {
+//                    img_item_cart_buy_add.setTextColor(Color.BLACK);
+//                }
+////              如果没有支付过保证金，判断报价和量是否都大于起拍量
+//                if (auctionDetailBean.getDepositFlag().equals("no")) {
+//
+//                    if (Double.parseDouble(tv_item_cart_buy_num.getText().toString()) < Double.parseDouble(qigou.getText().toString())) {
+//                        tv_item_cart_buy_num.setText((qigou.getText().toString()));
+//                        tv_item_cart_buy_num.setSelection(qigou.getText().toString().length());
+//
+//                    }
+//                    if (Double.parseDouble(tv_item_cart_buy_num.getText().toString()) == Double.parseDouble(qigou.getText().toString())) {
+//                        img_item_cart_buy_sub.setTextColor(Color.RED);
+//                    } else {
+//                        img_item_cart_buy_sub.setTextColor(Color.BLACK);
+//                    }
+//                    SharedPreferences sharedPreferences=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+//                    shishicunzai=sharedPreferences.getString("shishicunzai","");
+//                    //没有保证金存在实施行情里
+//                    if (shishicunzai.equals("true")) {
+//
+//                        if (Double.parseDouble(tv_item_cart_buy_num.getText().toString()) < Double.parseDouble(shishicjnumber)) {
+//                            tv_item_cart_buy_num.setText(shishicjnumber);
+//                            tv_item_cart_buy_num.setSelection(shishicjnumber.length());
+//                        }
+//                        if (Double.parseDouble(tv_item_cart_buy_num.getText().toString()) == Double.parseDouble(shishicjnumber)) {
+//                            img_item_cart_buy_sub.setTextColor(Color.RED);
+//                        } else {
+//                            img_item_cart_buy_sub.setTextColor(Color.BLACK);
+//                        }
+//                    }
+////              如果有支付过保证金，当大于起拍量时，可以提交成功
+//                } else {
+//                    SharedPreferences sharedPreferences=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+//                    shishicunzai=sharedPreferences.getString("shishicunzai","");
+//                    //有保证金存在实施行情里
+//                    if (shishicunzai.equals("true")) {
+//                        if (Double.parseDouble(tv_item_cart_buy_num.getText().toString()) < Double.parseDouble(shishicjnumber)) {
+//                            tv_item_cart_buy_num.setText(shishicjnumber);
+//                            tv_item_cart_buy_num.setSelection(shishicjnumber.length());
+//                        }
+//                        if (Double.parseDouble(tv_item_cart_buy_num.getText().toString()) == Double.parseDouble(shishicjnumber)) {
+//                            img_item_cart_buy_sub.setTextColor(Color.RED);
+//                        } else {
+//                            img_item_cart_buy_sub.setTextColor(Color.BLACK);
+//                        }
+//
+//                    } else {
+//                        if (Double.parseDouble(tv_item_cart_buy_num.getText().toString()) < Double.parseDouble(qigou.getText().toString())) {
+//                            tv_item_cart_buy_num.setText(qigou.getText().toString());
+//                            tv_item_cart_buy_num.setSelection(qigou.getText().toString().length() );
+//                        }
+//
+//                        if (Double.parseDouble(tv_item_cart_buy_num.getText().toString()) == Double.parseDouble(qigou.getText().toString())) {
+//                            img_item_cart_buy_sub.setTextColor(Color.RED);
+//                        } else {
+//                            img_item_cart_buy_sub.setTextColor(Color.BLACK);
+//                        }
+//                    }
+//
+//                }
+//
+//                if (!tv_item_cart_buy_num.getText().toString().equals("")) {
+//                    double num = (Double.parseDouble(tv_item_cart_buy_num.getText().toString()));
+//                    double price_num = (Double.parseDouble(bid_price_num.getText().toString()));
+//                    double x = num * price_num;
+//                    DecimalFormat df = new DecimalFormat("#.##");
+//                    all_price_num.setText(df.format(x) + "");
+//
+//                }
+//                LogUtils.log(bianjiadanwei.getText().toString() + "<---");
+//                if ((Double.parseDouble(tv_item_cart_buy_num.getText().toString()) - Double.parseDouble(qigou.getText().toString())) % Double.parseDouble(bianjiadanwei.getText().toString()) != 0) {
+//                    DecimalFormat df = new DecimalFormat("#");
+//                    double number = Double.parseDouble(tv_item_cart_buy_num.getText().toString()) / Double.parseDouble(bianjiadanwei.getText().toString());
+//                    double priceNum = (Integer.parseInt(df.format(number)) * Double.parseDouble(bianjiadanwei.getText().toString())) + Double.parseDouble(qigou.getText().toString());
+//                    String priceString = (priceNum + "");
+//                    tv_item_cart_buy_num.setText(priceString);
+//                    tv_item_cart_buy_num.setSelection(priceString.length());
+//                }
+//            }
+//        });
+////       竞拍价格
+//        bid_price_num.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+////                if (s.length() == 0) {
+////                    if (!status.equals("2")) {
+////                        if (realTimeQuotesIncludeMyOffer) {
+////                            bid_price_num.setText(myOfferBean.getMyPrice().get(0).getBidPrice());
+////                            if (Double.parseDouble(bid_price_num.getText().toString()) == Double.parseDouble(myOfferBean.getMyPrice().get(0).getBidPrice())) {
+////                                bid_price_sub.setTextColor(Color.RED);
+////                            } else {
+////                                bid_price_sub.setTextColor(Color.BLACK);
+////                            }
+////                        } else {
+////                            if (myOfferBean.getMybidQut() == null) {
+////                                if (Double.parseDouble(bid_price_num.getText().toString()) < Double.parseDouble(price.getText().toString()))
+////                                    bid_price_num.setText(price.getText().toString());
+////                                if (Double.parseDouble(bid_price_num.getText().toString()) == Double.parseDouble(price.getText().toString())) {
+////                                    bid_price_sub.setTextColor(Color.RED);
+////                                } else {
+////                                    bid_price_sub.setTextColor(Color.BLACK);
+////                                }
+////                            } else if (myOfferBean.getMybidQut().equals("0")) {
+////                                bid_price_num.setText(price.getText().toString());
+////                                if (Double.parseDouble(bid_price_num.getText().toString()) == Double.parseDouble(price.getText().toString())) {
+////                                    bid_price_sub.setTextColor(Color.RED);
+////                                } else {
+////                                    bid_price_sub.setTextColor(Color.BLACK);
+////                                }
+////                            } else {
+////                                bid_price_num.setText(realTimeMardet.getAuctionPricelist().get(realTimeMardet.getAuctionPricelist().size() - 1).getBidPrice());
+////                                if (Double.parseDouble(bid_price_num.getText().toString()) == Double.parseDouble(realTimeMardet.getAuctionPricelist().get(realTimeMardet.getAuctionPricelist().size() - 1).getBidPrice())) {
+////                                    bid_price_sub.setTextColor(Color.RED);
+////                                } else {
+////                                    bid_price_sub.setTextColor(Color.BLACK);
+////                                }
+////                            }
+////                        }
+////                    } else {
+////                        bid_price_num.setText(price.getText().toString());
+////                        bid_price_num.setSelection(price.getText().toString().length());
+////                        if (Double.parseDouble(bid_price_num.getText().toString()) == Double.parseDouble(price.getText().toString())) {
+////                            bid_price_sub.setTextColor(Color.RED);
+////                        } else {
+////                            bid_price_sub.setTextColor(Color.BLACK);
+////                        }
+////                    }
+////
+////                }
+////                if (s.toString().contains(".")) {
+////
+////                    if (s.length() - 1 - s.toString().indexOf(".") > 3) {
+////                        s = s.toString().subSequence(0,
+////                                s.toString().indexOf(".") + 4);
+////                        bid_price_num.setText(s);
+////                        bid_price_num.setSelection(s.length());
+////                    }
+////                }
+////                if (s.toString().trim().substring(0).equals(".")) {
+////                    s = "0" + s;
+////                    bid_price_num.setText(s);
+////                    bid_price_num.setSelection(3);
+////                }
+////
+////                if (s.toString().startsWith("0")
+////                        && s.toString().trim().length() > 1) {
+////                    if (!s.toString().substring(1, 2).equals(".")) {
+////                        bid_price_num.setText(s.subSequence(1, s.length()));
+////                        bid_price_num.setSelection(1);
+////                        return;
+////                    }
+////                }
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+////              如果没有支付过保证金，都是数字的时候，判断报价和量是否都大于起拍价
+//                if (auctionDetailBean.getDepositFlag().equals("no")) {
+//                    if (Double.parseDouble(bid_price_num.getText().toString()) < Double.parseDouble(price.getText().toString())) {
+//                        bid_price_num.setText((price.getText().toString()));
+//                        bid_price_num.setSelection(price.getText().toString().length());
+//                    }
+//                    if (Double.parseDouble(bid_price_num.getText().toString()) == Double.parseDouble(price.getText().toString())) {
+//                        bid_price_sub.setTextColor(Color.RED);
+//                    } else {
+//                        bid_price_sub.setTextColor(Color.BLACK);
+//                    }
+////              如果有支付过保证金，当大于起拍价时，可以提交成功
+//                } else {
+//                    SharedPreferences sharedPreferences=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+//                    shishicunzai=sharedPreferences.getString("shishicunzai","");
+//                    if (shishicunzai.equals("true")) {
+//                        if (Double.parseDouble(bid_price_num.getText().toString()) < Double.parseDouble(shishiprice)) {
+//                            bid_price_num.setText(shishiprice);
+//                        }
+//
+//                    } else {
+//
+//                            if (Double.parseDouble(bid_price_num.getText().toString()) < Double.parseDouble(price.getText().toString()))
+//                                bid_price_num.setText(price.getText().toString());
+//                            if (Double.parseDouble(bid_price_num.getText().toString()) == Double.parseDouble(price.getText().toString())) {
+//                                bid_price_sub.setTextColor(Color.RED);
+//                            } else {
+//                                bid_price_sub.setTextColor(Color.BLACK);
+//                            }
+//                       // } else if (myOfferBean.getMybidQut().equals("0")) {
+//                            if (Double.parseDouble(bid_price_num.getText().toString()) < Double.parseDouble(price.getText().toString()))
+//                                bid_price_num.setText(price.getText().toString());
+//                            if (Double.parseDouble(bid_price_num.getText().toString()) == Double.parseDouble(price.getText().toString())) {
+//                                bid_price_sub.setTextColor(Color.RED);
+//                            } else {
+//                                bid_price_sub.setTextColor(Color.BLACK);
+//                            }
+////                        } else {
+////                            if (Double.parseDouble(bid_price_num.getText().toString()) < Double.parseDouble(realTimeMardet.getAuctionPricelist().get(realTimeMardet.getAuctionPricelist().size() - 1).getBidPrice()))
+////                                bid_price_num.setText(realTimeMardet.getAuctionPricelist().get(realTimeMardet.getAuctionPricelist().size() - 1).getBidPrice());
+////                            if (Double.parseDouble(bid_price_num.getText().toString()) == Double.parseDouble(realTimeMardet.getAuctionPricelist().get(realTimeMardet.getAuctionPricelist().size() - 1).getBidPrice())) {
+////                                bid_price_sub.setTextColor(Color.RED);
+////                            } else {
+////                                bid_price_sub.setTextColor(Color.BLACK);
+////                            }
+////                        }
+//                    }
+//                }
+//
+//                if (!bid_price_num.getText().toString().equals("")) {
+//                    double num = (Double.parseDouble(tv_item_cart_buy_num.getText().toString()));
+//                    double price_num = (Double.parseDouble(bid_price_num.getText().toString()));
+//                    double x = num * price_num;
+//                    DecimalFormat df = new DecimalFormat("#.##");
+//                    all_price_num.setText(df.format(x) + "");
+//
+//                }
+//                if ((Double.parseDouble(bid_price_num.getText().toString()) - Double.parseDouble(price.getText().toString())) % Double.parseDouble(cangkuaddress.getText().toString()) != 0) {
+//                    DecimalFormat df = new DecimalFormat("#");
+//                    double number = Integer.parseInt(df.format(Double.parseDouble(bid_price_num.getText().toString()) / Double.parseDouble(cangkuaddress.getText().toString()))) + 1;
+//                    double priceNum = (Integer.parseInt(df.format(number)) * Double.parseDouble(cangkuaddress.getText().toString())) + Double.parseDouble(price.getText().toString());
+//                    String priceString = (priceNum + "");
+//                    bid_price_num.setText(priceString);
+//                    bid_price_num.setSelection(priceString.length());
+//                }
+//            }
+//        });
 
     }
 
@@ -1106,7 +1296,7 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
 
     //    获取支付保证金时的银行列表
     public void getinfo_Bank() {
-        Loding.show(this, "加载中...", false, null);
+       // Loding.show(this, "加载中...", false, null);
         String productId = id_value;
         openAuctionPresenter.getBankListResult(productId);
     }
@@ -1144,29 +1334,32 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
 
     //    公开竞拍的报价
     public void gongkai_baojia() {
-        Loding.show(this, "提交报价中...", false, null);
+        //Loding.show(this, "提交报价中...", false, null);
         String productId = id_value;
         String bidPrice = bid_price_num.getText().toString();
         String bidQuantity = tv_item_cart_buy_num.getText().toString();
         SharedPreferences sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
         String _dynSessConf = sp.getString("unique", "");
-        openAuctionPresenter.getOpenBiddingResult(productId, bidPrice, bidQuantity, _dynSessConf);
+        String qigouliang=qigou.getText().toString();
+        openAuctionPresenter.getOpenBiddingResult(productId, bidPrice, bidQuantity, _dynSessConf,qigouliang);
     }
 
     //    密封报价
     public void mifeng_baojia() {
-        Loding.show(this, "提交报价中...", false, null);
+        //Loding.show(this, "提交报价中...", false, null);
         String productId = id_value;
         String bidPrice = bid_price_num.getText().toString();
         String bidQuantity = tv_item_cart_buy_num.getText().toString();
         SharedPreferences sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
         String _dynSessConf = sp.getString("unique", "");
+        String qigouliang=qigou.getText().toString();
 //        密封竞拍报价
-        openAuctionPresenter.getSealedBidResult(productId, bidPrice, bidQuantity, _dynSessConf);
+        openAuctionPresenter.getSealedBidResult(productId, bidPrice, bidQuantity, _dynSessConf,qigouliang);
     }
 
     //      获取已支付的保证金金额
     public void alreadyBaoZhengJin(boolean needShowPopupWindow) {
+        Log.d("进来","即那里");
         String productId = id_value;
         SharedPreferences sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
         String _dynSessConf = sp.getString("unique", "");
@@ -1179,7 +1372,7 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
     //    公开竞拍报价
     @Override
     public void getOpenAuctionResult(String result) {
-        Loding.dis();
+        //Loding.dis();
         if (result.equals("success")) {
             Intent intent = new Intent(OpenAuctionActivity.this, Ok_Dialog.class);
             intent.putExtra("number", SuMaoConstant.QUOTE_SUCCESS);
@@ -1375,6 +1568,7 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
     @Override
     public void setPaymentSecurityResult(String result) {
         Loding.dis();
+        paymentSecurityPopupWindow.dismiss();
         if (result.contains("formError\":true")) {
             Toast.makeText(OpenAuctionActivity.this, "您支付保证金失败！", Toast.LENGTH_SHORT).show();
         } else if (result.contains("\"info\":\"sucess\"")) {
@@ -1394,6 +1588,7 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
     //    获取已支付保证金金额
     @Override
     public void setAmountPaidedResult(String result) {
+
         try {
             JSONObject obj = new JSONObject(result);
             zhifujine = obj.getString("deposit");
@@ -1503,8 +1698,8 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
             LogUtils.log("走这里--->3");
             tv_result.setText(promptLanguage);
             LogUtils.log("tv_Message--->" + openAuctionStateBean.getMsg());
-            //tv_Message.setText(openAuctionStateBean.getMsg());
-            Toast.makeText(OpenAuctionActivity.this, ""+openAuctionStateBean.getMsg(), Toast.LENGTH_SHORT).show();
+            //提示返回的信息
+            //Toast.makeText(OpenAuctionActivity.this, ""+openAuctionStateBean.getMsg(), Toast.LENGTH_SHORT).show();
         }
 //       显示参与竞拍按钮
         if (openAuctionStateBean.getMsg().equals("attendAuction")) {
@@ -1519,17 +1714,34 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
                 LogUtils.log("走这里--->7");
                 //        需要支付保证金
                 LogUtils.log("setStateOfPublicBiddingResult--->" + setStateOfPublicBiddingResult);
-                if (setStateOfPublicBiddingResult) {
+                if (auctionDetailBean.getDepositFlag().equals("percent")) {
                     LogUtils.log("走这里--->8");
+                    depositDeadline = auctionDetailBean.getDepositDeadline().getTime();
 //                保证金最后期限
 //                    if (Double.parseDouble(depositDeadline) - System.currentTimeMillis() < 0) {
 //                        btZhifu_auction.setBackgroundColor(getResources().getColor(R.color.gray));
 //                    }
+                    //      保证金比例
+                    String str = auctionDetailBean.getCl_baozhj();
+                    LogUtils.log("需要支付保证金比例--->" + str);
+//        是否需要支付保证金
+                    needToPayTheMargin = !str.equals("%");
+                    LogUtils.log("是否需要支付保证金--->" + needToPayTheMargin);
+                    if (needToPayTheMargin) {
+                        NumberFormat nf = NumberFormat.getPercentInstance();
+                        try {
+                            m = nf.parse(str);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        percent = String.format("%.4f", Double.parseDouble(m.toString()));
+                    }
+
                     bt_jinpai_colse.setVisibility(View.GONE);
                     Layout_Button_Open.setVisibility(View.VISIBLE);
                     alreadyBaoZhengJin(false);
 //            不需要支付保证金
-                } else {
+                } else if (auctionDetailBean.getDepositFlag().equals("no")){
                     LogUtils.log("走这里--->8的else");
                     Layout_Button_close.setVisibility(View.VISIBLE);
                     bt_jinpai_colse.setVisibility(View.VISIBLE);
@@ -1537,65 +1749,133 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
                     bt_jinpai_colse.setText("立即报价");
                 }
 //            竞拍未开始
-            } else if (!status.equals("2")) {
-                String url=SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/payment/OrderPayment/attendAuction";
-                RequestParams rp=new RequestParams(url);
-                rp.addParameter("productId",id_value);
-                rp.addParameter("_dynSessConf",unique);
-                x.http().post(rp, new Callback.CommonCallback<String>() {
-                    @Override
-                    public void onSuccess(String result) {
-                        Log.d("判断状态的返回值",""+result);
-                        if (!result.contains("请前往'订单管理'查看您的订单，订单号")){
-                            //第一次参加竞拍
-                            participate_in_the_auction_ll.setVisibility(View.VISIBLE);
-                        }else{
-                            LogUtils.log("走这里--->9");
-//        需要支付保证金
-                            if (isbaizhengjin) {
-                                LogUtils.log("走这里--->10");
+            } else if (!status.equals("2")&&state.equals("1")) {
+                //需要支付保证金
+                if (auctionDetailBean.getDepositFlag().equals("percent")) {
+                    depositDeadline = auctionDetailBean.getDepositDeadline().getTime();
+                    LogUtils.log("走这里--->10");
 //                保证金最后期限
-                                String depositDeadline = auctionDetailBean.getDepositDeadline().getTime();
-                                if (Double.parseDouble(depositDeadline) - System.currentTimeMillis() < 0) {
-                                    bt_jinpai_colse.setBackgroundColor(getResources().getColor(R.color.gray));
-                                }
-                                bt_jinpai_colse.setText("支付保证金");
-                                Layout_Button_close.setVisibility(View.VISIBLE);
-                                alreadyBaoZhengJin(false);
+                    String depositDeadline = auctionDetailBean.getDepositDeadline().getTime();
+                    if (Double.parseDouble(depositDeadline) - System.currentTimeMillis() < 0) {
+                        bt_jinpai_colse.setBackgroundColor(getResources().getColor(R.color.gray));
+                    }
+                    bt_jinpai_colse.setText("支付保证金");
+                    Layout_Button_close.setVisibility(View.VISIBLE);
+                    alreadyBaoZhengJin(false);
 //            不需要支付保证金
-                            } else {
-                                LogUtils.log("走这里--->11");
-                                bt_jinpai_colse.setVisibility(View.GONE);
-                                //没有保证金
-                               // participate_in_the_auction_ll.setVisibility(View.VISIBLE);
-                            }
+                } else if (auctionDetailBean.getDepositFlag().equals("no")){
+                    LogUtils.log("走这里--->11");
+                    bt_jinpai_colse.setVisibility(View.GONE);
+                    //没有保证金
+                    // participate_in_the_auction_ll.setVisibility(View.VISIBLE);
+                }
 
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable ex, boolean isOnCallback) {
-                        Log.d("error的值","error");
-
-                    }
-
-                    @Override
-                    public void onCancelled(CancelledException cex) {
-                        Log.d("oncancelled的值","onCancelled");
-
-                    }
-
-                    @Override
-                    public void onFinished() {
-                        Log.d("finish的值","finish");
-
-                    }
-                });
+//                String url=SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/payment/OrderPayment/attendAuction";
+//                RequestParams rp=new RequestParams(url);
+//                rp.addParameter("productId",id_value);
+//                rp.addParameter("_dynSessConf",unique);
+//                x.http().post(rp, new Callback.CommonCallback<String>() {
+//                    @Override
+//                    public void onSuccess(String result) {
+//                        Log.d("判断状态的返回值",""+result);
+//                        if (!result.contains("请前往'订单管理'查看您的订单，订单号")){
+//                            //第一次参加竞拍
+//                            participate_in_the_auction_ll.setVisibility(View.VISIBLE);
+//                        }else{
+//                            LogUtils.log("走这里--->9");
+////        需要支付保证金
+//                            if (isbaizhengjin) {
+//                                depositDeadline = auctionDetailBean.getDepositDeadline().getTime();
+//                                LogUtils.log("走这里--->10");
+////                保证金最后期限
+//                                String depositDeadline = auctionDetailBean.getDepositDeadline().getTime();
+//                                if (Double.parseDouble(depositDeadline) - System.currentTimeMillis() < 0) {
+//                                    bt_jinpai_colse.setBackgroundColor(getResources().getColor(R.color.gray));
+//                                }
+//                                bt_jinpai_colse.setText("支付保证金");
+//                                Layout_Button_close.setVisibility(View.VISIBLE);
+//                                alreadyBaoZhengJin(false);
+////            不需要支付保证金
+//                            } else {
+//                                LogUtils.log("走这里--->11");
+//                                bt_jinpai_colse.setVisibility(View.GONE);
+//                                //没有保证金
+//                               // participate_in_the_auction_ll.setVisibility(View.VISIBLE);
+//                            }
+//
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable ex, boolean isOnCallback) {
+//                        Log.d("error的值","error");
+//
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(CancelledException cex) {
+//                        Log.d("oncancelled的值","onCancelled");
+//
+//                    }
+//
+//                    @Override
+//                    public void onFinished() {
+//                        Log.d("finish的值","finish");
+//
+//                    }
+//                });
 
             }
 
 
         }
+
+    }
+
+    //参与竞拍
+    public void canyujingpai(){
+        String url=SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/payment/OrderPayment/attendAuction";
+        RequestParams rp=new RequestParams(url);
+        rp.addParameter("productId",id_value);
+        rp.addParameter("skuId",auctionDetailBean.getCl_cpid());
+        rp.addParameter("_dynSessConf",unique);
+        x.http().post(rp, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.d("参与竞拍的返回值",result+"");
+                if (result.contains("yes")){
+
+                    if (auctionDetailBean.getDepositFlag().equals("no")) {
+                        bt_jinpai_colse.setText("立即报价");
+                    } else if(auctionDetailBean.getDepositFlag().equals("percent")) {
+                        participate_in_the_auction.setVisibility(View.GONE);
+                        Layout_Button_close.setVisibility(View.VISIBLE);
+                        bt_jinpai_colse.setText("支付保证金");
+//                保证金最后期限
+                        String depositDeadline = auctionDetailBean.getDepositDeadline().getTime();
+                        if (Double.parseDouble(depositDeadline) - System.currentTimeMillis() < 0) {
+                            bt_jinpai_colse.setBackgroundColor(getResources().getColor(R.color.gray));
+                        }
+                    }
+
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
 
     }
 
@@ -1621,23 +1901,45 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
                 double num1 = Double.valueOf(tv_item_cart_buy_num.getText().toString());
                 num1 -= Double.valueOf(bianjiadanwei.getText().toString());
                 if (Double.parseDouble(zhifujine) == 0) {
-                    if (num1 < Double.valueOf(qigou.getText().toString())) {
-                        Toast.makeText(this, "购买数量不能小于起购量", Toast.LENGTH_SHORT).show();
-                    } else {
-                        tv_item_cart_buy_num.setText(num1 + "");
-                    }
-                } else {
-                    if (realTimeQuotesIncludeMyOffer) {
-                        if (num1 < Double.valueOf(myOfferBean.getMyPrice().get(0).getBidQut())) {
-                            tv_item_cart_buy_num.setText(myOfferBean.getMyPrice().get(0).getBidQut());
-                        } else {
+
+//                    if (num1 < Double.valueOf(qigou.getText().toString())) {
+//                        Toast.makeText(this, "购买数量不能小于起购量", Toast.LENGTH_SHORT).show();
+//                    } else {
+//                        tv_item_cart_buy_num.setText(num1 + "");
+//                    }
+                    SharedPreferences spces=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+                    shishicunzai=spces.getString("shishicunzai","");
+                    if (shishicunzai.equals("true")){
+                        //可以减少到当前成交数量
+                        if (num1<Double.parseDouble(shishicjnumber)){
+                            tv_item_cart_buy_num.setText(shishicjnumber);
+                        }else{
+                            tv_item_cart_buy_num.setText(num1+"");
+                        }
+                    }else{
+                        //可以减少到起购量
+                        if (num1 < Double.valueOf(qigou.getText().toString())){
+                            Toast.makeText(this, "购买数量不能小于起购量", Toast.LENGTH_SHORT).show();
+                        }else{
                             tv_item_cart_buy_num.setText(num1 + "");
                         }
+                    }
+                } else {
 
-                    } else {
-                        if (num1 < Double.valueOf(qigou.getText().toString())) {
+                    SharedPreferences spces=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+                    shishicunzai=spces.getString("shishicunzai","");
+                    if (shishicunzai.equals("true")){
+                        //可以减少到当前成交数量
+                        if (num1<Double.parseDouble(shishicjnumber)){
+                            tv_item_cart_buy_num.setText(shishicjnumber);
+                        }else{
+                            tv_item_cart_buy_num.setText(num1+"");
+                        }
+                    }else{
+                        //可以减少到起购量
+                        if (num1 < Double.valueOf(qigou.getText().toString())){
                             Toast.makeText(this, "购买数量不能小于起购量", Toast.LENGTH_SHORT).show();
-                        } else {
+                        }else{
                             tv_item_cart_buy_num.setText(num1 + "");
                         }
                     }
@@ -1648,6 +1950,7 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
 //            数量加
             case R.id.img_item_cart_buy_add:
                 double num2 = Double.valueOf(tv_item_cart_buy_num.getText().toString());
+                Log.d("num2的值",num2+"");
                 num2 += Double.valueOf(bianjiadanwei.getText().toString());
                 if (num2 > Double.valueOf(sheng.getText().toString())) {
                     Toast.makeText(this, "购买数量不能大于竞拍总量", Toast.LENGTH_SHORT).show();
@@ -1668,33 +1971,50 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
                         bid_price_num.setText(num3 + "");
                     }
                 } else {
-                    if (realTimeQuotesIncludeMyOffer) {
-                        if (num3 < Double.parseDouble(myOfferBean.getMyPrice().get(0).getBidPrice())) {
-                            bid_price_num.setText(myOfferBean.getMyPrice().get(0).getBidPrice());
-                        } else {
+                    SharedPreferences sharedPreferences=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+                    shishicunzai=sharedPreferences.getString("shishicunzai","");
+                    if (shishicunzai.equals("true")){
+                        //价格不能减少，价格是实施行情的价格
+                        if (num3<=Double.parseDouble(shishiprice)){
+                            bid_price_num.setText(shishiprice);
+                        }else{
                             bid_price_num.setText(num3 + "");
                         }
-
-                    } else {
-                        if (myOfferBean.getMybidQut() == null) {
-                            if (Double.parseDouble(bid_price_num.getText().toString()) < Double.parseDouble(price.getText().toString()))
-                                bid_price_num.setText(price.getText().toString());
-                        } else if (myOfferBean.getMybidQut().equals("0")) {
-                            if (num3 < Double.parseDouble(price.getText().toString())) {
-                                bid_price_num.setText(price.getText().toString());
-                            } else {
-                                bid_price_num.setText(num3 + "");
-                            }
-
-                        } else {
-                            if (num3 < Double.parseDouble(realTimeMardet.getAuctionPricelist().get(realTimeMardet.getAuctionPricelist().size() - 1).getBidPrice())) {
-                                bid_price_num.setText(realTimeMardet.getAuctionPricelist().get(realTimeMardet.getAuctionPricelist().size() - 1).getBidPrice());
-                            } else {
-                                bid_price_num.setText(num3 + "");
-                            }
-
+                    }else{
+                        //价格不能小于起拍价
+                        if (num3<Double.parseDouble(qigou.getText().toString())){
+                            bid_price_num.setText(qigou.getText().toString());
+                        }else{
+                            bid_price_num.setText(num3 + "");
                         }
                     }
+//                    if (realTimeQuotesIncludeMyOffer) {
+//                        if (num3 < Double.parseDouble(myOfferBean.getMyPrice().get(0).getBidPrice())) {
+//                            bid_price_num.setText(myOfferBean.getMyPrice().get(0).getBidPrice());
+//                        } else {
+//                            bid_price_num.setText(num3 + "");
+//                        }
+//
+//                    } else {
+//                        if (myOfferBean.getMybidQut() == null) {
+//                            if (Double.parseDouble(bid_price_num.getText().toString()) < Double.parseDouble(price.getText().toString()))
+//                                bid_price_num.setText(price.getText().toString());
+//                        } else if (myOfferBean.getMybidQut().equals("0")) {
+//                            if (num3 < Double.parseDouble(price.getText().toString())) {
+//                                bid_price_num.setText(price.getText().toString());
+//                            } else {
+//                                bid_price_num.setText(num3 + "");
+//                            }
+//
+//                        } else {
+//                            if (num3 < Double.parseDouble(realTimeMardet.getAuctionPricelist().get(realTimeMardet.getAuctionPricelist().size() - 1).getBidPrice())) {
+//                                bid_price_num.setText(realTimeMardet.getAuctionPricelist().get(realTimeMardet.getAuctionPricelist().size() - 1).getBidPrice());
+//                            } else {
+//                                bid_price_num.setText(num3 + "");
+//                            }
+//
+//                        }
+                   // }
 
                 }
                 all_price_num.setText(Double.valueOf(bid_price_num.getText().toString()) * Double.valueOf(tv_item_cart_buy_num.getText().toString()) + "");
@@ -1704,6 +2024,7 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
                 double num4 = Double.valueOf(bid_price_num.getText().toString());
                 num4 += Double.valueOf(cangkuaddress.getText().toString());
                 bid_price_num.setText(num4 + "");
+                Log.d("tv_item_buy_num",tv_item_cart_buy_num.getText().toString());
                 all_price_num.setText(Double.valueOf(bid_price_num.getText().toString()) * Double.valueOf(tv_item_cart_buy_num.getText().toString()) + "");
                 break;
         }
@@ -1730,7 +2051,7 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
         String orderId = tv_order_id.getText().toString();
         list_order.add(orderId);
         String order = null;
-        Loding.show(this, "加载中...", false, null);
+       // Loding.show(this, "加载中...", false, null);
         openAuctionPresenter.getBankListFromService(order, orderId);
     }
 
@@ -1775,14 +2096,50 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
     @Override
     public void onStart() {
         super.onStart();
+        Log.d("先走这个方法","先走这个方法");
         sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
         unique=sp.getString("unique","");
-       // setValue();
+
         booleanOpenorClose();
+        if (type_way.equals("公开竞拍")) {
+            handler = new Handler() {
+                @Override
+                public void handleMessage(Message msg) {
+                    super.handleMessage(msg);
+                    //getinfo();
+                    switch (msg.what) {
+                        case 1:
+                            selecttimer();
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            };
+
+            timer = new Timer();
+            task = new TimerTask() {
+                @Override
+                public void run() {
+                    Message message = new Message();
+                    message.what = 1;
+                    handler.sendMessage(message);
+                }
+            };
+
+            timer.schedule(task, 3000, 3000);
+        }
 
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (type_way.equals("公开竞拍")){
+            timer.cancel();
+        }
 
+    }
 
     /*定义一个倒计时的内部类*/
     class MyCount extends CountDownTimer {
@@ -1792,8 +2149,7 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
 
         @Override
         public void onFinish() {
-            onCreate(null);
-            onStart();
+            selecttimer();
 //            tvTimeValue.setText("");
 //            payImmediately.setVisibility(View.GONE);
 //            layoutIn.setVisibility(View.GONE);
@@ -1802,7 +2158,7 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
 //                    btZhifu_auction.setBackgroundColor(getResources().getColor(R.color.gray_type));
 //                    bt_jinpai.setBackgroundColor(getResources().getColor(R.color.gray_type));
 //                } else {
-//                    Popupwindow();
+//                    //Popupwindow();
 //                }
 //                Layout_Button_Open.setVisibility(View.VISIBLE);
 //                Layout_Button_close.setVisibility(View.GONE);
@@ -1852,6 +2208,7 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
     public void setMyOfferResult(String result, boolean offer) {
         Loding.dis();
         myOffer = result;
+        Log.d("我的报价的返回值",result);
         Gson gson = new Gson();
         myOfferBean = gson.fromJson(myOffer, MyOfferBean.class);
         if (realTimeQuotesIncludeMyOffer && !offer) {
@@ -1892,16 +2249,16 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
         Loding.dis();
         String productId = auctionDetailBean.getCl_id();
         String type = auctionDetailBean.getCl_type();
-        SharedPreferences sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+        sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
         String _dynSessConf = sp.getString("unique", "");
-//        我的报价
-        Loding.show(this, "加载中...", false, null);
+
         openAuctionPresenter.getMyOfferResult(_dynSessConf, productId, type, offer);
         realTimeQuotes = result;
         Gson gson = new Gson();
         realTimeMardet = gson.fromJson(realTimeQuotes, RealTimeMardet.class);
         List<RealTimeMardet.AuctionPricelistBean> auctionPricelist = realTimeMardet.getAuctionPricelist();
         String u_clientID = getSharedPreferences("sumao", Activity.MODE_PRIVATE).getString("U_clientID", "");
+
         for (int i = 0; i < auctionPricelist.size(); i++) {
             RealTimeMardet.AuctionPricelistBean auctionPricelistBean = auctionPricelist.get(i);
             if (u_clientID.equals(auctionPricelistBean.getBuyerId())) {
@@ -1909,8 +2266,8 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
             }
         }
         if (offer && !realTimeQuotesIncludeMyOffer) {
-            if (Double.parseDouble(bid_price_num.getText().toString()) <= Double.parseDouble(myOfferBean.getMyPrice().get(0).getBidPrice()) &&
-                    Double.parseDouble(tv_item_cart_buy_num.getText().toString()) <= Double.parseDouble(myOfferBean.getMyPrice().get(0).getBidQut())) {
+            if (Double.parseDouble(bid_price_num.getText().toString()) <= Double.parseDouble(shishiprice) &&
+                    Double.parseDouble(tv_item_cart_buy_num.getText().toString()) <= Double.parseDouble(shishicjnumber)) {
                 if (Double.parseDouble(bid_price_num.getText().toString()) <= Double.parseDouble(myOfferBean.getMyPrice().get(0).getBidPrice())) {
                     Toast.makeText(OpenAuctionActivity.this, "竞拍单价必须大于等于您当前的自报价。", Toast.LENGTH_SHORT).show();
                 } else {
@@ -1942,6 +2299,109 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
             }
 
         }
+
+    }
+
+    //实时行情查看
+    public void shishihangqingSelect(){
+
+        String url= SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/catalog/ProductCatalogActor/auctionProductPriceList";
+        RequestParams rp = new RequestParams(url);
+        rp.addParameter("productId", productId);
+
+        Log.d("实时行情的rp",""+rp);
+        x.http().post(rp, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.d("实施行情的返回值", result);
+                u_clientID = getSharedPreferences("sumao", Activity.MODE_PRIVATE).getString("U_clientID", "");
+                if (result.contains("auctionPricelist")){
+                    Log.d("if","if");
+                    try {
+                        JSONObject jsonobject=new JSONObject(result);
+                        String auctionPricelist=jsonobject.getString("auctionPricelist");
+                        JSONArray jsonArray=new JSONArray(auctionPricelist);
+                        for (int i=0;i<jsonArray.length();i++){
+                            Log.d("jsonfor","jsonfor");
+                            JSONObject object=jsonArray.getJSONObject(i);
+                            Log.d("userid",u_clientID+"u_clientId");
+                            if (object.toString().contains(u_clientID)){
+                                Log.d("解析进来了","解析进来了");
+                                shishiprice=object.getString("bidPrice");
+                                shishinumber=object.getString("bidQut");
+                                shishicjnumber=object.getString("dealQut");
+                                Log.d("解析的值",shishiprice+shishicjnumber+shishinumber);
+                                sp= getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sp.edit();
+                                //editor.putBoolean("shishicunzai", true);
+                                editor.putString("shishicunzai","true");
+                                editor.commit();
+                                //editor.commit();
+
+                            }
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                //setValue();
+                fuzhi();
+
+
+
+
+            }
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+    }
+
+    //定时器再次查看详情
+    public void selecttimer(){
+        //iscunhuan=true;
+        String url = SuMaoConstant.SUMAO_IP + "/rest/model/atg/commerce/catalog/ProductCatalogActor/auctionProduct";
+        RequestParams rp=new RequestParams(url);
+        rp.addParameter("productId",productId);
+        rp.addParameter("proType",proType);
+        x.http().post(rp, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                if (result.contains("cl_xbianjia")){
+                    Gson gson=new Gson();
+                    auctionDetailBean = gson.fromJson(result, AuctionDetailBean.class);
+                    //shishihangqingSelect();
+                    setValue();
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+
 
     }
 

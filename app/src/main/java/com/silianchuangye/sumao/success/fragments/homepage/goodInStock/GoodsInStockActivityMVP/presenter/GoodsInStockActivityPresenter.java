@@ -25,7 +25,7 @@ IGoodsInStockActivityView goodsInStockActivityView;
         this.goodsInStockActivityView = goodsInStockActivityView;
     }
 
-    public   void getGoodsInStockInfo(String groups,String pattern, String regions, String provinces, String cities,
+    public void getGoodsInStockInfo(String groups,String pattern, String regions, String provinces, String cities,
                                       String categoryNames, String appNames, String gradeNums, String pageNum,String updateOrLoad){
         IGoodsInStockActivityModel goodsInStockActivityModel = new GoodsInStockActivityModel(groups,pattern,  regions,  provinces,  cities,
                 categoryNames,  appNames,  gradeNums,  pageNum,updateOrLoad);

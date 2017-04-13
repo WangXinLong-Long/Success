@@ -365,6 +365,11 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
             case R.id.bottom4:
 //                intent.setClass(this, LogisticsInformationActivity.class);
 //                startActivity(intent);
+                Intent intent1=new Intent(SpotOrder.this,logisticsActivity.class);
+                intent1.putExtra("orderId",orderId);
+                startActivity(intent1);
+
+
                 break;
 
         }

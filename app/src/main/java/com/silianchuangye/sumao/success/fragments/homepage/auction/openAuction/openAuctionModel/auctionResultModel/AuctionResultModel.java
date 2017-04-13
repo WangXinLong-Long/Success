@@ -1,5 +1,7 @@
 package com.silianchuangye.sumao.success.fragments.homepage.auction.openAuction.openAuctionModel.auctionResultModel;
 
+import android.widget.Toast;
+
 import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
@@ -42,6 +44,7 @@ public class AuctionResultModel implements IAuctionResultModel {
 
             @Override
             public void onCancelled(CancelledException cex) {
+
 
             }
 

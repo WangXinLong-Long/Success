@@ -7,6 +7,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -75,14 +76,16 @@ public class VesselOneActivity extends AppCompatActivity {
         String uCompany = getIntent().getStringExtra("U_company");
         String type_way = getIntent().getStringExtra("type_way");
         String productId = getIntent().getStringExtra("productId");
+        Log.d("商品的Id",productId);
         title_vessel_one.setText(type_way);
         list = new ArrayList<Fragment>();
 //        实时行情
         RealTimeMarketFragment realTimeMarketFragment = new RealTimeMarketFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("realTimeQuotes", realTimeQuotes);
+        //bundle.putString("realTimeQuotes", realTimeQuotes);
         bundle.putString("uCompany", uCompany);
         bundle.putString("type_way", type_way);
+        bundle.putString("productId",productId);
         realTimeMarketFragment.setArguments(bundle);
         list.add(realTimeMarketFragment);
 //        我的报价

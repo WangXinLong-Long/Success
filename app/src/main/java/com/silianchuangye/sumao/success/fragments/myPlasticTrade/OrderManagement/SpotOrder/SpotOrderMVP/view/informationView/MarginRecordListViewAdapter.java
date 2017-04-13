@@ -2,6 +2,7 @@ package com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagemen
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +12,10 @@ import android.widget.TextView;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.SpotOrder.SpotOrderMVP.MarginRecordItemBean;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Jobs Created on 2017/2/8.
@@ -20,7 +23,7 @@ import java.util.List;
 public class MarginRecordListViewAdapter extends BaseAdapter {
     private Context context;
     private LayoutInflater inflater;
-    private List<MarginRecordItemBean> lists;
+    private List<Map<String,Object>> lists;
 
     public MarginRecordListViewAdapter(Context context) {
         this.context = context;
@@ -28,15 +31,16 @@ public class MarginRecordListViewAdapter extends BaseAdapter {
         lists = new ArrayList<>();
     }
 
-    public void addData(List<MarginRecordItemBean> data){
+    public void addData(List<Map<String,Object>> data){
         lists.addAll(data);
     }
 
-public void clearData(){
+    public void clearData(){
     lists.clear();
 }
     @Override
     public int getCount() {
+        Log.d("list的size",lists.size()+"");
         return lists.size();
     }
 
@@ -71,19 +75,27 @@ public void clearData(){
         }else {
             viewHolder = ((ViewHolder) convertView.getTag());
         }
-        if (lists.get(position).getState().equals("已冻结:")){
+        if (lists.get(position).get("type").equals("freeze")){
             viewHolder.frozen_tv.setTextColor(Color.RED);
             viewHolder.capital_yuan.setTextColor(Color.RED);
             viewHolder.capital.setTextColor(Color.RED);
+            viewHolder.frozen_tv.setText("已冻结");
+        }else if (lists.get(position).get("type").equals("force")){
+            viewHolder.frozen_tv.setTextColor(Color.YELLOW);
+            viewHolder.capital_yuan.setTextColor(Color.YELLOW);
+            viewHolder.capital.setTextColor(Color.YELLOW);
+            viewHolder.frozen_tv.setText("已强扣");
         }else {
             viewHolder.frozen_tv.setTextColor(Color.GREEN);
             viewHolder.capital_yuan.setTextColor(Color.GREEN);
             viewHolder.capital.setTextColor(Color.GREEN);
+            viewHolder.frozen_tv.setText("已解冻");
         }
-        viewHolder.frozen_tv.setText(lists.get(position).getState());
-        viewHolder.capital.setText(lists.get(position).getMoney());
-        viewHolder.frozen_date_number.setText(lists.get(position).getDate());
-        viewHolder.frozen_time_number.setText(lists.get(position).getTime());
+        //viewHolder.frozen_tv.setText(lists.get(position).get("type").toString());
+        viewHolder.capital.setText(lists.get(position).get("amount").toString());
+        viewHolder.frozen_date_number.setText(new SimpleDateFormat("yyyy-MM-dd").
+                format(Double.parseDouble(lists.get(position).get("time").toString())));
+        viewHolder.frozen_time_number.setText(new SimpleDateFormat("HH:mm:ss").format(Double.parseDouble(lists.get(position).get("time").toString())));
         return convertView;
     }
     class ViewHolder{

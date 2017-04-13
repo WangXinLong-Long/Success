@@ -39,6 +39,7 @@ public class PaymentSecurityModel implements IPaymentAuctionSecurityModel {
         x.http().post(rp, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
+
                 LogUtils.log("支付保证金返回值result--->"+"" + result);
                 callback.callbackPaymentSecurity(result);
             }

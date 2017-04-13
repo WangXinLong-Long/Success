@@ -121,6 +121,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/x10"
                 android:background="@color/white"
+                android:id="@+id/layout_huokuan"
                 android:padding="@dimen/x10">
                 <TextView
                     android:id="@+id/loan_record_tv"
@@ -193,6 +194,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/x10"
                 android:background="@color/white"
+                android:id="@+id/layout_bank"
                 android:padding="@dimen/x10">
                 <TextView
                     android:id="@+id/payment_information_tv"
@@ -244,14 +246,15 @@
                     android:id="@+id/payment_information_payment_account_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:layout_below="@id/payment_information_payer_tv"/>
+                    android:layout_marginTop="@dimen/x10"
+                    android:layout_below="@id/payment_information_paying_bank"/>
                 <TextView
                     android:text="~~"
                     android:id="@+id/payment_information_payment_account"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/payment_information_payer_tv"
+                    android:layout_marginTop="@dimen/x10"
+                    android:layout_below="@id/payment_information_paying_bank"
                     android:layout_toRightOf="@id/payment_information_payment_account_tv"/>
 
                 <TextView
@@ -259,50 +262,55 @@
                     android:id="@+id/payment_information_dividing_line2"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/x1"
+                    android:layout_marginTop="@dimen/x5"
                     android:background="@color/gray_type"
-                    android:layout_below="@id/payment_information_paying_bank_tv"/>
+                    android:layout_below="@id/payment_information_payment_account_tv"/>
                 <TextView
                     android:text="收款方:"
                     android:id="@+id/payment_information_payer_tv2"
-                    android:layout_marginBottom="@dimen/x10"
+                    android:layout_marginTop="@dimen/x10"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/payment_information_dividing_line2"/>
+                    android:layout_below="@id/payment_information_payment_account"/>
                 <TextView
                     android:text="~~"
                     android:id="@+id/payment_information_payer2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/payment_information_dividing_line2"
+                    android:layout_marginTop="@dimen/x10"
+                    android:layout_below="@id/payment_information_payment_account"
                     android:layout_toRightOf="@id/payment_information_payer_tv2"/>
 
                 <TextView
                     android:text="收款银行:"
-                    android:layout_marginBottom="@dimen/x10"
+                    android:layout_marginTop="@dimen/x10"
                     android:id="@+id/payment_information_paying_bank_tv2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/payment_information_payer_tv2"/>
+                    android:layout_below="@id/payment_information_payer2"/>
                 <TextView
                     android:text="~~"
                     android:id="@+id/payment_information_paying_bank2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/payment_information_payer_tv2"
-                    android:layout_toRightOf="@id/payment_information_paying_bank_tv2"/>
+                    android:layout_marginTop="@dimen/x10"
+                    android:layout_toRightOf="@+id/payment_information_paying_bank_tv2"
+                    android:layout_below="@id/payment_information_payer2"
+                    />
                 <TextView
                     android:text="收款账号:"
                     android:id="@+id/payment_information_payment_account_tv2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:layout_below="@id/payment_information_payer_tv2"/>
+                    android:layout_marginTop="@dimen/x10"
+                    android:layout_below="@id/payment_information_paying_bank2"/>
                 <TextView
                     android:text="~~"
                     android:id="@+id/payment_information_payment_account2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/payment_information_payer_tv2"
+                    android:layout_marginTop="@dimen/x10"
+                    android:layout_below="@id/payment_information_paying_bank2"
                     android:layout_toRightOf="@id/payment_information_payment_account_tv2"/>
             </RelativeLayout>
         </LinearLayout>

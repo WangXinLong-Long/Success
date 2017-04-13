@@ -1,5 +1,7 @@
 package com.silianchuangye.sumao.success.fragments.homepage.auction.openAuction.openAuctionModel.openAuctionOrSealedBidModel;
 
+import android.util.Log;
+
 import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
@@ -33,6 +35,7 @@ public class OpenAuctionOrSealedBidModel implements IOpenAuctionOrSealedBidModel
         rp.addParameter("productId", productId);
         rp.addParameter("proType", proType);
         LogUtils.log("竞拍详情的URL--->"+rp);
+        Log.d("竞拍详情的URL",""+rp);
         x.http().post(rp, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {

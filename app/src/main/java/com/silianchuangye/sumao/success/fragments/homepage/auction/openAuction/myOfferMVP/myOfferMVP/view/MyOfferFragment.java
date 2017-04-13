@@ -2,9 +2,11 @@ package com.silianchuangye.sumao.success.fragments.homepage.auction.openAuction.
 
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +23,13 @@ import com.google.gson.Gson;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.openAuction.myOfferMVP.bean.MyOfferBean;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.openAuction.myOfferMVP.myOfferMVP.presenter.MyOfferPresenter;
+import com.silianchuangye.sumao.success.fragments.homepage.auction.openAuction.openAuctionPresenter.OpenAuctionPresenter;
+import com.silianchuangye.sumao.success.fragments.homepage.auction.openAuction.openAuctionView.OpenAuctionActivity;
+import com.silianchuangye.sumao.success.utils.SuMaoConstant;
+
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -41,6 +50,8 @@ public class MyOfferFragment extends Fragment implements IMyOfferView {
     private String productId;
     private GridAdpater adapter;
     private String _dynSessConf;
+    private OpenAuctionPresenter openAuctionPresenter;
+    String type_way ;
     // private List<String> bianhai,danjia,shuliang,m_dun,time;
 
     @Override
@@ -53,23 +64,26 @@ public class MyOfferFragment extends Fragment implements IMyOfferView {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         myOfferPresenter = new MyOfferPresenter(this);
+
         View view = inflater.inflate(R.layout.fragment_my_offer, container, false);
         lvDemo = (ListView) view.findViewById(R.id.lvDemo);
         RelativeLayout five_rl = (RelativeLayout) view.findViewById(R.id.five_rl);
         list = new ArrayList<Map<String, Object>>();
         _dynSessConf = getActivity().getSharedPreferences("sumao", Activity.MODE_PRIVATE).getString("unique","");
         String result = getArguments().getString("myOffer");
-        String type_way = getArguments().getString("type_way");
+        type_way= getArguments().getString("type_way");
         productId = getArguments().getString("productId");
-
+        Log.d("type的值",type_way);
+        myOfferPresenter.getMyOfferResult(_dynSessConf,productId,type_way,null);
         if (type_way.equals("密封报价")) {
             five_rl.setVisibility(View.VISIBLE);
+            getinfo("sealedAuctionProduct");
         } else {
             five_rl.setVisibility(View.GONE);
+            getinfo("englishAuctionProduct");
         }
-        adapter = new GridAdpater(type_way);
-        lvDemo.setAdapter(adapter);
-        getData(result);
+
+
         return view;
     }
 
@@ -209,7 +223,25 @@ public class MyOfferFragment extends Fragment implements IMyOfferView {
             viewHolder.revoke.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    myOfferPresenter.getMyOfferResult(_dynSessConf,productId,"sealedAuctionProduct",(String) list.get(position).get("bianhao"));
+                    //myOfferPresenter.getMyOfferResult(_dynSessConf,productId,"sealedAuctionProduct",(String) list.get(position).get("bianhao"));
+
+                    final AlertDialog.Builder alert=new AlertDialog.Builder(getContext());
+                    alert.setMessage("是否要撤销报价?");
+                    alert.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                             dialog.cancel();
+                        }
+                    });
+                    alert.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            revoke(list.get(position).get("bianhao").toString(),position);
+                            list.remove(position);
+                            adapter.notifyDataSetChanged();
+                        }
+                    });
+                    alert.create().show();
                 }
             });
             return convertView;
@@ -222,6 +254,45 @@ public class MyOfferFragment extends Fragment implements IMyOfferView {
             Button revoke;
             RelativeLayout revoke_rl;
         }
+
+    }
+
+    public void getinfo(String type){
+        String url = "";
+        if (type.equals("sealedAuctionProduct")) {//密封竞拍我的报价
+            url = SuMaoConstant.SUMAO_IP + "/rest/model/atg/commerce/catalog/ProductCatalogActor/sealedAuctionProductPrice";
+        } else if (type.equals("englishAuctionProduct")) {//公开竞拍我的报价
+            url = SuMaoConstant.SUMAO_IP + "/rest/model/atg/commerce/catalog/ProductCatalogActor/myAuctionProductPrice";
+        }
+        RequestParams rp = new RequestParams(url);
+        rp.addParameter("productId", productId);
+        rp.addParameter("_dynSessConf", _dynSessConf);
+        Log.d("我的报价的rp",rp+"");
+        x.http().post(rp, new Callback.CommonCallback<String>() {
+
+            @Override
+            public void onSuccess(String result) {
+                 Log.d("result的值",result);
+                 adapter = new GridAdpater(type_way);
+                 lvDemo.setAdapter(adapter);
+                 getData(result);
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
 
     }
 
