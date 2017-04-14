@@ -158,12 +158,27 @@ public class PagerOne extends BasePager implements IPagerOneView {
                 startActivity(intent);
             }
         });
-        //yingyong
+        //分类
         classificationGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(mActivity, GoodsInStockActivity.class);
                 intent.putExtra("title", "分类");
+                intent.putExtra("id",fenlei_List.get(position).toString());
+                intent.putExtra("goodsInStockActivityBean", goodsInStockActivityBean);
+                intent.putExtra("classificationBean", classificationBean);
+                intent.putExtra("applicationBean", applicationBean);
+                intent.putExtra("supplierBean", supplierBean);
+                //Log.d("传过去有的值",searchField+goodsInStockActivityBean+classificationBean+applicationBean+supplierBean+"");
+                startActivity(intent);
+            }
+        });
+        //应用
+        applicationDetail.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(mActivity, GoodsInStockActivity.class);
+                intent.putExtra("title", "应用");
                 intent.putExtra("id",yingyongId.get(position).toString());
                 intent.putExtra("goodsInStockActivityBean", goodsInStockActivityBean);
                 intent.putExtra("classificationBean", classificationBean);
@@ -173,27 +188,14 @@ public class PagerOne extends BasePager implements IPagerOneView {
                 startActivity(intent);
             }
         });
-        //shangchan
-        applicationDetail.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(mActivity, GoodsInStockActivity.class);
-                intent.putExtra("title", "应用");
-                intent.putExtra("id",ShengchanId.get(position).toString());
-                intent.putExtra("goodsInStockActivityBean", goodsInStockActivityBean);
-                intent.putExtra("classificationBean", classificationBean);
-                intent.putExtra("applicationBean", applicationBean);
-                intent.putExtra("supplierBean", supplierBean);
-                //Log.d("传过去有的值",searchField+goodsInStockActivityBean+classificationBean+applicationBean+supplierBean+"");
-                startActivity(intent);
-            }
-        });
+        //供应商
         supplierDetail.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d("供应商",ShengchanId.size()+"");
                 Intent intent = new Intent(mActivity, GoodsInStockActivity.class);
                 intent.putExtra("title", "供应商");
-                 intent.putExtra("id",fenlei_List.get(position).toString());
+                intent.putExtra("id",ShengchanId.get(position).toString());
                 intent.putExtra("goodsInStockActivityBean", goodsInStockActivityBean);
                 intent.putExtra("classificationBean", classificationBean);
                 intent.putExtra("applicationBean", applicationBean);
@@ -650,35 +652,17 @@ public class PagerOne extends BasePager implements IPagerOneView {
             public void run() {
                 super.run();
                 get_area();
-                get_yingyong();
-                get_shengchan();
-                get_fenlei();
+//                get_yingyong();
+//                get_shengchan();
+//                get_fenlei();
             }
         }.start();
 
-//        for (int i = 0; i < applicationBean.getIn_yyname().size(); i++) {
-//            applicationList.add(applicationBean.getIn_yyname().get(i));
-//        }
-//        for (int i = 0; i < provinceList.size(); i++) {
-//            areaList.add(provinceList.get(i).getName());
-//        }
-//        for (int i = 0; i < supplierBean.getIn_gysname().size(); i++) {
-//            supplierBeanList.add(supplierBean.getIn_gysname().get(i));
-//        }
-
-
-
-
-        //Log.d("地区的list",areaList.size()+"");
-//        areaGridView.setOnItemClickListener(new MyAdapterItemClickListener(getActivity(), areaList, pagerOnePresenter));
-//        classificationGridView.setOnItemClickListener(new MyAdapterItemClickListener(getActivity(), classificationList, pagerOnePresenter));
-//        applicationDetail.setOnItemClickListener(new MyAdapterItemClickListener(getActivity(), applicationList, pagerOnePresenter));
-//        supplierDetail.setOnItemClickListener(new MyAdapterItemClickListener(getActivity(), supplierBeanList, pagerOnePresenter));
 
     }
 
     public void get_area(){
-        String url= SuMaoConstant.SUMAO_IP+"/rest/model/atg/endeca/HomeActor/EndecaAppRegion";
+        String url= SuMaoConstant.SUMAO_IP+"/rest/model/atg/endeca/HomeActor/EndecaAppHome";
         RequestParams rp=new RequestParams(url);
         x.http().post(rp, new Callback.CommonCallback<String>() {
             @Override
@@ -687,149 +671,60 @@ public class PagerOne extends BasePager implements IPagerOneView {
                 try {
                     areaListId=new ArrayList<String>();
                     JSONObject jsonObject=new JSONObject(result);
-                    String object_fenlei=jsonObject.getString("cl");
+                    String object_fenlei=jsonObject.getString("dq");
                     JSONArray array_Fenlei=new JSONArray(object_fenlei);
                     for (int i=0;i<array_Fenlei.length();i++){
                         JSONObject ob_fl=array_Fenlei.getJSONObject(i);
-                        areaList.add(ob_fl.getString("cl_name"));
-                        areaListId.add(ob_fl.getString("cl_id"));
+                        areaList.add(ob_fl.getString("dq_name"));
+                        areaListId.add(ob_fl.getString("dq_id"));
                     }
                     Log.d("area的值",areaList.size()+"条");
                     TextGrideViewAdapter areaAdapter = new TextGrideViewAdapter(getActivity());
                     areaAdapter.addData(areaList);
                     areaGridView.setAdapter(areaAdapter);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-
-            }
-
-            @Override
-            public void onCancelled(CancelledException cex) {
-
-            }
-
-            @Override
-            public void onFinished() {
-
-            }
-        });
-    }
-
-    public void get_fenlei(){
-        String url= SuMaoConstant.SUMAO_IP+"/rest/model/atg/endeca/HomeActor/EndecaAppApplication";
-        RequestParams rp=new RequestParams(url);
-        x.http().post(rp, new Callback.CommonCallback<String>() {
-            @Override
-            public void onSuccess(String result) {
-                Log.d("分类的返回值",result);
-                try {
                     yingyongId=new ArrayList<String>();
-                    JSONObject jsonObject=new JSONObject(result);
-                    String object_fenlei=jsonObject.getString("cl");
-                    JSONArray array_Fenlei=new JSONArray(object_fenlei);
-                    for (int i=0;i<array_Fenlei.length();i++){
-                        JSONObject ob_fl=array_Fenlei.getJSONObject(i);
-                        classificationList.add(ob_fl.getString("cl_name"));
-                        yingyongId.add(ob_fl.getString("cl_id"));
+                    //JSONObject jsonObject=new JSONObject(result);
+                    String object_yingyong=jsonObject.getString("yy");
+                    JSONArray array_yingyong=new JSONArray(object_yingyong);
+                    for (int i=0;i<array_yingyong.length();i++){
+                        JSONObject ob_fl=array_yingyong.getJSONObject(i);
+                        classificationList.add(ob_fl.getString("yy_name"));
+                        yingyongId.add(ob_fl.getString("yy_id"));
                     }
                     TextGrideViewAdapter classificationAdapter = new TextGrideViewAdapter(getActivity());
                     classificationAdapter.addData(classificationList);
-                    classificationGridView.setAdapter(classificationAdapter);
+                    //classificationGridView.setAdapter(classificationAdapter);
+                    applicationDetail.setAdapter(classificationAdapter);
+                    //分类
+                    fenlei_List=new ArrayList<String>();
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-
-            }
-
-            @Override
-            public void onCancelled(CancelledException cex) {
-
-            }
-
-            @Override
-            public void onFinished() {
-
-            }
-        });
-    }
-
-    public void get_yingyong(){
-        String url= SuMaoConstant.SUMAO_IP+"/rest/model/atg/endeca/HomeActor/EndecaAppSupplier";
-        RequestParams rp=new RequestParams(url);
-        x.http().post(rp, new Callback.CommonCallback<String>() {
-            @Override
-            public void onSuccess(String result) {
-                Log.d("分类的返回值",result);
-                try {
-                    ShengchanId=new ArrayList<String>();
-                    JSONObject jsonObject=new JSONObject(result);
-                    String object_fenlei=jsonObject.getString("cl");
-                    JSONArray array_Fenlei=new JSONArray(object_fenlei);
-                    for (int i=0;i<array_Fenlei.length();i++){
-                        JSONObject ob_fl=array_Fenlei.getJSONObject(i);
-                        applicationList.add(ob_fl.getString("cl_name"));
-                        ShengchanId.add(ob_fl.getString("cl_id"));
+                    String object_fl=jsonObject.getString("fl");
+                    JSONArray array_fl=new JSONArray(object_fl);
+                    for (int i=0;i<array_fl.length();i++){
+                        JSONObject ob_fl=array_fl.getJSONObject(i);
+                        applicationList.add(ob_fl.getString("fl_name"));
+                        fenlei_List.add(ob_fl.getString("fl_id"));
                     }
                     TextGrideViewAdapter supplierAdapter = new TextGrideViewAdapter(getActivity());
                     supplierAdapter.addData(applicationList);
-                    supplierDetail.setAdapter(supplierAdapter);
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-
-            }
-
-            @Override
-            public void onCancelled(CancelledException cex) {
-
-            }
-
-            @Override
-            public void onFinished() {
-
-            }
-        });
-    }
-
-    public void get_shengchan(){
-        String url= SuMaoConstant.SUMAO_IP+"/rest/model/atg/endeca/HomeActor/EndecaAppCategory";
-        RequestParams rp=new RequestParams(url);
-        x.http().post(rp, new Callback.CommonCallback<String>() {
-            @Override
-            public void onSuccess(String result) {
-                Log.d("分类的返回值",result);
-                try {
-                    fenlei_List=new ArrayList<String>();
-                    JSONObject jsonObject=new JSONObject(result);
-                    String object_fenlei=jsonObject.getString("cl");
-                    JSONArray array_Fenlei=new JSONArray(object_fenlei);
-                    for (int i=0;i<array_Fenlei.length();i++){
-                        JSONObject ob_fl=array_Fenlei.getJSONObject(i);
-                        supplierBeanList.add(ob_fl.getString("cl_name"));
-                        fenlei_List.add(ob_fl.getString("cl_id"));
+                    classificationGridView.setAdapter(supplierAdapter);
+                    //生产商ShengchanId
+                    ShengchanId=new ArrayList<String>();
+                    String object_sc=jsonObject.getString("sc");
+                    JSONArray array_sc=new JSONArray(object_sc);
+                    for (int i=0;i<array_sc.length();i++){
+                        JSONObject ob_fl=array_sc.getJSONObject(i);
+                        supplierBeanList.add(ob_fl.getString("sc_name"));
+                        ShengchanId.add(ob_fl.getString("sc_id"));
                     }
 
 
 
                     TextGrideViewAdapter applicationAdapter = new TextGrideViewAdapter(getActivity());
                     applicationAdapter.addData(supplierBeanList);
-                    applicationDetail.setAdapter(applicationAdapter);
+                    supplierDetail.setAdapter(applicationAdapter);
+
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -851,6 +746,127 @@ public class PagerOne extends BasePager implements IPagerOneView {
             }
         });
     }
+
+//    public void get_fenlei(){
+//        String url= SuMaoConstant.SUMAO_IP+"/rest/model/atg/endeca/HomeActor/EndecaAppApplication";
+//        RequestParams rp=new RequestParams(url);
+//        x.http().post(rp, new Callback.CommonCallback<String>() {
+//            @Override
+//            public void onSuccess(String result) {
+//                Log.d("分类的返回值",result);
+//                try {
+//
+//
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//
+//            @Override
+//            public void onError(Throwable ex, boolean isOnCallback) {
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(CancelledException cex) {
+//
+//            }
+//
+//            @Override
+//            public void onFinished() {
+//
+//            }
+//        });
+//    }
+
+//    public void get_yingyong(){
+//        String url= SuMaoConstant.SUMAO_IP+"/rest/model/atg/endeca/HomeActor/EndecaAppSupplier";
+//        RequestParams rp=new RequestParams(url);
+//        x.http().post(rp, new Callback.CommonCallback<String>() {
+//            @Override
+//            public void onSuccess(String result) {
+//                Log.d("分类的返回值",result);
+//                try {
+//                    ShengchanId=new ArrayList<String>();
+//                    JSONObject jsonObject=new JSONObject(result);
+//                    String object_fenlei=jsonObject.getString("cl");
+//                    JSONArray array_Fenlei=new JSONArray(object_fenlei);
+//                    for (int i=0;i<array_Fenlei.length();i++){
+//                        JSONObject ob_fl=array_Fenlei.getJSONObject(i);
+//                        applicationList.add(ob_fl.getString("cl_name"));
+//                        ShengchanId.add(ob_fl.getString("cl_id"));
+//                    }
+//                    TextGrideViewAdapter supplierAdapter = new TextGrideViewAdapter(getActivity());
+//                    supplierAdapter.addData(applicationList);
+//                    supplierDetail.setAdapter(supplierAdapter);
+//
+//
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//
+//            @Override
+//            public void onError(Throwable ex, boolean isOnCallback) {
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(CancelledException cex) {
+//
+//            }
+//
+//            @Override
+//            public void onFinished() {
+//
+//            }
+//        });
+//    }
+//
+//    public void get_shengchan(){
+//        String url= SuMaoConstant.SUMAO_IP+"/rest/model/atg/endeca/HomeActor/EndecaAppCategory";
+//        RequestParams rp=new RequestParams(url);
+//        x.http().post(rp, new Callback.CommonCallback<String>() {
+//            @Override
+//            public void onSuccess(String result) {
+//                Log.d("分类的返回值",result);
+//                try {
+//                    fenlei_List=new ArrayList<String>();
+//                    JSONObject jsonObject=new JSONObject(result);
+//                    String object_fenlei=jsonObject.getString("cl");
+//                    JSONArray array_Fenlei=new JSONArray(object_fenlei);
+//                    for (int i=0;i<array_Fenlei.length();i++){
+//                        JSONObject ob_fl=array_Fenlei.getJSONObject(i);
+//                        supplierBeanList.add(ob_fl.getString("cl_name"));
+//                        fenlei_List.add(ob_fl.getString("cl_id"));
+//                    }
+//
+//
+//
+//                    TextGrideViewAdapter applicationAdapter = new TextGrideViewAdapter(getActivity());
+//                    applicationAdapter.addData(supplierBeanList);
+//                    applicationDetail.setAdapter(applicationAdapter);
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//
+//            @Override
+//            public void onError(Throwable ex, boolean isOnCallback) {
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(CancelledException cex) {
+//
+//            }
+//
+//            @Override
+//            public void onFinished() {
+//
+//            }
+//        });
+  //  }
 
     @Override
     public void getSupplier(SupplierBean supplierBean, String transactionType) {
