@@ -35,22 +35,12 @@ public class SearchActivityModel implements ISearchActivityModel {
 
     @Override
     public void getSearchActivityInfo(final SearchActivityCallback callback) {
-        String url = SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/catalog/ProductCatalogActor/researchProduct";
+        String url = SuMaoConstant.SUMAO_IP+"/rest/model/atg/endeca/HomeActor/EndecaAppScreenResult";
         RequestParams requestParams = new RequestParams(url);
-       requestParams.setAsJsonContent(true);
-        JSONObject jsonObject = new JSONObject();
-
-        try {
-            jsonObject.put("Ntt", Ntt);
-            jsonObject.put("Nrpp",Nrpp+"");
-            jsonObject.put("No",No+"");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        requestParams.setBodyContent(jsonObject.toString());
+        requestParams.addParameter("keyword",Ntt);
         Log.e("TAG","requestParams---------"+requestParams);
         try {
-            x.http().request(HttpMethod.POST, requestParams, new Callback.CacheCallback<String>() {
+            x.http().get(requestParams, new Callback.CacheCallback<String>() {
 
                 private SearchActivityBean searchActivityBean;
 
@@ -65,7 +55,6 @@ public class SearchActivityModel implements ISearchActivityModel {
 
                     Gson gson = new Gson();
                     searchActivityBean = gson.fromJson(result, SearchActivityBean.class);
-
                     callback.callbackSearchActivity(searchActivityBean);
                 }
 

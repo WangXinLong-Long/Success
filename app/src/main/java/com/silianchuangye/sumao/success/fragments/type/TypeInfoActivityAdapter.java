@@ -1,6 +1,7 @@
 package com.silianchuangye.sumao.success.fragments.type;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,24 +22,27 @@ public class TypeInfoActivityAdapter extends BaseAdapter {
     private Context context;
     private List<Cls> cl;////////////////
     private LayoutInflater inflater;
-    private final Map<String, String> hashMap;
+
 
     public TypeInfoActivityAdapter(Context context, List<Cls> cl) {
         this.context = context;
         this.cl = cl;
         inflater = LayoutInflater.from(context);
-        hashMap = new HashMap<>();
-        hashMap.put("englishAuctionProduct","公开竞拍");
-        hashMap.put("fixedProduct","现货");
-        hashMap.put("forward-pricing-product","预售");
-        hashMap.put("demandScheduleProduct","计划订单");
-        hashMap.put("sealedAuctionProduct","密封竞拍");
-        hashMap.put("groupProdut","团购");
+
+    }
+
+    public void addData(List<Cls> data){
+        cl.addAll(data);
+    }
+    public void clearData(){
+        cl.clear();
     }
 
     @Override
     public int getCount() {
+        Log.d("list的size",cl.size()+"");
         return cl.size();
+
     }
 
     @Override
@@ -68,12 +72,26 @@ public class TypeInfoActivityAdapter extends BaseAdapter {
             holder = (ViewHolder)convertView.getTag();
         }
 
-        holder.tv_name_type_two.setText(cl.get(position).getCl_mingcheng());
-        holder.tv_number_type_two.setText(cl.get(position).getCl_shuliang());
-        holder.tv_price_type_two .setText(cl.get(position).getCl_jine());
-        holder.tv_address_type_two.setText(cl.get(position).getCl_qiye());
-        holder.tv_cangku_type_two.setText(cl.get(position).getCl_cangku());
-        holder.tv_state_type_two.setText(hashMap.get(cl.get(position).getCl_type()));
+        holder.tv_name_type_two.setText(cl.get(position).getIn_name());
+        holder.tv_number_type_two.setText(cl.get(position).getIn_num());
+        holder.tv_price_type_two .setText(cl.get(position).getIn_prix());
+        holder.tv_address_type_two.setText(cl.get(position).getIn_qiye());
+        holder.tv_cangku_type_two.setText(cl.get(position).getIn_cangku());
+
+        if(cl.get(position).getIn_leixing().equals("englishAuctionProduct")){
+            holder.tv_state_type_two.setText("公开竞拍");
+        }else if (cl.get(position).getIn_leixing().equals("fixedProduct")){
+            holder.tv_state_type_two.setText("现货");
+        }else if(cl.get(position).getIn_leixing().equals("forward-pricing-product")){
+            holder.tv_state_type_two.setText("预售");
+        }else if (cl.get(position).getIn_leixing().equals("demandScheduleProduct")){
+            holder.tv_state_type_two.setText("计划订单");
+        }else if (cl.get(position).getIn_leixing().equals("sealedAuctionProduct")){
+            holder.tv_state_type_two.setText("密封竞拍");
+        }else if(cl.get(position).getIn_leixing().equals("groupProdut")){
+            holder.tv_state_type_two.setText("团购");
+        }
+
         return convertView;
     }
 

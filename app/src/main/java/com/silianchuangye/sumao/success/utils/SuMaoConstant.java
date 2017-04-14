@@ -28,7 +28,7 @@ public class SuMaoConstant {
     // ATG数据测试使用
     public static final String SUMAO_IP = "http://192.168.32.126:7023";
     public static final String SUMAO_CONTRACT_IP = "http://192.168.32.126:7003/crsdocroot";
-    //             public static final String SUMAO_IP = "http://192.168.32.126:7003";
+                 //public static final String SUMAO_IP = "http://192.168.32.126:7003";
 //    ATG数据uat环境
 //public static final String SUMAO_IP = "http://172.22.16.105:7003";
 ////    APP自己的维护信息

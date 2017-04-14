@@ -25,20 +25,22 @@ public class TypeInfoModel implements ITypeInfoModel {
     int No;
     String Ntt;
     private String keyword;
+    private String page;
 
-    public TypeInfoModel(String keyword) {
+    public TypeInfoModel(String keyword,String page) {
         this.keyword = keyword;
+        this.page=page;
     }
 
-    public TypeInfoModel(String region2, String classification2, String application2, String tradingMethod, int nrpp, int no, String Ntt) {
-        this.region2 = region2;
-        this.classification2 = classification2;
-        this.application2 = application2;
-        this.tradingMethod = tradingMethod;
-        Nrpp = nrpp;
-        No = no;
-        this.Ntt = Ntt;
-    }
+//    public TypeInfoModel(String region2, String classification2, String application2, String tradingMethod, int nrpp, int no, String Ntt) {
+//        this.region2 = region2;
+//        this.classification2 = classification2;
+//        this.application2 = application2;
+//        this.tradingMethod = tradingMethod;
+//        Nrpp = nrpp;
+//        No = no;
+//        this.Ntt = Ntt;
+//    }
 
     @Override
     public void searchMessageFromServer(final TypeInfoCallback callback) {
@@ -46,10 +48,12 @@ public class TypeInfoModel implements ITypeInfoModel {
         String url = SuMaoConstant.SUMAO_IP+"/rest/model/atg/endeca/HomeActor/EndecaAppScreenResult";
 
         LogUtils.log("URL----->"+url+"<-----URL");
+        url=url+"?No="+page+"&keyword="+keyword;
+
         RequestParams requestParams = new RequestParams(url);
-//        requestParams.addParameter("Nrpp",Nrpp+"");
-//        requestParams.addParameter("No",No+"");No
-        requestParams.addParameter("keyword",keyword);
+      //  requestParams.addParameter("keyword",Ntt);
+
+
         Log.e("TAG","request-------"+requestParams);
         try {
             x.http().request(HttpMethod.POST, requestParams, new Callback.CacheCallback<String>() {

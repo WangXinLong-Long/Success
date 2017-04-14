@@ -166,6 +166,7 @@ public class AuctionActivity extends AppCompatActivity implements IAuctionView {
     public void setOpenAuctionOrSealedBidResult(String result, String type_way) {
         Log.d("竞拍产品的详情",""+result);
         Log.d("type_way",type_way);
+        Log.d("proType",proType);
 //        Gson gson = new Gson();
 //        AuctionDetailBean auctionDetailBean = gson.fromJson(result, AuctionDetailBean.class);
         Intent intent = new Intent(AuctionActivity.this, OpenAuctionActivity.class);

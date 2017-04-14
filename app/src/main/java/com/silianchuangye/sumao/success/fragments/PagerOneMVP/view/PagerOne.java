@@ -193,7 +193,7 @@ public class PagerOne extends BasePager implements IPagerOneView {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(mActivity, GoodsInStockActivity.class);
                 intent.putExtra("title", "供应商");
-                intent.putExtra("id",fenlei_List.get(position).toString());
+                 intent.putExtra("id",fenlei_List.get(position).toString());
                 intent.putExtra("goodsInStockActivityBean", goodsInStockActivityBean);
                 intent.putExtra("classificationBean", classificationBean);
                 intent.putExtra("applicationBean", applicationBean);

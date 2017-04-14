@@ -192,6 +192,7 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
         state = bundle.getString("state");
         result2 = bundle.getString("result2");
         Log.d("成团状态", "" + result2);
+        Log.d("result的值",""+result);
         relative_tuangou_end = (RelativeLayout) findViewById(R.id.relative_tuangou_end);
 
         lvDemo = (ListView) findViewById(R.id.lv_demo);

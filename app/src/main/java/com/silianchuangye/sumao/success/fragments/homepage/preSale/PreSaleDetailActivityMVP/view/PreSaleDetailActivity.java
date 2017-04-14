@@ -281,10 +281,13 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
 
                 if (!edt_num.getText().toString().equals("")) {
                     double num = (Double.parseDouble(edt_num.getText().toString()));
-                    double price_num = (Double.parseDouble(tvPrice_auction.getText().toString()));
-                    double x = num * price_num;
-                    DecimalFormat df = new DecimalFormat("#.##");
-                    tv_item_cart_all_price.setText(df.format(x) + "");
+                    if (tvPrice_auction.getText().toString() != null && !tvPrice_auction.getText().toString().equals("")) {
+                        double price_num = (Double.parseDouble(tvPrice_auction.getText().toString()));
+                        double x = num * price_num;
+                        DecimalFormat df = new DecimalFormat("#.##");
+                        tv_item_cart_all_price.setText(df.format(x) + "");
+
+                    }
 
                 }
             }

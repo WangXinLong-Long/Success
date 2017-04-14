@@ -158,7 +158,7 @@ public class SearchActivity extends AppCompatActivity implements ISearchActivity
 
     @Override
     public void getSearchActivityData(SearchActivityBean searchActivityBean) {
-        if (searchActivityBean.getTotal().equals("0")){
+        if (searchActivityBean.getIn().size()==0){
             Toast.makeText(this,"没有找到相关商品，请重新搜索",Toast.LENGTH_SHORT).show();
         }else {
             Intent intent=new Intent(SearchActivity.this, TypeInfoActivity.class);
