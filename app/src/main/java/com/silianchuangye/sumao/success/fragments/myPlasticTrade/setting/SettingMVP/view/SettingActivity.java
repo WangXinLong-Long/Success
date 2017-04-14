@@ -116,11 +116,47 @@ public class SettingActivity extends AppCompatActivity implements ISettingView{
 //                        new Thread(){
 //                            @Override
 //                            public void run() {}
-                        tuichu();
-                        Intent intent=new Intent(SettingActivity.this,MainActivity.class);
-                        intent.putExtra("roles","buyer");
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(intent);
+                        RequestParams  rp=new RequestParams(SuMaoConstant.SUMAO_IP+"/rest/model/atg/userprofiling/ProfileActor/logout");
+                        SharedPreferences sp=getSharedPreferences("sumao",0);
+                        //SharedPreferences sp1=g
+                        String unique=sp.getString("unique","");
+                        rp.addParameter("_dynSessConf",unique);
+                        Log.d("退出时的唯一标识",unique);
+                        x.http().post(rp, new Callback.CommonCallback<String>() {
+                            @Override
+                            public void onSuccess(String result) {
+                                SharedPreferences sp=getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+                                SharedPreferences.Editor editor=sp.edit();
+                                editor.clear();
+                                //      editor.clear();
+                                editor.commit();
+                                Intent intent=new Intent(SettingActivity.this,MainActivity.class);
+                                intent.putExtra("roles","buyer");
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
+                                Toast.makeText(SettingActivity.this, "用户名称已删除", Toast.LENGTH_SHORT).show();
+
+//                                            SettingActivity.this.finish();
+
+//                                        }
+                            }
+
+                            @Override
+                            public void onError(Throwable ex, boolean isOnCallback) {
+
+                            }
+
+                            @Override
+                            public void onCancelled(CancelledException cex) {
+
+                            }
+
+                            @Override
+                            public void onFinished() {
+
+                            }
+                        });
+
                     }
 
                 });
@@ -131,48 +167,8 @@ public class SettingActivity extends AppCompatActivity implements ISettingView{
 
     }
 
-    public void tuichu(){
-        RequestParams  rp=new RequestParams(SuMaoConstant.SUMAO_IP+"/rest/model/atg/userprofiling/ProfileActor/logout");
-        SharedPreferences sp=context.getSharedPreferences("sumao",0);
-        //SharedPreferences sp1=g
-        String unique=sp.getString("unique","默认值");
-        rp.addParameter("_dynSessConf",unique);
-        Log.d("退出时的唯一标识",unique);
-        x.http().post(rp, new Callback.CommonCallback<String>() {
-            @Override
-            public void onSuccess(String result) {
-                SharedPreferences sp=context.getSharedPreferences("sumao", Activity.MODE_PRIVATE);
-                SharedPreferences.Editor editor=sp.edit();
-                editor.clear();
-                //      editor.clear();
-                editor.commit();
-                Toast.makeText(context, "用户名称已删除", Toast.LENGTH_SHORT).show();
-
-//                                            SettingActivity.this.finish();
-
-//                                        }
-            }
-
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-
-            }
-
-            @Override
-            public void onCancelled(CancelledException cex) {
-
-            }
-
-            @Override
-            public void onFinished() {
-
-            }
-        });
-//                            }
-//                        }.start();
 
 
-    }
     public void title_Bar(){
 
         iv_title_bar_back = ((ImageView) findViewById(R.id.iv_title_bar_back));

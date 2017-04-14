@@ -595,7 +595,7 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
         RequestParams  rp=new RequestParams(SuMaoConstant.SUMAO_IP+"/rest/model/atg/userprofiling/ProfileActor/logout");
         SharedPreferences sp=getSharedPreferences("sumao",0);
         //SharedPreferences sp1=g
-        String unique=sp.getString("unique","默认值");
+        String unique=sp.getString("unique","");
         rp.addParameter("_dynSessConf",unique);
         Log.d("退出时的唯一标识",unique);
         x.http().post(rp, new Callback.CommonCallback<String>() {

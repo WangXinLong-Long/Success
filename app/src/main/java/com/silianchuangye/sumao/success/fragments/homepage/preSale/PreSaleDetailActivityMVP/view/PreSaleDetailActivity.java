@@ -436,13 +436,11 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
                 /**
                  * 这里需要弹出popupWindow，即支付的弹出窗
                  */
-
+                Log.d("预售的唯一标识",unique);
                 if (unique.equals("false") || unique.equals("")) {
                     tuichu();
                     Intent intent1 = new Intent(PreSaleDetailActivity.this, LoginUserActivity.class);
                     intent1.putExtra("roles", "buyer");
-//                    intent1.putExtra("position",101);
-//                    startActivityForResult(intent1, 101);
                     startActivity(intent1);
                 } else {
                     //在这里首先判断客户是否有权限
@@ -466,12 +464,13 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
         RequestParams  rp=new RequestParams(SuMaoConstant.SUMAO_IP+"/rest/model/atg/userprofiling/ProfileActor/logout");
         SharedPreferences sp=getSharedPreferences("sumao",0);
         //SharedPreferences sp1=g
-        String unique=sp.getString("unique","默认值");
+        String unique=sp.getString("unique","");
         rp.addParameter("_dynSessConf",unique);
         Log.d("退出时的唯一标识",unique);
         x.http().post(rp, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
+                Log.d("退出时的result",result);
                 SharedPreferences sp=getSharedPreferences("sumao", Activity.MODE_PRIVATE);
                 SharedPreferences.Editor editor=sp.edit();
                 editor.clear();
@@ -555,6 +554,10 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
                         Toast.makeText(PreSaleDetailActivity.this, "黑名单不能购买", Toast.LENGTH_SHORT).show();
                     }else if (allow.equals("3")){
                         Toast.makeText(PreSaleDetailActivity.this, "用户没有登录", Toast.LENGTH_SHORT).show();
+                        tuichu();
+                        Intent intent1 = new Intent(PreSaleDetailActivity.this, LoginUserActivity.class);
+                        intent1.putExtra("roles", "buyer");
+                        startActivity(intent1);
                     }else if (allow.equals("4")){
                         Toast.makeText(PreSaleDetailActivity.this, "没有在购买期限内，不能购买", Toast.LENGTH_SHORT).show();
                     }else if(allow.equals("5")){

@@ -352,7 +352,7 @@ public void tuichu(){
     RequestParams  rp=new RequestParams(SuMaoConstant.SUMAO_IP+"/rest/model/atg/userprofiling/ProfileActor/logout");
     SharedPreferences sp=getSharedPreferences("sumao",0);
     //SharedPreferences sp1=g
-    String unique=sp.getString("unique","默认值");
+    String unique=sp.getString("unique","");
     rp.addParameter("_dynSessConf",unique);
     Log.d("退出时的唯一标识",unique);
     x.http().post(rp, new Callback.CommonCallback<String>() {
@@ -407,8 +407,12 @@ public void tuichu(){
                     Toast.makeText(GroupBuyingSuccessActivity.this, "黑名单不能购买", Toast.LENGTH_SHORT).show();
 
                 }else if (result.contains("3")){
-                    Toast.makeText(GroupBuyingSuccessActivity.this, "未登入", Toast.LENGTH_SHORT).show();
-
+                    Toast.makeText(GroupBuyingSuccessActivity.this, "用户没有登录", Toast.LENGTH_SHORT).show();
+                    tuichu();
+                    Intent intent = new Intent(GroupBuyingSuccessActivity.this, LoginUserActivity.class);
+                    intent.putExtra("roles", "buyer");
+                    intent.putExtra("position", 102);
+                    startActivity(intent);
                 }else if (result.contains("4")){
                     Toast.makeText(GroupBuyingSuccessActivity.this, "没有在购买期限内，不能购买", Toast.LENGTH_SHORT).show();
 

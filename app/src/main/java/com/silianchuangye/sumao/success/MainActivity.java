@@ -32,10 +32,13 @@ import com.silianchuangye.sumao.success.HX.DemoHelper;
 import com.silianchuangye.sumao.success.HX.ui.ChatActivity;
 import com.silianchuangye.sumao.success.fragments.PagerFive;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.view.PagerOne;
+import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.bean.UpstreamDirectorySellingBean;
+import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.view.UpstreamDirectSellingActivity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.LoginUserActivity;
 import com.silianchuangye.sumao.success.fragments.pagerFourMVP.view.PagerFour;
 import com.silianchuangye.sumao.success.fragments.pagerThreeMVP.view.PagerThree;
 import com.silianchuangye.sumao.success.fragments.pagerTwoMVP.PagerTwo;
+import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
 import org.json.JSONObject;
@@ -153,12 +156,12 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
             }
         });
         /**
-         * 设置默认选中第几个
+         * 我的sumao的点击时间
          */
         mTabHost.getTabWidget().getChildTabViewAt(4).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Log.d("我的sumao","我的sumao");
 
                 if (unique.equals("false")) {
                     Toast.makeText(MainActivity.this, "请登录", Toast.LENGTH_SHORT).show();
@@ -173,13 +176,14 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
                 } else {
                     username = sp.getString("name", "");
                     if (username != "") {
-                        mTabHost.setCurrentTab(4);
-                        boolean openNetwork = isOpenNetwork();
-                        if (openNetwork) {
-                        } else {
-                            networkConnections = false;
-                            Toast.makeText(MainActivity.this, "暂时没有网络连接,请检查您的网络设置", Toast.LENGTH_SHORT).show();
-                        }
+//                        mTabHost.setCurrentTab(4);
+//                        boolean openNetwork = isOpenNetwork();
+//                        if (openNetwork) {
+//                        } else {
+//                            networkConnections = false;
+//                            Toast.makeText(MainActivity.this, "暂时没有网络连接,请检查您的网络设置", Toast.LENGTH_SHORT).show();
+//                        }
+                        infoLogin(unique,4);
                     } else {
                         SharedPreferences.Editor editor = sp.edit();
                         editor.clear();
@@ -224,10 +228,11 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
 //                }
                 if (unique.equals("false")) {
                     Toast.makeText(MainActivity.this, "请登录", Toast.LENGTH_SHORT).show();
-                    SharedPreferences.Editor editor = sp.edit();
-                    editor.clear();
-                    //      editor.clear();////
-                    editor.commit();
+//                    SharedPreferences.Editor editor = sp.edit();
+//                    editor.clear();
+//                    //      editor.clear();////
+//                    editor.commit();
+                    tuichu();
                     Intent intent = new Intent();
                     intent.putExtra("roles", "buyer");
                     intent.putExtra("cart1", 9);
@@ -236,18 +241,16 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
                 } else {
                     username = sp.getString("name", "");
                     if (username != "") {
-                        mTabHost.setCurrentTab(2);
-                        boolean openNetwork = isOpenNetwork();
-                        if (openNetwork) {
-                        } else {
-                            networkConnections = false;
-                            Toast.makeText(MainActivity.this, "暂时没有网络连接,请检查您的网络设置", Toast.LENGTH_SHORT).show();
-                        }
+//                        mTabHost.setCurrentTab(2);
+//                        boolean openNetwork = isOpenNetwork();
+//                        if (openNetwork) {
+//                        } else {
+//                            networkConnections = false;
+//                            Toast.makeText(MainActivity.this, "暂时没有网络连接,请检查您的网络设置", Toast.LENGTH_SHORT).show();
+//                        }
+                        infoLogin(unique,2);
                     } else {
-                        SharedPreferences.Editor editor = sp.edit();
-                        editor.clear();
-                        //      editor.clear();
-                        editor.commit();
+                        tuichu();
                         Intent intent = new Intent();
                         intent.putExtra("roles", "buyer");
                         intent.putExtra("cart1", 9);
@@ -420,32 +423,124 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
                 showCart(savedInstanceState);
                 break;
             case 3:
+                Log.d("点击了我的sumao","点击了我的");
                 sp = getSharedPreferences("sumao", Context.MODE_PRIVATE);
                 username = sp.getString("name", "");
+                unique=sp.getString("unique","");
                 Log.e("TAG", "username11111-----" + username);
                 if (username != "") {
-                    mTabHost.setCurrentTab(4);
-                    boolean openNetwork = isOpenNetwork();
-                    if (openNetwork) {
-                    } else {
-                        networkConnections = false;
-                        Toast.makeText(MainActivity.this, "暂时没有网络连接,请检查您的网络设置", Toast.LENGTH_SHORT).show();
-                    }
+                    infoLogin(unique,4);
                 } else {
+                    tuichu();
                     Intent intent = new Intent();
                     intent.setClass(MainActivity.this, LoginUserActivity.class);
                     intent.putExtra("roles", "buyer");
+                    intent.putExtra("cart1",10);
                     startActivity(intent);
                     MainActivity.this.finish();
                 }
                 break;
             case 4:
+                Log.d("点击了我的sumao","我的sumao");
                 showCart(savedInstanceState);
                 break;
             default:
                 break;
 
         }
+    }
+    public void infoLogin(String _dynSessConf, final int position){
+        String url=SuMaoConstant.SUMAO_IP+"/rest/model/atg/userprofiling/ProfileActor/appCustomerInfo";
+        RequestParams rp=new RequestParams(url);
+        rp.addParameter("_dynSessConf",_dynSessConf);
+        Log.d("上游的rp",rp+"");
+        x.http().post(rp, new Callback.CommonCallback<String>() {
+
+            @Override
+            public void onSuccess(String result) {
+                Log.d("判断是否denglu",result);
+                if(result.contains("fail")){
+                    tuichu();
+                    Intent intent=new Intent(getApplication(), LoginUserActivity.class);
+                    intent.putExtra("roles","buyer");
+                    if (position==2){
+                        intent.putExtra("cart1", 9);
+                    }else if (position==4){
+                        intent.putExtra("cart1", 10);
+                    }
+
+                    startActivity(intent);
+                }else{
+                    mTabHost.setCurrentTab(position);
+                    boolean openNetwork = isOpenNetwork();
+                    if (openNetwork) {
+                    } else {
+                        networkConnections = false;
+                        Toast.makeText(MainActivity.this, "暂时没有网络连接,请检查您的网络设置", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+    }
+
+    public void tuichu(){
+        SharedPreferences sp=getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor=sp.edit();
+        editor.clear();
+        //      editor.clear();
+        editor.commit();
+//        //RequestParams  rp=new RequestParams(SuMaoConstant.SUMAO_IP+"/rest/model/atg/userprofiling/ProfileActor/logout");
+//        SharedPreferences sp=getSharedPreferences("sumao",0);
+//        //SharedPreferences sp1=g
+//        String unique=sp.getString("unique","");
+//        rp.addParameter("_dynSessConf",unique);
+//        Log.d("退出时的唯一标识",unique);
+//        x.http().post(rp, new Callback.CommonCallback<String>() {
+//            @Override
+//            public void onSuccess(String result) {
+//
+//                //Toast.makeText(context, "用户名称已删除", Toast.LENGTH_SHORT).show();
+//
+////                                            SettingActivity.this.finish();
+//
+////                                        }
+//            }
+//
+//            @Override
+//            public void onError(Throwable ex, boolean isOnCallback) {
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(CancelledException cex) {
+//
+//            }
+//
+//            @Override
+//            public void onFinished() {
+//
+//            }
+//        });
+//                            }
+//                        }.start();
+
+
     }
 
     @Override

@@ -373,6 +373,7 @@ public class LoginUserActivity extends AppCompatActivity implements View.OnClick
                                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                     startActivity(intent);
                                 } else if (mainActivityInteger==10){
+                                    Log.d("jinlai l ","wode");
                                     Intent intent = new Intent();
                                     intent.setClass(LoginUserActivity.this, MainActivity.class);
                                     intent.putExtra("cart", 3);
@@ -438,6 +439,7 @@ public class LoginUserActivity extends AppCompatActivity implements View.OnClick
 
             @Override
             public void onCancelled(CancelledException cex) {
+                Log.d("cancel","cancel");
 
             }
 

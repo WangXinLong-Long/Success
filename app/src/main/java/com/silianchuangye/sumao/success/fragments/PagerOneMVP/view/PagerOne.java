@@ -516,7 +516,7 @@ public class PagerOne extends BasePager implements IPagerOneView {
         RequestParams  rp=new RequestParams(SuMaoConstant.SUMAO_IP+"/rest/model/atg/userprofiling/ProfileActor/logout");
         SharedPreferences sp=mActivity.getSharedPreferences("sumao",0);
         //SharedPreferences sp1=g
-        String unique=sp.getString("unique","默认值");
+        String unique=sp.getString("unique","");
         rp.addParameter("_dynSessConf",unique);
         Log.d("退出时的唯一标识",unique);
         x.http().post(rp, new Callback.CommonCallback<String>() {
@@ -560,18 +560,60 @@ public class PagerOne extends BasePager implements IPagerOneView {
         Loding.dis();
         SharedPreferences sp=mActivity.getSharedPreferences("sumao", Activity.MODE_PRIVATE);
         String unique=sp.getString("unique","");
-        if (unique.equals("false")||unique==""||unique==null){
+        Log.d("上游的unique",""+unique);
+
+        if (unique.equals("false")||unique==""||unique==null||unique.equals("")){
             tuichu();
             Intent intent=new Intent(mActivity, LoginUserActivity.class);
             intent.putExtra("roles","buyer");
             startActivity(intent);
         }else{
-        Intent intent = new Intent();
-        intent.setClass(mActivity, UpstreamDirectSellingActivity.class);
-        intent.putExtra("upstreamDirectorySellingBean", upstreamDirectorySellingBean);
-        LogUtils.log("upstreamDirectorySellingBean" + upstreamDirectorySellingBean.getInfo());
-        startActivity(intent);
+          //  if ()//用户没有登录的状态
+            infoLogin(unique,upstreamDirectorySellingBean);
+
         }
+    }
+
+    public void infoLogin(String _dynSessConf,final UpstreamDirectorySellingBean upstreamDirectorySellingBean){
+        String url=SuMaoConstant.SUMAO_IP+"/rest/model/atg/userprofiling/ProfileActor/appCustomerInfo";
+        RequestParams rp=new RequestParams(url);
+        rp.addParameter("_dynSessConf",_dynSessConf);
+        Log.d("上游的rp",rp+"");
+        x.http().post(rp, new Callback.CommonCallback<String>() {
+
+            @Override
+            public void onSuccess(String result) {
+                Log.d("判断是否denglu",result);
+                if(result.contains("fail")){
+                    tuichu();
+                    Intent intent=new Intent(mActivity, LoginUserActivity.class);
+                    intent.putExtra("roles","buyer");
+                    startActivity(intent);
+                }else{
+                     Intent intent = new Intent();
+                     intent.setClass(mActivity, UpstreamDirectSellingActivity.class);
+                     intent.putExtra("upstreamDirectorySellingBean", upstreamDirectorySellingBean);
+                     LogUtils.log("upstreamDirectorySellingBean" + upstreamDirectorySellingBean.getInfo());
+                     startActivity(intent);
+                }
+
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
     }
 
 
