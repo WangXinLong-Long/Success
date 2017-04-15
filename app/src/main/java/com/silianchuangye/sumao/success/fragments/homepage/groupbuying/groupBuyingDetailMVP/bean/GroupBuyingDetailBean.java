@@ -63,12 +63,14 @@ public class GroupBuyingDetailBean implements Serializable {
     private String contractTemplatePath;
     private String cl_baozhj;
     private String cl_gongsi;
+    private String addressDetail;
     private String utilDate;
-    private String cl_jine;
     private String cl_qigou;
+    private String cl_jine;
     private String cl_zongliang;
     private String groupStartDate;
     private String cl_fenlei;
+    private String depositDeadline;
     private String groupEndDate;
     private String gradeNumber;
     private String securedOfSection;
@@ -81,31 +83,19 @@ public class GroupBuyingDetailBean implements Serializable {
     private String cl_shijian;
     private String cl_type;
     private String cl_shijianend;
+    private String cl_qiyeonlyId;
     private String manufacturer;
     private String cl_diqu;
     private String cl_cangku;
     private String cl_guojia;
     private String group;
     private String sumAddQty;
-    private String addressDetail;
-    private String depositDeadline;
+    private String securedPage;
+   // private String securedOfSection;
     private List<String> cl_fangshi;
 
-    public String getDepositDeadline() {
-        return depositDeadline;
-    }
 
-    public void setDepositDeadline(String depositDeadline) {
-        this.depositDeadline = depositDeadline;
-    }
 
-    public String getAddressDetail() {
-        return addressDetail;
-    }
-
-    public void setAddressDetail(String addressDetail) {
-        this.addressDetail = addressDetail;
-    }
 
     public String getGroupPercent() {
         return groupPercent;
@@ -131,6 +121,14 @@ public class GroupBuyingDetailBean implements Serializable {
         this.cl_cpid = cl_cpid;
     }
 
+    public String getCl_groupQuantity() {
+        return cl_groupQuantity;
+    }
+
+    public void setCl_groupQuantity(String cl_groupQuantity) {
+        this.cl_groupQuantity = cl_groupQuantity;
+    }
+
     public String getCl_gongsiId() {
         return cl_gongsiId;
     }
@@ -148,7 +146,7 @@ public class GroupBuyingDetailBean implements Serializable {
     }
 
     public String getCl_baozhj() {
-        return cl_baozhj;
+        return this.cl_baozhj;
     }
 
     public void setCl_baozhj(String cl_baozhj) {
@@ -163,12 +161,36 @@ public class GroupBuyingDetailBean implements Serializable {
         this.cl_gongsi = cl_gongsi;
     }
 
+    public String getAddressDetail() {
+        return addressDetail;
+    }
+
+    public void setAddressDetail(String addressDetail) {
+        this.addressDetail = addressDetail;
+    }
+
     public String getUtilDate() {
         return utilDate;
     }
 
     public void setUtilDate(String utilDate) {
         this.utilDate = utilDate;
+    }
+
+    public String getCl_qigou() {
+        return cl_qigou;
+    }
+
+    public void setCl_qigou(String cl_qigou) {
+        this.cl_qigou = cl_qigou;
+    }
+
+    public String getCl_jine() {
+        return cl_jine;
+    }
+
+    public void setCl_jine(String cl_jine) {
+        this.cl_jine = cl_jine;
     }
 
     public String getCl_zongliang() {
@@ -179,6 +201,13 @@ public class GroupBuyingDetailBean implements Serializable {
         this.cl_zongliang = cl_zongliang;
     }
 
+    public String getGroupStartDate() {
+        return groupStartDate;
+    }
+
+    public void setGroupStartDate(String groupStartDate) {
+        this.groupStartDate = groupStartDate;
+    }
 
     public String getCl_fenlei() {
         return cl_fenlei;
@@ -188,6 +217,21 @@ public class GroupBuyingDetailBean implements Serializable {
         this.cl_fenlei = cl_fenlei;
     }
 
+    public String getDepositDeadline() {
+        return depositDeadline;
+    }
+
+    public void setDepositDeadline(String depositDeadline) {
+        this.depositDeadline = depositDeadline;
+    }
+
+    public String getGroupEndDate() {
+        return groupEndDate;
+    }
+
+    public void setGroupEndDate(String groupEndDate) {
+        this.groupEndDate = groupEndDate;
+    }
 
     public String getGradeNumber() {
         return gradeNumber;
@@ -211,6 +255,14 @@ public class GroupBuyingDetailBean implements Serializable {
 
     public void setYingyong(String yingyong) {
         this.yingyong = yingyong;
+    }
+
+    public String getCl_xbianliang() {
+        return cl_xbianliang;
+    }
+
+    public void setCl_xbianliang(String cl_xbianliang) {
+        this.cl_xbianliang = cl_xbianliang;
     }
 
     public String getCl_mingcheng() {
@@ -245,12 +297,36 @@ public class GroupBuyingDetailBean implements Serializable {
         this.cl_id = cl_id;
     }
 
+    public String getCl_shijian() {
+        return cl_shijian;
+    }
+
+    public void setCl_shijian(String cl_shijian) {
+        this.cl_shijian = cl_shijian;
+    }
+
     public String getCl_type() {
         return cl_type;
     }
 
     public void setCl_type(String cl_type) {
         this.cl_type = cl_type;
+    }
+
+    public String getCl_shijianend() {
+        return cl_shijianend;
+    }
+
+    public void setCl_shijianend(String cl_shijianend) {
+        this.cl_shijianend = cl_shijianend;
+    }
+
+    public String getCl_qiyeonlyId() {
+        return cl_qiyeonlyId;
+    }
+
+    public void setCl_qiyeonlyId(String cl_qiyeonlyId) {
+        this.cl_qiyeonlyId = cl_qiyeonlyId;
     }
 
     public String getManufacturer() {
@@ -301,75 +377,19 @@ public class GroupBuyingDetailBean implements Serializable {
         this.sumAddQty = sumAddQty;
     }
 
+    public String getSecuredPage() {
+        return securedPage;
+    }
+
+    public void setSecuredPage(String securedPage) {
+        this.securedPage = securedPage;
+    }
+
     public List<String> getCl_fangshi() {
         return cl_fangshi;
     }
 
     public void setCl_fangshi(List<String> cl_fangshi) {
         this.cl_fangshi = cl_fangshi;
-    }
-
-    public String getCl_groupQuantity() {
-        return cl_groupQuantity;
-    }
-
-    public void setCl_groupQuantity(String cl_groupQuantity) {
-        this.cl_groupQuantity = cl_groupQuantity;
-    }
-
-    public String getCl_jine() {
-        return cl_jine;
-    }
-
-    public void setCl_jine(String cl_jine) {
-        this.cl_jine = cl_jine;
-    }
-
-    public String getCl_qigou() {
-        return cl_qigou;
-    }
-
-    public void setCl_qigou(String cl_qigou) {
-        this.cl_qigou = cl_qigou;
-    }
-
-    public String getGroupStartDate() {
-        return groupStartDate;
-    }
-
-    public void setGroupStartDate(String groupStartDate) {
-        this.groupStartDate = groupStartDate;
-    }
-
-    public String getGroupEndDate() {
-        return groupEndDate;
-    }
-
-    public void setGroupEndDate(String groupEndDate) {
-        this.groupEndDate = groupEndDate;
-    }
-
-    public String getCl_xbianliang() {
-        return cl_xbianliang;
-    }
-
-    public void setCl_xbianliang(String cl_xbianliang) {
-        this.cl_xbianliang = cl_xbianliang;
-    }
-
-    public String getCl_shijian() {
-        return cl_shijian;
-    }
-
-    public void setCl_shijian(String cl_shijian) {
-        this.cl_shijian = cl_shijian;
-    }
-
-    public String getCl_shijianend() {
-        return cl_shijianend;
-    }
-
-    public void setCl_shijianend(String cl_shijianend) {
-        this.cl_shijianend = cl_shijianend;
     }
 }

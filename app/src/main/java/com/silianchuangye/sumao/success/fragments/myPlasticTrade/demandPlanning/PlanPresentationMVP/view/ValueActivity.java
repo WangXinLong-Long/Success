@@ -35,7 +35,7 @@ public class ValueActivity extends AppCompatActivity implements View.OnClickList
         title=bundle.getString("title");
         id=bundle.getInt("id");
         iv_child_title_bar_back.setOnClickListener(this);
-        //Log.d("传过来position的值",id);
+        Log.d("传过来position的值",id+"");
         tv_child_title_bar_title.setText(title);
 
 

@@ -638,7 +638,7 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
             Toast.makeText(PreSaleDetailActivity.this, "请选择支付银行", Toast.LENGTH_SHORT).show();
 
         } else {
-            Loding.show(this, "正在支付保证金...", false, null);//网络请求之前调用
+            //Loding.show(this, "正在支付保证金...", false, null);//网络请求之前调用
             String quantity = edt_num.getText().toString();//数量
             SharedPreferences sp = this.getSharedPreferences("sumao", Activity.MODE_PRIVATE);
             String _dynSessConf = sp.getString("unique", "");
@@ -647,7 +647,7 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
                     quantity + "  _dynSessConf," + _dynSessConf + "  paymentPlatform," + paymentPlatform);
 //            TODO 差skuId，预售日历
 //             TODO 修改支付保证金接口？？？？
-            preSaleDetailPresenter.getPaymentSecurityResult(skuId, productId, quantity, _dynSessConf, paymentPlatform);
+            preSaleDetailPresenter.getPaymentSecurityResult(tv.getText().toString(), (Integer.parseInt(quantity)*1000)+"", productId, paymentPlatform, skuId,_dynSessConf);
 
         }
     }
@@ -741,7 +741,9 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
                     ActionBarOverlayLayout.LayoutParams.WRAP_CONTENT);
             popupWindow.setContentView(view);
             tv = (TextView) view.findViewById(R.id.tv_pay);
-            tv.setText(BZprice + "");
+            //tv.setText(BZprice + "");
+            //DecimalFormat df = new DecimalFormat("#.00");
+            tv.setText(String.format("%.2f", BZprice));
 //        et= (EditText) view.findViewById(R.id.etZhifu_auction);
             lv = (ListView) view.findViewById(R.id.lv_popupwindow_auction);
             Button bt = (Button) view.findViewById(R.id.btZhifu);
@@ -833,7 +835,9 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
     //    支付保证金
     @Override
     public void payPaymentSecurity(String result) {
-        Loding.dis();
+        Log.d("支付保证金的返回值",result);
+
+//        Loding.dis();
         try {
             JSONObject job = new JSONObject(result);
             String info = job.getString("info");

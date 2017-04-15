@@ -54,7 +54,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/x40"
             android:layout_alignParentBottom="true"
-            android:background="@color/gray_normal"
+            android:background="@color/btn_register_pressed"
             android:visibility="gone">
 
             <TextView

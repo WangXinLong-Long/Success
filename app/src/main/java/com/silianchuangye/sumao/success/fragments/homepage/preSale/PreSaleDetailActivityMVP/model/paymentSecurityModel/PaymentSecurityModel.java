@@ -11,29 +11,34 @@ import org.xutils.x;
  * Created by Jobs Created on 2016/12/24.
  */
 public class PaymentSecurityModel implements IPaymentSecurityModel {
-    private String skuId;
-    private String productId;
-    private String quantity;
-    private String _dynSessConf;
-    private String paymentPlatform;
 
-    public PaymentSecurityModel(String skuId, String productId, String quantity, String _dynSessConf, String paymentPlatform) {
-        this.skuId = skuId;
-        this.productId = productId;
+
+    private String quantity;
+    private String productId;
+    private String paymentPlatform;
+    private String skuId;
+    private String price;
+    private String _dynSessConf;
+
+    public PaymentSecurityModel(String price, String quantity, String productId, String paymentPlatform, String skuId,String _dynSessConf) {
+        this.price = price;
         this.quantity = quantity;
-        this._dynSessConf = _dynSessConf;
+        this.productId = productId;
         this.paymentPlatform = paymentPlatform;
+        this.skuId = skuId;
+        this._dynSessConf=_dynSessConf;
     }
 
     @Override
     public void getPaymentSecurityResult(final PaymentSecurityCallback callback) {
 //        TODO 修改支付保证金接口
         RequestParams params = new RequestParams(SuMaoConstant.SUMAO_IP + "/rest/model/atg/commerce/payment/OrderPayment/goPresale");
-        params.addParameter("skuId", skuId);
+        params.addParameter("quantity", quantity);
         params.addParameter("productId", productId);
-        params.addParameter("quantity", quantity);//保证金
-        params.addParameter("_dynSessConf", _dynSessConf);
         params.addParameter("paymentPlatform", paymentPlatform);
+        params.addParameter("skuId", skuId);
+        params.addParameter("price", price);
+        params.addParameter("_dynSessConf",_dynSessConf);
         LogUtils.log("支付保证金RUL--->"+params);
         x.http().post(params, new Callback.CommonCallback<String>() {
             @Override

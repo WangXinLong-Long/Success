@@ -31,6 +31,7 @@ public class GroupBuyingActivity extends AppCompatActivity implements IGroupBuyi
     private String shangpinId;
     private PullToRefreshLayout pullToRefreshLayout;
     private GroupBuyingPresenter groupBuyingPresenter;
+    GroupBuyingListBean groupBuyingListBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,8 +81,10 @@ public class GroupBuyingActivity extends AppCompatActivity implements IGroupBuyi
         lv_group_buying.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                groupBuyingPresenter.getGroupBuyingDetailResult(list.get(position).getId(), list.get(position).getRuning(),list.get(position).getResult());
-
+                //groupBuyingPresenter.getGroupBuyingDetailResult(list.get(position).getId(), list.get(position).getRuning(),list.get(position).getResult());
+                Intent intent = new Intent(GroupBuyingActivity.this, GroupBuyingSuccessActivity.class);
+                intent.putExtra("productId",groupBuyingListBean.getProd().get(position).getId());
+                startActivity(intent);
             }
         });
 
@@ -94,7 +97,7 @@ public class GroupBuyingActivity extends AppCompatActivity implements IGroupBuyi
             list.clear();
         }
         Gson gson = new Gson();
-        GroupBuyingListBean groupBuyingListBean = gson.fromJson(result, GroupBuyingListBean.class);
+        groupBuyingListBean= gson.fromJson(result, GroupBuyingListBean.class);
         list.addAll(groupBuyingListBean.getProd());
         adapter.clearData();
         adapter.addData(list);
@@ -104,28 +107,30 @@ public class GroupBuyingActivity extends AppCompatActivity implements IGroupBuyi
     @Override
     public void setGroupBuyingDetailResult(String result, String state,String result2) {
         Intent intent = new Intent(GroupBuyingActivity.this, GroupBuyingSuccessActivity.class);
-        if (state.equals("true")) {
-            intent.putExtra("state", "团购已开始");
-            intent.putExtra("result2","abc");
-           // intent.putExtra("productOff","false");
-        } else if (state.equals("false")) {
-            intent.putExtra("state", "团购未开始");
-            intent.putExtra("result2","abc");
-            //intent.putExtra("productOff","false");
-        } else if (state.equals("end")){
-                if (result2.equals("gone")) {
-                    intent.putExtra("state", "团购结束");
-                    intent.putExtra("result2", "未成团");
-                   // intent.putExtra("productOff","false");
-                } else {
-                    intent.putExtra("state", "团购结束");
-                    intent.putExtra("result2", "已成团");
-                    //intent.putExtra("productOff","false");
-                }
 
-        }
-        intent.putExtra("result", result);
-        startActivity(intent);
+//        if (state.equals("true")) {
+//            intent.putExtra("state", "团购已开始");
+//            intent.putExtra("result2","abc");
+//           // intent.putExtra("productOff","false");
+//        } else if (state.equals("false")) {
+//            intent.putExtra("state", "团购未开始");
+//            intent.putExtra("result2","abc");
+//            //intent.putExtra("productOff","false");
+//        } else if (state.equals("end")){
+//                if (result2.equals("gone")) {
+//                    intent.putExtra("state", "团购结束");
+//                    intent.putExtra("result2", "未成团");
+//                   // intent.putExtra("productOff","false");
+//                } else {
+//                    intent.putExtra("state", "团购结束");
+//                    intent.putExtra("result2", "已成团");
+//                    //intent.putExtra("productOff","false");
+//                }
+//
+//        }
+//        intent.putExtra("result", result);
+      //  startActivity(intent);
+
 
     }
 

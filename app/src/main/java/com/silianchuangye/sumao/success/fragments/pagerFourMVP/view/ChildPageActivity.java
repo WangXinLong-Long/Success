@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -36,6 +37,7 @@ public class ChildPageActivity extends AppCompatActivity {
     private ArrayAdapter<String> adapter;
     private String url;
     private String newsid;
+    private ImageView iv_child_title_bar_back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,13 @@ public class ChildPageActivity extends AppCompatActivity {
         tv_child_title_bar_title= (TextView) findViewById(R.id.tv_child_title_bar_title);
         tv_child_title_bar_title.setText(title);
         lv_Holp= (ListView) findViewById(R.id.lv_Holp);
+        iv_child_title_bar_back= (ImageView) findViewById(R.id.iv_child_title_bar_back);
+        iv_child_title_bar_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ChildPageActivity.this.finish();
+            }
+        });
 
 
         try {

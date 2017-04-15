@@ -292,6 +292,9 @@ public class TypeInfoActivity extends AppCompatActivity implements OnClickListen
                     //Toast.makeText(TypeInfoActivity.this,"管俊需要写跳转->团购",Toast.LENGTH_SHORT).show();
                     // TODO 管俊需要写跳转
                     //getGoupBuying(list.get(position).getCl_id());
+                    Intent intent=new Intent(TypeInfoActivity.this,GroupBuyingSuccessActivity.class);
+                    intent.putExtra("productId",list.get(position).getIn_id());
+                    startActivity(intent);
 
                 }
 

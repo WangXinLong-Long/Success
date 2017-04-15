@@ -203,6 +203,7 @@ public class PlanPresentationActivity extends AppCompatActivity implements View.
                 break;
             case 4:
                 price=data.getStringExtra("content");
+                Log.d("price的返回值",price);
                 break;
             case 5:
                 number=data.getStringExtra("content");
@@ -369,7 +370,7 @@ public class PlanPresentationActivity extends AppCompatActivity implements View.
                            // planPresentationPresenter.setSubmitPlan(/*date, name, wareHouse, number, delivery, remark, productId, getActivity().getSharedPreferences("sumao", Context.MODE_PRIVATE).getString("unique", "")*/);
                             SharedPreferences sp=getSharedPreferences("sumao", Activity.MODE_PRIVATE);
                             String unique=sp.getString("unique","");
-                            planPresentationPresenter.setSubmitPlan(sellerCompanyId,date,productId,productName,warehouseId,number,wayId,remark,unique);
+                            planPresentationPresenter.setSubmitPlan(sellerCompanyId,date,productId,price,warehouseId,number,wayId,remark,unique);
                         }
 //                        alert.show();
                     }

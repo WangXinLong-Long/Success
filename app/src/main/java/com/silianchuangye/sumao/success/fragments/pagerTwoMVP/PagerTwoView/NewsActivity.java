@@ -288,10 +288,17 @@ public class NewsActivity extends AppCompatActivity {
                         }
                         Log.d("html的url", urlhtml);
                         wb_Content.getSettings().setJavaScriptEnabled(true);
+                        wb_Content.getSettings().setUseWideViewPort(true);
+                        wb_Content.getSettings().setLoadWithOverviewMode(true);
+                        wb_Content.setVerticalScrollBarEnabled(false);
+                        wb_Content.setHorizontalScrollBarEnabled(false);
+                        //wb_Content.getSettings().setJavaScriptEnabled(true);
                         //跳转网页仍然在当前WebView中显示
                         wb_Content.setWebViewClient(new WebViewClient());
                         //调用loadUrl()方法，并传入网址，展示相应内容
                         wb_Content.loadUrl(urlhtml);
+//                        websettings.setUseWideViewPort(true);
+//                        websettings.setLoadWithOverviewMode(true);
                     }else {
                         JSONObject jsonObject=new JSONObject(result);
                         String time=jsonObject.getString("time");

@@ -92,6 +92,7 @@ public class PlanQueryActivity extends AppCompatActivity implements IPlanQueryVi
     private List<String> list_wuliu,list_qiye,list_qiyeId,list_wuliyId;
     private LinearLayout mention_logistc_ll,layout_seller_enterprise;
     private String wuliu,qiye;
+    private ImageView img_create_logistics_back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,7 +102,13 @@ public class PlanQueryActivity extends AppCompatActivity implements IPlanQueryVi
         pullToRefreshLayout = ((PullToRefreshLayout) findViewById(R.id.refresh_view));
         listview = ((ListView) pullToRefreshLayout.getPullableView());
         //PlanQueryAdapter planQueryAdapter = new PlanQueryAdapter(this);
-
+        img_create_logistics_back= (ImageView) findViewById(R.id.img_create_logistics_back);
+        img_create_logistics_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PlanQueryActivity.this.finish();
+            }
+        });
         //i//nitData(planQueryAdapter);
         title = ((RelativeLayout) findViewById(R.id.title));
 

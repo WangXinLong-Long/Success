@@ -23,6 +23,7 @@ public class PlanPresentationModel implements IPlanPresentationModel {
     private String notes;
     private String _dynSessConf;
     private String sellerCompanyId;
+    private String price;
 
     public PlanPresentationModel() {
         this.scheduleDate = scheduleDate;
@@ -36,10 +37,10 @@ public class PlanPresentationModel implements IPlanPresentationModel {
         this.sellerCompanyId = sellerCompanyId;
     }
 
-    public PlanPresentationModel(String scheduleDate, String productId, String productName, String warehouseID, String planOrderQuantity, String logisticsID, String notes, String _dynSessConf, String sellerCompanyId) {
+    public PlanPresentationModel(String scheduleDate, String productId, String price, String warehouseID, String planOrderQuantity, String logisticsID, String notes, String _dynSessConf, String sellerCompanyId) {
         this.scheduleDate = scheduleDate;
         this.productId = productId;
-        this.productName = productName;
+        this.price = price;
         this.warehouseID = warehouseID;
         this.planOrderQuantity = planOrderQuantity;
         this.logisticsID = logisticsID;
@@ -60,14 +61,14 @@ public class PlanPresentationModel implements IPlanPresentationModel {
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("sellerCompanyId",sellerCompanyId);
-            jsonObject.put("_dynSessConf",_dynSessConf);
-            jsonObject.put("productId",productId);
             jsonObject.put("scheduleDate",scheduleDate);
-            jsonObject.put("productName",productName);
+            jsonObject.put("productId",productId);
             jsonObject.put("warehouseID",warehouseID);
             jsonObject.put("planOrderQuantity",planOrderQuantity);
             jsonObject.put("logisticsID",logisticsID);
             jsonObject.put("notes",notes);
+            jsonObject.put("_dynSessConf",_dynSessConf);
+            jsonObject.put("price",price);
         } catch (JSONException e) {
             e.printStackTrace();
         }

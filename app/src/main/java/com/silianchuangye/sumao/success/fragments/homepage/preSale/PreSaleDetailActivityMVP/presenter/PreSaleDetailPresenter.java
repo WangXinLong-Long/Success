@@ -59,8 +59,8 @@ public class PreSaleDetailPresenter {
     }
 
 //    支付保证金
-    public void getPaymentSecurityResult( String skuId, String productId, String quantity, String _dynSessConf, String paymentPlatform){
-        IPaymentSecurityModel paymentSecurityModel = new PaymentSecurityModel( skuId,  productId,  quantity,  _dynSessConf,  paymentPlatform);
+    public void getPaymentSecurityResult(String price, String quantity, String productId, String paymentPlatform, String skuId,String _dynSessConf){
+        IPaymentSecurityModel paymentSecurityModel = new PaymentSecurityModel( price,  quantity,  productId,  paymentPlatform,  skuId,_dynSessConf);
         paymentSecurityModel.getPaymentSecurityResult(new PaymentSecurityCallback() {
             @Override
             public void callbackPaymentSecurity(String result) {

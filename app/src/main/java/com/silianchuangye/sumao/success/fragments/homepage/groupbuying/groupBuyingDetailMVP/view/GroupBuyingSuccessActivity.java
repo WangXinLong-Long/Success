@@ -8,6 +8,8 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ActionBarOverlayLayout;
 import android.text.Editable;
@@ -46,6 +48,8 @@ import com.silianchuangye.sumao.success.dialog.Ok_Dialog;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.OpenAuction;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.VesselThreeActivity;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.bean.GoodsInStockDetailBean;
+import com.silianchuangye.sumao.success.fragments.homepage.groupbuying.GroupBuyingMVP.presenter.GroupBuyingPresenter;
+import com.silianchuangye.sumao.success.fragments.homepage.groupbuying.GroupBuyingMVP.view.IGroupBuyingView;
 import com.silianchuangye.sumao.success.fragments.homepage.groupbuying.JoinActivity;
 import com.silianchuangye.sumao.success.fragments.homepage.groupbuying.RuleActivity;
 import com.silianchuangye.sumao.success.fragments.homepage.groupbuying.groupBuyingDetailMVP.bean.GroupBuyingDetailBean;
@@ -72,8 +76,10 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
-public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGroupBuyingDetailView, View.OnClickListener {
+public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGroupBuyingDetailView, View.OnClickListener,IGroupBuyingView {
     private ListView lvDemo;
     private SimpleAdapter adapter;
     private List<Map<String, Object>> list;
@@ -149,24 +155,35 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
     private List<Map<String, Object>> list_gridview = new ArrayList<Map<String, Object>>();
     private LinearLayout line_bottom, line_top, line_content;
     private String unique;
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    private GoogleApiClient client;
+    private GroupBuyingPresenter groupBuyingPresenter;
+    private String productId;
+    private String login;
+    private String Inforesult;
+    private Handler handler;
+    private TimerTask task;
+    private Timer timer;
+    private String groupPercent;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         groupBuyingDetailPresenter = new GroupBuyingDetailPresenter(this);
+        groupBuyingPresenter = new GroupBuyingPresenter(this);
         setContentView(R.layout.activity_group_buying_success);
-        init();
+        Bundle bundle = getIntent().getExtras();
+        productId=bundle.getString("productId");
+        Log.d("成团状态", "" + result2);
+        Log.d("result的值",""+result);
 
+        init();
+        info();
+//        addData();
         event();
-        addData();
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+
+    }
+    public void info(){
+        groupBuyingPresenter.getGroupBuyingDetailResult(productId,"","");
     }
 
     public void init() {
@@ -187,12 +204,7 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
                 finish();
             }
         });
-        Bundle bundle = getIntent().getExtras();
-        result = bundle.getString("result");
-        state = bundle.getString("state");
-        result2 = bundle.getString("result2");
-        Log.d("成团状态", "" + result2);
-        Log.d("result的值",""+result);
+
         relative_tuangou_end = (RelativeLayout) findViewById(R.id.relative_tuangou_end);
 
         lvDemo = (ListView) findViewById(R.id.lv_demo);
@@ -259,7 +271,7 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
         //        购买数量
         tv_item_cart_buy_num = ((EditText) findViewById(R.id.tv_item_cart_buy_num));
 
-        getinfo(result);
+        //getinfo(result);
 //        减
         img_item_cart_buy_sub = ((TextView) findViewById(R.id.img_item_cart_buy_sub));
         img_item_cart_buy_sub.setOnClickListener(this);
@@ -267,7 +279,7 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
         img_item_cart_buy_add = ((TextView) findViewById(R.id.img_item_cart_buy_add));
         img_item_cart_buy_add.setOnClickListener(this);
 
-        booleanOpenorclose();
+
         //       购买数量
         tv_item_cart_buy_num.addTextChangedListener(new TextWatcher() {
             @Override
@@ -341,15 +353,8 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
 
     }
 
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if (resultCode==102){
-//            unique=data.getStringExtra("unique");
-//            Log.d("返回过来的之",unique);
-//        }
-//    }
-public void tuichu(){
+
+    public void tuichu(){
     RequestParams  rp=new RequestParams(SuMaoConstant.SUMAO_IP+"/rest/model/atg/userprofiling/ProfileActor/logout");
     SharedPreferences sp=getSharedPreferences("sumao",0);
     //SharedPreferences sp1=g
@@ -362,13 +367,8 @@ public void tuichu(){
             SharedPreferences sp=getSharedPreferences("sumao", Activity.MODE_PRIVATE);
             SharedPreferences.Editor editor=sp.edit();
             editor.clear();
-            //      editor.clear();
             editor.commit();
-            //Toast.makeText(context, "用户名称已删除", Toast.LENGTH_SHORT).show();
 
-//                                            SettingActivity.this.finish();
-
-//                                        }
         }
 
         @Override
@@ -386,8 +386,6 @@ public void tuichu(){
 
         }
     });
-//                            }
-//                        }.start();
 
 
 }
@@ -453,47 +451,47 @@ public void tuichu(){
         x.http().post(rp, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Log.d("開閉式的返回值", result);
+
                 if (result.contains("true")) {
-                    if (state.equals("团购未开始")) {
-                        layout_not_action.setVisibility(View.GONE);
-                        layout_Bottom.setVisibility(View.GONE);
-                        relative_tuangou_end.setVisibility(View.VISIBLE);
-                        tvResult.setText("团购未开始");
-                    } else if (state.equals("团购已开始")) {
-                        layout_Bottom.setVisibility(View.VISIBLE);
-                        layout_not_action.setVisibility(View.GONE);
-                        relative_tuangou_end.setVisibility(View.GONE);
+//                    if (state.equals("团购未开始")) {
+//                        layout_not_action.setVisibility(View.GONE);
+//                        layout_Bottom.setVisibility(View.GONE);
+//                        relative_tuangou_end.setVisibility(View.VISIBLE);
+//                        tvResult.setText("团购未开始");
+//                    } else if (state.equals("团购已开始")) {
+//                        layout_Bottom.setVisibility(View.VISIBLE);
+//                        layout_not_action.setVisibility(View.GONE);
+//                        relative_tuangou_end.setVisibility(View.GONE);
+//
+//                    } else if (state.equals("团购结束")) {
+//                        if (securedOfSection.equals("productOff")) {
+//                            //产品已下架
+//                            layout_Bottom.setVisibility(View.GONE);
+//                            layout_not_action.setVisibility(View.GONE);
+//                            relative_tuangou_end.setVisibility(View.VISIBLE);
+//                            tvResult.setText("产品已下架");
+//                            tvResult.setTextColor(getResources().getColor(R.color.red));
+//                            tvResult.setTextSize(16);
+//                            //  Toast.makeText(GroupBuyingSuccessActivity.this, "产品已下架", Toast.LENGTH_SHORT).show();
+//                        } else {
+//                            if (result2.equals("未成团")) {
+//                                layout_Bottom.setVisibility(View.GONE);
+//                                layout_not_action.setVisibility(View.GONE);
+//                                relative_tuangou_end.setVisibility(View.VISIBLE);
+//                            } else if (result2.equals("已成团")) {
+//                                //
+//                                layout_Bottom.setVisibility(View.GONE);
+//                                layout_not_action.setVisibility(View.GONE);
+//                                relative_tuangou_end.setVisibility(View.VISIBLE);
+//                                tvResult.setText("团购已经结束请,关注其他团购");
+//                                tvResult.setTextColor(getResources().getColor(R.color.red));
+//                                tvResult.setTextSize(16);
+//                                chenggong();
+//
+//                            }
+//                        }
+                    tuangou_state();
 
-                    } else if (state.equals("团购结束")) {
-                        if (securedOfSection.equals("productOff")) {
-                            //产品已下架
-                            layout_Bottom.setVisibility(View.GONE);
-                            layout_not_action.setVisibility(View.GONE);
-                            relative_tuangou_end.setVisibility(View.VISIBLE);
-                            tvResult.setText("产品已下架");
-                            tvResult.setTextColor(getResources().getColor(R.color.red));
-                            tvResult.setTextSize(16);
-                            //  Toast.makeText(GroupBuyingSuccessActivity.this, "产品已下架", Toast.LENGTH_SHORT).show();
-                        } else {
-                            if (result2.equals("未成团")) {
-                                layout_Bottom.setVisibility(View.GONE);
-                                layout_not_action.setVisibility(View.GONE);
-                                relative_tuangou_end.setVisibility(View.VISIBLE);
-                            } else if (result2.equals("已成团")) {
-                                //
-                                layout_Bottom.setVisibility(View.GONE);
-                                layout_not_action.setVisibility(View.GONE);
-                                relative_tuangou_end.setVisibility(View.VISIBLE);
-                                tvResult.setText("团购已经结束请,关注其他团购");
-                                tvResult.setTextColor(getResources().getColor(R.color.red));
-                                tvResult.setTextSize(16);
-                                chenggong();
-
-                            }
-                        }
-
-                    }
                 } else {
                     layout_not_action.setVisibility(View.GONE);
                     layout_Bottom.setVisibility(View.GONE);
@@ -637,7 +635,8 @@ public void tuichu(){
     }
 
     public void addData() {
-        if (state.equals("团购未开始")) {
+        Log.d("state的值",state);
+        if (state.equals("0")) {
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("name", "交易规则");
             list.add(map);
@@ -665,12 +664,17 @@ public void tuichu(){
     }
 
     public void getinfo(String result) {
+
+        Log.d("团购详情的result",result);
         Gson gson = new Gson();
         groupBuyingDetailBean = gson.fromJson(result, GroupBuyingDetailBean.class);
         cl_baozhj = groupBuyingDetailBean.getCl_baozhj();
+        Log.d("保证金的值",cl_baozhj);
         cl_id = groupBuyingDetailBean.getCl_id();
+        Log.d("商品的编号",cl_id);
         NumberFormat nf = NumberFormat.getPercentInstance();
         Number number = null;
+       // addData();
         try {
             number = nf.parse(cl_baozhj);
         } catch (ParseException e) {
@@ -678,8 +682,9 @@ public void tuichu(){
         }
         percent = String.format("%.4f", Double.parseDouble(number.toString()));
         try {
-            JSONObject obj = new JSONObject(result);
+            //JSONObject obj = new JSONObject(result);
             String utilDate = groupBuyingDetailBean.getUtilDate();
+            Log.d("utilDate的值",utilDate);
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             long time = 0l;
             try {
@@ -692,38 +697,47 @@ public void tuichu(){
                 e.printStackTrace();
             }
             name.setText(groupBuyingDetailBean.getCl_mingcheng());
+            Log.d("name的值",name.getText().toString());
+
+
             strprice = groupBuyingDetailBean.getCl_jine();
             price.setText(strprice);
+            state=groupBuyingDetailBean.getSection().toString();
+            Log.d("state的值",state);
+            addData();
+
+
+
             if (result.contains("cl_zongliang")) {
                 count.setText(groupBuyingDetailBean.getCl_zongliang());
             } else {
                 count.setText("");
             }
             cl_gongsiId = groupBuyingDetailBean.getCl_gongsiId();
-            layoutContent_auction.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(GroupBuyingSuccessActivity.this, "客服聊天", Toast.LENGTH_SHORT).show();
-                    Intent intentHX = new Intent();
-                    intentHX.setClass(GroupBuyingSuccessActivity.this, LoginActivity.class);
-                    intentHX.putExtra(Constant.MESSAGE_TO_INTENT_EXTRA, Constant.MESSAGE_TO_DEFAULT);
-//                传入卖家id
-                    intentHX.putExtra(Constant.IM_SERVICE_NUMBER, cl_gongsiId);
-                    startActivity(intentHX);
-                }
-            });
+            Log.d("公司的Id",cl_gongsiId);
+
+
+            strbianliang = groupBuyingDetailBean.getCl_xbianliang();
+            Log.d("最小变量单位",strbianliang);
+            bianliang.setText(strbianliang);
             securedOfSection = groupBuyingDetailBean.getSecuredOfSection();
+            Log.d("securedOfSection的值",securedOfSection);
             group_amount_et.setText(groupBuyingDetailBean.getCl_groupQuantity());
+            Log.d("输入矿的的值",groupBuyingDetailBean.getCl_groupQuantity());
             qigou.setText(groupBuyingDetailBean.getCl_qigou());
+            Log.d("qigouliang的值",groupBuyingDetailBean.getCl_qigou());
             tv_item_cart_buy_num.setText(qigou.getText().toString());
             tv_item_cart_all_price.setText(String.format("%.2f", Double.parseDouble(tv_item_cart_buy_num.getText().toString()) * Double.parseDouble(price.getText().toString())));
-            strbianliang = groupBuyingDetailBean.getCl_xbianliang();
-            bianliang.setText(strbianliang);
+
             cangku.setText(groupBuyingDetailBean.getCl_cangku());
+            Log.d("仓库的值",groupBuyingDetailBean.getCl_cangku());
             String fangshi = groupBuyingDetailBean.getCl_fangshi().toString();
-            String str = fangshi.substring(2, fangshi.length() - 2);
+            Log.d("方式的值",groupBuyingDetailBean.getCl_fangshi().toString());
+            String str = fangshi.substring(1, fangshi.length() - 1);
+            Log.d("提货方式的值",str);
             way.setText(str);
             type.setText(groupBuyingDetailBean.getCl_fenlei());
+            Log.d("分类的值",groupBuyingDetailBean.getCl_fenlei());
 //                            String bian=obj.getString("cl_xbianjia");
 //                            bianjia.setText(obj.getString("cl_xbianjia"));//最小变价
             add.setText(groupBuyingDetailBean.getCl_diqu());
@@ -755,15 +769,65 @@ public void tuichu(){
             tuan_start = groupBuyingDetailBean.getGroupStartDate();
             tuan_end = groupBuyingDetailBean.getGroupEndDate();
             String sumAddQty = groupBuyingDetailBean.getSumAddQty();//数量
-            String groupPercent = groupBuyingDetailBean.getGroupPercent();//比例
+             groupPercent = groupBuyingDetailBean.getGroupPercent();//比例
 
             int i = (int) (Double.valueOf(groupPercent) * 100);
             tv_pro_now.setText("当前成团量为 : " + i + "%");
             tv_all_num.setText(groupBuyingDetailBean.getCl_zongliang() + "t");
             pbDemo.setProgress(i);
-            String state = groupBuyingDetailBean.getSection();
-            Log.e("TAG", "state=" + state);
-            if (state.equals("2")) {
+
+            login=groupBuyingDetailBean.getSecuredPage();
+            booleanOpenorclose();
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+
+    public void tuangou_state(){
+//        if (state.equals("2")) {
+//            tv_tuangou_line.setVisibility(View.VISIBLE);
+//            relative_tuangou.setVisibility(View.GONE);
+//            tv_success.setVisibility(View.GONE);
+//            tv_failed.setVisibility(View.GONE);
+//            layout_Bottom.setVisibility(View.INVISIBLE);
+//            relative_tuangou_end.setVisibility(View.VISIBLE);
+//            linear_tuangou_time.setVisibility(View.GONE);
+//            // linear_tuagou_line.setVisibility(View.GONE);
+//            tv_tuangou_line.setVisibility(View.GONE);
+//            tv_tuangou_time.setVisibility(View.GONE);
+//            tvResult.setText("团购");
+//            tvResult.setVisibility(View.GONE);
+//        }
+//        if (state.equals("1")) {//正在进行
+//            relative_tuangou.setVisibility(View.VISIBLE);
+//            tv_tuangou_time.setVisibility(View.GONE);
+//            tv_tuangou_line.setVisibility(View.GONE);
+//            linear_tuangou_time.setVisibility(View.VISIBLE);
+//        }
+//        if (state.equals("0")) {//未开始
+//            tv_tuangou_line.setVisibility(View.VISIBLE);
+//            relative_tuangou.setVisibility(View.GONE);
+//            layout_Bottom.setVisibility(View.GONE);
+//            relative_tuangou_end.setVisibility(View.VISIBLE);
+//            linear_tuangou_time.setVisibility(View.GONE);
+//            // linear_tuagou_line.setVisibility(View.GONE);
+//            tv_tuangou_time.setVisibility(View.VISIBLE);
+//        }
+        if (login.equals("unlogin")){
+            //没有登陆
+            Inforesult=groupBuyingDetailBean.getSecuredOfSection();
+            if (Inforesult.equals("running")){
+                relative_tuangou.setVisibility(View.VISIBLE);
+                tv_tuangou_time.setVisibility(View.GONE);
+                tv_tuangou_line.setVisibility(View.GONE);
+                linear_tuangou_time.setVisibility(View.VISIBLE);
+
+            }else if (Inforesult.equals("unGroup")){
                 tv_tuangou_line.setVisibility(View.VISIBLE);
                 relative_tuangou.setVisibility(View.GONE);
                 tv_success.setVisibility(View.GONE);
@@ -774,14 +838,47 @@ public void tuichu(){
                 // linear_tuagou_line.setVisibility(View.GONE);
                 tv_tuangou_line.setVisibility(View.GONE);
                 tv_tuangou_time.setVisibility(View.GONE);
-            }
-            if (state.equals("1")) {//正在进行
-                relative_tuangou.setVisibility(View.VISIBLE);
-                tv_tuangou_time.setVisibility(View.GONE);
+                tvResult.setText("未成团，请关注其他团购");
+            }else if (Inforesult.equals("calc")){
+                //团购结果结算中
+                tv_tuangou_line.setVisibility(View.VISIBLE);
+                relative_tuangou.setVisibility(View.GONE);
+                tv_success.setVisibility(View.GONE);
+                tv_failed.setVisibility(View.GONE);
+                layout_Bottom.setVisibility(View.INVISIBLE);
+                relative_tuangou_end.setVisibility(View.VISIBLE);
+                linear_tuangou_time.setVisibility(View.GONE);
+                // linear_tuagou_line.setVisibility(View.GONE);
                 tv_tuangou_line.setVisibility(View.GONE);
-                linear_tuangou_time.setVisibility(View.VISIBLE);
-            }
-            if (state.equals("0")) {//未开始
+                tv_tuangou_time.setVisibility(View.GONE);
+                tvResult.setText("团购结果结算中");
+
+            }else if (Inforesult.equals("saledOff")){
+                tv_tuangou_line.setVisibility(View.VISIBLE);
+                relative_tuangou.setVisibility(View.GONE);
+                tv_success.setVisibility(View.GONE);
+                tv_failed.setVisibility(View.GONE);
+                layout_Bottom.setVisibility(View.INVISIBLE);
+                relative_tuangou_end.setVisibility(View.VISIBLE);
+                linear_tuangou_time.setVisibility(View.GONE);
+                // linear_tuagou_line.setVisibility(View.GONE);
+                tv_tuangou_line.setVisibility(View.GONE);
+                tv_tuangou_time.setVisibility(View.GONE);
+                tvResult.setText("团购结束！请关注其他团购");
+            }else if (Inforesult.equals("end")){
+                tv_tuangou_line.setVisibility(View.VISIBLE);
+                relative_tuangou.setVisibility(View.GONE);
+                tv_success.setVisibility(View.GONE);
+                tv_failed.setVisibility(View.GONE);
+                layout_Bottom.setVisibility(View.INVISIBLE);
+                relative_tuangou_end.setVisibility(View.VISIBLE);
+                linear_tuangou_time.setVisibility(View.GONE);
+                // linear_tuagou_line.setVisibility(View.GONE);
+                tv_tuangou_line.setVisibility(View.GONE);
+                tv_tuangou_time.setVisibility(View.GONE);
+                tvResult.setText("团购已结束");
+            }else if (Inforesult.equals("notStarted")){
+                //没有开始状态
                 tv_tuangou_line.setVisibility(View.VISIBLE);
                 relative_tuangou.setVisibility(View.GONE);
                 layout_Bottom.setVisibility(View.GONE);
@@ -789,87 +886,189 @@ public void tuichu(){
                 linear_tuangou_time.setVisibility(View.GONE);
                 // linear_tuagou_line.setVisibility(View.GONE);
                 tv_tuangou_time.setVisibility(View.VISIBLE);
+            }else if (Inforesult.equals("productOff")){
+                tv_tuangou_line.setVisibility(View.VISIBLE);
+                relative_tuangou.setVisibility(View.GONE);
+                tv_success.setVisibility(View.GONE);
+                tv_failed.setVisibility(View.GONE);
+                layout_Bottom.setVisibility(View.INVISIBLE);
+                relative_tuangou_end.setVisibility(View.VISIBLE);
+                linear_tuangou_time.setVisibility(View.GONE);
+                // linear_tuagou_line.setVisibility(View.GONE);
+                tv_tuangou_line.setVisibility(View.GONE);
+                tv_tuangou_time.setVisibility(View.GONE);
+                tvResult.setText("商品已下架");
             }
 
+        }else if(login.equals("productOff")){
+            //下架
+            tv_tuangou_line.setVisibility(View.VISIBLE);
+            relative_tuangou.setVisibility(View.GONE);
+            tv_success.setVisibility(View.GONE);
+            tv_failed.setVisibility(View.GONE);
+            layout_Bottom.setVisibility(View.INVISIBLE);
+            relative_tuangou_end.setVisibility(View.VISIBLE);
+            linear_tuangou_time.setVisibility(View.GONE);
+            // linear_tuagou_line.setVisibility(View.GONE);
+            tv_tuangou_line.setVisibility(View.GONE);
+            tv_tuangou_time.setVisibility(View.GONE);
+            tvResult.setText("产品已下架");
+        }else if (login.equals("running")){
+            //进行中
+            relative_tuangou.setVisibility(View.VISIBLE);
+            tv_tuangou_time.setVisibility(View.GONE);
+            tv_tuangou_line.setVisibility(View.GONE);
+            linear_tuangou_time.setVisibility(View.VISIBLE);
+        }else if (login.equals("saledOff")){
+            tv_tuangou_line.setVisibility(View.VISIBLE);
+            relative_tuangou.setVisibility(View.GONE);
+            tv_success.setVisibility(View.GONE);
+            tv_failed.setVisibility(View.GONE);
+            layout_Bottom.setVisibility(View.INVISIBLE);
+            relative_tuangou_end.setVisibility(View.VISIBLE);
+            linear_tuangou_time.setVisibility(View.GONE);
+            // linear_tuagou_line.setVisibility(View.GONE);
+            tv_tuangou_line.setVisibility(View.GONE);
+            tv_tuangou_time.setVisibility(View.GONE);
+            tvResult.setText("团购结束！请关注其他团购");
+        }else if (login.equals("end_failed")){
+            tv_tuangou_line.setVisibility(View.VISIBLE);
+            relative_tuangou.setVisibility(View.GONE);
+            tv_success.setVisibility(View.GONE);
+            tv_failed.setVisibility(View.GONE);
+            layout_Bottom.setVisibility(View.INVISIBLE);
+            relative_tuangou_end.setVisibility(View.VISIBLE);
+            linear_tuangou_time.setVisibility(View.GONE);
+            // linear_tuagou_line.setVisibility(View.GONE);
+            tv_tuangou_line.setVisibility(View.GONE);
+            tv_tuangou_time.setVisibility(View.GONE);
+            tvResult.setText("团购已结束");
+        }else if (login.equals("end")){
+            tv_tuangou_line.setVisibility(View.VISIBLE);
+            relative_tuangou.setVisibility(View.GONE);
+            tv_success.setVisibility(View.GONE);
+            tv_failed.setVisibility(View.GONE);
+            layout_Bottom.setVisibility(View.INVISIBLE);
+            relative_tuangou_end.setVisibility(View.VISIBLE);
+            linear_tuangou_time.setVisibility(View.GONE);
+            // linear_tuagou_line.setVisibility(View.GONE);
+            tv_tuangou_line.setVisibility(View.GONE);
+            tv_tuangou_time.setVisibility(View.GONE);
+            tvResult.setText("团购已结束");
+        }else if (login.equals("end_success")){
+            tv_tuangou_line.setVisibility(View.VISIBLE);
+            relative_tuangou.setVisibility(View.GONE);
+            tv_success.setVisibility(View.GONE);
+            tv_failed.setVisibility(View.GONE);
+            layout_Bottom.setVisibility(View.INVISIBLE);
+            relative_tuangou_end.setVisibility(View.VISIBLE);
+            linear_tuangou_time.setVisibility(View.GONE);
+            // linear_tuagou_line.setVisibility(View.GONE);
+            tv_tuangou_line.setVisibility(View.GONE);
+            tv_tuangou_time.setVisibility(View.GONE);
+            tvResult.setText("团购已结束");
+            chenggong();
 
-        } catch (JSONException e) {
-            e.printStackTrace();
+        }else if (login.equals("unGroup")){
+            tv_tuangou_line.setVisibility(View.VISIBLE);
+            relative_tuangou.setVisibility(View.GONE);
+            tv_success.setVisibility(View.GONE);
+            tv_failed.setVisibility(View.GONE);
+            layout_Bottom.setVisibility(View.INVISIBLE);
+            relative_tuangou_end.setVisibility(View.VISIBLE);
+            linear_tuangou_time.setVisibility(View.GONE);
+            // linear_tuagou_line.setVisibility(View.GONE);
+            tv_tuangou_line.setVisibility(View.GONE);
+            tv_tuangou_time.setVisibility(View.GONE);
+            tvResult.setText("未成团，请关注其他团购");
+        }else if (login.equals("calc")){
+            tv_tuangou_line.setVisibility(View.VISIBLE);
+            relative_tuangou.setVisibility(View.GONE);
+            tv_success.setVisibility(View.GONE);
+            tv_failed.setVisibility(View.GONE);
+            layout_Bottom.setVisibility(View.INVISIBLE);
+            relative_tuangou_end.setVisibility(View.VISIBLE);
+            linear_tuangou_time.setVisibility(View.GONE);
+            // linear_tuagou_line.setVisibility(View.GONE);
+            tv_tuangou_line.setVisibility(View.GONE);
+            tv_tuangou_time.setVisibility(View.GONE);
+            tvResult.setText("团购结果计算中");
+            info();
         }
-
-
     }
 
-//    private void showPopWindow() {
-//        popView = View.inflate(this, R.layout.pop_tuagou_add, null);
-//        tv_pop_price = (TextView) popView.findViewById(R.id.tvPrice_auction);//价钱
-//        tv_pop_num = (TextView) popView.findViewById(R.id.surplus_amount_et);//团购总量
-//        tv_pop_fenlei = (TextView) popView.findViewById(R.id.classification_pre_sale_et);//分类
-//        tv_pop_start_num = (TextView) popView.findViewById(R.id.purchase_quantity_et);//起购量
-//        tv_pop_type = (TextView) popView.findViewById(R.id.warehouse_et);//交货方式
-//        tv_pop_small_null = (TextView) popView.findViewById(R.id.min_variable_et);//最小变量单位
-//        tv_pop_diqu = (TextView) popView.findViewById(R.id.region_et);//地区
-//        tv_pop_cangku = (TextView) popView.findViewById(R.id.delivery_time_et);//仓库
-//        tv_pop_gongsi = (TextView) popView.findViewById(R.id.warehouse_address_et);//公司
-//        tv_pop_add = (TextView) popView.findViewById(R.id.img_item_cart_buy_add);//加号
-//        tv_pop_sub = (TextView) popView.findViewById(R.id.img_item_cart_buy_sub);//减号
-//        edt_pop_num = (EditText) popView.findViewById(R.id.tv_item_cart_buy_num);//中间变化的数量
-//        edt_pop_num.setText(number.getText().toString());
-//        btn_pop_ok = (Button) popView.findViewById(R.id.determine_buy_immediately_button);//确定
-//        popView.measure(0, 0);
-//        int w = getWindowManager().getDefaultDisplay().getWidth();
-//        popupWindow = new PopupWindow(popView, w, popView.getMeasuredHeight());
-//        popupWindow.setFocusable(true);
-//        popupWindow.setBackgroundDrawable(new BitmapDrawable());
-//        popupWindow.showAtLocation(btn_tuangou_add, Gravity.BOTTOM, 0, 0);
-//        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-//            @Override
-//            public void onDismiss() {
-//                backgroundAlpha(1f);
-//            }
-//        });
-//        tv_pop_add.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                String str = edt_pop_num.getText().toString();
-//                double num = Double.valueOf(str);
-//                double cc = Double.parseDouble(strbianliang);
-//                num += cc;
-//                edt_pop_num.setText(num + "");
-////                tv_pop_price.setText(Double.valueOf(edt_pop_num.getText().toString())*Double.valueOf(strprice)+"");
-//                number.setText(edt_pop_num.getText().toString());
-//                count_price.setText(Double.valueOf(number.getText().toString()) * Double.valueOf(strprice) + "");
-//            }
-//        });
-//        tv_pop_sub.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                String str = edt_pop_num.getText().toString();
-//                double num = Double.valueOf(str);
-//                double cc = Double.parseDouble(strbianliang);
-//                num -= cc;
-//                if (num < cc) {
-//                    num = cc;
-//                }
-//                edt_pop_num.setText(num + "");
-////                tv_pop_price.setText(Double.valueOf(edt_pop_num.getText().toString())*Double.valueOf(strprice)+"");
-//                //
-//                number.setText(edt_pop_num.getText().toString());
-//                count_price.setText(Double.valueOf(number.getText().toString()) * Double.valueOf(strprice) + "");
-//            }
-//        });
-//
-//        btn_pop_ok.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                //支付保证金popwindow
-//                popupWindow.dismiss();
-//                showpop();
-//                backgroundAlpha(0.5f);
-//
-//            }
-//        });
-//        popDate();
-//    }
+    public void shuaxin(){
+        if (Float.parseFloat(count.getText().toString())-Float.parseFloat(group_amount_et.getText().toString())<Float.parseFloat(qigou.getText().toString())){
+            info();
+        }else{
+            //bundle=new Bundle(){};
+            handler=new Handler(){
+                @Override
+                public void handleMessage(Message msg) {
+                    super.handleMessage(msg);
+                    switch (msg.what){
+                        case 1:
+                            tuangouinfo();
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            };
+
+            timer=new Timer();
+            task=new TimerTask() {
+                @Override
+                public void run() {
+                    Message message = new Message();
+                    message.what = 1;
+                    handler.sendMessage(message);
+                }
+            };
+
+            timer.schedule(task,3000,1000);
+        }
+
+    }
+    public void tuangouinfo(){
+        String url=SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/catalog/ProductCatalogActor/groupProduct";
+        RequestParams requestParams=new RequestParams(url);
+        requestParams.addParameter("productId",productId);
+        x.http().post(requestParams, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                try {
+                    JSONObject jsonobject=new JSONObject(result);
+//                    login=jsonobject.getString("securedOfSection");
+//                    Inforesult=jsonobject.getString("securedPage");
+                    groupPercent=jsonobject.getString("groupPercent");
+                    //tuangou_state();
+                   // booleanOpenorclose();
+                    int i = (int) (Double.valueOf(groupPercent) * 100);
+                    pbDemo.setProgress(i);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+    }
+
+
 
     public void backgroundAlpha(float bgAlpha) {
         WindowManager.LayoutParams lp = this.getWindow().getAttributes();
@@ -890,33 +1089,7 @@ public void tuichu(){
         groupBuyingDetailPresenter.getBankListResult(cl_id);
     }
 
-//    private void popDate() {
-//        edt_pop_num.setText(number.getText().toString());
-//        String str, str2;
-//        if (edt_pop_num.getText().toString().equals("")) {
-//            str = 0 + "";
-//        } else {
-//            str = edt_pop_num.getText().toString();
-//        }
-//        if (strprice.equals("")) {
-//            str2 = "0";
-//        } else {
-//            str2 = strprice;
-//        }
-//        tv_pop_price.setText(price.getText().toString());
-////        String baozhengjin=Double.valueOf(str)*Double.valueOf(str2)+"";
-////        tv_pop_price.setText(Double.valueOf(str)*Double.valueOf(str2)+"");
-//
-//        tv_pop_num.setText(count.getText().toString());//剩余数量
-//        tv_pop_fenlei.setText(type.getText().toString());
-//        tv_pop_start_num.setText(qigou.getText().toString());
-//        tv_pop_type.setText(way.getText().toString());//交易方式
-//        tv_pop_small_null.setText(bianliang.getText().toString());
-//        tv_pop_diqu.setText(add.getText().toString());
-//        tv_pop_cangku.setText(cangku.getText().toString());
-//        tv_pop_gongsi.setText(comm.getText().toString());
-//        //
-//    }
+
 
     @Override
     public void setBankListResult(String result) {
@@ -1099,9 +1272,7 @@ public void tuichu(){
     //    支付保证金接口
     public void zhifu_baozhengjin(String platform) {
         Loding.show(this, "保证金支付中...", false, null);
-//        保证金金额
 
-//        产品Id
         String productId = cl_id;
 //        支付平台
         String paymentPlatform = platform;
@@ -1123,12 +1294,12 @@ public void tuichu(){
                 if (result.contains("formError\":false")) {
                     Toast.makeText(GroupBuyingSuccessActivity.this, "您支付保证金失败！", Toast.LENGTH_SHORT).show();
                 } else if (result.contains("\"info\":\"sucess\"")) {
-//                    Toast.makeText(GroupBuyingSuccessActivity.this, "您支付保证金成功！", Toast.LENGTH_SHORT).show();
-//                    Intent intent = new Intent(GroupBuyingSuccessActivity.this, Ok_Dialog.class);
-//                    intent.putExtra("number", SuMaoConstant.MARGIN_PAYMENT_SUCCESS);
-//                    intent.putExtra("type", "");
-//                    startActivity(intent);
-                    //  chenggong();
+                    Toast.makeText(GroupBuyingSuccessActivity.this, "您支付保证金成功！", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(GroupBuyingSuccessActivity.this, Ok_Dialog.class);
+                    intent.putExtra("number", SuMaoConstant.MARGIN_PAYMENT_SUCCESS);
+                    intent.putExtra("type", "");
+                    startActivity(intent);
+                      //chenggong();
                 }
             }
 
@@ -1160,6 +1331,15 @@ public void tuichu(){
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.layoutContent_auction:
+                Toast.makeText(GroupBuyingSuccessActivity.this, "客服聊天", Toast.LENGTH_SHORT).show();
+                Intent intentHX = new Intent();
+                intentHX.setClass(GroupBuyingSuccessActivity.this, LoginActivity.class);
+                intentHX.putExtra(Constant.MESSAGE_TO_INTENT_EXTRA, Constant.MESSAGE_TO_DEFAULT);
+//                传入卖家id
+                intentHX.putExtra(Constant.IM_SERVICE_NUMBER, cl_gongsiId);
+                startActivity(intentHX);
+                break;
             //            数量减
             case R.id.img_item_cart_buy_sub:
                 double num1 = Double.valueOf(tv_item_cart_buy_num.getText().toString());
@@ -1190,9 +1370,22 @@ public void tuichu(){
         super.onStart();
         SharedPreferences sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
         unique = sp.getString("unique", "");
+        shuaxin();
 
     }
 
+    @Override
+    public void setGroupBuyingResult(String result, boolean updateOrLoad) {
+
+    }
+
+    @Override
+    public void setGroupBuyingDetailResult(String result, String state, String result2) {
+        Log.d("result",result);
+        Log.d("state",state);
+        Log.d("results",result);
+        getinfo(result);
+    }
 
 
     class MyCount extends CountDownTimer {
@@ -1202,7 +1395,8 @@ public void tuichu(){
 
         @Override
         public void onFinish() {
-            tv_success.setText("finish");
+            //tv_success.setText("finish");
+            info();
         }
 
         @Override

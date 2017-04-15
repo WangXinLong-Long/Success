@@ -14,6 +14,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.silianchuangye.sumao.success.R;
@@ -32,6 +33,7 @@ public class PagerFourDetailActivity extends AppCompatActivity implements View.O
     private WebSettings webSettings;
     private PagerFourDetailBean pagerFourDetailBean;
     private String Result;
+    private ImageView image_view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +47,13 @@ public class PagerFourDetailActivity extends AppCompatActivity implements View.O
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        image_view= (ImageView) findViewById(R.id.image_view);
+        image_view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PagerFourDetailActivity.this.finish();
+            }
+        });
 //        Intent intent = getIntent();
         pagerFourDetailBean = (PagerFourDetailBean)  getIntent().getSerializableExtra("pagerFourDetailBean");
 //        String haha = getIntent().getStringExtra("haha");

@@ -16,8 +16,8 @@ public class PlanPresentationPresenter {
         this.planPresentationView = planPresentationView;
     }
 
-    public void setSubmitPlan(String sellerCompanyId,String scheduleDate,String productId,String productName,String warehouseID,String planOrderQuantity,String logisticsID,String notes,String _dynSessConf ){
-       IPlanPresentationModel iPlanPresentationModel=new PlanPresentationModel(scheduleDate,productId,productName,warehouseID,planOrderQuantity,logisticsID,notes,_dynSessConf,sellerCompanyId);
+    public void setSubmitPlan(String sellerCompanyId,String scheduleDate,String productId,String price,String warehouseID,String planOrderQuantity,String logisticsID,String notes,String _dynSessConf ){
+       IPlanPresentationModel iPlanPresentationModel=new PlanPresentationModel(scheduleDate,productId,price,warehouseID,planOrderQuantity,logisticsID,notes,_dynSessConf,sellerCompanyId);
         iPlanPresentationModel.getPlanPresentationResuls(new PlanPresentationCallback() {
             @Override
             public void CallbackPlanPresentationResuls(String result) {
