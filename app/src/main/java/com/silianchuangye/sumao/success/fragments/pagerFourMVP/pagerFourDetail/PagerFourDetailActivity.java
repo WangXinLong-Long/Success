@@ -34,16 +34,30 @@ public class PagerFourDetailActivity extends AppCompatActivity implements View.O
     private PagerFourDetailBean pagerFourDetailBean;
     private String Result;
     private ImageView image_view;
+    private TextView tv_timer;
+    private TextView tv_liulan;
+    private TextView tv_from;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pager_four_detail);
+        tv_timer= (TextView) findViewById(R.id.time_text);
+        tv_from= (TextView) findViewById(R.id.from_text_value);
+        //tv_liulan= (TextView) findViewById(R.id.liulan_text_value);
         Bundle bundle=getIntent().getExtras();
         String fanhui=bundle.getString("result");
+        Log.d("result的结果",fanhui);
         try {
             JSONObject jsonObject=new JSONObject(fanhui);
             Result=jsonObject.getString("content");
+            tv_from.setText(jsonObject.getString("source"));
+            //tv_timer.setText(jsonObject.getString(""));
+            String createDate=jsonObject.getString("createDate");
+            JSONObject object=new JSONObject(createDate);
+            //SimpleDateFormat sdf =   new SimpleDateFormat(" yyyy-MM-dd HH:mm:ss " );
+            //tv_timer.setText(sdf.format(object.getString("time")));
+            tv_timer.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Double.parseDouble(object.getString("time"))));
         } catch (JSONException e) {
             e.printStackTrace();
         }

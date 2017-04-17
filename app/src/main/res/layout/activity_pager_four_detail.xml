@@ -44,16 +44,31 @@
     <RelativeLayout
         android:id="@+id/title_text"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/x100"
         android:layout_below="@id/article_title"
+        android:background="@color/gray_type"
         android:gravity="center">
-
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/x10"
+            android:textSize="16sp"
+            android:id="@+id/tv_title"
+            />
+<RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/tv_title"
+    android:layout_centerHorizontal="true"
+    >
         <TextView
             android:id="@+id/time_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:text="时间"
+
             android:textColor="@color/black"
             android:textSize="@dimen/x10" />
 
@@ -62,11 +77,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/time_text"
-            android:text="来源"
+            android:text="来源:"
+            android:layout_marginLeft="@dimen/x10"
+
+            android:textColor="@color/black"
+            android:textSize="@dimen/x10" />
+
+        <TextView
+            android:id="@+id/from_text_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/from_text"
+
+            android:layout_marginLeft="@dimen/x2"
             android:textColor="@color/black"
             android:textSize="@dimen/x10" />
 
 
+
+</RelativeLayout>
     </RelativeLayout>
 
     <WebView

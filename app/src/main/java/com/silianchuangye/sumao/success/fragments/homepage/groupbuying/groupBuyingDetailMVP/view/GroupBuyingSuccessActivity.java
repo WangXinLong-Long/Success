@@ -177,8 +177,14 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
         Log.d("result的值",""+result);
 
         init();
-        info();
-//        addData();
+        new Thread(){
+            @Override
+            public void run() {
+                super.run();
+               info();
+            }
+        }.start();
+addData();
         event();
 
     }
@@ -635,8 +641,11 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
     }
 
     public void addData() {
-        Log.d("state的值",state);
-        if (state.equals("0")) {
+      //  Log.d("state的值",state);
+        SharedPreferences sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+        String Stutes=sp.getString("state","");
+        Log.d("stutes的值",Stutes);
+        if (Stutes.equals("0")) {
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("name", "交易规则");
             list.add(map);
@@ -659,6 +668,7 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
                 new String[]{"name"},
                 new int[]{R.id.tvRule_auction});
         lvDemo.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
 
 
     }
@@ -674,7 +684,7 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
         Log.d("商品的编号",cl_id);
         NumberFormat nf = NumberFormat.getPercentInstance();
         Number number = null;
-       // addData();
+
         try {
             number = nf.parse(cl_baozhj);
         } catch (ParseException e) {
@@ -704,7 +714,11 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
             price.setText(strprice);
             state=groupBuyingDetailBean.getSection().toString();
             Log.d("state的值",state);
-            addData();
+            SharedPreferences sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+            SharedPreferences.Editor editor=sp.edit();
+            editor.putString("state",state);
+            editor.commit();
+
 
 
 
@@ -998,35 +1012,42 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
     }
 
     public void shuaxin(){
-        if (Float.parseFloat(count.getText().toString())-Float.parseFloat(group_amount_et.getText().toString())<Float.parseFloat(qigou.getText().toString())){
-            info();
-        }else{
-            //bundle=new Bundle(){};
-            handler=new Handler(){
-                @Override
-                public void handleMessage(Message msg) {
-                    super.handleMessage(msg);
-                    switch (msg.what){
-                        case 1:
-                            tuangouinfo();
-                            break;
-                        default:
-                            break;
+        if(!count.getText().toString().equals("~~")) {
+
+            if (Float.parseFloat(count.getText().toString()) - Float.parseFloat(group_amount_et.getText().toString()) < Float.parseFloat(qigou.getText().toString())) {
+                info();
+                Log.d("总量",count.getText().toString());
+                Log.d("已经成团量",group_amount_et.getText().toString());
+                Log.d("起购量",qigou.getText().toString());
+            }
+            if (state.equals("1")) {
+                //bundle=new Bundle(){};
+                handler = new Handler() {
+                    @Override
+                    public void handleMessage(Message msg) {
+                        super.handleMessage(msg);
+                        switch (msg.what) {
+                            case 1:
+                                // tuangouinfo();
+                                break;
+                            default:
+                                break;
+                        }
                     }
-                }
-            };
+                };
 
-            timer=new Timer();
-            task=new TimerTask() {
-                @Override
-                public void run() {
-                    Message message = new Message();
-                    message.what = 1;
-                    handler.sendMessage(message);
-                }
-            };
+                timer = new Timer();
+                task = new TimerTask() {
+                    @Override
+                    public void run() {
+                        Message message = new Message();
+                        message.what = 1;
+                        handler.sendMessage(message);
+                    }
+                };
 
-            timer.schedule(task,3000,1000);
+                timer.schedule(task, 3000, 1000);
+            }
         }
 
     }
@@ -1089,7 +1110,14 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
         groupBuyingDetailPresenter.getBankListResult(cl_id);
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
 
+            timer.cancel();
+
+
+    }
 
     @Override
     public void setBankListResult(String result) {

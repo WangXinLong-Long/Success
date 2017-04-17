@@ -54,6 +54,7 @@ public class HelpDeskPreferenceUtils {
 
 	public String getSettingCustomerAppkey() {
 		return mSharedPreferences.getString(SHARED_KEY_SETTING_CUSTOMER_APPKEY, Constant.DEFAULT_COSTOMER_APPKEY);
+//		return mSharedPreferences.getString(SHARED_KEY_SETTING_CUSTOMER_APPKEY, "12344321123#sumaodemo");
 	}
 
 	public void setSettingCustomerAccount(String account) {

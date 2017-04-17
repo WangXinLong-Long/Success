@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
 
 import com.easemob.easeui.ui.EaseChatFragment;
 import com.silianchuangye.sumao.success.HX.Constant;
@@ -37,7 +38,7 @@ public class ChatActivity extends BaseActivity {
         Intent intent = getIntent();
         // 聊天人或群id
         toChatUsername = intent.getStringExtra(Constant.IM_SERVICE_NUMBER);
-        ;
+        Log.d("连天Id",toChatUsername);
         intent.putExtra(Constant.EXTRA_USER_ID, toChatUsername);
         intent.putExtra(Constant.EXTRA_SHOW_USERNICK, true);
         // 传入参数

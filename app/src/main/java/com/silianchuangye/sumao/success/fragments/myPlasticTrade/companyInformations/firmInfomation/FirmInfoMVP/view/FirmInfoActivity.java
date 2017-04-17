@@ -70,6 +70,8 @@ public class FirmInfoActivity extends AppCompatActivity implements IFirmInfoView
     private String name;
     private String unique;
     private String laiyuan;
+    private String  enterpriseInfoReview;
+    private String cl_state;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -242,8 +244,10 @@ public class FirmInfoActivity extends AppCompatActivity implements IFirmInfoView
                         String cl_leixing = qiyeType(job.getString("cl_leixing"));
                         String cl_yewu = job.getString("cl_yewu");
                         String cl_dizhi = job.getString("cl_dizhi");
-                        String cl_state = job.getString("cl_stat");
-                        String enterpriseInfoReview = job.getString("enterpriseInfoReview");
+                        cl_state = job.getString("cl_stat");
+                        if (job.toString().contains("enterpriseInfoReview")) {
+                            String enterpriseInfoReview = job.getString("enterpriseInfoReview");
+                        }
                         String cl_zhengjian = zhengjianType(job.getString("cl_zhengjian"));
                         String nashuipeople = job.getString("cl_nashuiren");
                         String xinyong;
@@ -271,6 +275,7 @@ public class FirmInfoActivity extends AppCompatActivity implements IFirmInfoView
 
                         //这里判断是新增还是修改，如果新增则没有后面的值
                         list = new ArrayList<Map<String, Object>>();
+
                         if (enterpriseInfoReview.equals("35")) {
                             firm_info_title.setText("您的企业信息正在重新审核，塑贸网将审核企业新信息，在新信息完成审核前，企业信息将任然采用原信息");
                             tvUpdate.setVisibility(View.GONE);

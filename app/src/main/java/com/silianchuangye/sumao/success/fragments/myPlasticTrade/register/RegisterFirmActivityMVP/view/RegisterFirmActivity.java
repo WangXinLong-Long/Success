@@ -746,6 +746,8 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
                         SharedPreferences sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
                         SharedPreferences.Editor editor=sp.edit();
                         editor.putString("unique",unique);
+                        editor.putString("zhanghao",account);
+                        editor.putString("password",pass);
                         editor.commit();
 
                         Intent intent=new Intent(RegisterFirmActivity.this, FirmInfoActivity.class);

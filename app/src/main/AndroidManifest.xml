@@ -155,7 +155,7 @@
         <!-- 设置环信应用的appkey 可以在Manifest设置也可以在代码中设置 -->
         <meta-data
             android:name="EASEMOB_APPKEY"
-            android:value="xiongmaowang1#ziguang" />
+            android:value="12344321123#sumaodemo" />
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="RBuN9HdDa8wBNS27rxMvguKR" />
