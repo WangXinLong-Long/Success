@@ -16,6 +16,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.provider.Settings;
@@ -44,6 +45,7 @@ import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.silianchuangye.sumao.success.R;
+import com.silianchuangye.sumao.success.utils.LGImgCompressor;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 import com.zhy.m.permission.MPermissions;
@@ -57,14 +59,16 @@ import org.xutils.http.RequestParams;
 import org.xutils.image.ImageOptions;
 import org.xutils.x;
 
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class DataDetailsActivity extends AppCompatActivity implements View.OnClickListener {
+public class DataDetailsActivity extends AppCompatActivity implements View.OnClickListener,LGImgCompressor.CompressListener {
 
     private TextView tv_child_title_bar_title;
     private TextView tv_child_title_bar_text;
@@ -149,7 +153,7 @@ public class DataDetailsActivity extends AppCompatActivity implements View.OnCli
     }
 
     public void uploadPicture() {
-        tupian=getPhotoFileName();
+        //tupian=getPhotoFileName();
         RequestParams rp = new RequestParams(SuMaoConstant.SUMAO_IP + "/rest/model/atg/commerce/order/myorder/OrderPaymentInfo/fileUpload");
         SharedPreferences sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
         fileCode = sp.getString("filename", "");
@@ -367,6 +371,18 @@ public class DataDetailsActivity extends AppCompatActivity implements View.OnCli
 //            ownInformation = true;
 //        return ownInformation;
 //    }
+public static File saveFile(Bitmap bm,String path, String fileName) throws IOException {
+    File dirFile = new File(path);
+    if(!dirFile.exists()){
+        dirFile.mkdir();
+    }
+    File myCaptureFile = new File(path , fileName);
+    BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(myCaptureFile));
+    bm.compress(Bitmap.CompressFormat.JPEG, 80, bos);
+    bos.flush();
+    bos.close();
+    return myCaptureFile;
+}
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -377,7 +393,7 @@ public class DataDetailsActivity extends AppCompatActivity implements View.OnCli
                     Toast.makeText(DataDetailsActivity.this, "取消了拍照", Toast.LENGTH_LONG).show();
                     return;
                 }
-
+tupian=getPhotoFileName();
                 Bitmap photo = data.getParcelableExtra("data");
                 image.setImageBitmap(photo);
                 fileBianma = BitmapToString(photo);
@@ -385,6 +401,16 @@ public class DataDetailsActivity extends AppCompatActivity implements View.OnCli
                 SharedPreferences.Editor editor=sp.edit();
                 editor.putString("filename",fileBianma);
                 editor.commit();
+                File path= null;
+                try {
+                    path = saveFile(photo, Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)+"/",tupian);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                Log.d("path的值",path+"");
+                LGImgCompressor.getInstance(this).withListener(this).
+                        starCompress(path+"", 1000, 1000, 2048);
+
                 break;
             case PHOTO_REQUEST_GALLERY://当选择从本地获取图片时
 //做非空判断，当我们觉得不满意想重新剪裁的时候便不会报异常，下同
@@ -403,7 +429,7 @@ public class DataDetailsActivity extends AppCompatActivity implements View.OnCli
                     Cursor cursor = cursorLoader.loadInBackground();
                     int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
                     cursor.moveToFirst();
-
+tupian=getPhotoFileName();
                     filepath = cursor.getString(column_index);
                     Log.d("realpath", "" + filepath);
                     bitmap= BitmapFactory.decodeFile(filepath);
@@ -641,7 +667,27 @@ public class DataDetailsActivity extends AppCompatActivity implements View.OnCli
     }
 
 
+    @Override
+    public void onCompressStart() {
 
+    }
 
+    @Override
+    public void onCompressEnd(LGImgCompressor.CompressResult imageOutPath) {
+        Log.d("info", "onCompressEnd outPath:" + imageOutPath.getOutPath());
+        if (imageOutPath.getStatus() == LGImgCompressor.CompressResult.RESULT_ERROR)//压缩失败
+            return;
 
+        File file = new File(imageOutPath.getOutPath());
+        Bitmap bitmap = null;
+        try {
+            bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), Uri.fromFile(file));
+            //ivDemo.setImageBitmap(bitmap);
+            float imageFileSize = file.length() / 1024f;
+            Log.d("图片的信息","image info width:" + bitmap.getWidth() + " \nheight:" + bitmap.getHeight() +
+                    " \nsize:" + imageFileSize + "kb" + "\nimagePath:" + file.getAbsolutePath());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -202,13 +202,13 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
                 smCl.setIn_cangku(productItem.get(i).getWareHouse());
                 smCl.setIn_cpid(productItem.get(i).getSkuId());
 //                TODO 差价格参数、刷新出来的是现货的数据
-                smCl.setIn_prix(productItem.get(i).getProductId());
+                smCl.setIn_prix("现货");
                 smCl.setIn_name(productItem.get(i).getProductName());
                 smCl.setIn_qiye(productItem.get(i).getSalerEnterpriseName());
                 smCl.setIn_num(productItem.get(i).getQuantity());
                 smClList.add(smCl);
             }
-            adapter = new PreSaleAdapter(this);
+            adapter = new PreSaleAdapter(this,"现货直销");
             pre_sale_listView.setAdapter(adapter);
             adapter.addData(smClList);
         }

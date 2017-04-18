@@ -42,7 +42,9 @@ import android.widget.Toast;
 
 import com.cloopen.rest.sdk.utils.encoder.BASE64Encoder;
 import com.silianchuangye.sumao.success.R;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation.decoding.Intents;
 import com.silianchuangye.sumao.success.utils.FavFTPUtil;
+import com.silianchuangye.sumao.success.utils.LGImgCompressor;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 //import com.zhy.m.permission.MPermissions;
@@ -53,6 +55,7 @@ import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -60,10 +63,12 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class RegisterPicture extends AppCompatActivity {
+public class RegisterPicture extends AppCompatActivity implements LGImgCompressor.CompressListener {
     private String filepath=null;
     private String fileBianma=null;
     private ImageView ivBack;
@@ -80,6 +85,10 @@ public class RegisterPicture extends AppCompatActivity {
     EditText ed_number;
     String fileCode=null;
     private String tupian;
+    private String path;
+    private Uri mOutPutFileUri;
+    private String trime;
+    private File file;
     // 创建一个以当前时间为名称的文件
     File tempFile = new File(Environment.getExternalStorageDirectory(),getPhotoFileName());
     @Override
@@ -120,7 +129,7 @@ public class RegisterPicture extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.d("点击事件","进来了");
-                tupian=getPhotoFileName();
+                //tupian=getPhotoFileName();
                 //上传图片
                 new Thread(){
                     @Override
@@ -128,7 +137,7 @@ public class RegisterPicture extends AppCompatActivity {
                         super.run();
                         RequestParams rp = new RequestParams(SuMaoConstant.SUMAO_IP + "/rest/model/atg/commerce/order/myorder/OrderPaymentInfo/fileUpload");
                             SharedPreferences sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
-                           fileCode=sp.getString("filename","");
+                            fileCode=sp.getString("filename","");
                             Log.d("fileCode",fileCode);
                            if (fileCode!=null && fileCode!="") {
                                rp.addParameter("file", fileCode);
@@ -146,8 +155,8 @@ public class RegisterPicture extends AppCompatActivity {
                            }
 
                             Log.d("文件",fileCode+"");
-                            rp.addParameter("fileName", tupian);
-                            Log.d("名称",tupian);
+                            rp.addParameter("fileName", trime);
+                            Log.d("名称",trime);
                             Log.d("aaa",rp.getUri().toString());
                             x.http().post(rp, new Callback.CommonCallback<String>() {
                                 @Override
@@ -162,7 +171,7 @@ public class RegisterPicture extends AppCompatActivity {
                                     Intent intent = new Intent();
                                     //Intent intent = new Intent();
                                     intent.putExtra("value", ed_number.getText().toString());
-                                    intent.putExtra("picturePath", "/mnt/docs/"+tupian);
+                                    intent.putExtra("picturePath", "/mnt/docs/"+trime);
                                     Log.d("chuangu","");
                                     setResult(number1, intent);
                                     RegisterPicture.this.finish();
@@ -210,8 +219,8 @@ public class RegisterPicture extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // 调用系统的拍照功能
-          //      Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-// 指定调用相机拍照后照片的储存路径
+//                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+// //指定调用相机拍照后照片的储存路径
 //                intent.putExtra(MediaStore.EXTRA_OUTPUT,
 //                        Uri.fromFile(tempFile));
 //              //  filepath=Uri.fromFile(tempFile).toString();
@@ -219,9 +228,36 @@ public class RegisterPicture extends AppCompatActivity {
 //                startActivityForResult(intent, PHOTO_REQUEST_TAKEPHOTO);
 //                //getImageFromCamera();
 
+//                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                startActivityForResult(intent, 1);
+//                popupWindow.dismiss();
+//                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//
+//
+//                File fileDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+//                File imageFile = null;
+//                try {
+//                    imageFile = File.createTempFile(getPhotoFileName(), ".jpg", fileDir);
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//                Log.d("imagepath_forpaizhai",""+Uri.fromFile(imageFile)+"");
+//                SharedPreferences sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+//                SharedPreferences.Editor editor=sp.edit();
+//                editor.putString("imagepath_forpaizhai", Uri.fromFile(imageFile)+"");
+//                editor.commit();
+//                Log.d("imagepath_forpaizhai",""+Uri.fromFile(imageFile)+"");
+//                intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(imageFile));
+//                startActivityForResult(intent, 1);
+//                popupWindow.dismiss();
+                trime=getPhotoFileName();
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+
+                //intent.putExtra(MediaStore.EXTRA_OUTPUT, mOutPutFileUri);
                 startActivityForResult(intent, 1);
                 popupWindow.dismiss();
+
             }
         });
         textphoto.setOnClickListener(new View.OnClickListener() {
@@ -260,6 +296,19 @@ public class RegisterPicture extends AppCompatActivity {
 
 
     }
+    public static File saveFile(Bitmap bm,String path, String fileName) throws IOException {
+        File dirFile = new File(path);
+        if(!dirFile.exists()){
+            dirFile.mkdir();
+        }
+        File myCaptureFile = new File(path , fileName);
+        BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(myCaptureFile));
+        bm.compress(Bitmap.CompressFormat.JPEG, 80, bos);
+        bos.flush();
+        bos.close();
+        return myCaptureFile;
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -273,13 +322,24 @@ public class RegisterPicture extends AppCompatActivity {
                     return;
                 }
                 tv_Name.setVisibility(View.VISIBLE);
-                tv_Name.setText(getPhotoFileName());
+                tv_Name.setText(trime);
                 Bitmap photo = data.getParcelableExtra("data");
-                fileBianma=BitmapToString(photo);
-                SharedPreferences sp=getSharedPreferences("sumao", Activity.MODE_PRIVATE);
-                SharedPreferences.Editor editor=sp.edit();
+                //image.setImageBitmap(photo);
+                fileBianma = BitmapToString(photo);
+                SharedPreferences sharedPreferences=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+                SharedPreferences.Editor editor=sharedPreferences.edit();
                 editor.putString("filename",fileBianma);
                 editor.commit();
+                File path= null;
+                try {
+                    path = saveFile(photo,Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)+"/",trime);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                Log.d("path的值",path+"");
+                LGImgCompressor.getInstance(this).withListener(this).
+                        starCompress(path+"", 1000, 1000, 2048);
+
 
                 break;
             case PHOTO_REQUEST_GALLERY://当选择从本地获取图片时
@@ -287,8 +347,9 @@ public class RegisterPicture extends AppCompatActivity {
               //  if (data != null)
                     //Uri uri = data.getData();
                     // startPhotoZoom(data.getData(), 150);
+                trime=getPhotoFileName();
                 tv_Name.setVisibility(View.VISIBLE);
-                tv_Name.setText(getPhotoFileName());
+                tv_Name.setText(trime);
 
                 Uri uri = data.getData();
                 try {
@@ -302,6 +363,8 @@ public class RegisterPicture extends AppCompatActivity {
 
                     filepath = cursor.getString(column_index);
                     Log.d("realpath",""+filepath);
+                    LGImgCompressor.getInstance(this).withListener(this).
+                            starCompress(filepath, 1000, 1000, 2048);
 
                 } catch (Exception ex) {
                     Log.e("aaaa", "failed." + ex.getMessage());
@@ -354,10 +417,29 @@ public class RegisterPicture extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onCompressStart() {
 
+    }
 
+    @Override
+    public void onCompressEnd(LGImgCompressor.CompressResult imageOutPath) {
+        Log.d("info", "onCompressEnd outPath:" + imageOutPath.getOutPath());
+        if (imageOutPath.getStatus() == LGImgCompressor.CompressResult.RESULT_ERROR)//压缩失败
+            return;
 
-
+        File file = new File(imageOutPath.getOutPath());
+        Bitmap bitmap = null;
+        try {
+            bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), Uri.fromFile(file));
+            //ivDemo.setImageBitmap(bitmap);
+            float imageFileSize = file.length() / 1024f;
+            Log.d("图片的信息","image info width:" + bitmap.getWidth() + " \nheight:" + bitmap.getHeight() +
+                    " \nsize:" + imageFileSize + "kb" + "\nimagePath:" + file.getAbsolutePath());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 
 }

@@ -722,7 +722,8 @@
         <activity android:name=".fragments.myPlasticTrade.OrderManagement.SpotOrder.SpotOrderMVP.view.ShowPictureActivity" />
         <activity android:name=".fragments.myPlasticTrade.OrderManagement.SpotOrder.SpotOrderMVP.view.logisticsActivity" />
         <activity android:name=".ShangYou.gonggao.oticeActivity" />
-        <activity android:name=".ShangYou.gonggao.NoticeActivityInfo"></activity>
+        <activity android:name=".ShangYou.gonggao.NoticeActivityInfo" />
+        <activity android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmShowImageActivity"></activity>
     </application>
 
 </manifest>

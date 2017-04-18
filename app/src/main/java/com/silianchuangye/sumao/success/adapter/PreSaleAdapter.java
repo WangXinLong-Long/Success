@@ -11,6 +11,9 @@ import android.widget.TextView;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.bean.GoodsInStockActivityBean;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,10 +24,19 @@ public class PreSaleAdapter extends BaseAdapter {
     private Context context;
     private  List<GoodsInStockActivityBean.InBean> preSaleModels;
     LayoutInflater inflater;
+    private String xinhuo="";
+    private TextView tv_icon;
 
+    public PreSaleAdapter(Context context,String xianhuo) {
+        preSaleModels = new ArrayList<>();
+        this.context = context;
+        this.xinhuo=xianhuo;
+        inflater = LayoutInflater.from(context);
+    }
     public PreSaleAdapter(Context context) {
         preSaleModels = new ArrayList<>();
         this.context = context;
+
         inflater = LayoutInflater.from(context);
     }
 
@@ -56,33 +68,49 @@ public void clearData(){
         if (convertView == null) {
             viewHolder = new ViewHolder();
             convertView = inflater.inflate(R.layout.presale_item, null);
+            tv_icon= (TextView) convertView.findViewById(R.id.icon);
             viewHolder.title = (TextView) convertView.findViewById(R.id.title_presale_item);
             viewHolder.number = (TextView) convertView.findViewById(R.id.number_presale_item);
             viewHolder.price = (TextView) convertView.findViewById(R.id.price_presale_item);
             viewHolder.company = (TextView) convertView.findViewById(R.id.company_presale_item);
             viewHolder.warehouse = (TextView) convertView.findViewById(R.id.warehouse_presale_item);
-//            viewHolder.productType = (TextView) convertView.findViewById(R.id.productType_presale_item);
+            viewHolder.productType = (TextView) convertView.findViewById(R.id.productType_presale_item);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         viewHolder.title.setText(preSaleModels.get(position).getIn_name());
         viewHolder.number.setText(preSaleModels.get(position).getIn_num());
-        viewHolder.price.setText(preSaleModels.get(position).getIn_prix());
+       // DecimalFormat df = new DecimalFormat("0.00");
+
+        BigDecimal b=new BigDecimal(preSaleModels.get(position).getIn_prix().toString());
+        double  f1=b.setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue();
+        viewHolder.price.setText(f1+"");
+
         viewHolder.company.setText(preSaleModels.get(position).getIn_qiye());
         viewHolder.warehouse.setText(preSaleModels.get(position).getIn_cangku());
-//        viewHolder.productType.setText(preSaleModels.get(position).getProductType());
-
+        viewHolder.productType.setText("现货");
+if (xinhuo.equals("现货直销")){
+    viewHolder.productType.setVisibility(View.VISIBLE);
+    viewHolder.price.setVisibility(View.GONE);
+    tv_icon.setVisibility(View.GONE);
+}else {
+    viewHolder.productType.setVisibility(View.GONE);
+    viewHolder.price.setVisibility(View.VISIBLE);
+    tv_icon.setVisibility(View.VISIBLE);
+}
         return convertView;
     }
 
     class ViewHolder {
+
         TextView title;
         TextView number;
         TextView price;
         TextView company;
         TextView warehouse;
         TextView productType;
+
 
     }
 }

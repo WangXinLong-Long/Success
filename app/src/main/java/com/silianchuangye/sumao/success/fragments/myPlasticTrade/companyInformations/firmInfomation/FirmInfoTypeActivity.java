@@ -11,6 +11,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -40,6 +41,7 @@ import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.FirmInfoTypeActivityMVP.presenter.GetEntInformationPresenter;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.FirmInfoTypeActivityMVP.view.IFirmInfoTypeActivity;
 import com.silianchuangye.sumao.success.model.EnterpriseInformation;
+import com.silianchuangye.sumao.success.utils.LGImgCompressor;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
@@ -47,7 +49,11 @@ import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -55,7 +61,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class FirmInfoTypeActivity extends AppCompatActivity implements IFirmInfoTypeActivity {
+public class FirmInfoTypeActivity extends AppCompatActivity implements IFirmInfoTypeActivity, LGImgCompressor.CompressListener {
     ImageView iv_title_bar_logo,
             iv_title_bar_back,
             iv_title_bar_service,
@@ -263,7 +269,14 @@ public class FirmInfoTypeActivity extends AppCompatActivity implements IFirmInfo
 //                startActivityForResult(intent, PHOTO_REQUEST_TAKEPHOTO);
 //                //getImageFromCamera();
 
+//                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                startActivityForResult(intent, 1);
+//                popupWindow.dismiss();
+                tupian=getPhotoFileName();
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+
+                //intent.putExtra(MediaStore.EXTRA_OUTPUT, mOutPutFileUri);
                 startActivityForResult(intent, 1);
                 popupWindow.dismiss();
             }
@@ -338,6 +351,19 @@ public class FirmInfoTypeActivity extends AppCompatActivity implements IFirmInfo
             }
         });
     }
+    public static File saveFile(Bitmap bm,String path, String fileName) throws IOException {
+        File dirFile = new File(path);
+        if(!dirFile.exists()){
+            dirFile.mkdir();
+        }
+        File myCaptureFile = new File(path , fileName);
+        BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(myCaptureFile));
+        bm.compress(Bitmap.CompressFormat.JPEG, 80, bos);
+        bos.flush();
+        bos.close();
+        return myCaptureFile;
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 // TODO Auto-generated method stub
@@ -350,7 +376,7 @@ public class FirmInfoTypeActivity extends AppCompatActivity implements IFirmInfo
                     return;
                 }
                 prompt.setVisibility(View.VISIBLE);
-                tupian=getPhotoFileName();
+
                 prompt.setText(tupian);
                 Bitmap photo = data.getParcelableExtra("data");
                 fileBianma=BitmapToString(photo);
@@ -358,6 +384,15 @@ public class FirmInfoTypeActivity extends AppCompatActivity implements IFirmInfo
                 SharedPreferences.Editor editor=sp.edit();
                 editor.putString("filename",fileBianma);
                 editor.commit();
+                File path= null;
+                try {
+                    path = saveFile(photo, Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)+"/",tupian);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                Log.d("path的值",path+"");
+                LGImgCompressor.getInstance(this).withListener(this).
+                        starCompress(path+"", 1000, 1000, 2048);
 
                 break;
             case 2://当选择从本地获取图片时
@@ -381,6 +416,8 @@ public class FirmInfoTypeActivity extends AppCompatActivity implements IFirmInfo
 
                     filepath = cursor.getString(column_index);
                     Log.d("realpath",""+filepath);
+                    LGImgCompressor.getInstance(this).withListener(this).
+                            starCompress(filepath+"", 1000, 1000, 2048);
 
                 } catch (Exception ex) {
                     Log.e("aaaa", "failed." + ex.getMessage());
@@ -446,6 +483,30 @@ public class FirmInfoTypeActivity extends AppCompatActivity implements IFirmInfo
             e.printStackTrace();
         }
         return des;
+    }
+
+    @Override
+    public void onCompressStart() {
+
+    }
+
+    @Override
+    public void onCompressEnd(LGImgCompressor.CompressResult imageOutPath) {
+        Log.d("info", "onCompressEnd outPath:" + imageOutPath.getOutPath());
+        if (imageOutPath.getStatus() == LGImgCompressor.CompressResult.RESULT_ERROR)//压缩失败
+            return;
+
+        File file = new File(imageOutPath.getOutPath());
+        Bitmap bitmap = null;
+        try {
+            bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), Uri.fromFile(file));
+            //ivDemo.setImageBitmap(bitmap);
+            float imageFileSize = file.length() / 1024f;
+            Log.d("图片的信息","image info width:" + bitmap.getWidth() + " \nheight:" + bitmap.getHeight() +
+                    " \nsize:" + imageFileSize + "kb" + "\nimagePath:" + file.getAbsolutePath());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     class ViewHolder {
