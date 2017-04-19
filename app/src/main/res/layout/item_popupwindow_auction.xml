@@ -122,7 +122,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/x3"
+                android:layout_marginLeft="@dimen/x5"
                 android:id="@+id/tv_money"
                 android:layout_alignRight="@+id/tv_B"
                 />

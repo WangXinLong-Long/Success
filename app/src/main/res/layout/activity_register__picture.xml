@@ -25,7 +25,7 @@
             android:id="@+id/tv_Title"
             android:textColor="#fff"
             android:layout_centerInParent="true"
-            android:text="统一社会信用代码"
+
             />
     </RelativeLayout>
     <EditText

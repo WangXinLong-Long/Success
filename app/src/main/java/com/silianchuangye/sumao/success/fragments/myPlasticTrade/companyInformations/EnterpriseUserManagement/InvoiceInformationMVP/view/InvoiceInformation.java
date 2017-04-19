@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -20,6 +21,12 @@ import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformat
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.personalInformation.ModifyName;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
 
 /**
  * Created by Administrator on 2016/5/16 0016.
@@ -68,7 +75,7 @@ public class InvoiceInformation extends Activity implements View.OnClickListener
         setContentView(R.layout.activity_invoice_information);
         initView();
         initListener();
-        //invoiceInformationPresenter = new InvoiceInformationPresenter(this);
+        invoiceInformationPresenter = new InvoiceInformationPresenter(this);
         addAddressPresenter = new AddAddressPresenter(this);
 
         SharedPreferences sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
@@ -81,7 +88,7 @@ public class InvoiceInformation extends Activity implements View.OnClickListener
             }
         });
         LogUtils.log("开票信息-->");
-       // invoiceInformationPresenter.getInvoiceInformationToBean(sessionId);
+        invoiceInformationPresenter.getInvoiceInformationToBean(sessionId);
     }
 
     void initView() {
@@ -126,6 +133,66 @@ public class InvoiceInformation extends Activity implements View.OnClickListener
         bill_mailing_address_zip_code_tv = ((TextView) findViewById(R.id.bill_mailing_address_zip_code_tv));
 //        保存按钮
         save_modify_info = ((Button) findViewById(R.id.save_modify_info));
+    }
+    public void updateInfo(){
+        String url=SuMaoConstant.SUMAO_IP+"/rest/model/atg/userprofiling/ProfileActor/invoiceEdit";
+        JSONObject jsonObject=new JSONObject();
+        RequestParams rp=new RequestParams(url);
+        rp.setAsJsonContent(true);
+        try {
+            jsonObject.put("tax",duty_paragraph.getText().toString());
+            jsonObject.put("address",invoice_information_address.getText().toString());
+            jsonObject.put("phoneNO",invoice_information_telephone.getText().toString());
+            jsonObject.put("bank",invoice_information_bank_account.getText().toString());
+            jsonObject.put("bankAccount",invoice_information_account_number_tv.getText().toString());
+            jsonObject.put("notesRecipientName",bill_mailing_address_name_tv.getText().toString());
+            jsonObject.put("notesRecipientMobile",bill_mailing_address_telephone_tv.getText().toString());
+            jsonObject.put("notesRecipientPhone",bill_mailing_address_fix_telephone_tv.getText().toString());
+            jsonObject.put("notesRecipientProvince",sb.substring(0, 4).toString());
+            jsonObject.put("notesRecipientCity",sb.substring(0, 6).toString());
+            jsonObject.put("notesRecipientCounty",sb.toString().toString());
+            jsonObject.put("_dynSessConf",sessionId);
+            jsonObject.put("notesRecipientAddress",bill_mailing_address_mailing_address_tv_detail.getText().toString());
+            jsonObject.put("notesRecipientZipCode",bill_mailing_address_zip_code_tv.getText().toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        rp.setBodyContent(jsonObject.toString());
+        Log.d("传入的参数",jsonObject.toString());
+        x.http().post(rp, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.d("修改信息的返回值",result);
+                try {
+                    JSONObject json=new JSONObject(result);
+                    if (result.contains("info")){
+                        String info=json.getString("info");
+                        if (info.equals("sucess")){
+                            Toast.makeText(InvoiceInformation.this, "修改成功", Toast.LENGTH_SHORT).show();
+                        }else{
+                            Toast.makeText(InvoiceInformation.this, "修改失败", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
     }
 
     void initListener() {
@@ -215,6 +282,7 @@ public class InvoiceInformation extends Activity implements View.OnClickListener
                 startActivityForResult(intent, SuMaoConstant.CHANGE_POSITION_TEN);
                 break;
             case R.id.save_modify_info:
+                updateInfo();
 //                保存按钮
 //                invoiceInformationPresenter.saveModifyInvoiceInformation(
 //                        duty_paragraph.getText().toString().trim(),
@@ -251,10 +319,16 @@ public class InvoiceInformation extends Activity implements View.OnClickListener
         super.onNewIntent(intent);
         setIntent(intent);
         String address = getIntent().getStringExtra("address");
+        //String className=getIntent().getStringExtra("className");
+        Log.d("address的值",address);
+        String info=getIntent().getStringExtra("info");
+        //Log.d("className的值",className);
         sb.delete(0,sb.length());
         sb.append(address);
-        addAddressPresenter.setDisplaylAddress(sb.substring(0, 4), sb.substring(0, 6), sb.toString());
+        //addAddressPresenter.setDisplaylAddress(sb.substring(0, 4), sb.substring(0, 6), sb.toString());
         detailAddress = getIntent().getStringExtra("detailAddress");
+        Log.d("detailAddress",detailAddress);
+        bill_mailing_address_mailing_address_tv_region.setText(info);
         bill_mailing_address_mailing_address_tv_detail.setText(detailAddress);
         showSaveButton();
     }
@@ -381,7 +455,7 @@ public class InvoiceInformation extends Activity implements View.OnClickListener
         String province = bean.getInvoice().getNotesRecipientProvince();
         String city = bean.getInvoice().getNotesRecipientCity();
         String county = bean.getInvoice().getNotesRecipientCounty();
-        sb.append(county);
+        //sb.append(county);
         addAddressPresenter.sendrequestGetAddress(province,city,county);
         //        纳税人类型
         type_of_taxpayer_tv.setText(bean.getCl_nsrleixing());
@@ -392,7 +466,7 @@ public class InvoiceInformation extends Activity implements View.OnClickListener
         //        地址
         invoice_information_address.setText(bean.getInvoice().getAddress());
         //        固定电话
-        invoice_information_telephone.setText(bean.getInvoice().getNotesRecipientPhone());
+        invoice_information_telephone.setText(bean.getInvoice().getPhoneNO());
         //        开户行
         invoice_information_bank_account.setText(bean.getInvoice().getBank());
         //        账号
@@ -406,6 +480,7 @@ public class InvoiceInformation extends Activity implements View.OnClickListener
 
         //        邮寄地址详细
         bill_mailing_address_mailing_address_tv_detail.setText(bean.getInvoice().getNotesRecipientAddress());
+        Log.d("详细地址的值",bean.getInvoice().getNotesRecipientAddress());
         //        邮编
         bill_mailing_address_zip_code_tv.setText(bean.getInvoice().getNotesRecipientZipCode());
 
@@ -413,6 +488,7 @@ public class InvoiceInformation extends Activity implements View.OnClickListener
 
     @Override
     public void setRegionInText(String result) {
+        Log.d("详细地址的返回值",result);
 //        邮寄地址地区
         bill_mailing_address_mailing_address_tv_region.setText(result);
     }
@@ -430,4 +506,6 @@ public class InvoiceInformation extends Activity implements View.OnClickListener
         Toast.makeText(this,"修改成功",Toast.LENGTH_SHORT).show();
         finish();
     }
+
+
 }

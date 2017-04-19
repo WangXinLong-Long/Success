@@ -492,7 +492,7 @@
             android:layout_below="@id/bill_mailing_address_parent"
             android:background="@drawable/button_background_red"
             android:layout_margin="@dimen/x5"
-            android:visibility="gone"
+
             />
     </RelativeLayout>
 </RelativeLayout>

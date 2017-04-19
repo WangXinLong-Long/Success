@@ -1014,39 +1014,41 @@ addData();
     public void shuaxin(){
         if(!count.getText().toString().equals("~~")) {
 
-            if (Float.parseFloat(count.getText().toString()) - Float.parseFloat(group_amount_et.getText().toString()) < Float.parseFloat(qigou.getText().toString())) {
-                info();
-                Log.d("总量",count.getText().toString());
-                Log.d("已经成团量",group_amount_et.getText().toString());
-                Log.d("起购量",qigou.getText().toString());
-            }
+
             if (state.equals("1")) {
-                //bundle=new Bundle(){};
-                handler = new Handler() {
-                    @Override
-                    public void handleMessage(Message msg) {
-                        super.handleMessage(msg);
-                        switch (msg.what) {
-                            case 1:
-                                // tuangouinfo();
-                                break;
-                            default:
-                                break;
+                if (Float.parseFloat(count.getText().toString()) - Float.parseFloat(group_amount_et.getText().toString()) < Float.parseFloat(qigou.getText().toString())) {
+                    info();
+                    Log.d("总量", count.getText().toString());
+                    Log.d("已经成团量", group_amount_et.getText().toString());
+                    Log.d("起购量", qigou.getText().toString());
+                } else {
+                    //bundle=new Bundle(){};
+                    handler = new Handler() {
+                        @Override
+                        public void handleMessage(Message msg) {
+                            super.handleMessage(msg);
+                            switch (msg.what) {
+                                case 1:
+                                    // tuangouinfo();
+                                    break;
+                                default:
+                                    break;
+                            }
                         }
-                    }
-                };
+                    };
 
-                timer = new Timer();
-                task = new TimerTask() {
-                    @Override
-                    public void run() {
-                        Message message = new Message();
-                        message.what = 1;
-                        handler.sendMessage(message);
-                    }
-                };
+                    timer = new Timer();
+                    task = new TimerTask() {
+                        @Override
+                        public void run() {
+                            Message message = new Message();
+                            message.what = 1;
+                            handler.sendMessage(message);
+                        }
+                    };
 
-                timer.schedule(task, 3000, 1000);
+                    timer.schedule(task, 3000, 1000);
+                }
             }
         }
 
@@ -1113,11 +1115,14 @@ addData();
     @Override
     protected void onStop() {
         super.onStop();
-
+        if(timer!=null) {
             timer.cancel();
+        }
+
 
 
     }
+
 
     @Override
     public void setBankListResult(String result) {
@@ -1424,7 +1429,7 @@ addData();
         @Override
         public void onFinish() {
             //tv_success.setText("finish");
-            info();
+            //info();
         }
 
         @Override

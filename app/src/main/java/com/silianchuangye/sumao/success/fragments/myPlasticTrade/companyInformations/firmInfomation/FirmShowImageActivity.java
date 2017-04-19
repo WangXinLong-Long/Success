@@ -38,7 +38,7 @@ public class FirmShowImageActivity extends AppCompatActivity implements View.OnC
         showImage();
     }
     public void showImage(){
-       if (path.equals("")){
+       if (path.equals("abc")){
            Toast.makeText(FirmShowImageActivity.this, "扫描件不存在", Toast.LENGTH_SHORT).show();
        }else{
            String url= SuMaoConstant.SUMAO_CONTRACT_IP+path;

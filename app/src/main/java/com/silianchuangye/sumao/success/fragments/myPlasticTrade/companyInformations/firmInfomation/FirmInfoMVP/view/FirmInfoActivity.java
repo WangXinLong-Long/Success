@@ -18,11 +18,13 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.silianchuangye.sumao.success.MainActivity;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.SpotOrder.TiQu;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.addressDisplayMVP.presenter.AddressDisplayPresenter;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.addressDisplayMVP.view.IAddressDisplayView;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoMVP.model.FirmBean;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoMVP.presenter.FirmInfoPresenter;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoPicture.FirmInfoPictureMVP.view.FirmInfoPictureActivity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoUpdateMVP.bean.FirmInfoUpdateActivityBean;
@@ -78,10 +80,10 @@ public class FirmInfoActivity extends AppCompatActivity implements IFirmInfoView
     private String  enterpriseInfoReview;
     private String cl_state;
     private String xinyong;
-    private String cl_shuiwuImg;
-    private String cl_zhizhaoImg;
-    private String cl_nashuirenImg;
-    private String cl_jigouImg;
+    private String cl_shuiwuImg="abc";
+    private String cl_zhizhaoImg="abc";
+    private String cl_nashuirenImg="abc";
+    private String cl_jigouImg="abc";
     String addressDisplay;
     List<String> addressDisplays;
     private AddressDisplayPresenter addressDisplayPresenter;
@@ -91,18 +93,18 @@ public class FirmInfoActivity extends AppCompatActivity implements IFirmInfoView
     String countty="";
     String city="";
     String cl_leixing_info = "";
-
+    String cl_corporationinfo="";
     String cl_yewu_info = "";
-
     String cl_dizhi_info = "";
     String cl_zhengjian_info = "";
-
+    String cl_chuanzheniinfo="传真";
     String nashuipeople_info = "";
 
-    String qiyefaren_info="";
-    String chuanzhen_info = "";
-    String jigou_info = "";
-    String cl_shuiwu_info = "";
+    String jigou_info = "机构";
+    String cl_shuiwu_info = "税务";
+    //private String cl_jigou_info;
+    private String cl_id;
+    private String cl_zhizhao="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -221,14 +223,6 @@ public class FirmInfoActivity extends AppCompatActivity implements IFirmInfoView
             @Override
             public void onSuccess(String result) {
                 LogUtils.log("企业信息result-->onSuccess-->"+result);
-//                {"cl_stat":"27","cl_mingcheng":"四联创业深圳分公司","cl_yewu":"销售部1hao ",
-// "U_province":"1315","cl_zhengjian":"5","info":"sucess","cl_id":"161","U_city":"131509",
-// "U_county":"13150981","cl_dizhi":"倒档到","cl_zhizhao":"91120116724472468Y","cl_leixing":"3"}
-//                {"cl_stat":"27","cl_mingcheng":"北京义广达商贸有限公司","cl_corporation":"段绍昌",
-// "U_province":"1311","cl_yewu":"市场部","cl_zhengjian":"4","cl_jigou":"74672227-X","cl_id":"1000009",
-// "info":"sucess","U_city":"131101","cl_dizhi":"燕房路113号\n","U_county":"13110111","cl_shuiwu":"11019174672227X",
-// "cl_zhizhao":"110304005278473","cl_leixing":"1","cl_nashuiren":"一般纳税人"}
-
                 try {
                     JSONObject job = new JSONObject(result);
                     String info = job.getString("info");
@@ -237,95 +231,147 @@ public class FirmInfoActivity extends AppCompatActivity implements IFirmInfoView
                         new TiQu(FirmInfoActivity.this).showLogin();
                         finish();
                     } else {
-//                    String cl_mingcheng;
                         Log.d("企业信息的返回值",info);
-                        if (job.toString().contains("cl_mingcheng")) {
-                            name = job.getString("cl_mingcheng");
-                        }else{
-                            name="";
-                        }
-                        Log.d("名称的值",name);
-                         cl_leixing_info = qiyeType(job.getString("cl_leixing"));
-                         cl_yewu_info = job.getString("cl_yewu");
-                         cl_dizhi_info = job.getString("cl_dizhi");
-                        cl_state = job.getString("cl_stat");
-                        Log.d("状态的值",cl_zhengjian+"");
-                        if (job.toString().contains("enterpriseInfoReview")) {
-                             enterpriseInfoReview = job.getString("enterpriseInfoReview");
-                        }
-                         cl_zhengjian_info = zhengjianType(job.getString("cl_zhengjian"));
-
-                         nashuipeople_info = job.getString("cl_nashuiren");
-
-                         qiyefaren_info=job.getString("cl_corporation");
-                        if (result.contains("cl_shuiwuImg")){
-                            cl_shuiwuImg=job.getString("cl_shuiwuImg");
-                        }else{
-                            cl_shuiwuImg="";
-                        }
-                        if (result.contains("cl_jigouImg")){
-                            cl_jigouImg=job.getString("cl_jigouImg");
-                        }else{
-                            cl_jigouImg="";
-                        }
-                        if (result.contains("cl_zhizhaoImg")){
-                            cl_zhizhaoImg=job.getString("cl_zhizhaoImg");
-                        }else{
-                            cl_zhizhaoImg="";
-                        }
-                        if (result.contains("cl_nashuirenImg")){
-                            cl_nashuirenImg=job.getString("cl_nashuirenImg");
-                        }else{
-                            cl_nashuirenImg="";
-                        }
-
-
-
-
-
+                        Log.d("result的值",result);
+                        Gson gson=new Gson();
+                        FirmBean firmBean=gson.fromJson(result,FirmBean.class);
                         if (result.contains("cl_chuanzhen")) {
-                            chuanzhen_info = job.getString("cl_chuanzhen");
-                        } else {
-                            chuanzhen_info = "";
+                            cl_chuanzheniinfo = firmBean.getCl_chuanzhen();
+                        }
+                        Log.d("传真的值",cl_chuanzheniinfo+"nnnnn");
+                        cl_state=firmBean.getCl_stat();
+                        Log.d("状态的值",cl_state);
+                        if (result.contains("cl_shuiwuImg")) {
+                            cl_shuiwuImg = firmBean.getCl_shuiwuImg();
+                        }
+                        name=firmBean.getCl_mingcheng();
+                        cl_corporationinfo=firmBean.getCl_corporation();
+                        if (result.contains("cl_jigouImg")) {
+                            cl_jigouImg = firmBean.getCl_jigouImg();
+                        }
+                        province=firmBean.getU_province();
+                        cl_yewu_info=firmBean.getCl_yewu();
+                        cl_zhengjian_info=zhengjianType(firmBean.getCl_zhengjian());
+                        if (result.contains("cl_jigou")){
+                            jigou_info=firmBean.getCl_jigou();
                         }
 
-                        if (cl_zhengjian.equals("5")) {
-                            if (result.contains("cl_zhizhao")){
-                                xinyong=job.getString("cl_zhizhao");
-                            }else{
-                                xinyong="";
-                            }
-
-                        } else {
-                            if (result.contains("cl_zhizhao")){
-                                xinyong=job.getString("cl_zhizhao");
-                            }else{
-                                xinyong="";
-                            }
-                            if (result.contains("cl_jigou")){
-                                jigou_info=job.getString("cl_jigou");
-                            }else{
-                                jigou_info="";
-                            }
-                            if (result.contains("cl_shuiwu")){
-cl_shuiwu_info=job.getString("cl_shuiwu");
-                            }
-                            cl_shuiwu_info="";
-
+                        cl_id=firmBean.getCl_id();
+                        enterpriseInfoReview=firmBean.getEnterpriseInfoReview();
+                        city=firmBean.getU_city();
+                        if (result.contains("cl_zhizhaoImg")) {
+                            cl_zhizhaoImg = firmBean.getCl_zhizhaoImg();
                         }
-                        if (result.contains("U_province") && result.contains("U_county") && result.contains("U_city")){
-                             province=job.getString("U_province");
-                             countty=job.getString("U_county");
-                             city=job.getString("U_city");
-                            getAddress_info(province,city,countty,cl_dizhi_info);
+                        cl_dizhi_info=firmBean.getCl_dizhi();
+                        countty=firmBean.getU_county();
+                        if (result.contains("cl_shuiwu")) {
+                            cl_shuiwu_info = firmBean.getCl_shuiwu();
                         }
+                        cl_zhizhao=firmBean.getCl_zhizhao();
+                        cl_leixing_info=qiyeType(firmBean.getCl_leixing());
+                        if (result.contains("cl_nashuirenImg")) {
+                            cl_nashuirenImg = firmBean.getCl_nashuirenImg();
+                        }
+                        nashuipeople_info=firmBean.getCl_nashuiren();
+                        getAddress_info(province,city,countty,cl_dizhi_info);
 
-                        //这里判断是新增还是修改，如果新增则没有后面的值
 
+
+
+
+
+
+//                        if (job.toString().contains("cl_mingcheng")) {
+//                            name = job.getString("cl_mingcheng");
+//                        }else{
+//                            name="";
+//                        }
+//                        Log.d("名称的值",name);
+//                         cl_leixing_info = qiyeType(job.getString("cl_leixing"));
+//                         cl_yewu_info = job.getString("cl_yewu");
+//                         cl_dizhi_info = job.getString("cl_dizhi");
+//                        cl_state = job.getString("cl_stat");
+//                        Log.d("状态的值",cl_state+cl_leixing_info+cl_yewu_info+cl_dizhi_info);
+//                        if (job.toString().contains("enterpriseInfoReview")) {
+//                             enterpriseInfoReview = job.getString("enterpriseInfoReview");
+//                        }
+//                         cl_zhengjian_info = zhengjianType(job.getString("cl_zhengjian"));
+//
+//                         nashuipeople_info = job.getString("cl_nashuiren");
+//
+//                         qiyefaren_info=job.getString("cl_corporation");
+//                        Log.d("返回的值",enterpriseInfoReview+cl_zhengjian_info+nashuipeople_info);
+//                        if (result.contains("cl_shuiwuImg")){
+//                            cl_shuiwuImg=job.getString("cl_shuiwuImg");
+//                        }else{
+//                            cl_shuiwuImg="";
+//                        }
+//                        if (result.contains("cl_jigouImg")){
+//                            cl_jigouImg=job.getString("cl_jigouImg");
+//                        }else{
+//                            cl_jigouImg="";
+//                        }
+//                        if (result.contains("cl_zhizhaoImg")){
+//                            cl_zhizhaoImg=job.getString("cl_zhizhaoImg");
+//                        }else{
+//                            cl_zhizhaoImg="";
+//                        }
+//                        if (result.contains("cl_nashuirenImg")){
+//                            cl_nashuirenImg=job.getString("cl_nashuirenImg");
+//                        }else{
+//                            cl_nashuirenImg="";
+//                        }
+//
+//
+//
+//
+//
+//                        if (result.contains("cl_chuanzhen")) {
+//                            chuanzhen_info = job.getString("cl_chuanzhen");
+//                        } else {
+//                            chuanzhen_info = "";
+//                        }
+//                        Log.d("传真",chuanzhen_info);
+//
+//                        if (cl_zhengjian.equals("5")) {
+//                            if (result.contains("cl_zhizhao")){
+//                                xinyong=job.getString("cl_zhizhao");
+//                            }else{
+//                                xinyong="";
+//                            }
+//
+//                        } else {
+//                            if (result.contains("cl_zhizhao")){
+//                                xinyong=job.getString("cl_zhizhao");
+//                            }else{
+//                                xinyong="";
+//                            }
+//                            if (result.contains("cl_jigou")){
+//                                jigou_info=job.getString("cl_jigou");
+//                            }else{
+//                                jigou_info="";
+//                            }
+//                            if (result.contains("cl_shuiwu")){
+//cl_shuiwu_info=job.getString("cl_shuiwu");
+//                            }
+//                            cl_shuiwu_info="";
+//
+//                        }
+//                        if (result.contains("U_province") && result.contains("U_county") && result.contains("U_city")){
+//                             province=job.getString("U_province");
+//                             countty=job.getString("U_county");
+//                             city=job.getString("U_city");
+//                            Log.d("地址",province+countty+city);
+//                            getAddress_info(province,city,countty,cl_dizhi_info);
+//                        }
+//
+//
+//                        //这里判断是新增还是修改，如果新增则没有后面的值
+//
                     }
                     }catch(JSONException e){
                         e.printStackTrace();
-                    }
+                }
 
             }
 
@@ -353,7 +399,7 @@ cl_shuiwu_info=job.getString("cl_shuiwu");
             public void onSuccess(String result) {
                 Log.d("详细地址的返回值",""+result);
                 list = new ArrayList<Map<String, Object>>();
-
+                Log.d("enterpriseInfoReview",enterpriseInfoReview);
                 if (enterpriseInfoReview.equals("35")) {
                     firm_info_title.setText("您企业信息正在重新审核,塑贸网将审核企业新信息，在新信息完成审核前，企业信息将仍然采用原信息。");
                     tvUpdate.setVisibility(View.GONE);
@@ -369,6 +415,7 @@ cl_shuiwu_info=job.getString("cl_shuiwu");
                 map2.put("left", "企业类型");
                 map2.put("right", cl_leixing_info);
                 list.add(map2);
+                Log.d("类型",cl_leixing_info+name);
                 if (!name.equals("")) {
                     Map<String, Object> map3 = new Hashtable<String, Object>();
                     map3.put("left", "企业名称");
@@ -380,16 +427,16 @@ cl_shuiwu_info=job.getString("cl_shuiwu");
                     map3.put("right", "");
                     list.add(map3);
                 }
+               // Log.d("企业法人",qiyefaren_info);
                 Map<String,Object> map_fare=new Hashtable<String, Object>();
                 map_fare.put("left", "企业法人");
-                map_fare.put("right", qiyefaren_info);
+                map_fare.put("right", cl_corporationinfo);
                 list.add(map_fare);
                 Map<String, Object> map4 = new Hashtable<String, Object>();
                 map4.put("left", "业务部门");
                 map4.put("right", cl_yewu_info);
                 list.add(map4);
-//                        SharedPreferences sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
-//                        String xingsi=sp.getString("address","");
+Log.d("夜袭",cl_corporationinfo+cl_corporationinfo);
                 String province="";
                 try {
                     JSONObject json=new JSONObject(result);
@@ -397,22 +444,25 @@ cl_shuiwu_info=job.getString("cl_shuiwu");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                //getAddress_info(province,city,countty,cl_dizhi);
+
                 Map<String,Object> map5=new Hashtable<String, Object>();
                 map5.put("left","办公地址");
-                map5.put("right",province+cl_dizhi);
+                map5.put("right",province+cl_dizhi_info);
                 list.add(map5);
-                if (chuanzhen_info.equals("")) {
+                Log.d("穿着",cl_chuanzheniinfo);
+                if (cl_chuanzheniinfo.equals("传真")) {
+                    Log.d("if","if");
                     Map<String, Object> map6 = new Hashtable<String, Object>();
                     map6.put("left", "传真号");
                     map6.put("right", "");
-                    Log.e("TAG", "chuanzhen======" + chuanzhen_info);
+                    Log.e("TAG", "chuanzhen======" + cl_chuanzheniinfo);
                     list.add(map6);
                 } else {
+                    Log.d("else","else");
                     Map<String, Object> map6 = new Hashtable<String, Object>();
                     map6.put("left", "传真号");
-                    map6.put("right", chuanzhen_info);
-                    Log.e("TAG", "chuanzhen======" + chuanzhen_info);
+                    map6.put("right", cl_chuanzheniinfo);
+                    Log.e("TAG", "chuanzhen======" + cl_chuanzheniinfo);
                     list.add(map6);
                 }
 
@@ -420,28 +470,65 @@ cl_shuiwu_info=job.getString("cl_shuiwu");
                 map7.put("left", "企业注册证件");
                 map7.put("right", cl_zhengjian_info);
                 list.add(map7);
-                Map<String, Object> map8 = new HashMap<String, Object>();
-                map8.put("left", "组织机构代码");
-                map8.put("right", jigou_info);
-                map8.put("icon", R.mipmap.my_sumao_iv_order);
-                list.add(map8);
-
-                Map<String, Object> map9 = new Hashtable<String, Object>();
-                map9.put("right", xinyong);
-                map9.put("icon", R.mipmap.my_sumao_iv_order);
-                Map<String, Object> map10 = new HashMap<String, Object>();
-                map10.put("left", "税务登记号");
-                map10.put("right", cl_shuiwu_info);
-                map10.put("icon", R.mipmap.my_sumao_iv_order);
-                list.add(map10);
-                Log.e("TAG", "xinyong======" + xinyong);
-                if (cl_zhengjian.equals("三证合一")) {
-                    map9.put("left", "统一社会信用代码");
-                } else {
-                    map9.put("left", "营业执照号");
-
+                if (jigou_info.equals("机构")){
+                    Log.d("祖居if","if");
+                    Map<String, Object> map8 = new HashMap<String, Object>();
+                    map8.put("left", "组织机构代码");
+                    map8.put("right", "");
+                    map8.put("icon", R.mipmap.my_sumao_iv_order);
+                    list.add(map8);
+                }else{
+                    Log.d("zuzhiif","else");
+                    Map<String, Object> map8 = new HashMap<String, Object>();
+                    map8.put("left", "组织机构代码");
+                    map8.put("right", jigou_info);
+                    map8.put("icon", R.mipmap.my_sumao_iv_order);
+                    list.add(map8);
                 }
-                list.add(map9);
+                if (cl_zhizhao.equals("")){
+                    Log.d("执照if","if");
+                    Map<String, Object> map9 = new Hashtable<String, Object>();
+                    map9.put("right", "");
+                    map9.put("icon", R.mipmap.my_sumao_iv_order);
+                    if (cl_zhengjian.equals("三证合一")) {
+                        map9.put("left", "统一社会信用代码");
+                    } else {
+                        map9.put("left", "营业执照号");
+
+                    }
+                    list.add(map9);
+                }else{
+                    Log.d("执照else","else");
+                    Map<String, Object> map9 = new Hashtable<String, Object>();
+                    map9.put("right", cl_zhizhao);
+                    map9.put("icon", R.mipmap.my_sumao_iv_order);
+                    if (cl_zhengjian.equals("三证合一")) {
+                        map9.put("left", "统一社会信用代码");
+                    } else {
+                        map9.put("left", "营业执照号");
+
+                    }
+                    list.add(map9);
+                }
+               if (cl_shuiwu_info.equals("税务")){
+                   Map<String, Object> map10 = new HashMap<String, Object>();
+                   map10.put("left", "税务登记号");
+                   map10.put("right", "");
+                   map10.put("icon", R.mipmap.my_sumao_iv_order);
+                   list.add(map10);
+                   Log.e("TAG", "xinyong======" + cl_zhizhao+"123");
+               }else {
+                   Map<String, Object> map10 = new HashMap<String, Object>();
+                   map10.put("left", "税务登记号");
+                   map10.put("right", cl_shuiwu_info);
+                   map10.put("icon", R.mipmap.my_sumao_iv_order);
+                   list.add(map10);
+                   Log.e("TAG", "xinyong======" + cl_zhizhao);
+               }
+
+
+
+
 
                 Map<String, Object> map11 = new Hashtable<String, Object>();
                 map11.put("left", "纳税人类型");

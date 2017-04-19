@@ -105,7 +105,7 @@ public class SelectCountyArea extends Activity implements View.OnClickListener,I
             intent.putExtra("address",lists.get(position).getLevel());
             startActivity(intent);
         }else {
-            Intent intent = new Intent();
+           // Intent intent = new Intent();
             intent.setClass(SelectCountyArea.this,SelectDetailArea.class);
             intent.putExtra("county",lists.get(position).getLevel());
             intent.putExtra("className",className);

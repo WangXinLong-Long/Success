@@ -97,6 +97,7 @@ public class RegisterPicture extends AppCompatActivity implements LGImgCompresso
         setContentView(R.layout.activity_register__picture);
         Bundle bundle=getIntent().getExtras();
         title=bundle.getString("name");
+        Log.d("title的值",title);
         number1=bundle.getInt("number");
         initData();
         event();
