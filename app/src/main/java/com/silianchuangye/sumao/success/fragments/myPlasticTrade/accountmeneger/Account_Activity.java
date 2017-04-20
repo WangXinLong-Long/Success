@@ -22,12 +22,14 @@ public class Account_Activity extends AppCompatActivity implements View.OnClickL
     private TextView tv_child_title_bar_title;
     private ListView lv_Bank;
     private List<Map<String,Object>> list;
+   // private ImageView iv_child_title_bar_back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_);
         iv_child_title_bar_back= (ImageView) findViewById(R.id.iv_child_title_bar_back);
+        iv_child_title_bar_back.setOnClickListener(this);
         tv_child_title_bar_title= (TextView) findViewById(R.id.tv_child_title_bar_title);
         lv_Bank= (ListView) findViewById(R.id.lv_Bank);
         list=new ArrayList<>();

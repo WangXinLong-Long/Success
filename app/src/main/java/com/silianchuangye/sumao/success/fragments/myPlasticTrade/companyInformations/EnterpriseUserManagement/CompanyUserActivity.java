@@ -1,6 +1,8 @@
 package com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,6 +15,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.utils.Loding;
@@ -45,7 +48,9 @@ public class CompanyUserActivity extends AppCompatActivity {
     private String role;
     private String user_id;
     private SimpleAdapter adapter;
-
+    private String U_userid;
+    private JSONArray array;
+    private String object_cl;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +70,7 @@ public class CompanyUserActivity extends AppCompatActivity {
         add_address_rl= (RelativeLayout) findViewById(R.id.add_address_rl);
         tv= (TextView) findViewById(R.id.tvupdate);
         tv.setText("新增用户");
+
         add= (ImageView) findViewById(R.id.add_address);
         add_address_rl.setVisibility(View.VISIBLE);
         iv_title_bar_logo.setVisibility(View.GONE);
@@ -90,10 +96,22 @@ public class CompanyUserActivity extends AppCompatActivity {
         add_address_rl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(CompanyUserActivity.this,CompanyUserAddActivity.class);
-                startActivity(intent);
+                SharedPreferences sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+                String U_group=sp.getString("U_group","");
+                if (U_group.contains("50")) {
+                    Intent intent = new Intent(CompanyUserActivity.this, CompanyUserAddActivity.class);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(CompanyUserActivity.this, "用户没有该权限", Toast.LENGTH_SHORT).show();
+                }
+               // Companyuser();
             }
         });
+
+
+
+
+
 
         /**
          * 修改用户
@@ -114,11 +132,75 @@ public class CompanyUserActivity extends AppCompatActivity {
         });
     }
 
+    public void Companyuser(){
+        String url=SuMaoConstant.SUMAO_IP+"/rest/model/atg/userprofiling/ProfileActor/appCustomerInfo";
+        RequestParams requestParams=new RequestParams(url);
+        SharedPreferences sp=getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+        String unique=sp.getString("unique","");
+        requestParams.addParameter("_dynSessConf",unique);
+        x.http().post(requestParams, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.d("用户信息的返回值",result);
+                try {
+                    JSONObject json=new JSONObject(result);
+                    U_userid=json.getString("U_userid");
+                    array=new JSONArray(object_cl);
+                    for (int i=0;i<array.length();i++) {
+                        JSONObject object_info=array.getJSONObject(i);
+                        jiaose=object_info.getString("cl_qiye");
+                        account=object_info.getString("cl_cpid");
+                        Log.d("角色的值",jiaose);
+                        if (account.equals(U_userid)){
+                            if (jiaose.contains("50")){
+
+                                add_address_rl.setVisibility(View.VISIBLE);
+                            }else {
+                                Toast.makeText(CompanyUserActivity.this, "用户没有权限进行该操作!", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
+        if (listitem!=null){
+            listitem.clear();
+        }
 //        new Thread(){
+
 //            @Override
+        new Thread(){
+            @Override
+            public void run() {
+                super.run();
+                getAllUser();
+
+            }
+        }.start();
+
 
     }
 
@@ -131,19 +213,20 @@ public class CompanyUserActivity extends AppCompatActivity {
 
     }
 
+
     @Override
     protected void onResume() {
         super.onResume();
-        if (listitem!=null){
-            listitem.clear();
-        }
-        new Thread(){
-            @Override
-            public void run() {
-                super.run();
-                getAllUser();
-            }
-        }.start();
+
+//        new Thread(){
+//            @Override
+//            public void run() {
+//                super.run();
+//
+//                Companyuser();
+//            }
+//        }.start();
+
     }
 
     /**
@@ -161,9 +244,9 @@ public class CompanyUserActivity extends AppCompatActivity {
                 try {
                     JSONObject object = new JSONObject(result);
                     Log.d("object的值",object.toString());
-                    String object_cl=object.getString("cl");
+                     object_cl=object.getString("cl");
                     Log.d("object_cl的值",object_cl.toString());
-                    JSONArray array=new JSONArray(object_cl.toString());
+                    array=new JSONArray(object_cl.toString());
                     for (int i=0;i<array.length();i++){
                         Log.d("解析json数组",array.toString());
                         JSONObject object_info=array.getJSONObject(i);

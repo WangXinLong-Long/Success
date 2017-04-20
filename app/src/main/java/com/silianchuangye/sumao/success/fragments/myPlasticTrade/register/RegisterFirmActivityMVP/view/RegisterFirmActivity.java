@@ -345,6 +345,7 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
 //        unified_social_credit_coder_image = ((TextView) findViewById(R.id.unified_social_credit_coder_image));//        统一社会信用代码
 
 
+
     }
 
     private void registerMethodW() {

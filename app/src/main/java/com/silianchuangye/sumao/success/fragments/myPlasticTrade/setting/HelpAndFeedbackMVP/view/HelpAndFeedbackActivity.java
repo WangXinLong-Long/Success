@@ -3,6 +3,7 @@ package com.silianchuangye.sumao.success.fragments.myPlasticTrade.setting.HelpAn
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -53,11 +54,11 @@ public class HelpAndFeedbackActivity extends AppCompatActivity implements View.O
                 break;
             case R.id.btSave_password_update:
                 String telephoneNumber = telephone.getText().toString();
+                telephone.setInputType(InputType.TYPE_CLASS_PHONE);
                 String feedbackText = feedbackInformation.getText().toString();
                 if (telephoneNumber.isEmpty() || telephoneNumber.equals("")) {
                     Toast.makeText(this, "请输入手机号", Toast.LENGTH_SHORT).show();
-                } else if (!isMobileNO(telephoneNumber)) {
-                    Toast.makeText(this, "输入手机号的手机号不符合规范", Toast.LENGTH_SHORT).show();
+
                 } else if (feedbackText.isEmpty() || feedbackText.equals("")) {
                     Toast.makeText(this, "输入反馈信息", Toast.LENGTH_SHORT).show();
                 } else {
@@ -72,8 +73,9 @@ public class HelpAndFeedbackActivity extends AppCompatActivity implements View.O
 
     public  boolean isMobileNO(String mobiles) {
 
-        Pattern p = Pattern.compile("^((13[0-9])|(15[^4,\\D])|(18[0,5-9]))\\d{8}$");
 
+        String regExp = "^[1]([3][0-9]{1}|59|58|88|89)[0-9]{8}$";
+        Pattern p = Pattern.compile(regExp);
         Matcher m = p.matcher(mobiles);
 
         System.out.println(m.matches() + "---");

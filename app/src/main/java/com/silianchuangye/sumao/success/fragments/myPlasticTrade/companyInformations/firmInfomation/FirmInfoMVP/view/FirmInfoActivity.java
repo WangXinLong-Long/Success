@@ -26,12 +26,12 @@ import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformat
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.addressDisplayMVP.view.IAddressDisplayView;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoMVP.model.FirmBean;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoMVP.presenter.FirmInfoPresenter;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoPicture.FirmInfoPictureMVP.view.FirmInfoPictureActivity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoUpdateMVP.bean.FirmInfoUpdateActivityBean;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoUpdateMVP.view.FirmInfoUpdateActivity;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoUpdateMVP.view.FirmUpdateActivity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation.FirmShowImageActivity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.ReceiptAddressMVP.bean.ReAddress;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.ReceiptAddressMVP.view.IReceiptAddressView;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.RegisterFirmActivityMVP.view.RegisterFirmActivity;
 import com.silianchuangye.sumao.success.model.DifferentTypes;
 import com.silianchuangye.sumao.success.utils.GlobalVariable;
 import com.silianchuangye.sumao.success.utils.LogUtils;
@@ -48,7 +48,6 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 public class FirmInfoActivity extends AppCompatActivity implements IFirmInfoView,IAddressDisplayView,IReceiptAddressView {
     ImageView iv_title_bar_logo,
@@ -77,7 +76,7 @@ public class FirmInfoActivity extends AppCompatActivity implements IFirmInfoView
     private String name;
     private String unique;
     private String laiyuan;
-    private String  enterpriseInfoReview;
+    private String  enterpriseInfoReview="提示语";
     private String cl_state;
     private String xinyong;
     private String cl_shuiwuImg="abc";
@@ -105,6 +104,7 @@ public class FirmInfoActivity extends AppCompatActivity implements IFirmInfoView
     //private String cl_jigou_info;
     private String cl_id;
     private String cl_zhizhao="";
+    private String xiangxiaddress="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,9 +147,9 @@ public class FirmInfoActivity extends AppCompatActivity implements IFirmInfoView
                     if (position==7){
                         intent.putExtra("path",cl_jigouImg);
                     }else if (position==8){
-                        intent.putExtra("path",cl_shuiwuImg);
-                    }else if (position==9){
                         intent.putExtra("path",cl_zhizhaoImg);
+                    }else if (position==9){
+                        intent.putExtra("path",cl_shuiwuImg);
                     }else if (position==10){
                         intent.putExtra("path",cl_nashuirenImg);
                     }
@@ -207,7 +207,27 @@ public class FirmInfoActivity extends AppCompatActivity implements IFirmInfoView
         tvUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                firmInfoPresenter.getFirmInfoUpdatePresenterInActivity();
+                //firmInfoPresenter.getFirmInfoUpdatePresenterInActivity();
+                Intent intent=new Intent(FirmInfoActivity.this,FirmUpdateActivity.class);
+//                intent.putExtra("leixing",cl_leixing_info);
+//                intent.putExtra("mingcheng",name);
+//                intent.putExtra("fare",cl_corporationinfo);
+//                intent.putExtra("bumen",cl_yewu_info);
+//                intent.putExtra("address",xiangxiaddress);
+//                intent.putExtra("chuanzhen",cl_chuanzheniinfo);
+//                intent.putExtra("zhengjian",cl_zhengjian_info);
+//                intent.putExtra("jigou",jigou_info);
+//                intent.putExtra("zhizhao",cl_zhizhao);
+//                intent.putExtra("shuiwu",cl_shuiwu_info);
+//                intent.putExtra("nashuiren",nashuipeople_info);
+//                intent.putExtra("sheng",province);
+//                intent.putExtra("city",city);
+//                intent.putExtra("countty",countty);
+//                intent.putExtra("cl_jigouImg",cl_jigouImg);
+//                intent.putExtra("cl_zhizhaoImg",cl_zhizhaoImg);
+//                intent.putExtra("cl_shuiwuImg",cl_shuiwuImg);
+//                intent.putExtra("cl_nashuirenImg",cl_nashuirenImg);
+                startActivity(intent);
             }
         });
     }
@@ -257,7 +277,11 @@ public class FirmInfoActivity extends AppCompatActivity implements IFirmInfoView
                         }
 
                         cl_id=firmBean.getCl_id();
-                        enterpriseInfoReview=firmBean.getEnterpriseInfoReview();
+                        if (result.contains("enterpriseInfoReview"))
+                        {
+                            enterpriseInfoReview=firmBean.getEnterpriseInfoReview();
+                        }
+                       // enterpriseInfoReview=firmBean.get"cl_zhengjian":"5","cl_id":"1666758","info":"sucess","enterpriseInfoReview":"35","U_city":"124201","cl_zhizhaoImg":"/mnt/docs/rCgXbJuV2HFoC20161130043419.jpg","cl_dizhi":"武汉市","U_county":"12420114","cl_zhizhao":"79294954-7","cl_leixing":"99","cl_nashuirenImg":"/mnt/docs/hXPSudH8vTKl74yBehT20161130043424.jpg","cl_nashuiren":"6();
                         city=firmBean.getU_city();
                         if (result.contains("cl_zhizhaoImg")) {
                             cl_zhizhaoImg = firmBean.getCl_zhizhaoImg();
@@ -275,99 +299,6 @@ public class FirmInfoActivity extends AppCompatActivity implements IFirmInfoView
                         nashuipeople_info=firmBean.getCl_nashuiren();
                         getAddress_info(province,city,countty,cl_dizhi_info);
 
-
-
-
-
-
-
-//                        if (job.toString().contains("cl_mingcheng")) {
-//                            name = job.getString("cl_mingcheng");
-//                        }else{
-//                            name="";
-//                        }
-//                        Log.d("名称的值",name);
-//                         cl_leixing_info = qiyeType(job.getString("cl_leixing"));
-//                         cl_yewu_info = job.getString("cl_yewu");
-//                         cl_dizhi_info = job.getString("cl_dizhi");
-//                        cl_state = job.getString("cl_stat");
-//                        Log.d("状态的值",cl_state+cl_leixing_info+cl_yewu_info+cl_dizhi_info);
-//                        if (job.toString().contains("enterpriseInfoReview")) {
-//                             enterpriseInfoReview = job.getString("enterpriseInfoReview");
-//                        }
-//                         cl_zhengjian_info = zhengjianType(job.getString("cl_zhengjian"));
-//
-//                         nashuipeople_info = job.getString("cl_nashuiren");
-//
-//                         qiyefaren_info=job.getString("cl_corporation");
-//                        Log.d("返回的值",enterpriseInfoReview+cl_zhengjian_info+nashuipeople_info);
-//                        if (result.contains("cl_shuiwuImg")){
-//                            cl_shuiwuImg=job.getString("cl_shuiwuImg");
-//                        }else{
-//                            cl_shuiwuImg="";
-//                        }
-//                        if (result.contains("cl_jigouImg")){
-//                            cl_jigouImg=job.getString("cl_jigouImg");
-//                        }else{
-//                            cl_jigouImg="";
-//                        }
-//                        if (result.contains("cl_zhizhaoImg")){
-//                            cl_zhizhaoImg=job.getString("cl_zhizhaoImg");
-//                        }else{
-//                            cl_zhizhaoImg="";
-//                        }
-//                        if (result.contains("cl_nashuirenImg")){
-//                            cl_nashuirenImg=job.getString("cl_nashuirenImg");
-//                        }else{
-//                            cl_nashuirenImg="";
-//                        }
-//
-//
-//
-//
-//
-//                        if (result.contains("cl_chuanzhen")) {
-//                            chuanzhen_info = job.getString("cl_chuanzhen");
-//                        } else {
-//                            chuanzhen_info = "";
-//                        }
-//                        Log.d("传真",chuanzhen_info);
-//
-//                        if (cl_zhengjian.equals("5")) {
-//                            if (result.contains("cl_zhizhao")){
-//                                xinyong=job.getString("cl_zhizhao");
-//                            }else{
-//                                xinyong="";
-//                            }
-//
-//                        } else {
-//                            if (result.contains("cl_zhizhao")){
-//                                xinyong=job.getString("cl_zhizhao");
-//                            }else{
-//                                xinyong="";
-//                            }
-//                            if (result.contains("cl_jigou")){
-//                                jigou_info=job.getString("cl_jigou");
-//                            }else{
-//                                jigou_info="";
-//                            }
-//                            if (result.contains("cl_shuiwu")){
-//cl_shuiwu_info=job.getString("cl_shuiwu");
-//                            }
-//                            cl_shuiwu_info="";
-//
-//                        }
-//                        if (result.contains("U_province") && result.contains("U_county") && result.contains("U_city")){
-//                             province=job.getString("U_province");
-//                             countty=job.getString("U_county");
-//                             city=job.getString("U_city");
-//                            Log.d("地址",province+countty+city);
-//                            getAddress_info(province,city,countty,cl_dizhi_info);
-//                        }
-//
-//
-//                        //这里判断是新增还是修改，如果新增则没有后面的值
-//
                     }
                     }catch(JSONException e){
                         e.printStackTrace();
@@ -403,13 +334,14 @@ public class FirmInfoActivity extends AppCompatActivity implements IFirmInfoView
                 if (enterpriseInfoReview.equals("35")) {
                     firm_info_title.setText("您企业信息正在重新审核,塑贸网将审核企业新信息，在新信息完成审核前，企业信息将仍然采用原信息。");
                     tvUpdate.setVisibility(View.GONE);
-                } else if (enterpriseInfoReview.equals("25")) {
-                    firm_info_title.setText("您企业信息正在审核中，请您耐心等待！如果您有任何问题，请与我们联系!");
-                } else if (enterpriseInfoReview.equals("26")) {
-                    firm_info_title.setText("对不起,您的企业信息未通过审核");
-
                 } else {
-                    firm_info_title.setText("恭喜您,企业信息已通过审核。");
+                    if (cl_state.equals("25")) {
+                        firm_info_title.setText("您企业信息正在审核中，请您耐心等待！如果您有任何问题，请与我们联系!");
+                    } else if (cl_state.equals("26")) {
+                        firm_info_title.setText("对不起,您的企业信息未通过审核");
+                    } else {
+                        firm_info_title.setText("恭喜您,企业信息已通过审核。");
+                    }
                 }
                 Map<String, Object> map2 = new Hashtable<String, Object>();
                 map2.put("left", "企业类型");
@@ -444,10 +376,10 @@ Log.d("夜袭",cl_corporationinfo+cl_corporationinfo);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
+                xiangxiaddress=province+cl_dizhi_info;
                 Map<String,Object> map5=new Hashtable<String, Object>();
                 map5.put("left","办公地址");
-                map5.put("right",province+cl_dizhi_info);
+                map5.put("right",xiangxiaddress);
                 list.add(map5);
                 Log.d("穿着",cl_chuanzheniinfo);
                 if (cl_chuanzheniinfo.equals("传真")) {
@@ -610,7 +542,7 @@ Log.d("夜袭",cl_corporationinfo+cl_corporationinfo);
 
     @Override
     public void setStringInText(String result) {
-        Intent intent=new Intent(FirmInfoActivity.this,FirmInfoUpdateActivity.class);
+        Intent intent=new Intent(FirmInfoActivity.this,FirmUpdateActivity.class);
         intent.putExtra("addressnumber",address);
         intent.putExtra("add","修改");
         intent.putExtra("address",result);

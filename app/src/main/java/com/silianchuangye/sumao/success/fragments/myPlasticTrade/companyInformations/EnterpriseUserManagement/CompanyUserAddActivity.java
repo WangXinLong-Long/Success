@@ -124,47 +124,41 @@ public class CompanyUserAddActivity extends AppCompatActivity {
         btsave_company_user_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                new Thread(){
-//                    @Override
-//                    public void run() {
-//                        addUser();
-//                    }
-//                }.start();
                 String url= SuMaoConstant.SUMAO_IP+"/rest/model/atg/userprofiling/ProfileActor/addUser";
                 RequestParams rp=new RequestParams(url);
-                rp.addParameter("cl_cpid",account);
-                rp.setCharset("UTF-8");
                 rp.setAsJsonContent(true);
                 JSONObject object=new JSONObject();
                 try {
+                    object.put("cl_cpid",account);
+                    object.put("cl_mingcheng",name);
+                    object.put("cl_shuliang",email);
+                    object.put("cl_jiner",phone);
+                    String role_id="";
+                    if (role.contains("企业管理员")){
+                        role_id=role_id+" 50";
+                    }
+                    if (role.contains("财务员")){
+                        role_id=role_id+" 53";
+                    }
+                    if (role.contains("业务员")){
+                        role_id=role_id+" 52";
+                    }
+                    Log.d("role_id的值",role_id);
+                    String zhize=role_id.trim().replaceAll(" ",",");
+                    Log.d("职责",zhize);
+                    object.put("cl_qiye",zhize);
+                    SharedPreferences sp=getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+                    String unique=sp.getString("unique","");
+                    Log.d("unique",unique);
+                    object.put("_dynSessConf",unique);
 
-                    object.put("cl_mingcheng","小红");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-               // rp.addParameter("cl_mingcheng",name);
                 rp.setBodyContent(object.toString());
-                rp.addParameter("cl_shuliang",email);
-                rp.addParameter("cl_jiner",phone);
-                String role_id="";
-                if (role.contains("企业管理员")){
-                    role_id=role_id+" 50";
-                }
-                if (role.contains("财务员")){
-                    role_id=role_id+" 53";
-                }
-                if (role.contains("业务员")){
-                    role_id=role_id+" 52";
-                }
-                Log.d("role_id的值",role_id);
-                String zhize=role_id.trim().replaceAll(" ",",");
-                Log.d("职责",zhize);
-                rp.addParameter("cl_qiye",zhize);
-                SharedPreferences sp=getSharedPreferences("sumao", Activity.MODE_PRIVATE);
-                String unique=sp.getString("unique","");
-                Log.d("unique",unique);
-                rp.addParameter("_dynSessConf",unique);
-                Log.d("rp",rp.toString());
+
+
+                Log.d("rp",object.toString());
 
                 x.http().post(rp, new Callback.CommonCallback<String>() {
                     @Override

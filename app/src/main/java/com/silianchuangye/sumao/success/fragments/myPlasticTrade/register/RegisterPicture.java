@@ -87,8 +87,9 @@ public class RegisterPicture extends AppCompatActivity implements LGImgCompresso
     private String tupian;
     private String path;
     private Uri mOutPutFileUri;
-    private String trime;
+    private String trime="";
     private File file;
+    private TextView tv_Title;
     // 创建一个以当前时间为名称的文件
     File tempFile = new File(Environment.getExternalStorageDirectory(),getPhotoFileName());
     @Override
@@ -103,13 +104,14 @@ public class RegisterPicture extends AppCompatActivity implements LGImgCompresso
         event();
     }
     public void initData(){
+        tv_Title= (TextView) findViewById(R.id.tv_Title);
         ed_number= (EditText) findViewById(R.id.ed_number);
         ivBack= (ImageView) findViewById(R.id.ivback);
         bt_upload= (Button) findViewById(R.id.bt_upload);
         bt_save= (Button) findViewById(R.id.bt_save);
         tv_Name= (TextView) findViewById(R.id.tv_Name);
         layout_title= (RelativeLayout) findViewById(R.id.layout_title);
-        tv_Name.setText(title);
+        tv_Title.setText(title);
     }
     public void event(){
         ivBack.setOnClickListener(new View.OnClickListener() {
@@ -132,33 +134,34 @@ public class RegisterPicture extends AppCompatActivity implements LGImgCompresso
                 Log.d("点击事件","进来了");
                 //tupian=getPhotoFileName();
                 //上传图片
-                new Thread(){
-                    @Override
-                    public void run() {
-                        super.run();
-                        RequestParams rp = new RequestParams(SuMaoConstant.SUMAO_IP + "/rest/model/atg/commerce/order/myorder/OrderPaymentInfo/fileUpload");
-                            SharedPreferences sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
-                            fileCode=sp.getString("filename","");
-                            Log.d("fileCode",fileCode);
-                           if (fileCode!=null && fileCode!="") {
-                               rp.addParameter("file", fileCode);
-                               SharedPreferences.Editor editor=sp.edit();
-                               editor.remove("filename");
-                               editor.commit();
-                           }else{
-                               Log.d("判断","进来了");
-                               Log.d("相册的路径",filepath);
-                               Bitmap bitmap=BitmapFactory.decodeFile(filepath);
-                               fileCode=BitmapToString(bitmap);
-                               Log.d("图片编码",fileCode);
+                if (!trime.equals("")) {
+                    new Thread() {
+                        @Override
+                        public void run() {
+                            super.run();
+                            RequestParams rp = new RequestParams(SuMaoConstant.SUMAO_IP + "/rest/model/atg/commerce/order/myorder/OrderPaymentInfo/fileUpload");
+                            SharedPreferences sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+                            fileCode = sp.getString("filename", "");
+                            Log.d("fileCode", fileCode);
+                            if (fileCode != null && fileCode != "") {
+                                rp.addParameter("file", fileCode);
+                                SharedPreferences.Editor editor = sp.edit();
+                                editor.remove("filename");
+                                editor.commit();
+                            } else {
+                                Log.d("判断", "进来了");
+                                Log.d("相册的路径", filepath);
+                                Bitmap bitmap = BitmapFactory.decodeFile(filepath);
+                                fileCode = BitmapToString(bitmap);
+                                Log.d("图片编码", fileCode);
 //                               Toast.makeText(RegisterPicture.this, ""+fileCode, Toast.LENGTH_SHORT).show();
-                               rp.addParameter("file", fileCode);
-                           }
+                                rp.addParameter("file", fileCode);
+                            }
 
-                            Log.d("文件",fileCode+"");
+                            Log.d("文件", fileCode + "");
                             rp.addParameter("fileName", trime);
-                            Log.d("名称",trime);
-                            Log.d("aaa",rp.getUri().toString());
+                            Log.d("名称", trime);
+                            Log.d("aaa", rp.getUri().toString());
                             x.http().post(rp, new Callback.CommonCallback<String>() {
                                 @Override
                                 public void onFinished() {
@@ -167,13 +170,13 @@ public class RegisterPicture extends AppCompatActivity implements LGImgCompresso
 
                                 @Override
                                 public void onSuccess(String result) {
-                                    Log.d("上穿陈功的返回值",result);
+                                    Log.d("上穿陈功的返回值", result);
                                     //  Intent intent=new Intent();
                                     Intent intent = new Intent();
                                     //Intent intent = new Intent();
                                     intent.putExtra("value", ed_number.getText().toString());
-                                    intent.putExtra("picturePath", "/mnt/docs/"+trime);
-                                    Log.d("chuangu","");
+                                    intent.putExtra("picturePath", "/mnt/docs/" + trime);
+                                    Log.d("chuangu", "");
                                     setResult(number1, intent);
                                     RegisterPicture.this.finish();
 
@@ -191,9 +194,18 @@ public class RegisterPicture extends AppCompatActivity implements LGImgCompresso
                                 }
                             });
 
-                      // printStackTrace
-                    }
-                }.start();
+                            // printStackTrace
+                        }
+                    }.start();
+                }else {
+                    Intent intent = new Intent();
+                    //Intent intent = new Intent();
+                    intent.putExtra("value", ed_number.getText().toString());
+                    intent.putExtra("picturePath", "abc");
+                    Log.d("chuangu", "");
+                    setResult(number1, intent);
+                    RegisterPicture.this.finish();
+                }
 
 
             }

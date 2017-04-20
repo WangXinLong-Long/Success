@@ -373,10 +373,6 @@
             android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoMVP.view.FirmInfoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoUpdateMVP.view.FirmInfoUpdateActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoTypeActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -723,7 +719,12 @@
         <activity android:name=".fragments.myPlasticTrade.OrderManagement.SpotOrder.SpotOrderMVP.view.logisticsActivity" />
         <activity android:name=".ShangYou.gonggao.oticeActivity" />
         <activity android:name=".ShangYou.gonggao.NoticeActivityInfo" />
-        <activity android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmShowImageActivity"></activity>
+        <activity android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmShowImageActivity" />
+        <activity android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoUpdateMVP.view.FirmUpdateActivity"
+                   android:launchMode="singleTask"
+                   android:screenOrientation="portrait"
+            >
+        </activity>
     </application>
 
 </manifest>

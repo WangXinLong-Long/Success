@@ -61,6 +61,7 @@ public class ProductNameActivity extends AppCompatActivity implements View.OnCli
         iv_child_title_bar_back.setOnClickListener(this);
         Bundle bundle=getIntent().getExtras();
         title=bundle.getString("title");
+        tv_child_title_bar_title.setText(title);
         sellerCompanyId=bundle.getString("sellerCompanyId");
         //position=bundle.getString("id");
         new Thread(){

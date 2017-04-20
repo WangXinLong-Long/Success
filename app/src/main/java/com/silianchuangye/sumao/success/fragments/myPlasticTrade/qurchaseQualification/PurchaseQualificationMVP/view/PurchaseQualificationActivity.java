@@ -58,6 +58,7 @@ public class PurchaseQualificationActivity extends AppCompatActivity implements 
         tv_child_title_bar_title = ((TextView) findViewById(R.id.tv_child_title_bar_title));
         tv_child_title_bar_title.setText("购买资质申请");
         iv_child_title_bar_back = ((ImageView) findViewById(R.id.iv_child_title_bar_back));
+        iv_child_title_bar_back.setOnClickListener(this);
 
 
         upstreamResourcesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

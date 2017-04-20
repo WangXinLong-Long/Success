@@ -1,5 +1,7 @@
 package com.silianchuangye.sumao.success.fragments.PagerOneMVP.model;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.bean.BannerBean;
 import com.silianchuangye.sumao.success.utils.LogUtils;
@@ -20,6 +22,7 @@ public class PagerOneModel implements IPagerOneModel {
     @Override
     public void getPagerOneInfor(final PagerOneCallback callback) {
         String url = SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/catalog/ProductCatalogActor/HomeImage";
+        Log.d("图片",url);
         RequestParams requestParams = new RequestParams(url);
         try {
             x.http().request(HttpMethod.POST, requestParams, new Callback.CacheCallback<String>() {

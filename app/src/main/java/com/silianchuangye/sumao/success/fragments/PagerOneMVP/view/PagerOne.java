@@ -440,6 +440,7 @@ public class PagerOne extends BasePager implements IPagerOneView {
         listDrawable.add(BitmapFactory.decodeResource(getResources(), R.mipmap.carousel_figure1));
         listDrawable.add(BitmapFactory.decodeResource(getResources(), R.mipmap.carousel_figure2));
         listDrawable.add(BitmapFactory.decodeResource(getResources(), R.mipmap.carousel_figure3));
+        listDrawable.add(BitmapFactory.decodeResource(getResources(), R.mipmap.carousel_figure4));
         gallery.setAdapter(new ImageAdapter(mActivity, listDrawable));
         InitFocusIndicatorContainer();
 //        TODO 网络图片放开底下的就行

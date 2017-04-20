@@ -40,6 +40,7 @@ import android.widget.Toast;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.FirmInfoTypeActivityMVP.presenter.GetEntInformationPresenter;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.FirmInfoTypeActivityMVP.view.IFirmInfoTypeActivity;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.RegisterFirmActivityMVP.presenter.RegisterFirmActivityPresenter;
 import com.silianchuangye.sumao.success.model.EnterpriseInformation;
 import com.silianchuangye.sumao.success.utils.LGImgCompressor;
 import com.silianchuangye.sumao.success.utils.LogUtils;
@@ -84,7 +85,7 @@ public class FirmInfoTypeActivity extends AppCompatActivity implements IFirmInfo
     private TextView prompt;
     private List<EnterpriseInformation> typeAndLevel;
     private String level;
-
+    private RegisterFirmActivityPresenter presenter;
     private Button btUpload;
     private String fileBianma=null;
     private String filepath=null;
@@ -147,7 +148,8 @@ public class FirmInfoTypeActivity extends AppCompatActivity implements IFirmInfo
                     prompt.setVisibility(View.VISIBLE);
 
                 } else {
-                    if (title.equals("纳税人类型")){
+
+                    if (filepath!=null){
                         Log.d("点击事件", "进来了");
                         new Thread(){
                             @Override
@@ -197,7 +199,7 @@ public class FirmInfoTypeActivity extends AppCompatActivity implements IFirmInfo
                                         Intent intent = new Intent();
                                         intent.putExtra("name", name);
                                         intent.putExtra("level",level);
-                                        intent.putExtra("picturePath","/mnt/dosc/"+tupian);
+                                        intent.putExtra("picturePath","/mnt/docs/"+tupian);
                                         FirmInfoTypeActivity.this.setResult(RESULT_OK, intent);
                                         FirmInfoTypeActivity.this.finish();
 
@@ -223,8 +225,8 @@ public class FirmInfoTypeActivity extends AppCompatActivity implements IFirmInfo
                         Intent intent = new Intent();
                         intent.putExtra("name", name);
                         intent.putExtra("level",level);
-                       //intent.putExtra("picturePath","/mnt/"+getPhotoFileName());
-                        FirmInfoTypeActivity.this.setResult(RESULT_OK, intent);
+                        intent.putExtra("picturePath","abc");
+                         FirmInfoTypeActivity.this.setResult(RESULT_OK, intent);
                         FirmInfoTypeActivity.this.finish();
 
 

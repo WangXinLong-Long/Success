@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context="com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoUpdateMVP.view.FirmUpdateActivity">
+
+    <include
+        android:id="@+id/title_bar"
+        layout="@layout/child_title_bar"></include>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/bt_commit"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="@dimen/x5"
+        android:layout_marginRight="@dimen/x5"
+        android:layout_marginBottom="@dimen/x10"
+        android:text="保存修改"
+        android:textColor="#fff"
+        android:textSize="16sp"
+        android:background="@drawable/button_background_blue"
+        />
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lvdemo"
+        android:layout_below="@+id/title_bar"
+        android:layout_above="@+id/bt_commit"
+        ></ListView>
+</RelativeLayout>

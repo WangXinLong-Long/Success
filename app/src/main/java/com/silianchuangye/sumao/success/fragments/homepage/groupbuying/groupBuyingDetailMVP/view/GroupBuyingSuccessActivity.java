@@ -701,8 +701,12 @@ addData();
                 long strdate = dateFormat.parse(utilDate).getTime();
                 long nowTime = System.currentTimeMillis();
                 time = strdate - nowTime;
-                mc = new MyCount(time, 1000);
-                mc.start();
+                Log.d("time的值",time+"");
+                if (time>0) {
+                    mc = new MyCount(time, 1000);
+                    mc.start();
+                }
+
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -1429,7 +1433,7 @@ addData();
         @Override
         public void onFinish() {
             //tv_success.setText("finish");
-            //info();
+            info();
         }
 
         @Override

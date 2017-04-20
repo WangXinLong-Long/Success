@@ -79,6 +79,23 @@ public class PlanPresentationActivity extends AppCompatActivity implements View.
         btn_day_plan_add.setOnClickListener(this);
 
     }
+//    private void onClickPlanDate(int position) {
+//        groupPositionPublic = position;
+//        Calendar d = Calendar.getInstance(Locale.CHINA);
+////创建一个日历引用d，通过静态方法getInstance() 从指定时区 Locale.CHINA 获得一个日期实例
+//        Date myDate = new Date();
+////创建一个Date实例
+//        d.setTime(myDate);
+////设置日历的时间，把一个新建Date实例myDate传入
+//        int year = d.get(Calendar.YEAR);
+//        int month = d.get(Calendar.MONTH);
+//        int day = d.get(Calendar.DAY_OF_MONTH);
+////获得日历中的 year month day
+//        DatePickerDialog dlg = new DatePickerDialog(PlanPresentationActivity.this, new MyClick(), year, month, day);
+//        DatePicker datePicker = dlg.getDatePicker();
+//        datePicker.setMinDate(System.currentTimeMillis());
+//        dlg.show();
+//    }
 
     @Override
     protected void onStart() {
@@ -428,7 +445,7 @@ public class PlanPresentationActivity extends AppCompatActivity implements View.
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
             //list.get(groupPositionPublic).get()
             int month=monthOfYear+1;
-             date=year + "-" +month + "-" + dayOfMonth;
+            date=year + "-" +month + "-" + dayOfMonth;
             list.get(groupPositionPublic).set(1, new DayPlanInfo("需求日期", "", year + "-" +month + "-" + dayOfMonth));
             adapter.notifyDataSetChanged();
         }

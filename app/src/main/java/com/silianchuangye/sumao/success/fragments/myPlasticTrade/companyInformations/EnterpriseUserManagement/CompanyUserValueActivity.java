@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -12,10 +13,18 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.RegisterPhoneMVP.RegisterPhonePresenter.RegisterPhonePresenter;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.RegisterPhoneMVP.RegisterPhoneView.IRegisterPhoneView;
+import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
-public class CompanyUserValueActivity extends AppCompatActivity {
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
+
+public class CompanyUserValueActivity extends AppCompatActivity implements IRegisterPhoneView {
     ImageView iv_title_bar_logo,
             iv_title_bar_back,
             iv_title_bar_service,
@@ -30,14 +39,17 @@ public class CompanyUserValueActivity extends AppCompatActivity {
     String account;
     private TextView tv_a;
     String Content;
+    private RegisterPhonePresenter registerPhonePresenter;
+    private String title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_company_user_value);
+        registerPhonePresenter=new RegisterPhonePresenter(this);
         tv_a= (TextView) findViewById(R.id.tv_a);
         Bundle bundle=getIntent().getExtras();
-        String title=bundle.getString("title");
+         title=bundle.getString("title");
         position=bundle.getInt("number");
         Content=bundle.getString("content");
         title_Bar(title);
@@ -53,17 +65,58 @@ public class CompanyUserValueActivity extends AppCompatActivity {
         bt_Save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                account=et_content_value.getText().toString();
+                if (title.equals("电话号码")){
+                    et_content_value.setInputType(InputType.TYPE_CLASS_PHONE);
+                    registerPhonePresenter.sendRegisterPhoneToServer(et_content_value.getText().toString());
+                }else if (title.equals("邮箱")){
+                    et_content_value.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+                    yanzhengyouxiang();
+                }
+
+
+
+            }
+        });
+
+
+    }
+    public void yanzhengyouxiang(){
+        String url= SuMaoConstant.SUMAO_IP+"/rest/model/atg/store/profile/RegistrationActor/userVerify";
+        RequestParams rp=new RequestParams(url);
+        rp.addParameter("type","email");
+        rp.addParameter("attr",et_content_value.getText().toString());
+        x.http().post(rp, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.d("验证邮箱的返回值",result);
+                if (result.contains("true")){
+                                    account=et_content_value.getText().toString();
                 Intent intent=new Intent();
                 intent.putExtra("content",account);
                 Log.d("账号的值",account);
                 setResult(position,intent);
                 Log.d("position的值",position+"");
                 CompanyUserValueActivity.this.finish();
+                }else{
+                    Toast.makeText(CompanyUserValueActivity.this, "该邮箱已经注册!", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
             }
         });
-
-
     }
     public void title_Bar(String string) {
 
@@ -116,5 +169,21 @@ public class CompanyUserValueActivity extends AppCompatActivity {
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public void getRegisterPhoneInfo(String result) {
+        if (result.contains("true")){
+                account=et_content_value.getText().toString();
+                Intent intent=new Intent();
+                intent.putExtra("content",account);
+                Log.d("账号的值",account);
+                setResult(position,intent);
+                Log.d("position的值",position+"");
+                CompanyUserValueActivity.this.finish();
+        }else {
+            Toast.makeText(CompanyUserValueActivity.this, "该手机号已经注册", Toast.LENGTH_SHORT).show();
+        }
+
     }
 }

@@ -10,6 +10,7 @@ import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.ExpandableListViewAdapter;
@@ -33,6 +34,14 @@ import com.silianchuangye.sumao.success.fragments.myPlasticTrade.personalInforma
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.qurchaseQualification.PurchaseQualificationMVP.view.PurchaseQualificationActivity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.setting.SettingMVP.view.SettingActivity;
 import com.silianchuangye.sumao.success.utils.LogUtils;
+import com.silianchuangye.sumao.success.utils.SuMaoConstant;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
 
 /**
  * Created by Administrator on 2016/4/20 0020.
@@ -145,9 +154,8 @@ public class PagerFive extends BasePager {
                     Intent intent = new Intent(context, SearchMoney.class);
                     startActivity(intent);
                 }else if (sela.getChild(groupPosition,childPosition).toString().equals("账户管理")){
-                    Intent intent=new Intent(context, Account_Activity.class);
-                    startActivity(intent);
 
+                    quanxin("账户管理");
                 }else if (sela.getChild(groupPosition, childPosition).toString().equals("物流需求")) {
                     Intent intent = new Intent(context,Logistics.class);
                     startActivity(intent);
@@ -159,10 +167,9 @@ public class PagerFive extends BasePager {
                     Intent intent = new Intent(context, PlanQueryActivity.class);
                     startActivity(intent);
                 }else if (sela.getChild(groupPosition, childPosition).toString().equals("购买资质申请")) {
-                    Intent intent = new Intent(context, PurchaseQualificationActivity.class);
-                    startActivity(intent);
+                    quanxin("购买资质申请");
                 }else if (sela.getChild(groupPosition,childPosition).toString().equals("通知列表")){
-                    //Log.d("","");
+
                     Intent intent=new Intent(context, MessagePushActivity.class);
                     startActivity(intent);
                 }
@@ -170,6 +177,7 @@ public class PagerFive extends BasePager {
                 return true;
             }
         });
+
 
 //        my_sumao_to_be_paid = ((ImageView) view.findViewById(R.id.my_sumao_to_be_paid));
 //        my_sumao_to_send_the_goods = ((ImageView) view.findViewById(R.id.my_sumao_to_send_the_goods));
@@ -186,6 +194,54 @@ public class PagerFive extends BasePager {
 //        my_sumao_has_been_cancelled.setOnClickListener(this);
 //        my_sumao_have_to_return.setOnClickListener(this);
         my_sumao_ib_setting.setOnClickListener(this);
+
+    }
+    public void quanxin(final String title){
+        String url= SuMaoConstant.SUMAO_IP+"/rest/model/atg/userprofiling/ProfileActor/enterpriseInfo";
+        RequestParams rp=new RequestParams(url);
+        SharedPreferences sp=getActivity().getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+        String unique=sp.getString("unique","");
+        rp.addParameter("_dynSessConf",unique);
+        x.http().post(rp, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.d("企业信息的返回值",result);
+                try {
+                    JSONObject object=new JSONObject(result);
+                    String info=object.getString("cl_stat");
+                    if (info.equals("25")||info.equals("26")){
+                       // Log.d()
+                        Toast.makeText(mActivity, "该用户没有通过审核", Toast.LENGTH_SHORT).show();
+                    }else{
+                        if (title.equals("账户管理")){
+                            Intent intent=new Intent(context, Account_Activity.class);
+                            startActivity(intent);
+                        }else if (title.equals("购买资质申请")){
+                            Intent intent = new Intent(context, PurchaseQualificationActivity.class);
+                            startActivity(intent);
+                        }
+                    }
+                    //String
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
 
     }
 

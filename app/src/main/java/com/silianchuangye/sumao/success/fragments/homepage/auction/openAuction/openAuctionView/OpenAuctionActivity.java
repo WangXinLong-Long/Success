@@ -705,7 +705,9 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
         if (status.equals("") || status.equals("0")){//竞拍未开始
             tvTime.setText("距离竞拍开始时间:");
             long startTime = Long.parseLong(auctionDetailBean.getStartDate()) - System.currentTimeMillis();
-            new MyCount(startTime, 1000).start();
+            if (startTime>0) {
+                new MyCount(startTime, 1000).start();
+            }
             Layout_Button_Open.setVisibility(View.GONE);
             layout_non.setVisibility(View.INVISIBLE);
             Layout_info.setVisibility(View.GONE);
@@ -717,7 +719,9 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
         }else if (status.equals("1")){//正在竞拍
             tvTime.setText("竞拍剩余时间:");
             long startTime = Long.parseLong(auctionDetailBean.getEndDate()) - System.currentTimeMillis();
-            new MyCount(startTime, 1000).start();
+            if (startTime>0) {
+                new MyCount(startTime, 1000).start();
+            }
             isSuccessorFail(needToPayTheMargin);
         }else if (status.equals("2")){//竞拍结束
             tvTime.setText("竞拍已结束");

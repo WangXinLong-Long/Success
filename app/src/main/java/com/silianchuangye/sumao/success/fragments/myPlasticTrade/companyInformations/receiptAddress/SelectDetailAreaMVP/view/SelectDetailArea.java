@@ -15,6 +15,7 @@ import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.InvoiceInformationMVP.bean.InvoiceInformationBean;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.InvoiceInformationMVP.view.IInvoiceInformationView;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.InvoiceInformationMVP.view.InvoiceInformation;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoUpdateMVP.view.FirmUpdateActivity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.AddAddressMVP.presenter.AddAddressPresenter;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.AddAddressMVP.view.AddAddress;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.ReceiptAddressDetailMVP.view.ReceiptAddressDetail;
@@ -121,6 +122,13 @@ public class SelectDetailArea extends Activity implements View.OnClickListener,I
                 LogUtils.log("county----------->"+county);
                 intent.putExtra("detailAddress",modify_information.getText().toString().trim());
                 intent.setClass(SelectDetailArea.this,ReceiptAddressDetail.class);
+                startActivity(intent);
+            }else if (className.equals("updateFirmActivity")){
+                Intent intent = new Intent();
+                intent.putExtra("address",county);
+                LogUtils.log("county----------->"+county);
+                intent.putExtra("detailAddress",modify_information.getText().toString().trim());
+                intent.setClass(SelectDetailArea.this,FirmUpdateActivity.class);
                 startActivity(intent);
             }
 

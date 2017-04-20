@@ -339,6 +339,8 @@ public class LoginUserActivity extends AppCompatActivity implements View.OnClick
                     editor.putString("zhanghao", name.trim());
                     editor.putString("U_clientID", loginUserInfoBean.getU_clientID());
                     editor.putString("password",password);
+                    editor.putString("U_group",loginUserInfoBean.getU_group());
+
                     editor.commit();
                     String unique = sp.getString("unique", "");
                     Log.d("唯一标识", unique);

@@ -62,6 +62,7 @@ public class PhonePasswordActivity extends AppCompatActivity implements View.OnC
         verification_code_num= (EditText) findViewById(R.id.verification_code_num);
         change = ((TextView) findViewById(R.id.change));
         change.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
+        change.setOnClickListener(this);
         checkOut= (EditText) findViewById(R.id.checkout);
         checkOut.addTextChangedListener(mTextWatcher);
         tv_child_title_bar_title= (TextView) findViewById(R.id.tv_child_title_bar_title);
