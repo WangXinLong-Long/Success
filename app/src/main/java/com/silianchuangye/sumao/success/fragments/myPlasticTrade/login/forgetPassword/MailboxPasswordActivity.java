@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.CodeUtils;
 import com.silianchuangye.sumao.success.utils.BPUtil;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
@@ -25,7 +26,7 @@ import org.xutils.x;
 /**
  * 通过邮件找回密码
  */
-public class MailboxPasswordActivity extends AppCompatActivity implements View.OnClickListener{
+public class  MailboxPasswordActivity extends AppCompatActivity implements View.OnClickListener{
 
     private Button submit;
     private ImageView verification_code;
@@ -34,11 +35,14 @@ public class MailboxPasswordActivity extends AppCompatActivity implements View.O
     private EditText email_num;
     private boolean verificationCode;
     private EditText checkOut;
+    private ImageView iv_child_title_bar_back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mailbox_password);
+        iv_child_title_bar_back= (ImageView) findViewById(R.id.iv_child_title_bar_back);
+        iv_child_title_bar_back.setOnClickListener(this);
         email_num= (EditText) findViewById(R.id.email_num);
         email_num.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
         checkOut= (EditText) findViewById(R.id.checkout);
@@ -49,7 +53,7 @@ public class MailboxPasswordActivity extends AppCompatActivity implements View.O
         submit.setOnClickListener(this);
 //        图片验证码
         verification_code = ((ImageView) findViewById(R.id.verification_code));
-        verification_code.setImageBitmap(BPUtil.getInstance().createBitmap());
+        verification_code.setImageBitmap(CodeUtils.getInstance().createBitmap());
         change = ((TextView) findViewById(R.id.change));
         change.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
         change.setOnClickListener(this);
@@ -74,11 +78,11 @@ public class MailboxPasswordActivity extends AppCompatActivity implements View.O
             editStart = checkOut.getSelectionStart();
             editEnd = checkOut.getSelectionEnd();
             if (temp.length() == 4) {
-                if (BPUtil.getInstance().getCode().equals(checkOut.getText().toString())) {
+                if (CodeUtils.getInstance().getCode().equals(checkOut.getText().toString())) {
                     verificationCode = true;
                 } else {
                     checkOut.setText("");
-                    verification_code.setImageBitmap(BPUtil.getInstance().createBitmap());
+                    verification_code.setImageBitmap(CodeUtils.getInstance().createBitmap());
                     verificationCode = false;
                     Toast.makeText(MailboxPasswordActivity.this, "验证码错误请重新输入", Toast.LENGTH_SHORT).show();
                 }
@@ -96,6 +100,9 @@ public class MailboxPasswordActivity extends AppCompatActivity implements View.O
     @Override
     public void onClick(View v) {
         switch (v.getId()){
+            case R.id.iv_child_title_bar_back:
+                finish();
+                break;
             case R.id.submit:
                 if (!email_num.getText().toString().contains("@")){
                     Toast.makeText(MailboxPasswordActivity.this, "请输入正确的邮箱格式", Toast.LENGTH_LONG).show();
@@ -111,7 +118,7 @@ public class MailboxPasswordActivity extends AppCompatActivity implements View.O
 
                 break;
             case R.id.change:
-                verification_code.setImageBitmap(BPUtil.getInstance().createBitmap());
+                verification_code.setImageBitmap(CodeUtils.getInstance().createBitmap());
                 break;
         }
     }

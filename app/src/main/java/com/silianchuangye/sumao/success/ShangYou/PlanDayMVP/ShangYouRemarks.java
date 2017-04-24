@@ -7,6 +7,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.silianchuangye.sumao.success.R;
@@ -20,11 +21,14 @@ public class ShangYouRemarks extends AppCompatActivity implements View.OnClickLi
     private TextView tv_child_title_bar_title;
     private Button modify_name_save;
     private TextView prompt_information;
+    private ImageView iv_child_title_bar_back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shang_you_remarks);
+        iv_child_title_bar_back= (ImageView) findViewById(R.id.iv_child_title_bar_back);
+        iv_child_title_bar_back.setOnClickListener(this);
         intent = getIntent();
         titleName = intent.getStringExtra("titleName");
         modify_information = ((EditText) findViewById(R.id.modify_information));
@@ -42,6 +46,9 @@ public class ShangYouRemarks extends AppCompatActivity implements View.OnClickLi
         {
             case R.id.modify_name_save:
                 canSave();
+                break;
+            case R.id.iv_child_title_bar_back:
+                finish();
                 break;
         }
     }

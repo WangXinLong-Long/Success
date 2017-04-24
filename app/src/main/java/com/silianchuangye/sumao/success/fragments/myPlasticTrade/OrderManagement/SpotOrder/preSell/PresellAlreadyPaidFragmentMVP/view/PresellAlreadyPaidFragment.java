@@ -71,7 +71,7 @@ public class PresellAlreadyPaidFragment extends Fragment implements IPresellAlre
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
                 Intent intent = new Intent();
-                intent.putExtra("OrderBean", orders.get(groupPosition));
+                intent.putExtra("id", orders.get(groupPosition).getOrderId());
                 intent.setClass(getActivity(), SpotOrder.class);
                 startActivity(intent);
                 return true;

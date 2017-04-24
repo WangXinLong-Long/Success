@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.cloopen.rest.sdk.CCPRestSDK;
 import com.silianchuangye.sumao.success.R;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.CodeUtils;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.forgetPassword.RetrievePasswordActivity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.forgetPassword.phonePassword.presenter.PhonePasswordPresenter;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.RegisterPhone.CountDownTimerUtils;
@@ -53,12 +54,15 @@ public class PhonePasswordActivity extends AppCompatActivity implements View.OnC
     private boolean verificationCode;
 //    验证码
     private String yanzhen = "";
+    private ImageView iv_child_title_bar_back;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_phone_password);
+        iv_child_title_bar_back= (ImageView) findViewById(R.id.iv_child_title_bar_back);
+        iv_child_title_bar_back.setOnClickListener(this);
         verification_code = ((ImageView) findViewById(R.id.iv_verification_code));
-        verification_code.setImageBitmap(BPUtil.getInstance().createBitmap());
+        verification_code.setImageBitmap(CodeUtils.getInstance().createBitmap());
         verification_code_num= (EditText) findViewById(R.id.verification_code_num);
         change = ((TextView) findViewById(R.id.change));
         change.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
@@ -87,6 +91,9 @@ public class PhonePasswordActivity extends AppCompatActivity implements View.OnC
     @Override
     public void onClick(View v) {
         switch (v.getId()){
+            case R.id.iv_child_title_bar_back:
+                finish();
+                break;
             case R.id.submit:
                 if (telephone_num.getText().toString()==""||telephone_num.getText().toString()==null){
                     Toast.makeText(PhonePasswordActivity.this, "验证手机号码不能为空", Toast.LENGTH_SHORT).show();
@@ -121,7 +128,7 @@ public class PhonePasswordActivity extends AppCompatActivity implements View.OnC
                 }
                 break;
             case R.id.change:
-                verification_code.setImageBitmap(BPUtil.getInstance().createBitmap());
+                verification_code.setImageBitmap(CodeUtils.getInstance().createBitmap());
                 break;
 
 
@@ -228,11 +235,11 @@ public class PhonePasswordActivity extends AppCompatActivity implements View.OnC
             editStart = checkOut.getSelectionStart();
             editEnd = checkOut.getSelectionEnd();
             if (temp.length() == 4) {
-                if (BPUtil.getInstance().getCode().equals(checkOut.getText().toString())) {
+                if (CodeUtils.getInstance().getCode().equals(checkOut.getText().toString())) {
                     verificationCode = true;
                 } else {
                     checkOut.setText("");
-                    verification_code.setImageBitmap(BPUtil.getInstance().createBitmap());
+                    verification_code.setImageBitmap(CodeUtils.getInstance().createBitmap());
                     verificationCode = false;
                     Toast.makeText(PhonePasswordActivity.this, "验证码错误请重新输入", Toast.LENGTH_SHORT).show();
                 }

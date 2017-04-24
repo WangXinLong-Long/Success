@@ -10,6 +10,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.silianchuangye.sumao.success.R;
@@ -24,11 +25,19 @@ public class ShangYouSelectNumber extends AppCompatActivity implements View.OnCl
     private Button modify_name_save;
     private Intent intent;
     private TextView prompt_information;
+    private ImageView iv_child_title_bar_back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shang_you_select_number);
+        iv_child_title_bar_back= (ImageView) findViewById(R.id.iv_child_title_bar_back);
+        iv_child_title_bar_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         intent = getIntent();
         titleName = intent.getStringExtra("titleName");
         modify_information = ((EditText) findViewById(R.id.modify_information));

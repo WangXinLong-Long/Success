@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -23,13 +24,20 @@ public class VipProductList extends AppCompatActivity {
     private List<String> ID;
     private String titleName;
     private Intent intent;
+    private ImageView iv_child_title_bar_back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vip_product_list);
         tv_child_title_bar_title = ((TextView) findViewById(R.id.tv_child_title_bar_title));
-
+        iv_child_title_bar_back= (ImageView) findViewById(R.id.iv_child_title_bar_back);
+        iv_child_title_bar_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         vip_producted_list_view = ((ListView) findViewById(R.id.vip_producted_list_view));
         intent = getIntent();
         ID =( List<String>) intent.getSerializableExtra("ID");

@@ -55,6 +55,7 @@ import com.silianchuangye.sumao.success.fragments.homepage.groupbuying.RuleActiv
 import com.silianchuangye.sumao.success.fragments.homepage.groupbuying.groupBuyingDetailMVP.bean.GroupBuyingDetailBean;
 import com.silianchuangye.sumao.success.fragments.homepage.groupbuying.groupBuyingDetailMVP.presenter.GroupBuyingDetailPresenter;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.bean.PreSaleBondBean;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.SpotOrder.SpotOrderMVP.view.SpotOrder;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.LoginUserActivity;
 import com.silianchuangye.sumao.success.utils.Loding;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
@@ -184,7 +185,7 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
                info();
             }
         }.start();
-addData();
+        addData();
         event();
 
     }
@@ -610,12 +611,14 @@ addData();
                         );
                         gvDemo.setAdapter(adapter_grid);
                         adapter_grid.notifyDataSetChanged();
-                        gvDemo.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-
-                            }
-                        });
+                       gvDemo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                           @Override
+                           public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                               Intent intent=new Intent(GroupBuyingSuccessActivity.this,SpotOrder.class);
+                               intent.putExtra("id",list_gridview.get(position).get("id").toString());
+                               startActivity(intent);
+                           }
+                       });
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -840,10 +843,13 @@ addData();
             //没有登陆
             Inforesult=groupBuyingDetailBean.getSecuredOfSection();
             if (Inforesult.equals("running")){
-                relative_tuangou.setVisibility(View.VISIBLE);
+                layout_Bottom.setVisibility(View.VISIBLE);
                 tv_tuangou_time.setVisibility(View.GONE);
                 tv_tuangou_line.setVisibility(View.GONE);
                 linear_tuangou_time.setVisibility(View.VISIBLE);
+                //tv_tuangou_time.setVisibility(View.VISIBLE);
+                tv_success.setVisibility(View.VISIBLE);
+                relative_tuangou.setVisibility(View.VISIBLE);
 
             }else if (Inforesult.equals("unGroup")){
                 tv_tuangou_line.setVisibility(View.VISIBLE);
@@ -933,10 +939,13 @@ addData();
             tvResult.setText("产品已下架");
         }else if (login.equals("running")){
             //进行中
-            relative_tuangou.setVisibility(View.VISIBLE);
+            layout_Bottom.setVisibility(View.VISIBLE);
             tv_tuangou_time.setVisibility(View.GONE);
             tv_tuangou_line.setVisibility(View.GONE);
             linear_tuangou_time.setVisibility(View.VISIBLE);
+            //tv_tuangou_time.setVisibility(View.VISIBLE);
+            tv_success.setVisibility(View.VISIBLE );
+            relative_tuangou.setVisibility(View.VISIBLE);
         }else if (login.equals("saledOff")){
             tv_tuangou_line.setVisibility(View.VISIBLE);
             relative_tuangou.setVisibility(View.GONE);
@@ -1017,23 +1026,24 @@ addData();
 
     public void shuaxin(){
         if(!count.getText().toString().equals("~~")) {
-
-
             if (state.equals("1")) {
+                Log.d("state的值shuaxin",state);
                 if (Float.parseFloat(count.getText().toString()) - Float.parseFloat(group_amount_et.getText().toString()) < Float.parseFloat(qigou.getText().toString())) {
+                    Log.d("state的if","if");
                     info();
                     Log.d("总量", count.getText().toString());
                     Log.d("已经成团量", group_amount_et.getText().toString());
                     Log.d("起购量", qigou.getText().toString());
                 } else {
-                    //bundle=new Bundle(){};
+                    Log.d("state的else","else");
                     handler = new Handler() {
                         @Override
                         public void handleMessage(Message msg) {
                             super.handleMessage(msg);
                             switch (msg.what) {
                                 case 1:
-                                    // tuangouinfo();
+                                    tuangouinfo();
+                                    //info();
                                     break;
                                 default:
                                     break;
@@ -1051,7 +1061,7 @@ addData();
                         }
                     };
 
-                    timer.schedule(task, 3000, 1000);
+                    timer.schedule(task, 2000, 2000);
                 }
             }
         }
@@ -1066,6 +1076,7 @@ addData();
             public void onSuccess(String result) {
                 try {
                     JSONObject jsonobject=new JSONObject(result);
+                    Log.d("result的值",result);
 //                    login=jsonobject.getString("securedOfSection");
 //                    Inforesult=jsonobject.getString("securedPage");
                     groupPercent=jsonobject.getString("groupPercent");
@@ -1140,6 +1151,8 @@ addData();
             paymentSecurityPopupWindow.setContentView(view);
             LinearLayout layout_four = (LinearLayout) view.findViewById(R.id.layout_four);
             layout_four.setVisibility(View.GONE);
+            LinearLayout layout_one= (LinearLayout) view.findViewById(R.id.layout_one);
+            layout_one.setVisibility(View.GONE);
             paidDeposit = (TextView) view.findViewById(R.id.tvPrice_popupwindow_auction);
             paidDeposit.setText(zhifujine);
             amountOfMarginRequired = (EditText) view.findViewById(R.id.etZhifu_auction);
@@ -1319,7 +1332,7 @@ addData();
         String url = SuMaoConstant.SUMAO_IP + "/rest/model/atg/commerce/payment/OrderPayment/groupDeposit";
         RequestParams rp = new RequestParams(url);
         rp.addParameter("productId", cl_id);
-        rp.addParameter("qty", shulian);
+        rp.addParameter("qty", tv_item_cart_buy_num.getText().toString()  );
         rp.addParameter("platform", platform);
         rp.addParameter("_dynSessConf", _dynSessConf);
         Log.d("支付保證金的rp", rp + "");

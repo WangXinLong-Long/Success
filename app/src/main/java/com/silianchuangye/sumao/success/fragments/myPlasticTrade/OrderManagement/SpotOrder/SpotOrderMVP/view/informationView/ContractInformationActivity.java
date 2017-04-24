@@ -35,19 +35,31 @@ public class ContractInformationActivity extends AppCompatActivity implements Vi
         tv_child_title_bar_title.setText("合同信息");
         contract_web_view = ((WebView) findViewById(R.id.contract_web_view));
         settings = contract_web_view.getSettings();
-        settings.setJavaScriptEnabled(true);
-        settings.setBuiltInZoomControls(true);
-        settings.setLoadWithOverviewMode(true);
-        settings.setUseWideViewPort(true);
+        //settings.setJavaScriptEnabled(true);
+//        settings.setBuiltInZoomControls(true);
+//        settings.setLoadWithOverviewMode(true);
+//        settings.setUseWideViewPort(true);
 
-        contract_web_view.setWebViewClient(new WebViewClient(){
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                LogUtils.log("合同的地址是--->"+url);
-                view.loadUrl(url);
-                return true;
-            }
-        });
+//        contract_web_view.setWebViewClient(new WebViewClient(){
+//            @Override
+//            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+//                LogUtils.log("合同的地址是--->"+url);
+//                view.loadUrl(url);
+//                return true;
+//            }
+//        });
+        //contract_web_view.loadUrl(SuMaoConstant.SUMAO_CONTRACT_IP+contract);
+
+        contract_web_view.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);//设置js可以直接打开窗口，如window.open()，默认为false
+        contract_web_view.getSettings().setJavaScriptEnabled(true);//是否允许执行js，默认为false。设置true时，会提醒可能造成XSS漏洞
+        contract_web_view.getSettings().setSupportZoom(true);//是否可以缩放，默认true
+        contract_web_view.getSettings().setBuiltInZoomControls(true);//是否显示缩放按钮，默认false
+        contract_web_view.getSettings().setUseWideViewPort(true);//设置此属性，可任意比例缩放。大视图模式
+        contract_web_view.getSettings().setLoadWithOverviewMode(true);//和setUseWideViewPort(true)一起解决网页自适应问题
+        contract_web_view.getSettings().setAppCacheEnabled(true);//是否使用缓存
+        contract_web_view.getSettings().setDomStorageEnabled(true);//DOM Storage
+ //displayWebview.getSettings().setUserAgentString("User-Agent:Android");//设置用户代理，一般不用
+        //contract_web_view.loadUrl("http://192.168.32.126:7003/crs/myaccount/profilePasswordChange.jsp?_requestid=258");
         contract_web_view.loadUrl(SuMaoConstant.SUMAO_CONTRACT_IP+contract);
         LogUtils.log(SuMaoConstant.SUMAO_CONTRACT_IP+contract);
         Log.d("合同的路径",SuMaoConstant.SUMAO_CONTRACT_IP+contract);

@@ -75,7 +75,7 @@ public class PresellToBePaidFragment extends Fragment implements IPresellToBePai
             public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
 //                Toast.makeText(getContext(), "点击title", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent();
-                intent.putExtra("OrderBean", orders.get(groupPosition));
+                intent.putExtra("id", orders.get(groupPosition).getOrderId());
                 intent.setClass(getActivity(), SpotOrder.class);
                 startActivity(intent);
                 return true;

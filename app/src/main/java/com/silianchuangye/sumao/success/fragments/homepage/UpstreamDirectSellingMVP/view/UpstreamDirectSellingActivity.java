@@ -82,47 +82,15 @@ public class UpstreamDirectSellingActivity extends AppCompatActivity implements 
                 name=nameList.get(position).toString();
                 Log.d("要传id的值",idList.get(position));
                 Log.d("要传title的值",nameList.get(position));
-                booleanPower(Id,name);
+               // booleanPower(Id,name);
+                upstreamDirectSellingPresenter.getUpstreamDirectSellingDetail(sessionId,Id,name);
                    //
                // }
 
             }
         });
     }
-    public void  booleanPower(final String Id, final String name){
-        sessionId= getSharedPreferences("sumao",MODE_PRIVATE).getString("unique","");
-        String url= SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/userprofiling/PurchaseJurisdictionCheckActor/PurchaseResultCid";
-        url=url+"?sellerCompanyId="+Id+"&productId";
-       // rp.addParameter("sellerCompanyId",Id);
-        Log.d("上游的url",url.toString());
-        RequestParams rp=new RequestParams(url);
-        x.http().post(rp, new Callback.CommonCallback<String>() {
-            @Override
-            public void onSuccess(String result) {
-                Log.d("上游直銷的返回值",result);
-                if (result.contains("0")){
-                    upstreamDirectSellingPresenter.getUpstreamDirectSellingDetail(sessionId,Id,name);
-                }else if (result.contains("1")){
-                    Toast.makeText(UpstreamDirectSellingActivity.this, "该用户没有进入上游直销的权限", Toast.LENGTH_SHORT).show();
-                }
-            }
 
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-
-            }
-
-            @Override
-            public void onCancelled(CancelledException cex) {
-
-            }
-
-            @Override
-            public void onFinished() {
-
-            }
-        });
-    }
 
     @Override
     public void getUpstreamDirectSellingDetailInfo(VipProductBean vipProductBean,String sellerCompanyId,String title) {

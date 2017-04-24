@@ -4,9 +4,11 @@ package com.silianchuangye.sumao.success.ShangYou.PlanDayMVP.view;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -31,6 +33,10 @@ import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSelling
 import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.bean.vipProductBean.VipProductBean;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
+
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -89,6 +95,7 @@ public class PlanDay extends Fragment implements OnClickListener, IPlanDayView {
     private String number;
     private String remarks;
     private boolean flag;
+    private String Id;
     //private String date;
     private PlanDayPresenter planDayPresenter;
 
@@ -107,6 +114,7 @@ public class PlanDay extends Fragment implements OnClickListener, IPlanDayView {
         LogUtils.log("sessionId-->" + getActivity().getSharedPreferences("sumao", Context.MODE_PRIVATE).getString("unique", ""));
         arguments = getArguments();
         vipProductBean = (VipProductBean) arguments.getSerializable("vipProductBean");
+        Id=arguments.getString("id");
         vipProducts = vipProductBean.getVipProduct();
         for (int i = 0; i < vipProducts.size(); i++) {
             vipProductsID = vipProducts.get(i).getProductID();
@@ -216,7 +224,7 @@ public class PlanDay extends Fragment implements OnClickListener, IPlanDayView {
                     intent.putExtra("titleName", "备注");
                     startActivityForResult(intent, groupPosition);
                 } else if (adapter.getChild(groupPosition, childPosition).getLevel().equals("")) {
-                    Toast.makeText(getActivity(), "删除的是：" + groupPosition + "组。" + "--childPosition" + childPosition + "位置", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity(), "删除的是：" + groupPosition + "组。" + "--childPosition" + childPosition + "位置", Toast.LENGTH_SHORT).show();
                     list.remove(groupPosition);
                     group.remove(groupPosition);
                     adapter.notifyDataSetChanged();
@@ -426,45 +434,92 @@ public class PlanDay extends Fragment implements OnClickListener, IPlanDayView {
                 }
                 break;
             case R.id.btn_day_plan_tijiao:
-                for (int i = 0; i < list.size(); i++) {
-                    flag = false;
-                    if (list.get(i).get(0).getDelete() == "" || list.get(i).get(0).getDelete().isEmpty()) {
-                        TOAST("请选择时间");
-                        flag = true;
-                    } else if (list.get(i).get(1).getDelete() == "" || list.get(i).get(1).getDelete().isEmpty()) {
-                        TOAST("请选择产品名称");
-                        flag = true;
-                    } else if (list.get(i).get(2).getDelete() == "" || list.get(i).get(2).getDelete().isEmpty()) {
-                        TOAST("请填写数量");
-                        flag = true;
-                    } else if (list.get(i).get(3).getDelete() == "" || list.get(i).get(3).getDelete().isEmpty()) {
-                        TOAST("请选择仓库");
-                        flag = true;
-                    } else if (list.get(i).get(4).getDelete() == "" || list.get(i).get(4).getDelete().isEmpty()) {
-                        TOAST("请选择配送方式");
-                        flag = true;
-                    } else if (list.get(i).get(5).getDelete() == "" || list.get(i).get(5).getDelete().isEmpty()) {
-                        TOAST("请填写备注");
-                        flag = true;
+                booleanPower(Id);
+
+                break;
+        }
+    }
+    public void  booleanPower(final String Id){
+
+        String url= SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/userprofiling/PurchaseJurisdictionCheckActor/PurchaseResultCid";
+        url=url+"?sellerCompanyId="+Id+"&productId";
+        // rp.addParameter("sellerCompanyId",Id);
+        Log.d("上游的url",url.toString());
+        RequestParams rp=new RequestParams(url);
+        x.http().post(rp, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.d("上游直銷的返回值",result);
+                if (result.contains("0")){
+                    for (int i = 0; i < list.size(); i++) {
+                        flag = false;
+                        if (list.get(i).get(0).getDelete() == "" || list.get(i).get(0).getDelete().isEmpty()) {
+                            TOAST("请选择时间");
+                            flag = true;
+                        } else if (list.get(i).get(1).getDelete() == "" || list.get(i).get(1).getDelete().isEmpty()) {
+                            TOAST("请选择产品名称");
+                            flag = true;
+                        } else if (list.get(i).get(2).getDelete() == "" || list.get(i).get(2).getDelete().isEmpty()) {
+                            TOAST("请填写数量");
+                            flag = true;
+                        } else if (list.get(i).get(3).getDelete() == "" || list.get(i).get(3).getDelete().isEmpty()) {
+                            TOAST("请选择仓库");
+                            flag = true;
+                        } else if (list.get(i).get(4).getDelete() == "" || list.get(i).get(4).getDelete().isEmpty()) {
+                            TOAST("请选择配送方式");
+                            flag = true;
+                        } else if (list.get(i).get(5).getDelete() == "" || list.get(i).get(5).getDelete().isEmpty()) {
+                            TOAST("请填写备注");
+                            flag = true;
+                        }
                     }
-                }
-                if (!flag) {
-                    if (getActivity().getSharedPreferences("sumao", Context.MODE_PRIVATE).getString("unique", "").equals("false")) {
-                        TOAST("请登陆后进行操作");
+                    if (!flag) {
+                        if (getActivity().getSharedPreferences("sumao", Context.MODE_PRIVATE).getString("unique", "").equals("false")) {
+                            TOAST("请登陆后进行操作");
                         /*Intent intent = new Intent();
                         intent.setClass(getActivity(), LoginUserActivity.class);
                         intent.putExtra("roles", "buyer");
                         intent.putExtra("activity", "NotMainActivity");
                         startActivity(intent);*/
-                    } else {
-                        Toast.makeText(getActivity(), "提交", Toast.LENGTH_SHORT).show();
-                        alert.show();
+                        } else {
+                            Toast.makeText(getActivity(), "提交", Toast.LENGTH_SHORT).show();
+                            alert.show();
+                        }
+
+
                     }
+                }else if (result.contains("1")){
+                    //Toast.makeText(getActivity(), "该用户没有进入上游直销的权限", Toast.LENGTH_SHORT).show();
+                    AlertDialog.Builder diolog=new AlertDialog.Builder(getActivity());
+                    diolog.setMessage("您的账户现在不是资源方认证的买家,暂时无法进行购买");
+                    diolog.setNegativeButton("申请资源方资质认证", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            //
+                        }
+                    });
+                    diolog.create().show();
 
-
+                }else if (result.contains("5")){
+                    Toast.makeText(getActivity(), "用户没有审核通过", Toast.LENGTH_SHORT).show();
                 }
-                break;
-        }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
     }
 
     public void TOAST(String s) {

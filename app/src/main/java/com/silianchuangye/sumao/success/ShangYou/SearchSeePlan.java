@@ -2,6 +2,7 @@ package com.silianchuangye.sumao.success.ShangYou;
 
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -36,17 +37,27 @@ public class SearchSeePlan extends AppCompatActivity implements View.OnClickList
     private TextView tv_seeplan_right_date;
     private TextView tv_seeplan_right_name;
     private TextView tv_seeplan_right_cangku;
-    private TextView tv_seeplan_left_num;
+   // private TextView tv_seeplan_left_num;
     private TextView tv_seeplan_right_peisong;
     private TextView tv_seeplan_right_state;
     private TextView tv_seeplan_right_dingdannum;
     private Button btn_seeplan_copy;
+    private TextView tv_seeplan_left_date;
+    private TextView tv_seeplan_left_name;
+    private TextView tv_seeplan_left_cangku;
+    private TextView tv_seeplan_left_num;
+    private TextView tv_seeplan_left_peisong;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_see_plan);
 //        title=getIntent().getStringExtra("bianhao");
+        tv_seeplan_left_date= (TextView) findViewById(R.id.tv_seeplan_left_date);
+        tv_seeplan_left_name= (TextView) findViewById(R.id.tv_seeplan_left_name);
+        tv_seeplan_left_cangku= (TextView) findViewById(R.id.tv_seeplan_left_cangku);
+        tv_seeplan_left_num= (TextView) findViewById(R.id.tv_seeplan_left_num);
+        tv_seeplan_left_peisong= (TextView) findViewById(R.id.tv_seeplan_left_peisong);
         planOrderList =(PlanOrderList) getIntent().getSerializableExtra("PlanOrderList");
         title = planOrderList.getPlanID();
         initDate();
@@ -71,30 +82,40 @@ public class SearchSeePlan extends AppCompatActivity implements View.OnClickList
         tv_seeplan_right_date =(TextView) findViewById(R.id.tv_seeplan_right_date);//改变计划日期
         if ( planOrderList.getScheduleDateChange()!=null){
             tv_seeplan_right_date.setText(planOrderList.getScheduleDateChange());
+            tv_seeplan_right_date.setTextColor(Color.RED);
+            tv_seeplan_left_date.setTextColor(Color.RED);
         }else {
             tv_seeplan_right_date.setText(planOrderList.getScheduleDate());
         }
         tv_seeplan_right_name =(TextView) findViewById(R.id.tv_seeplan_right_name);//改变产品名称
         if ( planOrderList.getProductNameChange()!=null){
             tv_seeplan_right_name.setText(planOrderList.getProductNameChange());
+            tv_seeplan_right_name.setTextColor(Color.RED);
+            tv_seeplan_left_name.setTextColor(Color.RED);
         }else {
             tv_seeplan_right_name.setText(planOrderList.getProductName());
         }
         tv_seeplan_right_cangku =(TextView) findViewById(R.id.tv_seeplan_right_cangku);//改变仓库
         if ( planOrderList.getWarehouseChangeName()!=null){
             tv_seeplan_right_cangku.setText(planOrderList.getWarehouseChangeName());
+            tv_seeplan_right_cangku.setTextColor(Color.RED);
+            tv_seeplan_left_cangku.setTextColor(Color.RED);
         }else {
             tv_seeplan_right_cangku.setText(planOrderList.getWarehouseName());
         }
         tv_seeplan_left_num =(TextView) findViewById(R.id.tv_seeplan_right_num);//改变数量
         if ( planOrderList.getQuantityChange()!=null){
             tv_seeplan_left_num.setText(planOrderList.getQuantityChange());
+            tv_seeplan_left_num.setTextColor(Color.RED);
+            tv_seeplan_left_num.setTextColor(Color.RED);
         }else {
             tv_seeplan_left_num.setText(planOrderList.getQuantity());
         }
         tv_seeplan_right_peisong =(TextView) findViewById(R.id.tv_seeplan_right_peisong);//改变配送方式
         if ( planOrderList.getLogisticsChangeName()!=null){
             tv_seeplan_right_peisong.setText(planOrderList.getLogisticsChangeName());
+            tv_seeplan_right_peisong.setTextColor(Color.RED);
+            tv_seeplan_left_peisong.setTextColor(Color.RED);
         }else {
             tv_seeplan_right_peisong.setText(planOrderList.getLogisticsName());
         }
@@ -120,7 +141,8 @@ public class SearchSeePlan extends AppCompatActivity implements View.OnClickList
     private void initView() {
         img_back= (ImageView) findViewById(R.id.img_search_see_plan_back);
         tv_title= (TextView) findViewById(R.id.tv_search_see_plan_title);
-        tv_title.setText("计划编号 : "+title);
+        //tv_title.setText("计划编号 : "+title);
+        tv_title.setText("查看原计划");
         img_back.setOnClickListener(this);
         img_back.setOnClickListener(this);
     }

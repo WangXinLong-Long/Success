@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -84,7 +85,9 @@ public class PresellallFragment extends Fragment implements IPresellallFragmentV
 //                    startActivity(intent);
 //                } else if ("SUBMITTED".equals(orders.get(groupPosition).getState())) {
                     Intent intent = new Intent();
-                    intent.putExtra("OrderBean", orders.get(groupPosition));
+                   // intent.putExtra("OrderBean", orders.get(groupPosition));
+                    intent.putExtra("id",orders.get(groupPosition).getOrderId());
+                    Log.d("订单传过去的值",orders.get(groupPosition).toString());
                     intent.setClass(getActivity(), SpotOrder.class);
                     startActivity(intent);
 //                }

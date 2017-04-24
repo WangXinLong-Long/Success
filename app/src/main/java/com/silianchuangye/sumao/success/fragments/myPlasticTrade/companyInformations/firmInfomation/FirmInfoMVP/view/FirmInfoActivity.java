@@ -138,24 +138,35 @@ public class FirmInfoActivity extends AppCompatActivity implements IFirmInfoView
         lv_firm_info.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                if (position==7||position==8){
-//                    Intent intent=new Intent(FirmInfoActivity.this,FirmInfoPictureActivity.class);
-//                    startActivity(intent);
-//                }
-                if (position==7||position==8||position==9||position==10){
-                    Intent intent=new Intent(FirmInfoActivity.this,FirmShowImageActivity.class);
-                    if (position==7){
-                        intent.putExtra("path",cl_jigouImg);
-                    }else if (position==8){
-                        intent.putExtra("path",cl_zhizhaoImg);
-                    }else if (position==9){
-                        intent.putExtra("path",cl_shuiwuImg);
-                    }else if (position==10){
-                        intent.putExtra("path",cl_nashuirenImg);
+                if (list.get(6).get("right").toString().equals("三证独立")){
+                    if (position==7||position==8||position==9||position==10){
+                        Intent intent=new Intent(FirmInfoActivity.this,FirmShowImageActivity.class);
+                        if (position==7){
+                            intent.putExtra("path",cl_jigouImg);
+                        }else if (position==8){
+                            intent.putExtra("path",cl_zhizhaoImg);
+                        }else if (position==9){
+                            intent.putExtra("path",cl_shuiwuImg);
+                        }else if (position==10){
+                            intent.putExtra("path",cl_nashuirenImg);
+                        }
+                        intent.putExtra("title",list.get(position).get("left").toString());
+                        startActivity(intent);
                     }
-                    intent.putExtra("title",list.get(position).get("left").toString());
-                    startActivity(intent);
+                }else{
+                    if (position==7||position==8){
+                        Intent intent=new Intent(FirmInfoActivity.this,FirmShowImageActivity.class);
+                        if (position==7){
+                            intent.putExtra("path",cl_zhizhaoImg);
+                        }else if (position==8){
+                            intent.putExtra("path",cl_nashuirenImg);
+                        }
+                        intent.putExtra("title",list.get(position).get("left").toString());
+                        startActivity(intent);
+                    }
                 }
+
+
             }
         });
     }
@@ -274,6 +285,8 @@ public class FirmInfoActivity extends AppCompatActivity implements IFirmInfoView
                         cl_zhengjian_info=zhengjianType(firmBean.getCl_zhengjian());
                         if (result.contains("cl_jigou")){
                             jigou_info=firmBean.getCl_jigou();
+                        }else {
+                            jigou_info="机构";
                         }
 
                         cl_id=firmBean.getCl_id();
@@ -337,10 +350,13 @@ public class FirmInfoActivity extends AppCompatActivity implements IFirmInfoView
                 } else {
                     if (cl_state.equals("25")) {
                         firm_info_title.setText("您企业信息正在审核中，请您耐心等待！如果您有任何问题，请与我们联系!");
+                        tvUpdate.setVisibility(View.GONE);
                     } else if (cl_state.equals("26")) {
                         firm_info_title.setText("对不起,您的企业信息未通过审核");
+                        tvUpdate.setVisibility(View.GONE);
                     } else {
                         firm_info_title.setText("恭喜您,企业信息已通过审核。");
+                        tvUpdate.setVisibility(View.GONE);
                     }
                 }
                 Map<String, Object> map2 = new Hashtable<String, Object>();
@@ -368,7 +384,7 @@ public class FirmInfoActivity extends AppCompatActivity implements IFirmInfoView
                 map4.put("left", "业务部门");
                 map4.put("right", cl_yewu_info);
                 list.add(map4);
-Log.d("夜袭",cl_corporationinfo+cl_corporationinfo);
+                Log.d("夜袭",cl_corporationinfo+cl_yewu_info);
                 String province="";
                 try {
                     JSONObject json=new JSONObject(result);
@@ -402,61 +418,82 @@ Log.d("夜袭",cl_corporationinfo+cl_corporationinfo);
                 map7.put("left", "企业注册证件");
                 map7.put("right", cl_zhengjian_info);
                 list.add(map7);
-                if (jigou_info.equals("机构")){
-                    Log.d("祖居if","if");
-                    Map<String, Object> map8 = new HashMap<String, Object>();
-                    map8.put("left", "组织机构代码");
-                    map8.put("right", "");
-                    map8.put("icon", R.mipmap.my_sumao_iv_order);
-                    list.add(map8);
-                }else{
-                    Log.d("zuzhiif","else");
-                    Map<String, Object> map8 = new HashMap<String, Object>();
-                    map8.put("left", "组织机构代码");
-                    map8.put("right", jigou_info);
-                    map8.put("icon", R.mipmap.my_sumao_iv_order);
-                    list.add(map8);
-                }
-                if (cl_zhizhao.equals("")){
-                    Log.d("执照if","if");
-                    Map<String, Object> map9 = new Hashtable<String, Object>();
-                    map9.put("right", "");
-                    map9.put("icon", R.mipmap.my_sumao_iv_order);
-                    if (cl_zhengjian.equals("三证合一")) {
+                Log.d("企业注册证件",cl_zhengjian_info);
+                if (cl_zhengjian_info.equals("三证合一")){
+                    if (cl_zhizhao.equals("")){
+                        Log.d("执照if","if");
+                        Map<String, Object> map9 = new Hashtable<String, Object>();
+                        map9.put("right", "");
+                        map9.put("icon", R.mipmap.my_sumao_iv_order);
                         map9.put("left", "统一社会信用代码");
-                    } else {
-                        map9.put("left", "营业执照号");
-
-                    }
-                    list.add(map9);
-                }else{
-                    Log.d("执照else","else");
-                    Map<String, Object> map9 = new Hashtable<String, Object>();
-                    map9.put("right", cl_zhizhao);
-                    map9.put("icon", R.mipmap.my_sumao_iv_order);
-                    if (cl_zhengjian.equals("三证合一")) {
+                        list.add(map9);
+                    }else{
+                        Log.d("执照else","else");
+                        Map<String, Object> map9 = new Hashtable<String, Object>();
+                        map9.put("right", cl_zhizhao);
+                        map9.put("icon", R.mipmap.my_sumao_iv_order);
                         map9.put("left", "统一社会信用代码");
-                    } else {
-                        map9.put("left", "营业执照号");
-
+                        list.add(map9);
                     }
-                    list.add(map9);
+                }else {
+                    if (jigou_info.equals("机构")){
+                        Log.d("祖居if","if");
+                        Map<String, Object> map8 = new HashMap<String, Object>();
+                        map8.put("left", "组织机构代码");
+                        map8.put("right", "");
+                        map8.put("icon", R.mipmap.my_sumao_iv_order);
+                        list.add(map8);
+                    }else{
+                        Log.d("zuzhiif","else");
+                        Map<String, Object> map8 = new HashMap<String, Object>();
+                        map8.put("left", "组织机构代码");
+                        map8.put("right", jigou_info);
+                        map8.put("icon", R.mipmap.my_sumao_iv_order);
+                        list.add(map8);
+                    }
+                    if (cl_zhizhao.equals("")){
+                        Log.d("执照if","if");
+                        Map<String, Object> map9 = new Hashtable<String, Object>();
+                        map9.put("right", "");
+                        map9.put("icon", R.mipmap.my_sumao_iv_order);
+//                        if (cl_zhengjian.equals("三证合一")) {
+//                            map9.put("left", "统一社会信用代码");
+//                        } else {
+                        map9.put("left", "营业执照号");
+                        list.add(map9);
+                       // }
+
+                    }else{
+                        Log.d("执照else","else");
+                        Map<String, Object> map9 = new Hashtable<String, Object>();
+                        map9.put("right", cl_zhizhao);
+                        map9.put("icon", R.mipmap.my_sumao_iv_order);
+//                        if (cl_zhengjian.equals("三证合一")) {
+//                            map9.put("left", "统一社会信用代码");
+//                        } else {
+                        map9.put("left", "营业执照号");
+                        list.add(map9);
+
+                    }if (cl_shuiwu_info.equals("税务")){
+                        Map<String, Object> map10 = new HashMap<String, Object>();
+                        map10.put("left", "税务登记号");
+                        map10.put("right", "");
+                        map10.put("icon", R.mipmap.my_sumao_iv_order);
+                        list.add(map10);
+                        Log.e("TAG", "xinyong======" + cl_zhizhao+"123");
+                    }else {
+                        Map<String, Object> map10 = new HashMap<String, Object>();
+                        map10.put("left", "税务登记号");
+                        map10.put("right", cl_shuiwu_info);
+                        map10.put("icon", R.mipmap.my_sumao_iv_order);
+                        list.add(map10);
+                        Log.e("TAG", "xinyong======" + cl_zhizhao);
+                    }
+
+
                 }
-               if (cl_shuiwu_info.equals("税务")){
-                   Map<String, Object> map10 = new HashMap<String, Object>();
-                   map10.put("left", "税务登记号");
-                   map10.put("right", "");
-                   map10.put("icon", R.mipmap.my_sumao_iv_order);
-                   list.add(map10);
-                   Log.e("TAG", "xinyong======" + cl_zhizhao+"123");
-               }else {
-                   Map<String, Object> map10 = new HashMap<String, Object>();
-                   map10.put("left", "税务登记号");
-                   map10.put("right", cl_shuiwu_info);
-                   map10.put("icon", R.mipmap.my_sumao_iv_order);
-                   list.add(map10);
-                   Log.e("TAG", "xinyong======" + cl_zhizhao);
-               }
+
+               //}
 
 
 

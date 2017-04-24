@@ -71,7 +71,7 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
     private String unique;
     String Login;
     private RequestParams rp;
-    private String leixing;
+    private String leixing="";
     private String mingcheng;
     private String yewu;
     private RegisterFirmActivityPresenter presenter;
@@ -82,7 +82,7 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
     private String picturePath1 = "";
     private String picturePath2 = "";
     private String picturePath3 = "";
-    private String zhuce_leixing;
+    private String zhuce_leixing="";
     private String zhuce_leixingLevel = "";
     private Map<String, Object> map13, map14, map15, map12;
     private String qiYeZhuCeZhenJianLevel;
@@ -245,19 +245,25 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
                         intent.setClass(RegisterFirmActivity.this,RegisterPicture.class);
                        // intent.setClass(RegisterFirmActivity.this, FirmInfoPictureActivity.class);//营业执照号
                         intent.putExtra("name", "营业执照号");
+                        intent.putExtra("value",registerFirmLists.get(position).getValue().toString());
                         intent.putExtra("number", 9);
+                        intent.putExtra("path",picturePath1);
                         startActivityForResult(intent, 9);
                     } else if (position == 1) {
                         intent.setClass(RegisterFirmActivity.this,RegisterPicture.class);
                       //  intent.setClass(RegisterFirmActivity.this, FirmInfoPictureActivity.class);//        组织机构代码
                         intent.putExtra("name","组织机构代码");
+                        intent.putExtra("value",registerFirmLists.get(position).getValue().toString());
                         intent.putExtra("number", 10);
+                        intent.putExtra("path",picturePath2);
                         startActivityForResult(intent, 10);
                     } else if (position == 2) {
                         intent.setClass(RegisterFirmActivity.this,RegisterPicture.class);
                         //intent.setClass(RegisterFirmActivity.this, FirmInfoPictureActivity.class);//        税务登记号
                         intent.putExtra("name", "税务登记号");
+                        intent.putExtra("value",registerFirmLists.get(position).getValue().toString());
                         intent.putExtra("number", 11);
+                        intent.putExtra("path",picturePath3);
                         startActivityForResult(intent, 11);
                     }
 
@@ -265,7 +271,9 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
                     intent.setClass(RegisterFirmActivity.this,RegisterPicture.class);
                    // intent.setClass(RegisterFirmActivity.this, FirmInfoPictureActivity.class);//        统一社会信用代码
                     intent.putExtra("name", "统一社会信用代码");
+                    intent.putExtra("value",registerFirmLists.get(position).getValue().toString());
                     intent.putExtra("number", 15);
+                    intent.putExtra("path",picturePath1);
                     startActivityForResult(intent, 15);
                 } else {
                     Toast.makeText(RegisterFirmActivity.this, "请选择类型", Toast.LENGTH_SHORT).show();
@@ -366,7 +374,7 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
             jsonObject.put("cl_leixing", leixingLevel);//企业类型
             if (value1.trim()!=null&&value1.trim()!=""&&!value1.trim().equals(""))
             jsonObject.put("cl_zhizhao", value1.trim());//企业营业执照
-            if (value2.trim()!=null&&value2.trim()!=""&&value2.trim().equals(""))
+            if (value2.trim()!=null && value2.trim()!="" &&  !value2.trim().equals(""))
             jsonObject.put("cl_jigou", value2.trim());//组织机构代码
             if (value3.trim()!=null&&value3.trim()!=""&&!value3.equals(""))
             jsonObject.put("cl_shuiwu", value3.trim());//税务登记号
@@ -630,6 +638,8 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
             case R.id.type_of_enterprise_rl://            企业类型
                 intent.setClass(RegisterFirmActivity.this, FirmInfoTypeActivity.class);
                 intent.putExtra("title", type_of_enterprise_name.getText().toString());
+                intent.putExtra("value",leixing);
+                intent.putExtra("path","");
                 startActivityForResult(intent, 1);
                 break;
 
@@ -681,6 +691,8 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
 
             case R.id.enterprise_registration_certificate_rl://            企业注册证件
                 intent.setClass(RegisterFirmActivity.this, FirmInfoTypeActivity.class);
+                intent.putExtra("value",zhuce_leixing);
+                intent.putExtra("path","");
                 intent.putExtra("title", enterprise_registration_certificate_name.getText().toString());
                 startActivityForResult(intent, 8);
                 break;
@@ -709,6 +721,8 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
             case R.id.type_of_taxpayer_rl://            纳税人类型
                 intent.setClass(RegisterFirmActivity.this, FirmInfoTypeActivity.class);
                 intent.putExtra("title", type_of_taxpayer_name.getText().toString());
+                intent.putExtra("value",nashuiren);
+                intent.putExtra("path",picturePath4);
                 startActivityForResult(intent, 12);
                 break;
 
@@ -722,6 +736,8 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
             case R.id.application_to_become_a_plastic_trade_network_rl://        申请成为塑贸网
                 intent.setClass(RegisterFirmActivity.this, FirmInfoTypeActivity.class);
                 intent.putExtra("title", application_to_become_a_plastic_trade_network_name.getText().toString());
+                intent.putExtra("value",applicationAsSM);
+                intent.putExtra("path","");
                 startActivityForResult(intent, 14);
                 break;
 

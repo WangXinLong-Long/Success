@@ -74,6 +74,7 @@ public class RegisterValueActivity extends AppCompatActivity {
             if (title.equals("企业名称")) {
                 tv_a.setVisibility(View.GONE);
             } else {
+                tv_a.setVisibility(View.GONE);
                 tv_a.setText("6-16个字符,可由中英文,数字,'-','_'组成");
             }
 
@@ -82,16 +83,20 @@ public class RegisterValueActivity extends AppCompatActivity {
             ed_content_value.setText(pass);
             ed_content_value.setTransformationMethod(PasswordTransformationMethod.getInstance());
         } else if (title.equals("邮箱")) {
-            tv_a.setVisibility(View.VISIBLE);
+            tv_a.setVisibility(View.GONE);
             tv_a.setText("6-16个字符,可由中英文,数字,'-','_'组成");
             ed_content_value.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
         } else if (title.equals("地址详情")) {
+            tv_a.setVisibility(View.GONE);
             tv_a.setText("6-16个字符,可由中英文,数字,'-','_'组成");
         } else if (title.equals("登录账号")) {
+            tv_a.setVisibility(View.GONE);
             tv_a.setText("登录账号不能为纯数字，不能包含特殊字符");
         } else if (title.equals("传真号")) {
+            tv_a.setVisibility(View.GONE);
             ed_content_value.setInputType(InputType.TYPE_CLASS_NUMBER);
         } else {
+            tv_a.setVisibility(View.GONE);
             tv_a.setText("6-16个字符,可由中英文,数字,'-','_'组成");
         }
 

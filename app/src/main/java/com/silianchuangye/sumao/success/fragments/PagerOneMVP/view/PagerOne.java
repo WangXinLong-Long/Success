@@ -674,6 +674,7 @@ public class PagerOne extends BasePager implements IPagerOneView {
                     JSONObject jsonObject=new JSONObject(result);
                     String object_fenlei=jsonObject.getString("dq");
                     JSONArray array_Fenlei=new JSONArray(object_fenlei);
+
                     for (int i=0;i<array_Fenlei.length();i++){
                         JSONObject ob_fl=array_Fenlei.getJSONObject(i);
                         areaList.add(ob_fl.getString("dq_name"));
@@ -687,11 +688,21 @@ public class PagerOne extends BasePager implements IPagerOneView {
                     //JSONObject jsonObject=new JSONObject(result);
                     String object_yingyong=jsonObject.getString("yy");
                     JSONArray array_yingyong=new JSONArray(object_yingyong);
-                    for (int i=0;i<array_yingyong.length();i++){
-                        JSONObject ob_fl=array_yingyong.getJSONObject(i);
-                        classificationList.add(ob_fl.getString("yy_name"));
-                        yingyongId.add(ob_fl.getString("yy_id"));
+
+                    if (array_yingyong.length()>12){
+                        for (int i=0;i<12;i++){
+                            JSONObject ob_fl=array_yingyong.getJSONObject(i);
+                            classificationList.add(ob_fl.getString("yy_name"));
+                            yingyongId.add(ob_fl.getString("yy_id"));
+                        }
+                    }else {
+                        for (int i=0;i<array_yingyong.length();i++){
+                            JSONObject ob_fl=array_yingyong.getJSONObject(i);
+                            classificationList.add(ob_fl.getString("yy_name"));
+                            yingyongId.add(ob_fl.getString("yy_id"));
+                        }
                     }
+
                     TextGrideViewAdapter classificationAdapter = new TextGrideViewAdapter(getActivity());
                     classificationAdapter.addData(classificationList);
                     //classificationGridView.setAdapter(classificationAdapter);
@@ -701,11 +712,20 @@ public class PagerOne extends BasePager implements IPagerOneView {
 
                     String object_fl=jsonObject.getString("fl");
                     JSONArray array_fl=new JSONArray(object_fl);
-                    for (int i=0;i<array_fl.length();i++){
-                        JSONObject ob_fl=array_fl.getJSONObject(i);
-                        applicationList.add(ob_fl.getString("fl_name"));
-                        fenlei_List.add(ob_fl.getString("fl_id"));
+                    if (array_Fenlei.length()>15){
+                        for (int i=0;i<15;i++){
+                            JSONObject ob_fl=array_fl.getJSONObject(i);
+                            applicationList.add(ob_fl.getString("fl_name"));
+                            fenlei_List.add(ob_fl.getString("fl_id"));
+                        }
+                    }else{
+                        for (int i=0;i<array_fl.length();i++){
+                            JSONObject ob_fl=array_fl.getJSONObject(i);
+                            applicationList.add(ob_fl.getString("fl_name"));
+                            fenlei_List.add(ob_fl.getString("fl_id"));
+                        }
                     }
+
                     TextGrideViewAdapter supplierAdapter = new TextGrideViewAdapter(getActivity());
                     supplierAdapter.addData(applicationList);
                     classificationGridView.setAdapter(supplierAdapter);
@@ -713,11 +733,20 @@ public class PagerOne extends BasePager implements IPagerOneView {
                     ShengchanId=new ArrayList<String>();
                     String object_sc=jsonObject.getString("sc");
                     JSONArray array_sc=new JSONArray(object_sc);
-                    for (int i=0;i<array_sc.length();i++){
-                        JSONObject ob_fl=array_sc.getJSONObject(i);
-                        supplierBeanList.add(ob_fl.getString("sc_name"));
-                        ShengchanId.add(ob_fl.getString("sc_id"));
+                    if (array_sc.length()>10){
+                        for (int i=0;i<10;i++){
+                            JSONObject ob_fl=array_sc.getJSONObject(i);
+                            supplierBeanList.add(ob_fl.getString("sc_name"));
+                            ShengchanId.add(ob_fl.getString("sc_id"));
+                        }
+                    }else {
+                        for (int i=0;i<array_sc.length();i++){
+                            JSONObject ob_fl=array_sc.getJSONObject(i);
+                            supplierBeanList.add(ob_fl.getString("sc_name"));
+                            ShengchanId.add(ob_fl.getString("sc_id"));
+                        }
                     }
+
 
 
 

@@ -54,7 +54,7 @@
             android:id="@+id/number1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/x105"
+            android:layout_marginLeft= "@dimen/x105"
             android:layout_toRightOf="@id/fenlei"
             android:text="数量(吨):" />
 
@@ -187,7 +187,7 @@
             android:layout_below="@id/warehouse1"
             android:layout_marginLeft="@dimen/x5"
             android:paddingTop="@dimen/x5"
-            android:text="@string/company"
+            android:text="交货时间:"
 
             />
 

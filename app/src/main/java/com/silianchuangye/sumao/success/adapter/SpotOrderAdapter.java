@@ -11,8 +11,10 @@ import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.SpotOrder.preSell.presellallFragmentMVP.bean.PreSellAllBean;
 import com.silianchuangye.sumao.success.model.SpotOrderModel;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -21,19 +23,18 @@ import java.util.List;
 public class SpotOrderAdapter extends BaseAdapter {
     Context context;
     SpotOrderModel model;
-    List<PreSellAllBean.OrderBean.ClBean> list;
+    List<Map<String,Object>> list;
     LayoutInflater inflater;
     PreSellAllBean.OrderBean data;
-    public SpotOrderAdapter(Context context) {
+    private String cl_fangshi;
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    public SpotOrderAdapter(Context context,List<Map<String,Object>>list,String cl_fangshi) {
         this.context = context;
-        list = new ArrayList<>();
+        this.list=list;
         inflater = LayoutInflater.from(context);
     }
 
-    public void addData(PreSellAllBean.OrderBean data) {
-        this.list.addAll(data.getCl());
-        this.data = data;
-    }
+
 
     public void clearData(){
         this.list.clear();
@@ -48,10 +49,10 @@ public class SpotOrderAdapter extends BaseAdapter {
     }
 
     @Override
-    public PreSellAllBean.OrderBean.ClBean getItem(int position) {
-        return list.get(position);
-
+    public Object getItem(int position) {
+        return position;
     }
+
 
     @Override
     public long getItemId(int position) {
@@ -79,17 +80,19 @@ public class SpotOrderAdapter extends BaseAdapter {
         } else {
             holder = ((ViewHolder) convertView.getTag());
         }
-        holder.productModel.setText(list.get(position).getCl_mingcheng());
+        holder.productModel.setText(list.get(position).get("cl_mingcheng").toString());
 
-        holder.univalent.setText(list.get(position).getCl_jine() + "");
-        holder.number.setText(list.get(position).getCl_shuliang() + "");
+        holder.univalent.setText(list.get(position).get("cl_jine").toString());
+        holder.number.setText(list.get(position).get("cl_shuliang").toString());
 //        holder.enterprise.setText(list.get(position).getEnterprise()+"");
-        holder.totalMoney.setText(list.get(position).getCl_amount() + "");
-        holder.warehouse.setText(list.get(position).getCl_cangku() + "");
-        holder.company.setText(list.get(position).getCl_gongsi() + "");
+        holder.totalMoney.setText(list.get(position).get("cl_amount")+"");
+        holder.warehouse.setText(list.get(position).get("cl_cangku") + "");
+
+        //holder.company.setText(simpleDateFormat.format(Double.parseDouble(list.get(position).get("deliveryStartDate").toString())+"至"+ simpleDateFormat.format(Double.parseDouble(list.get(position).get("deliveryEndDate").toString())))+"");
+          holder.company.setText(new SimpleDateFormat("yyyy-MM-dd ").format(Double.parseDouble(list.get(position).get("deliveryStartDate").toString()))+"至"+new SimpleDateFormat("yyyy-MM-dd ").format(Double.parseDouble(list.get(position).get("deliveryEndDate").toString())));
         //            物流信息
-        holder.date.setText(data.getCl_fangshi());
-        holder.fenlei.setText(list.get(position).getCl_fenlei() + "");
+        holder.date.setText(cl_fangshi);
+        holder.fenlei.setText(list.get(position).get("cl_fenlei") + "");
 //        String type = data.getType();
 //        if (type.equals("fixedPricingOrder")){//现货
 //            holder.type.setText("现货");

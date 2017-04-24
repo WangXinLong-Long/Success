@@ -189,10 +189,10 @@ public class OrderDetailsActivity  extends Activity implements IOrderDetailsView
 //        销售公司
         warehouse2.setText(orderBean.getCl().get(0).getCl_gongsi());
 
-        spotOrderAdapter = new SpotOrderAdapter(OrderDetailsActivity.this);
-
-        spot_order_listView.setAdapter(spotOrderAdapter);
-        spotOrderAdapter.addData(orderBean);
+//        spotOrderAdapter = new SpotOrderAdapter(OrderDetailsActivity.this,);
+//
+//        spot_order_listView.setAdapter(spotOrderAdapter);
+//        spotOrderAdapter.addData(orderBean);
     }
 
     //获取银行列表

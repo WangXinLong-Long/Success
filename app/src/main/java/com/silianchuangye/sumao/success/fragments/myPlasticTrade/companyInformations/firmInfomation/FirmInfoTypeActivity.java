@@ -90,8 +90,9 @@ public class FirmInfoTypeActivity extends AppCompatActivity implements IFirmInfo
     private String fileBianma=null;
     private String filepath=null;
     private String fileCode=null;
-    private String tupian;
-
+    private String tupian="";
+    private String info="";
+    private String tupianpath="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,6 +113,10 @@ public class FirmInfoTypeActivity extends AppCompatActivity implements IFirmInfo
         Bundle bundle = getIntent().getExtras();
         title = bundle.getString("title");
         number = bundle.getInt("number");
+        info=bundle.getString("value");
+
+        tupianpath=bundle.getString("path");
+
         Log.d("number", number + "");
         LogUtils.log("title标题--->"+title);
         LogUtils.log("number--->"+number);
@@ -142,14 +147,13 @@ public class FirmInfoTypeActivity extends AppCompatActivity implements IFirmInfo
             @Override
             public void onClick(View v) {
                 if (name == null || name.isEmpty()) {
-
                     prompt.setText("请选择类型");
                     prompt.setTextColor(Color.RED);
                     prompt.setVisibility(View.VISIBLE);
 
                 } else {
 
-                    if (filepath!=null){
+                    if (!tupian.equals("")){
                         Log.d("点击事件", "进来了");
                         new Thread(){
                             @Override
@@ -323,12 +327,18 @@ public class FirmInfoTypeActivity extends AppCompatActivity implements IFirmInfo
     @Override
     public void initFirmInfoTypeActivityView(List<EnterpriseInformation> names) {
 //        list.add(names.get(i).getDisplayName());
+
         typeAndLevel = names;
+        Log.d("names",names.toString());
+        if (names.contains("买卖双方身份")){
+            names.remove("买卖双方身份");
+        }
+        Log.d("name的值",names.toString());
         adapter = new ListAdapter(getApplication(), names);
         lv_type.setAdapter(adapter);
     }
 
-    public void title_Bar(String name) {
+    public void title_Bar(final String name) {
         iv_title_bar_back = ((ImageView) findViewById(R.id.iv_title_bar_back));
         iv_title_bar_logo = ((ImageView) findViewById(R.id.iv_title_bar_logo));
         iv_title_bar_service = ((ImageView) findViewById(R.id.iv_title_bar_service));
@@ -349,7 +359,38 @@ public class FirmInfoTypeActivity extends AppCompatActivity implements IFirmInfo
         iv_title_bar_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirmInfoTypeActivity.this.finish();
+                if (title.equals("纳税人类型")){
+                    if (prompt.getVisibility()==View.GONE){
+                        Toast.makeText(FirmInfoTypeActivity.this, "请上传纳税人图片", Toast.LENGTH_SHORT).show();
+                    }else {
+                        if (info.equals("")){
+                            intent.putExtra("name", "");
+                            intent.putExtra("level","");
+                            intent.putExtra("picturePath","abc");
+                            FirmInfoTypeActivity.this.setResult(RESULT_OK, intent);
+                            finish();
+                        }else{
+                            intent.putExtra("name", name);
+                            intent.putExtra("level",level);
+                            intent.putExtra("picturePath","abc");
+                            FirmInfoTypeActivity.this.setResult(RESULT_OK, intent);
+                            finish();
+                        }
+                    }
+
+                }else {
+                    if (info.equals("")) {
+                        intent.putExtra("name", "");
+                        intent.putExtra("level", "");
+                        FirmInfoTypeActivity.this.setResult(RESULT_OK, intent);
+                        finish();
+                    } else {
+                        intent.putExtra("name", name);
+                        intent.putExtra("level", level);
+                        FirmInfoTypeActivity.this.setResult(RESULT_OK, intent);
+                        finish();
+                    }
+                }
             }
         });
     }
@@ -447,19 +488,36 @@ public class FirmInfoTypeActivity extends AppCompatActivity implements IFirmInfo
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             if (title.equals("纳税人类型")){
-            if (prompt.getVisibility()==View.GONE){
-                Toast.makeText(FirmInfoTypeActivity.this, "请上传纳税人图片", Toast.LENGTH_SHORT).show();
+                if (prompt.getVisibility()==View.GONE){
+                    Toast.makeText(FirmInfoTypeActivity.this, "请上传纳税人图片", Toast.LENGTH_SHORT).show();
+                }else {
+                    if (info.equals("")){
+                        intent.putExtra("name", "");
+                        intent.putExtra("level","");
+                        intent.putExtra("picturePath","abc");
+                        FirmInfoTypeActivity.this.setResult(RESULT_OK, intent);
+                        finish();
+                    }else{
+                        intent.putExtra("name", "");
+                        intent.putExtra("level","");
+                        intent.putExtra("picturePath","abc");
+                        FirmInfoTypeActivity.this.setResult(RESULT_OK, intent);
+                        finish();
+                    }
+                }
+
             }else {
-                intent.putExtra("name", "");
-                intent.putExtra("level","");
-                FirmInfoTypeActivity.this.setResult(RESULT_OK, intent);
-                finish();
-            }
-            }else {
-                intent.putExtra("name", "");
-                intent.putExtra("level","");
-                FirmInfoTypeActivity.this.setResult(RESULT_OK, intent);
-                finish();
+                if (info.equals("")) {
+                    intent.putExtra("name", "");
+                    intent.putExtra("level", "");
+                    FirmInfoTypeActivity.this.setResult(RESULT_OK, intent);
+                    finish();
+                }else{
+                    intent.putExtra("name", name);
+                    intent.putExtra("level", level);
+                    FirmInfoTypeActivity.this.setResult(RESULT_OK, intent);
+                    finish();
+                }
             }
 
 
@@ -556,6 +614,11 @@ public class FirmInfoTypeActivity extends AppCompatActivity implements IFirmInfo
             final RadioButton radio = (RadioButton) convertView.findViewById(R.id.rbCheck);
             holder.rb_state = radio;
             radio.setText(list.get(position).getDisplayName());
+//            if (!info.equals("") && info.equals(radio.getText().toString())){
+//
+////                states.put(String.valueOf(position), radio.isChecked());
+//                radio.setChecked(true);
+//            }
             holder.rb_state.setOnClickListener(new View.OnClickListener() {
 
                 public void onClick(View v) {

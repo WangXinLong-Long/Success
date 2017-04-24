@@ -6,6 +6,7 @@ import com.silianchuangye.sumao.success.ShangYou.PlanDayMVP.Bean.PlanDayBean;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.xutils.common.Callback;
@@ -73,11 +74,23 @@ public class CaiGouModel implements ICaiGouModel {
             @Override
             public void onSuccess(String result) {
                 LogUtils.log("上游直销查看计划-->"+result);
-                Gson gson = new Gson();
-                caiGouBean = gson.fromJson(result,CaiGouBean.class);
-                callback.callbackCaiGou( caiGouBean,pageNum, planStartDate,
-                         planEndDate,  planState,  warehouseName,
-                         logisticsID);
+                try {
+                    JSONObject jsonObject1=new JSONObject(result);
+                    String list=jsonObject1.getString("vipPlanOrder");
+                    JSONObject jsonObject2=new JSONObject(list);
+                    String bb=jsonObject2.getString("planOrderList");
+                    JSONArray jsonArray=new JSONArray(bb);
+                    if (jsonArray.length()>0){
+                        Gson gson = new Gson();
+                        caiGouBean = gson.fromJson(result,CaiGouBean.class);
+                        callback.callbackCaiGou(caiGouBean,pageNum, planStartDate,
+                                planEndDate,  planState,  warehouseName,
+                                logisticsID);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
             }
 
             @Override

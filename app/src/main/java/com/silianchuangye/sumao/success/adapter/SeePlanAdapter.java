@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.ShangYou.CaiGouMVP.bean.PlanOrderList;
 import com.silianchuangye.sumao.success.ShangYou.SearchSeePlan;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.SpotOrder.SpotOrderMVP.view.SpotOrder;
 
 import java.util.List;
 
@@ -82,6 +83,7 @@ public class SeePlanAdapter extends BaseAdapter{
         holder.tv_num.setText(list.get(position).getQuantity());
         holder.tv_peisong.setText(list.get(position).getLogisticsName());
         holder.tv_state.setText(list.get(position).getDemandScheduleState());
+
 //        holder.tv_dingdangnum.setText(list.get(position).getOrderId());
         //复制按钮
         holder.btn_copy.setOnClickListener(new View.OnClickListener() {
@@ -100,6 +102,16 @@ public class SeePlanAdapter extends BaseAdapter{
                 Intent intent=new Intent(ctx, SearchSeePlan.class);
                 intent.putExtra("PlanOrderList",list.get(position));
                 ctx.startActivity(intent);
+            }
+        });
+        holder.tv_dingdangnum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //订单号跳转
+                Intent intent=new Intent(ctx, SpotOrder.class);
+                intent.putExtra("id",list.get(position).getOrderId());
+                ctx.startActivity(intent);
+
             }
         });
         if (null == list.get(position).getDemandScheduleState()){

@@ -54,7 +54,7 @@ public class CaiGou extends AppCompatActivity implements OnClickListener, Adapte
     private TabLayout tlDemo;
     private ViewPager vpDemo;
     private MyPageAdapter adapter;
-    private ImageView img_create_logistics_back;
+
     private ImageView img_create_logistics_search;
     private PopupWindow popupWindow;
     private View popView;
@@ -90,6 +90,7 @@ public class CaiGou extends AppCompatActivity implements OnClickListener, Adapte
     String logisticsID = "";//物流ID
     private List<String> logisticsNameIDList;
     private Bundle bundle1;
+    private ImageView img_create_logistics_back;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -100,6 +101,8 @@ public class CaiGou extends AppCompatActivity implements OnClickListener, Adapte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cai_gou);
+        img_create_logistics_back= (ImageView) findViewById(R.id.img_create_logistics_back);
+        img_create_logistics_back.setOnClickListener(this);
         Intent intent = getIntent();
         vipProductBean = (VipProductBean) intent.getSerializableExtra("vipProductBean");
         sellerCompanyId = intent.getStringExtra("sellerCompanyId");
@@ -162,6 +165,7 @@ public class CaiGou extends AppCompatActivity implements OnClickListener, Adapte
         see.setArguments(bundle1);
         Bundle bundle2 = new Bundle();
         bundle2.putSerializable("vipProductBean", vipProductBean);
+        bundle2.putString("id",sellerCompanyId);
         plan.setArguments(bundle2);
 
         adapter = new MyPageAdapter(getSupportFragmentManager());

@@ -67,7 +67,7 @@ public class PresellCancelFragment extends Fragment implements IPresellCancelFra
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
                 Intent intent = new Intent();
-                intent.putExtra("OrderBean", orders.get(groupPosition));
+                intent.putExtra("id", orders.get(groupPosition).getOrderId());
                 intent.setClass(getActivity(), SpotOrder.class);
                 startActivity(intent);
                 return true;

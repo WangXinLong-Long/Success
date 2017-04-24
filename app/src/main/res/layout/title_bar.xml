@@ -114,7 +114,8 @@
     <Button
         android:id="@+id/sv_title_bar_serachView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/x25"
+        android:layout_centerVertical="true"
         android:layout_centerInParent="true"
         android:layout_toLeftOf="@+id/message_rl"
         android:layout_toRightOf="@+id/iv_title_bar_logo"

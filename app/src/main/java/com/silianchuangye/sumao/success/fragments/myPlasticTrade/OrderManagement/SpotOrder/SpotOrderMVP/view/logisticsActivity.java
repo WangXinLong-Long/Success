@@ -82,7 +82,7 @@ public class logisticsActivity extends AppCompatActivity implements View.OnClick
 // orderId":"10257200000003","imaterialName":"上海Q210"}
 //                ,{"carNo":"2","idCard":"2","driverTel":"2","quantity":0.01,"trackNo":"di39002","driverName":"2","orderId":"10257200000003","imaterialName":"上海Q210"},
 //                {"carNo":"2","idCard":"2","driverTel":"2","quantity":0.01,"trackNo":"di39003","driverName":"2","orderId":"10257200000003","imaterialName":"上海Q210"}],"info":"sucess"
-                if (result.contains("sucess")) {
+                if (result.contains("in")) {
                     try {
                         list = new ArrayList<Map<String, Object>>();
                         JSONObject jsonObject = new JSONObject(result);

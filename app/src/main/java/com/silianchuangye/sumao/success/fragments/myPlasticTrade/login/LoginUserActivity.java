@@ -8,6 +8,7 @@ import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
@@ -118,11 +119,11 @@ public class LoginUserActivity extends AppCompatActivity implements View.OnClick
         forgetPassword.setOnClickListener(this);
 //          验证码
         verification_code = ((ImageView) findViewById(R.id.verification_code));
-        verification_code.setImageBitmap(BPUtil.getInstance().createBitmap());
+        verification_code.setImageBitmap(CodeUtils.getInstance().createBitmap());
         verification_code.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                verification_code.setImageBitmap(BPUtil.getInstance().createBitmap());
+                verification_code.setImageBitmap(CodeUtils.getInstance().createBitmap());
             }
         });
 //          验证码输入框
@@ -202,11 +203,13 @@ public class LoginUserActivity extends AppCompatActivity implements View.OnClick
             editStart = checkOut.getSelectionStart();
             editEnd = checkOut.getSelectionEnd();
             if (temp.length() == 4) {
-                if (BPUtil.getInstance().getCode().equals(checkOut.getText().toString())) {
+                Log.d("生成的验证码1",CodeUtils.getInstance().getCode()+"");
+                Log.d("生成的验证吗2",CodeUtils.getInstance().createCode()+"");
+                if (CodeUtils.getInstance().getCode().equals(checkOut.getText().toString())) {
                     verificationCode = true;
                 } else {
                     checkOut.setText("");
-                    verification_code.setImageBitmap(BPUtil.getInstance().createBitmap());
+                    verification_code.setImageBitmap(CodeUtils.getInstance().createBitmap());
                     verificationCode = false;
                     Toast.makeText(LoginUserActivity.this, "验证码错误请重新输入", Toast.LENGTH_SHORT).show();
                 }
@@ -217,6 +220,19 @@ public class LoginUserActivity extends AppCompatActivity implements View.OnClick
                 checkOut.setText(s);
                 checkOut.setSelection(tempSelection);
             }
+            //codeStr = et.getText().toString().trim();
+//            Log.e("codeStr", checkOut.getText().toString().trim());
+//            if (null == checkOut.getText().toString().trim() || TextUtils.isEmpty(checkOut.getText().toString().trim())) {
+//                Toast.makeText(LoginUserActivity.this, "请输入验证码", Toast.LENGTH_SHORT).show();
+//                return;
+//            }
+//           // String code = codeUtils.getCode();
+//            Log.e("code", CodeUtils.getInstance().getCode()+"");
+//            if (CodeUtils.getInstance().getCode().equalsIgnoreCase(checkOut.getText().toString().trim())) {
+//                Toast.makeText(LoginUserActivity.this, "验证码正确", Toast.LENGTH_SHORT).show();
+//            } else {
+//                Toast.makeText(LoginUserActivity.this, "验证码错误", Toast.LENGTH_SHORT).show();
+//            }
         }
 
     };

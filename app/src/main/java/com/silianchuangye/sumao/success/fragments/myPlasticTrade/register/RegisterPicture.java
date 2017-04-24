@@ -90,6 +90,8 @@ public class RegisterPicture extends AppCompatActivity implements LGImgCompresso
     private String trime="";
     private File file;
     private TextView tv_Title;
+    private String value;
+    private String tupianpath="";
     // 创建一个以当前时间为名称的文件
     File tempFile = new File(Environment.getExternalStorageDirectory(),getPhotoFileName());
     @Override
@@ -100,6 +102,8 @@ public class RegisterPicture extends AppCompatActivity implements LGImgCompresso
         title=bundle.getString("name");
         Log.d("title的值",title);
         number1=bundle.getInt("number");
+        value=bundle.getString("value");
+        tupianpath=bundle.getString("path");
         initData();
         event();
     }
@@ -112,12 +116,30 @@ public class RegisterPicture extends AppCompatActivity implements LGImgCompresso
         tv_Name= (TextView) findViewById(R.id.tv_Name);
         layout_title= (RelativeLayout) findViewById(R.id.layout_title);
         tv_Title.setText(title);
+        ed_number.setText(value);
     }
     public void event(){
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RegisterPicture.this.finish();
+                if (tupianpath.equals("")) {
+                    Intent intent = new Intent();
+                    //Intent intent = new Intent();
+                    intent.putExtra("value", ed_number.getText().toString());
+                    intent.putExtra("picturePath", "abc");
+                    Log.d("chuangu", "");
+                    setResult(number1, intent);
+                    RegisterPicture.this.finish();
+                }else{
+                    Intent intent = new Intent();
+                    //Intent intent = new Intent();
+                    intent.putExtra("value", ed_number.getText().toString());
+                    intent.putExtra("picturePath",tupianpath);
+                    Log.d("chuangu", "");
+                    setResult(number1, intent);
+                    RegisterPicture.this.finish();
+                }
+
             }
         });
         bt_upload.setOnClickListener(new View.OnClickListener() {
@@ -153,7 +175,7 @@ public class RegisterPicture extends AppCompatActivity implements LGImgCompresso
                                 Log.d("相册的路径", filepath);
                                 Bitmap bitmap = BitmapFactory.decodeFile(filepath);
                                 fileCode = BitmapToString(bitmap);
-                                Log.d("图片编码", fileCode);
+//                                Log.d("图片编码", fileCode);
 //                               Toast.makeText(RegisterPicture.this, ""+fileCode, Toast.LENGTH_SHORT).show();
                                 rp.addParameter("file", fileCode);
                             }
@@ -377,7 +399,7 @@ public class RegisterPicture extends AppCompatActivity implements LGImgCompresso
                     filepath = cursor.getString(column_index);
                     Log.d("realpath",""+filepath);
                     LGImgCompressor.getInstance(this).withListener(this).
-                            starCompress(filepath, 1000, 1000, 2048);
+                            starCompress(filepath, 1000, 1000, 100);
 
                 } catch (Exception ex) {
                     Log.e("aaaa", "failed." + ex.getMessage());
@@ -404,7 +426,23 @@ public class RegisterPicture extends AppCompatActivity implements LGImgCompresso
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            finish();
+            if (tupianpath.equals("")) {
+                Intent intent = new Intent();
+                //Intent intent = new Intent();
+                intent.putExtra("value", ed_number.getText().toString());
+                intent.putExtra("picturePath", "abc");
+                Log.d("chuangu", "");
+                setResult(number1, intent);
+                RegisterPicture.this.finish();
+            }else {
+                Intent intent = new Intent();
+                //Intent intent = new Intent();
+                intent.putExtra("value", ed_number.getText().toString());
+                intent.putExtra("picturePath", tupianpath);
+                Log.d("chuangu", "");
+                setResult(number1, intent);
+                RegisterPicture.this.finish();
+            }
             return true;
         } else if (keyCode == KeyEvent.KEYCODE_FOCUS || keyCode == KeyEvent.KEYCODE_CAMERA) {
             return true;

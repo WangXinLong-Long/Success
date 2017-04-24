@@ -85,7 +85,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-android:textColor="#222"
+            android:textColor="#222"
+            android:maxEms="6"
+            android:singleLine="true"
+            android:ellipsize="end"
             android:layout_toRightOf="@id/tv_seeplan_left_cangku_old"/>
         <TextView
             android:id="@+id/tv_seeplan_left_num_old"
@@ -182,6 +185,9 @@ android:textColor="#222"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:textColor="#222"
+            android:maxEms="6"
+            android:singleLine="true"
+            android:ellipsize="end"
 
             android:layout_toRightOf="@id/tv_seeplan_left_cangku"/>
         <TextView

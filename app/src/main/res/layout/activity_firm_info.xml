@@ -9,24 +9,31 @@
     <include
         android:id="@+id/layoutTop_firm_info"
         layout="@layout/title_bar"></include>
-
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/firm_info_title"
-        android:layout_marginTop="@dimen/x10"
         android:layout_below="@+id/layoutTop_firm_info"
-        android:background="@color/white"
+        android:layout_marginTop="@dimen/x5"
+        android:id="@+id/layout_info"
+        android:background="#fff"
+        >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/firm_info_title"
         android:layout_centerHorizontal="true"
         android:textColor="@color/common_top_bar_blue"
+        android:layout_marginLeft="@dimen/x5"
+        android:layout_marginRight="@dimen/x5"
         />
+    </RelativeLayout>
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/lvShow_firm_info"
         android:layout_marginTop="@dimen/x1"
-
-        android:layout_below="@+id/firm_info_title"
+        android:layout_below="@+id/layout_info"
         ></ListView>
 
 </RelativeLayout>

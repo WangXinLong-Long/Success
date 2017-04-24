@@ -21,6 +21,7 @@
         android:layout_marginTop="@dimen/x5"
         android:id="@+id/layout_introduction_setting"
         android:background="#fff"
+        android:visibility="gone"
         >
         <TextView
             android:layout_width="wrap_content"

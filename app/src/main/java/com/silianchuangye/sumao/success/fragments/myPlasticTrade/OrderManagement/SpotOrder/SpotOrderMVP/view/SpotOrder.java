@@ -47,14 +47,21 @@ import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement
 import com.silianchuangye.sumao.success.model.SpotOrderModel;
 import com.silianchuangye.sumao.success.utils.Loding;
 import com.silianchuangye.sumao.success.utils.LogUtils;
+import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 import java.util.TimeZone;
 
 /**
@@ -75,7 +82,7 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
     //    SpotOrde模型
     private SpotOrderModel model, dada;
     //      创建SpotOrderModel对象集合
-    List<SpotOrderModel> list;
+    //List<SpotOrderModel> list;
     //    适配器
     SpotOrderAdapter spotOrderAdapter;
     private Button bt_zhifu;
@@ -99,6 +106,7 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
     private TextView bottom_money2;
     private PopupWindowAdaptrer adapterBank;
     String cl_id;
+    String submittedDate;
     private List<String> list_order = new ArrayList<String>();
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -106,7 +114,7 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
      */
     private GoogleApiClient client2;
     private SpotOrderPresenter spotOrderPresenter;
-    private PreSellAllBean.OrderBean orderBean;
+    //private PreSellAllBean.OrderBean orderBean;
     private LinearLayout bottom_money;
     private TextView tv;
     private ArrayList<OpenAuction> list_pop;
@@ -118,7 +126,13 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
     private RelativeLayout contractInformation;
     private RelativeLayout logisticsInformation;
     private String zhifu_unique;
-
+    private String OrderId;
+    private String state;
+    private String price;
+    private String owner;
+    private List<Map<String,Object>> list;
+    private String cl_fangshi;
+   // private CustomListView typespot_order_listView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -130,8 +144,10 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
         LogUtils.log("onCreate--->");
         spotOrderPresenter = new SpotOrderPresenter(this);
         initView();
-        orderBean = (PreSellAllBean.OrderBean) getIntent().getSerializableExtra("OrderBean");
-        setValue(orderBean);
+        OrderId=getIntent().getStringExtra("id");
+        //orderBean = (PreSellAllBean.OrderBean) getIntent().getSerializableExtra("OrderBean");
+        getOrderInfo();
+
         IntentFilter filter = new IntentFilter();
         filter.addAction("finishsportorder");
         registerReceiver(broadcastReceiver, filter);
@@ -147,6 +163,7 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
 
     //    初始化控件
     private void initView() {
+        //typespot_order_listView=(CustomListView)findViewById(R.id.spot_order_listView);
         bottom_money = ((LinearLayout) findViewById(R.id.bottom_money));
         bt_copy = (Button) findViewById(R.id.bt_copy);
         the_order_number_number = (TextView) findViewById(R.id.the_order_number_number);
@@ -182,9 +199,7 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
 //        标题
         tv_title_bar_title = ((TextView) findViewById(R.id.tv_title_bar_title));
         spot_order_listView = ((CustomListView) findViewById(R.id.spot_order_listView));
-        spotOrderAdapter = new SpotOrderAdapter(SpotOrder.this);
 
-        spot_order_listView.setAdapter(spotOrderAdapter);
         iv_title_bar_logo.setVisibility(View.INVISIBLE);
         iv_title_bar_service.setVisibility(View.INVISIBLE);
         sv_title_bar_serachView.setVisibility(View.INVISIBLE);
@@ -211,25 +226,114 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
         logisticsInformation = ((RelativeLayout) findViewById(R.id.bottom4));
         logisticsInformation.setOnClickListener(this);
     }
+    public void getOrderInfo(){
+        String url= SuMaoConstant.SUMAO_IP+"/rest/model/atg/userprofiling/ProfileActor/orderDetail";
+        RequestParams requestParams=new RequestParams(url);
+        requestParams.addParameter("_dynSessConf",zhifu_unique);
+        requestParams.addParameter("orderId",OrderId);
+        Log.d("订单详情的rp",requestParams+"");
+        list=new ArrayList<>();
+        x.http().post(requestParams, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.d("订单详情的返回值",result);
+//                Gson gson=new Gson();
+//                orderBean=gson.fromJson(result,PreSellAllBean.OrderBean.class);
+//                setValue(orderBean);
+                try {
+                    JSONObject jsonObject=new JSONObject(result);
+                    String order=jsonObject.getString("order");
+                    JSONObject object=new JSONObject(order);
+                    String shippingGroupState=object.getString("shippingGroupState");
+                    price=object.getString("price");
+                    String contract=object.getString("contract");
+                     submittedDate=object.getString("submittedDate");
+                    state=object.getString("state");
+                    owner=object.getString("owner");
+                    type=object.getString("type");
+                    cl_fangshi=object.getString("cl_fangshi");
+                    //orderId=object.getString("orderId");
+                    String cl=object.getString("cl");
+                    JSONArray jsonarray=new JSONArray(cl);
+                    for (int i=0;i<jsonarray.length();i++){
+                        JSONObject jsonobj=jsonarray.getJSONObject(i);
+                        String cl_mingcheng=jsonobj.getString("cl_mingcheng");
+                        String cl_gongsiId=jsonobj.getString("cl_gongsiId");
+                        String deliveryStartDate=jsonobj.getString("deliveryStartDate");
+                        String cl_gongsi=jsonobj.getString("cl_gongsi");
+                        String deliveryEndDate=jsonobj.getString("deliveryEndDate");
+                        String cl_jine=jsonobj.getString("cl_jine");
+                        String cl_id=jsonobj.getString("cl_id");
+                        String cl_amount=jsonobj.getString("cl_amount");
+                        String cl_qiyeonlyId=jsonobj.getString("cl_qiyeonlyId");
+                        String cl_fenlei=jsonobj.getString("cl_fenlei");
+                        String cl_jituan=jsonobj.getString("cl_jituan");
+                        String cl_cangku=jsonobj.getString("cl_cangku");
+                        String cl_shuliang=jsonobj.getString("cl_shuliang");
+                        Map<String,Object> map=new Hashtable<String, Object>();
+                        map.put("cl_mingcheng",cl_mingcheng);
+                        map.put("cl_gongsiId",cl_gongsiId);
+                        map.put("deliveryStartDate",deliveryStartDate);
+                        map.put("cl_gongsi",cl_gongsi);
+                        map.put("deliveryEndDate",deliveryEndDate);
+                        map.put("cl_jine",cl_jine);
+                        map.put("cl_id",cl_id);
+                        map.put("cl_amount",cl_amount);
+                        map.put("cl_qiyeonlyId",cl_qiyeonlyId);
+                        map.put("cl_fenlei",cl_fenlei);
+                        map.put("cl_jituan",cl_jituan);
+                        map.put("cl_cangku",cl_cangku);
+                        map.put("cl_shuliang",cl_shuliang);
+                        list.add(map);
+                    }
+                    spotOrderAdapter = new SpotOrderAdapter(SpotOrder.this,list,cl_fangshi);
+
+                    spot_order_listView.setAdapter(spotOrderAdapter);
+                    spotOrderAdapter.notifyDataSetChanged();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                setValue();
+
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+    }
 
     //    设置值
-    public void setValue(PreSellAllBean.OrderBean orderBean) {
+    public void setValue(/*PreSellAllBean.OrderBean orderBean*/) {
 
-        spotOrderAdapter.addData(orderBean);
-        String state = orderBean.getState();
+        //spotOrderAdapter.addData(orderBean);
+       // String state = orderBean.getState();
+        Log.d("state的值",state);
 //        除了待支付，其他的都不显示倒计时
         if (state.equals("SUBMITTED")) {//待支付
             tv_title_bar_title.setText("待支付");
             state2.setText("待支付");
             count_down_tv.setVisibility(View.VISIBLE);
             bottom_money.setVisibility(View.VISIBLE);
-            List<PreSellAllBean.OrderBean.ClBean> cl = orderBean.getCl();
-            double total = 0;
-            for (int i = 0; i < cl.size(); i++) {
-                double amount = Double.parseDouble(cl.get(i).getCl_amount());
-                total += amount;
-            }
-            bottom_money2.setText(String.valueOf(total));
+//            List<PreSellAllBean.OrderBean.ClBean> cl = orderBean.getCl();
+//            double total = 0;
+//            for (int i = 0; i < cl.size(); i++) {
+//                double amount = Double.parseDouble(cl.get(i).getCl_amount());
+//                total += amount;
+//            }
+
+            bottom_money2.setText(String.valueOf(price));
         } else if (state.equals("PAYMENT_COMPLETION")) {//货款已支付
             tv_title_bar_title.setText("货款已支付");
             state2.setText("货款已支付");
@@ -256,7 +360,7 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
             count_down_tv.setVisibility(View.GONE);
         }
 //        订单号
-        the_order_number_number.setText(orderBean.getOrderId());
+        the_order_number_number.setText(OrderId);
 
         /**
          *待支付订单result
@@ -269,43 +373,43 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
         calendar.set(Calendar.SECOND, 0);
         long countDownTime = 0;
 //        订单类型
-        String type = orderBean.getType();
+        //String type = orderBean.getType();
         if (type.equals("fixedPricingOrder")) {//现货
             type2.setText("现货");
             tv_xianqing_type.setText("现货");
-            long countDown = (Long.parseLong(orderBean.getSubmittedDate()) + 1000 * 3600) - System.currentTimeMillis();
+            long countDown = (Long.parseLong(submittedDate) + 1000 * 3600) - System.currentTimeMillis();
             countDownTime = countDown > 0 ? countDown : 0;
         } else if (type.equals("openAuctionOrder")) {//公开竞拍
             type2.setText("公开竞拍");
             tv_xianqing_type.setText("公开竞拍");
-            long countDown = (calendar.getTimeInMillis()) - Long.parseLong(orderBean.getSubmittedDate());
-            countDownTime = countDown > 0 ? countDown : (calendar.getTimeInMillis() + 24 * 60 * 60 * 1000) - Long.parseLong(orderBean.getSubmittedDate());
+            long countDown = (calendar.getTimeInMillis()) - Long.parseLong(submittedDate);
+            countDownTime = countDown > 0 ? countDown : (calendar.getTimeInMillis() + 24 * 60 * 60 * 1000) - Long.parseLong(submittedDate);
         } else if (type.equals("sealedAuctionOrder")) {//密封竞拍
             type2.setText("密封竞拍");
             tv_xianqing_type.setText("密封竞拍");
-            long countDown = (calendar.getTimeInMillis()) - Long.parseLong(orderBean.getSubmittedDate());
-            countDownTime = countDown > 0 ? countDown : (calendar.getTimeInMillis() + 24 * 60 * 60 * 1000) - Long.parseLong(orderBean.getSubmittedDate());
+            long countDown = (calendar.getTimeInMillis()) - Long.parseLong(submittedDate);
+            countDownTime = countDown > 0 ? countDown : (calendar.getTimeInMillis() + 24 * 60 * 60 * 1000) - Long.parseLong(submittedDate);
         } else if (type.equals("integratePurchaseOrder")) {//团购
             type2.setText("团购");
             tv_xianqing_type.setText("团购");
-            long countDown = (calendar.getTimeInMillis()) - Long.parseLong(orderBean.getSubmittedDate());
-            countDownTime = countDown > 0 ? countDown : (calendar.getTimeInMillis() + 24 * 60 * 60 * 1000) - Long.parseLong(orderBean.getSubmittedDate());
+            long countDown = (calendar.getTimeInMillis()) - Long.parseLong(submittedDate);
+            countDownTime = countDown > 0 ? countDown : (calendar.getTimeInMillis() + 24 * 60 * 60 * 1000) - Long.parseLong(submittedDate);
         } else if (type.equals("forwardPricingOrder")) {//预售
             type2.setText("预售");
             tv_xianqing_type.setText("预售");
-            countDownTime = Long.parseLong(orderBean.getCl().get(0).getPaymentEndDate()) - Long.parseLong(orderBean.getSubmittedDate());
+          //  countDownTime = Long.parseLong(orderBean.getCl().get(0).getPaymentEndDate()) - Long.parseLong(submittedDate);
         } else if (type.equals("scheduleOrder")) {//计划订单
             type2.setText("计划订单");
             tv_xianqing_type.setText("计划订单");
-            long countDown = (calendar.getTimeInMillis()) - Long.parseLong(orderBean.getSubmittedDate());
-            countDownTime = countDown > 0 ? countDown : (calendar.getTimeInMillis() + 24 * 60 * 60 * 1000) - Long.parseLong(orderBean.getSubmittedDate());
+            long countDown = (calendar.getTimeInMillis()) - Long.parseLong(submittedDate);
+            countDownTime = countDown > 0 ? countDown : (calendar.getTimeInMillis() + 24 * 60 * 60 * 1000) - Long.parseLong(submittedDate);
         }
         mc = new MyCount(countDownTime, 1000);
         mc.start();
 //  采购员
-        buyer2.setText(orderBean.getOwner());
+        buyer2.setText(owner);
 //        状态
-        company2.setText(orderBean.getCl().get(0).getCl_gongsi());
+        company2.setText(list.get(0).get("cl_gongsi").toString());
         if (state.equals("SUBMITTED")) {//待支付
             order_status_order_details.setImageResource(R.mipmap.to_pay_the_picture);
         } else if (state.equals("PAYMENT_COMPLETION")) {//货款已支付
@@ -325,7 +429,7 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
 
     @Override
     public void onClick(View v) {
-        String orderId = orderBean.getOrderId();
+        //String orderId = orderBean.getOrderId();
         String _dynSessConf = zhifu_unique;
         Intent intent = new Intent();
         switch (v.getId()) {
@@ -344,12 +448,12 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
 //            付款信息
             case R.id.bottom1:
 
-                spotOrderPresenter.getPaymentInformationResult(orderId, _dynSessConf);
+                spotOrderPresenter.getPaymentInformationResult(OrderId, _dynSessConf);
 
                 break;
 //            发票信息
             case R.id.bottom2:
-                spotOrderPresenter.getInvoiceInformationResult(orderId, _dynSessConf);
+                spotOrderPresenter.getInvoiceInformationResult(OrderId, _dynSessConf);
 //                Intent intent_fapiao = new Intent();
 //                intent_fapiao.setClass(this, InvoiceInformationActivity.class);
 //                intent_fapiao.putExtra("id",orderId);
@@ -358,7 +462,7 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
                 break;
 //            合同信息
             case R.id.bottom3:
-                spotOrderPresenter.getContractInformationResult(orderId, _dynSessConf);
+                spotOrderPresenter.getContractInformationResult(OrderId, _dynSessConf);
 
                 break;
 //            物流信息
@@ -366,7 +470,7 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
 //                intent.setClass(this, LogisticsInformationActivity.class);
 //                startActivity(intent);
                 Intent intent1=new Intent(SpotOrder.this,logisticsActivity.class);
-                intent1.putExtra("orderId",orderId);
+                intent1.putExtra("orderId",OrderId);
                 startActivity(intent1);
 
 
@@ -411,11 +515,11 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
 
     //获取银行列表
     public void getinfo_Bank() {
-        String orderId = orderBean.getOrderId();
-        list_order.add(orderId);
+       // String orderId = orderBean.getOrderId();
+        list_order.add(OrderId);
         String order = null;
         Loding.show(this, "加载中...", false, null);
-        spotOrderPresenter.getBankListFromService(order, orderId);
+        spotOrderPresenter.getBankListFromService(order, OrderId);
     }
 
     @Override
