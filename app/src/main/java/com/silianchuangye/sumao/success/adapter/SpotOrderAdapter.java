@@ -31,6 +31,7 @@ public class SpotOrderAdapter extends BaseAdapter {
     public SpotOrderAdapter(Context context,List<Map<String,Object>>list,String cl_fangshi) {
         this.context = context;
         this.list=list;
+        this.cl_fangshi=cl_fangshi;
         inflater = LayoutInflater.from(context);
     }
 

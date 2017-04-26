@@ -7,10 +7,12 @@
     <include
         android:id="@+id/payment_information_title"
         layout="@layout/child_title_bar" />
-    <WebView
-        android:id="@+id/contract_web_view"
-        android:layout_below="@id/payment_information_title"
+
+    <com.github.barteksc.pdfviewer.PDFView
+        android:id="@+id/pdfView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </WebView>
+        android:layout_height="match_parent"
+        android:layout_below="@+id/payment_information_title"
+
+        />
 </RelativeLayout>

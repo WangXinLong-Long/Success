@@ -101,7 +101,8 @@ public class LoginActivity extends BaseActivity {
 		SharedPreferences sharedPreferences=getSharedPreferences("sumao", Activity.MODE_PRIVATE);
 		 randomAccount=sharedPreferences.getString("zhanghao","");
 		Log.d("Login",randomAccount);
-		 userPwd=sharedPreferences.getString("password","");
+		String phone=sharedPreferences.getString("phone","");
+		userPwd=randomAccount+phone;
 		Log.d("password",userPwd);
 		progressDialog = getProgressDialog();
 		progressDialog.setMessage(getResources().getString(R.string.system_is_regist));

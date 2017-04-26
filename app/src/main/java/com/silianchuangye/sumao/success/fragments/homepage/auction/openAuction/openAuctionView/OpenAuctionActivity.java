@@ -849,20 +849,21 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
             this.cl_attribute.addAll(cl_attribute);
         }
         path = auctionDetailBean.getContract();
+        cl_gongsiId=auctionDetailBean.getCl_gongsiId();
 
         //cl_attribute.addAll();
 //                Jobs Created 联系客服跳转
-//        contactCustomerService.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intentHX = new Intent();
-//                intentHX.setClass(OpenAuctionActivity.this, LoginActivity.class);
-//                intentHX.putExtra(Constant.MESSAGE_TO_INTENT_EXTRA, Constant.MESSAGE_TO_DEFAULT);
-////                传入卖家id
-//                intentHX.putExtra(Constant.IM_SERVICE_NUMBER, cl_gongsiId);
-//                startActivity(intentHX);
-//            }
-//        });
+        contactCustomerService.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentHX = new Intent();
+                intentHX.setClass(OpenAuctionActivity.this, LoginActivity.class);
+                intentHX.putExtra(Constant.MESSAGE_TO_INTENT_EXTRA, Constant.MESSAGE_TO_DEFAULT);
+//                传入卖家id
+                intentHX.putExtra(Constant.IM_SERVICE_NUMBER, cl_gongsiId);
+                startActivity(intentHX);
+            }
+        });
 //        购买数量
         tv_item_cart_buy_num = ((EditText) findViewById(R.id.tv_item_cart_buy_num));
 

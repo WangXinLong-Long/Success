@@ -27,12 +27,12 @@ public class SuMaoConstant {
     //   public static final String SUMAO_IP = "http://139.198.7.27:7003";
 
     // ATG数据测试使用
-     public static final String SUMAO_IP="http://192.168.32.126:7023";
-     public static final String SUMAO_CONTRACT_IP = "http://192.168.32.126:7003/crsdocroot";
+//     public static final String SUMAO_IP="http://192.168.32.126:7023";
+//     public static final String SUMAO_CONTRACT_IP = "http://192.168.32.126:7003/crsdocroot";
 
     //ATG数据uat环境
-//     public static final String SUMAO_IP = "http://172.22.16.105:7003";
-//     public static final String SUMAO_CONTRACT_IP = "http://172.22.16.100:7003/crsdocroot";
+     public static final String SUMAO_IP = "http://172.22.16.105:7003";
+     public static final String SUMAO_CONTRACT_IP = "http://172.22.16.100:7003/crsdocroot";
 
 
 

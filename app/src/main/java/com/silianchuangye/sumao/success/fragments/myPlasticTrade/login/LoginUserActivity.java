@@ -354,7 +354,7 @@ public class LoginUserActivity extends AppCompatActivity implements View.OnClick
                     editor = sp.edit();
                     editor.putString("zhanghao", name.trim());
                     editor.putString("U_clientID", loginUserInfoBean.getU_clientID());
-                    editor.putString("password",password);
+                    editor.putString("phone",loginUserInfoBean.getU_phone());
                     editor.putString("U_group",loginUserInfoBean.getU_group());
 
                     editor.commit();

@@ -24,6 +24,24 @@ public class LoginUserInfoBean implements Serializable {
     private String U_clientID;
     private String U_user_status;
     private String info;
+    private String U_phone;
+    private String U_company;
+
+    public String getU_phone() {
+        return U_phone;
+    }
+
+    public void setU_phone(String u_phone) {
+        U_phone = u_phone;
+    }
+
+    public String getU_company() {
+        return U_company;
+    }
+
+    public void setU_company(String u_company) {
+        U_company = u_company;
+    }
 
     public String getU_type() {
         return U_type;

@@ -254,6 +254,7 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
         number = (EditText) findViewById(R.id.ed_shuzhi_number);
 
         layoutContent_auction = ((LinearLayout) findViewById(R.id.layoutContent_auction));
+        layoutContent_auction.setOnClickListener(this);
         btn_tuangou_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -1382,7 +1383,7 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.layoutContent_auction:
-                Toast.makeText(GroupBuyingSuccessActivity.this, "客服聊天", Toast.LENGTH_SHORT).show();
+               // Toast.makeText(GroupBuyingSuccessActivity.this, "客服聊天", Toast.LENGTH_SHORT).show();
                 Intent intentHX = new Intent();
                 intentHX.setClass(GroupBuyingSuccessActivity.this, LoginActivity.class);
                 intentHX.putExtra(Constant.MESSAGE_TO_INTENT_EXTRA, Constant.MESSAGE_TO_DEFAULT);

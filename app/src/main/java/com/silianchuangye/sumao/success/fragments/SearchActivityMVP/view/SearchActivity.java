@@ -51,14 +51,20 @@ public class SearchActivity extends AppCompatActivity implements ISearchActivity
         db.execSQL("create table if not exists search (name text)");
        // db.execSQL("delete from search");
         list=new ArrayList<String>();
-        searchActivityPresenter = new SearchActivityPresenter(SearchActivity.this);
         tv_clear= (TextView) findViewById(R.id.tv_clear);
+        if(list.size()==0){
+            tv_clear.setVisibility(View.GONE);
+        }
+
+        searchActivityPresenter = new SearchActivityPresenter(SearchActivity.this);
+
         tv_clear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //清楚搜索历史
                 db.execSQL("delete from search");
                 list.clear();
+                tv_clear.setVisibility(View.GONE);
                 adapter.notifyDataSetChanged();
             }
         });
@@ -122,7 +128,11 @@ public class SearchActivity extends AppCompatActivity implements ISearchActivity
             while(cursor.moveToNext()){
                 Log.d("获取内容：", ""+cursor.getString(0) );
                 list.add(cursor.getString(0));
-
+                if (list.size()==0){
+                    tv_clear.setVisibility(View.GONE);
+                }else if (list.size()>0){
+                    tv_clear.setVisibility(View.VISIBLE);
+                }
                 for (int j=0;j<list.size();j++){
                     if (list.get(j).equals(null)){
                         list.remove(j);

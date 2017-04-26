@@ -24,6 +24,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.silianchuangye.sumao.success.HX.Constant;
+import com.silianchuangye.sumao.success.HX.ui.LoginActivity;
 import com.silianchuangye.sumao.success.MainActivity;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.PopupWindowAdaptrer;
@@ -110,6 +112,7 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
     private LinearLayout remark;
     private Button payment_security_closeMerket;
     private String unique;
+    private String cl_gongsiId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -342,6 +345,7 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
                 sb.append("、");
             }
         }
+        cl_gongsiId=preSaleDetailBean.getCl_qiyeId();
         delivery_mode_et.setText(sb.toString());
         //       分类
         classification_pre_sale_et.setText(preSaleDetailBean.getCl_fenlei());
@@ -362,9 +366,11 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
         tv_item_cart_all_price.setText(Double.valueOf(edt_num.getText().toString()) * Double.valueOf(tvPrice_auction.getText().toString()) + "");
 
 //        Jobs Created      联系客服跳转 TODO:  需要cl_gongsiId
-        /*layoutService.setOnClickListener(new View.OnClickListener() {
+        layoutService.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 Intent intentHX = new Intent();
                 intentHX.setClass(PreSaleDetailActivity.this, LoginActivity.class);
                 intentHX.putExtra(Constant.MESSAGE_TO_INTENT_EXTRA, Constant.MESSAGE_TO_DEFAULT);
@@ -372,7 +378,7 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
                 intentHX.putExtra(Constant.IM_SERVICE_NUMBER, cl_gongsiId);
                 startActivity(intentHX);
             }
-        });*/
+        });
 
         //计算保证金
         payBao();

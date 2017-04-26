@@ -30,6 +30,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.gson.Gson;
+import com.silianchuangye.sumao.success.HX.Constant;
+import com.silianchuangye.sumao.success.HX.ui.LoginActivity;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.adapter.PopupWindowAdaptrer;
 import com.silianchuangye.sumao.success.adapter.SpotOrderAdapter;
@@ -56,9 +58,11 @@ import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
@@ -132,6 +136,8 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
     private String owner;
     private List<Map<String,Object>> list;
     private String cl_fangshi;
+    private Button services;
+    private String paymentEndDate;
    // private CustomListView typespot_order_listView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,9 +154,9 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
         //orderBean = (PreSellAllBean.OrderBean) getIntent().getSerializableExtra("OrderBean");
         getOrderInfo();
 
-        IntentFilter filter = new IntentFilter();
-        filter.addAction("finishsportorder");
-        registerReceiver(broadcastReceiver, filter);
+//        IntentFilter filter = new IntentFilter();
+//        filter.addAction("finishsportorder");
+//        registerReceiver(broadcastReceiver, filter);
 
         bt_zhifu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -174,7 +180,18 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
         state2 = (TextView) findViewById(R.id.state2);
         company2 = (TextView) findViewById(R.id.company2);
         bt_zhifu = (Button) findViewById(R.id.bt_Zhifu);
-
+        services= (Button) findViewById(R.id.services);
+        services.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentHX = new Intent();
+                intentHX.setClass(SpotOrder.this, LoginActivity.class);
+                intentHX.putExtra(Constant.MESSAGE_TO_INTENT_EXTRA, Constant.MESSAGE_TO_DEFAULT);
+//                传入卖家id
+                intentHX.putExtra(Constant.IM_SERVICE_NUMBER, list.get(0).get("cl_gongsiId").toString());
+                startActivity(intentHX);
+            }
+        });
         bt_copy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -236,7 +253,7 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
         x.http().post(requestParams, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Log.d("订单详情的返回值",result);
+                Log.d(" ",result);
 //                Gson gson=new Gson();
 //                orderBean=gson.fromJson(result,PreSellAllBean.OrderBean.class);
 //                setValue(orderBean);
@@ -270,6 +287,11 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
                         String cl_jituan=jsonobj.getString("cl_jituan");
                         String cl_cangku=jsonobj.getString("cl_cangku");
                         String cl_shuliang=jsonobj.getString("cl_shuliang");
+                        if (jsonobj.toString().contains("paymentEndDate")){
+                            paymentEndDate =jsonobj.getString("paymentEndDate");
+                        }else{
+                            paymentEndDate ="abc";
+                        }
                         Map<String,Object> map=new Hashtable<String, Object>();
                         map.put("cl_mingcheng",cl_mingcheng);
                         map.put("cl_gongsiId",cl_gongsiId);
@@ -283,9 +305,12 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
                         map.put("cl_fenlei",cl_fenlei);
                         map.put("cl_jituan",cl_jituan);
                         map.put("cl_cangku",cl_cangku);
+
+                        map.put("paymentEndDate",paymentEndDate);
                         map.put("cl_shuliang",cl_shuliang);
                         list.add(map);
                     }
+                    Log.d("物流方式的值",cl_fangshi);
                     spotOrderAdapter = new SpotOrderAdapter(SpotOrder.this,list,cl_fangshi);
 
                     spot_order_listView.setAdapter(spotOrderAdapter);
@@ -332,8 +357,175 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
 //                double amount = Double.parseDouble(cl.get(i).getCl_amount());
 //                total += amount;
 //            }
-
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Calendar.HOUR_OF_DAY, 16);
+            calendar.set(Calendar.MINUTE, 0);
+            calendar.set(Calendar.SECOND, 0);
+            long countDownTime = 0;
             bottom_money2.setText(String.valueOf(price));
+            if (type.equals("fixedPricingOrder")) {//现货
+                type2.setText("现货");
+                tv_xianqing_type.setText("现货");
+                long countDown = (Long.parseLong(submittedDate) + 1000 * 3600) - System.currentTimeMillis();
+                countDownTime = countDown > 0 ? countDown : 0;
+            } else if (type.equals("openAuctionOrder")) {//公开竞拍
+                type2.setText("公开竞拍");
+                tv_xianqing_type.setText("公开竞拍");
+//            long countDown = (calendar.getTimeInMillis()) - Long.parseLong(submittedDate);
+//            countDownTime = countDown > 0 ? countDown : (calendar.getTimeInMillis() + 24 * 60 * 60 * 1000) - Long.parseLong(submittedDate);
+                String committime= new SimpleDateFormat("yyyy-MM-dd").format(Double.parseDouble(submittedDate));
+                Log.d("comittime",committime);
+                //把日期变为String类型
+                try {
+                    String data=committime+" 17:00:00";
+                    Date date=new Date();
+                    SimpleDateFormat simpleFormat = new SimpleDateFormat( "yyyy-MM-dd hh:mm:ss" );
+
+                    date = simpleFormat.parse(data);
+                    Log.d("日期的值",date.toString());
+                    long createdate=date.getTime();
+                    Log.d("日期转为秒的值",createdate+"");
+
+                    if (createdate-Long.parseLong(submittedDate)>=0){
+                        //倒计时到5点
+
+                        if (createdate-System.currentTimeMillis()>0){
+                            countDownTime=createdate-System.currentTimeMillis();
+                        }else{
+                            countDownTime=0;
+                        }
+                        Log.d("if countDownTime的值",countDownTime+"");
+                    }else{
+                        //倒计时到明天5点
+
+                        if (createdate+(1000*60*60*24)-System.currentTimeMillis()>=0){
+                            countDownTime=createdate+(1000*60*60*24)-System.currentTimeMillis();
+                        }
+                        Log.d("else countDownTime的值",countDownTime+"");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            } else if (type.equals("sealedAuctionOrder")) {//密封竞拍
+                type2.setText("密封竞拍");
+                tv_xianqing_type.setText("密封竞拍");
+//            long countDown = (calendar.getTimeInMillis()) - Long.parseLong(submittedDate);
+//            countDownTime = countDown > 0 ? countDown : (calendar.getTimeInMillis() + 24 * 60 * 60 * 1000) - Long.parseLong(submittedDate);
+
+                String committime= new SimpleDateFormat("yyyy-MM-dd").format(Double.parseDouble(submittedDate));
+                Log.d("comittime",committime);
+                //把日期变为String类型
+                try {
+                    String data=committime+" 17:00:00";
+                    Date date=new Date();
+                    SimpleDateFormat simpleFormat = new SimpleDateFormat( "yyyy-MM-dd hh:mm:ss" );
+
+                    date = simpleFormat.parse(data);
+                    Log.d("日期的值",date.toString());
+                    long createdate=date.getTime();
+                    Log.d("日期转为秒的值",createdate+"");
+
+                    if (createdate-Long.parseLong(submittedDate)>=0){
+                        //倒计时到5点
+
+                        if (createdate-System.currentTimeMillis()>=0){
+                            countDownTime=createdate-System.currentTimeMillis();
+                        }
+                        Log.d("if countDownTime的值",countDownTime+"");
+                    }else{
+                        //倒计时到明天5点
+
+                        if (createdate+(1000*60*60*24)-System.currentTimeMillis()>=0){
+                            countDownTime=createdate+(1000*60*60*24)-System.currentTimeMillis();
+                        }
+                        Log.d("else countDownTime的值",countDownTime+"");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            } else if (type.equals("integratePurchaseOrder")) {//团购
+                type2.setText("团购");
+                tv_xianqing_type.setText("团购");
+//            long countDown = (calendar.getTimeInMillis()) - Long.parseLong(submittedDate);
+//            countDownTime = countDown > 0 ? countDown : (calendar.getTimeInMillis() + 24 * 60 * 60 * 1000) - Long.parseLong(submittedDate);
+                String committime= new SimpleDateFormat("yyyy-MM-dd").format(Double.parseDouble(submittedDate));
+                Log.d("comittime",committime);
+                //把日期变为String类型
+                try {
+                    String data=committime+" 17:00:00";
+                    Date date=new Date();
+                    SimpleDateFormat simpleFormat = new SimpleDateFormat( "yyyy-MM-dd hh:mm:ss" );
+
+                    date = simpleFormat.parse(data);
+                    Log.d("日期的值",date.toString());
+                    long createdate=date.getTime();
+                    Log.d("日期转为秒的值",createdate+"");
+
+                    if (createdate-Long.parseLong(submittedDate)>=0){
+                        //倒计时到5点
+
+                        if (createdate-System.currentTimeMillis()>=0){
+                            countDownTime=createdate-System.currentTimeMillis();
+                        }
+                        Log.d("if countDownTime的值",countDownTime+"");
+                    }else{
+                        //倒计时到明天5点
+
+                        if (createdate+(1000*60*60*24)-System.currentTimeMillis()>=0){
+                            countDownTime=createdate+(1000*60*60*24)-System.currentTimeMillis();
+                        }
+                        Log.d("else countDownTime的值",countDownTime+"");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else if (type.equals("forwardPricingOrder")) {//预售
+                type2.setText("预售");
+                tv_xianqing_type.setText("预售");
+                //countDownTime = Long.parseLong(list.get(0).get("deliveryEndDate").toString()) - Long.parseLong(submittedDate);
+                countDownTime = Long.parseLong(list.get(0).get("paymentEndDate").toString()) - System.currentTimeMillis();
+                Log.d("预售截止时间",Long.parseLong(list.get(0).get("deliveryEndDate").toString())+"");
+            } else if (type.equals("scheduleOrder")) {//计划订单
+                type2.setText("计划订单");
+                tv_xianqing_type.setText("计划订单");
+//            long countDown = (calendar.getTimeInMillis()) - Long.parseLong(submittedDate);
+//            countDownTime = countDown > 0 ? countDown : (calendar.getTimeInMillis() + 24 * 60 * 60 * 1000) - Long.parseLong(submittedDate);
+                String committime= new SimpleDateFormat("yyyy-MM-dd").format(Double.parseDouble(submittedDate));
+                Log.d("comittime",committime);
+                //把日期变为String类型
+                try {
+                    String data=committime+" 17:00:00";
+                    Date date=new Date();
+                    SimpleDateFormat simpleFormat = new SimpleDateFormat( "yyyy-MM-dd hh:mm:ss" );
+
+                    date = simpleFormat.parse(data);
+                    Log.d("日期的值",date.toString());
+                    long createdate=date.getTime();
+                    Log.d("日期转为秒的值",createdate+"");
+
+                    if (createdate-Long.parseLong(submittedDate)>=0){
+                        //倒计时到5点
+
+                        if (createdate-System.currentTimeMillis()>=0){
+                            countDownTime=createdate-System.currentTimeMillis();
+                        }
+                        Log.d("if countDownTime的值",countDownTime+"");
+                    }else{
+                        //倒计时到明天5点
+
+                        if (createdate+(1000*60*60*24)-System.currentTimeMillis()>=0){
+                            countDownTime=createdate+(1000*60*60*24)-System.currentTimeMillis();
+                        }
+                        Log.d("else countDownTime的值",countDownTime+"");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            mc = new MyCount(countDownTime, 1000);
+            mc.start();
         } else if (state.equals("PAYMENT_COMPLETION")) {//货款已支付
             tv_title_bar_title.setText("货款已支付");
             state2.setText("货款已支付");
@@ -367,45 +559,10 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
          * 根据系统下单时间，获取剩余结束时间
          */
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, 16);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        long countDownTime = 0;
+
 //        订单类型
         //String type = orderBean.getType();
-        if (type.equals("fixedPricingOrder")) {//现货
-            type2.setText("现货");
-            tv_xianqing_type.setText("现货");
-            long countDown = (Long.parseLong(submittedDate) + 1000 * 3600) - System.currentTimeMillis();
-            countDownTime = countDown > 0 ? countDown : 0;
-        } else if (type.equals("openAuctionOrder")) {//公开竞拍
-            type2.setText("公开竞拍");
-            tv_xianqing_type.setText("公开竞拍");
-            long countDown = (calendar.getTimeInMillis()) - Long.parseLong(submittedDate);
-            countDownTime = countDown > 0 ? countDown : (calendar.getTimeInMillis() + 24 * 60 * 60 * 1000) - Long.parseLong(submittedDate);
-        } else if (type.equals("sealedAuctionOrder")) {//密封竞拍
-            type2.setText("密封竞拍");
-            tv_xianqing_type.setText("密封竞拍");
-            long countDown = (calendar.getTimeInMillis()) - Long.parseLong(submittedDate);
-            countDownTime = countDown > 0 ? countDown : (calendar.getTimeInMillis() + 24 * 60 * 60 * 1000) - Long.parseLong(submittedDate);
-        } else if (type.equals("integratePurchaseOrder")) {//团购
-            type2.setText("团购");
-            tv_xianqing_type.setText("团购");
-            long countDown = (calendar.getTimeInMillis()) - Long.parseLong(submittedDate);
-            countDownTime = countDown > 0 ? countDown : (calendar.getTimeInMillis() + 24 * 60 * 60 * 1000) - Long.parseLong(submittedDate);
-        } else if (type.equals("forwardPricingOrder")) {//预售
-            type2.setText("预售");
-            tv_xianqing_type.setText("预售");
-          //  countDownTime = Long.parseLong(orderBean.getCl().get(0).getPaymentEndDate()) - Long.parseLong(submittedDate);
-        } else if (type.equals("scheduleOrder")) {//计划订单
-            type2.setText("计划订单");
-            tv_xianqing_type.setText("计划订单");
-            long countDown = (calendar.getTimeInMillis()) - Long.parseLong(submittedDate);
-            countDownTime = countDown > 0 ? countDown : (calendar.getTimeInMillis() + 24 * 60 * 60 * 1000) - Long.parseLong(submittedDate);
-        }
-        mc = new MyCount(countDownTime, 1000);
-        mc.start();
+
 //  采购员
         buyer2.setText(owner);
 //        状态
@@ -426,6 +583,11 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
             order_status_order_details.setImageResource(R.mipmap.no_order_form);
         }
     }
+
+
+
+
+
 
     @Override
     public void onClick(View v) {
@@ -488,16 +650,74 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
 
         @Override
         public void onFinish() {
-            count_down_tv.setText("finish");
+
+            count_down_tv.setText("支付已截止");
+            count_down_tv.setTextColor(Color.RED);
             bottom_money.setVisibility(View.INVISIBLE);
+
+
         }
 
         @Override
         public void onTick(long millisUntilFinished) {
-            SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
-            String time = format.format(millisUntilFinished - TimeZone.getDefault().getRawOffset());
+//            SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+//            String time = format.format(millisUntilFinished - TimeZone.getDefault().getRawOffset());
+
+            String time = formatTime(millisUntilFinished /*- TimeZone.getDefault().getRawOffset()*/);
             count_down_tv.setText("剩余支付时间：" + time);
+//            if (time==2000+""){
+//                getOrderInfo();
+//            }
         }
+    }
+    //    转化为倒计时需要的时间
+    public String formatTime(Long ms) {
+        Integer ss = 1000;
+        Integer mi = ss * 60;
+        Integer hh = mi * 60;
+        Integer dd = hh * 24;
+
+        Long day = ms / dd;
+        Long hour = (ms - day * dd) / hh;
+        Long minute = (ms - day * dd - hour * hh) / mi;
+        Long second = (ms - day * dd - hour * hh - minute * mi) / ss;
+
+
+        StringBuffer sb = new StringBuffer();
+        if (day > 0) {
+            sb.append(day + "天");
+        }
+        if (hour > 0) {
+
+            if (hour>9){
+                sb.append(hour + ":");
+            }else if (hour<=9){
+                sb.append("0"+hour+":");
+            }
+        }else if (hour==0){
+            sb.append("00:");
+        }
+        if (minute > 0) {
+
+            if (minute>9){
+                sb.append(minute + ":");
+            }else {
+                sb.append("0"+minute+":");
+            }
+        }else if (minute==0){
+            sb.append("00:");
+        }
+        if (second > 0) {
+            if (second<=9){
+                sb.append("0"+second);
+            }else {
+                sb.append(second);
+            }
+        }else if (second==0){
+            sb.append("00");
+        }
+
+        return sb.toString();
     }
 
     //设置背景透明
@@ -708,6 +928,7 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
             Intent intent = new Intent();
             intent.setClass(this, ContractInformationActivity.class);
             intent.putExtra("contract",contractInformation.getCl_hturl());
+            intent.putExtra("orderId",OrderId);
             startActivity(intent);
         }
 
