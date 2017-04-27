@@ -11,6 +11,9 @@
         android:layout_marginLeft="@dimen/x5"
         android:layout_marginTop="@dimen/x5"
         android:textSize="@dimen/x15"
+        android:maxEms="6"
+        android:singleLine="true"
+        android:ellipsize="end"
         android:textColor="@color/black_deep"/>
     <TextView
         android:id="@+id/number_presale_item"

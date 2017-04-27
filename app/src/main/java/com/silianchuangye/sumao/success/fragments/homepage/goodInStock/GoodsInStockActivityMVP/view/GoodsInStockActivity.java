@@ -183,9 +183,9 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
 //            adapter.addData(smClList);
 //            adapter.notifyDataSetChanged();
 //            initData();
-            searchProductName("0");
+            searchProductName("0","");
         } else if (title.contains("分类")|| title.contains("应用")|| title.contains("供应商")||title.contains("地区")){
-            searchProductName("0");
+            searchProductName("0","");
         }
         else {
 //            selection_condition.setVisibility(View.GONE);
@@ -254,7 +254,7 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
                     @Override
                     public void run() {
                         super.run();
-                        searchProductName("0");
+                        searchProductName("0","条件");
                     }
                 }.start();
 
@@ -270,7 +270,7 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
 
     public void getPopupwindow(){
 
-            View popView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.screen_multi_select_popupwindow_view, null);
+            final View popView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.searchitem, null);
             popupWindow = new PopupWindow(findViewById(R.id.layout_popup), ActionBarOverlayLayout.LayoutParams.MATCH_PARENT, LinearLayoutCompat.LayoutParams.WRAP_CONTENT);
             popupWindow.setContentView(popView);
         new Thread(){
@@ -280,8 +280,17 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
                 getInfoForGridView();
             }
         }.start();
-        TextView tv_Title= (TextView) popView.findViewById(R.id.tv_Title);
-        tv_Title.setText(title);
+//        TextView tv_Title= (TextView) popView.findViewById(R.id.tv_Title);
+//        tv_Title.setText(title);
+        ImageView imageViewBack= (ImageView) popView.findViewById(R.id.iv_child_title_bar_back);
+        imageViewBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
+            }
+        });
+        TextView tv_child_title_bar_title1= (TextView) popView.findViewById(R.id.tv_child_title_bar_title);
+        tv_child_title_bar_title1.setText(title);
             gv_Diqu= (GridView) popView.findViewById(R.id.region_grid);
             gv_Fenlei= (GridView) popView.findViewById(R.id.classification_grid);
             gv_Yinyong= (GridView) popView.findViewById(R.id.application_grid);
@@ -298,6 +307,7 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
             popupWindow.setFocusable(true);
 
             popupWindow.showAtLocation(iv_screen_title_bar_back, Gravity.TOP, 0, 0);
+        //popupWindow.showAsDropDown(iv_screen_title_bar_back);
             popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
                 @Override
                 public void onDismiss() {
@@ -460,7 +470,7 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
         });
     }
 
-    public void searchProductName(String number){
+    public void searchProductName(String number, final String tiaojian){
         urlSearch=SuMaoConstant.SUMAO_IP+"/rest/model/atg/endeca/HomeActor/EndecaAppScreenResult";
         if (!fenlei&&!diqu&&!shengchan&&!yingyong){
             if (title.equals("现货")){
@@ -499,13 +509,20 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
                     Gson gson = new Gson();
                     goodsInStockActivityBean = gson.fromJson(result, GoodsInStockActivityBean.class);
                     //callback.callbackInGoodsInStockActivity(goodsInStockActivityBean,updateOrLoad,"");
-
                     LogUtils.log(smClList.size() + "--------------WXL");
                     adapter = new PreSaleAdapter(GoodsInStockActivity.this);
                     pre_sale_listView.setAdapter(adapter);
+
+                    if (tiaojian.equals("条件")){
+                        smClList.clear();
+                    }
                     smClList.addAll(goodsInStockActivityBean.getIn());
+                    Log.d("现货类的长度",goodsInStockActivityBean.getIn().size()+"");
+                    Log.d("smClList的长度",smClList.size()+"");
+
                     adapter.clearData();
                     adapter.addData(smClList);
+                    Log.d("adapter的长度",adapter.getCount()+"");
                     adapter.notifyDataSetChanged();
                 }// prl.setOnPullListener(new InStockActivityListPullListener());
             }
@@ -725,7 +742,7 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
         }
         List<GoodsInStockActivityBean.InBean> in = goodsInStockActivityBean.getIn();
         smClList.addAll(in);
-        adapter.addData(in);
+        adapter.addData(smClList);
         adapter.notifyDataSetChanged();
     }
 
@@ -815,51 +832,51 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
 
     }
 
-    public class PagerOneGoodsInStockActivityListPullListener implements PullToRefreshLayout.OnPullListener {
-        String pageNum = "0";
-       // searchProductName()
-
-        @Override
-        public void onRefresh(final PullToRefreshLayout pullToRefreshLayout) {
-//            pageNum = "1";
-//            if (tv_screen_title_bar_title.getText().toString().equals("现货")) {
-//                pattern = "fixedProduct";
-//            } else if (tv_screen_title_bar_title.getText().toString().equals("预售")) {
-//                pattern = "forward-pricing-product";
-//            }
-//            goodsInStockActivityPresenter.getGoodsInStockInfo(groups, pattern, regions, provinces, cities,
-//                    categoryNames, appNames, gradeNums, pageNum, "update");
-
-            searchProductName(pageNum);
-            // 千万别忘了告诉控件刷新完毕了哦！
-            pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
-        }
-
-        @Override
-        public void onLoadMore(final PullToRefreshLayout pullToRefreshLayout) {
-//            if (tv_screen_title_bar_title.getText().toString().equals("现货")) {
-//                pattern = "fixedProduct";
-//            } else if (tv_screen_title_bar_title.getText().toString().equals("预售")) {
-//                pattern = "forward-pricing-product";
-//            }
-            new Handler() {
-                @Override
-                public void handleMessage(Message msg) {
-                    //String updateOrLoad = "load";
-                    Log.d("走这个方法了下拉加载数据","走这个方法了");
-                    int num = (Integer.parseInt(pageNum) + 1)*10;
-                    pageNum = num + "";
-                    Log.d("页数的值",""+pageNum);
-                    searchProductName("10");
-//                    goodsInStockActivityPresenter.getGoodsInStockInfo(groups, pattern, regions, provinces, cities,
-//                            categoryNames, appNames, gradeNums, pageNum, updateOrLoad);
-                    // 千万别忘了告诉控件加载完毕了哦！
-                    pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
-                }
-            }.sendEmptyMessageDelayed(0, 3000);
-        }
-
-    }
+//    public class PagerOneGoodsInStockActivityListPullListener implements PullToRefreshLayout.OnPullListener {
+//        String pageNum = "0";
+//       // searchProductName()
+//
+//        @Override
+//        public void onRefresh(final PullToRefreshLayout pullToRefreshLayout) {
+////            pageNum = "1";
+////            if (tv_screen_title_bar_title.getText().toString().equals("现货")) {
+////                pattern = "fixedProduct";
+////            } else if (tv_screen_title_bar_title.getText().toString().equals("预售")) {
+////                pattern = "forward-pricing-product";
+////            }
+////            goodsInStockActivityPresenter.getGoodsInStockInfo(groups, pattern, regions, provinces, cities,
+////                    categoryNames, appNames, gradeNums, pageNum, "update");
+//
+//            searchProductName(pageNum);
+//            // 千万别忘了告诉控件刷新完毕了哦！
+//            pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
+//        }
+//
+//        @Override
+//        public void onLoadMore(final PullToRefreshLayout pullToRefreshLayout) {
+////            if (tv_screen_title_bar_title.getText().toString().equals("现货")) {
+////                pattern = "fixedProduct";
+////            } else if (tv_screen_title_bar_title.getText().toString().equals("预售")) {
+////                pattern = "forward-pricing-product";
+////            }
+//            new Handler() {
+//                @Override
+//                public void handleMessage(Message msg) {
+//                    //String updateOrLoad = "load";
+//                    Log.d("走这个方法了下拉加载数据","走这个方法了");
+//                    int num = (Integer.parseInt(pageNum) + 1)*10;
+//                    pageNum = num + "";
+//                    Log.d("页数的值",""+pageNum);
+//                    searchProductName("10");
+////                    goodsInStockActivityPresenter.getGoodsInStockInfo(groups, pattern, regions, provinces, cities,
+////                            categoryNames, appNames, gradeNums, pageNum, updateOrLoad);
+//                    // 千万别忘了告诉控件加载完毕了哦！
+//                    pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
+//                }
+//            }.sendEmptyMessageDelayed(0, 3000);
+//        }
+//
+//    }
 
 
     public class InStockActivityListPullListener implements PullToRefreshLayout.OnPullListener {
@@ -874,7 +891,7 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
 //            } else if (tv_screen_title_bar_title.getText().toString().equals("预售")) {
 //                pattern = "forward-pricing-product";
 //            }
-            searchProductName(number);
+            searchProductName(number,"");
 //            goodsInStockActivityPresenter.getGoodsInStockInfo(groups, pattern, regions, provinces, cities,
 //                    categoryNames, appNames, gradeNums, pageNum, "update");
 
@@ -899,7 +916,7 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
                     page=num;
                     number = page*10 + "";
                     Log.d("number的值",number+"");
-                    searchProductName(number);
+                    searchProductName(number,"");
 //                    goodsInStockActivityPresenter.getGoodsInStockInfo(groups, pattern, regions, provinces, cities,
 //                            categoryNames, appNames, gradeNums, pageNum, updateOrLoad);
                     // 千万别忘了告诉控件加载完毕了哦！

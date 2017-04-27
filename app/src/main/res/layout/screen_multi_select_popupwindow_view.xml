@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:id="@+id/layout_popup"
-    android:layout_height="@dimen/x300"
-
-    android:orientation="vertical">
-
+    android:background="#fff"
+    android:layout_height="@dimen/x280"
+    >
     <RelativeLayout
         android:layout_height="@dimen/x43"
         android:layout_width="match_parent"
@@ -55,13 +54,73 @@
             android:src="@mipmap/search"
             android:layout_alignParentRight="true"/>
     </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@id/layout_Bottom"
+        android:background="#fff"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/x5"
+        >
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x25"
+            android:background="@drawable/juxing"
+            android:id="@+id/et_productName"
+            android:hint="请输入产品名称查询"
+            android:layout_marginLeft="@dimen/x10"
+            android:layout_marginRight="@dimen/x10"
+            android:textColorHint="@color/gray_normal"
+            />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x25"
+            android:background="@drawable/juxing"
+            android:id="@+id/et_warehouseName"
+            android:hint="请输入仓库名称查询"
+            android:layout_below="@+id/et_productName"
+            android:layout_marginTop="@dimen/x5"
+            android:layout_marginLeft="@dimen/x10"
+            android:layout_marginRight="@dimen/x10"
+            android:textColorHint="@color/gray_normal"
+            />
+
+        <RelativeLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x50"
+            android:layout_below="@id/et_warehouseName"
+            >
+
+            <Button
+                android:id="@+id/reset"
+                android:layout_width="@dimen/x50"
+                android:layout_height="@dimen/x25"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/x10"
+                android:background="@drawable/button_background_yellow"
+                android:text="重置" />
+
+            <Button
+                android:id="@+id/completed"
+                android:layout_width="@dimen/x50"
+                android:layout_height="@dimen/x25"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/x10"
+                android:background="@drawable/button_backgroup_save"
+                android:text="确定" />
+        </RelativeLayout>
+    </RelativeLayout>
     <ScrollView
         android:layout_below="@id/title"
+        android:id="@+id/scroll_view"
+        android:layout_above="@+id/layout_Bottom"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="@dimen/x100">
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/x100"
             android:background="@color/white"
             >
             <TextView
@@ -210,7 +269,7 @@
                 android:paddingTop="@dimen/x5"
                 android:layout_below="@id/application_grid"
                 android:text="生产商" />
-            <com.silianchuangye.sumao.success.custom.CustomGridView
+            <com.silianchuangye.sumao.success.custom.CustomGrideView
                 android:layout_below="@id/shengchanshang_tv"
                 android:id="@+id/shangchanshang_grid"
                 android:layout_width="match_parent"
@@ -222,58 +281,9 @@
                 android:padding="@dimen/x5"
                 android:verticalSpacing="3dp" />
 
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/x25"
-                android:background="@drawable/juxing"
-                android:id="@+id/et_productName"
-                android:hint="请输入产品名称查询"
-                android:layout_below="@+id/shangchanshang_grid"
-                android:layout_marginLeft="@dimen/x10"
-                android:layout_marginRight="@dimen/x10"
-                android:textColorHint="@color/gray_normal"
-                />
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/x25"
-                android:background="@drawable/juxing"
-                android:id="@+id/et_warehouseName"
-                android:hint="请输入仓库名称查询"
-                android:layout_below="@+id/et_productName"
-                android:layout_marginTop="@dimen/x5"
-                android:layout_marginLeft="@dimen/x10"
-                android:layout_marginRight="@dimen/x10"
-                android:textColorHint="@color/gray_normal"
-                />
 
-            <RelativeLayout
-
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/x50"
-                android:layout_below="@id/et_warehouseName"
-                >
-
-                <Button
-                    android:id="@+id/reset"
-                    android:layout_width="@dimen/x50"
-                    android:layout_height="@dimen/x25"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/x10"
-                    android:background="@drawable/button_background_yellow"
-                    android:text="重置" />
-
-                <Button
-                    android:id="@+id/completed"
-                    android:layout_width="@dimen/x50"
-                    android:layout_height="@dimen/x25"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/x10"
-                    android:background="@drawable/button_backgroup_save"
-                    android:text="确定" />
-            </RelativeLayout>
         </RelativeLayout>
     </ScrollView>
 
 
-</LinearLayout>
+</RelativeLayout>
