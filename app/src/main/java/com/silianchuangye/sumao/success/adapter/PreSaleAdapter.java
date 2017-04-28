@@ -26,6 +26,7 @@ public class PreSaleAdapter extends BaseAdapter {
     LayoutInflater inflater;
     private String xinhuo="";
     private TextView tv_icon;
+    private  String state;
 
     public PreSaleAdapter(Context context,String xianhuo) {
         preSaleModels = new ArrayList<>();
@@ -89,15 +90,18 @@ public void clearData(){
 
         viewHolder.company.setText(preSaleModels.get(position).getIn_qiye());
         viewHolder.warehouse.setText(preSaleModels.get(position).getIn_cangku());
-        viewHolder.productType.setText("现货");
+
+        if (preSaleModels.get(position).getIn_leixing().equals("fixedProduct")){
+            viewHolder.productType.setText("现货");
+            viewHolder.productType.setVisibility(View.VISIBLE);
+        }else if (preSaleModels.get(position).getIn_leixing().equals("forward-pricing-product")){
+            viewHolder.productType.setText("预售");
+            viewHolder.productType.setVisibility(View.VISIBLE);
+        }
 if (xinhuo.equals("现货直销")){
     viewHolder.productType.setVisibility(View.VISIBLE);
     viewHolder.price.setVisibility(View.GONE);
     tv_icon.setVisibility(View.GONE);
-}else {
-    viewHolder.productType.setVisibility(View.GONE);
-    viewHolder.price.setVisibility(View.VISIBLE);
-    tv_icon.setVisibility(View.VISIBLE);
 }
         return convertView;
     }

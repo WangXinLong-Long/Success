@@ -36,43 +36,43 @@
         android:layout_centerVertical="true"
         android:layout_toRightOf="@+id/tv_Order_id"
         />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tv_Order_price"
-        android:layout_marginLeft="@dimen/x20"
-        android:layout_marginTop="@dimen/x10"
-        android:textSize="16sp"
-        android:text="金额:"
-        android:textColor="#A4A4A4"
-        android:layout_centerVertical="true"
-        android:layout_toRightOf="@+id/tv_Order_id_value"
-        android:visibility="gone"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tv_order_price_value"
-        android:layout_marginTop="@dimen/x10"
-        android:layout_marginLeft="@dimen/x3"
-        android:textSize="16sp"
-        android:visibility="gone"
-        android:textColor="#A4A4A4"
-        android:layout_centerVertical="true"
-        android:layout_toRightOf="@id/tv_Order_price"
-        />
+
+
     <ImageView
         android:layout_width="16dp"
         android:layout_height="16dp"
         android:id="@+id/iv_order_more"
         android:layout_marginTop="@dimen/x12"
-        android:layout_marginLeft="@dimen/x10"
         android:src="@mipmap/my_sumao_iv_order"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
         android:layout_marginRight="@dimen/x10"
 
         />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_order_price_value"
+            android:layout_marginTop="@dimen/x10"
+            android:layout_marginRight="@dimen/x3"
+            android:textSize="16sp"
+            android:textColor="#A4A4A4"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/iv_order_more"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_Order_price"
+            android:layout_marginTop="@dimen/x10"
+            android:textSize="16sp"
+            android:text="金额:"
+            android:textColor="#A4A4A4"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/tv_order_price_value"
+            android:layout_marginRight="@dimen/x2"
+
+            />
     </RelativeLayout>
      <LinearLayout
          android:background="#EEEEF3"

@@ -1,6 +1,7 @@
 package com.silianchuangye.sumao.success.fragments.myPlasticTrade.demandPlanning.PlanQueryMVP.adapter;
 
 import android.app.Activity;
+import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.ShangYou.SearchSeePlan;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.SpotOrder.SpotOrderMVP.view.SpotOrder;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.demandPlanning.PlanQueryMVP.bean.PlanBean;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.demandPlanning.PlanQueryMVP.bean.PlanQueryBean;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.demandPlanning.SearchplanActivity;
@@ -39,6 +41,7 @@ public class PlanQueryAdapter extends BaseAdapter {
     private Button bt_search;
     private int number;
     String id;
+    private TextView tv_seeplan_left_dingdannum;
 //    private List<PlanBean.PlanOrderList> list;
     public PlanQueryAdapter(Context context,List<Map<String,Object>> list) {
         this.context = context;
@@ -113,6 +116,7 @@ public class PlanQueryAdapter extends BaseAdapter {
             viewHolder.qiye= (TextView) convertView.findViewById(R.id.seller_enterprise_content1);
             //状态
             viewHolder.zhuangtai= (TextView) convertView.findViewById(R.id.state_content1);
+            tv_seeplan_left_dingdannum= (TextView) convertView.findViewById(R.id.tv_seeplan_left_dingdannum);
             viewHolder.view_original_plan = ((RelativeLayout) convertView.findViewById(R.id.view_original_plan));
             convertView.setTag(viewHolder);
         }else {
@@ -120,7 +124,8 @@ public class PlanQueryAdapter extends BaseAdapter {
         }
 
         viewHolder.demand_or_order_number.setText(list.get(position).get("planID").toString());
-
+        viewHolder.demand_or_order.setTextColor(context.getResources().getColor(R.color.btn_blue_normal));
+        tv_seeplan_left_dingdannum.setTextColor(context.getResources().getColor(R.color.btn_blue_normal));
         viewHolder.demand_date_num.setText(list.get(position).get("scheduleDateChange").toString());
         viewHolder.date_of_presentation_num.setText(list.get(position).get("scheduleDate").toString());
         viewHolder.classification_content.setText(" ");
@@ -136,11 +141,12 @@ public class PlanQueryAdapter extends BaseAdapter {
             viewHolder.copy_button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ClipboardManager copy = (ClipboardManager) context
-                            .getSystemService(Context.CLIPBOARD_SERVICE);
-                    copy.setText(finalViewHolder.demand_or_order.getText().toString());
-                    Toast.makeText(context,"复制成功",Toast.LENGTH_SHORT).show();
-
+                    //获取剪贴板管理器：
+                    ClipboardManager cm = (ClipboardManager)context.getSystemService(Context.CLIPBOARD_SERVICE);
+// 创建普通字符型ClipData
+                    ClipData mClipData = ClipData.newPlainText("Label", id);
+// 将ClipData内容放到系统剪贴板里。
+                    cm.setPrimaryClip(mClipData);
                 }
             });
 
@@ -171,7 +177,14 @@ public class PlanQueryAdapter extends BaseAdapter {
         }
         viewHolder.warehouse.setText(list.get(position).get("warehouseName").toString());
         viewHolder.wuliu.setText(list.get(position).get("logisticsName").toString());
-
+        viewHolder.demand_or_order.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(context, SpotOrder.class);
+                intent.putExtra("id",id);
+                context.startActivity(intent);
+            }
+        });
         if (list.get(position).toString().contains("orderId")) {
             id=list.get(position).get("orderId").toString();
             viewHolder.demand_or_order.setText(id);
@@ -206,7 +219,8 @@ public class PlanQueryAdapter extends BaseAdapter {
 
                     if (list.get(position).toString().contains("productNameChange")){
                         String nameNew=list.get(position).get("productNameChange").toString();
-                        if (nameNew!=null&&nameNew!=""&&!nameNew.equals("")) {
+                        Log.d("产品名称的值",list.get(number).get("productNameChange").toString());
+                        if (nameNew!=null&& nameNew!="" && !nameNew.equals("")) {
                             // viewHolder.product_name_content.setText(list.get(position).get("productNameChange").toString());
                             intent.putExtra("nameNew", list.get(number).get("productNameChange").toString());
                         }else{

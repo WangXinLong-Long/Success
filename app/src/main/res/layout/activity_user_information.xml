@@ -29,7 +29,7 @@
     <RelativeLayout
         android:id="@+id/account_login"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/x40"
         android:padding="@dimen/x5"
         android:background="@color/white"
 
@@ -40,12 +40,14 @@
             android:layout_height="wrap_content"
             android:text="@string/account_login"
             android:textSize="@dimen/x15"
+            android:layout_centerVertical="true"
             />
         <TextView
             android:id="@+id/tv_loginNum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="zhangsan001"
+            android:layout_centerVertical="true"
             android:textSize="@dimen/x15"
             android:layout_alignParentRight="true"
             android:textColor="@color/user_infomation_textColor"
@@ -54,7 +56,7 @@
     <RelativeLayout
         android:id="@+id/login_password"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/x40"
         android:layout_below="@id/account_login"
         android:layout_marginTop="@dimen/x1"
         android:padding="@dimen/x5"
@@ -66,12 +68,14 @@
             android:layout_height="wrap_content"
             android:text="@string/login_password"
             android:textSize="@dimen/x15"
+            android:layout_centerVertical="true"
             />
         <TextView
             android:id="@+id/tv_loginPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="zhangsan001"
+            android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:textSize="@dimen/x15"
             android:textColor="@color/user_infomation_textColor"
@@ -80,7 +84,7 @@
     <RelativeLayout
         android:id="@+id/name_user_information"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/x40"
         android:layout_below="@id/login_password"
         android:layout_marginTop="@dimen/x1"
         android:padding="@dimen/x5"
@@ -93,6 +97,7 @@
             android:layout_height="wrap_content"
             android:text="@string/name_user_information"
             android:textSize="@dimen/x15"
+            android:layout_centerVertical="true"
             />
         <ImageView
             android:id="@+id/image_name"
@@ -110,6 +115,7 @@
             android:text="zhangsan001"
             android:layout_toLeftOf="@id/image_name"
             android:textSize="@dimen/x15"
+            android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/x5"
             android:textColor="@color/user_infomation_textColor"
             />
@@ -117,7 +123,7 @@
     <RelativeLayout
         android:id="@+id/mailbox_user_information"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/x40"
         android:layout_below="@id/name_user_information"
         android:layout_marginTop="@dimen/x1"
         android:padding="@dimen/x5"
@@ -131,6 +137,7 @@
             android:layout_height="wrap_content"
             android:text="@string/mailbox_user_information"
             android:textSize="@dimen/x15"
+            android:layout_centerVertical="true"
 
             />
         <ImageView
@@ -150,12 +157,13 @@
             android:textSize="@dimen/x15"
             android:layout_marginRight="@dimen/x5"
             android:textColor="@color/user_infomation_textColor"
+            android:layout_centerVertical="true"
             />
     </RelativeLayout>
     <RelativeLayout
         android:id="@+id/telephone_user_information"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/x40"
         android:layout_below="@id/mailbox_user_information"
         android:layout_marginTop="@dimen/x1"
         android:padding="@dimen/x5"
@@ -168,6 +176,7 @@
             android:layout_height="wrap_content"
             android:text="@string/telephone_user_information"
             android:textSize="@dimen/x15"
+            android:layout_centerVertical="true"
             />
         <ImageView
             android:id="@+id/image_telephone"
@@ -184,6 +193,7 @@
             android:text="zhangsan001"
             android:layout_toLeftOf="@id/image_telephone"
             android:textSize="@dimen/x15"
+            android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/x5"
             android:textColor="@color/user_infomation_textColor"
             />

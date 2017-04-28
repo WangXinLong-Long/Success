@@ -145,6 +145,10 @@ public class WarehouseActivity extends AppCompatActivity implements View.OnClick
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_child_title_bar_back:
+                Intent intent1 = new Intent();
+                intent1.putExtra("id", "");
+                intent1.putExtra("name", "");
+                setResult(position, intent1);
                 WarehouseActivity.this.finish();
                 break;
             case R.id.bt_upload:

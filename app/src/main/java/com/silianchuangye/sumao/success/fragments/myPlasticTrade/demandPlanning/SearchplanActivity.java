@@ -2,6 +2,7 @@ package com.silianchuangye.sumao.success.fragments.myPlasticTrade.demandPlanning
 
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -52,11 +53,23 @@ public class SearchplanActivity extends AppCompatActivity implements View.OnClic
     private String orderId;
     private String state;
    private List<Map<String,Object>> resulr_list;
+    private TextView tv_seeplan_left_date;
+    private TextView tv_seeplan_left_name;
+    private TextView tv_seeplan_left_cangku;
+    private TextView tv_seeplan_left_num;
+    private TextView tv_seeplan_left_peisong;
+   // private TextView tv_seeplan_left_state;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_see_plan);
+        tv_seeplan_left_date= (TextView) findViewById(R.id.tv_seeplan_left_date);
+        tv_seeplan_left_name= (TextView) findViewById(R.id.tv_seeplan_left_name);
+        tv_seeplan_left_cangku= (TextView) findViewById(R.id.tv_seeplan_left_cangku);
+        tv_seeplan_left_num= (TextView) findViewById(R.id.tv_seeplan_left_num);
+        tv_seeplan_left_peisong= (TextView) findViewById(R.id.tv_seeplan_left_peisong);
         Bundle bundle=getIntent().getExtras();
      //   resulr_list=(List<Map<String,Object>>)bundle.getString("PlanOrderList");
        // Log.d("resultd的值",result);
@@ -135,26 +148,36 @@ public class SearchplanActivity extends AppCompatActivity implements View.OnClic
             tv_seeplan_right_peisong_old.setText(resulr_list.get(0).get("logisticsName").toString());
             if (result.contains("scheduleDateChange")){
                 tv_seeplan_right_date.setText(resulr_list.get(0).get("scheduleDateChange").toString());
+                tv_seeplan_right_date.setTextColor(Color.RED);
+                tv_seeplan_left_date.setTextColor(Color.RED);
             }else{
                 tv_seeplan_right_date.setText(resulr_list.get(0).get("scheduleDate").toString());
             }
             if (result.contains("productNameChange")){
                 tv_seeplan_right_name.setText(resulr_list.get(0).get("productNameChange").toString());
+                tv_seeplan_right_name.setTextColor(Color.RED);
+                tv_seeplan_left_name.setTextColor(Color.RED);
             }else{
                 tv_seeplan_right_name.setText(resulr_list.get(0).get("productName").toString());
             }
             if (result.contains("warehouseChangeName")){
                 tv_seeplan_right_cangku.setText(resulr_list.get(0).get("warehouseChangeName").toString());
+                tv_seeplan_right_cangku.setTextColor(Color.RED);
+                tv_seeplan_left_cangku.setTextColor(Color.RED);
             }else{
                 tv_seeplan_right_cangku.setText(resulr_list.get(0).get("warehouseName").toString());
             }
             if (result.contains("quantityChange")){
                 tv_seeplan_right_num.setText(resulr_list.get(0).get("quantityChange").toString());
+                tv_seeplan_right_num.setTextColor(Color.RED);
+                tv_seeplan_left_num.setTextColor(Color.RED);
             }else{
                 tv_seeplan_right_num.setText(resulr_list.get(0).get("quantity").toString());
             }
             if (result.contains("logisticsChangeName")){
                 tv_seeplan_right_peisong.setText(resulr_list.get(0).get("logisticsChangeName").toString());
+                tv_seeplan_right_peisong.setTextColor(Color.RED);
+                tv_seeplan_left_peisong.setTextColor(Color.RED);
             }else{
                 tv_seeplan_right_peisong.setText(resulr_list.get(0).get("logisticsName").toString());
             }

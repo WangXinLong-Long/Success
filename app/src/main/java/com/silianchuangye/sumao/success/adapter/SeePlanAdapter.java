@@ -1,5 +1,6 @@
 package com.silianchuangye.sumao.success.adapter;
 
+import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
@@ -89,10 +90,16 @@ public class SeePlanAdapter extends BaseAdapter{
         holder.btn_copy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ClipboardManager copy = (ClipboardManager) ctx
-                        .getSystemService(Context.CLIPBOARD_SERVICE);
-                copy.setText(holder.tv_dingdangnum.getText().toString());
-                Toast.makeText(ctx,"复制成功",Toast.LENGTH_SHORT).show();
+//                ClipboardManager copy = (ClipboardManager) ctx
+//                        .getSystemService(Context.CLIPBOARD_SERVICE);
+//                copy.setText(holder.tv_dingdangnum.getText().toString());
+//                Toast.makeText(ctx,"复制成功",Toast.LENGTH_SHORT).show();
+                //获取剪贴板管理器：
+                ClipboardManager cm = (ClipboardManager) ctx.getSystemService(Context.CLIPBOARD_SERVICE);
+// 创建普通字符型ClipData
+                ClipData mClipData = ClipData.newPlainText("Label", list.get(position).getOrderId().toString());
+// 将ClipData内容放到系统剪贴板里。
+                cm.setPrimaryClip(mClipData);
             }
         });
         //查看原计划按钮
@@ -109,7 +116,7 @@ public class SeePlanAdapter extends BaseAdapter{
             public void onClick(View v) {
                 //订单号跳转
                 Intent intent=new Intent(ctx, SpotOrder.class);
-                intent.putExtra("id",list.get(position).getOrderId());
+                intent.putExtra("id",list.get(position).getOrderId().toString());
                 ctx.startActivity(intent);
 
             }

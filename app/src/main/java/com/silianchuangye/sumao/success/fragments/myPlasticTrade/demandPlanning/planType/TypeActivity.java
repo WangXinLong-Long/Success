@@ -133,6 +133,10 @@ public class TypeActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.iv_child_title_bar_back:
+                Intent intent1=new Intent();
+                intent1.putExtra("id","");
+                intent1.putExtra("name","");
+                setResult(0,intent1);
                 TypeActivity.this.finish();
                 break;
             case R.id.bt_upload:

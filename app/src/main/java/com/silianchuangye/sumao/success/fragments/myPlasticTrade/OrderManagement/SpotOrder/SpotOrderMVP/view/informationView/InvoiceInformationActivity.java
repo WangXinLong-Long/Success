@@ -33,6 +33,9 @@ public class InvoiceInformationActivity extends AppCompatActivity implements Vie
     private TextView dividing_line1,dividing_line2,dividing_line3,dividing_line4;
     private RelativeLayout express_rl,courier_number_rl,bill_rl,remark_rl;
     private String path;
+    private RelativeLayout billing_status_rl;
+    private TextView tv_info;
+    private RelativeLayout layout_info;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +44,9 @@ public class InvoiceInformationActivity extends AppCompatActivity implements Vie
 //        Bundle bundle=getIntent().getExtras();
 //        Id=bundle.getString("id");
 //        unique=bundle.getString("unique");
+        billing_status_rl= (RelativeLayout) findViewById(R.id.billing_status_rl);
+        layout_info= (RelativeLayout) findViewById(R.id.layout_info);
+        tv_info= (TextView) findViewById(R.id.tv_info);
         String result=getIntent().getStringExtra("result");
         Log.d("发票信息的返回值",""+result);
         Gson gson = new Gson();
@@ -53,7 +59,9 @@ public class InvoiceInformationActivity extends AppCompatActivity implements Vie
         findView();
         if (invoiceInformationBean.getCl_kaipiao() == null) {
 //        开票状态
-            billing_status.setText("未开票");
+            layout_info.setVisibility(View.GONE);
+            tv_info.setVisibility(View.VISIBLE);
+            billing_status_rl.setVisibility(View.GONE);
             express_rl.setVisibility(View.GONE);
             courier_number_rl.setVisibility(View.GONE);
             bill_rl.setVisibility(View.GONE);

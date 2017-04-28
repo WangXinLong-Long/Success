@@ -151,7 +151,7 @@ android:textColor="#222"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-android:textColor="#222"
+            android:textColor="#222"
             android:layout_toRightOf="@id/tv_seeplan_left_date"/>
         <TextView
             android:id="@+id/tv_seeplan_left_name"
@@ -243,10 +243,12 @@ android:textColor="#222"
         android:id="@+id/line_searchseeplan"
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:visibility="gone"
         android:background="@color/selley_bg"/>
     <RelativeLayout
         android:id="@+id/relative_final"
         android:layout_width="match_parent"
+        android:visibility="gone"
         android:layout_height="@dimen/x40">
         <TextView
             android:id="@+id/tv_seeplan_left_dingdannum"

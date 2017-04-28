@@ -144,7 +144,13 @@ public class ReceiptAddress extends Activity implements View.OnClickListener, IR
         LogUtils.log("onRestart--->");
 //        lists.clear();
         presenter.setReceiptAddressListView(unique);
-        adapter.notifyDataSetChanged();
+        if (count == lists.size()) {
+            adapter = new ReceiptAddressAdapter(this,  addressDis/*al*/);
+            listView.setAdapter(adapter);
+            adapter.addData(lists);
+           // count = 0;
+            adapter.notifyDataSetChanged();
+        }
     }
 
     @Override

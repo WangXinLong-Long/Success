@@ -2,6 +2,7 @@ package com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagemen
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
+import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
@@ -195,9 +196,15 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
         bt_copy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ClipboardManager copy = (ClipboardManager) SpotOrder.this
-                        .getSystemService(Context.CLIPBOARD_SERVICE);
-                copy.setText(the_order_number_number.getText().toString());
+//                ClipboardManager copy = (ClipboardManager) SpotOrder.this
+//                        .getSystemService(Context.CLIPBOARD_SERVICE);
+//                copy.setText(the_order_number_number.getText().toString());
+                //获取剪贴板管理器：
+                ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+// 创建普通字符型ClipData
+                ClipData mClipData = ClipData.newPlainText("Label", the_order_number_number.getText().toString());
+// 将ClipData内容放到系统剪贴板里。
+                cm.setPrimaryClip(mClipData);
 
             }
         });
@@ -346,7 +353,7 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
        // String state = orderBean.getState();
         Log.d("state的值",state);
 //        除了待支付，其他的都不显示倒计时
-        if (state.equals("SUBMITTED")) {//待支付
+        if (state.equals("SUBMITTED") ||state.equals("PENDING_APPROVAL") || state.equals("APPROVED")||state.equals("FAILED_APPROVAL")) {//待支付
             tv_title_bar_title.setText("待支付");
             state2.setText("待支付");
             count_down_tv.setVisibility(View.VISIBLE);
@@ -904,6 +911,7 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
         Intent intent = new Intent();
         intent.setClass(this, PaymentInformationActivity.class);
         intent.putExtra("result",result);
+        intent.putExtra("price",price);
         startActivity(intent);
     }
 

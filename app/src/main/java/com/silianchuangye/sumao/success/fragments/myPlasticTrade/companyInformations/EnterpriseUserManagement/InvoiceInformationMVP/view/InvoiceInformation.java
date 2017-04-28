@@ -451,16 +451,14 @@ public class InvoiceInformation extends Activity implements View.OnClickListener
 
     @Override
     public void setResultInText(InvoiceInformationBean bean) {
-//        要获取省市县的level
-        String province = bean.getInvoice().getNotesRecipientProvince();
-        String city = bean.getInvoice().getNotesRecipientCity();
-        String county = bean.getInvoice().getNotesRecipientCounty();
-        //sb.append(county);
-        addAddressPresenter.sendrequestGetAddress(province,city,county);
+        Log.d("走这个方法了","走这个方法了");
+        Log.d("信息的返回值",bean.getCl_nsrleixing()+bean.getCl_mingcheng()+bean.getCl_id()+bean.getInfo());
         //        纳税人类型
-        type_of_taxpayer_tv.setText(bean.getCl_nsrleixing());
+        type_of_taxpayer_tv.setText(bean.getCl_nsrleixing().toString());
+        Log.d("纳税人类型",bean.getCl_nsrleixing().toString()+"为什么没有值");
         //        公司名称
         company_name.setText(bean.getCl_mingcheng());
+        Log.d("公司名称",bean.getCl_mingcheng().toString()+"为什么没有值");
         //        税号
         duty_paragraph.setText(bean.getInvoice().getTaxID());
         //        地址
@@ -477,7 +475,12 @@ public class InvoiceInformation extends Activity implements View.OnClickListener
         bill_mailing_address_telephone_tv.setText(bean.getInvoice().getNotesRecipientMobile());
         //        固定电话
         bill_mailing_address_fix_telephone_tv.setText(bean.getInvoice().getNotesRecipientPhone());
-
+//        要获取省市县的level
+        String province = bean.getInvoice().getNotesRecipientProvince();
+        String city = bean.getInvoice().getNotesRecipientCity();
+        String county = bean.getInvoice().getNotesRecipientCounty();
+        //sb.append(county);
+        addAddressPresenter.sendrequestGetAddress(province,city,county);
         //        邮寄地址详细
         bill_mailing_address_mailing_address_tv_detail.setText(bean.getInvoice().getNotesRecipientAddress());
         Log.d("详细地址的值",bean.getInvoice().getNotesRecipientAddress());

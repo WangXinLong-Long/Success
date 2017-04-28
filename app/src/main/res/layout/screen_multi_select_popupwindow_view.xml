@@ -7,7 +7,7 @@
     android:layout_height="@dimen/x280"
     >
     <RelativeLayout
-        android:layout_height="@dimen/x43"
+        android:layout_height="@dimen/x44"
         android:layout_width="match_parent"
         android:paddingTop="@dimen/padding_right"
         android:paddingBottom="@dimen/padding_right"

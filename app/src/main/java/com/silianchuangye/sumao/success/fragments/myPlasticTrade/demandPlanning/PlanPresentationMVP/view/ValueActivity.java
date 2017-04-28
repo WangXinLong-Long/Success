@@ -46,6 +46,9 @@ public class ValueActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.iv_child_title_bar_back:
+                Intent intent1=new Intent();
+                intent1.putExtra("content","");
+                setResult(id,intent1);
                 ValueActivity.this.finish();
                 break;
             case R.id.bt_save_register_value:

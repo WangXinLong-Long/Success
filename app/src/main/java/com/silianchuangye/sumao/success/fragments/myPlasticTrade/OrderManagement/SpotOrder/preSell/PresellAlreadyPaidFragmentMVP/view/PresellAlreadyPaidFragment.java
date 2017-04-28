@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -120,6 +121,7 @@ public class PresellAlreadyPaidFragment extends Fragment implements IPresellAlre
     }
     @Override
     public void setPresellAlreadyPaidFragmentResult(String result,boolean update) {
+        Log.d("订单列表的返回值",result);
         Gson gson = new Gson();
         PreSellAllBean preSellAllBean = gson.fromJson(result, PreSellAllBean.class);
         if (preSellAllBean.getInfo().equals("fail")) {

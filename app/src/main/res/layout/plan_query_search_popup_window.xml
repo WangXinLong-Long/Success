@@ -19,6 +19,9 @@
             android:layout_marginRight="@dimen/x7"
             android:background="@drawable/juxing"
             android:gravity="center_vertical"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+
             android:paddingLeft="@dimen/x7" />
 
         <TextView

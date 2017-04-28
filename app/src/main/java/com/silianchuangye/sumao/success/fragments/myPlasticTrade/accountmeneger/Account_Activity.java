@@ -38,14 +38,14 @@ public class Account_Activity extends AppCompatActivity implements View.OnClickL
         map.put("icon",R.mipmap.pingan);
         map.put("name","平安银行");
         list.add(map);
-        Map<String,Object> map1=new Hashtable<>();
-        map1.put("icon",R.mipmap.kunlun);
-        map1.put("name","昆仑银行");
-        list.add(map1);
-        Map<String,Object> map2=new Hashtable<>();
-        map2.put("icon",R.mipmap.jianshe);
-        map2.put("name","中国建设银行");
-        list.add(map2);
+//        Map<String,Object> map1=new Hashtable<>();
+//        map1.put("icon",R.mipmap.kunlun);
+//        map1.put("name","昆仑银行");
+//        list.add(map1);
+//        Map<String,Object> map2=new Hashtable<>();
+//        map2.put("icon",R.mipmap.jianshe);
+//        map2.put("name","中国建设银行");
+//        list.add(map2);
         SimpleAdapter adapter=new SimpleAdapter(Account_Activity.this,list,R.layout.layout_item_banklist,new String[]{"icon","name"},new int[]{R.id.iv_Bank_icon,R.id.tv_Bank_name});
         lv_Bank.setAdapter(adapter);
         lv_Bank.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -56,7 +56,7 @@ public class Account_Activity extends AppCompatActivity implements View.OnClickL
                     Intent intent=new Intent(Account_Activity.this,inganActivity.class);
                     intent.putExtra("position",1);
                     startActivity(intent);
-                }else if(position==1){
+                }/*else if(position==1){
                     Intent intent=new Intent(Account_Activity.this,KunlunActivity.class);
                     intent.putExtra("position",2);
                     startActivity(intent);
@@ -64,7 +64,7 @@ public class Account_Activity extends AppCompatActivity implements View.OnClickL
                     Intent intent=new Intent(Account_Activity.this,JiansheActivity.class);
                     intent.putExtra("position",3);
                     startActivity(intent);
-                }
+                }*/
 
 
             }

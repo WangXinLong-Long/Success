@@ -150,6 +150,7 @@ public class PresellallFragment extends Fragment implements IPresellallFragmentV
     //
     @Override
     public void setPresellallFragmentResult(String result, boolean update) {
+        Log.d("订单列表的全部订单的返回值",result);
         Gson gson = new Gson();
         PreSellAllBean preSellAllBean = gson.fromJson(result, PreSellAllBean.class);
         if (preSellAllBean.getInfo().equals("fail")) {

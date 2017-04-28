@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:background="@color/my_sumao_background"
     android:orientation="vertical">
+
     <RelativeLayout
 
         android:background="@color/my_sumao_background"
@@ -13,12 +14,22 @@
             android:id="@+id/invoice_information_title"
             layout="@layout/child_title_bar"
             ></include>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/invoice_information_title"
+            >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            >
         <RelativeLayout
             android:id="@+id/value_added_tax_information_rl"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/x40"
             android:background="@color/white"
-            android:layout_below="@id/invoice_information_title"
+
             android:layout_marginTop="@dimen/x5"
             >
         <TextView
@@ -52,7 +63,7 @@
             <RelativeLayout
                 android:id="@+id/type_of_taxpayer_rl"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/x40"
                 android:background="@color/white"
                 android:paddingTop="@dimen/x5"
                 android:paddingBottom="@dimen/x5"
@@ -71,12 +82,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="一般纳税人"/>
+                    />
             </RelativeLayout>
             <RelativeLayout
                 android:id="@+id/company_name_rl"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/x40"
                 android:background="@color/white"
                 android:paddingTop="@dimen/x5"
                 android:paddingBottom="@dimen/x5"
@@ -96,12 +107,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="成都塑料包装有限公司"/>
+                    />
             </RelativeLayout>
             <RelativeLayout
                 android:id="@+id/duty_paragraph_rl"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/x40"
                 android:background="@color/white"
                 android:paddingTop="@dimen/x5"
                 android:paddingBottom="@dimen/x5"
@@ -127,13 +138,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toLeftOf="@id/duty_paragraph_iv"
-                    android:text="610104073412011"
+
                     android:paddingRight="@dimen/x5"/>
             </RelativeLayout>
             <RelativeLayout
                 android:id="@+id/invoice_information_address_rl"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/x40"
                 android:background="@color/white"
                 android:paddingTop="@dimen/x5"
                 android:paddingBottom="@dimen/x5"
@@ -160,7 +171,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="北京市燕山东流水路x号"
+
                     android:layout_toLeftOf="@id/invoice_information_address_iv"
                     android:paddingRight="@dimen/x5"
                     />
@@ -168,7 +179,7 @@
             <RelativeLayout
                 android:id="@+id/invoice_information_telephone_rl"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/x40"
                 android:background="@color/white"
                 android:paddingTop="@dimen/x5"
                 android:paddingBottom="@dimen/x5"
@@ -194,7 +205,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="01089288790"
+
                     android:layout_toLeftOf="@id/invoice_information_telephone_iv"
                     android:paddingRight="@dimen/x5"
                     />
@@ -202,7 +213,7 @@
             <RelativeLayout
                 android:id="@+id/invoice_information_bank_account_rl"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/x40"
                 android:background="@color/white"
                 android:paddingTop="@dimen/x5"
                 android:paddingBottom="@dimen/x5"
@@ -228,7 +239,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="中国工商银行房山分行"
+
                     android:layout_toLeftOf="@id/invoice_information_bank_account_iv"
                     android:paddingRight="@dimen/x5"
                     />
@@ -236,7 +247,7 @@
             <RelativeLayout
                 android:id="@+id/invoice_information_account_number_rl"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/x40"
                 android:background="@color/white"
                 android:paddingTop="@dimen/x5"
                 android:paddingBottom="@dimen/x5"
@@ -263,7 +274,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="61030122000100111"
+
                     android:layout_toLeftOf="@id/invoice_information_account_number_iv"
                     android:paddingRight="@dimen/x5"
                     />
@@ -275,10 +286,10 @@
         <RelativeLayout
             android:id="@+id/bill_mailing_address_rl"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/x40"
             android:background="@color/white"
             android:layout_below="@id/value_added_tax_information_parent"
-            android:layout_marginTop="@dimen/x10"
+            android:layout_marginTop="@dimen/x5"
             >
             <TextView
                 android:id="@+id/bill_mailing_address"
@@ -312,7 +323,7 @@
                 <RelativeLayout
                     android:id="@+id/bill_mailing_address_name_rl"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/x40"
                     android:paddingTop="@dimen/x5"
                     android:paddingBottom="@dimen/x5"
                     android:background="@color/white"
@@ -334,7 +345,7 @@
                         android:id="@+id/bill_mailing_address_name_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="张三"
+
                         android:layout_toLeftOf="@id/bill_mailing_address_name_iv"
                         android:layout_centerVertical="true"
                         android:paddingRight="@dimen/x5"
@@ -343,7 +354,7 @@
                 <RelativeLayout
                     android:id="@+id/bill_mailing_address_telephone_rl"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/x40"
                     android:paddingTop="@dimen/x5"
                     android:paddingBottom="@dimen/x5"
                     android:background="@color/white"
@@ -367,7 +378,7 @@
                         android:id="@+id/bill_mailing_address_telephone_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="13611110000"
+
                         android:layout_toLeftOf="@id/bill_mailing_address_telephone_iv"
                         android:layout_centerVertical="true"
                         android:paddingRight="@dimen/x5"
@@ -376,7 +387,7 @@
                 <RelativeLayout
                     android:id="@+id/bill_mailing_address_fix_telephone_rl"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/x40"
                     android:paddingTop="@dimen/x5"
                     android:paddingBottom="@dimen/x5"
                     android:background="@color/white"
@@ -400,7 +411,7 @@
                         android:id="@+id/bill_mailing_address_fix_telephone_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="01089288790"
+
                         android:layout_toLeftOf="@id/bill_mailing_address_fix_telephone_iv"
                         android:layout_centerVertical="true"
                         android:paddingRight="@dimen/x5"
@@ -409,7 +420,7 @@
                 <RelativeLayout
                     android:id="@+id/bill_mailing_address_mailing_address_rl"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/x40"
                     android:paddingTop="@dimen/x5"
                     android:paddingBottom="@dimen/x5"
                     android:background="@color/white"
@@ -434,7 +445,7 @@
                         android:id="@+id/bill_mailing_address_mailing_address_tv_region"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="北京 北京市 房山区燕山东流水路x号"
+
                         android:layout_toLeftOf="@id/bill_mailing_address_mailing_address_iv"
                         android:paddingRight="@dimen/x5"
                         />
@@ -442,7 +453,7 @@
                         android:id="@+id/bill_mailing_address_mailing_address_tv_detail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="北京 北京市 房山区燕山东流水路x号"
+
                         android:layout_toLeftOf="@id/bill_mailing_address_mailing_address_iv"
                         android:paddingRight="@dimen/x5"
                         android:layout_below="@id/bill_mailing_address_mailing_address_tv_region"
@@ -451,7 +462,7 @@
                 <RelativeLayout
                     android:id="@+id/bill_mailing_address_zip_code_rl"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/x40"
                     android:paddingTop="@dimen/x5"
                     android:paddingBottom="@dimen/x5"
                     android:background="@color/white"
@@ -475,7 +486,7 @@
                         android:id="@+id/bill_mailing_address_zip_code_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="102400"
+
                         android:layout_toLeftOf="@id/bill_mailing_address_zip_code_iv"
                         android:layout_centerVertical="true"
                         android:paddingRight="@dimen/x5"
@@ -495,4 +506,6 @@
 
             />
     </RelativeLayout>
+        </ScrollView>
+</RelativeLayout>
 </RelativeLayout>

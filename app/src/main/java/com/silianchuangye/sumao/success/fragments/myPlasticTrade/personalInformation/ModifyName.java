@@ -165,6 +165,8 @@ public class ModifyName extends Activity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_title_bar_back:
+                intent.putExtra(SuMaoConstant.MODIFY_INFORMATION, "");
+                ModifyName.this.setResult(RESULT_OK, intent);
                 finish();
                 break;
             case R.id.modify_name_save:

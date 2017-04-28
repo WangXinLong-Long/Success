@@ -281,7 +281,7 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
                 break;
             case R.id.img_item_cart_buy_sub:
                 String str = et_number.getText().toString();
-                int num = Integer.valueOf(str);
+                float num = Float.valueOf(str);
                 num--;
                 if (num >= 1) {
                     et_number.setText("" + num);
@@ -289,7 +289,8 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
                 break;
             case R.id.img_item_cart_buy_add:
                 str = et_number.getText().toString();
-                num = Integer.valueOf(str);
+                Log.d("输入框内的值",str);
+                num = Float.valueOf(str);
 
                 if (num >= Float.parseFloat(goodsInStockDetailBean.getCl_shuliang())) {
 //                    Cart_MyDialog diolog=new Cart_MyDialog(GoodsInStockDetailActivity.this,goodsInStockDetailBean.getCl_mingcheng(),goodsInStockDetailBean.getCl_shuliang());

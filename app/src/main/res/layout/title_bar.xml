@@ -39,6 +39,7 @@
             android:id="@+id/iv_title_bar_service"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/x15"
+            android:layout_centerVertical="true"
             android:src="@mipmap/iv_title_bar_service" />
 
         <TextView
@@ -47,6 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/iv_title_bar_service"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/x6"
             android:text="@string/message_text"
             android:textSize="10sp"
             android:visibility="invisible" />
@@ -114,7 +116,7 @@
     <Button
         android:id="@+id/sv_title_bar_serachView"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/x25"
+        android:layout_height="@dimen/x30"
         android:layout_centerVertical="true"
         android:layout_centerInParent="true"
         android:layout_toLeftOf="@+id/message_rl"

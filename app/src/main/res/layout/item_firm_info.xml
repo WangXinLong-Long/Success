@@ -34,9 +34,12 @@
         android:layout_height="wrap_content"
         android:id="@+id/tvValue_firm_info"
         android:layout_toLeftOf="@+id/ivMore_firm_info"
+
+        android:layout_marginLeft="@dimen/x80"
         android:layout_marginRight="@dimen/x5"
-        android:layout_marginTop="@dimen/x13"
+        android:layout_centerVertical="true"
         android:textSize="14sp"
+
         android:text="四联创业"
         />
     <TextView

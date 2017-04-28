@@ -57,6 +57,7 @@ public class AuctionActivity extends AppCompatActivity implements IAuctionView {
         Bundle bundle = getIntent().getExtras();
         name_Auction = bundle.getString("name");
         SellId = bundle.getString("result");
+
         getAddData(SellId);
         init();
     }
@@ -129,22 +130,25 @@ public class AuctionActivity extends AppCompatActivity implements IAuctionView {
     }
 
     public void getAuction_zhunchang(String result) {
-        Gson gson = new Gson();
-        AuctionSessionBean auctionSessionBean = gson.fromJson(result, AuctionSessionBean.class);
-        List<AuctionSessionBean.ProductItemBean> productItem = auctionSessionBean.getProductItem();
-        for (int i = 0; i < productItem.size(); i++) {
-            AuctionSessionBean.ProductItemBean productItemBean = productItem.get(i);
-            ListBean.ProdBean prodBean = new ListBean.ProdBean();
-            prodBean.setCl_cangku(productItemBean.getWareHouse());
-            prodBean.setCl_gongsi(productItemBean.getSupplier());
-            prodBean.setCl_mingcheng(productItemBean.getProductName());
-            prodBean.setId(productItemBean.getProductId());
-            prodBean.setStatus(productItemBean.getStatus());
-            prodBean.setStartDate(productItemBean.getStartDate());
-            prodBean.setEndDate(productItemBean.getEndDate());
-            prodBean.setType(productItemBean.getType());
-            prodBean.setCl_zongliang(productItemBean.getQuantity());
-            lists.add(prodBean);
+        Log.d("竞拍专场的返回值",result);
+        if (result.contains("productItem")) {
+            Gson gson = new Gson();
+            AuctionSessionBean auctionSessionBean = gson.fromJson(result, AuctionSessionBean.class);
+            List<AuctionSessionBean.ProductItemBean> productItem = auctionSessionBean.getProductItem();
+            for (int i = 0; i < productItem.size(); i++) {
+                AuctionSessionBean.ProductItemBean productItemBean = productItem.get(i);
+                ListBean.ProdBean prodBean = new ListBean.ProdBean();
+                prodBean.setCl_cangku(productItemBean.getWareHouse());
+                prodBean.setCl_gongsi(productItemBean.getSupplier());
+                prodBean.setCl_mingcheng(productItemBean.getProductName());
+                prodBean.setId(productItemBean.getProductId());
+                prodBean.setStatus(productItemBean.getStatus());
+                prodBean.setStartDate(productItemBean.getStartDate());
+                prodBean.setEndDate(productItemBean.getEndDate());
+                prodBean.setType(productItemBean.getType());
+                prodBean.setCl_zongliang(productItemBean.getQuantity());
+                lists.add(prodBean);
+            }
         }
     }
 

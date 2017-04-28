@@ -77,11 +77,14 @@ public class PaymentInformationActivity extends AppCompatActivity implements Vie
     private TextView frozen_time_tv;
     private TextView counter_fee_time_tv;
     private TextView counter_fee_date_tv;
+    private RelativeLayout layout_baozhengjin;
+    private String type="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment_information);
+        layout_baozhengjin= (RelativeLayout) findViewById(R.id.layout_baozhengjin);
         frozen_date_tv= (TextView) findViewById(R.id.frozen_date_tv);
         frozen_time_tv= (TextView) findViewById(R.id.frozen_time_tv);
         counter_fee_time_tv= (TextView) findViewById(R.id.counter_fee_time_tv);
@@ -105,6 +108,7 @@ public class PaymentInformationActivity extends AppCompatActivity implements Vie
                 shoukuanzhanghao = jsonObject.getString("cl_shoukzh");
             }
             State=jsonObject.getString("orderState");
+            Log.d("state的值",State);//SUBMITTED  待支付   QUOTED已支付    CHANGED已变更
             serviceFee=jsonObject.getString("serviceFee");
             String info=jsonObject.getString("AA");
             Log.d("aa的值",info+"");
@@ -120,7 +124,7 @@ public class PaymentInformationActivity extends AppCompatActivity implements Vie
                 JSONArray array_amountDetails=new JSONArray(amountDetails);
                 for (int j=0;j<array_amountDetails.length();j++){
                     JSONObject object_amountDetails=array_amountDetails.getJSONObject(j);
-                    String type=object_amountDetails.getString("type");
+                    type=object_amountDetails.getString("type");
                     Log.d("type的值",type);
                     String amount=object_amountDetails.getString("amount");
                     Log.d("amont的值",amount);
@@ -167,6 +171,7 @@ public class PaymentInformationActivity extends AppCompatActivity implements Vie
                         forcelist.add(map);
 
                     }
+
 
                 }
 
@@ -254,6 +259,8 @@ public class PaymentInformationActivity extends AppCompatActivity implements Vie
 //
 //        手续费
         counter_fee_rl = ((RelativeLayout) findViewById(R.id.counter_fee_rl));
+
+
         if (serviceFee.equals("0")) {
             counter_fee_rl.setVisibility(View.GONE);
         } else {
@@ -263,19 +270,23 @@ public class PaymentInformationActivity extends AppCompatActivity implements Vie
         counter_fee_date_number= (TextView) findViewById(R.id.counter_fee_date_number);
         counter_fee_time_number = ((TextView) findViewById(R.id.counter_fee_time_number));
         counter_fee_has_paded_number = ((TextView) findViewById(R.id.counter_fee_has_paded_number));
+        Log.d("状态的值",State);
         if (serviceFee!=""){
             counter_fee_has_paded_number.setText(serviceFee);
+            Log.d("状态的值",State);
             if (State.equals("QUOTED")||State.equals("CHANGED")){
                 counter_fee_date_number.setText(new SimpleDateFormat("yyyy-MM-dd").
                     format(Double.parseDouble(payTail_time)) );
                 counter_fee_time_number.setText(new SimpleDateFormat("HH:mm:ss").
                     format(Double.parseDouble(payTail_time)));
-            }else{
+            }else if(State.equals("SUBMITTED")||State.equals("PENDING_APPROVAL")||State.equals("APPROVED")||State.equals("FAILED_APPROVAL") ){
                 counter_fee_date_number.setVisibility(View.GONE);
                 counter_fee_time_number.setVisibility(View.GONE);
                 //把日期时间隐藏
                 counter_fee_time_tv.setVisibility(View.GONE);
                 counter_fee_date_tv.setVisibility(View.GONE);
+            }else{
+
             }
 
         }
@@ -348,46 +359,72 @@ public class PaymentInformationActivity extends AppCompatActivity implements Vie
     }
 
     private void event(){
-        if (payTail_type.equals("payTail")&&payTail_type!=null||!payTail_type.equals("")) {
+        Log.d("payTail的值",payTail_type);
+
 
             if (State.equals("QUOTED")||State.equals("CHANGED")){
-                //                    货款记录
-                capital.setText(payTail_amount);
-                //frozen_date_number.setText(inBean.getCl_yidrq());
-                frozen_date_number.setText(new SimpleDateFormat("yyyy-MM-dd").
-                        format(Double.parseDouble(payTail_time)));
-                //frozen_time_number.setText(inBean.getCl_yidsj());
-                frozen_time_number.setText(new SimpleDateFormat("HH:mm:ss").format(Double.parseDouble(payTail_time)));
-                counter_fee_has_paded_tv.setText("已支付:");
-                //        货款记录状态
-                frozen_tv.setText("已支付:");
+                if (payTail_type.equals("payTail") && payTail_type!=null && !payTail_type.equals("")) {
+                    //                    货款记录
+                    capital.setText(payTail_amount);
+                    //frozen_date_number.setText(inBean.getCl_yidrq());
+                    frozen_date_number.setText(new SimpleDateFormat("yyyy-MM-dd").
+                            format(Double.parseDouble(payTail_time)));
+                    //frozen_time_number.setText(inBean.getCl_yidsj());
+                    frozen_time_number.setText(new SimpleDateFormat("HH:mm:ss").format(Double.parseDouble(payTail_time)));
+                    counter_fee_has_paded_tv.setText("已支付:");
+                    //        货款记录状态
+                    frozen_tv.setText("已支付:");
+                    layout_bank.setVisibility(View.VISIBLE);
+                }else {
+                    Log.d("走这里了","走这里了");
+                    layout_huokuan.setVisibility(View.VISIBLE);
+                }
 
-            }else {
+
+            }else if (State.equals("SUBMITTED")||State.equals("PENDING_APPROVAL")||State.equals("APPROVED")||State.equals("FAILED_APPROVAL") ){
+
+
+                layout_bank.setVisibility(View.GONE);
+                capital.setText(getIntent().getStringExtra("price"));
+                Log.d("待支付的货款信息",getIntent().getStringExtra("price"));
                 //        手续费状态
                 counter_fee_has_paded_tv.setText("待支付:");
+
+
                 //        货款记录状态
                 frozen_tv.setText("待支付:");
                 frozen_date_tv.setVisibility(View.GONE);
                 frozen_time_tv.setVisibility(View.GONE);
+                frozen_time_number.setVisibility(View.GONE);
+                frozen_date_number.setVisibility(View.GONE);
+            }else{
+                layout_huokuan.setVisibility(View.GONE);
+                layout_bank.setVisibility(View.GONE);
             }
 
-        }else {
-            Log.d("走这里了","走这里了");
-            layout_huokuan.setVisibility(View.GONE);
-
-
+        if (!type.equals("unfreeze")&&!type.equals("force")&&!type.equals("freeze") ||type.equals("")){
+            layout_baozhengjin.setVisibility(View.GONE);
         }
+
+//        }else {
+//
+//            capital.setText(getIntent().getStringExtra("price"));
+//            Log.d("待支付的货款信息",getIntent().getStringExtra("price"));
+//            //        手续费状态
+//            counter_fee_has_paded_tv.setText("待支付:");
+//            //        货款记录状态
+//            frozen_tv.setText("待支付:");
+//            frozen_date_tv.setVisibility(View.GONE);
+//            frozen_time_tv.setVisibility(View.GONE);
+//
+//        }
         if (list.size()>0){
             marginRecordListViewAdapter =new MarginRecordListViewAdapter(PaymentInformationActivity.this);
             margin_record_list_view.setAdapter(marginRecordListViewAdapter);
             marginRecordListViewAdapter.addData(list);
             marginRecordListViewAdapter.notifyDataSetChanged();
         }
-        if (State.equals("QUOTED")||State.equals("CHANGED")){
-            layout_bank.setVisibility(View.VISIBLE);
-        }else{
-           layout_bank.setVisibility(View.GONE);
-        }
+
     }
 
 

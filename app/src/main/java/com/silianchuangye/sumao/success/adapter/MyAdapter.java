@@ -1,6 +1,7 @@
 package com.silianchuangye.sumao.success.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
@@ -100,7 +101,9 @@ public class MyAdapter extends BaseExpandableListAdapter {
         TextView tv_people = (TextView) view.findViewById(R.id.tv_order_price_people_name);
         TextView tv_order_price_state = (TextView) view.findViewById(R.id.tv_order_price_state);
         TextView tvprice = (TextView) view.findViewById(R.id.tv_order_price_value);
-        if (groupBeans.get(groupposition).getStates().equals("SUBMITTED")){
+        if (groupBeans.get(groupposition).getStates().equals("SUBMITTED")||groupBeans.get(groupposition).getStates().equals("PENDING_APPROVAL")
+                ||groupBeans.get(groupposition).getStates().equals("APPROVED")||groupBeans.get(groupposition).getStates().equals("FAILED_APPROVAL")
+                ){
             tv_order_price_state.setText("待支付");
         }else if (groupBeans.get(groupposition).getStates().equals("QUOTED")){
             tv_order_price_state.setText("已支付");
@@ -114,12 +117,23 @@ public class MyAdapter extends BaseExpandableListAdapter {
             tv_order_price_state.setText("保证金解冻失败");
         }else if (groupBeans.get(groupposition).getStates().equals("DEPOSIT_SUCCESS")){
             tv_order_price_state.setText("保证金解冻成功");
-        }else {
+        }else if (groupBeans.get(groupposition).getStates().equals("PRESSING1")){
+            tv_order_price_state.setText("已发货");
+        }else if (groupBeans.get(groupposition).getStates().equals("NO_PENDING_ACTION")){
+            tv_order_price_state.setText("已完成");
+        }else if (groupBeans.get(groupposition).getStates().equals("PAYMENT_PROCESSING")){
+            tv_order_price_state.setText("订单处理中");
+        }else if (groupBeans.get(groupposition).getStates().equals("SERVICE_ERROR")){
+            tv_order_price_state.setText("服务费支付失败");
+        }
+        else {
             tv_order_price_state.setText("等待客服处理");
         }
         tvTitle.setText(groupBeans.get(groupposition).getId());
         tv_people.setText(groupBeans.get(groupposition).getName());
-        tvprice.setText(groupBeans.get(groupposition).getPrice());
+        Log.d("订单的金额",order.get(groupposition).getCl().get(0).getCl_amount());
+        tvprice.setText(order.get(groupposition).getCl().get(0).getCl_amount());
+        tvprice.setVisibility(View.VISIBLE);
         return view;
     }
 
