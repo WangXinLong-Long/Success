@@ -1,13 +1,17 @@
 package com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.goodsInStock;
 
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -68,6 +72,7 @@ public class OrderGoodsActivity extends AppCompatActivity implements View.OnClic
     private RelativeLayout relative;
     private TextView tv_title_name;
     private String title;
+    private Dialog mDialog;
 
     int i;
     private String OrderType;
@@ -197,8 +202,9 @@ public class OrderGoodsActivity extends AppCompatActivity implements View.OnClic
                 //PopupWindow
 //                Toast.makeText(OrderGoodsActivity.this, "弹出对话框", Toast.LENGTH_SHORT).show();
                 initData();
-                initView();
-                showPopView();
+               // initView();
+               // showPopView();
+                dialog();
 //                WindowManager.LayoutParams lp =getWindow().getAttributes();
 //                lp.alpha =0.5f; //0.0-1.0
 //                getWindow().setAttributes(lp);
@@ -206,11 +212,17 @@ public class OrderGoodsActivity extends AppCompatActivity implements View.OnClic
         });
 
     }
+    public void dialog(){
+        mDialog= new Dialog(OrderGoodsActivity.this);
+//创建dialog
+        mDialog.getWindow().setBackgroundDrawable(getResources().getDrawable(R.color.bottom_text_color_normal));
 
-    private void initView() {
-        //加载popwindow以及popWindow不局下的控件
+//设置背景颜色
+        Window win = mDialog.getWindow();
+        mDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//获取dialog窗口
         popView = View.inflate(this, R.layout.popwindow, null);
-        // popView=getLayoutInflater().inflate(R.layout.popwindow,null);
+        win.setContentView(popView);
         Tv_jiaoyi = (TextView) popView.findViewById(R.id.tv_dingdan_jiaoyi);
         Tv_kaipiao = (TextView) popView.findViewById(R.id.tv_dingdan_kaioiao);
         Tv_dingdan = (TextView) popView.findViewById(R.id.tv_dingdan_zhuangtai);
@@ -223,6 +235,13 @@ public class OrderGoodsActivity extends AppCompatActivity implements View.OnClic
         edt_dingdan_num = (EditText) popView.findViewById(R.id.edt_dingdan_bianhao);
         btn_dingdan_my = (Button) popView.findViewById(R.id.btn_dingdan_my);
         btn_dingdan_all = (Button) popView.findViewById(R.id.btn_dingdan_all);
+        ImageView ivBack_order_layout_top= (ImageView) popView.findViewById(R.id.ivBack_order_layout_top);
+        ivBack_order_layout_top.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDialog.dismiss();
+            }
+        });
         linear = (LinearLayout) popView.findViewById(R.id.linear7_dingdan_bottem);
         linear.setOnClickListener(this);
         Tv_jiaoyi.setOnClickListener(this);
@@ -238,7 +257,20 @@ public class OrderGoodsActivity extends AppCompatActivity implements View.OnClic
         Lv_jiaoyi.setOnItemClickListener(this);
         Lv_kaipiao.setOnItemClickListener(this);
         Lv_dingdan.setOnItemClickListener(this);
+        /*实例化Window*/
+        WindowManager.LayoutParams lp = win.getAttributes();
+        win.setGravity(Gravity.LEFT | Gravity.TOP);
+/*实例化Window操作者*/
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        mDialog.setCanceledOnTouchOutside(false);
+        win.setAttributes(lp);
+//设置显示的布局文件
+        mDialog.show();
+      //  mDialog.dismiss();
     }
+
+
 
     @Override
     public void onClick(View v) {
@@ -276,15 +308,18 @@ public class OrderGoodsActivity extends AppCompatActivity implements View.OnClic
             case R.id.btn_dingdan_my://popwindow下的查询我的订单按钮
                 submitTypeInput = "1";
                 changeThePresellSelectPosition(submitTypeInput);
-                popupWindow.dismiss();
+                //popupWindow.dismiss();
+                mDialog.dismiss();
                 break;
             case R.id.btn_dingdan_all://popwindow下的查询所有订单按钮
                 submitTypeInput = "2";
                 changeThePresellSelectPosition(submitTypeInput);
-                popupWindow.dismiss();
+                //popupWindow.dismiss();
+                mDialog.dismiss();
                 break;
             case R.id.linear7_dingdan_bottem:
-                popupWindow.dismiss();
+               // popupWindow.dismiss();
+                mDialog.dismiss();
                 break;
         }
     }

@@ -1,15 +1,19 @@
 package com.silianchuangye.sumao.success.ShangYou.SeePlanMVP.view;
 
 
+import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ListView;
 
 import com.jingchen.pulltorefresh.PullToRefreshLayout;
@@ -120,6 +124,7 @@ public class SeePlan extends Fragment implements ISeePlanView{
 //        }
 //
 //    }
+
 
     @Override
     public void getSeePlanInfoInFragment(CaiGouBean caiGouBean,String pageNum, String planStartDate,

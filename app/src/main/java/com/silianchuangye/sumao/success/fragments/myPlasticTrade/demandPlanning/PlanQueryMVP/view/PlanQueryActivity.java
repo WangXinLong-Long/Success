@@ -2,6 +2,7 @@ package com.silianchuangye.sumao.success.fragments.myPlasticTrade.demandPlanning
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.SharedPreferences;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -9,8 +10,10 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -93,6 +96,7 @@ public class PlanQueryActivity extends AppCompatActivity implements IPlanQueryVi
     private LinearLayout mention_logistc_ll,layout_seller_enterprise;
     private String wuliu,qiye;
     private ImageView img_create_logistics_back;
+    Dialog mDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -154,7 +158,8 @@ public class PlanQueryActivity extends AppCompatActivity implements IPlanQueryVi
             case R.id.img_create_logistics_search:
                 initPopupListView();
                 initPopupWindow();
-                showPopupWindow();
+               // showPopupWindow();
+                dialog();
                 break;
             case R.id.mention_state_ll:
                 if (mentionStateListView.getVisibility() == View.VISIBLE) {
@@ -167,9 +172,10 @@ public class PlanQueryActivity extends AppCompatActivity implements IPlanQueryVi
 
 
 
-            case R.id.out_of_popupwindow:
-                popupWindow.dismiss();
-                break;
+//            case R.id.out_of_popupwindow:
+//              //  popupWindow.dismiss();
+//                mDialog.dismiss();
+//                break;
             case R.id.demand_end_time_rl:
                 showEndDataDialog();
                 break;
@@ -177,7 +183,8 @@ public class PlanQueryActivity extends AppCompatActivity implements IPlanQueryVi
                 showStartDataDialog();
                 break;
             case R.id.search_button:
-                popupWindow.dismiss();
+               // popupWindow.dismiss();
+                mDialog.dismiss();
                 if (tv_pop_customer_qu.getText().toString().equals("已确定")){
                     state="confirmed";
                 }else if (tv_pop_customer_qu.getText().toString().equals("待确定")){
@@ -412,6 +419,74 @@ public class PlanQueryActivity extends AppCompatActivity implements IPlanQueryVi
 //        });
 //    }
 
+   public void dialog(){
+        mDialog= new Dialog(PlanQueryActivity.this);
+//创建dialog
+       mDialog.getWindow().setBackgroundDrawable(getResources().getDrawable(R.color.bottom_text_color_normal));
+
+//设置背景颜色
+       Window win = mDialog.getWindow();
+       mDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//获取dialog窗口
+       popupWindowView = View.inflate(this, R.layout.plan_query_search_popup_window, null);
+       win.setContentView(popupWindowView);
+      // 提报状态
+       mentionState = ((LinearLayout) popupWindowView.findViewById(R.id.mention_state_ll));
+//        提报状态的ListView
+//        mention_logistc_ll= (LinearLayout) popupWindowView.findViewById(R.id.mention_logistc_ll);
+//        mention_logistc_ll.setOnClickListener(this);
+//        layout_seller_enterprise= (LinearLayout) popupWindowView.findViewById(R.id.layout_seller_enterprise);
+//        layout_seller_enterprise.setOnClickListener(this);
+       mentionStateListView = ((ListView) popupWindowView.findViewById(R.id.mention_state_lv));
+       outOfPopupWindow =(LinearLayout) popupWindowView.findViewById(R.id.out_of_popupwindow);
+       demand_end_time_rl =(LinearLayout) popupWindowView.findViewById(R.id.demand_end_time_rl);//结束的日历dialog
+       demand_start_time_rl =(LinearLayout) popupWindowView.findViewById(R.id.demand_start_time_rl);//开始的日历dialog
+       demand_end_time =(TextView) popupWindowView.findViewById(R.id.demand_end_time);
+       demand_start_time =(TextView) popupWindowView.findViewById(R.id.demand_start_time);
+       img_create_logistics_back= (ImageView) popupWindowView.findViewById(R.id.img_create_logistics_back);
+       img_create_logistics_back.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               mDialog.dismiss();
+           }
+       });
+       ArrayAdapter mentionStateAdapter = new ArrayAdapter(this, R.layout.item_pop_lv, R.id.tv_pop_lv, mentionStateList);
+       mentionStateListView.setAdapter(mentionStateAdapter);
+       mentionState.setOnClickListener(this);
+       outOfPopupWindow.setOnClickListener(this);
+       demand_end_time_rl.setOnClickListener(this);
+       demand_start_time_rl.setOnClickListener(this);
+       bt_Search= (Button) popupWindowView.findViewById(R.id.search_button);
+       bt_Search.setOnClickListener(this);
+       product_name= (EditText) popupWindowView.findViewById(R.id.product_name);
+       warehouse_name= (EditText) popupWindowView.findViewById(R.id.warehouse_name);
+       demand_number= (EditText) popupWindowView.findViewById(R.id.demand_number);
+       seller_enterprise= (EditText) popupWindowView.findViewById(R.id.seller_enterprise);
+       tv_pop_customer_qu= (TextView) popupWindowView.findViewById(R.id.tv_pop_customer_qu);
+//        lv_qiye= (ListView) popupWindowView.findViewById(R.id.qiye_lv);
+//        ArrayAdapter adapter_qiye=new ArrayAdapter(PlanQueryActivity.this,R.layout.item_pop_lv,R.id.tv_pop_lv, list_qiye);
+//        lv_qiye.setAdapter(adapter_qiye);
+//        lv_wuliu= (ListView) popupWindowView.findViewById(R.id.wuliu_lv);
+//        ArrayAdapter adapter_wuliu=new ArrayAdapter(PlanQueryActivity.this,R.layout.item_pop_lv,R.id.tv_pop_lv,list_wuliu);
+//        lv_qiye.setAdapter(adapter_wuliu);
+       mentionStateListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+           @Override
+           public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+               tv_pop_customer_qu.setText(mentionStateList.get(position).toString());
+               mentionStateListView.setVisibility(View.GONE);
+           }
+       });
+/*实例化Window*/
+       WindowManager.LayoutParams lp = win.getAttributes();
+       win.setGravity(Gravity.LEFT | Gravity.TOP);
+/*实例化Window操作者*/
+       lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+       lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+       mDialog.setCanceledOnTouchOutside(false);
+       win.setAttributes(lp);
+//设置显示的布局文件
+       mDialog.show();
+   }
     private void initPopupWindow() {
         popupWindowView = View.inflate(this, R.layout.plan_query_search_popup_window, null);
 //        提报状态
@@ -488,13 +563,6 @@ public class PlanQueryActivity extends AppCompatActivity implements IPlanQueryVi
                     super.handleMessage(msg);
                     pageNum = "1";
                     boolean updateOrLoad = true;
-                    //groupBuyingPresenter.getGroupBuyingResult(pageNum,updateOrLoad);
-                    //messagePushPresenter.getMessagePushResult(pageNum,updateOrLoad,unique);
-                    //  messagePushPresenter.getMessagePushForselect();
-                   // messagePushPresenter.getMessagePushForselect("1",updateOrLoad,unique,"","","","","");
-                    //messagePushPresenter.getMessagePushForselect("","","","","","1",updateOrLoad,unique);
-                    //planQueryPresenter.getList("1","10",product_name.getText().toString(),demand_start_time.getText().toString(),demand_end_time.getText().toString()
-                           // ,state,warehouse_name.getText().toString(),"物流id","上游资源方",unique,updateOrLoad);
                     planQueryPresenter.getList(pageNum,"10","","","","","","","",unique,updateOrLoad);
                     pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
                 }
@@ -511,10 +579,6 @@ public class PlanQueryActivity extends AppCompatActivity implements IPlanQueryVi
                     int num = Integer.parseInt(pageNum) + 1;
                     pageNum = num + "";
                     boolean updateOrLoad = false;
-//                    planQueryPresenter.getList("1","10",product_name.getText().toString(),demand_start_time.getText().toString(),demand_end_time.getText().toString()
-//                            ,state,warehouse_name.getText().toString(),"物流id","上游资源方",unique,updateOrLoad);
-                    //messagePushPresenter.getMessagePushResult(pageNum,updateOrLoad,unique);
-                    //groupBuyingPresenter.getGroupBuyingResult(pageNum,updateOrLoad);
                     planQueryPresenter.getList(pageNum,"10","","","","","","","",unique,true);
                     pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
                 }

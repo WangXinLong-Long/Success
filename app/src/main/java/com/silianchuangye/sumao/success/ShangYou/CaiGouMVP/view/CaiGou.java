@@ -1,6 +1,7 @@
 package com.silianchuangye.sumao.success.ShangYou.CaiGouMVP.view;
 
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
@@ -15,6 +16,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -96,6 +98,7 @@ public class CaiGou extends AppCompatActivity implements OnClickListener, Adapte
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
     private GoogleApiClient client;
+    Dialog mDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,6 +150,70 @@ public class CaiGou extends AppCompatActivity implements OnClickListener, Adapte
         //TODO   这里需要修改
         logisticsNameIDList.add("250072");
         logisticsNameIDList.add("250072");
+    }
+
+    public void dialog(){
+        mDialog = new Dialog(CaiGou.this);
+//创建dialog
+        mDialog.getWindow().setBackgroundDrawable(getResources().getDrawable(R.color.bottom_text_color_normal));
+//设置背景颜色
+        Window win = mDialog.getWindow();
+//获取dialog窗口
+        View popView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.plan_popwindow, null);
+        win.setContentView(popView);
+        TextView tv_name= (TextView) popView.findViewById(R.id.name);
+        tv_name.setText("产品名称:");
+
+        TextView tv_Time= (TextView) popView.findViewById(R.id.Time);
+        tv_Time.setText("计划日期:");
+        TextView tv_sheng= (TextView) popView.findViewById(R.id.sheng);
+        tv_sheng.setText("至");
+        TextView tv_state= (TextView) popView.findViewById(R.id.state);
+        tv_state.setText("提报状态:");
+        TextView tv_cangku= (TextView) popView.findViewById(R.id.cangku);
+        tv_cangku.setText("仓库名称:");
+        TextView tv_way= (TextView) popView.findViewById(R.id.way);
+        tv_way.setText("配送方式:");
+
+        tv_pop_canle = (TextView) popView.findViewById(R.id.tv_create_logistics_search);
+        img_pop_back = (ImageView) popView.findViewById(R.id.img_create_logistics_back1);
+        edt_pop_name = (EditText) popView.findViewById(R.id.tv_pop_customer_num);//产品名称
+        edt_pop_cangku = (EditText) popView.findViewById(R.id.tv_pop_customer_name);//仓库名称
+        start_pop_date = (TextView) popView.findViewById(R.id.demand_start_time);//计划开始日期
+        end_pop_date = (TextView) popView.findViewById(R.id.demand_end_time);//计划结束日期
+        tv_state_pop = (TextView) popView.findViewById(R.id.tv_pop_customer_qu);//提报状态
+        tv_pop_peisong = (TextView) popView.findViewById(R.id.tv_pop_customer_zhuangtai);//配送方式
+        lv_start_date = (ListView) popView.findViewById(R.id.lv_sheng);//开始日期下
+        lv_end_date = (ListView) popView.findViewById(R.id.lv_shi);//结束日期下的
+        lv_state = (ListView) popView.findViewById(R.id.lv_qu);//提报状态下
+        lv_peisong = (ListView) popView.findViewById(R.id.lv_zhuangtai);//配送方式下
+        btn_pop_customer_search = (Button) popView.findViewById(R.id.btn_pop_customer_search);//立即查询
+        linear2 = (LinearLayout) popView.findViewById(R.id.linear2);
+        linear_sheng = (LinearLayout) popView.findViewById(R.id.linear_sheng);
+        linear_shi = (LinearLayout) popView.findViewById(R.id.linear_shi);
+        linear_qu = (LinearLayout) popView.findViewById(R.id.mention_state_ll);
+        img_pop_back.setOnClickListener(this);
+        tv_pop_canle.setOnClickListener(this);
+        linear2.setOnClickListener(this);
+        linear_sheng.setOnClickListener(this);
+        linear_shi.setOnClickListener(this);
+        linear_qu.setOnClickListener(this);
+        lv_peisong.setOnItemClickListener(this);
+        lv_state.setOnItemClickListener(this);
+        lv_end_date.setOnItemClickListener(this);
+        lv_start_date.setOnItemClickListener(this);
+        btn_pop_customer_search.setOnClickListener(this);
+
+/*实例化Window*/
+        WindowManager.LayoutParams lp = win.getAttributes();
+        win.setGravity(Gravity.TOP);
+/*实例化Window操作者*/
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        mDialog.setCanceledOnTouchOutside(false);
+        win.setAttributes(lp);
+//设置显示的布局文件
+        mDialog.show();
     }
 
     private void initView() {
@@ -303,6 +370,7 @@ public class CaiGou extends AppCompatActivity implements OnClickListener, Adapte
                 break;
             case R.id.img_create_logistics_search:
                 showPop();
+//                dialog();
                 backgroundAlpha(0.5f);
                 break;
             case R.id.linear_sheng:
@@ -398,12 +466,19 @@ public class CaiGou extends AppCompatActivity implements OnClickListener, Adapte
 
                 presenter.requestSeePlanDate("1","10",sellerCompanyId,sessionID,productName,planStartDate,planEndDate,planState,warehouseName,logisticsID);
                 popupWindow.dismiss();
+               // mDialog.cancel();
+               // mDialog.dismiss();
+                backgroundAlpha(1.0f);
                 break;
             case R.id.tv_create_logistics_search:
                 popupWindow.dismiss();
+               // mDialog.dismiss();
+                backgroundAlpha(1.0f);
                 break;
             case R.id.img_create_logistics_back1:
                 popupWindow.dismiss();
+                //mDialog.dismiss();
+                backgroundAlpha(1.0f);
                 break;
         }
     }

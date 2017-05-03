@@ -5,7 +5,43 @@
     android:orientation="horizontal"
     >
     <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_height"
+        android:id="@+id/order_layout_top"
+        android:background="#28ABE3"
+        >
+        <ImageView
+            android:layout_width="@dimen/x15"
+            android:layout_height="@dimen/y13"
+            android:id="@+id/ivBack_order_layout_top"
+            android:layout_marginTop="@dimen/y10"
+            android:src="@drawable/back"
+            android:layout_marginLeft="10dp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="订单查询"
+            android:textColor="#fff"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/y8"
+            android:textSize="18sp"
+            android:id="@+id/tv_title_name_order"
+            />
+        <ImageView
+            android:layout_width="@dimen/x15"
+            android:layout_height="@dimen/y14"
+            android:id="@+id/ivSearch_order_layout_top"
+            android:layout_marginTop="@dimen/y10"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/search"
+            android:visibility="gone"
+            />
+    </RelativeLayout>
+    <RelativeLayout
         android:id="@+id/relative_pop"
+        android:layout_below="@+id/order_layout_top"
         android:layout_width="match_parent"
         android:layout_height="@dimen/x280"
         android:background="@color/dingdanpopwindow_Topbg">
