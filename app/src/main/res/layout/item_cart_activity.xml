@@ -203,12 +203,13 @@
             android:id="@+id/tv_item_cart_buy_num"
             android:layout_width="@dimen/x50"
             android:layout_height="@dimen/x25"
-            android:text="1"
             android:layout_toRightOf="@id/img_item_cart_buy_sub"
             android:layout_centerVertical="true"
             android:background="@drawable/juxing"
             android:gravity="center"
             android:singleLine="true"
+            android:textColor="#222"
+            android:textColorHint="#222"
             android:inputType="numberDecimal"
            />
         <TextView

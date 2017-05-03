@@ -83,7 +83,7 @@ public class CartBean implements Serializable {
         private String commerceItemId;
         private String surplus;
         private String productName;
-        private String quantityAdjustmentUnit;
+        private String quantityAdjustmentUnit;//最小变量
         private boolean selectFlag;
 
         public boolean isSelectFlag() {

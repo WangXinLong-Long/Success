@@ -34,6 +34,7 @@ import com.silianchuangye.sumao.success.fragments.bean.CartInfo;
 import com.silianchuangye.sumao.success.fragments.bean.CartItemInfo;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.bean.Orders;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.PayMentsOrderMVP.view.PaymentsOrder;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation.decoding.Intents;
 import com.silianchuangye.sumao.success.fragments.pagerThreeMVP.bean.CartBean;
 import com.silianchuangye.sumao.success.fragments.pagerThreeMVP.bean.OrderErrorBean;
 import com.silianchuangye.sumao.success.fragments.pagerThreeMVP.presenter.PagerThreePresenter;
@@ -45,6 +46,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,6 +64,7 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
     private boolean all_Flag;
     private float all_Price;
     private Context ctx;
+    private String id;
     private MyReciver my;
     private Cart_MyDialog dialog;
     private RelativeLayout relative_cart_null, relative_cart_tishi, relative_activity_cart_bottom;
@@ -72,19 +75,33 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
     private List<String> kucong = new ArrayList<String>();
     private String name;
     private String ku_cong_number;
+    private float number;
     private Context context;
     private List<String> id_String = new ArrayList<String>();
     private PagerThreePresenter pagerThreePresenter;
     private List<CartBean.CommerceItemBean> commerceItem;
+    private RelativeLayout layout_gouwuche_value;
+    private String value;
+    private String temp;
+    //屏幕高度
+    private int screenHeight = 0;
+    //软件盘弹起后所占高度阀值
+    private int keyHeight = 0;
+    private String bianliang;
+    private String qigouliang;
+    private int shuaaa;
+    private EditText numValue;
 
 
-    public class MyReciver extends BroadcastReceiver {
+    public class MyReciver extends BroadcastReceiver  {
         @Override
         public void onReceive(Context context, Intent intent) {
 //            if (intent.getAction().equals("close_cart_dialog")) {
 //                dialog.dismiss();
 //            }
         }
+
+
     }
 
     @Override
@@ -113,6 +130,56 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
         rl_title.setVisibility(View.GONE);
         View v = View.inflate(getActivity(), R.layout.activity_cart, null);
         fl_content.addView(v);
+
+        layout_gouwuche_value= (RelativeLayout) v.findViewById(R.id.layout_gouwuche_value);
+        layout_gouwuche_value.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                if(oldBottom != 0 && bottom != 0 &&(oldBottom - bottom > keyHeight)){
+
+                    //Toast.makeText(getActivity(), "监听到软键盘弹起...", Toast.LENGTH_SHORT).show();
+
+                }else if(oldBottom != 0 && bottom != 0 &&(bottom - oldBottom > keyHeight)){
+                    SharedPreferences sp=ctx.getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+                    String shuru=sp.getString("temp","");
+                    Log.d("shuru的值",shuru);
+                    if (shuru.equals("")){
+                        shuru=temp;
+                    }
+                    Double jianshu=sub(Double.parseDouble(shuru),Double.parseDouble(qigouliang));
+                    Log.d("jianshu的值",jianshu+"");
+                    int beishu=(int)div(jianshu,Float.parseFloat(bianliang),0);
+                    Log.d("倍数的值",beishu+"");
+                    if (beishu<=0){
+                        beishu=1;
+                    }
+                    Double shuliang=mul(beishu,Double.parseDouble(bianliang));
+                    Log.d("数量的值",shuliang+"");
+                    double shuvalue=add(shuliang,Double.parseDouble(qigouliang));
+                    Log.d("输入框应该填入的值",shuvalue+"");
+                    //holder.Edt_buy_num.setText(shuvalue+"");
+                    number=Float.parseFloat(shuvalue+"");
+                    updataView(shuaaa, lv_Cart, id);
+//                    adapter.isupdateInfo(true);
+                    adapter.notifyDataSetChanged();
+
+
+
+
+//                        SharedPreferences sp=ctx.getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+//                        SharedPreferences.Editor editor=sp.edit();
+//                        editor.putString("surukuang",shuvalue+"");
+//                        editor.commit();
+
+
+                }
+            }
+        });
+        //获取屏幕高度
+        screenHeight = this.getActivity().getWindowManager().getDefaultDisplay().getHeight();
+        //阀值设置为屏幕高度的1/3
+        keyHeight = screenHeight/3;
+
         relative_cart_null = (RelativeLayout) v.findViewById(R.id.relative_cart_null);
         relative_cart_tishi = (RelativeLayout) v.findViewById(R.id.relative_cart_tishi);
         relative_activity_cart_bottom = (RelativeLayout) v.findViewById(R.id.relative_activity_cart_bottom);
@@ -139,6 +206,31 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
         pagerThreePresenter = new PagerThreePresenter(this);
 
 
+    }
+    public  double add(double d1, double d2)
+    {        // 进行加法运算
+        BigDecimal b1 = new BigDecimal(d1);
+        BigDecimal b2 = new BigDecimal(d2);
+        return b1.add(b2).doubleValue();
+    }
+    public  double sub(double d1, double d2)
+    {        // 进行减法运算
+        BigDecimal b1 = new BigDecimal(d1);
+        BigDecimal b2 = new BigDecimal(d2);
+        return b1.subtract(b2).doubleValue();
+    }
+    public  double mul(double d1, double d2)
+    {        // 进行乘法运算
+        BigDecimal b1 = new BigDecimal(d1);
+        BigDecimal b2 = new BigDecimal(d2);
+        return b1.multiply(b2).doubleValue();
+    }
+    public  double div(double d1,
+                       double d2,int len) {// 进行除法运算
+        BigDecimal b1 = new BigDecimal(d1);
+        BigDecimal b2 = new BigDecimal(d2);
+        return b1.divide(b2,len,BigDecimal.
+                ROUND_HALF_UP).doubleValue();
     }
 
     @Override
@@ -259,6 +351,7 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
     //    得到方法showGouwuche中的数据
     @Override
     public void setDataInPagerThree(String result) {
+        Log.d("购物车的返回值",""+result);
         if (result.contains("commerceItem")) {
             Gson gson = new Gson();
             CartBean cartBean = gson.fromJson(result, CartBean.class);
@@ -342,7 +435,8 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
             name = commerceItem.get(position).getProductName();
             Log.d("name的值", name);
             ku_cong_number = commerceItem.get(position).getSalePrice();
-
+//            numValue= (EditText) lv_Cart.getChildAt(position).findViewById(R.id.tv_item_cart_buy_num);
+//            Log.d("num的值",numValue.getText().toString()+"aaa");
             Toast.makeText(getContext(), "点击了一条item", Toast.LENGTH_SHORT).show();
 
         }
@@ -355,6 +449,7 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
             item_list.get(position).flag = !item_list.get(position).flag;
             cartItemAdapter.notifyDataSetChanged();
         }
+
 
     }
 
@@ -413,16 +508,18 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
         private Context ctx;
         private Cart_MyDialog dialog;
         private SelectCallBack call;
-        private String temp;
+
         private String name_chanpin;
         private List<String> kucong;
         private List<String> list_id;
-        private String id;
+
         private String kucong_value;
         private String price;
         private String all_price;
-        private float number;
+
         private boolean[] checked;
+
+
 
         public CartAdapter(Context ctx, SelectCallBack call, List<CartBean.CommerceItemBean> list, List<String> kucong) {
             this.ctx = ctx;
@@ -445,6 +542,11 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
             this.notifyDataSetChanged();
         }
 
+//        public boolean isupdateInfo(boolean info){
+//            this.isupdate=info;
+//            return isupdate;
+//        }
+
         @Override
         public int getCount() {
             return list.size();
@@ -462,6 +564,7 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
 
         @Override
         public View getView(final int position, View convertView, final ViewGroup parent) {
+            shuaaa=position;
             final ViewHolder holder;
             if (convertView == null) {
                 convertView = View.inflate(ctx, R.layout.item_cart_activity, null);
@@ -486,6 +589,9 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
                 holder = (ViewHolder) convertView.getTag();
             }
             id = list.get(position).getCommerceItemId().toString();
+            bianliang=list.get(position).getQuantityAdjustmentUnit();
+            qigouliang=list.get(position).getMinPurchaseQuantity();
+
             kucong_value = list.get(position).getSurplus();
             holder.Tv_name.setText(list.get(position).getProductName());
             holder.Tv_sort_name.setText(list.get(position).getParentCategories());
@@ -494,7 +600,12 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
             holder.Tv_price.setText(list.get(position).getSalePrice());
             holder.Tv_qiye.setText(list.get(position).getManufacturer());
             holder.Tv_company.setText(list.get(position).getSalesCompanyDisplayName());
+
             holder.Edt_buy_num.setText(Float.parseFloat(list.get(position).getQuantity())+"");
+//            }else {
+//                holder.Edt_buy_num.setHint(Float.parseFloat(list.get(position).getQuantity())+"");
+//            }
+
             Log.d("数量",list.get(position).getQuantity());
             holder.Tv_all_price.setText(list.get(position).getAmount() + "元");
             dialog = new Cart_MyDialog(ctx, holder.Tv_name.getText().toString(), kucong_value);
@@ -566,55 +677,73 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
                 @Override
                 public void onClick(View v) {
                     adapter.setUnCheck(position);
-                    String str = holder.Edt_buy_num.getText().toString();
+                    String str;
+//                    if (isupdate) {
+                         str= holder.Edt_buy_num.getText().toString();
+//                    }else {
+//                         str=holder.Edt_buy_num.getHint().toString();
+//                    }
                     if (str.equals("")) {
                         str = "0";
                     }
                     float num = Float.parseFloat(str);
-                    num = num - 1;
-                    if (num >= 0) {
-                        holder.Edt_buy_num.setText("" + num);
-                        number = num;
+                    float qigouliang=Float.parseFloat(list.get(position).getMinPurchaseQuantity());
+                    Log.d("num的值",num+"");
+                    Log.d("最小qigouliang",qigouliang+"");
+                    Log.d("num的值",num+"");
+
+                    //如果数量小于最小qigouliang
+                    if (num <= qigouliang){
+                        Log.d("数量小雨qigouliang","是de");
+                       // num=Float.parseFloat(list.get(position).getMinPurchaseQuantity());
+                        holder.Edt_buy_num.setText("" + qigouliang);
+                        number = qigouliang;
                         Log.d("商品的--id", list.get(position).getCommerceItemId().toString());
                         //update_data(list.get(position).id.toString());
+
                         updataView(position, lv_Cart, list.get(position).getCommerceItemId().toString());
                         holder.relative_item_cart.setVisibility(View.GONE);
-                        // update_data(number);
-//                    holder.Tv_price.setText(price);
-//                    holder.Tv_all_price.setText(all_price);
-                        //notifyDataSetChanged();
+                    }else  if (num>Float.parseFloat(list.get(position).getMinPurchaseQuantity())){//正常
+                        Log.d("zhangchang","zhengchang");
+                        num = num - Float.parseFloat(list.get(position).getQuantityAdjustmentUnit());
+                        Log.d("num的值",num+"");
+                        number=num;
+                        holder.Edt_buy_num.setText(num+"");
+                        updataView(position, lv_Cart, list.get(position).getCommerceItemId().toString());
+                        holder.relative_item_cart.setVisibility(View.GONE);
                     }
                     if (num == 0) {
                         Toast.makeText(ctx, "购买数量不能为零", Toast.LENGTH_SHORT).show();
                     }
                 }
             });
+            //数量的增加
             holder.Tv_buy_Add.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     adapter.setUnCheck(position);
-                    String str = holder.Edt_buy_num.getText().toString();
+                    String str;
+//                    if (isupdate){
+                        str = holder.Edt_buy_num.getText().toString();
+//                    }else {
+//                        str = holder.Edt_buy_num.getHint().toString();
+//                    }
+
                     if (str.equals("")) {
                         str = "0";
                     }
                     float num = Float.parseFloat(str);
 
-                    num = num + 1;
+                    num = num + Float.parseFloat(list.get(position).getQuantityAdjustmentUnit());
 
 
                     if (num >= Float.parseFloat(kucong_value)) {
                         //num=num;
                         holder.relative_item_cart.setVisibility(View.VISIBLE);
                         holder.Tv_no_much.setText("产品库存为" + num + "吨");
-                        //dialog.show();
 
-
-//                        SharedPreferences sp=getActivity().getSharedPreferences("sumao",Activity.MODE_PRIVATE);
-//                        SharedPreferences.Editor editor=sp.edit();
-//                        editor.putInt("position",position);
-//                        editor.putFloat("number",num);
                     }
-                    if (num <= Float.parseFloat(kucong_value) && num >= 0) {
+                    if (num <= Float.parseFloat(kucong_value) && num >= Float.parseFloat(list.get(position).getMinPurchaseQuantity())) {
                         holder.relative_item_cart.setVisibility(View.GONE);
                         holder.Edt_buy_num.setText("" + num);
                         number = num;
@@ -622,58 +751,29 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
                         Log.d("商品的--id", id);
                         //update_data(list.get(position).id.toString());
                         updataView(position, lv_Cart, list.get(position).getCommerceItemId().toString());
-//                   String number=num+"";
-//                    update_data(number);
-//                    holder.Tv_price.setText(price);
-//                    holder.Tv_all_price.setText(all_price);
-                        //notifyDataSetChanged();
+
                     }
                 }
             });
-            holder.Edt_buy_num.addTextChangedListener(new TextWatcher() {
+            holder.Edt_buy_num.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                    temp = holder.Edt_buy_num.getText().toString();
-                }
+                public void onFocusChange(View v, boolean hasFocus) {
 
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    if (s.length() == 0) {
-                        holder.Edt_buy_num.setText("0");
-                        holder.Edt_buy_num.setSelection(1);
-                    }
-                    if (s.toString().contains(".")) {
-                        if (s.length() - 1 - s.toString().indexOf(".") > 3) {
-                            s = s.toString().subSequence(0,
-                                    s.toString().indexOf(".") + 4);
-                            holder.Edt_buy_num.setText(s);
-                            holder.Edt_buy_num.setSelection(s.length());
-                        }
-                    }
-                    if (s.toString().trim().substring(0).equals(".")) {
-                        s = "0" + s;
-                        holder.Edt_buy_num.setText(s);
-                        holder.Edt_buy_num.setSelection(3);
-                    }
+                    temp=holder.Edt_buy_num.getText().toString();
 
-                    if (s.toString().startsWith("0")
-                            && s.toString().trim().length() > 1) {
-                        if (!s.toString().substring(1, 2).equals(".")) {
-                            holder.Edt_buy_num.setText(s.subSequence(1, s.length()));
-                            holder.Edt_buy_num.setSelection(1);
-                            return;
-                        }
-                    }
-
-
-                }
-
-                @Override
-                public void afterTextChanged(Editable s) {
-                    temp = holder.Edt_buy_num.getText().toString();
                     if (Double.parseDouble(temp) > Double.parseDouble(kucong_value)) {
                         holder.Edt_buy_num.setText((kucong_value));
                         holder.Edt_buy_num.setSelection(kucong_value.length());
+                        number=Float.parseFloat(kucong_value);
+                        updataView(position, lv_Cart, list.get(position).getCommerceItemId().toString());
+
+                    }else if (Double.parseDouble(temp) < Double.parseDouble(kucong_value) && Double.parseDouble(temp)>0){
+                        holder.Edt_buy_num.setSelection(temp.length());
+                        Log.d("temp的值",temp);
+                        SharedPreferences sharedPreferences=ctx.getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+                        SharedPreferences.Editor editor=sharedPreferences.edit();
+                        editor.putString("temp",temp);
+                        editor.commit();
                     }
 
                     float i = Float.parseFloat(temp);
@@ -684,11 +784,119 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
                     } else {
                         holder.relative_item_cart.setVisibility(View.GONE);
                     }
-
                 }
             });
+//            holder.Edt_buy_num.addTextChangedListener(new TextWatcher() {
+//                @Override
+//                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//                }
+//
+//                @Override
+//                public void onTextChanged(CharSequence s, int start, int before, int count) {
+//
+//                }
+//
+//                @Override
+//                public void afterTextChanged(Editable s) {
+//temp=holder.Edt_buy_num.getText().toString();
+//                    Log.d("temp的值",temp);
+//                    SharedPreferences sharedPreferences=ctx.getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+//                    SharedPreferences.Editor editor=sharedPreferences.edit();
+//                    editor.putString("temp",temp);
+//                    editor.commit();
+//                }
+//            });
+
+
+
+            //value=holder.Edt_buy_num.getText().toString();
+//            holder.Edt_buy_num.addTextChangedListener(new TextWatcher() {
+//                @Override
+//                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//                    temp = holder.Edt_buy_num.getText().toString();
+//                }
+//
+//                @Override
+//                public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                    if (s.length() == 0) {
+//                        holder.Edt_buy_num.setText("0");
+//                        holder.Edt_buy_num.setSelection(1);
+//                    }
+//                    if (s.toString().contains(".")) {
+//                        if (s.length() - 1 - s.toString().indexOf(".") > 3) {
+//                            s = s.toString().subSequence(0,
+//                                    s.toString().indexOf(".") + 4);
+//                            holder.Edt_buy_num.setText(s);
+//                            holder.Edt_buy_num.setSelection(s.length());
+//                        }
+//                    }
+//                    if (s.toString().trim().substring(0).equals(".")) {
+//                        s = "0" + s;
+//                        holder.Edt_buy_num.setText(s);
+//                        holder.Edt_buy_num.setSelection(3);
+//                    }
+//
+//                    if (s.toString().startsWith("0")
+//                            && s.toString().trim().length() > 1) {
+//                        if (!s.toString().substring(1, 2).equals(".")) {
+//                            holder.Edt_buy_num.setText(s.subSequence(1, s.length()));
+//                            holder.Edt_buy_num.setSelection(1);
+//                            return;
+//                        }
+//                    }
+//
+//
+//                }
+//
+//                @Override
+//                public void afterTextChanged(Editable s) {
+//                    temp = holder.Edt_buy_num.getText().toString();
+//                    Log.d("输入框后的值",temp);
+//                    SharedPreferences sp=ctx.getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+//                    SharedPreferences.Editor editor=sp.edit();
+//                    editor.putString("editText",temp);
+//                    editor.commit();
+////                    if (Double.parseDouble(temp) > Double.parseDouble(kucong_value)) {
+////                        holder.Edt_buy_num.setText((kucong_value));
+////                        holder.Edt_buy_num.setSelection(kucong_value.length());
+////                        number=Float.parseFloat(kucong_value);
+//                        updataView(position, lv_Cart, list.get(position).getCommerceItemId().toString());
+//
+//                    }else {
+////                        SharedPreferences sharedPreferences=ctx.getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+////                        String aa=sharedPreferences.getString("surukuang","");
+////                        if (!aa.equals("")){
+////                            holder.Edt_buy_num.setText((aa));
+////                            number=Float.parseFloat(aa);
+////                            updataView(position, lv_Cart, list.get(position).getCommerceItemId().toString());
+////                            adapter.notifyDataSetChanged();
+////                        }
+//                    }
+//
+//                    float i = Float.parseFloat(temp);
+//                    if (i >= Float.parseFloat(kucong_value)) {
+//                        holder.relative_item_cart.setVisibility(View.VISIBLE);
+//                        holder.Tv_no_much.setText("产品库存为" + i + "吨");
+//                       // dialog.show();
+//                    } else {
+//                        holder.relative_item_cart.setVisibility(View.GONE);
+//
+//                    }
+//
+
+
+
+
+
+
+
+//                }
+//            });
             return convertView;
         }
+
+
 
         //    取消全选
         public void clearAll() {
@@ -715,40 +923,44 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
             pagerThreePresenter.getDeleteGoodsResult(_dynSessConf, commerceId, position);
         }
 
-        public void updataView(final int posi, final ListView listView, String commerceId) {
-            int visibleFirstPosi = listView.getFirstVisiblePosition();
-            int visibleLastPosi = listView.getLastVisiblePosition();
-            if (posi >= visibleFirstPosi && posi <= visibleLastPosi) {
-                View view = listView.getChildAt(posi - visibleFirstPosi);
-                final ViewHolder viewHolder = (ViewHolder) view.getTag();
-                String amountUnitScale = "1000";
-                String qty = number + "";
-                SharedPreferences sp = ctx.getSharedPreferences("sumao", Activity.MODE_PRIVATE);
-                String unique_update = sp.getString("unique", "");
-                String _dynSessConf = unique_update;
-                pagerThreePresenter.getCarsUpdateResult(amountUnitScale, qty, commerceId, _dynSessConf);
-            } else {
 
-            }
-        }
-
-
-        public class ViewHolder {
-            TextView Tv_name;
-            TextView Tv_sort_name;
-            TextView Tv_cangku_name;
-            TextView Tv_pai_num;
-            TextView Tv_price;
-            TextView Tv_qiye;
-            TextView Tv_company;
-            EditText Edt_buy_num;
-            TextView Tv_buy_Sub, Tv_buy_Add;
-            TextView Tv_all_price, Tv_no_much;
-            ImageView Img_select, Img_del;
-            RelativeLayout relative_item_cart;
-        }
 
 
     }
+    public void updataView(final int posi, final ListView listView, String commerceId) {
+        int visibleFirstPosi = listView.getFirstVisiblePosition();
+        int visibleLastPosi = listView.getLastVisiblePosition();
+        if (posi >= visibleFirstPosi && posi <= visibleLastPosi) {
+            View view = listView.getChildAt(posi - visibleFirstPosi);
+            final ViewHolder viewHolder = (ViewHolder) view.getTag();
+            String amountUnitScale = "1000";
+            String qty = number + "";
+            SharedPreferences sp = ctx.getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+            String unique_update = sp.getString("unique", "");
+            String _dynSessConf = unique_update;
+            pagerThreePresenter.getCarsUpdateResult(amountUnitScale, qty, commerceId, _dynSessConf);
+        } else {
+
+        }
+    }
+
+
+    public class ViewHolder {
+        TextView Tv_name;
+        TextView Tv_sort_name;
+        TextView Tv_cangku_name;
+        TextView Tv_pai_num;
+        TextView Tv_price;
+        TextView Tv_qiye;
+        TextView Tv_company;
+        EditText Edt_buy_num;
+        TextView Tv_buy_Sub, Tv_buy_Add;
+        TextView Tv_all_price, Tv_no_much;
+        ImageView Img_select, Img_del;
+        RelativeLayout relative_item_cart;
+    }
+
+
+
 
 }

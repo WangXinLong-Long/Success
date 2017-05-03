@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/my_sumao_background"
+    android:id="@+id/layout_xianhuo"
     android:orientation="vertical">
 
     <include
@@ -460,7 +461,7 @@
                         android:gravity="center"
                         android:inputType="numberDecimal"
                         android:singleLine="true"
-                        android:text="1" />
+                         />
 
                     <TextView
                         android:id="@+id/img_item_cart_buy_add"
@@ -597,6 +598,7 @@
             android:layout_height="match_parent"
             android:layout_alignParentBottom="true"
             android:id="@+id/layout_gongneng"
+            android:orientation="horizontal"
             android:weightSum="2">
 
             <RelativeLayout

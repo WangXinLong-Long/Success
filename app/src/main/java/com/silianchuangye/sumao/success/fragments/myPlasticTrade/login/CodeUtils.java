@@ -30,7 +30,7 @@ public class CodeUtils {
     private static final int DEFAULT_FONT_SIZE = 70;//字体大小
     private static final int DEFAULT_LINE_NUMBER = 3;//多少条干扰线
     private static final int BASE_PADDING_LEFT = 35; //左边距
-    private static final int RANGE_PADDING_LEFT = 30;//左边距范围值
+    private static final int RANGE_PADDING_LEFT = 20;//左边距范围值
     private static final int BASE_PADDING_TOP = 70;//上边距
     private static final int RANGE_PADDING_TOP = 15;//上边距范围值
     private static final int DEFAULT_WIDTH = 310;//默认宽度.图片的总宽

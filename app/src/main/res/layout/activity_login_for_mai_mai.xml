@@ -93,6 +93,7 @@
             android:layout_marginBottom="@dimen/activity_horizontal_margin"
             android:background="@drawable/login_background"
             android:hint="密码"
+            android:text="Aa123456"
             android:inputType="textPassword"
             android:textSize="13sp" />
 
@@ -103,7 +104,8 @@
             android:layout_above="@id/et_pass_login"
             android:layout_marginBottom="@dimen/activity_horizontal_margin"
             android:background="@drawable/login_background"
-            android:hint="账号"
+            android:hint="帐号"
+            android:text="hb0001"
             android:textSize="13sp" />
 
         <CheckBox

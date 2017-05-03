@@ -362,6 +362,7 @@
 
         <activity
             android:name=".MainActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             android:screenOrientation="portrait" />
         <activity
             android:name=".fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.CompanyUserDutyActivity"
@@ -380,6 +381,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".fragments.homepage.preSale.PreSaleDetailActivityMVP.view.PreSaleDetailActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             android:screenOrientation="portrait" />
         <activity
             android:name=".fragments.myPlasticTrade.EnterpriseCapitalAccountManagement.FundInfoActivity"
@@ -431,6 +433,7 @@
         <activity
             android:name=".fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.view.GoodsInStockDetailActivity"
             android:launchMode="singleTop"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             android:screenOrientation="portrait" />
         <activity
             android:name=".fragments.homepage.goodInStock.LikeProduct"
@@ -555,7 +558,8 @@
         <activity
             android:name=".fragments.homepage.groupbuying.groupBuyingDetailMVP.view.GroupBuyingSuccessActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
             android:name=".fragments.homepage.groupbuying.RuleActivity"
             android:screenOrientation="portrait" />

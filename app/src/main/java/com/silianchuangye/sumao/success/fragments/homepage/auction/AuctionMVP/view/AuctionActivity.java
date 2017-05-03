@@ -124,9 +124,16 @@ public class AuctionActivity extends AppCompatActivity implements IAuctionView {
 
     //获取到从首页获得的数据，转化为竞拍模型
     public void getInfo(String result) {
-        Gson gson = new Gson();
-        ListBean listBean = gson.fromJson(result, ListBean.class);
-        lists.addAll(listBean.getProd());
+        Log.d("竞拍结果返回值",result);
+        if (result.contains("prod")) {
+            Gson gson = new Gson();
+            ListBean listBean = gson.fromJson(result, ListBean.class);
+            if (listBean.getProd().size() != 0) {
+                lists.addAll(listBean.getProd());
+            }
+        }
+
+
     }
 
     public void getAuction_zhunchang(String result) {

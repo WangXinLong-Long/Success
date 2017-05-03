@@ -22,6 +22,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.View.OnLayoutChangeListener;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -86,7 +87,7 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class OpenAuctionActivity extends AppCompatActivity implements IOpenAuctionView, View.OnClickListener{
+public class OpenAuctionActivity extends AppCompatActivity implements IOpenAuctionView, View.OnClickListener,OnLayoutChangeListener {
     private ListView lv_auction;
     private List<Map<String, Object>> list;
     private Button btZhifu_auction, bt_jinpai, bt_non_jingpai, bt_jinpai_colse;
@@ -177,6 +178,11 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
     private Timer timer;
     private TimerTask task;
     private boolean iscunhuan=false;
+    private RelativeLayout parent;
+    //屏幕高度
+    private int screenHeight = 0;
+    //软件盘弹起后所占高度阀值
+    private int keyHeight = 0;
 
 
 
@@ -864,6 +870,12 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
                 startActivity(intentHX);
             }
         });
+        parent= (RelativeLayout) findViewById(R.id.parent);
+//获取屏幕高度
+        screenHeight = this.getWindowManager().getDefaultDisplay().getHeight();
+        //阀值设置为屏幕高度的1/3
+        keyHeight = screenHeight/3;
+        parent.addOnLayoutChangeListener(this);
 //        购买数量
         tv_item_cart_buy_num = ((EditText) findViewById(R.id.tv_item_cart_buy_num));
 
@@ -2188,6 +2200,19 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
             timer.cancel();
         }
 
+    }
+
+    @Override
+    public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+        if(oldBottom != 0 && bottom != 0 &&(oldBottom - bottom > keyHeight)){
+
+            Toast.makeText(OpenAuctionActivity.this, "监听到软键盘弹起...", Toast.LENGTH_SHORT).show();
+
+        }else if(oldBottom != 0 && bottom != 0 &&(bottom - oldBottom > keyHeight)){
+
+            Toast.makeText(OpenAuctionActivity.this, "监听到软件盘关闭...", Toast.LENGTH_SHORT).show();
+
+        }
     }
 
     /*定义一个倒计时的内部类*/

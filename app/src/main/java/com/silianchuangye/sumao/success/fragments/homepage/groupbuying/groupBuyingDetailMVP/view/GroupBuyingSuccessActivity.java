@@ -17,6 +17,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.View.OnLayoutChangeListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -80,7 +81,7 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGroupBuyingDetailView, View.OnClickListener,IGroupBuyingView {
+public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGroupBuyingDetailView, View.OnClickListener,IGroupBuyingView,OnLayoutChangeListener {
     private ListView lvDemo;
     private SimpleAdapter adapter;
     private List<Map<String, Object>> list;
@@ -164,6 +165,11 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
     private TimerTask task;
     private Timer timer;
     private String groupPercent;
+    private RelativeLayout parent;
+    //屏幕高度
+    private int screenHeight = 0;
+    //软件盘弹起后所占高度阀值
+    private int keyHeight = 0;
 
 
     @Override
@@ -194,6 +200,12 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
     }
 
     public void init() {
+        parent= (RelativeLayout) findViewById(R.id.parent);
+        parent.addOnLayoutChangeListener(this);
+        //获取屏幕高度
+        screenHeight = this.getWindowManager().getDefaultDisplay().getHeight();
+        //阀值设置为屏幕高度的1/3
+        keyHeight = screenHeight/3;
         line_top = (LinearLayout) findViewById(R.id.line_top);
         line_bottom = (LinearLayout) findViewById(R.id.line_bottom);
         line_content = (LinearLayout) findViewById(R.id.line_content);
@@ -937,7 +949,7 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
             // linear_tuagou_line.setVisibility(View.GONE);
             tv_tuangou_line.setVisibility(View.GONE);
             tv_tuangou_time.setVisibility(View.GONE);
-            tvResult.setText("产品已下架");
+            tvResult.setText("团购结束");
         }else if (login.equals("running")){
             //进行中
             layout_Bottom.setVisibility(View.VISIBLE);
@@ -1436,6 +1448,19 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
         Log.d("state",state);
         Log.d("results",result);
         getinfo(result);
+    }
+
+    @Override
+    public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+        if(oldBottom != 0 && bottom != 0 &&(oldBottom - bottom > keyHeight)){
+
+            Toast.makeText(GroupBuyingSuccessActivity.this, "监听到软键盘弹起...", Toast.LENGTH_SHORT).show();
+
+        }else if(oldBottom != 0 && bottom != 0 &&(bottom - oldBottom > keyHeight)){
+
+            Toast.makeText(GroupBuyingSuccessActivity.this, "监听到软件盘关闭...", Toast.LENGTH_SHORT).show();
+
+        }
     }
 
 

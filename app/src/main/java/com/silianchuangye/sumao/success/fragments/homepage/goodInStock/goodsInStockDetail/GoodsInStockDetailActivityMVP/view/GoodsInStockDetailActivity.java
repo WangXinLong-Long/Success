@@ -52,6 +52,7 @@ import org.xutils.http.RequestParams;
 import org.xutils.x;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -59,7 +60,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2016/6/1 0001.
  */
-public class GoodsInStockDetailActivity extends Activity implements View.OnClickListener, IGoodsInStockDetailView {
+public class GoodsInStockDetailActivity extends Activity implements View.OnClickListener, IGoodsInStockDetailView ,View.OnLayoutChangeListener {
     CalendarView calendarView;
     ImageView title_bar_white_back;
     TextView title_bar_white_title;
@@ -109,6 +110,11 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
     private Button bt_Colse;
     private LinearLayout layout_gongneng;
     private String unique;
+    private RelativeLayout layout_xianhuo;
+    //屏幕高度
+    private int screenHeight = 0;
+    //软件盘弹起后所占高度阀值
+    private int keyHeight = 0;
 
 
     @Override
@@ -148,9 +154,15 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
         tv_jia.setOnClickListener(this);
         tv_jian.setOnClickListener(this);
         title_bar_white_title.setText("现货");
+        layout_xianhuo.addOnLayoutChangeListener(this);
     }
 
     private void initView() {
+        layout_xianhuo= (RelativeLayout) findViewById(R.id.layout_xianhuo);
+        //获取屏幕高度
+        screenHeight = this.getWindowManager().getDefaultDisplay().getHeight();
+        //阀值设置为屏幕高度的1/3
+        keyHeight = screenHeight/3;
         all_price = (TextView) findViewById(R.id.tv_item_cart_all_price);
         tv_jian = (TextView) findViewById(R.id.img_item_cart_buy_sub);
         tv_jia = (TextView) findViewById(R.id.img_item_cart_buy_add);
@@ -279,12 +291,14 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
                 }
 //
                 break;
-            case R.id.img_item_cart_buy_sub:
+            case R.id.img_item_cart_buy_sub://数量减少
                 String str = et_number.getText().toString();
                 float num = Float.valueOf(str);
-                num--;
-                if (num >= 1) {
+                num=num-Float.parseFloat(goodsInStockDetailBean.getCl_xiaobian());
+                if (num >= Float.parseFloat(goodsInStockDetailBean.getCl_qigou())) {
                     et_number.setText("" + num);
+                }else{
+                    et_number.setText(goodsInStockDetailBean.getCl_qigou());
                 }
                 break;
             case R.id.img_item_cart_buy_add:
@@ -297,7 +311,7 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
 //                    diolog.show();
                     et_number.setText(goodsInStockDetailBean.getCl_shuliang());
                 } else {
-                    num++;
+                    num=num+Float.parseFloat(goodsInStockDetailBean.getCl_xiaobian());
                     et_number.setText("" + num);
                 }
 
@@ -434,6 +448,7 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
     public void getGoodsInStockDetailData(GoodsInStockDetailBean goodsInStockDetailBean) {
 //        Loding.dis();
         //skuId
+        et_number.setText(goodsInStockDetailBean.getCl_qigou());
         sku_id = goodsInStockDetailBean.getCl_cpid();
 //        兰州石化7042
         tvName_auction.setText(goodsInStockDetailBean.getCl_mingcheng());
@@ -681,15 +696,20 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
         Log.d("进来这个方法", "进来这个方法");
         String productId = goodsInStockDetailBean.getCl_id();
         Log.d("选择框的值", et_number.getText().toString());
-        String quantity = Integer.parseInt(et_number.getText().toString()) * 1000 + "";
+        Float quantity =Float.parseFloat(et_number.getText().toString()) * 1000 ;
+        Float f=new Float(quantity);
+        int quantityint=f.intValue();
 //        Log.d("库存的值",Integer.parseInt(et_number.getText().toString())+"");
-//        Log.d("库存的值",Float.parseFloat(et_number.getText().toString())*1000+"");
+
+        Log.d("库存的值",Float.parseFloat(et_number.getText().toString())*1000+"");
         //  quantity=quantity.substring(0,quantity.length()-2);
         String skuId = sku_id;
+        Log.d("skuId的值",skuId);
         SharedPreferences sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
         String unique = sp.getString("unique", "");
         String _dynSessConf = unique;
-        goodsInStockDetailPresenter.joinToCart(productId, quantity, skuId, _dynSessConf);
+        Log.d("现货唯一",_dynSessConf+"");
+        goodsInStockDetailPresenter.joinToCart(productId, quantityint+"", skuId, _dynSessConf);
 
     }
 
@@ -750,4 +770,59 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
 
     }
 
+    @Override
+    public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+        if(oldBottom != 0 && bottom != 0 &&(oldBottom - bottom > keyHeight)){
+
+            //Toast.makeText(GoodsInStockDetailActivity.this, "监听到软键盘弹起...", Toast.LENGTH_SHORT).show();
+
+        }else if(oldBottom != 0 && bottom != 0 &&(bottom - oldBottom > keyHeight)){
+
+            //Toast.makeText(GoodsInStockDetailActivity.this, "监听到软件盘关闭...", Toast.LENGTH_SHORT).show();
+           // (Float.parseFloat(et_number.getText().toString())-Float.parseFloat(goodsInStockDetailBean.getCl_qigou()))/Float.parseFloat(goodsInStockDetailBean.getCl_xiaobian())
+            Double jianshu=sub(Double.parseDouble(et_number.getText().toString()),Double.parseDouble(goodsInStockDetailBean.getCl_qigou()));
+            Log.d("jianshu的值",jianshu+"");
+            int beishu=(int)div(jianshu,Float.parseFloat(goodsInStockDetailBean.getCl_xiaobian()),0);
+            Log.d("倍数的值",beishu+"");
+            if (beishu==0){
+                beishu=1;
+            }
+            Double shuliang=mul(beishu,Double.parseDouble(goodsInStockDetailBean.getCl_xiaobian()));
+            Log.d("数量的值",shuliang+"");
+           // et_number.setText(shuliang+"");
+            Double value123=add(shuliang,Double.parseDouble(goodsInStockDetailBean.getCl_qigou()));
+            et_number.setText(value123+"");
+
+            double x = (Double.parseDouble(et_number.getText().toString())) * (Double.parseDouble(tvPrice_auction.getText().toString()));
+            DecimalFormat df = new DecimalFormat("#.##");
+            all_price.setText(df.format(x) + "");
+
+
+        }
+    }
+    public  double sub(double d1, double d2)
+    {        // 进行减法运算
+        BigDecimal b1 = new BigDecimal(d1);
+        BigDecimal b2 = new BigDecimal(d2);
+        return b1.subtract(b2).doubleValue();
+    }
+    public  double mul(double d1, double d2)
+    {        // 进行乘法运算
+        BigDecimal b1 = new BigDecimal(d1);
+        BigDecimal b2 = new BigDecimal(d2);
+        return b1.multiply(b2).doubleValue();
+    }
+    public  double div(double d1,
+                             double d2,int len) {// 进行除法运算
+        BigDecimal b1 = new BigDecimal(d1);
+        BigDecimal b2 = new BigDecimal(d2);
+        return b1.divide(b2,len,BigDecimal.
+                ROUND_HALF_UP).doubleValue();
+    }
+    public  double add(double d1, double d2)
+    {        // 进行加法运算
+        BigDecimal b1 = new BigDecimal(d1);
+        BigDecimal b2 = new BigDecimal(d2);
+        return b1.add(b2).doubleValue();
+    }
 }

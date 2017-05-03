@@ -11,6 +11,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.View.OnLayoutChangeListener;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -52,6 +53,7 @@ import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -61,7 +63,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2016/5/19 0019.
  */
-public class PreSaleDetailActivity extends Activity implements View.OnClickListener, IPreSaleDetailView {
+public class PreSaleDetailActivity extends Activity implements View.OnClickListener, IPreSaleDetailView,OnLayoutChangeListener {
     CalendarView calendarView;
     ImageView title_bar_white_back;
     TextView title_bar_white_title;
@@ -113,7 +115,11 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
     private Button payment_security_closeMerket;
     private String unique;
     private String cl_gongsiId;
-
+    private RelativeLayout parent;
+    //屏幕高度
+    private int screenHeight = 0;
+    //软件盘弹起后所占高度阀值
+    private int keyHeight = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -189,9 +195,15 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
         title_bar_white_back.setOnClickListener(this);
         title_bar_white_shopping_cart.setOnClickListener(this);
         pre_sale_sale_detail_detail.setOnClickListener(this);
+        parent.addOnLayoutChangeListener(this);
     }
 
     private void initView() {
+        parent= (RelativeLayout) findViewById(R.id.parent);
+       //获取屏幕高度
+        screenHeight = this.getWindowManager().getDefaultDisplay().getHeight();
+        //阀值设置为屏幕高度的1/3
+        keyHeight = screenHeight/3;
         payment_security = (Button) findViewById(R.id.payment_security);
         title_bar_white_back = ((ImageView) findViewById(R.id.title_bar_white_back));
         title_bar_white_title = ((TextView) findViewById(R.id.title_bar_white_title));
@@ -905,5 +917,55 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
 
             }
         });
+    }
+
+    @Override
+    public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+//现在认为只要控件将Activity向上推的高度超过了1/3屏幕高，就认为软键盘弹起
+        if(oldBottom != 0 && bottom != 0 &&(oldBottom - bottom > keyHeight)){
+
+            //Toast.makeText(PreSaleDetailActivity.this, "监听到软键盘弹起...", Toast.LENGTH_SHORT).show();
+
+        }else if(oldBottom != 0 && bottom != 0 &&(bottom - oldBottom > keyHeight)){
+
+            //Toast.makeText(PreSaleDetailActivity.this, "监听到软件盘关闭...", Toast.LENGTH_SHORT).show();
+            Double jianshu=sub(Double.parseDouble(edt_num.getText().toString()),Double.parseDouble(preSaleDetailBean.getCl_qigou()));
+            int beishu=(int)div(jianshu,Double.parseDouble(preSaleDetailBean.getCl_xiaobian()),1);
+            Log.d("倍数的值",beishu+"");
+            if (beishu<=0){
+                beishu=1;
+            }
+            Double ji=mul(beishu,Double.parseDouble(preSaleDetailBean.getCl_xiaobian()));
+            Log.d("即的值",ji+"");
+            Double he=add(ji,Double.parseDouble(preSaleDetailBean.getCl_qigou()));
+            Log.d("和的值",he+"");
+            edt_num.setText(he+"");
+
+        }
+    }
+    public  double sub(double d1, double d2)
+    {        // 进行减法运算
+        BigDecimal b1 = new BigDecimal(d1);
+        BigDecimal b2 = new BigDecimal(d2);
+        return b1.subtract(b2).doubleValue();
+    }
+    public  double mul(double d1, double d2)
+    {        // 进行乘法运算
+        BigDecimal b1 = new BigDecimal(d1);
+        BigDecimal b2 = new BigDecimal(d2);
+        return b1.multiply(b2).doubleValue();
+    }
+    public  double div(double d1,
+                       double d2,int len) {// 进行除法运算
+        BigDecimal b1 = new BigDecimal(d1);
+        BigDecimal b2 = new BigDecimal(d2);
+        return b1.divide(b2,len,BigDecimal.
+                ROUND_HALF_UP).doubleValue();
+    }
+    public  double add(double d1, double d2)
+    {        // 进行加法运算
+        BigDecimal b1 = new BigDecimal(d1);
+        BigDecimal b2 = new BigDecimal(d2);
+        return b1.add(b2).doubleValue();
     }
 }
