@@ -14,17 +14,22 @@ import org.xutils.x;
 public class DataFragmentModel implements IDataFragmentModel {
 
     String dateType;
+    String searchDate;
 
-    public DataFragmentModel(String dateType) {
+    public DataFragmentModel(String dateType,String searchDate) {
         this.dateType = dateType;
+        this.searchDate=searchDate;
     }
 
     @Override
     public void getDataFragmentResult(final DataFragmentCallback callback) {
         String url = SuMaoConstant.SUMAO_IP + "/rest/model/atg/commerce/news/NewsAnalyzeActor/NewsDataList";
         RequestParams rp = new RequestParams(url);
-        if (dateType!=null){
-            rp.addParameter("searchDate",dateType);
+        if (searchDate!=null && !searchDate.equals("")){
+            rp.addParameter("searchDate",searchDate);
+        }
+        if (dateType!=null &&!dateType.equals("")){
+            rp.addParameter("dateType",dateType);
         }
         Log.d("资讯中数据的返回值",rp+"");
             x.http().post(rp, new Callback.CommonCallback<String>() {

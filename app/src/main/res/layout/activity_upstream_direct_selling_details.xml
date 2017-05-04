@@ -96,7 +96,7 @@ android:layout_marginTop="@dimen/x5"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/x10"
             android:paddingBottom="@dimen/x10"
-            android:text="上游公告"
+            android:text="通知公告"
             android:layout_marginLeft="@dimen/x15"
             />
         <ImageView

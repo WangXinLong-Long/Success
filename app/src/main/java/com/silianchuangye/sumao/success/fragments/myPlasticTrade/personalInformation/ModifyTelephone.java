@@ -49,11 +49,19 @@ public class ModifyTelephone extends Activity implements View.OnClickListener {
     String name, email, phone;
     private TextView getNewPhoneNumberVerificationCode;
     private CountDownTimerUtils mCountDownTimerUtils;
+    private CountDownTimerUtils mCountDownTimerUtils1;
+    private Button Original_mobile_phone_verification_code_bn;
+    private EditText Original_mobile_phone_verification_code_et;
+    private EditText New_mobile_phone_verification_code_et;
+    private String yanzhen;
+    private String yanzhengold;
+    private TextView Old_mobile_phone_verification_code_bn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.modify_telephone);
+        Old_mobile_phone_verification_code_bn= (TextView) findViewById(R.id.Old_mobile_phone_verification_code_bn);
         title_modify_telephone = ((RelativeLayout) findViewById(R.id.title_modify_telephone));
         title_modify_telephone.setBackgroundColor(getResources().getColor(R.color.textColor_expandable_listview_show));
         iv_title_bar_back = ((ImageView) findViewById(R.id.iv_title_bar_back));
@@ -69,8 +77,13 @@ public class ModifyTelephone extends Activity implements View.OnClickListener {
         iv_title_bar_back.setOnClickListener(this);
         tv_title_bar_title.setText("修改电话");
         tv_title_bar_title.setTextColor(Color.WHITE);
+        Original_mobile_phone_verification_code_et= (EditText) findViewById(R.id.Original_mobile_phone_verification_code_et);
+        New_mobile_phone_verification_code_et= (EditText) findViewById(R.id.New_mobile_phone_verification_code_et);
+        Original_mobile_phone_verification_code_bn= (Button) findViewById(R.id.Original_mobile_phone_verification_code_bn);
+
 
         omp_number = ((EditText) findViewById(R.id.Omp_number));
+
         nmb_number = ((EditText) findViewById(R.id.Nmb_number));
 //        sp = getSharedPreferences("silian",MODE_PRIVATE);
 //        Log.e("TAG","sp.getString===="+sp.getString("count",""));
@@ -78,10 +91,12 @@ public class ModifyTelephone extends Activity implements View.OnClickListener {
         name = getIntent().getStringExtra("name");
         email = getIntent().getStringExtra("email");
         phone = getIntent().getStringExtra("phoneNum");
+        omp_number.setText(phone);
 //        Jobs Created 获取新手机号的验证码
         getNewPhoneNumberVerificationCode = ((TextView) findViewById(R.id.New_mobile_phone_verification_code_bn));
 //        Jobs Created 设置按钮倒计时的操作
         mCountDownTimerUtils = new CountDownTimerUtils(getNewPhoneNumberVerificationCode, 30000, 1000);
+        mCountDownTimerUtils1 = new CountDownTimerUtils(Old_mobile_phone_verification_code_bn, 30000, 1000);
         //        Jobs Created 获取验证码操作
         getNewPhoneNumberVerificationCode.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,6 +108,14 @@ public class ModifyTelephone extends Activity implements View.OnClickListener {
                     mCountDownTimerUtils.start();
                     getRegisterPhoneInfo();
                 }
+            }
+        });
+        Old_mobile_phone_verification_code_bn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Original_mobile_phone_verification_code_bn.setVisibility();
+                mCountDownTimerUtils1.start();
+                getOldRegisterPhoneInfo();
             }
         });
     }
@@ -141,10 +164,23 @@ public class ModifyTelephone extends Activity implements View.OnClickListener {
                                 if (!result.contains("changeResult")) {
                                     Toast.makeText(ModifyTelephone.this, "您输入的手机号不符合规则", Toast.LENGTH_SHORT).show();
                                 } else {
-                                    Toast.makeText(ModifyTelephone.this, "修改了手机号", Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent();
-                                    setResult(0, intent);
-                                    finish();
+//
+                                    SharedPreferences sharedPreferences=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+                                    String newinfo=sharedPreferences.getString("newyanzhen","");
+                                    Log.d("newinfo",newinfo);
+                                    String oldinfo=sharedPreferences.getString("oldyanzhen","");
+
+                                    Log.d("oldinfo",oldinfo);
+                                    Log.d("newinfo",New_mobile_phone_verification_code_et.getText().toString());
+                                    Log.d("oldinfo",Original_mobile_phone_verification_code_et.getText().toString());
+                                    if (newinfo.equals(New_mobile_phone_verification_code_et.getText().toString())&&oldinfo.equals(Original_mobile_phone_verification_code_et.getText().toString())){
+                                        Toast.makeText(ModifyTelephone.this, "修改了手机号", Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent();
+                                        setResult(0, intent);
+                                        finish();
+                                    }else{
+                                        Toast.makeText(ModifyTelephone.this, "验证码不正确!", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
                             }
 
@@ -174,7 +210,7 @@ public class ModifyTelephone extends Activity implements View.OnClickListener {
         }
     }
 
-    public void getRegisterPhoneInfo() {
+    public void  getRegisterPhoneInfo() {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -185,10 +221,13 @@ public class ModifyTelephone extends Activity implements View.OnClickListener {
                 restAPI.setAppId("8a48b5514fba2f87014fd022e7e3321b");// 初始化应用ID
                 String s = System.currentTimeMillis() + "";
                 LogUtils.log(s);
-                String yanzhen = s.substring(9, s.length());
+                yanzhen = s.substring(9, s.length());
                 LogUtils.log("System.currentTimeMillis()" + yanzhen);
                 result = restAPI.sendTemplateSMS(nmb_number.getText().toString(), "36882", new String[]{yanzhen, "2"});
-
+                SharedPreferences sp=getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+                SharedPreferences.Editor editor=sp.edit();
+                editor.putString("newyanzhen",yanzhen);
+                editor.commit();
 
                 System.out.println("SDKTestSendTemplateSMS result=" + result);
                 if ("000000".equals(result.get("statusCode"))) {
@@ -203,6 +242,51 @@ public class ModifyTelephone extends Activity implements View.OnClickListener {
                     //异常返回输出错误码和错误信息
                     if (result.get("statusCode").equals("160038")) {
                         Toast.makeText(ModifyTelephone.this, "短信验证码发送过频繁", Toast.LENGTH_SHORT).show();
+                    }
+                    System.out.println("错误码=" + result.get("statusCode") + " 错误信息= " + result.get("statusMsg"));
+                }
+            }
+        }).start();
+
+
+
+    }
+
+
+    public void  getOldRegisterPhoneInfo() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                HashMap<String, Object> result = null;
+                CCPRestSDK restAPI = new CCPRestSDK();
+                restAPI.init("app.cloopen.com", "8883");// 初始化服务器地址和端口，格式如下，服务器地址不需要写https://
+                restAPI.setAccount("aaf98f894fba2cb2014fcb18dd4a0cf4", "9be90b89b2434b16a7c36571c267432a");// 初始化主帐号和主帐号TOKEN
+                restAPI.setAppId("8a48b5514fba2f87014fd022e7e3321b");// 初始化应用ID
+                String s = System.currentTimeMillis() + "";
+                LogUtils.log(s);
+                yanzhengold = s.substring(9, s.length());
+                LogUtils.log("System.currentTimeMillis()" + yanzhengold);
+                result = restAPI.sendTemplateSMS(omp_number.getText().toString(), "36882", new String[]{yanzhengold, "2"});
+
+
+                System.out.println("SDKTestSendTemplateSMS result=" + result);
+                SharedPreferences sp=getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+                SharedPreferences.Editor editor=sp.edit();
+                editor.putString("oldyanzhen",yanzhengold);
+                editor.commit();
+                if ("000000".equals(result.get("statusCode"))) {
+                    //正常返回输出data包体信息（map）
+                    HashMap<String, Object> data = (HashMap<String, Object>) result.get("data");
+                    Set<String> keySet = data.keySet();
+                    for (String key : keySet) {
+                        Object object = data.get(key);
+                        System.out.println(key + " = " + object);
+                    }
+                } else {
+                    //异常返回输出错误码和错误信息
+                    if (result.get("statusCode").equals("160038")) {
+                        Toast.makeText(ModifyTelephone.this, "短信验证码发送过频繁", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(ModifyTelephone.this, "短信验证码发送过频繁", Toast.LENGTH_SHORT).show();
                     }
                     System.out.println("错误码=" + result.get("statusCode") + " 错误信息= " + result.get("statusMsg"));
                 }

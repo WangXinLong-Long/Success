@@ -207,7 +207,7 @@ public class PhonePasswordActivity extends AppCompatActivity implements View.OnC
                     }
                 }
             }).start();
-            Toast.makeText(this, yanzhen, Toast.LENGTH_LONG).show();
+           // Toast.makeText(this, yanzhen, Toast.LENGTH_LONG).show();
             SharedPreferences sp=getSharedPreferences("sumao", Activity.MODE_PRIVATE);
             SharedPreferences.Editor editor=sp.edit();
             editor.putString("yanzhen",yanzhen);

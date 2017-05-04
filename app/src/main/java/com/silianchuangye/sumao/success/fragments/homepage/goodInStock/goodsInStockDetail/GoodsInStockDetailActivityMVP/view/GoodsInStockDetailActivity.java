@@ -1,6 +1,7 @@
 package com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.view;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.BitmapDrawable;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -155,10 +157,12 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
         tv_jian.setOnClickListener(this);
         title_bar_white_title.setText("现货");
         layout_xianhuo.addOnLayoutChangeListener(this);
+        layout_xianhuo.setOnClickListener(this);
     }
 
     private void initView() {
         layout_xianhuo= (RelativeLayout) findViewById(R.id.layout_xianhuo);
+
         //获取屏幕高度
         screenHeight = this.getWindowManager().getDefaultDisplay().getHeight();
         //阀值设置为屏幕高度的1/3
@@ -167,6 +171,9 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
         tv_jian = (TextView) findViewById(R.id.img_item_cart_buy_sub);
         tv_jia = (TextView) findViewById(R.id.img_item_cart_buy_add);
         et_number = (EditText) findViewById(R.id.tv_item_cart_buy_num);
+        et_number.setOnClickListener(this);
+//        et_number.setFocusable(true);
+//        et_number.setFocusableInTouchMode(true);
         title_bar_white_back = ((ImageView) findViewById(R.id.title_bar_white_back));
         title_bar_white_title = ((TextView) findViewById(R.id.title_bar_white_title));
         title_bar_white_shopping_cart = ((ImageView) findViewById(R.id.title_bar_white_shopping_cart));
@@ -218,6 +225,12 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
     public void onClick(View v) {
         Intent intent = new Intent();
         switch (v.getId()) {
+            case R.id.layout_xianhuo:
+                Log.d("现货全屏的点击事件","事件");
+                InputMethodManager imm = (InputMethodManager)
+                        getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                break;
             case R.id.title_bar_white_back:
                 finish();
                 break;
@@ -324,6 +337,11 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
                 intentHX.putExtra(Constant.IM_SERVICE_NUMBER, cl_gongsiId);
                 startActivity(intentHX);
                 break;
+            case R.id.tv_item_cart_buy_num:
+                et_number.setFocusable(true);
+                et_number.setFocusableInTouchMode(true);
+                break;
+
 
 
             default:
@@ -796,6 +814,9 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
             double x = (Double.parseDouble(et_number.getText().toString())) * (Double.parseDouble(tvPrice_auction.getText().toString()));
             DecimalFormat df = new DecimalFormat("#.##");
             all_price.setText(df.format(x) + "");
+            et_number.clearFocus();
+            //et_number.setFocusable(false);
+
 
 
         }

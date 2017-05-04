@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.SpotOrder.preSell.presellallFragmentMVP.bean.PreSellAllBean;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -132,7 +133,10 @@ public class MyAdapter extends BaseExpandableListAdapter {
         tvTitle.setText(groupBeans.get(groupposition).getId());
         tv_people.setText(groupBeans.get(groupposition).getName());
         Log.d("订单的金额",order.get(groupposition).getCl().get(0).getCl_amount());
-        tvprice.setText(order.get(groupposition).getCl().get(0).getCl_amount());
+        //tvprice.setText(order.get(groupposition).getCl().get(0).getCl_amount());
+        Float price=Float.parseFloat(order.get(groupposition).getCl().get(0).getCl_amount());
+        DecimalFormat df = new DecimalFormat("#.##");
+        tvprice.setText(df.format(price) + "");
         tvprice.setVisibility(View.VISIBLE);
         return view;
     }

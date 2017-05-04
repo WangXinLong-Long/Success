@@ -431,6 +431,7 @@
                     android:layout_marginLeft="@dimen/x10"
                     android:layout_marginTop="@dimen/x10"
                     android:textSize="@dimen/x10"
+                    android:visibility="gone"
                     android:layout_toRightOf="@id/delivery_mode_et"
                     android:text="*如需配送请在购买后填写物流计划,确定物流价格"
                     android:textColor="#FAB96D" />

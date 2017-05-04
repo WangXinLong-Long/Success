@@ -172,8 +172,8 @@ public class CompanyUserUpdateActivity extends AppCompatActivity {
                 new Thread(){
                     @Override
                     public void run() {
+                        yanzhengyouxiang();
 
-                        updateUser();
                     }
                 }.start();
             }
@@ -183,6 +183,76 @@ public class CompanyUserUpdateActivity extends AppCompatActivity {
 
 
     }
+    public void yanzhengyouxiang(){
+        String url= SuMaoConstant.SUMAO_IP+"/rest/model/atg/store/profile/RegistrationActor/userVerify";
+        RequestParams rp=new RequestParams(url);
+        rp.addParameter("type","email");
+        rp.addParameter("attr",email);
+        x.http().post(rp, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.d("验证邮箱的返回值",result);
+                if (result.contains("true")){
+                    yanzhengphone();
+                }else{
+                    Toast.makeText(CompanyUserUpdateActivity.this, "该邮箱已经注册!", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+    }
+    public void yanzhengphone(){
+        String url= SuMaoConstant.SUMAO_IP+"/rest/model/atg/store/profile/RegistrationActor/userVerify";
+        RequestParams rp=new RequestParams(url);
+//        jsonObject.put("type", "mobile");
+//        jsonObject.put("attr", telephone);
+        rp.addParameter("type","mobile");
+        rp.addParameter("attr",phone);
+        x.http().post(rp, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.d("验证邮箱的返回值",result);
+                if (result.contains("true")){
+                    updateUser();
+
+
+                }else{
+                    Toast.makeText(CompanyUserUpdateActivity.this, "该邮箱已经注册!", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+    }
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

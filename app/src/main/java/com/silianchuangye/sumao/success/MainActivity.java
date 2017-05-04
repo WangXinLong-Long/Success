@@ -156,7 +156,7 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
             }
         });
         /**
-         * 我的sumao的点击时间
+         * 我的sumao的点击事件
          */
         mTabHost.getTabWidget().getChildTabViewAt(4).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -165,9 +165,7 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
 
                 if (unique.equals("false")) {
                     Toast.makeText(MainActivity.this, "请登录", Toast.LENGTH_SHORT).show();
-                    SharedPreferences.Editor editor = sp.edit();
-                    editor.clear();
-                    editor.commit();
+                    tuichu();
                     Intent intent = new Intent();
                     intent.putExtra("roles", "buyer");
                     intent.putExtra("cart1", 10);
@@ -176,19 +174,9 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
                 } else {
                     username = sp.getString("name", "");
                     if (username != "") {
-//                        mTabHost.setCurrentTab(4);
-//                        boolean openNetwork = isOpenNetwork();
-//                        if (openNetwork) {
-//                        } else {
-//                            networkConnections = false;
-//                            Toast.makeText(MainActivity.this, "暂时没有网络连接,请检查您的网络设置", Toast.LENGTH_SHORT).show();
-//                        }
                         infoLogin(unique,4);
                     } else {
-                        SharedPreferences.Editor editor = sp.edit();
-                        editor.clear();
-                        //      editor.clear();
-                        editor.commit();
+                        tuichu();
                         Intent intent = new Intent();
                         intent.putExtra("roles", "buyer");
                         intent.putExtra("cart1", 10);
@@ -209,29 +197,9 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
         mTabHost.getTabWidget().getChildTabViewAt(2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                sp = getSharedPreferences("sumao", Context.MODE_PRIVATE);
-//                username = sp.getString("name", "");
-//                if (!unique.equals("false")||unique!=null||unique!=""||!unique.equals("")) {
-//                    mTabHost.setCurrentTab(2);
-//                    boolean openNetwork = isOpenNetwork();
-//                    if (openNetwork) {
-//                    } else {
-//                        networkConnections = false;
-//                        Toast.makeText(MainActivity.this, "暂时没有网络连接,请检查您的网络设置", Toast.LENGTH_SHORT).show();
-//                    }
-//                } else {
-//                    Intent intent = new Intent();
-//                    intent.putExtra("roles", "buyer");
-//                    intent.putExtra("cart1", 9);
-//                    intent.setClass(MainActivity.this, LoginUserActivity.class);
-//                    startActivity(intent);
-//                }
+
                 if (unique.equals("false")) {
                     Toast.makeText(MainActivity.this, "请登录", Toast.LENGTH_SHORT).show();
-//                    SharedPreferences.Editor editor = sp.edit();
-//                    editor.clear();
-//                    //      editor.clear();////
-//                    editor.commit();
                     tuichu();
                     Intent intent = new Intent();
                     intent.putExtra("roles", "buyer");
@@ -241,13 +209,6 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
                 } else {
                     username = sp.getString("name", "");
                     if (username != "") {
-//                        mTabHost.setCurrentTab(2);
-//                        boolean openNetwork = isOpenNetwork();
-//                        if (openNetwork) {
-//                        } else {
-//                            networkConnections = false;
-//                            Toast.makeText(MainActivity.this, "暂时没有网络连接,请检查您的网络设置", Toast.LENGTH_SHORT).show();
-//                        }
                         infoLogin(unique,2);
                     } else {
                         tuichu();
@@ -415,6 +376,27 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
         }
     }
 
+    public void mySumao(Bundle savedInstanceState){
+        SharedPreferences share = getSharedPreferences("sumao", Context.MODE_PRIVATE);
+        String str = share.getString("name", "");
+        if (str != "") {
+            mTabHost.setCurrentTab(4);
+            boolean openNetwork = isOpenNetwork();
+            if (openNetwork) {
+            } else {
+                networkConnections = false;
+                Toast.makeText(MainActivity.this, "暂时没有网络连接,请检查您的网络设置", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Intent intent = new Intent();
+            intent.putExtra("cart1", 10);
+            intent.putExtra("roles", "buyer");
+            intent.setClass(MainActivity.this, LoginUserActivity.class);
+            startActivity(intent);
+            MainActivity.this.finish();
+        }
+    }
+
     private void showIntent(Bundle savedInstanceState) {
         int num = getIntent().getIntExtra("cart", 0);
         Log.e("TAG", "num=====" + num);
@@ -423,25 +405,9 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
                 showCart(savedInstanceState);
                 break;
             case 3:
-                Log.d("点击了我的sumao","点击了我的");
-                sp = getSharedPreferences("sumao", Context.MODE_PRIVATE);
-                username = sp.getString("name", "");
-                unique=sp.getString("unique","");
-                Log.e("TAG", "username11111-----" + username);
-                if (username != "") {
-                    infoLogin(unique,4);
-                } else {
-                    tuichu();
-                    Intent intent = new Intent();
-                    intent.setClass(MainActivity.this, LoginUserActivity.class);
-                    intent.putExtra("roles", "buyer");
-                    intent.putExtra("cart1",10);
-                    startActivity(intent);
-                    MainActivity.this.finish();
-                }
+                mySumao(savedInstanceState);
                 break;
             case 4:
-                Log.d("点击了我的sumao","我的sumao");
                 showCart(savedInstanceState);
                 break;
             default:

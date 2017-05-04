@@ -387,12 +387,12 @@ public class LoginUserActivity extends AppCompatActivity implements View.OnClick
                                 //接收mainactivity传递过来的参数
                                 if (mainActivityInteger == 9) {
                                     Intent intent = new Intent();
-                                    intent.putExtra("cart", 4);
                                     intent.setClass(LoginUserActivity.this, MainActivity.class);
+                                    intent.putExtra("cart", 4);
                                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                     startActivity(intent);
                                 } else if (mainActivityInteger==10){
-                                    Log.d("jinlai l ","wode");
+
                                     Intent intent = new Intent();
                                     intent.setClass(LoginUserActivity.this, MainActivity.class);
                                     intent.putExtra("cart", 3);
@@ -400,7 +400,7 @@ public class LoginUserActivity extends AppCompatActivity implements View.OnClick
                                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                     startActivity(intent);
                                 }else{
-                                    Log.d("session的树枝",Session);
+                                    Log.d("session的值",Session);
                                     Intent intent=new Intent();
                                     intent.putExtra("unique",Session);
                                     setResult(position,intent);

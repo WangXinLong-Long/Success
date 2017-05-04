@@ -215,6 +215,57 @@ public class InvoiceInformation extends Activity implements View.OnClickListener
         Bundle bundle = new Bundle();
         intent.setClass(InvoiceInformation.this, ModifyName.class);
         switch (v.getId()) {
+            case R.id.save_modify_info:
+                if (duty_paragraph.getText().toString().equals("")||duty_paragraph.getText().toString()==null
+                    ||invoice_information_address.getText().toString().equals("")||invoice_information_address.getText().toString()==null
+                        || invoice_information_telephone.getText().toString().equals("")||invoice_information_telephone.getText().toString()==null
+                        ||invoice_information_bank_account.getText().toString().equals("")||invoice_information_bank_account.getText().toString()==null
+                        ||invoice_information_account_number_tv.getText().toString().equals("")||invoice_information_account_number_tv.getText().toString()==null
+                        ||bill_mailing_address_name_tv.getText().toString().equals("")||bill_mailing_address_name_tv.getText().toString()==null
+                        ||bill_mailing_address_telephone_tv.getText().toString().equals("")||bill_mailing_address_telephone_tv.getText().toString()==null
+                        ||bill_mailing_address_fix_telephone_tv.getText().toString().equals("")||bill_mailing_address_fix_telephone_tv.getText().toString()==null
+                        ||bill_mailing_address_mailing_address_tv_region.getText().toString().equals("")||bill_mailing_address_mailing_address_tv_region.getText().toString()==null
+                        ||bill_mailing_address_mailing_address_tv_detail.getText().toString().equals("")||bill_mailing_address_mailing_address_tv_detail.getText().toString()==null
+                        ||bill_mailing_address_zip_code_tv.getText().toString().equals("")||bill_mailing_address_zip_code_tv.getText().toString()==null
+                        ){
+                    Toast.makeText(InvoiceInformation.this, "请填写完整您要修改的信息!", Toast.LENGTH_SHORT).show();
+                }else {
+                     updateInfo();
+                }
+//                if (invoice_information_address.getText().toString().equals("")||invoice_information_address.getText().toString()==null){
+//                    Toast.makeText(InvoiceInformation.this, "请填写您要修改的地址!", Toast.LENGTH_SHORT).show();
+//                }
+//                if (invoice_information_telephone.getText().toString().equals("")||invoice_information_telephone.getText().toString()==null){
+//                    Toast.makeText(InvoiceInformation.this, "请填写您要修改的固定电话!", Toast.LENGTH_SHORT).show();
+//                }
+//                if (invoice_information_bank_account.getText().toString().equals("")||invoice_information_bank_account.getText().toString()==null){
+//                    Toast.makeText(InvoiceInformation.this, "请填写您要修改的开户行!", Toast.LENGTH_SHORT).show();
+//                }
+//                if (invoice_information_account_number_tv.getText().toString().equals("")||invoice_information_account_number_tv.getText().toString()==null){
+//                    Toast.makeText(InvoiceInformation.this, "请填写您要修改的帐号!", Toast.LENGTH_SHORT).show();
+//                }
+//                if (bill_mailing_address_name_tv.getText().toString().equals("")||bill_mailing_address_name_tv.getText().toString()==null){
+//                    Toast.makeText(InvoiceInformation.this, "请填写您要修改的名称!", Toast.LENGTH_SHORT).show();
+//                }
+//                if (bill_mailing_address_telephone_tv.getText().toString().equals("")||bill_mailing_address_telephone_tv.getText().toString()==null){
+//                    Toast.makeText(InvoiceInformation.this, "请填写您要修改的手机号!", Toast.LENGTH_SHORT).show();
+//                }
+//                if (bill_mailing_address_fix_telephone_tv.getText().toString().equals("")||bill_mailing_address_fix_telephone_tv.getText().toString()==null){
+//                    Toast.makeText(InvoiceInformation.this, "请填写您要修改的固定电话!", Toast.LENGTH_SHORT).show();
+//                }
+//                if (bill_mailing_address_mailing_address_tv_region.getText().toString().equals("")||bill_mailing_address_mailing_address_tv_region.getText().toString()==null){
+//                    Toast.makeText(InvoiceInformation.this, "请填写您要修改的地址!", Toast.LENGTH_SHORT).show();
+//                }
+//                if (bill_mailing_address_mailing_address_tv_detail.getText().toString().equals("")||bill_mailing_address_mailing_address_tv_detail.getText().toString()==null){
+//                    Toast.makeText(InvoiceInformation.this, "请填写您要修改的地址!", Toast.LENGTH_SHORT).show();
+//                }
+//                if (bill_mailing_address_zip_code_tv.getText().toString().equals("")||bill_mailing_address_zip_code_tv.getText().toString()==null){
+//                    Toast.makeText(InvoiceInformation.this, "请填写您要修改的邮编!", Toast.LENGTH_SHORT).show();
+//                }
+//
+
+
+                break;
 
             case R.id.duty_paragraph_rl:
                 bundle.putString("receivingInformation", "修改税号");
@@ -281,24 +332,7 @@ public class InvoiceInformation extends Activity implements View.OnClickListener
                 intent.putExtras(bundle);
                 startActivityForResult(intent, SuMaoConstant.CHANGE_POSITION_TEN);
                 break;
-            case R.id.save_modify_info:
-                updateInfo();
-//                保存按钮
-//                invoiceInformationPresenter.saveModifyInvoiceInformation(
-//                        duty_paragraph.getText().toString().trim(),
-//                        invoice_information_address.getText().toString().trim(),
-//                        invoice_information_telephone.getText().toString().trim(),
-//                        invoice_information_bank_account.getText().toString().trim(),
-//                        invoice_information_account_number_tv.getText().toString().trim(),
-//                        bill_mailing_address_name_tv.getText().toString().trim(),
-//                        bill_mailing_address_telephone_tv.getText().toString().trim(),
-//                        bill_mailing_address_fix_telephone_tv.getText().toString().trim(),
-//                        sb.substring(0, 4).toString(), sb.substring(0, 6).toString(), sb.toString().toString(),
-//                        bill_mailing_address_mailing_address_tv_detail.getText().toString().trim(),
-//                        bill_mailing_address_zip_code_tv.getText().toString().trim(),
-//                        sessionId
-//                        );
-                break;
+
 //            修改邮寄地址
             case R.id.bill_mailing_address_mailing_address_rl:
                 Intent intentpor = new Intent();

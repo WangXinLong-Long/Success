@@ -364,8 +364,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/x5"
-                    android:layout_toRightOf="@id/delivery_mode_et"
-                    android:layout_alignBottom="@id/delivery_mode_et"
+                    android:layout_below="@+id/delivery_mode_tv"
+
                     android:text="*如需配送请在购买后填写物流计划,确定物流价格"
                     android:textColor="#FAB96D"
                     android:textSize="@dimen/x10" />

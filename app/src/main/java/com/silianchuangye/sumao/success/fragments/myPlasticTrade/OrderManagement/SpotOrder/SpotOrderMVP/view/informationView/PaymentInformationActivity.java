@@ -279,7 +279,7 @@ public class PaymentInformationActivity extends AppCompatActivity implements Vie
                     format(Double.parseDouble(payTail_time)) );
                 counter_fee_time_number.setText(new SimpleDateFormat("HH:mm:ss").
                     format(Double.parseDouble(payTail_time)));
-            }else if(State.equals("SUBMITTED")||State.equals("PENDING_APPROVAL")||State.equals("APPROVED")||State.equals("FAILED_APPROVAL") ){
+            }else if(State.equals("SUBMITTED")||State.equals("PENDING_APPROVAL")||State.equals("APPROVED")||State.equals("FAILED_APPROVAL")||State.equals("REMOVED") ){
                 counter_fee_date_number.setVisibility(View.GONE);
                 counter_fee_time_number.setVisibility(View.GONE);
                 //把日期时间隐藏

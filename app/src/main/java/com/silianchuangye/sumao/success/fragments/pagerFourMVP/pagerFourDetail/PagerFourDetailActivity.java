@@ -83,7 +83,9 @@ public class PagerFourDetailActivity extends AppCompatActivity implements View.O
       //  from.setText(pagerFourDetailBean.getSource());
 
         mWebView = (WebView) findViewById(R.id.webView);
-        initData();
+        //webSettings.setJavaScriptEnabled(true);
+        //initData();
+        initView();
     }
 
     @Override
@@ -94,9 +96,24 @@ public class PagerFourDetailActivity extends AppCompatActivity implements View.O
                 break;
         }
     }
-    @SuppressLint({"JavascriptInterface", "SetJavaScriptEnabled"})
+
+    public void initView(){
+        //支持javascript
+        mWebView.getSettings().setJavaScriptEnabled(true);
+// 设置可以支持缩放
+        mWebView.getSettings().setSupportZoom(true);
+// 设置出现缩放工具
+        mWebView.getSettings().setBuiltInZoomControls(true);
+//扩大比例的缩放
+        mWebView.getSettings().setUseWideViewPort(true);
+//自适应屏幕
+        mWebView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+        mWebView.getSettings().setLoadWithOverviewMode(true);
+        mWebView.loadDataWithBaseURL(null,Result, "text/html", "utf-8", null);
+    }
+    //@SuppressLint({"JavascriptInterface", "SetJavaScriptEnabled"})
     private void initData() {
-        javascriptInterface = new JavaScriptInterface(this);
+        //javascriptInterface = new JavaScriptInterface(this);
         webSettings = mWebView.getSettings();
         //是否支持js
         webSettings.setJavaScriptEnabled(true);
@@ -105,11 +122,15 @@ public class PagerFourDetailActivity extends AppCompatActivity implements View.O
         //显示图片时自适应屏幕大小,但是4.4以前好用,4,4以后不好用
         //mWebView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         //weView中有链接,在当前 browser 中相应
-        mWebView.setWebViewClient(new MyWebViewClient());
+        // 为图片添加放大缩小功能
+        //mWebView.getSettings().setUseWideViewPort(true);
+
+      //  mWebView.setInitialScale(70);   //100代表不缩放
+       // mWebView.setWebViewClient(new MyWebViewClient());
         //设置进度条,处理提示框
-        mWebView.setWebChromeClient(new MyWebChromeClient());
+        //mWebView.setWebChromeClient(new MyWebChromeClient());
         //添加监听
-        mWebView.addJavascriptInterface(javascriptInterface, "imagelistner");
+        //mWebView.addJavascriptInterface(javascriptInterface, "imagelistner");
         mWebView.loadDataWithBaseURL(null,Result, "text/html", "utf-8", null);
 
 //        talkWithNet1();

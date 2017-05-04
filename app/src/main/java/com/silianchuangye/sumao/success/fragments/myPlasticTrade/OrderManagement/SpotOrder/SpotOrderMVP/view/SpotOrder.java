@@ -326,6 +326,7 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
                     e.printStackTrace();
                 }
                 setValue();
+                typeinfo();
 
             }
 
@@ -364,175 +365,8 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
 //                double amount = Double.parseDouble(cl.get(i).getCl_amount());
 //                total += amount;
 //            }
-            Calendar calendar = Calendar.getInstance();
-            calendar.set(Calendar.HOUR_OF_DAY, 16);
-            calendar.set(Calendar.MINUTE, 0);
-            calendar.set(Calendar.SECOND, 0);
-            long countDownTime = 0;
-            bottom_money2.setText(String.valueOf(price));
-            if (type.equals("fixedPricingOrder")) {//现货
-                type2.setText("现货");
-                tv_xianqing_type.setText("现货");
-                long countDown = (Long.parseLong(submittedDate) + 1000 * 3600) - System.currentTimeMillis();
-                countDownTime = countDown > 0 ? countDown : 0;
-            } else if (type.equals("openAuctionOrder")) {//公开竞拍
-                type2.setText("公开竞拍");
-                tv_xianqing_type.setText("公开竞拍");
-//            long countDown = (calendar.getTimeInMillis()) - Long.parseLong(submittedDate);
-//            countDownTime = countDown > 0 ? countDown : (calendar.getTimeInMillis() + 24 * 60 * 60 * 1000) - Long.parseLong(submittedDate);
-                String committime= new SimpleDateFormat("yyyy-MM-dd").format(Double.parseDouble(submittedDate));
-                Log.d("comittime",committime);
-                //把日期变为String类型
-                try {
-                    String data=committime+" 17:00:00";
-                    Date date=new Date();
-                    SimpleDateFormat simpleFormat = new SimpleDateFormat( "yyyy-MM-dd hh:mm:ss" );
 
-                    date = simpleFormat.parse(data);
-                    Log.d("日期的值",date.toString());
-                    long createdate=date.getTime();
-                    Log.d("日期转为秒的值",createdate+"");
 
-                    if (createdate-Long.parseLong(submittedDate)>=0){
-                        //倒计时到5点
-
-                        if (createdate-System.currentTimeMillis()>0){
-                            countDownTime=createdate-System.currentTimeMillis();
-                        }else{
-                            countDownTime=0;
-                        }
-                        Log.d("if countDownTime的值",countDownTime+"");
-                    }else{
-                        //倒计时到明天5点
-
-                        if (createdate+(1000*60*60*24)-System.currentTimeMillis()>=0){
-                            countDownTime=createdate+(1000*60*60*24)-System.currentTimeMillis();
-                        }
-                        Log.d("else countDownTime的值",countDownTime+"");
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-            } else if (type.equals("sealedAuctionOrder")) {//密封竞拍
-                type2.setText("密封竞拍");
-                tv_xianqing_type.setText("密封竞拍");
-//            long countDown = (calendar.getTimeInMillis()) - Long.parseLong(submittedDate);
-//            countDownTime = countDown > 0 ? countDown : (calendar.getTimeInMillis() + 24 * 60 * 60 * 1000) - Long.parseLong(submittedDate);
-
-                String committime= new SimpleDateFormat("yyyy-MM-dd").format(Double.parseDouble(submittedDate));
-                Log.d("comittime",committime);
-                //把日期变为String类型
-                try {
-                    String data=committime+" 17:00:00";
-                    Date date=new Date();
-                    SimpleDateFormat simpleFormat = new SimpleDateFormat( "yyyy-MM-dd hh:mm:ss" );
-
-                    date = simpleFormat.parse(data);
-                    Log.d("日期的值",date.toString());
-                    long createdate=date.getTime();
-                    Log.d("日期转为秒的值",createdate+"");
-
-                    if (createdate-Long.parseLong(submittedDate)>=0){
-                        //倒计时到5点
-
-                        if (createdate-System.currentTimeMillis()>=0){
-                            countDownTime=createdate-System.currentTimeMillis();
-                        }
-                        Log.d("if countDownTime的值",countDownTime+"");
-                    }else{
-                        //倒计时到明天5点
-
-                        if (createdate+(1000*60*60*24)-System.currentTimeMillis()>=0){
-                            countDownTime=createdate+(1000*60*60*24)-System.currentTimeMillis();
-                        }
-                        Log.d("else countDownTime的值",countDownTime+"");
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-            } else if (type.equals("integratePurchaseOrder")) {//团购
-                type2.setText("团购");
-                tv_xianqing_type.setText("团购");
-//            long countDown = (calendar.getTimeInMillis()) - Long.parseLong(submittedDate);
-//            countDownTime = countDown > 0 ? countDown : (calendar.getTimeInMillis() + 24 * 60 * 60 * 1000) - Long.parseLong(submittedDate);
-                String committime= new SimpleDateFormat("yyyy-MM-dd").format(Double.parseDouble(submittedDate));
-                Log.d("comittime",committime);
-                //把日期变为String类型
-                try {
-                    String data=committime+" 17:00:00";
-                    Date date=new Date();
-                    SimpleDateFormat simpleFormat = new SimpleDateFormat( "yyyy-MM-dd hh:mm:ss" );
-
-                    date = simpleFormat.parse(data);
-                    Log.d("日期的值",date.toString());
-                    long createdate=date.getTime();
-                    Log.d("日期转为秒的值",createdate+"");
-
-                    if (createdate-Long.parseLong(submittedDate)>=0){
-                        //倒计时到5点
-
-                        if (createdate-System.currentTimeMillis()>=0){
-                            countDownTime=createdate-System.currentTimeMillis();
-                        }
-                        Log.d("if countDownTime的值",countDownTime+"");
-                    }else{
-                        //倒计时到明天5点
-
-                        if (createdate+(1000*60*60*24)-System.currentTimeMillis()>=0){
-                            countDownTime=createdate+(1000*60*60*24)-System.currentTimeMillis();
-                        }
-                        Log.d("else countDownTime的值",countDownTime+"");
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            } else if (type.equals("forwardPricingOrder")) {//预售
-                type2.setText("预售");
-                tv_xianqing_type.setText("预售");
-                //countDownTime = Long.parseLong(list.get(0).get("deliveryEndDate").toString()) - Long.parseLong(submittedDate);
-                countDownTime = Long.parseLong(list.get(0).get("paymentEndDate").toString()) - System.currentTimeMillis();
-                Log.d("预售截止时间",Long.parseLong(list.get(0).get("deliveryEndDate").toString())+"");
-            } else if (type.equals("scheduleOrder")) {//计划订单
-                type2.setText("计划订单");
-                tv_xianqing_type.setText("计划订单");
-//            long countDown = (calendar.getTimeInMillis()) - Long.parseLong(submittedDate);
-//            countDownTime = countDown > 0 ? countDown : (calendar.getTimeInMillis() + 24 * 60 * 60 * 1000) - Long.parseLong(submittedDate);
-                String committime= new SimpleDateFormat("yyyy-MM-dd").format(Double.parseDouble(submittedDate));
-                Log.d("comittime",committime);
-                //把日期变为String类型
-                try {
-                    String data=committime+" 17:00:00";
-                    Date date=new Date();
-                    SimpleDateFormat simpleFormat = new SimpleDateFormat( "yyyy-MM-dd hh:mm:ss" );
-
-                    date = simpleFormat.parse(data);
-                    Log.d("日期的值",date.toString());
-                    long createdate=date.getTime();
-                    Log.d("日期转为秒的值",createdate+"");
-
-                    if (createdate-Long.parseLong(submittedDate)>=0){
-                        //倒计时到5点
-
-                        if (createdate-System.currentTimeMillis()>=0){
-                            countDownTime=createdate-System.currentTimeMillis();
-                        }
-                        Log.d("if countDownTime的值",countDownTime+"");
-                    }else{
-                        //倒计时到明天5点
-
-                        if (createdate+(1000*60*60*24)-System.currentTimeMillis()>=0){
-                            countDownTime=createdate+(1000*60*60*24)-System.currentTimeMillis();
-                        }
-                        Log.d("else countDownTime的值",countDownTime+"");
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-            mc = new MyCount(countDownTime, 1000);
-            mc.start();
         } else if (state.equals("PAYMENT_COMPLETION")) {//货款已支付
             tv_title_bar_title.setText("货款已支付");
             state2.setText("货款已支付");
@@ -589,6 +423,178 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
         } else if (state.equals("CHANGED")) {//已变更
             order_status_order_details.setImageResource(R.mipmap.no_order_form);
         }
+    }
+
+    public void typeinfo(){
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 16);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        long countDownTime = 0;
+        bottom_money2.setText(String.valueOf(price));
+        if (type.equals("fixedPricingOrder")) {//现货
+            type2.setText("现货");
+            tv_xianqing_type.setText("现货");
+            long countDown = (Long.parseLong(submittedDate) + 1000 * 3600) - System.currentTimeMillis();
+            countDownTime = countDown > 0 ? countDown : 0;
+        } else if (type.equals("openAuctionOrder")) {//公开竞拍
+            type2.setText("公开竞拍");
+            tv_xianqing_type.setText("公开竞拍");
+//            long countDown = (calendar.getTimeInMillis()) - Long.parseLong(submittedDate);
+//            countDownTime = countDown > 0 ? countDown : (calendar.getTimeInMillis() + 24 * 60 * 60 * 1000) - Long.parseLong(submittedDate);
+            String committime= new SimpleDateFormat("yyyy-MM-dd").format(Double.parseDouble(submittedDate));
+            Log.d("comittime",committime);
+            //把日期变为String类型
+            try {
+                String data=committime+" 17:00:00";
+                Date date=new Date();
+                SimpleDateFormat simpleFormat = new SimpleDateFormat( "yyyy-MM-dd hh:mm:ss" );
+
+                date = simpleFormat.parse(data);
+                Log.d("日期的值",date.toString());
+                long createdate=date.getTime();
+                Log.d("日期转为秒的值",createdate+"");
+
+                if (createdate-Long.parseLong(submittedDate)>=0){
+                    //倒计时到5点
+
+                    if (createdate-System.currentTimeMillis()>0){
+                        countDownTime=createdate-System.currentTimeMillis();
+                    }else{
+                        countDownTime=0;
+                    }
+                    Log.d("if countDownTime的值",countDownTime+"");
+                }else{
+                    //倒计时到明天5点
+
+                    if (createdate+(1000*60*60*24)-System.currentTimeMillis()>=0){
+                        countDownTime=createdate+(1000*60*60*24)-System.currentTimeMillis();
+                    }
+                    Log.d("else countDownTime的值",countDownTime+"");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        } else if (type.equals("sealedAuctionOrder")) {//密封竞拍
+            type2.setText("密封竞拍");
+            tv_xianqing_type.setText("密封竞拍");
+//            long countDown = (calendar.getTimeInMillis()) - Long.parseLong(submittedDate);
+//            countDownTime = countDown > 0 ? countDown : (calendar.getTimeInMillis() + 24 * 60 * 60 * 1000) - Long.parseLong(submittedDate);
+
+            String committime= new SimpleDateFormat("yyyy-MM-dd").format(Double.parseDouble(submittedDate));
+            Log.d("comittime",committime);
+            //把日期变为String类型
+            try {
+                String data=committime+" 17:00:00";
+                Date date=new Date();
+                SimpleDateFormat simpleFormat = new SimpleDateFormat( "yyyy-MM-dd hh:mm:ss" );
+
+                date = simpleFormat.parse(data);
+                Log.d("日期的值",date.toString());
+                long createdate=date.getTime();
+                Log.d("日期转为秒的值",createdate+"");
+
+                if (createdate-Long.parseLong(submittedDate)>=0){
+                    //倒计时到5点
+
+                    if (createdate-System.currentTimeMillis()>=0){
+                        countDownTime=createdate-System.currentTimeMillis();
+                    }
+                    Log.d("if countDownTime的值",countDownTime+"");
+                }else{
+                    //倒计时到明天5点
+
+                    if (createdate+(1000*60*60*24)-System.currentTimeMillis()>=0){
+                        countDownTime=createdate+(1000*60*60*24)-System.currentTimeMillis();
+                    }
+                    Log.d("else countDownTime的值",countDownTime+"");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        } else if (type.equals("integratePurchaseOrder")) {//团购
+            type2.setText("团购");
+            tv_xianqing_type.setText("团购");
+//            long countDown = (calendar.getTimeInMillis()) - Long.parseLong(submittedDate);
+//            countDownTime = countDown > 0 ? countDown : (calendar.getTimeInMillis() + 24 * 60 * 60 * 1000) - Long.parseLong(submittedDate);
+            String committime= new SimpleDateFormat("yyyy-MM-dd").format(Double.parseDouble(submittedDate));
+            Log.d("comittime",committime);
+            //把日期变为String类型
+            try {
+                String data=committime+" 17:00:00";
+                Date date=new Date();
+                SimpleDateFormat simpleFormat = new SimpleDateFormat( "yyyy-MM-dd hh:mm:ss" );
+
+                date = simpleFormat.parse(data);
+                Log.d("日期的值",date.toString());
+                long createdate=date.getTime();
+                Log.d("日期转为秒的值",createdate+"");
+
+                if (createdate-Long.parseLong(submittedDate)>=0){
+                    //倒计时到5点
+
+                    if (createdate-System.currentTimeMillis()>=0){
+                        countDownTime=createdate-System.currentTimeMillis();
+                    }
+                    Log.d("if countDownTime的值",countDownTime+"");
+                }else{
+                    //倒计时到明天5点
+
+                    if (createdate+(1000*60*60*24)-System.currentTimeMillis()>=0){
+                        countDownTime=createdate+(1000*60*60*24)-System.currentTimeMillis();
+                    }
+                    Log.d("else countDownTime的值",countDownTime+"");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else if (type.equals("forwardPricingOrder")) {//预售
+            type2.setText("预售");
+            tv_xianqing_type.setText("预售");
+            //countDownTime = Long.parseLong(list.get(0).get("deliveryEndDate").toString()) - Long.parseLong(submittedDate);
+            countDownTime = Long.parseLong(list.get(0).get("paymentEndDate").toString()) - System.currentTimeMillis();
+            Log.d("预售截止时间",Long.parseLong(list.get(0).get("deliveryEndDate").toString())+"");
+        } else if (type.equals("scheduleOrder")) {//计划订单
+            type2.setText("计划订单");
+            tv_xianqing_type.setText("计划订单");
+//            long countDown = (calendar.getTimeInMillis()) - Long.parseLong(submittedDate);
+//            countDownTime = countDown > 0 ? countDown : (calendar.getTimeInMillis() + 24 * 60 * 60 * 1000) - Long.parseLong(submittedDate);
+            String committime= new SimpleDateFormat("yyyy-MM-dd").format(Double.parseDouble(submittedDate));
+            Log.d("comittime",committime);
+            //把日期变为String类型
+            try {
+                String data=committime+" 17:00:00";
+                Date date=new Date();
+                SimpleDateFormat simpleFormat = new SimpleDateFormat( "yyyy-MM-dd hh:mm:ss" );
+
+                date = simpleFormat.parse(data);
+                Log.d("日期的值",date.toString());
+                long createdate=date.getTime();
+                Log.d("日期转为秒的值",createdate+"");
+
+                if (createdate-Long.parseLong(submittedDate)>=0){
+                    //倒计时到5点
+
+                    if (createdate-System.currentTimeMillis()>=0){
+                        countDownTime=createdate-System.currentTimeMillis();
+                    }
+                    Log.d("if countDownTime的值",countDownTime+"");
+                }else{
+                    //倒计时到明天5点
+
+                    if (createdate+(1000*60*60*24)-System.currentTimeMillis()>=0){
+                        countDownTime=createdate+(1000*60*60*24)-System.currentTimeMillis();
+                    }
+                    Log.d("else countDownTime的值",countDownTime+"");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        mc = new MyCount(countDownTime, 1000);
+        mc.start();
     }
 
 

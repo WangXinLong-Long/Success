@@ -11,6 +11,7 @@ import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.SpotOrder.preSell.presellallFragmentMVP.bean.PreSellAllBean;
 import com.silianchuangye.sumao.success.model.SpotOrderModel;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -82,11 +83,14 @@ public class SpotOrderAdapter extends BaseAdapter {
             holder = ((ViewHolder) convertView.getTag());
         }
         holder.productModel.setText(list.get(position).get("cl_mingcheng").toString());
-
-        holder.univalent.setText(list.get(position).get("cl_jine").toString());
+        Float price=Float.parseFloat(list.get(position).get("cl_jine").toString());
+        DecimalFormat df = new DecimalFormat("#.##");
+        //all_price.setText(df.format(x) + "");
+        holder.univalent.setText(df.format(price)+"");
         holder.number.setText(list.get(position).get("cl_shuliang").toString());
 //        holder.enterprise.setText(list.get(position).getEnterprise()+"");
-        holder.totalMoney.setText(list.get(position).get("cl_amount")+"");
+        Float totle=Float.parseFloat(list.get(position).get("cl_amount").toString());
+        holder.totalMoney.setText(df.format(totle)+"");
         holder.warehouse.setText(list.get(position).get("cl_cangku") + "");
 
         //holder.company.setText(simpleDateFormat.format(Double.parseDouble(list.get(position).get("deliveryStartDate").toString())+"至"+ simpleDateFormat.format(Double.parseDouble(list.get(position).get("deliveryEndDate").toString())))+"");

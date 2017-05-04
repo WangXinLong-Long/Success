@@ -415,7 +415,15 @@ public class PagerOne extends BasePager implements IPagerOneView {
 
     // 加载图片数据
     private void initImgList() {
-        pagerOnePresenter.getPagerOneInfoToPagerOneFragment();
+       // pagerOnePresenter.getPagerOneInfoToPagerOneFragment();
+        LogUtils.log("添加三张静态图片--->");
+        listDrawable.add(BitmapFactory.decodeResource(getResources(), R.mipmap.carousel_figure1));
+        listDrawable.add(BitmapFactory.decodeResource(getResources(), R.mipmap.carousel_figure2));
+        listDrawable.add(BitmapFactory.decodeResource(getResources(), R.mipmap.carousel_figure3));
+        listDrawable.add(BitmapFactory.decodeResource(getResources(), R.mipmap.carousel_figure4));
+        gallery.setAdapter(new ImageAdapter(mActivity, listDrawable));
+        InitFocusIndicatorContainer();
+        int i = 0;
     }
 
     @Override
@@ -733,17 +741,28 @@ public class PagerOne extends BasePager implements IPagerOneView {
                     ShengchanId=new ArrayList<String>();
                     String object_sc=jsonObject.getString("sc");
                     JSONArray array_sc=new JSONArray(object_sc);
+                    int k=0;
+                    Log.d("aaa",object_sc.toString());
+                    if (object_sc.contains("sabic")){
+                        k=11;
+                    }else {
+                        k=10;
+                    }
                     if (array_sc.length()>10){
-                        for (int i=0;i<10;i++){
+                        for (int i=0;i<k;i++){
                             JSONObject ob_fl=array_sc.getJSONObject(i);
-                            supplierBeanList.add(ob_fl.getString("sc_name"));
-                            ShengchanId.add(ob_fl.getString("sc_id"));
+                            if (!ob_fl.getString("sc_name").equals("sabic")) {
+                                supplierBeanList.add(ob_fl.getString("sc_name"));
+                                ShengchanId.add(ob_fl.getString("sc_id"));
+                            }
                         }
                     }else {
                         for (int i=0;i<array_sc.length();i++){
                             JSONObject ob_fl=array_sc.getJSONObject(i);
-                            supplierBeanList.add(ob_fl.getString("sc_name"));
-                            ShengchanId.add(ob_fl.getString("sc_id"));
+                            if (!ob_fl.getString("sc_name").equals("sabic")) {
+                                supplierBeanList.add(ob_fl.getString("sc_name"));
+                                ShengchanId.add(ob_fl.getString("sc_id"));
+                            }
                         }
                     }
 

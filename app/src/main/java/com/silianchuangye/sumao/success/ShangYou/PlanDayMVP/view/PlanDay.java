@@ -502,6 +502,16 @@ public class PlanDay extends Fragment implements OnClickListener, IPlanDayView {
 
                 }else if (result.contains("5")){
                     Toast.makeText(getActivity(), "用户没有审核通过", Toast.LENGTH_SHORT).show();
+                }else if (result.contains("6")){
+                    Toast.makeText(getActivity(), "企业财务员无权购买产品", Toast.LENGTH_SHORT).show();
+                }else if (result.contains("7")){
+                    Toast.makeText(getActivity(), "库存小于购买量", Toast.LENGTH_SHORT).show();
+                }else if (result.contains("2")){
+                    Toast.makeText(getActivity(), "黑名单不能购买", Toast.LENGTH_SHORT).show();
+                }else if (result.contains("3")){
+                    Toast.makeText(getActivity(), "未登入", Toast.LENGTH_SHORT).show();
+                }else if (result.contains("4")){
+                    Toast.makeText(getActivity(), "没有在购买期限内,不能购买", Toast.LENGTH_SHORT).show();
                 }
             }
 

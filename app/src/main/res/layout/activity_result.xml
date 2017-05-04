@@ -82,44 +82,49 @@
             <RelativeLayout
                 android:id="@+id/enterprise_additional_information"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_below="@id/state"
                 android:layout_marginTop="@dimen/x5"
                 android:background="@color/white">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/x150"
+                    android:layout_height="@dimen/x60"
                     android:layout_centerHorizontal="true"
-
+                    android:layout_marginTop="@dimen/x20"
                     android:id="@+id/ivResult"
                     />
 
-           <!--     <TextView
+                <TextView
                     android:id="@+id/enterprise_additional_information_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_marginBottom="@dimen/x5"
                     android:layout_marginTop="@dimen/x5"
+                    android:layout_below="@+id/ivResult"
                     android:text=""
+                    android:textSize="16sp"
                      />
 
                 <TextView
                     android:id="@+id/split_line1"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
+
                     android:layout_height="wrap_content"
                     android:layout_below="@id/enterprise_additional_information_tv"
                     android:layout_marginTop="@dimen/x7"
+                    android:textSize="16sp"
                     android:layout_centerHorizontal="true" />
 
                 <TextView
                     android:id="@+id/split_line2"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/split_line1"
                     android:layout_marginTop="@dimen/x7"
-                    android:layout_centerHorizontal="true" />-->
+                    android:textSize="16sp"
+                    android:layout_centerHorizontal="true" />
 
         </RelativeLayout>
     </RelativeLayout>

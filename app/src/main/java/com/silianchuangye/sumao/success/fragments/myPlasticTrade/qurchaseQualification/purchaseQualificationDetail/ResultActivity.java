@@ -17,6 +17,7 @@ public class ResultActivity extends AppCompatActivity {
     private TextView tv_Result;
     private TextView tv_child_title_bar_title;
     private ImageView iv_child_title_bar_back;
+    private String name;
 
 
     @Override
@@ -33,14 +34,21 @@ public class ResultActivity extends AppCompatActivity {
         });
         Bundle bundle=getIntent().getExtras();
         String state=bundle.getString("state");
+        name=bundle.getString("name");
         if (state.equals("已通过")){
-             ivResult.setImageResource(R.mipmap.pass_i);
+             ivResult.setImageResource(R.mipmap.passi);
              iv_jieguo.setImageResource(R.mipmap.pass_icon);
              tv_Result.setText("审核通过");
+            enterprise_additional_information_tv.setText("恭喜您企业成为"+name+"客户!");
+            split_line1.setText("您可以直接购买"+name+"产品了,");
+            split_line2.setText("祝你购物愉快!");
         }else if (state.equals("未通过")){
             ivResult.setImageResource(R.mipmap.nopass);
             iv_jieguo.setImageResource(R.mipmap.nopass_icon);
             tv_Result.setText("审核未通过");
+            enterprise_additional_information_tv.setText("您的企业信息需要先获得审核通过!");
+            //split_line1.setText("您可以直接购买产品了");
+           // split_line2.setText("祝你购物愉快!");
         }
     }
 

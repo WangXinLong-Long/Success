@@ -16,8 +16,8 @@ public class DataFragmentPresenter {
     }
 
 //    获取数据页的列表内容
-    public void getDataFragmentResult(String dateType){
-        IDataFragmentModel dataFragmentModel = new DataFragmentModel(dateType);
+    public void getDataFragmentResult(String dateType,String SearchDate){
+        IDataFragmentModel dataFragmentModel = new DataFragmentModel(dateType,SearchDate);
         dataFragmentModel.getDataFragmentResult(new DataFragmentCallback() {
             @Override
             public void callbackDataFragmentResult(String result) {

@@ -93,11 +93,12 @@ public class DataFragment extends Fragment implements IDataFragmentView {
             gridViewBeanList.add(gridViewBean);
         }
 
+
     }
 
     private void initData() {
         String dateType = null;
-        dataFragmentPresenter.getDataFragmentResult(dateType);
+        dataFragmentPresenter.getDataFragmentResult("","");
 
     }
 
@@ -105,10 +106,10 @@ public class DataFragment extends Fragment implements IDataFragmentView {
         //Toast.makeText(getActivity(), "" + year + "-" + monthOfYear + "-" + dayOfMonth + "在数据中搜索", Toast.LENGTH_SHORT).show();
         String dateType = year+"-"+(monthOfYear)+"-"+dayOfMonth;
         Log.d("在數據中選擇的時間",""+dateType);
-        dataFragmentPresenter.getDataFragmentResult(dateType);
+        dataFragmentPresenter.getDataFragmentResult("",dateType);
     }
     public void info(){
-        dataFragmentPresenter.getDataFragmentResult(null);
+        dataFragmentPresenter.getDataFragmentResult("","");
     }
 
     //    从网络加载数据
@@ -147,8 +148,9 @@ public class DataFragment extends Fragment implements IDataFragmentView {
 
                 case R.id.dateType:
                     String dateType = gridViewBeanList.get(position).getId();
+                    Log.d("dataType的值",dateType);
                     in.clear();
-                    dataFragmentPresenter.getDataFragmentResult(dateType);
+                    dataFragmentPresenter.getDataFragmentResult(dateType,"");
                     break;
             }
         }
@@ -166,7 +168,7 @@ public class DataFragment extends Fragment implements IDataFragmentView {
                     Toast.makeText(context, "暂时没有网络,请检查您的网络设置", Toast.LENGTH_SHORT).show();
                 }else {
                     //                    1表示有
-                    dataFragmentPresenter.getDataFragmentResult(null);
+                    dataFragmentPresenter.getDataFragmentResult("","");
                 }
             }
         };

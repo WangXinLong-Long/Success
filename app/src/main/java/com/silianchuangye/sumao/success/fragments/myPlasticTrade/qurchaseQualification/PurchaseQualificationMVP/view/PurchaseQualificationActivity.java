@@ -45,6 +45,7 @@ public class PurchaseQualificationActivity extends AppCompatActivity implements 
     private List<String> nameList = new ArrayList<>();;
     private List<PurchaseQualificationBean.OrgBean> org;
     String unique;
+    PurchaseQualificationBean purchaseQualificationBean;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,12 +66,12 @@ public class PurchaseQualificationActivity extends AppCompatActivity implements 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                getStatus(org.get(position).getId());
+                getStatus(org.get(position).getId(),position);
             }
         });
     }
 
-    public void getStatus(final String id){
+    public void getStatus(final String id, final int position){
         Log.d("企业id",id);
 
         String url= SuMaoConstant.SUMAO_IP+"/rest/model/atg/userprofiling/ProfileActor/upresource";
@@ -81,13 +82,13 @@ public class PurchaseQualificationActivity extends AppCompatActivity implements 
             @Override
             public void onSuccess(String result) {
                 Log.d("判断状态的返回值",""+result);
-                try {
-                    JSONObject object=new JSONObject(result);
+                    try {
+                        JSONObject object = new JSONObject(result);
+
                     if (!result.contains("state")){
-                        Toast.makeText(PurchaseQualificationActivity.this, "该用户没有通过审核,无法进行该操作！", Toast.LENGTH_SHORT).show();
-//                        Intent intent = new Intent(PurchaseQualificationActivity.this, PurchaseQualificationDetailActivity.class);
-//                        intent.putExtra("id", id);
-//                        startActivity(intent);
+                        Intent intent = new Intent(PurchaseQualificationActivity.this, PurchaseQualificationDetailActivity.class);
+                        intent.putExtra("id", id);
+                        startActivity(intent);
                     }else {
                         String booleancommit=object.getString("state");
                         if (object.getString("state").equals("待审核")) {
@@ -99,10 +100,12 @@ public class PurchaseQualificationActivity extends AppCompatActivity implements 
                         } else if (object.getString("state").equals("有")) {
                             Intent intent = new Intent(PurchaseQualificationActivity.this, ResultActivity.class);
                             intent.putExtra("state", "已通过");
+                            intent.putExtra("name",org.get(position).getName());
                             startActivity(intent);
                         } else if (object.getString("state").equals("无")) {
                             Intent intent = new Intent(PurchaseQualificationActivity.this, ResultActivity.class);
                             intent.putExtra("state", "未通过");
+                            intent.putExtra("name",org.get(position).getName());
                             startActivity(intent);
                         } else {
                             Log.d("进来", "进来没有");
@@ -156,7 +159,7 @@ public class PurchaseQualificationActivity extends AppCompatActivity implements 
         Loding.dis();
         if (result != null) {
             Gson gson = new Gson();
-            PurchaseQualificationBean purchaseQualificationBean = gson.fromJson(result, PurchaseQualificationBean.class);
+            purchaseQualificationBean = gson.fromJson(result, PurchaseQualificationBean.class);
             org = purchaseQualificationBean.getOrg();
             for (int i = 0; i < org.size(); i++) {
                 nameList.add(org.get(i).getName());

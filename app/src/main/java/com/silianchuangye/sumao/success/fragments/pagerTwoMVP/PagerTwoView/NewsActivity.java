@@ -287,11 +287,22 @@ public class NewsActivity extends AppCompatActivity {
                             urlhtml = object.getString("newspri");
                         }
                         Log.d("html的url", urlhtml);
+                        //支持javascript
                         wb_Content.getSettings().setJavaScriptEnabled(true);
+// 设置可以支持缩放
+                        wb_Content.getSettings().setSupportZoom(true);
+// 设置出现缩放工具
+                        wb_Content.getSettings().setBuiltInZoomControls(true);
+//扩大比例的缩放
                         wb_Content.getSettings().setUseWideViewPort(true);
+//自适应屏幕
+                        wb_Content.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
                         wb_Content.getSettings().setLoadWithOverviewMode(true);
-                        wb_Content.setVerticalScrollBarEnabled(false);
-                        wb_Content.setHorizontalScrollBarEnabled(false);
+//                        wb_Content.getSettings().setJavaScriptEnabled(true);
+//                        wb_Content.getSettings().setUseWideViewPort(true);
+//                        wb_Content.getSettings().setLoadWithOverviewMode(true);
+//                        wb_Content.setVerticalScrollBarEnabled(false);
+//                        wb_Content.setHorizontalScrollBarEnabled(false);
                         //wb_Content.getSettings().setJavaScriptEnabled(true);
                         //跳转网页仍然在当前WebView中显示
                         wb_Content.setWebViewClient(new WebViewClient());

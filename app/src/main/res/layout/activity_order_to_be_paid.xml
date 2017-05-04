@@ -181,7 +181,6 @@
                         android:paddingBottom="@dimen/x5"
                         android:paddingRight="@dimen/x5"
                         android:paddingTop="@dimen/x5"
-                        android:text="定价"
                         android:textSize="@dimen/x13" />
 
 
