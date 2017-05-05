@@ -6,6 +6,7 @@
     android:id="@+id/layout_xianhuo"
     android:orientation="vertical">
 
+
     <include
         android:id="@+id/title_activity_goods_in_stock_detail"
         layout="@layout/title_bar_white"></include>
@@ -653,4 +654,5 @@
         android:layout_marginLeft="20dp"
         android:src="@mipmap/shopping_cart"
         android:visibility="gone" />
+
 </RelativeLayout>

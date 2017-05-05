@@ -31,7 +31,7 @@
             android:id="@+id/tv_auction_time"
             android:layout_marginTop="@dimen/x13"
             android:textSize="14sp"
-            android:text="~~"
+            android:text=""
 
             android:textColor="#29ABE2"
             android:layout_marginRight="@dimen/x20"

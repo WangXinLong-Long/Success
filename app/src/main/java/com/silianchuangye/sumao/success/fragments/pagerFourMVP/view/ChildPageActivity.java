@@ -38,6 +38,7 @@ public class ChildPageActivity extends AppCompatActivity {
     private String url;
     private String newsid;
     private ImageView iv_child_title_bar_back;
+    private String titleName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +86,7 @@ public class ChildPageActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 newsid=list_id.get(position).toString();
+                titleName=list_name.get(position).toString();
                 if (type.equals("塑贸指南")){
                     url= SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/news/SumaoNewsActor/selectDetailDroplet";
                 }else if (type.equals("客服帮助")){
@@ -94,7 +96,7 @@ public class ChildPageActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         super.run();
-                        getInfo(newsid);
+                        getInfo(newsid,titleName);
                     }
                 }.start();
             }
@@ -103,7 +105,7 @@ public class ChildPageActivity extends AppCompatActivity {
 
 
     }
-    public void getInfo(String rp_id){
+    public void getInfo(String rp_id,final String title123){
         RequestParams rp=new RequestParams(url);
         rp.addParameter("newsId",rp_id);
         x.http().post(rp, new Callback.CommonCallback<String>() {
@@ -112,6 +114,7 @@ public class ChildPageActivity extends AppCompatActivity {
                 //Log.d("fanhuizhi",result);
                 Intent intent=new Intent(ChildPageActivity.this,PagerFourDetailActivity.class);
                 intent.putExtra("result",result);
+                intent.putExtra("title",title123);
                 startActivity(intent);
             }
 

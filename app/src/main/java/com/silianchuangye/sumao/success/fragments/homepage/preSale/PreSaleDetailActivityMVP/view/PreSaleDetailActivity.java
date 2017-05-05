@@ -1,6 +1,7 @@
 package com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.view;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.BitmapDrawable;
@@ -10,9 +11,11 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnLayoutChangeListener;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -116,6 +119,7 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
     private String unique;
     private String cl_gongsiId;
     private RelativeLayout parent;
+    private String xianshi="";
     //屏幕高度
     private int screenHeight = 0;
     //软件盘弹起后所占高度阀值
@@ -123,7 +127,9 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setContentView(R.layout.activity_pre_sale_detail);
+
         Intent intent = getIntent();
         skuId = intent.getStringExtra("skuId");
         LogUtils.log("skuId---->" + skuId);
@@ -314,6 +320,7 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
         img_item_cart_buy_sub.setOnClickListener(this);
 //        Jobs Created 联系客服
         layoutService = ((LinearLayout) findViewById(R.id.layoutService));
+        layoutService.setOnClickListener(this);
 
     }
 
@@ -378,19 +385,19 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
         tv_item_cart_all_price.setText(Double.valueOf(edt_num.getText().toString()) * Double.valueOf(tvPrice_auction.getText().toString()) + "");
 
 //        Jobs Created      联系客服跳转 TODO:  需要cl_gongsiId
-        layoutService.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-                Intent intentHX = new Intent();
-                intentHX.setClass(PreSaleDetailActivity.this, LoginActivity.class);
-                intentHX.putExtra(Constant.MESSAGE_TO_INTENT_EXTRA, Constant.MESSAGE_TO_DEFAULT);
-//                传入卖家id
-                intentHX.putExtra(Constant.IM_SERVICE_NUMBER, cl_gongsiId);
-                startActivity(intentHX);
-            }
-        });
+//        layoutService.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//
+//                Intent intentHX = new Intent();
+//                intentHX.setClass(PreSaleDetailActivity.this, LoginActivity.class);
+//                intentHX.putExtra(Constant.MESSAGE_TO_INTENT_EXTRA, Constant.MESSAGE_TO_DEFAULT);
+////                传入卖家id
+//                intentHX.putExtra(Constant.IM_SERVICE_NUMBER, cl_gongsiId);
+//                startActivity(intentHX);
+//            }
+//        });
 
         //计算保证金
         payBao();
@@ -476,7 +483,22 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
                 }
                 break;
             case R.id.layoutService:
+                Log.d("预售的唯一标识",unique);
+                if (unique.equals("false") || unique.equals("")) {
+                    tuichu();
+                    Intent intent1 = new Intent(PreSaleDetailActivity.this, LoginUserActivity.class);
+                    intent1.putExtra("roles", "buyer");
+                    startActivity(intent1);
+                } else {
+                    Intent intentHX = new Intent();
+                    intentHX.setClass(PreSaleDetailActivity.this, LoginActivity.class);
+                    intentHX.putExtra(Constant.MESSAGE_TO_INTENT_EXTRA, Constant.MESSAGE_TO_DEFAULT);
+//                传入卖家id
+                    intentHX.putExtra(Constant.IM_SERVICE_NUMBER, cl_gongsiId);
+                    startActivity(intentHX);
 
+
+                }
                 break;
 
         }
@@ -924,22 +946,42 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
 //现在认为只要控件将Activity向上推的高度超过了1/3屏幕高，就认为软键盘弹起
         if(oldBottom != 0 && bottom != 0 &&(oldBottom - bottom > keyHeight)){
 
+            if(payment_security.getVisibility()==View.VISIBLE){
+                payment_security.setVisibility(View.GONE);
+                xianshi="支付保证金";
+               // payment_security.set
+            }
+            if (payment_security_closeMerket.getVisibility()==View.VISIBLE){
+                payment_security_closeMerket.setVisibility(View.GONE );
+                xianshi="提示";
+            }
+
+
+
+
             //Toast.makeText(PreSaleDetailActivity.this, "监听到软键盘弹起...", Toast.LENGTH_SHORT).show();
 
         }else if(oldBottom != 0 && bottom != 0 &&(bottom - oldBottom > keyHeight)){
-
+            edt_num.clearFocus();
+             if (xianshi.equals("支付保证金")){
+                 payment_security.setVisibility(View.VISIBLE);
+             }else if (xianshi.equals("提示")){
+                 payment_security_closeMerket.setVisibility(View.VISIBLE);
+             }
             //Toast.makeText(PreSaleDetailActivity.this, "监听到软件盘关闭...", Toast.LENGTH_SHORT).show();
             Double jianshu=sub(Double.parseDouble(edt_num.getText().toString()),Double.parseDouble(preSaleDetailBean.getCl_qigou()));
             int beishu=(int)div(jianshu,Double.parseDouble(preSaleDetailBean.getCl_xiaobian()),1);
             Log.d("倍数的值",beishu+"");
             if (beishu<=0){
-                beishu=1;
+               // beishu=1;
+                edt_num.setText(preSaleDetailBean.getCl_qigou());
+            }else {
+                Double ji = mul(beishu, Double.parseDouble(preSaleDetailBean.getCl_xiaobian()));
+                Log.d("即的值", ji + "");
+                Double he = add(ji, Double.parseDouble(preSaleDetailBean.getCl_qigou()));
+                Log.d("和的值", he + "");
+                edt_num.setText(he + "");
             }
-            Double ji=mul(beishu,Double.parseDouble(preSaleDetailBean.getCl_xiaobian()));
-            Log.d("即的值",ji+"");
-            Double he=add(ji,Double.parseDouble(preSaleDetailBean.getCl_qigou()));
-            Log.d("和的值",he+"");
-            edt_num.setText(he+"");
 
         }
     }
@@ -967,5 +1009,65 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
         BigDecimal b1 = new BigDecimal(d1);
         BigDecimal b2 = new BigDecimal(d2);
         return b1.add(b2).doubleValue();
+    }
+    public  boolean isShouldHideInput(View v, MotionEvent event) {
+        if (v != null && (v instanceof EditText)) {
+            int[] leftTop = { 0, 0 };
+            //获取输入框当前的location位置
+            v.getLocationInWindow(leftTop);
+            int left = leftTop[0];
+            int top = leftTop[1];
+            int bottom = top + v.getHeight();
+            int right = left + v.getWidth();
+            if (event.getX() > left && event.getX() < right
+                    && event.getY() > top && event.getY() < bottom) {
+                // 点击的是输入框区域，保留点击EditText的事件
+                return false;
+            } else {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+            View v = getCurrentFocus();
+            if (isShouldHideInput(v, ev)) {
+
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imm != null) {
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                    edt_num.clearFocus();
+                    if (xianshi.equals("支付保证金")){
+                        payment_security.setVisibility(View.VISIBLE);
+                    }else if (xianshi.equals("提示")){
+                        payment_security_closeMerket.setVisibility(View.VISIBLE);
+                    }
+                    //Toast.makeText(PreSaleDetailActivity.this, "监听到软件盘关闭...", Toast.LENGTH_SHORT).show();
+                    Double jianshu=sub(Double.parseDouble(edt_num.getText().toString()),Double.parseDouble(preSaleDetailBean.getCl_qigou()));
+                    int beishu=(int)div(jianshu,Double.parseDouble(preSaleDetailBean.getCl_xiaobian()),1);
+                    Log.d("倍数的值",beishu+"");
+                    if (beishu<=0){
+                        //beishu=1;
+                        edt_num.setText(preSaleDetailBean.getCl_qigou());
+                    }else {
+                        Double ji = mul(beishu, Double.parseDouble(preSaleDetailBean.getCl_xiaobian()));
+                        Log.d("即的值", ji + "");
+                        Double he = add(ji, Double.parseDouble(preSaleDetailBean.getCl_qigou()));
+                        Log.d("和的值", he + "");
+                        edt_num.setText(he + "");
+                    }
+
+                }
+            }
+            return super.dispatchTouchEvent(ev);
+        }
+        // 必不可少，否则所有的组件都不会有TouchEvent了
+        if (getWindow().superDispatchTouchEvent(ev)) {
+            return true;
+        }
+        return onTouchEvent(ev);
     }
 }

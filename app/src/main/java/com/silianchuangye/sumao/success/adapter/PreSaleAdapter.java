@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.silianchuangye.sumao.success.R;
@@ -27,17 +28,19 @@ public class PreSaleAdapter extends BaseAdapter {
     private String xinhuo="";
     private TextView tv_icon;
     private  String state;
+    private ListView listDemo;
 
     public PreSaleAdapter(Context context,String xianhuo) {
         preSaleModels = new ArrayList<>();
         this.context = context;
         this.xinhuo=xianhuo;
+        this.listDemo=listDemo;
         inflater = LayoutInflater.from(context);
     }
     public PreSaleAdapter(Context context) {
         preSaleModels = new ArrayList<>();
         this.context = context;
-
+        this.listDemo=listDemo;
         inflater = LayoutInflater.from(context);
     }
 
@@ -67,6 +70,7 @@ public void clearData(){
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder = null;
         if (convertView == null) {
+
             viewHolder = new ViewHolder();
             convertView = inflater.inflate(R.layout.presale_item, null);
             tv_icon= (TextView) convertView.findViewById(R.id.icon);
@@ -103,6 +107,8 @@ if (xinhuo.equals("现货直销")){
     viewHolder.price.setVisibility(View.GONE);
     tv_icon.setVisibility(View.GONE);
 }
+
+
         return convertView;
     }
 

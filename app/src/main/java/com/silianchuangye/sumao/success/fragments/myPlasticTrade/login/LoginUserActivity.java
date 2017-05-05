@@ -1,6 +1,7 @@
 package com.silianchuangye.sumao.success.fragments.myPlasticTrade.login;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
@@ -11,7 +12,9 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -105,9 +108,11 @@ public class LoginUserActivity extends AppCompatActivity implements View.OnClick
 
 //        对账号和密码进行校验
         et_account_login = (EditText) findViewById(R.id.et_account_login);
+        et_account_login.clearFocus();
         textWitcher1 = new EditTextWitcher(et_account_login);
 
         et_pass_login = (EditText) findViewById(R.id.et_pass_login);
+        et_pass_login.clearFocus();
         textWitcher = new EditTextWitcher(et_pass_login);
 
         et_pass_login.addTextChangedListener(textWitcher);
@@ -128,6 +133,7 @@ public class LoginUserActivity extends AppCompatActivity implements View.OnClick
         });
 //          验证码输入框
         checkOut = ((EditText) findViewById(R.id.checkout));
+        checkOut.clearFocus();
         checkOut.addTextChangedListener(mTextWatcher);
 //          登录按钮
         bt_Login = (Button) findViewById(R.id.bt_login);
@@ -475,5 +481,46 @@ public class LoginUserActivity extends AppCompatActivity implements View.OnClick
         super.onDestroy();
         et_pass_login.removeTextChangedListener(textWitcher);
         et_account_login.removeTextChangedListener(textWitcher1);
+    }
+
+    public  boolean isShouldHideInput(View v, MotionEvent event) {
+        if (v != null && (v instanceof EditText)) {
+            int[] leftTop = { 0, 0 };
+            //获取输入框当前的location位置
+            v.getLocationInWindow(leftTop);
+            int left = leftTop[0];
+            int top = leftTop[1];
+            int bottom = top + v.getHeight();
+            int right = left + v.getWidth();
+            if (event.getX() > left && event.getX() < right
+                    && event.getY() > top && event.getY() < bottom) {
+                // 点击的是输入框区域，保留点击EditText的事件
+                return false;
+            } else {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+            View v = getCurrentFocus();
+            if (isShouldHideInput(v, ev)) {
+
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imm != null) {
+                   // Search.clearFocus();
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+            return super.dispatchTouchEvent(ev);
+        }
+        // 必不可少，否则所有的组件都不会有TouchEvent了
+        if (getWindow().superDispatchTouchEvent(ev)) {
+            return true;
+        }
+        return onTouchEvent(ev);
     }
 }

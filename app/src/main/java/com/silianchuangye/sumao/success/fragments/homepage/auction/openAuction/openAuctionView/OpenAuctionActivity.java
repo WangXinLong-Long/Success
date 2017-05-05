@@ -21,9 +21,11 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnLayoutChangeListener;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -221,7 +223,7 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
         id_value=auctionDetailBean.getCl_id();
         productId = auctionDetailBean.getCl_id();
         proType=getIntent().getStringExtra("proType");
-
+        status = auctionDetailBean.getStatus();
 
 
 //        标题
@@ -315,6 +317,7 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
 
 
        // openAuctionPresenter.getRealTimeQuotes(productId, true);
+
 //返回当前页面
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -509,14 +512,41 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
         });
 //      Jobs Created 联系客服
         contactCustomerService = ((LinearLayout) findViewById(R.id.layoutService));
-
+        contactCustomerService.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+                unique=sp.getString("unique","");
+                Log.d("竞拍的唯一标识",unique);
+                if (unique.equals("false")||unique.equals("")){
+                    tuichu();
+                    Intent intent = new Intent(OpenAuctionActivity.this, LoginUserActivity.class);
+                    intent.putExtra("roles", "buyer");
+                    intent.putExtra("position", 103);
+                    startActivityForResult(intent, 103);
+                }else {
+                    Intent intentHX = new Intent();
+                    intentHX.setClass(OpenAuctionActivity.this, LoginActivity.class);
+                    intentHX.putExtra(Constant.MESSAGE_TO_INTENT_EXTRA, Constant.MESSAGE_TO_DEFAULT);
+//                传入卖家id
+                    intentHX.putExtra(Constant.IM_SERVICE_NUMBER, cl_gongsiId);
+                    startActivity(intentHX);
+                }
+            }
+        });
+        parent= (RelativeLayout) findViewById(R.id.parent);
+//获取屏幕高度
+        screenHeight = this.getWindowManager().getDefaultDisplay().getHeight();
+        //阀值设置为屏幕高度的1/3
+        keyHeight = screenHeight/3;
+        parent.addOnLayoutChangeListener(this);
 
 
         IntentFilter filter = new IntentFilter();
         filter.addAction("finishOpenAuction");
         registerReceiver(broadcastReceiver, filter);
 
-
+        Log.d("type_way的值",type_way);
         if (type_way.equals("公开竞拍")) {
             Log.d("这是公开竞拍","公开竞拍");
             shishihangqingSelect();
@@ -550,6 +580,7 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
             public void onSuccess(String result) {
                 Log.d("开闭市的返回值",result);
                 if (result.contains("true")){
+                    Log.d("竞拍的唯一标识",unique);
                     if (unique.equals("false") || unique.equals("")){
                         //没有登录登录状态
                         Layout_info.setVisibility(View.GONE);
@@ -597,6 +628,7 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
             }
         });
     }
+    //退出登录
     public void tuichu(){
         RequestParams  rp=new RequestParams(SuMaoConstant.SUMAO_IP+"/rest/model/atg/userprofiling/ProfileActor/logout");
         SharedPreferences sp=getSharedPreferences("sumao",0);
@@ -702,25 +734,36 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
         });
     }
 
-
-
-
     private void setValue() {
+        SharedPreferences sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+        unique=sp.getString("unique","");
+        Log.d("unique的值",unique);
+
 //        竞拍的状态
-        status = auctionDetailBean.getStatus();
+        Log.d("公开竞拍的status",status);
         if (status.equals("") || status.equals("0")){//竞拍未开始
             tvTime.setText("距离竞拍开始时间:");
             long startTime = Long.parseLong(auctionDetailBean.getStartDate()) - System.currentTimeMillis();
             if (startTime>0) {
                 new MyCount(startTime, 1000).start();
             }
-            Layout_Button_Open.setVisibility(View.GONE);
-            layout_non.setVisibility(View.INVISIBLE);
-            Layout_info.setVisibility(View.GONE);
-            Layout_Button_no_login.setVisibility(View.GONE);
-            Layout_info.setVisibility(View.GONE);
-            layout_Message.setVisibility(View.GONE);
-            isSuccessorFail(needToPayTheMargin);
+            if (unique.equals("false")||unique.equals("")){
+                Layout_Button_Open.setVisibility(View.GONE);
+                layout_non.setVisibility(View.GONE);
+                Layout_info.setVisibility(View.GONE);
+                Layout_Button_no_login.setVisibility(View.VISIBLE);
+                Layout_info.setVisibility(View.GONE);
+                layout_Message.setVisibility(View.GONE);
+            }else {
+                Layout_Button_Open.setVisibility(View.GONE);
+                layout_non.setVisibility(View.INVISIBLE);
+                Layout_info.setVisibility(View.GONE);
+                Layout_Button_no_login.setVisibility(View.GONE);
+                Layout_info.setVisibility(View.GONE);
+                layout_Message.setVisibility(View.GONE);
+                isSuccessorFail(needToPayTheMargin);
+            }
+
 
         }else if (status.equals("1")){//正在竞拍
             tvTime.setText("竞拍剩余时间:");
@@ -728,18 +771,37 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
             if (startTime>0) {
                 new MyCount(startTime, 1000).start();
             }
-            isSuccessorFail(needToPayTheMargin);
+            Log.d("unique的值",unique);
+            if (unique.equals("false")||unique.equals("")){
+                Layout_Button_Open.setVisibility(View.GONE);
+                layout_non.setVisibility(View.GONE);
+                Layout_info.setVisibility(View.GONE);
+                Layout_Button_no_login.setVisibility(View.VISIBLE);
+                Layout_info.setVisibility(View.GONE);
+                layout_Message.setVisibility(View.GONE);
+            }else {
+                isSuccessorFail(needToPayTheMargin);
+            }
         }else if (status.equals("2")){//竞拍结束
             tvTime.setText("竞拍已结束");
             tvTimeValue.setText("");
-            Layout_info.setVisibility(View.GONE);
-            Layout_Button_no_login.setVisibility(View.GONE);
-            participate_in_the_auction_ll.setVisibility(View.GONE);
-            Layout_Button_close.setVisibility(View.GONE);
-            Layout_Button_Open.setVisibility(View.GONE);
-            //显示listview
-           // isSuccessorFail(needToPayTheMargin);
-            auctionResult();
+//            if (unique.equals("false")||unique.equals("")){
+//                Layout_Button_Open.setVisibility(View.GONE);
+//                layout_non.setVisibility(View.GONE);
+//                Layout_info.setVisibility(View.GONE);
+//                Layout_Button_no_login.setVisibility(View.VISIBLE);
+//                Layout_info.setVisibility(View.GONE);
+//                layout_Message.setVisibility(View.GONE);
+//            }else {
+                Layout_info.setVisibility(View.GONE);
+                Layout_Button_no_login.setVisibility(View.GONE);
+                participate_in_the_auction_ll.setVisibility(View.GONE);
+                Layout_Button_close.setVisibility(View.GONE);
+                Layout_Button_Open.setVisibility(View.GONE);
+                //显示listview
+                auctionResult();
+           // }
+
         }
 
 
@@ -859,23 +921,8 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
 
         //cl_attribute.addAll();
 //                Jobs Created 联系客服跳转
-        contactCustomerService.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intentHX = new Intent();
-                intentHX.setClass(OpenAuctionActivity.this, LoginActivity.class);
-                intentHX.putExtra(Constant.MESSAGE_TO_INTENT_EXTRA, Constant.MESSAGE_TO_DEFAULT);
-//                传入卖家id
-                intentHX.putExtra(Constant.IM_SERVICE_NUMBER, cl_gongsiId);
-                startActivity(intentHX);
-            }
-        });
-        parent= (RelativeLayout) findViewById(R.id.parent);
-//获取屏幕高度
-        screenHeight = this.getWindowManager().getDefaultDisplay().getHeight();
-        //阀值设置为屏幕高度的1/3
-        keyHeight = screenHeight/3;
-        parent.addOnLayoutChangeListener(this);
+
+
 //        购买数量
         tv_item_cart_buy_num = ((EditText) findViewById(R.id.tv_item_cart_buy_num));
 
@@ -2163,32 +2210,35 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
 
         booleanOpenorClose();
         if (type_way.equals("公开竞拍")) {
-            handler = new Handler() {
-                @Override
-                public void handleMessage(Message msg) {
-                    super.handleMessage(msg);
-                    //getinfo();
-                    switch (msg.what) {
-                        case 1:
-                            selecttimer();
-                            break;
-                        default:
-                            break;
+            Log.e("公开竞拍的状态",state+"aaa");
+            if (!status.equals("2")) {
+                handler = new Handler() {
+                    @Override
+                    public void handleMessage(Message msg) {
+                        super.handleMessage(msg);
+                        //getinfo();
+                        switch (msg.what) {
+                            case 1:
+                                selecttimer();
+                                break;
+                            default:
+                                break;
+                        }
                     }
-                }
-            };
+                };
 
-            timer = new Timer();
-            task = new TimerTask() {
-                @Override
-                public void run() {
-                    Message message = new Message();
-                    message.what = 1;
-                    handler.sendMessage(message);
-                }
-            };
+                timer = new Timer();
+                task = new TimerTask() {
+                    @Override
+                    public void run() {
+                        Message message = new Message();
+                        message.what = 1;
+                        handler.sendMessage(message);
+                    }
+                };
 
-            timer.schedule(task, 3000, 3000);
+                timer.schedule(task, 3000, 3000);
+            }
         }
 
     }
@@ -2196,7 +2246,7 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
     @Override
     protected void onStop() {
         super.onStop();
-        if (type_way.equals("公开竞拍")){
+        if (type_way.equals("公开竞拍")&&!status.equals("2")){
             timer.cancel();
         }
 
@@ -2224,19 +2274,8 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
         @Override
         public void onFinish() {
             selecttimer();
-//            tvTimeValue.setText("");
-//            payImmediately.setVisibility(View.GONE);
-//            layoutIn.setVisibility(View.GONE);
-//            if (status.equals("") || status.equals("0")) {
-//                if (Double.parseDouble(zhifujine) == 0 && type_way.equals("公开竞拍")) {
-//                    btZhifu_auction.setBackgroundColor(getResources().getColor(R.color.gray_type));
-//                    bt_jinpai.setBackgroundColor(getResources().getColor(R.color.gray_type));
-//                } else {
-//                    //Popupwindow();
-//                }
-//                Layout_Button_Open.setVisibility(View.VISIBLE);
-//                Layout_Button_close.setVisibility(View.GONE);
-//            }
+
+            //在这里进行判断就可以了
 
         }
 
@@ -2418,7 +2457,7 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
                         e.printStackTrace();
                     }
                 }
-                //setValue();
+                setValue();
                 fuzhi();
 
 
@@ -2477,6 +2516,47 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
         });
 
 
+    }
+
+    //点击其他地方软键盘关闭的方法
+    public  boolean isShouldHideInput(View v, MotionEvent event) {
+        if (v != null && (v instanceof EditText)) {
+            int[] leftTop = { 0, 0 };
+            //获取输入框当前的location位置
+            v.getLocationInWindow(leftTop);
+            int left = leftTop[0];
+            int top = leftTop[1];
+            int bottom = top + v.getHeight();
+            int right = left + v.getWidth();
+            if (event.getX() > left && event.getX() < right
+                    && event.getY() > top && event.getY() < bottom) {
+                // 点击的是输入框区域，保留点击EditText的事件
+                return false;
+            } else {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+            View v = getCurrentFocus();
+            if (isShouldHideInput(v, ev)) {
+
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imm != null) {
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+            return super.dispatchTouchEvent(ev);
+        }
+        // 必不可少，否则所有的组件都不会有TouchEvent了
+        if (getWindow().superDispatchTouchEvent(ev)) {
+            return true;
+        }
+        return onTouchEvent(ev);
     }
 
 

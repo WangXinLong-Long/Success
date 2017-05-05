@@ -10,10 +10,13 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -55,7 +58,7 @@ import java.util.List;
  * 购物车界面
  */
 public class PagerThree extends BasePager implements AdapterView.OnItemClickListener, SelectCallBack, IPagerThreeView {
-    private CustomListView lv_Cart;
+    private ListView lv_Cart;
     private CartAdapter adapter;
     private List<CartInfo> list;
     private ImageView img_Cart_All_Select;
@@ -64,7 +67,7 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
     private boolean all_Flag;
     private float all_Price;
     private Context ctx;
-    private String id;
+    private String id="abc";
     private MyReciver my;
     private Cart_MyDialog dialog;
     private RelativeLayout relative_cart_null, relative_cart_tishi, relative_activity_cart_bottom;
@@ -159,9 +162,12 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
                     Log.d("输入框应该填入的值",shuvalue+"");
                     //holder.Edt_buy_num.setText(shuvalue+"");
                     number=Float.parseFloat(shuvalue+"");
-                    updataView(shuaaa, lv_Cart, id);
+                    Log.d("id的值",id);
+                    if (!id.equals("abc")&&!id.equals("")&&id!=null&&id!="abc") {
+                        updataView(shuaaa, lv_Cart, id);
 //                    adapter.isupdateInfo(true);
-                    adapter.notifyDataSetChanged();
+                        adapter.notifyDataSetChanged();
+                    }
 
 
 
@@ -183,15 +189,13 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
         relative_cart_null = (RelativeLayout) v.findViewById(R.id.relative_cart_null);
         relative_cart_tishi = (RelativeLayout) v.findViewById(R.id.relative_cart_tishi);
         relative_activity_cart_bottom = (RelativeLayout) v.findViewById(R.id.relative_activity_cart_bottom);
-        lv_Cart = (CustomListView) v.findViewById(R.id.lv_activity_cart);
+        lv_Cart = (ListView) v.findViewById(R.id.lv_activity_cart);
         btn_Cart_Ok = (Button) v.findViewById(R.id.btn_activity_cart_ok);
         img_Cart_All_Select = (ImageView) v.findViewById(R.id.img_activity_cart_allselect);
         tv_Cart_All_Price = (TextView) v.findViewById(R.id.tv_activity_cart_all_price);
 //        adapter = new CartAdapter(getActivity(),list,this,dialog,list_id,ku_cong_number);
 //       //adapter=new CartAdapter(getActivity(),list,list_id,ku_cong_number));
 //        lv_Cart.setAdapter(adapter);
-
-
         lv_Cart.setOnItemClickListener(this);
         img_Cart_All_Select.setOnClickListener(this);
         btn_Cart_Ok.setOnClickListener(this);
@@ -478,8 +482,10 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
     private void refrashPrice() {
         all_Price = 0f;
         int index = 0;
+        Log.d("commerceItem的值",commerceItem.size()+"");
         for (int i = 0; i < commerceItem.size(); i++) {
             if (adapter.checked[i]) {
+                Log.d("总价的值",commerceItem.get(i).getAmount());
                 float price = Float.valueOf(commerceItem.get(i).getAmount());
                 all_Price += price;
                 index++;
@@ -564,13 +570,13 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
 
         @Override
         public View getView(final int position, View convertView, final ViewGroup parent) {
-            shuaaa=position;
+
             final ViewHolder holder;
             if (convertView == null) {
                 convertView = View.inflate(ctx, R.layout.item_cart_activity, null);
                 holder = new ViewHolder();
                 holder.Tv_all_price = (TextView) convertView.findViewById(R.id.tv_item_cart_all_price);
-                holder.Edt_buy_num = (EditText) convertView.findViewById(R.id.tv_item_cart_buy_num);
+                holder.Edt_buy_num = (TextView) convertView.findViewById(R.id.tv_item_cart_buy_num);
                 holder.Tv_cangku_name = (TextView) convertView.findViewById(R.id.tv_item_cart_cangku_name);
                 holder.Tv_company = (TextView) convertView.findViewById(R.id.tv_item_cart_cangku_conmpany_name);
                 holder.Tv_name = (TextView) convertView.findViewById(R.id.tv_item_cart_name);
@@ -588,7 +594,7 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
-            id = list.get(position).getCommerceItemId().toString();
+
             bianliang=list.get(position).getQuantityAdjustmentUnit();
             qigouliang=list.get(position).getMinPurchaseQuantity();
 
@@ -602,9 +608,9 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
             holder.Tv_company.setText(list.get(position).getSalesCompanyDisplayName());
 
             holder.Edt_buy_num.setText(Float.parseFloat(list.get(position).getQuantity())+"");
-//            }else {
-//                holder.Edt_buy_num.setHint(Float.parseFloat(list.get(position).getQuantity())+"");
-//            }
+//            holder.Edt_buy_num.setCursorVisible(false);
+//            holder.Edt_buy_num.requestFocus();
+//            holder.Edt_buy_num.setInputType(InputType.TYPE_CLASS_NUMBER |InputType.TYPE_NUMBER_FLAG_DECIMAL|InputType.TYPE_CLASS_TEXT);
 
             Log.d("数量",list.get(position).getQuantity());
             holder.Tv_all_price.setText(list.get(position).getAmount() + "元");
@@ -663,10 +669,7 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
                         }
                     });
                     dialog.create().show();
-//                    if (checked[position]){
-//                        refrashPrice();
-//                        holder.Img_select.setImageResource(R.mipmap.cart_select_null);
-//                    }
+
 
 
                 }
@@ -678,11 +681,9 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
                 public void onClick(View v) {
                     adapter.setUnCheck(position);
                     String str;
-//                    if (isupdate) {
-                         str= holder.Edt_buy_num.getText().toString();
-//                    }else {
-//                         str=holder.Edt_buy_num.getHint().toString();
-//                    }
+
+                    str= holder.Edt_buy_num.getText().toString();
+
                     if (str.equals("")) {
                         str = "0";
                     }
@@ -691,16 +692,11 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
                     Log.d("num的值",num+"");
                     Log.d("最小qigouliang",qigouliang+"");
                     Log.d("num的值",num+"");
-
-                    //如果数量小于最小qigouliang
                     if (num <= qigouliang){
                         Log.d("数量小雨qigouliang","是de");
-                       // num=Float.parseFloat(list.get(position).getMinPurchaseQuantity());
                         holder.Edt_buy_num.setText("" + qigouliang);
                         number = qigouliang;
                         Log.d("商品的--id", list.get(position).getCommerceItemId().toString());
-                        //update_data(list.get(position).id.toString());
-
                         updataView(position, lv_Cart, list.get(position).getCommerceItemId().toString());
                         holder.relative_item_cart.setVisibility(View.GONE);
                     }else  if (num>Float.parseFloat(list.get(position).getMinPurchaseQuantity())){//正常
@@ -711,6 +707,7 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
                         holder.Edt_buy_num.setText(num+"");
                         updataView(position, lv_Cart, list.get(position).getCommerceItemId().toString());
                         holder.relative_item_cart.setVisibility(View.GONE);
+                        lv_Cart.setSelection(ListView.FOCUS_DOWN);
                     }
                     if (num == 0) {
                         Toast.makeText(ctx, "购买数量不能为零", Toast.LENGTH_SHORT).show();
@@ -723,174 +720,106 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
                 public void onClick(View v) {
                     adapter.setUnCheck(position);
                     String str;
-//                    if (isupdate){
-                        str = holder.Edt_buy_num.getText().toString();
-//                    }else {
-//                        str = holder.Edt_buy_num.getHint().toString();
-//                    }
-
+                    str = holder.Edt_buy_num.getText().toString();
                     if (str.equals("")) {
                         str = "0";
                     }
                     float num = Float.parseFloat(str);
-
                     num = num + Float.parseFloat(list.get(position).getQuantityAdjustmentUnit());
-
-
                     if (num >= Float.parseFloat(kucong_value)) {
-                        //num=num;
-                        holder.relative_item_cart.setVisibility(View.VISIBLE);
                         holder.Tv_no_much.setText("产品库存为" + num + "吨");
-
                     }
                     if (num <= Float.parseFloat(kucong_value) && num >= Float.parseFloat(list.get(position).getMinPurchaseQuantity())) {
                         holder.relative_item_cart.setVisibility(View.GONE);
                         holder.Edt_buy_num.setText("" + num);
                         number = num;
-                        //list.get(position).id.toString()
-                        Log.d("商品的--id", id);
-                        //update_data(list.get(position).id.toString());
                         updataView(position, lv_Cart, list.get(position).getCommerceItemId().toString());
 
                     }
                 }
             });
-            holder.Edt_buy_num.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+
+            holder.Edt_buy_num.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onFocusChange(View v, boolean hasFocus) {
+                public void onClick(View v) {
+                    //holder.Edt_buy_num.setCursorVisible(true);
+                    Log.d("输入框的点击事件","输入框的点击事件");
 
                     temp=holder.Edt_buy_num.getText().toString();
+                    final AlertDialog.Builder alertDialog=new AlertDialog.Builder(ctx);
+                    alertDialog.setTitle("修改数量");
+                    View view=View.inflate(ctx,R.layout.gouwucheinput,null);
+                    alertDialog.setView(view);
+                    final EditText tv_item_cart_buy_num_info=(EditText) view.findViewById(R.id.tv_item_cart_buy_num_info);
+                    tv_item_cart_buy_num_info.setText(temp);
+                    tv_item_cart_buy_num_info.setSelection(temp.length());
+                    tv_item_cart_buy_num_info.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                        @Override
+                        public void onFocusChange(View v, boolean hasFocus) {
 
-                    if (Double.parseDouble(temp) > Double.parseDouble(kucong_value)) {
+                        }
+                    });
+                    alertDialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            //alertDialog.
+                            alertDialog.create().dismiss();
+                        }
+                    });
+                    alertDialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            //这里进行判断
+
+                            if (Double.parseDouble(temp) > Double.parseDouble(kucong_value)) {
                         holder.Edt_buy_num.setText((kucong_value));
-                        holder.Edt_buy_num.setSelection(kucong_value.length());
+                      //  holder.Edt_buy_num.setSelection(kucong_value.length());
                         number=Float.parseFloat(kucong_value);
                         updataView(position, lv_Cart, list.get(position).getCommerceItemId().toString());
 
                     }else if (Double.parseDouble(temp) < Double.parseDouble(kucong_value) && Double.parseDouble(temp)>0){
-                        holder.Edt_buy_num.setSelection(temp.length());
-                        Log.d("temp的值",temp);
+                       // holder.Edt_buy_num.setSelection(temp.length());
+                                shuaaa=position;
+                                id = list.get(position).getCommerceItemId().toString();
+                                Log.d("购物车产品的id",id);
+                        Log.d("temp的值",tv_item_cart_buy_num_info.getText().toString());
                         SharedPreferences sharedPreferences=ctx.getSharedPreferences("sumao",Activity.MODE_PRIVATE);
                         SharedPreferences.Editor editor=sharedPreferences.edit();
-                        editor.putString("temp",temp);
+                        editor.putString("temp",tv_item_cart_buy_num_info.getText().toString());
                         editor.commit();
-                    }
 
-                    float i = Float.parseFloat(temp);
-                    if (i >= Float.parseFloat(kucong_value)) {
-                        holder.relative_item_cart.setVisibility(View.VISIBLE);
-                        holder.Tv_no_much.setText("产品库存为" + i + "吨");
-                       // dialog.show();
-                    } else {
-                        holder.relative_item_cart.setVisibility(View.GONE);
+
                     }
+                        }
+                    });
+                    alertDialog.create().show();
+
+
                 }
             });
-//            holder.Edt_buy_num.addTextChangedListener(new TextWatcher() {
+//            holder.Edt_buy_num.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 //                @Override
-//                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//                }
-//
-//                @Override
-//                public void onTextChanged(CharSequence s, int start, int before, int count) {
-//
-//                }
-//
-//                @Override
-//                public void afterTextChanged(Editable s) {
-//temp=holder.Edt_buy_num.getText().toString();
-//                    Log.d("temp的值",temp);
-//                    SharedPreferences sharedPreferences=ctx.getSharedPreferences("sumao",Activity.MODE_PRIVATE);
-//                    SharedPreferences.Editor editor=sharedPreferences.edit();
-//                    editor.putString("temp",temp);
-//                    editor.commit();
-//                }
-//            });
-
-
-
-            //value=holder.Edt_buy_num.getText().toString();
-//            holder.Edt_buy_num.addTextChangedListener(new TextWatcher() {
-//                @Override
-//                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//                    temp = holder.Edt_buy_num.getText().toString();
-//                }
-//
-//                @Override
-//                public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                    if (s.length() == 0) {
-//                        holder.Edt_buy_num.setText("0");
-//                        holder.Edt_buy_num.setSelection(1);
-//                    }
-//                    if (s.toString().contains(".")) {
-//                        if (s.length() - 1 - s.toString().indexOf(".") > 3) {
-//                            s = s.toString().subSequence(0,
-//                                    s.toString().indexOf(".") + 4);
-//                            holder.Edt_buy_num.setText(s);
-//                            holder.Edt_buy_num.setSelection(s.length());
-//                        }
-//                    }
-//                    if (s.toString().trim().substring(0).equals(".")) {
-//                        s = "0" + s;
-//                        holder.Edt_buy_num.setText(s);
-//                        holder.Edt_buy_num.setSelection(3);
-//                    }
-//
-//                    if (s.toString().startsWith("0")
-//                            && s.toString().trim().length() > 1) {
-//                        if (!s.toString().substring(1, 2).equals(".")) {
-//                            holder.Edt_buy_num.setText(s.subSequence(1, s.length()));
-//                            holder.Edt_buy_num.setSelection(1);
-//                            return;
-//                        }
-//                    }
+//                public void onFocusChange(View v, boolean hasFocus) {
 //
 //
-//                }
+//                    temp=holder.Edt_buy_num.getText().toString();
 //
-//                @Override
-//                public void afterTextChanged(Editable s) {
-//                    temp = holder.Edt_buy_num.getText().toString();
-//                    Log.d("输入框后的值",temp);
-//                    SharedPreferences sp=ctx.getSharedPreferences("sumao",Activity.MODE_PRIVATE);
-//                    SharedPreferences.Editor editor=sp.edit();
-//                    editor.putString("editText",temp);
-//                    editor.commit();
-////                    if (Double.parseDouble(temp) > Double.parseDouble(kucong_value)) {
-////                        holder.Edt_buy_num.setText((kucong_value));
-////                        holder.Edt_buy_num.setSelection(kucong_value.length());
-////                        number=Float.parseFloat(kucong_value);
+//                    if (Double.parseDouble(temp) > Double.parseDouble(kucong_value)) {
+//                        holder.Edt_buy_num.setText((kucong_value));
+//                      //  holder.Edt_buy_num.setSelection(kucong_value.length());
+//                        number=Float.parseFloat(kucong_value);
 //                        updataView(position, lv_Cart, list.get(position).getCommerceItemId().toString());
 //
-//                    }else {
-////                        SharedPreferences sharedPreferences=ctx.getSharedPreferences("sumao",Activity.MODE_PRIVATE);
-////                        String aa=sharedPreferences.getString("surukuang","");
-////                        if (!aa.equals("")){
-////                            holder.Edt_buy_num.setText((aa));
-////                            number=Float.parseFloat(aa);
-////                            updataView(position, lv_Cart, list.get(position).getCommerceItemId().toString());
-////                            adapter.notifyDataSetChanged();
-////                        }
-//                    }
+//                    }else if (Double.parseDouble(temp) < Double.parseDouble(kucong_value) && Double.parseDouble(temp)>0){
+//                       // holder.Edt_buy_num.setSelection(temp.length());
+//                        Log.d("temp的值",temp);
+//                        SharedPreferences sharedPreferences=ctx.getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+//                        SharedPreferences.Editor editor=sharedPreferences.edit();
+//                        editor.putString("temp",temp);
+//                        editor.commit();
 //
-//                    float i = Float.parseFloat(temp);
-//                    if (i >= Float.parseFloat(kucong_value)) {
-//                        holder.relative_item_cart.setVisibility(View.VISIBLE);
-//                        holder.Tv_no_much.setText("产品库存为" + i + "吨");
-//                       // dialog.show();
-//                    } else {
-//                        holder.relative_item_cart.setVisibility(View.GONE);
 //
 //                    }
-//
-
-
-
-
-
-
-
 //                }
 //            });
             return convertView;
@@ -953,12 +882,14 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
         TextView Tv_price;
         TextView Tv_qiye;
         TextView Tv_company;
-        EditText Edt_buy_num;
+        TextView Edt_buy_num;
         TextView Tv_buy_Sub, Tv_buy_Add;
         TextView Tv_all_price, Tv_no_much;
         ImageView Img_select, Img_del;
         RelativeLayout relative_item_cart;
     }
+
+
 
 
 

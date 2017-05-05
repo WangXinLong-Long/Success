@@ -104,7 +104,9 @@
                     android:layout_marginTop="@dimen/x5"
                     android:layout_below="@+id/ivResult"
                     android:text=""
-                    android:textSize="16sp"
+                    android:textSize="14sp"
+                    android:layout_marginLeft="@dimen/x5"
+                    android:layout_marginRight="@dimen/x5"
                      />
 
                 <TextView
@@ -114,7 +116,9 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/enterprise_additional_information_tv"
                     android:layout_marginTop="@dimen/x7"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
+                    android:layout_marginLeft="@dimen/x5"
+                    android:layout_marginRight="@dimen/x5"
                     android:layout_centerHorizontal="true" />
 
                 <TextView
@@ -123,7 +127,9 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/split_line1"
                     android:layout_marginTop="@dimen/x7"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
+                    android:layout_marginLeft="@dimen/x5"
+                    android:layout_marginRight="@dimen/x5"
                     android:layout_centerHorizontal="true" />
 
         </RelativeLayout>

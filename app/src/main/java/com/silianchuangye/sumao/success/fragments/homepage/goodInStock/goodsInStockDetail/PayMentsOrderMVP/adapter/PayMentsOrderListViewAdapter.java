@@ -1,7 +1,11 @@
 package com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.PayMentsOrderMVP.adapter;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +19,11 @@ import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInSt
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.TimeZone;
 
 /**
@@ -24,7 +32,7 @@ import java.util.TimeZone;
 public class PayMentsOrderListViewAdapter extends BaseAdapter {
     private Context context;
     List<Orders.OrderIdListBean> orderIdListBeans;
-
+    private Map<TextView, TextViewTimeCountUtil> leftTimeMap = new HashMap<TextView, TextViewTimeCountUtil>();
 
     public PayMentsOrderListViewAdapter(Context context) {
         this.context = context;
@@ -122,23 +130,54 @@ public class PayMentsOrderListViewAdapter extends BaseAdapter {
                 ((PaymentsOrder) context).payImmediately(position);
             }
         });
-        long time = 1000 * Long.parseLong(orderIdListBean.getRemainingTime());
-        final SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
-        format.setTimeZone(TimeZone.getTimeZone("GMT+0"));
-        new CountDownTimer(time, 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                String time = format.format(millisUntilFinished);
-                viewHolder.residual_time.setText("剩余支付时间：" + time);
-            }
+        Log.d("时间的值",orderIdListBean.getRemainingTime().toString());
+        TextViewTimeCountUtil tc = leftTimeMap.get(viewHolder.residual_time);
+        if (tc != null) {
+            tc.cancel();
+            tc = null;
+        }
+        long time = Long.parseLong(this.orderIdListBeans.get(position).getRemainingTime().toString())*1000;
 
-            @Override
-            public void onFinish() {
 
-            }
-        }.start();
+        //启动倒计时
+        TextViewTimeCountUtil tcu = new TextViewTimeCountUtil(
+                time, 1000,
+                viewHolder.residual_time);
+        tcu.start();
+        //保存当前到时任务
+        leftTimeMap.put(viewHolder.residual_time, tcu);
+
+
         return convertView;
     }
+
+    public void cancelAllTimers() {
+        Set<Map.Entry<TextView, TextViewTimeCountUtil>> s = leftTimeMap
+                .entrySet();
+        Iterator it = s.iterator();
+        while (it.hasNext()) {
+            try {
+                Map.Entry pairs = (Map.Entry) it.next();
+                TextViewTimeCountUtil cdt = (TextViewTimeCountUtil) pairs
+                        .getValue();
+                cdt.cancel();
+                cdt = null;
+            } catch (Exception e) {
+            }
+        }
+        it = null;
+        s = null;
+        leftTimeMap.clear();
+    }
+
+
+
+
+}
+
+
+
+
 
 
     class ViewHolder {
@@ -158,4 +197,6 @@ public class PayMentsOrderListViewAdapter extends BaseAdapter {
     }
 
 
-}
+
+
+

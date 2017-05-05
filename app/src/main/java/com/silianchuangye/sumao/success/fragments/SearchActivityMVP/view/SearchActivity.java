@@ -2,6 +2,7 @@ package com.silianchuangye.sumao.success.fragments.SearchActivityMVP.view;
 
 import android.app.Activity;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -9,7 +10,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -20,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
+import com.silianchuangye.sumao.success.db.Search;
 import com.silianchuangye.sumao.success.fragments.SearchActivityMVP.bean.SearchActivityBean;
 import com.silianchuangye.sumao.success.fragments.SearchActivityMVP.presenter.SearchActivityPresenter;
 import com.silianchuangye.sumao.success.fragments.type.view.TypeInfoActivity;
@@ -39,11 +43,13 @@ public class SearchActivity extends AppCompatActivity implements ISearchActivity
     private String infoSearch;
     private TextView tv_clear;//清除搜索历史
     private boolean flag;
+    private TextView tv_More_Search;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+        tv_More_Search= (TextView) findViewById(R.id.tv_More_Search);
         if(!getDatabasePath("sumao.db").exists()){
             getDatabasePath("sumao.db").getParentFile().mkdirs();
         }
@@ -54,6 +60,7 @@ public class SearchActivity extends AppCompatActivity implements ISearchActivity
         tv_clear= (TextView) findViewById(R.id.tv_clear);
         if(list.size()==0){
             tv_clear.setVisibility(View.GONE);
+            tv_More_Search.setVisibility(View.GONE);
         }
 
         searchActivityPresenter = new SearchActivityPresenter(SearchActivity.this);
@@ -65,6 +72,7 @@ public class SearchActivity extends AppCompatActivity implements ISearchActivity
                 db.execSQL("delete from search");
                 list.clear();
                 tv_clear.setVisibility(View.GONE);
+                tv_More_Search.setVisibility(View.GONE);
                 adapter.notifyDataSetChanged();
             }
         });
@@ -130,8 +138,10 @@ public class SearchActivity extends AppCompatActivity implements ISearchActivity
                 list.add(cursor.getString(0));
                 if (list.size()==0){
                     tv_clear.setVisibility(View.GONE);
+                    tv_More_Search.setVisibility(View.GONE);
                 }else if (list.size()>0){
                     tv_clear.setVisibility(View.VISIBLE);
+                    tv_More_Search.setVisibility(View.VISIBLE);
                 }
                 for (int j=0;j<list.size();j++){
                     if (list.get(j).equals(null)){
@@ -168,6 +178,7 @@ public class SearchActivity extends AppCompatActivity implements ISearchActivity
 
     @Override
     public void getSearchActivityData(SearchActivityBean searchActivityBean) {
+        search_content.clearFocus();
         if (searchActivityBean.getIn().size()==0){
             Toast.makeText(this,"没有找到相关商品，请重新搜索",Toast.LENGTH_SHORT).show();
         }else {
@@ -177,5 +188,45 @@ public class SearchActivity extends AppCompatActivity implements ISearchActivity
             startActivity(intent);
         }
 
+    }
+    public  boolean isShouldHideInput(View v, MotionEvent event) {
+        if (v != null && (v instanceof EditText)) {
+            int[] leftTop = { 0, 0 };
+            //获取输入框当前的location位置
+            v.getLocationInWindow(leftTop);
+            int left = leftTop[0];
+            int top = leftTop[1];
+            int bottom = top + v.getHeight();
+            int right = left + v.getWidth();
+            if (event.getX() > left && event.getX() < right
+                    && event.getY() > top && event.getY() < bottom) {
+                // 点击的是输入框区域，保留点击EditText的事件
+                return false;
+            } else {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+            View v = getCurrentFocus();
+            if (isShouldHideInput(v, ev)) {
+
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imm != null) {
+                    search_content.clearFocus();
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+            return super.dispatchTouchEvent(ev);
+        }
+        // 必不可少，否则所有的组件都不会有TouchEvent了
+        if (getWindow().superDispatchTouchEvent(ev)) {
+            return true;
+        }
+        return onTouchEvent(ev);
     }
 }

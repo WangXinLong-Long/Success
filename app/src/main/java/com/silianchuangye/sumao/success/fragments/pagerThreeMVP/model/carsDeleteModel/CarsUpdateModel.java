@@ -33,6 +33,7 @@ public class CarsUpdateModel implements ICarsUpdateModel {
         rp.addParameter("commerceId", commerceId);
 
         rp.addParameter("_dynSessConf", _dynSessConf);
+        Log.d("购物车修改的url",rp+"");
         x.http().post(rp, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {

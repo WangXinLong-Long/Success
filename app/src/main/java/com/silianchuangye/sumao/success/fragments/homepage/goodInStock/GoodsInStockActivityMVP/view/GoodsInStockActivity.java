@@ -13,6 +13,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -291,6 +292,10 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
         });
         TextView tv_child_title_bar_title1= (TextView) popView.findViewById(R.id.tv_child_title_bar_title);
         tv_child_title_bar_title1.setText(title);
+        final TextView textValefenlei= (TextView)popView.findViewById(R.id.textValefenlei);
+        final TextView textValediqu= (TextView) popView.findViewById(R.id.textValediqu);
+        final TextView textValeyingyong= (TextView)popView.findViewById(R.id.textValeyingyong);
+        final TextView textValeshengchan= (TextView) popView.findViewById(R.id.textValeshengchan);
             gv_Diqu= (GridView) popView.findViewById(R.id.region_grid);
             gv_Fenlei= (GridView) popView.findViewById(R.id.classification_grid);
             gv_Yinyong= (GridView) popView.findViewById(R.id.application_grid);
@@ -318,6 +323,9 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 fenleiString=list_feilei.get(position).get("id").toString();
+                String fenleiname=list_feilei.get(position).get("name").toString();
+                textValefenlei.setVisibility(View.VISIBLE);
+                textValefenlei.setText(fenleiname);
                 fenlei=true;
                 Log.d("分类选择的id",fenleiString);
                 getInfoForGridView();
@@ -327,6 +335,10 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 fenleiString=list_diqu.get(position).get("id").toString();
+                String diquname=list_diqu.get(position).get("name").toString();
+                Log.d("地区的值",diquname);
+                textValediqu.setVisibility(View.VISIBLE);
+                textValediqu.setText(diquname);
                 diqu=true;
                 Log.d("地区的选择id",fenleiString);
                 getInfoForGridView();
@@ -336,6 +348,17 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 fenleiString=list_yingyong.get(position).get("id").toString();
+                String yingyongname=list_yingyong.get(position).get("name").toString();
+
+//                if (textVale.getText().toString()==null||textVale.getText().toString().equals("")){
+//                    Log.d("进来了","进来了");
+//                }else {
+//                    //textVale.setText(textVale.getText().toString() + fenleiname);
+//                    //textVale.setText(textVale.getText().toString()+diquname);
+//                    textVale.setText(textVale.getText().toString()+yingyongname);
+//                }
+                textValeyingyong.setVisibility(View.VISIBLE);
+                textValeyingyong.setText(yingyongname);
                 yingyong=true;
                 Log.d("应用的选择id",fenleiString);
                 getInfoForGridView();
@@ -345,6 +368,18 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 fenleiString=list_shengchan.get(position).get("id").toString();
+                String shengchanname=list_shengchan.get(position).get("name").toString();
+
+//                if (textVale.getText().toString()==null||textVale.getText().toString().equals("")){
+//                    Log.d("进来了","进来了");
+//                }else {
+//                    //textVale.setText(textVale.getText().toString() + fenleiname);
+//                    //textVale.setText(textVale.getText().toString()+diquname);
+//                    //textVale.setText(textVale.getText().toString()+yingyongname);
+//                    textVale.setText(textVale.getText().toString()+shengchanname);
+//                }
+                textValeshengchan.setVisibility(View.VISIBLE);
+                textValeshengchan.setText(shengchanname);
                 shengchan=true;
                 Log.d("生产的应用id",fenleiString);
                 getInfoForGridView();
@@ -470,7 +505,7 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
         });
     }
 
-    public void searchProductName(String number, final String tiaojian){
+    public void searchProductName(final String number, final String tiaojian){
         urlSearch=SuMaoConstant.SUMAO_IP+"/rest/model/atg/endeca/HomeActor/EndecaAppScreenResult";
         if (!fenlei&&!diqu&&!shengchan&&!yingyong){
             if (title.equals("现货")){
@@ -516,12 +551,19 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
                     if (tiaojian.equals("条件")){
                         smClList.clear();
                     }
+                    if (number.equals("0") && smClList.size()>0){
+                        smClList.clear();
+                    }
                     smClList.addAll(goodsInStockActivityBean.getIn());
                     Log.d("现货类的长度",goodsInStockActivityBean.getIn().size()+"");
                     Log.d("smClList的长度",smClList.size()+"");
 
                     adapter.clearData();
                     adapter.addData(smClList);
+                    Log.d("number的值",number);
+                    if (smClList.size()>10) {
+                        pre_sale_listView.setSelection(Integer.parseInt(number) - 10);
+                    }
                     Log.d("adapter的长度",adapter.getCount()+"");
                     adapter.notifyDataSetChanged();
                 }// prl.setOnPullListener(new InStockActivityListPullListener());
@@ -886,46 +928,27 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
         @Override
         public void onRefresh(final PullToRefreshLayout pullToRefreshLayout) {
             number = "0";
-//            if (tv_screen_title_bar_title.getText().toString().equals("现货")) {
-//                pattern = "fixedProduct";
-//            } else if (tv_screen_title_bar_title.getText().toString().equals("预售")) {
-//                pattern = "forward-pricing-product";
-//            }
+            page =0;
             searchProductName(number,"");
-//            goodsInStockActivityPresenter.getGoodsInStockInfo(groups, pattern, regions, provinces, cities,
-//                    categoryNames, appNames, gradeNums, pageNum, "update");
 
-            // 千万别忘了告诉控件刷新完毕了哦！
             pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
         }
 
         @Override
         public void onLoadMore(final PullToRefreshLayout pullToRefreshLayout) {
-//            if (tv_screen_title_bar_title.getText().toString().equals("现货")) {
-//                pattern = "fixedProduct";
-//            } else if (tv_screen_title_bar_title.getText().toString().equals("预售")) {
-//                pattern = "forward-pricing-product";
-//            }
             new Handler() {
                 @Override
                 public void handleMessage(Message msg) {
-                    //String updateOrLoad = "load";
-
+                    Log.d("page的值",page+"");
                     int num = page + 1;
                     Log.d("下一页number的值",""+num);
                     page=num;
                     number = page*10 + "";
                     Log.d("number的值",number+"");
                     searchProductName(number,"");
-//                    goodsInStockActivityPresenter.getGoodsInStockInfo(groups, pattern, regions, provinces, cities,
-//                            categoryNames, appNames, gradeNums, pageNum, updateOrLoad);
-                    // 千万别忘了告诉控件加载完毕了哦！
-                   // pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
-
-                    //Ceshi
                     pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
                 }
-            }.sendEmptyMessageDelayed(0, 3000);
+            }.sendEmptyMessageDelayed(0, 1);
         }
 
     }

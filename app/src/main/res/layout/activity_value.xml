@@ -14,7 +14,7 @@
 
     <EditText
         android:layout_width="match_parent"
-        android:layout_height="@dimen/x40"
+        android:layout_height="@dimen/x35"
         android:layout_marginTop="@dimen/x20"
         android:layout_marginLeft="@dimen/x10"
         android:layout_marginRight="@dimen/x10"

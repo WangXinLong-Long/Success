@@ -127,7 +127,7 @@ public class PagerOne extends BasePager implements IPagerOneView {
     @Override
     public void myClickSearch() {
         //调到搜索页
-        Intent intent = new Intent(mActivity, SearchActivity.class);
+        Intent intent = new Intent(mActivity,SearchActivity.class );
         startActivity(intent);
     }
 
@@ -433,11 +433,34 @@ public class PagerOne extends BasePager implements IPagerOneView {
     // 客服界面
     @Override
     public void myClickRight() {
-        Intent intent = new Intent();
-        intent.setClass(mActivity, LoginActivity.class);
-        intent.putExtra(Constant.MESSAGE_TO_INTENT_EXTRA, Constant.MESSAGE_TO_DEFAULT);
-        intent.putExtra(Constant.IM_SERVICE_NUMBER, "塑贸客服");
-        startActivity(intent);
+//
+        SharedPreferences sp=getActivity().getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+        String unique=sp.getString("unique","");
+        String user_name="";
+        if (unique.equals("false")) {
+            //Toast.makeText(MainActivity.this, "请登录", Toast.LENGTH_SHORT).show();
+            tuichu();
+            Intent intent = new Intent();
+            intent.putExtra("roles", "buyer");
+            intent.setClass(getActivity(), LoginUserActivity.class);
+            startActivity(intent);
+        } else {
+            user_name = sp.getString("name", "");
+            if (user_name != "") {
+                Intent intent = new Intent();
+                intent.setClass(mActivity, LoginActivity.class);
+                intent.putExtra(Constant.MESSAGE_TO_INTENT_EXTRA, Constant.MESSAGE_TO_DEFAULT);
+                intent.putExtra(Constant.IM_SERVICE_NUMBER, "塑贸客服");
+                startActivity(intent);
+            } else {
+                tuichu();
+                Intent intent = new Intent();
+                intent.putExtra("roles", "buyer");
+                intent.setClass(getActivity(), LoginUserActivity.class);
+                startActivity(intent);
+            }
+        }
+
     }
 
     //获取到图片存放的路径，分别进行网络请求

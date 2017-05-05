@@ -8,6 +8,69 @@
     <include
         android:id="@+id/search_text"
         layout="@layout/child_title_bar"></include>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x30"
+        android:id="@+id/latout_choose"
+
+        android:layout_below="@id/search_text"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="你选择了:"
+            android:textColor="@color/textColor_expandable_listview_show"
+            android:id="@+id/nixuanze"
+            android:layout_marginRight="@dimen/x2"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/x5"
+
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textValefenlei"
+            android:textColor="@color/textColor_expandable_listview_show"
+            android:layout_toRightOf="@id/nixuanze"
+            android:layout_centerVertical="true"
+            android:text="分类"
+            android:visibility="gone"
+
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textValediqu"
+            android:textColor="@color/textColor_expandable_listview_show"
+            android:layout_toRightOf="@id/textValefenlei"
+            android:layout_centerVertical="true"
+            android:text="地区"
+            android:visibility="gone"
+            android:layout_marginLeft="@dimen/x5"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textValeyingyong"
+            android:textColor="@color/textColor_expandable_listview_show"
+            android:layout_toRightOf="@id/textValediqu"
+            android:layout_centerVertical="true"
+            android:text="应用"
+            android:visibility="gone"
+            android:layout_marginLeft="@dimen/x5"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textValeshengchan"
+            android:textColor="@color/textColor_expandable_listview_show"
+            android:layout_toRightOf="@id/textValeyingyong"
+            android:layout_centerVertical="true"
+            android:text="生产"
+            android:visibility="gone"
+            android:layout_marginLeft="@dimen/x5"
+            />
+    </RelativeLayout>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="@dimen/x280">

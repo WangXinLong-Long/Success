@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="@color/selley_bg"
     >
@@ -199,7 +199,7 @@
             android:gravity="center"
             android:background="@drawable/cart_num"
             />
-        <EditText
+        <TextView
             android:id="@+id/tv_item_cart_buy_num"
             android:layout_width="@dimen/x50"
             android:layout_height="@dimen/x25"
@@ -207,10 +207,9 @@
             android:layout_centerVertical="true"
             android:background="@drawable/juxing"
             android:gravity="center"
-            android:singleLine="true"
+
             android:textColor="#222"
-            android:textColorHint="#222"
-            android:inputType="numberDecimal"
+
            />
         <TextView
             android:textSize="20sp"
@@ -249,7 +248,7 @@
         android:background="@color/selley_lv"
         android:layout_width="match_parent"
 
-        android:layout_height="40dp">
+        android:layout_height="@dimen/x30">
         <TextView
             android:layout_centerInParent="true"
             android:textColor="#ff0000"

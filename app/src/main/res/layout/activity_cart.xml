@@ -26,6 +26,7 @@
         android:layout_alignParentBottom="true"
         android:id="@+id/relative_activity_cart_bottom"
         android:layout_marginTop="@dimen/x3"
+        android:visibility="gone"
         >
         <!--这个是隐藏全选按钮-->
         <ImageView
@@ -66,19 +67,20 @@
             android:text="立即支付"
             android:textColor="#ffffff"/>
     </RelativeLayout>
-    <ScrollView
-        android:layout_below="@id/reative_activity_cart_top"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/relative_activity_cart_bottom">
-      <RelativeLayout
+    <!--  <RelativeLayout
+          android:layout_below="@id/reative_activity_cart_top"
           android:layout_width="match_parent"
-          android:layout_height="match_parent">
-          <RelativeLayout
+          android:layout_height="wrap_content"
+          android:layout_above="@id/relative_activity_cart_bottom">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">-->
+        <RelativeLayout
               android:id="@+id/relative_cart_tishi"
               android:layout_width="match_parent"
               android:background="@color/selley_lv"
-              android:layout_height="@dimen/x35">
+              android:layout_below="@+id/reative_activity_cart_top"
+              android:layout_height="@dimen/x33">
               <TextView
                   android:text="提交订单之后，购物车剩余的商品会被清除"
                   android:layout_centerInParent="true"
@@ -87,15 +89,20 @@
                   android:layout_height="wrap_content"
                   android:textColor="#ff0000"/>
           </RelativeLayout>
-          <com.silianchuangye.sumao.success.custom.CustomListView
+      <!--    <com.silianchuangye.sumao.success.custom.CustomListView-->
+        <ListView
               android:background="@color/selley_lv"
               android:id="@+id/lv_activity_cart"
               android:layout_width="match_parent"
-              android:layout_height="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_above="@+id/relative_activity_cart_bottom"
               android:layout_below="@id/relative_cart_tishi"
-              android:layout_marginTop="@dimen/x5"></com.silianchuangye.sumao.success.custom.CustomListView>
-      </RelativeLayout>
-    </ScrollView>
+              android:layout_marginTop="@dimen/x2">
+        </ListView>
+
+         <!-- </com.silianchuangye.sumao.success.custom.CustomListView>-->
+     <!-- </RelativeLayout>
+    </RelativeLayout>-->
     <RelativeLayout
         android:id="@+id/relative_cart_null"
         android:visibility="gone"

@@ -11,6 +11,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -118,12 +119,16 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
     //软件盘弹起后所占高度阀值
     private int keyHeight = 0;
 
+    private RelativeLayout Layout_Button_Open;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setContentView(R.layout.activity_goods_in_stock_detail);
         bt_Colse = (Button) findViewById(R.id.bt_Colse);
+        Layout_Button_Open= (RelativeLayout) findViewById(R.id.Layout_Button_Open);
         layout_gongneng = (LinearLayout) findViewById(R.id.layout_gongneng);
         new Thread() {
             @Override
@@ -157,7 +162,8 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
         tv_jian.setOnClickListener(this);
         title_bar_white_title.setText("现货");
         layout_xianhuo.addOnLayoutChangeListener(this);
-        layout_xianhuo.setOnClickListener(this);
+
+
     }
 
     private void initView() {
@@ -225,12 +231,6 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
     public void onClick(View v) {
         Intent intent = new Intent();
         switch (v.getId()) {
-            case R.id.layout_xianhuo:
-                Log.d("现货全屏的点击事件","事件");
-                InputMethodManager imm = (InputMethodManager)
-                        getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-                break;
             case R.id.title_bar_white_back:
                 finish();
                 break;
@@ -330,12 +330,25 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
 
                 break;
             case R.id.layoutContent_auction:
-                Intent intentHX = new Intent();
-                intentHX.setClass(GoodsInStockDetailActivity.this, LoginActivity.class);
-                intentHX.putExtra(Constant.MESSAGE_TO_INTENT_EXTRA, Constant.MESSAGE_TO_DEFAULT);
+Log.d("现货的唯一标识",unique);
+                if (unique.equals("false")||unique.equals("")) {
+                    Toast.makeText(GoodsInStockDetailActivity.this, "请登录后进行操作", Toast.LENGTH_SHORT).show();
+                    tuichu();
+                    Intent intent1 = new Intent(this, LoginUserActivity.class);
+                    intent1.putExtra("roles", "buyer");
+                    intent1.putExtra("position", 100);
+                    startActivity(intent1);
+                } else {
+                    Intent intentHX = new Intent();
+                    intentHX.setClass(GoodsInStockDetailActivity.this, LoginActivity.class);
+                    intentHX.putExtra(Constant.MESSAGE_TO_INTENT_EXTRA, Constant.MESSAGE_TO_DEFAULT);
 //                传入卖家id
-                intentHX.putExtra(Constant.IM_SERVICE_NUMBER, cl_gongsiId);
-                startActivity(intentHX);
+                    intentHX.putExtra(Constant.IM_SERVICE_NUMBER, cl_gongsiId);
+                    startActivity(intentHX);
+//
+                }
+
+
                 break;
             case R.id.tv_item_cart_buy_num:
                 et_number.setFocusable(true);
@@ -792,24 +805,25 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
     public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
         if(oldBottom != 0 && bottom != 0 &&(oldBottom - bottom > keyHeight)){
 
+            Layout_Button_Open.setVisibility(View.GONE);
             //Toast.makeText(GoodsInStockDetailActivity.this, "监听到软键盘弹起...", Toast.LENGTH_SHORT).show();
 
         }else if(oldBottom != 0 && bottom != 0 &&(bottom - oldBottom > keyHeight)){
-
-            //Toast.makeText(GoodsInStockDetailActivity.this, "监听到软件盘关闭...", Toast.LENGTH_SHORT).show();
-           // (Float.parseFloat(et_number.getText().toString())-Float.parseFloat(goodsInStockDetailBean.getCl_qigou()))/Float.parseFloat(goodsInStockDetailBean.getCl_xiaobian())
+            Layout_Button_Open.setVisibility(View.VISIBLE);
             Double jianshu=sub(Double.parseDouble(et_number.getText().toString()),Double.parseDouble(goodsInStockDetailBean.getCl_qigou()));
             Log.d("jianshu的值",jianshu+"");
             int beishu=(int)div(jianshu,Float.parseFloat(goodsInStockDetailBean.getCl_xiaobian()),0);
             Log.d("倍数的值",beishu+"");
-            if (beishu==0){
-                beishu=1;
+            if (beishu<=0){
+                //beishu=1;
+                et_number.setText(goodsInStockDetailBean.getCl_qigou());
+            }else {
+                Double shuliang = mul(beishu, Double.parseDouble(goodsInStockDetailBean.getCl_xiaobian()));
+                Log.d("数量的值", shuliang + "");
+                // et_number.setText(shuliang+"");
+                Double value123 = add(shuliang, Double.parseDouble(goodsInStockDetailBean.getCl_qigou()));
+                et_number.setText(value123 + "");
             }
-            Double shuliang=mul(beishu,Double.parseDouble(goodsInStockDetailBean.getCl_xiaobian()));
-            Log.d("数量的值",shuliang+"");
-           // et_number.setText(shuliang+"");
-            Double value123=add(shuliang,Double.parseDouble(goodsInStockDetailBean.getCl_qigou()));
-            et_number.setText(value123+"");
 
             double x = (Double.parseDouble(et_number.getText().toString())) * (Double.parseDouble(tvPrice_auction.getText().toString()));
             DecimalFormat df = new DecimalFormat("#.##");
@@ -845,5 +859,64 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
         BigDecimal b1 = new BigDecimal(d1);
         BigDecimal b2 = new BigDecimal(d2);
         return b1.add(b2).doubleValue();
+    }
+    public  boolean isShouldHideInput(View v, MotionEvent event) {
+        if (v != null && (v instanceof EditText)) {
+            int[] leftTop = { 0, 0 };
+            //获取输入框当前的location位置
+            v.getLocationInWindow(leftTop);
+            int left = leftTop[0];
+            int top = leftTop[1];
+            int bottom = top + v.getHeight();
+            int right = left + v.getWidth();
+            if (event.getX() > left && event.getX() < right
+                    && event.getY() > top && event.getY() < bottom) {
+                // 点击的是输入框区域，保留点击EditText的事件
+                return false;
+            } else {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+            View v = getCurrentFocus();
+            if (isShouldHideInput(v, ev)) {
+
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imm != null) {
+                    Layout_Button_Open.setVisibility(View.VISIBLE);
+                    et_number.clearFocus();
+                    Double jianshu=sub(Double.parseDouble(et_number.getText().toString()),Double.parseDouble(goodsInStockDetailBean.getCl_qigou()));
+                    Log.d("jianshu的值",jianshu+"");
+                    int beishu=(int)div(jianshu,Float.parseFloat(goodsInStockDetailBean.getCl_xiaobian()),0);
+                    Log.d("倍数的值",beishu+"");
+                    if (beishu==0){
+                       // beishu=1;
+                        et_number.setText(goodsInStockDetailBean.getCl_qigou());
+                    }
+                    Double shuliang=mul(beishu,Double.parseDouble(goodsInStockDetailBean.getCl_xiaobian()));
+                    Log.d("数量的值",shuliang+"");
+                    // et_number.setText(shuliang+"");
+                    Double value123=add(shuliang,Double.parseDouble(goodsInStockDetailBean.getCl_qigou()));
+                    et_number.setText(value123+"");
+
+                    double x = (Double.parseDouble(et_number.getText().toString())) * (Double.parseDouble(tvPrice_auction.getText().toString()));
+                    DecimalFormat df = new DecimalFormat("#.##");
+                    all_price.setText(df.format(x) + "");
+                   // et_number.clearFocus();
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+            return super.dispatchTouchEvent(ev);
+        }
+        // 必不可少，否则所有的组件都不会有TouchEvent了
+        if (getWindow().superDispatchTouchEvent(ev)) {
+            return true;
+        }
+        return onTouchEvent(ev);
     }
 }

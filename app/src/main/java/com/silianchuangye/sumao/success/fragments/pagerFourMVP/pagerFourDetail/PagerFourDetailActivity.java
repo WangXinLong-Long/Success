@@ -37,6 +37,8 @@ public class PagerFourDetailActivity extends AppCompatActivity implements View.O
     private TextView tv_timer;
     private TextView tv_liulan;
     private TextView tv_from;
+    private String title;
+    private TextView information;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +47,11 @@ public class PagerFourDetailActivity extends AppCompatActivity implements View.O
         tv_timer= (TextView) findViewById(R.id.time_text);
         tv_from= (TextView) findViewById(R.id.from_text_value);
         //tv_liulan= (TextView) findViewById(R.id.liulan_text_value);
+        information= (TextView) findViewById(R.id.information);
         Bundle bundle=getIntent().getExtras();
         String fanhui=bundle.getString("result");
+        title=bundle.getString("title");
+        information.setText(title);
         Log.d("result的结果",fanhui);
         try {
             JSONObject jsonObject=new JSONObject(fanhui);

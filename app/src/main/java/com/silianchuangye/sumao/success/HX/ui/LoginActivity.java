@@ -139,6 +139,7 @@ public class LoginActivity extends BaseActivity {
 								Toast.makeText(getApplicationContext(), "网络不可用", Toast.LENGTH_SHORT).show();
 							} else if (errorCode == EMError.USER_ALREADY_EXISTS) {
 								Toast.makeText(getApplicationContext(), "用户已存在", Toast.LENGTH_SHORT).show();
+							//	toChatActivity();
 							} else if (errorCode == EMError.UNAUTHORIZED) {
 								Toast.makeText(getApplicationContext(), "无开放注册权限", Toast.LENGTH_SHORT).show();
 							} else if (errorCode == EMError.ILLEGAL_USER_NAME) {

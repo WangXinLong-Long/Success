@@ -142,6 +142,13 @@ public class PaymentsOrder extends Activity implements View.OnClickListener, IPa
         commit_order();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //结束任务
+        if(list_adapter!=null)
+            list_adapter.cancelAllTimers();
+    }
     public void commit_order() {
         String fixOrCart = getIntent().getStringExtra("type");
         orderList = (List<Orders.OrderIdListBean>) getIntent().getSerializableExtra("fix");
