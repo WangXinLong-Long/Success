@@ -19,8 +19,10 @@ import com.silianchuangye.sumao.success.fragments.homepage.auction.AuctionMVP.be
 import com.silianchuangye.sumao.success.fragments.homepage.auction.AuctionMVP.bean.AuctionSessionBean;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.AuctionMVP.bean.ListBean;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.AuctionMVP.presenter.AuctionPresenter;
+import com.silianchuangye.sumao.success.fragments.homepage.auction.openAuction.openAuctionView.OpenAcutionOrMifengActivity;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.openAuction.openAuctionView.OpenAuctionActivity;
 import com.silianchuangye.sumao.success.utils.LogUtils;
+import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,7 +60,7 @@ public class AuctionActivity extends AppCompatActivity implements IAuctionView {
         name_Auction = bundle.getString("name");
         SellId = bundle.getString("result");
 
-        getAddData(SellId);
+
         init();
     }
 
@@ -91,6 +93,12 @@ public class AuctionActivity extends AppCompatActivity implements IAuctionView {
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        getAddData(SellId);
+    }
+
     private void onListViewItemClick(int position) {
         String type_way = null;
         String productId = lists.get(position).getId();
@@ -104,18 +112,14 @@ public class AuctionActivity extends AppCompatActivity implements IAuctionView {
         }
         proType = lists.get(position).getType();
         auctionPresenter.getOpenAuctionOrSealedBid(type_way, productId, proType);
-//        Intent intent = new Intent(this, OpenAuctionActivity.class);
-//        intent.putExtra("auctionDetailBean", auctionDetailBean);
-//        intent.putExtra("type_way", type_way);
-//        intent.putExtra("proType",proType);
-//        intent.putExtra("productId",productId);
-//        startActivity(intent);
+
     }
 
     public void getAddData(String result) {
 //        getInfo();
         if (name_Auction.equals("竞拍")) {
-            getInfo(result);
+            //getInfo(result);
+            auctionPresenter.getAuctionListResult("1", "update");
         } else if (name_Auction.equals("竞拍专场")) {
             getAuction_zhunchang(result);
         }
@@ -124,6 +128,9 @@ public class AuctionActivity extends AppCompatActivity implements IAuctionView {
 
     //获取到从首页获得的数据，转化为竞拍模型
     public void getInfo(String result) {
+      //  String url= SuMaoConstant.SUMAO_IP+"/rest/model/atg/endeca/HomeActor/EndecaAppScreenResult";
+
+
         Log.d("竞拍结果返回值",result);
         if (result.contains("prod")) {
             Gson gson = new Gson();
@@ -180,8 +187,9 @@ public class AuctionActivity extends AppCompatActivity implements IAuctionView {
         Log.d("proType",proType);
 //        Gson gson = new Gson();
 //        AuctionDetailBean auctionDetailBean = gson.fromJson(result, AuctionDetailBean.class);
-        Intent intent = new Intent(AuctionActivity.this, OpenAuctionActivity.class);
+       // Intent intent = new Intent(AuctionActivity.this, OpenAuctionActivity.class);
         //intent.putExtra("auctionDetailBean", auctionDetailBean);
+        Intent intent=new Intent(AuctionActivity.this, OpenAcutionOrMifengActivity.class);
         intent.putExtra("result",result);
         intent.putExtra("type_way", type_way);
         intent.putExtra("proType",proType);

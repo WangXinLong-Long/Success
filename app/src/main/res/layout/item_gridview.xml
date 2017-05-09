@@ -20,11 +20,12 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/x2"
+                android:layout_marginLeft="@dimen/x5"
 
                 android:textSize="10sp"
                 android:textColor="#222"
                 android:id="@+id/tv_order_id"
+
                 />
         </RelativeLayout>
         <LinearLayout

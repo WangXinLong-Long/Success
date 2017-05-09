@@ -30,7 +30,6 @@ public class SubmissionPlanModel implements ISubmissionPlanModel {
     String price;
 
     String url = SuMaoConstant.SUMAO_IP+"/rest/model/com/sumao/mobile/order/purchase/PlanOrderActor/demandScheduleInOrder";
-
     public SubmissionPlanModel(String scheduleDate, String productName, String warehouseID, String planOrderQuantity, String logisticsID, String notes, String productId, String _dynSessConf) {
         this.scheduleDate = scheduleDate;
         this.productName = productName;

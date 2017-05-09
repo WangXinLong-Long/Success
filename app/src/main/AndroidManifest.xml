@@ -647,9 +647,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".fragments.pagerFourMVP.pagerFourDetail.PagerFourDetailActivity"
-            android:screenOrientation="portrait"
-
-            />
+            android:screenOrientation="portrait" />
 
         <receiver android:name=".utils.NetWorkChangeBroadcastReceiver">
             <intent-filter>
@@ -706,10 +704,9 @@
         <activity android:name=".fragments.myPlasticTrade.login.forgetPassword.ActivityPass" />
         <activity android:name=".fragments.myPlasticTrade.messagePush.view.MessagePushActivity" />
         <activity android:name=".fragments.pagerFourMVP.view.ChildPageActivity" />
-        <activity android:name=".fragments.pagerTwoMVP.PagerTwoView.NewsActivity"
-                   android:configChanges="keyboardHidden|orientation|screenSize"
-            />
-
+        <activity
+            android:name=".fragments.pagerTwoMVP.PagerTwoView.NewsActivity"
+            android:screenOrientation="portrait" />
         <activity android:name=".fragments.myPlasticTrade.demandPlanning.PlanPresentationMVP.view.ValueActivity" />
         <activity android:name=".fragments.myPlasticTrade.demandPlanning.planType.TypeActivity" />
         <activity android:name=".fragments.myPlasticTrade.demandPlanning.planType.ProductNameActivity" />
@@ -732,7 +729,7 @@
             android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoUpdateMVP.view.FirmUpdateActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
-        <activity android:name=".fragments.homepage.auction.openAuction.openAuctionView.OpenActionorMifengActivity"></activity>
+        <activity android:name=".fragments.homepage.auction.openAuction.openAuctionView.OpenAcutionOrMifengActivity"></activity>
     </application>
 
 </manifest>

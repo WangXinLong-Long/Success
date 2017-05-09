@@ -43,6 +43,7 @@ public class LoginActivity extends BaseActivity {
 	private String  imServiceKey="";
 	private String randomAccount="";
 	private String userPwd="";
+	private String title="";
 	@Override
 	protected void onCreate(Bundle arg0) {
 		super.onCreate(arg0);
@@ -51,6 +52,7 @@ public class LoginActivity extends BaseActivity {
 				Constant.INTENT_CODE_IMG_SELECTED_DEFAULT);
 		messageToIndex = intent.getIntExtra(Constant.MESSAGE_TO_INTENT_EXTRA, Constant.MESSAGE_TO_DEFAULT);
 		imServiceKey = intent.getStringExtra(Constant.IM_SERVICE_NUMBER);
+		title=intent.getStringExtra("name");
 		Log.d("imServicekey的值",""+imServiceKey);
 
 		
@@ -247,10 +249,12 @@ public class LoginActivity extends BaseActivity {
 				if (!LoginActivity.this.isFinishing())
 					progressDialog.dismiss();
 				 //进入主页面
-				startActivity(new Intent(LoginActivity.this, ChatActivity.class).putExtra(
-						Constant.INTENT_CODE_IMG_SELECTED_KEY, selectedIndex).putExtra(
-						Constant.MESSAGE_TO_INTENT_EXTRA, messageToIndex).
-						putExtra(Constant.IM_SERVICE_NUMBER,imServiceKey));
+				Intent intent=new Intent(LoginActivity.this,ChatActivity.class);
+				intent.putExtra(Constant.INTENT_CODE_IMG_SELECTED_KEY,selectedIndex);
+				intent.putExtra(Constant.MESSAGE_TO_INTENT_EXTRA,messageToIndex);
+				intent.putExtra(Constant.IM_SERVICE_NUMBER,imServiceKey);
+				intent.putExtra("name",title);
+				startActivity(intent);
 				finish();
 
 			}

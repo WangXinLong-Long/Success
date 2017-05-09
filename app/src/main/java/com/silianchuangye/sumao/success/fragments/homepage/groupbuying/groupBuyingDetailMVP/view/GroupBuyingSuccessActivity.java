@@ -344,10 +344,11 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
 
             @Override
             public void afterTextChanged(Editable s) {
+                Double shengyvshuliang=Double.parseDouble(count.getText().toString())-Double.parseDouble(groupBuyingDetailBean.getSumAddQty());
 
-                if (Double.parseDouble(tv_item_cart_buy_num.getText().toString()) > Double.parseDouble(count.getText().toString())) {
-                    tv_item_cart_buy_num.setText((count.getText().toString()));
-                    tv_item_cart_buy_num.setSelection(count.getText().toString().length());
+                if (Double.parseDouble(tv_item_cart_buy_num.getText().toString()) > shengyvshuliang) {
+                    tv_item_cart_buy_num.setText(shengyvshuliang+"");
+                    tv_item_cart_buy_num.setSelection((shengyvshuliang+"").length());
 
                 }
 //                if (Double.parseDouble(tv_item_cart_buy_num.getText().toString()) < Double.parseDouble(qigou.getText().toString())) {
@@ -548,7 +549,7 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
                 if (position == 0) {
                     Intent intent = new Intent(GroupBuyingSuccessActivity.this, RuleActivity.class);
                     intent.putExtra("bili", bili);
-                    intent.putExtra("jiezhi", jiezhishijian);
+                    intent.putExtra("jiezhi", "");
                     intent.putExtra("cangku", can_gku);
                     intent.putExtra("xiangxi", xiangxi);
                     intent.putExtra("kaishi", kaishishijian);
@@ -627,6 +628,7 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
                         );
                         gvDemo.setAdapter(adapter_grid);
                         adapter_grid.notifyDataSetChanged();
+
                        gvDemo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                            @Override
                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -999,6 +1001,7 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
             tv_tuangou_time.setVisibility(View.GONE);
             tvResult.setText("团购已结束");
         }else if (login.equals("end_success")){
+            info();
             tv_tuangou_line.setVisibility(View.VISIBLE);
             relative_tuangou.setVisibility(View.GONE);
             tv_success.setVisibility(View.GONE);
@@ -1011,6 +1014,7 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
             tv_tuangou_time.setVisibility(View.GONE);
             tvResult.setText("团购已结束");
             chenggong();
+
 
         }else if (login.equals("unGroup")){
             tv_tuangou_line.setVisibility(View.VISIBLE);
@@ -1083,6 +1087,7 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
         }
 
     }
+    //刷新进度条
     public void tuangouinfo(){
         String url=SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/catalog/ProductCatalogActor/groupProduct";
         RequestParams requestParams=new RequestParams(url);
@@ -1102,6 +1107,12 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
                     int i = (int) (Double.valueOf(groupPercent) * 100);
                     pbDemo.setProgress(i);
                     tv_pro_now.setText("当前成团量为 : " + i + "%");
+                    Double beishengshu=mul(Double.parseDouble(groupBuyingDetailBean.getGroupPercent()),Double.parseDouble(groupBuyingDetailBean.getCl_zongliang()));
+                    Double jianshu=sub(Double.parseDouble(groupBuyingDetailBean.getCl_zongliang()),beishengshu);
+                    if (jianshu<Double.parseDouble(groupBuyingDetailBean.getCl_qigou())){
+                        timer.cancel();
+                        info();
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -1123,6 +1134,7 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
             }
         });
     }
+
 
 
 
@@ -1419,6 +1431,7 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
                 intentHX.putExtra(Constant.MESSAGE_TO_INTENT_EXTRA, Constant.MESSAGE_TO_DEFAULT);
 //                传入卖家id
                 intentHX.putExtra(Constant.IM_SERVICE_NUMBER, cl_gongsiId);
+                    intentHX.putExtra("name",groupBuyingDetailBean.getCl_gongsi());
                 startActivity(intentHX);
 
 //                    backgroundAlpha(0.5f);
@@ -1512,6 +1525,9 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
         @Override
         public void onFinish() {
             //tv_success.setText("finish");
+            if (timer!=null){
+                timer.cancel();
+            }
             info();
         }
 

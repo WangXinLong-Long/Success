@@ -197,7 +197,6 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
         setContentView(R.layout.open_aution);
         openAuctionPresenter = new OpenAuctionPresenter(this);
         Bundle bundle=getIntent().getExtras();
-
         String result=bundle.getString("result");
         Log.d("传过来的result",""+result);
         Gson gson=new Gson();
@@ -353,8 +352,7 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
                 if (bt_jinpai_colse.getText().toString().equals("支付保证金")) {
                     LogUtils.log("支付保证金--->");
                     depositDeadline = auctionDetailBean.getDepositDeadline().getTime();
-
-                        alreadyBaoZhengJin(true);
+                    alreadyBaoZhengJin(true);
 
 
                 } else if (bt_jinpai_colse.getText().toString().equals("立即报价")) {
@@ -550,20 +548,15 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
         if (type_way.equals("公开竞拍")) {
             Log.d("这是公开竞拍","公开竞拍");
             shishihangqingSelect();
-           // Loding.show(this, "加载中...", false, null);
-            //这里先注视一下
-           //openAuctionPresenter.getRealTimeQuotes(id_value, false);
+
         } else {
-            //String type = auctionDetailBean.getCl_type();
+
             SharedPreferences sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
             String _dynSessConf = sp.getString("unique", "");
             Log.d("只是我的报价","我的报价");
             setValue();
             fuzhi();
             openAuctionPresenter.getMyOfferResult(_dynSessConf, productId, type_way, false);
-//        我的报价
-           // Loding.show(this, "加载中...", false, null);
-            //这里先注shi测试一下效果
 
         }
 
@@ -581,7 +574,7 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
                 Log.d("开闭市的返回值",result);
                 if (result.contains("true")){
                     Log.d("竞拍的唯一标识",unique);
-                    if (unique.equals("false") || unique.equals("")){
+                    if (unique.equals("false") || unique.equals("")){//开市但是没有登录
                         //没有登录登录状态
                         Layout_info.setVisibility(View.GONE);
                         //tv_result.setText("已闭市");
@@ -589,7 +582,7 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
                         participate_in_the_auction_ll.setVisibility(View.GONE);
                         Layout_Button_close.setVisibility(View.GONE);
                         Layout_Button_Open.setVisibility(View.GONE);
-                    }else{
+                    }else{                                         //开市场但是登陆了
                         //登录状态判断用户是不是有权限购买
                         Layout_info.setVisibility(View.GONE);
                         //tv_result.setText("已闭市");
@@ -630,15 +623,17 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
     }
     //退出登录
     public void tuichu(){
-        RequestParams  rp=new RequestParams(SuMaoConstant.SUMAO_IP+"/rest/model/atg/userprofiling/ProfileActor/logout");
-        SharedPreferences sp=getSharedPreferences("sumao",0);
-        //SharedPreferences sp1=g
-        String unique=sp.getString("unique","");
-        rp.addParameter("_dynSessConf",unique);
-        Log.d("退出时的唯一标识",unique);
-        x.http().post(rp, new Callback.CommonCallback<String>() {
-            @Override
-            public void onSuccess(String result) {
+      //  RequestParams  rp=new RequestParams(SuMaoConstant.SUMAO_IP+"/rest/model/atg/userprofiling/ProfileActor/logout");
+//        SharedPreferences sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+//        //SharedPreferences sp1=g
+//        String unique=sp.getString("unique","");
+//        rp.addParameter("_dynSessConf",unique);
+//        Log.d("退出时的唯一标识",unique);
+//        Log.d("退出的rp",rp+"");
+//        x.http().post(rp, new Callback.CommonCallback<String>() {
+//            @Override
+//            public void onSuccess(String result) {
+//                Log.d("退出的返回值",result);
                 SharedPreferences sp=getSharedPreferences("sumao", Activity.MODE_PRIVATE);
                 SharedPreferences.Editor editor=sp.edit();
                 editor.clear();
@@ -649,25 +644,25 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
 //                                            SettingActivity.this.finish();
 
 //                                        }
-            }
-
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-
-            }
-
-            @Override
-            public void onCancelled(CancelledException cex) {
-
-            }
-
-            @Override
-            public void onFinished() {
-
-            }
-        });
-//                            }
-//                        }.start();
+//            }
+//
+//            @Override
+//            public void onError(Throwable ex, boolean isOnCallback) {
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(CancelledException cex) {
+//
+//            }
+//
+//            @Override
+//            public void onFinished() {
+//
+//            }
+//        });
+////                            }
+////                        }.start();
 
 
     }
@@ -748,13 +743,17 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
                 new MyCount(startTime, 1000).start();
             }
             if (unique.equals("false")||unique.equals("")){
+                Log.d("没有登录","没有登录");
+
                 Layout_Button_Open.setVisibility(View.GONE);
                 layout_non.setVisibility(View.GONE);
                 Layout_info.setVisibility(View.GONE);
                 Layout_Button_no_login.setVisibility(View.VISIBLE);
+                tuichu();
                 Layout_info.setVisibility(View.GONE);
                 layout_Message.setVisibility(View.GONE);
             }else {
+                Log.d("登录了","登录了");
                 Layout_Button_Open.setVisibility(View.GONE);
                 layout_non.setVisibility(View.INVISIBLE);
                 Layout_info.setVisibility(View.GONE);
@@ -785,14 +784,6 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
         }else if (status.equals("2")){//竞拍结束
             tvTime.setText("竞拍已结束");
             tvTimeValue.setText("");
-//            if (unique.equals("false")||unique.equals("")){
-//                Layout_Button_Open.setVisibility(View.GONE);
-//                layout_non.setVisibility(View.GONE);
-//                Layout_info.setVisibility(View.GONE);
-//                Layout_Button_no_login.setVisibility(View.VISIBLE);
-//                Layout_info.setVisibility(View.GONE);
-//                layout_Message.setVisibility(View.GONE);
-//            }else {
                 Layout_info.setVisibility(View.GONE);
                 Layout_Button_no_login.setVisibility(View.GONE);
                 participate_in_the_auction_ll.setVisibility(View.GONE);
@@ -807,78 +798,7 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
 
     }
     public void fuzhi(){
-      //        String name = "";
-//        if (!getSharedPreferences("sumao", Activity.MODE_PRIVATE).getString("unique", "").equals("false"))
-//            name = getSharedPreferences("sumao", Activity.MODE_PRIVATE).getString("name", "");
-//        if (name.equals("")) {
-//            state = "no";
-//        } else {
-//            state = "yes";
-//        }
-//
-//        //        获取ProductID
-//        id_value = auctionDetailBean.getCl_id();
-//        LogUtils.log("status--->" + status);
-//        if (status.equals("") || status.equals("0")) {//竞拍未开始
-//            tvTime.setText("距离竞拍开始时间:");
-//            long startTime = Long.parseLong(auctionDetailBean.getStartDate()) - System.currentTimeMillis();
-//            new MyCount(startTime, 1000).start();
-//            Layout_Button_Open.setVisibility(View.GONE);
-//            layout_non.setVisibility(View.INVISIBLE);
-//            Layout_info.setVisibility(View.GONE);
-//            if (state.equals("no")) {
-//                //没有登录或者注册
-//                Layout_Button_no_login.setVisibility(View.VISIBLE);
-//                layout_Message.setVisibility(View.GONE);
-//                Layout_info.setVisibility(View.GONE);
-//                participate_in_the_auction_ll.setVisibility(View.GONE);
-//            } else {
-//                Layout_Button_no_login.setVisibility(View.GONE);
-//                Layout_info.setVisibility(View.GONE);
-//                layout_Message.setVisibility(View.GONE);
-//                isSuccessorFail(needToPayTheMargin);
-//            }
-//        } else if (status.equals("1")) {//正在竞拍
-//            tvTime.setText("竞拍剩余时间:");
-//            long startTime = Long.parseLong(auctionDetailBean.getEndDate()) - System.currentTimeMillis();
-//            new MyCount(startTime, 1000).start();
-//            if (state.equals("no")) {
-//                //提示登录或者注册
-//                Layout_Button_no_login.setVisibility(View.VISIBLE);
-//                Layout_Button_close.setVisibility(View.GONE);
-//                Layout_Button_Open.setVisibility(View.GONE);
-//                Layout_info.setVisibility(View.GONE);
-//                layout_Message.setVisibility(View.GONE);
-//            } else {
-//                //Layout_Button_no_login.setVisibility(View.GONE);
-//                //正常显示
-//                //这里需要判断是否支付保证金
-//                Layout_info.setVisibility(View.GONE);
-//                Layout_Button_no_login.setVisibility(View.GONE);
-//                LogUtils.log("正在竞拍是否需要支付保证金--->" + needToPayTheMargin);
-//                isSuccessorFail(needToPayTheMargin);
-//            }
-////      竞拍结束
-//        } else if (status.equals("2")) {
-        //  tvTime.setText("竞拍已结束");
-//            tvTimeValue.setText("");
-//            bt_jinpai.setBackgroundColor(getResources().getColor(R.color.gray_type));
-//            Layout_Button_close.setVisibility(View.GONE);
-//            Layout_Button_Open.setVisibility(View.GONE);
-////            未登录
-//            if (state.equals("no")) {
-//                //没有登录或者注册，最高标价
-//                Layout_Button_no_login.setVisibility(View.VISIBLE);
-//                layout_Message.setVisibility(View.VISIBLE);
-//                tv_Message.setText("竞拍结束");
-//                Layout_info.setVisibility(View.GONE);
-//            } else {
-//                Layout_info.setVisibility(View.VISIBLE);
-//                Layout_Button_no_login.setVisibility(View.GONE);
-//                //已经登录或者注册，判断是否成功
-//                isSuccessorFail(needToPayTheMargin);
-//            }
-//        }
+
         if (auctionDetailBean.getCl_mingcheng() == null) {
             namechanpin.setText("");
         } else {
@@ -946,7 +866,7 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
         sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
         //shishicunzai=sp.getBoolean("shishicunzai",false);
         shishicunzai=sp.getString("shishicunzai","");
-        Log.d("解析的值 ",""+shishicunzai+"我想睡觉");
+
         if (type_way.equals("公开竞拍")) {
             if (shishicunzai.equals("true")) {
                 tv_item_cart_buy_num.setText(shishinumber);
@@ -1647,10 +1567,6 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
                         }
                     }
 
-//                    paidDeposit.setText(amountOfMarginRequired.getText().toString());
-//                Intent intent=new Intent(OpenAuctionActivity.this,Ok_Dialog.class);
-//                intent.putExtra("number","122");
-//                startActivity(intent);
                 }
             });
             paymentSecurityPopupWindow.setTouchable(true);
@@ -1744,36 +1660,6 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
             Layout_Button_Open.setVisibility(View.GONE);
         }
 
-        //  user_success.setVisibility(View.VISIBLE);
-//        tv_result.setText("竞拍成功");
-//        price_auction = biddingesultsBean.getBidPrice();
-//        number_auction = biddingesultsBean.getDealQut();
-//        count_auction = biddingesultsBean.getTotalAmount();
-//        order_id = biddingesultsBean.getOrderId();
-//        tv_order_id.setText(order_id);
-//        tv_price.setText(price_auction);
-//        tv_number.setText(number_auction);
-//        tv_all_price.setText(count_auction);
-//        if (biddingesultsBean.getState().equals("QUOTED")) {//已支付
-//            payImmediately.setVisibility(View.GONE);
-//            layoutIn.setVisibility(View.GONE);
-//        } else {
-//            payImmediately.setVisibility(View.VISIBLE);
-//            Calendar calendar = Calendar.getInstance();
-//            calendar.set(Calendar.HOUR_OF_DAY, 16);
-//            calendar.set(Calendar.MINUTE, 0);
-//            calendar.set(Calendar.SECOND, 0);
-//            long countDownTime = 0;
-//            long todayOrTomorrow = (calendar.getTimeInMillis()) - Long.parseLong(biddingesultsBean.getDate());
-//            long today = calendar.getTimeInMillis() - System.currentTimeMillis();
-//            long tomorrow = calendar.getTimeInMillis() + 24 * 60 * 60 * 1000 - System.currentTimeMillis();
-//            countDownTime = todayOrTomorrow > 0 ? today : tomorrow;
-//            tvTime.setText("剩余支付时间：");
-//            mc = new MyCount(countDownTime, 1000);
-//            mc.start();
-      //  }
-
-
     }
 
     //    公开竞拍的状态
@@ -1781,6 +1667,7 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
     public void setStateOfPublicBiddingResult(String result, boolean setStateOfPublicBiddingResult) {
         isbaizhengjin=setStateOfPublicBiddingResult;
         LogUtils.log("走这里--->1");
+        Log.d("有没有竞拍的判断",result);
         Gson gson = new Gson();
         OpenAuctionStateBean openAuctionStateBean = gson.fromJson(result, OpenAuctionStateBean.class);
         String deposit_state = openAuctionStateBean.getDeposit_state();
@@ -1799,10 +1686,9 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
 //        竞拍成功
         if (openAuctionStateBean.getFlag().equals("yes")) {
             LogUtils.log("走这里--->2");
-            //layout_Message.setVisibility(View.GONE);
             auctionResult();
         } else {
-//            竞拍失败
+//竞拍失败
             LogUtils.log("走这里--->3");
             tv_result.setText(promptLanguage);
             LogUtils.log("tv_Message--->" + openAuctionStateBean.getMsg());
@@ -2207,7 +2093,7 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
         Log.d("先走这个方法","先走这个方法");
         sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
         unique=sp.getString("unique","");
-
+        Log.d("unique的值",unique);
         booleanOpenorClose();
         if (type_way.equals("公开竞拍")) {
             Log.e("公开竞拍的状态",state+"aaa");
@@ -2286,7 +2172,7 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
         }
     }
 
-    //    转化为倒计时需要的时间
+    //  转化为倒计时需要的时间
     public String formatTime(Long ms) {
         Integer ss = 1000;
         Integer mi = ss * 60;
@@ -2304,13 +2190,28 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
             sb.append(day + "天");
         }
         if (hour > 0) {
-            sb.append(hour + "小时");
+
+            if (hour>9){
+                sb.append(hour + "小时");
+            }else{
+                sb.append("0"+hour+"小时");
+            }
         }
         if (minute > 0) {
-            sb.append(minute + "分");
+            //sb.append(minute + "分");
+            if (minute>9){
+                sb.append(minute + "分");
+            }else{
+                sb.append("0"+minute + "分");
+            }
         }
         if (second > 0) {
-            sb.append(second + "秒");
+
+            if (second>9){
+                sb.append(second + "秒");
+            }else {
+                sb.append("0"+second + "秒");
+            }
         }
 
         return sb.toString();
@@ -2491,10 +2392,11 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
         x.http().post(rp, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
+                Log.d("竞拍的返回值",result);
                 if (result.contains("cl_xbianjia")){
                     Gson gson=new Gson();
                     auctionDetailBean = gson.fromJson(result, AuctionDetailBean.class);
-                    //shishihangqingSelect();
+
                     setValue();
                 }
             }
