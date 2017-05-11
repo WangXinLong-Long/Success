@@ -20,6 +20,7 @@
             android:layout_height="20dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/x10"
+            android:background="@drawable/fanhui"
             android:src="@mipmap/back" />
 
         <TextView

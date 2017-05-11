@@ -116,6 +116,13 @@ public class FirmInfoTypeActivity extends AppCompatActivity implements IFirmInfo
         info=bundle.getString("value");
 
         tupianpath=bundle.getString("path");
+//        if (info!=null&&!info.equals("")&&info!=""){
+//
+//        }
+        if (!tupianpath.equals("")&&tupianpath!=""&&tupianpath!=null){
+            prompt.setVisibility(View.VISIBLE);
+            prompt.setText(tupianpath.substring(10,tupianpath.length()));
+        }
 
         Log.d("number", number + "");
         LogUtils.log("title标题--->"+title);

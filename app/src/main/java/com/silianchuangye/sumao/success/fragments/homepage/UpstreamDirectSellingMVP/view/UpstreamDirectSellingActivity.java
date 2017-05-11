@@ -78,14 +78,21 @@ public class UpstreamDirectSellingActivity extends AppCompatActivity implements 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Id=idList.get(position).toString();
-                name=nameList.get(position).toString();
-                Log.d("要传id的值",idList.get(position));
-                Log.d("要传title的值",nameList.get(position));
-               // booleanPower(Id,name);
-                upstreamDirectSellingPresenter.getUpstreamDirectSellingDetail(sessionId,Id,name);
+//                Id=idList.get(position).toString();
+//                name=nameList.get(position).toString();
+//                Log.d("要传id的值",idList.get(position));
+//                Log.d("要传title的值",nameList.get(position));
+//               // booleanPower(Id,name);
+             ///upstreamDirectSellingPresenter.getUpstreamDirectSellingDetail(sessionId,Id,name);
                    //
                // }
+
+                Intent intent = new Intent();
+                intent.setClass(UpstreamDirectSellingActivity.this, UpstreamDirectSellingDetailsActivity.class);
+                intent.putExtra("vipProductBean", vipProductBean);
+                intent.putExtra("sellerCompanyId", idList.get(position).toString());
+                intent.putExtra("title", nameList.get(position).toString());
+                startActivity(intent);
 
             }
         });

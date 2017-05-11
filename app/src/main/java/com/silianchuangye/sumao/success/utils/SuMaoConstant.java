@@ -16,7 +16,7 @@ public class SuMaoConstant {
     public static final int CHANGE_POSITION_NINE = 9;
     public static final int CHANGE_POSITION_TEN = 10;
     public static final int VIP_PRODUCT_ID = 1;
-    public static final int VIP_SELECTNUMBER_ID = 2;
+    public static final int VIP_SELECTNUMBER_ID = 10;
     public static final int VIP_WAREHOUSE_ID = 3;
     public static final int VIP_DELIVERYMETHOD_ID = 4;
     public static final int VIP_REMARKS_ID = 5;
@@ -35,12 +35,12 @@ public class SuMaoConstant {
 //     public static final String SUMAO_CONTRACT_IP = "http://172.22.16.100:7003/crsdocroot";
 
     //sit数据路径
-//    public static final String SUMAO_IP = "http://172.22.15.21:7003";
-//    public static final String SUMAO_CONTRACT_IP = "http://172.22.15.21:7003/crsdocroot";
+    public static final String SUMAO_IP = "http://172.22.15.21:7003";
+    public static final String SUMAO_CONTRACT_IP = "http://172.22.15.21:7003/crsdocroot";
 
 //    //test外网
-    public static final String SUMAO_IP="http://139.198.7.75:7003";
-    public static final String SUMAO_CONTRACT_IP = "http://139.198.7.75:7003/crsdocroot";
+//    public static final String SUMAO_IP="http://139.198.7.75:7003";
+//    public static final String SUMAO_CONTRACT_IP = "http://139.198.7.75:7003/crsdocroot";
 
 
 

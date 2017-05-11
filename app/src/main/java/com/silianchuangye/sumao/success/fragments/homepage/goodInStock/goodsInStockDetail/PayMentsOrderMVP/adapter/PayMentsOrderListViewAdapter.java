@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.bean.Orders;
+import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.PayMentsOrderMVP.utils.TimeTextView;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.PayMentsOrderMVP.view.PaymentsOrder;
 
 import java.text.SimpleDateFormat;
@@ -33,10 +34,17 @@ public class PayMentsOrderListViewAdapter extends BaseAdapter {
     private Context context;
     List<Orders.OrderIdListBean> orderIdListBeans;
     private Map<TextView, TextViewTimeCountUtil> leftTimeMap = new HashMap<TextView, TextViewTimeCountUtil>();
+    private String time;
+    private Boolean flag=true;
 
     public PayMentsOrderListViewAdapter(Context context) {
         this.context = context;
         orderIdListBeans = new ArrayList<>();
+        //this.time=time;
+    }
+    public String time(String time){
+        this.time=time;
+        return time;
     }
 
     public void addLists(List<Orders.OrderIdListBean> orderIdListBean) {
@@ -74,7 +82,7 @@ public class PayMentsOrderListViewAdapter extends BaseAdapter {
             //金额
             viewHolder.money_number = ((TextView) convertView.findViewById(R.id.money_number));
             //剩余时间
-            viewHolder.residual_time = ((TextView) convertView.findViewById(R.id.residual_time));
+            viewHolder.residual_time = ((TimeTextView) convertView.findViewById(R.id.residual_time));
             //产品名称
             viewHolder.tv_name = ((TextView) convertView.findViewById(R.id.tv_name));
             //品种
@@ -96,56 +104,73 @@ public class PayMentsOrderListViewAdapter extends BaseAdapter {
 //            离家支付
             viewHolder.pay_button = (Button) convertView.findViewById(R.id.pay_button);
             convertView.setTag(viewHolder);
+            Orders.OrderIdListBean orderIdListBean = this.orderIdListBeans.get(position);
+            Orders.OrderIdListBean.CommerceItemBean commerceItemBean = orderIdListBean.getCommerceItem().get(0);
+            //订单编号
+            viewHolder.product_order_number.setText("订单编号:" + orderIdListBean.getOrderId());
+            //金额
+            viewHolder.money_number.setText(commerceItemBean.getAmount());
+            //剩余时间
+//        ("剩余支付时间：" + new SimpleDateFormat("HH:mm:ss").format());
+            viewHolder.tv_name.setText(commerceItemBean.getProductName());
+            //品种
+            viewHolder.surplus_amount_et.setText(commerceItemBean.getParentCategories());
+            //产品牌号
+            viewHolder.purchase_quantity_et.setText(commerceItemBean.getGradeNumber());
+            //生产企业
+            viewHolder.min_variable_et.setText(commerceItemBean.getManufacturer());
+            //仓库
+            viewHolder.delivery_time_et.setText(commerceItemBean.getWarehouse());
+            //产品单价
+            viewHolder.classification_pre_sale_et.setText(commerceItemBean.getAmount());
+            //数量
+            viewHolder.warehouse_et.setText(commerceItemBean.getQuantity());
+            //产品总价
+            viewHolder.region_et.setText(orderIdListBean.getTotal());
+            //公司
+            viewHolder.company_et.setText(commerceItemBean.getSalesCompanyDisplayName());
+            viewHolder.pay_button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((PaymentsOrder) context).payImmediately(position);
+                }
+            });
+
+            if (flag) {
+
+                viewHolder.residual_time.setTimes(orderIdListBeans.get(position).getSpecialFrom());
+
+                if (!viewHolder.residual_time.isRun()) {
+                    viewHolder.residual_time.run();
+                }
+            }
+            convertView.setTag(viewHolder);
+            viewHolder.residual_time.setTag(orderIdListBeans.get(position));
+
+
         } else {
             viewHolder = ((ViewHolder) convertView.getTag());
+            viewHolder.residual_time.setTag(orderIdListBeans.get(position));
         }
-        Orders.OrderIdListBean orderIdListBean = this.orderIdListBeans.get(position);
-        Orders.OrderIdListBean.CommerceItemBean commerceItemBean = orderIdListBean.getCommerceItem().get(0);
-        //订单编号
-        viewHolder.product_order_number.setText("订单编号:" + orderIdListBean.getOrderId());
-        //金额
-        viewHolder.money_number.setText(commerceItemBean.getAmount());
-        //剩余时间
-//        ("剩余支付时间：" + new SimpleDateFormat("HH:mm:ss").format());
-        viewHolder.tv_name.setText(commerceItemBean.getProductName());
-        //品种
-        viewHolder.surplus_amount_et.setText(commerceItemBean.getParentCategories());
-        //产品牌号
-        viewHolder.purchase_quantity_et.setText(commerceItemBean.getGradeNumber());
-        //生产企业
-        viewHolder.min_variable_et.setText(commerceItemBean.getManufacturer());
-        //仓库
-        viewHolder.delivery_time_et.setText(commerceItemBean.getWarehouse());
-        //产品单价
-        viewHolder.classification_pre_sale_et.setText(commerceItemBean.getAmount());
-        //数量
-        viewHolder.warehouse_et.setText(commerceItemBean.getQuantity());
-        //产品总价
-        viewHolder.region_et.setText(orderIdListBean.getTotal());
-        //公司
-        viewHolder.company_et.setText(commerceItemBean.getSalesCompanyDisplayName());
-        viewHolder.pay_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((PaymentsOrder) context).payImmediately(position);
-            }
-        });
-        Log.d("时间的值",orderIdListBean.getRemainingTime().toString());
-        TextViewTimeCountUtil tc = leftTimeMap.get(viewHolder.residual_time);
-        if (tc != null) {
-            tc.cancel();
-            tc = null;
-        }
-        long time = Long.parseLong(this.orderIdListBeans.get(position).getRemainingTime().toString())*1000;
 
+//        TextViewTimeCountUtil tc = leftTimeMap.get(viewHolder.residual_time);
+//        if (tc != null) {
+//            tc.cancel();
+//            tc = null;
+//        }
+//        //long time1 = Long.parseLong(orderIdListBeans.get(position).getRemainingTime())*1000;
+//        long time1=Long.parseLong(time);
+//        Log.d("time1的值",time1+"");
+//
+//        //启动倒计时
+//        TextViewTimeCountUtil tcu = new TextViewTimeCountUtil(
+//                time1, 1000,
+//                viewHolder.residual_time);
+//        tcu.start();
+//        //保存当前到时任务
+//        leftTimeMap.put(viewHolder.residual_time, tcu);
 
-        //启动倒计时
-        TextViewTimeCountUtil tcu = new TextViewTimeCountUtil(
-                time, 1000,
-                viewHolder.residual_time);
-        tcu.start();
-        //保存当前到时任务
-        leftTimeMap.put(viewHolder.residual_time, tcu);
+        //viewHolder.residual_time.setText(time);
 
 
         return convertView;
@@ -183,7 +208,7 @@ public class PayMentsOrderListViewAdapter extends BaseAdapter {
     class ViewHolder {
         TextView product_order_number;//订单编号
         TextView money_number;//金额
-        TextView residual_time;//剩余时间
+        TimeTextView residual_time;//剩余时间
         TextView tv_name;//
         TextView surplus_amount_et;//品种
         TextView purchase_quantity_et;//产品牌号

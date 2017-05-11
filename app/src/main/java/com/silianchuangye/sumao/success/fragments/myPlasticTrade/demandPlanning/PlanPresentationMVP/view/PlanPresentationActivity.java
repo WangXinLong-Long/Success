@@ -411,7 +411,7 @@ public class PlanPresentationActivity extends AppCompatActivity implements View.
                         String unique = sp.getString("unique", "");
                         planPresentationPresenter.setSubmitPlan(sellerCompanyId, date, productId, price, warehouseId, number, wayId, remark, unique);
                     }
-//                        alert.show();
+                        alert.show();
                 }
                 break;
             case R.id.iv_child_title_bar_back:
@@ -451,6 +451,23 @@ public class PlanPresentationActivity extends AppCompatActivity implements View.
                 group.remove(i);
                 adapter.notifyDataSetChanged();
             }
+            lists = new ArrayList<DayPlanInfo>();
+            lists.add(new DayPlanInfo("卖方企业", "", " "));
+            lists.add(new DayPlanInfo("需求日期", "", " "));
+            lists.add(new DayPlanInfo("产品名称", "", " "));
+            lists.add(new DayPlanInfo("仓库", "", " "));
+            lists.add(new DayPlanInfo("购买价格(元/吨)", "", " "));
+            lists.add(new DayPlanInfo("购买数量(吨)", "", " "));
+            lists.add(new DayPlanInfo("配送方式", "", " "));
+            lists.add(new DayPlanInfo("备注", "", " "));
+            lists.add(new DayPlanInfo("", "删除计划", ""));
+            list.add(lists);
+            group.add("");
+            adapter.notifyDataSetChanged();
+            for (int i = 0; i < group.size(); i++) {
+                lv_day_plan.expandGroup(i);
+            }
+
         } else {
             alert.dismiss();
             TOAST("上传失败");

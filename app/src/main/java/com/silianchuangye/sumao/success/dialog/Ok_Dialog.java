@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -29,6 +30,7 @@ public class Ok_Dialog extends Activity {
     private boolean isClosePrevious;
     private TextView tv_ok_text;
     private TextView pay_success;
+    private Button bt_my_order;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,24 +46,50 @@ public class Ok_Dialog extends Activity {
 //        支付成功
         pay_success = ((TextView) findViewById(R.id.pay_success));
         LogUtils.log("type的类型是---》" + type);
-        if (type.equals("")) {
-            linear.setVisibility(View.GONE);
-        } else {
-            btn_ok_dialog.setVisibility(View.GONE);
-        }
         ImageView iv_cancel = (ImageView) findViewById(R.id.iv_dialog_ok_cancel);
 
         TextView tv_order_number = (TextView) findViewById(R.id.tv_order_number_ok);
         String order_id = getIntent().getStringExtra("number");
-        if (order_id.equals(SuMaoConstant.QUOTE_SUCCESS)){
-            tv_ok_text.setText("恭喜您提交成功！");
+        Log.d("订单详请的or",order_id);
+//        if (order_id.equals(SuMaoConstant.QUOTE_SUCCESS)){
+//            tv_ok_text.setText("恭喜您提交成功！");
+//            tv_order_number.setVisibility(View.GONE);
+//            pay_success.setVisibility(View.GONE);
+//        }else if (order_id.equals(SuMaoConstant.MARGIN_PAYMENT_SUCCESS)){
+//            tv_ok_text.setText("恭喜您,保证金支付成功！");
+//            tv_order_number.setVisibility(View.GONE);
+//            pay_success.setVisibility(View.GONE);
+//        }else{
+//            tv_ok_text.setText("恭喜您,订单支付成功！");
+//            tv_order_number.setVisibility(View.GONE);
+//            pay_success.setVisibility(View.GONE);
+//            btn_ok_dialog.setVisibility(View.VISIBLE);
+//            linear.setVisibility(View.GONE);
+//        }
+
+        bt_my_order = (Button) findViewById(R.id.bt_my_order);
+        Button bt_wuliu = (Button) findViewById(R.id.bt_wulliu);
+        if(type.equals("现货")){
+            tv_ok_text.setText("恭喜您,支付成功!");
+            tv_order_number.setVisibility(View.VISIBLE);
+            pay_success.setVisibility(View.VISIBLE);
+            btn_ok_dialog.setVisibility(View.GONE);
+            bt_my_order.setVisibility(View.VISIBLE);
+        }else if (type.equals("预售")||type.equals("团购")||type.equals("竞拍")){
+            tv_ok_text.setText("恭喜您,保证金支付成功!");
+            tv_order_number.setVisibility(View.VISIBLE);
+            pay_success.setVisibility(View.VISIBLE);
+            btn_ok_dialog.setVisibility(View.GONE);
+            bt_my_order.setVisibility(View.VISIBLE);
+
+        }else{
+            tv_ok_text.setText("恭喜您,订单支付成功!");
             tv_order_number.setVisibility(View.GONE);
             pay_success.setVisibility(View.GONE);
-        }else if (order_id.equals(SuMaoConstant.MARGIN_PAYMENT_SUCCESS)){
-            tv_ok_text.setText("保证金支付成功！");
-            tv_order_number.setVisibility(View.GONE);
-            pay_success.setVisibility(View.GONE);
+            btn_ok_dialog.setVisibility(View.VISIBLE);
+            linear.setVisibility(View.GONE);
         }
+
         tv_order_number.setText(order_id);
         btn_ok_dialog.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,9 +97,6 @@ public class Ok_Dialog extends Activity {
                 finish();
             }
         });
-
-        Button bt_my_order = (Button) findViewById(R.id.bt_my_order);
-        Button bt_wuliu = (Button) findViewById(R.id.bt_wulliu);
         iv_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

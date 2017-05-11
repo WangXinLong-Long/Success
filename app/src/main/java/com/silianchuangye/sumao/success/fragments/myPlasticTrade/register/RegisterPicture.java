@@ -107,7 +107,16 @@ public class RegisterPicture extends AppCompatActivity implements LGImgCompresso
         number1=bundle.getInt("number");
         value=bundle.getString("value");
         tupianpath=bundle.getString("path");
+
         initData();
+        if (value!=null&&!value.equals("")&&!value.equals("")){
+            ed_number.setText(value);
+        }
+        if (tupianpath!=null&&!tupianpath.equals("")&&!tupianpath.equals("")){
+            tv_Name.setVisibility(View.VISIBLE);
+            tv_Name.setText(tupianpath.substring(10,tupianpath.length()));
+        }
+
         event();
     }
     public void initData(){
@@ -119,7 +128,7 @@ public class RegisterPicture extends AppCompatActivity implements LGImgCompresso
         tv_Name= (TextView) findViewById(R.id.tv_Name);
         layout_title= (RelativeLayout) findViewById(R.id.layout_title);
         tv_Title.setText(title);
-        ed_number.setText(value);
+      //  ed_number.setText(value);
     }
     public void event(){
         ivBack.setOnClickListener(new View.OnClickListener() {

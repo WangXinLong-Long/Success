@@ -132,6 +132,7 @@ public class ProductNameActivity extends AppCompatActivity implements View.OnCli
                 ProductNameActivity.this.finish();
                 break;
             case R.id.bt_upload:
+                Log.d("进行了点击","点击");
                 Intent intent=new Intent();
                 intent.putExtra("id",id);
                 intent.putExtra("name",name);

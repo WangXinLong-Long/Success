@@ -1,6 +1,8 @@
 package com.silianchuangye.sumao.success.fragments.homepage.auction.AuctionMVP.view;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -23,6 +25,10 @@ import com.silianchuangye.sumao.success.fragments.homepage.auction.openAuction.o
 import com.silianchuangye.sumao.success.fragments.homepage.auction.openAuction.openAuctionView.OpenAuctionActivity;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
+
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,15 +56,17 @@ public class AuctionActivity extends AppCompatActivity implements IAuctionView {
     private AuctionPresenter auctionPresenter;
     private PullToRefreshLayout pullToRefreshLayout;
     private ListView pullableView;
+    private String sellerCompanyId;
+    Bundle bundle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auction);
         auctionPresenter = new AuctionPresenter(this);
-        Bundle bundle = getIntent().getExtras();
+        bundle= getIntent().getExtras();
         name_Auction = bundle.getString("name");
-        SellId = bundle.getString("result");
+
 
 
         init();
@@ -96,7 +104,7 @@ public class AuctionActivity extends AppCompatActivity implements IAuctionView {
     @Override
     protected void onStart() {
         super.onStart();
-        getAddData(SellId);
+        getAddData();
     }
 
     private void onListViewItemClick(int position) {
@@ -115,13 +123,15 @@ public class AuctionActivity extends AppCompatActivity implements IAuctionView {
 
     }
 
-    public void getAddData(String result) {
+    public void getAddData() {
 //        getInfo();
         if (name_Auction.equals("竞拍")) {
             //getInfo(result);
+
             auctionPresenter.getAuctionListResult("1", "update");
         } else if (name_Auction.equals("竞拍专场")) {
-            getAuction_zhunchang(result);
+            sellerCompanyId=bundle.getString("id");
+            getAuction_zhunchang("1","no");
         }
     }
 
@@ -143,27 +153,66 @@ public class AuctionActivity extends AppCompatActivity implements IAuctionView {
 
     }
 
-    public void getAuction_zhunchang(String result) {
-        Log.d("竞拍专场的返回值",result);
-        if (result.contains("productItem")) {
-            Gson gson = new Gson();
-            AuctionSessionBean auctionSessionBean = gson.fromJson(result, AuctionSessionBean.class);
-            List<AuctionSessionBean.ProductItemBean> productItem = auctionSessionBean.getProductItem();
-            for (int i = 0; i < productItem.size(); i++) {
-                AuctionSessionBean.ProductItemBean productItemBean = productItem.get(i);
-                ListBean.ProdBean prodBean = new ListBean.ProdBean();
-                prodBean.setCl_cangku(productItemBean.getWareHouse());
-                prodBean.setCl_gongsi(productItemBean.getSupplier());
-                prodBean.setCl_mingcheng(productItemBean.getProductName());
-                prodBean.setId(productItemBean.getProductId());
-                prodBean.setStatus(productItemBean.getStatus());
-                prodBean.setStartDate(productItemBean.getStartDate());
-                prodBean.setEndDate(productItemBean.getEndDate());
-                prodBean.setType(productItemBean.getType());
-                prodBean.setCl_zongliang(productItemBean.getQuantity());
-                lists.add(prodBean);
+    public void getAuction_zhunchang(String number,final String updateOrLoad) {
+        //Log.d("竞拍专场的返回值",result);
+        String url = SuMaoConstant.SUMAO_IP + "/rest/model/com/sumao/mobile/order/purchase/PlanOrderActor/directEnterpriseAuctionProductList";
+        RequestParams rp = new RequestParams(url);
+        rp.addParameter("pageNum", number);
+        rp.addParameter("sellerCompanyId", sellerCompanyId);
+        SharedPreferences sp=getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+        String _dynSessConf=sp.getString("unique","");
+        rp.addParameter("_dynSessConf", _dynSessConf);
+        x.http().post(rp, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                if (result.contains("productItem")) {
+                    if (updateOrLoad == "update") {
+                        lists.clear();
+                    }
+                    Gson gson = new Gson();
+                    ListBean listBean = gson.fromJson(result, ListBean.class);
+                    lists.addAll(listBean.getProd());
+                    refreshListViewadapter.clearData();
+                    refreshListViewadapter.addData(lists);
+                    refreshListViewadapter.notifyDataSetChanged();
+//                    Gson gson = new Gson();
+//                    AuctionSessionBean auctionSessionBean = gson.fromJson(result, AuctionSessionBean.class);
+//                    List<AuctionSessionBean.ProductItemBean> productItem = auctionSessionBean.getProductItem();
+//                    for (int i = 0; i < productItem.size(); i++) {
+//                        AuctionSessionBean.ProductItemBean productItemBean = productItem.get(i);
+//                        ListBean.ProdBean prodBean = new ListBean.ProdBean();
+//                        prodBean.setCl_cangku(productItemBean.getWareHouse());
+//                        prodBean.setCl_gongsi(productItemBean.getSupplier());
+//                        prodBean.setCl_mingcheng(productItemBean.getProductName());
+//                        prodBean.setId(productItemBean.getProductId());
+//                        prodBean.setStatus(productItemBean.getStatus());
+//                        prodBean.setStartDate(productItemBean.getStartDate());
+//                        prodBean.setEndDate(productItemBean.getEndDate());
+//                        prodBean.setType(productItemBean.getType());
+//                        prodBean.setCl_zongliang(productItemBean.getQuantity());
+//                        lists.add(prodBean);
+//                    }
+
+                }
             }
-        }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+
+
     }
 
     //    通过上啦或者下拉取得数据
@@ -178,6 +227,7 @@ public class AuctionActivity extends AppCompatActivity implements IAuctionView {
         refreshListViewadapter.clearData();
         refreshListViewadapter.addData(lists);
         refreshListViewadapter.notifyDataSetChanged();
+
     }
 
     @Override
@@ -210,10 +260,15 @@ public class AuctionActivity extends AppCompatActivity implements IAuctionView {
                 public void handleMessage(Message msg) {
                     super.handleMessage(msg);
                     pageNum = "1";
-                    auctionPresenter.getAuctionListResult(pageNum, "update");
+
+                    if (name_Auction.equals("竞拍")){
+                        auctionPresenter.getAuctionListResult(pageNum, "update");
+                    }else if (name_Auction.equals("竞拍专场")){
+                        getAuction_zhunchang(pageNum,"update");
+                    }
                     pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
                 }
-            }.sendEmptyMessageDelayed(0, 3000);
+            }.sendEmptyMessageDelayed(0, 1000);
 
         }
 
@@ -225,10 +280,14 @@ public class AuctionActivity extends AppCompatActivity implements IAuctionView {
                     super.handleMessage(msg);
                     int num = Integer.parseInt(pageNum) + 1;
                     pageNum = num + "";
-                    auctionPresenter.getAuctionListResult(pageNum, "load");
+                    if (name_Auction.equals("竞拍")){
+                        auctionPresenter.getAuctionListResult(pageNum, "load");
+                    }else if (name_Auction.equals("竞拍专场")){
+                        getAuction_zhunchang(pageNum,"load");
+                    }
                     pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
                 }
-            }.sendEmptyMessageDelayed(0, 3000);
+            }.sendEmptyMessageDelayed(0, 1000);
         }
     }
 }

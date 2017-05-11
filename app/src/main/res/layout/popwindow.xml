@@ -207,14 +207,22 @@
                 android:layout_width="@dimen/x100"
                 android:layout_height="@dimen/x35"
                 android:layout_gravity="center"
-                android:background="@mipmap/dingdanbtn"/>
+                android:background="#28ABE3"
+                android:text="查询我的订单"
+                android:textColor="#fff"
+                android:textSize="14sp"
+                />
             <Button
                 android:id="@+id/btn_dingdan_all"
                 android:layout_marginLeft="@dimen/x30"
                 android:layout_width="@dimen/x100"
                 android:layout_height="@dimen/x35"
                 android:layout_gravity="center"
-                android:background="@mipmap/dingdanallbtn"/>
+                android:background="@color/orange"
+                android:text="查询所有订单"
+                android:textColor="#fff"
+                android:textSize="14sp"
+                />
         </LinearLayout>
         <RelativeLayout
             android:id="@+id/relative_lv1"

@@ -18,6 +18,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/x10"
             android:src="@mipmap/back"
+            android:background="@drawable/fanhui"
             />
         <TextView
             android:layout_width="wrap_content"

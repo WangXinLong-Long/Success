@@ -17,6 +17,7 @@
             android:id="@+id/ivBack_auction_layout_top"
             android:src="@drawable/back"
             android:layout_marginLeft="10dp"
+            android:background="@drawable/fanhui"
             android:layout_centerVertical="true"
             />
         <TextView

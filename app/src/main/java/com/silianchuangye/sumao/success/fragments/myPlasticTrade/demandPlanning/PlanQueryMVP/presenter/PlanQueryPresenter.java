@@ -17,8 +17,8 @@ public class PlanQueryPresenter {
         this.planQueryView = planQueryView;
     }
 
-    public void getList(String pageNum, String pageSize, String productName, String planStartDate, String planEndDate, String planState, String enterpriseName, String demandId, String sellerEnterpriseId,String _dynSessConf,boolean updateLoad){
-        IPlanQueryModel iPlanPresentationModel=new PlanQueryModel(pageNum,pageSize,productName,planStartDate,planEndDate,planState,enterpriseName,demandId,sellerEnterpriseId,_dynSessConf,updateLoad);
+    public void getList(String pageNum, String pageSize, String productName, String planStartDate, String planEndDate, String planState, String enterpriseName, String demandId, String warehouseName,String _dynSessConf,boolean updateLoad){
+        IPlanQueryModel iPlanPresentationModel=new PlanQueryModel(pageNum,pageSize,productName,planStartDate,planEndDate,planState,enterpriseName,demandId,warehouseName,_dynSessConf,updateLoad);
         iPlanPresentationModel.getPlanQueryResult(new PlanQueryCallback() {
             @Override
             public void callbackPlanQueryResult(String result, boolean updateLoad) {

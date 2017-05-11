@@ -15,6 +15,7 @@
         android:layout_marginRight="@dimen/x20"
         android:paddingLeft="@dimen/x10"
         android:paddingRight="@dimen/x15"
+        android:background="@drawable/fanhui"
         android:src="@mipmap/back" />
 
     <ImageView

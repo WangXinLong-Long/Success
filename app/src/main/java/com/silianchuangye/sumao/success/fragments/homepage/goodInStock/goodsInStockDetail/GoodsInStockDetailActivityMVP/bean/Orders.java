@@ -30,6 +30,17 @@ public class Orders implements Serializable{
         private String remainingTime;
         private String orderId;
         private List<CommerceItemBean> commerceItem;
+        private long[] SpecialFrom = { 0, 01, 00, 00 };
+
+        public long[] getSpecialFrom() {
+            return SpecialFrom;
+        }
+
+        public void setSpecialFrom(long[] specialFrom) {
+            SpecialFrom = specialFrom;
+        }
+//
+
 
         public String getTotal() {
             return total;

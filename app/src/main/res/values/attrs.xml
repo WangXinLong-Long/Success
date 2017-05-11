@@ -24,4 +24,5 @@
             <enum name="right" value="2"/>
         </attr>
     </declare-styleable>
+    <declare-styleable name="TimeTextView"></declare-styleable>
 </resources>

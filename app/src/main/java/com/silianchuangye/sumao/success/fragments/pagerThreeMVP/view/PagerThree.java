@@ -726,10 +726,10 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
                     }
                     float num = Float.parseFloat(str);
                     num = num + Float.parseFloat(list.get(position).getQuantityAdjustmentUnit());
-                    if (num >= Float.parseFloat(kucong_value)) {
+                    if (num >= Float.parseFloat(list.get(position).getSurplus().toString())) {
                         holder.Tv_no_much.setText("产品库存为" + num + "吨");
                     }
-                    if (num <= Float.parseFloat(kucong_value) && num >= Float.parseFloat(list.get(position).getMinPurchaseQuantity())) {
+                    if (num <= Float.parseFloat(list.get(position).getSurplus().toString()) && num >= Float.parseFloat(list.get(position).getMinPurchaseQuantity())) {
                         holder.relative_item_cart.setVisibility(View.GONE);
                         holder.Edt_buy_num.setText("" + num);
                         number = num;
@@ -744,7 +744,6 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
                 public void onClick(View v) {
                     //holder.Edt_buy_num.setCursorVisible(true);
                     Log.d("输入框的点击事件","输入框的点击事件");
-
                     temp=holder.Edt_buy_num.getText().toString();
                     final AlertDialog.Builder alertDialog=new AlertDialog.Builder(ctx);
                     alertDialog.setTitle("修改数量");
@@ -752,6 +751,7 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
                     alertDialog.setView(view);
                     final EditText tv_item_cart_buy_num_info=(EditText) view.findViewById(R.id.tv_item_cart_buy_num_info);
                     tv_item_cart_buy_num_info.setText(temp);
+                    tv_item_cart_buy_num_info.clearFocus();
                     tv_item_cart_buy_num_info.setSelection(temp.length());
                     tv_item_cart_buy_num_info.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                         @Override
@@ -762,34 +762,59 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
                     alertDialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            //alertDialog.
                             alertDialog.create().dismiss();
                         }
                     });
                     alertDialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
+
                             //这里进行判断
+                            Log.d("库存的值",Double.parseDouble(list.get(position).getSurplus())+"");
+                            Log.d("输入框内的值",temp);
+                            if (Double.parseDouble(tv_item_cart_buy_num_info.getText().toString()) > Double.parseDouble(list.get(position).getSurplus())) {
+                                holder.Edt_buy_num.setText((list.get(position).getSurplus().toString()));
+                                number=Float.parseFloat(list.get(position).getSurplus().toString());
+                                updataView(position, lv_Cart, list.get(position).getCommerceItemId().toString());
 
-                            if (Double.parseDouble(temp) > Double.parseDouble(kucong_value)) {
-                        holder.Edt_buy_num.setText((kucong_value));
-                      //  holder.Edt_buy_num.setSelection(kucong_value.length());
-                        number=Float.parseFloat(kucong_value);
-                        updataView(position, lv_Cart, list.get(position).getCommerceItemId().toString());
 
-                    }else if (Double.parseDouble(temp) < Double.parseDouble(kucong_value) && Double.parseDouble(temp)>0){
-                       // holder.Edt_buy_num.setSelection(temp.length());
+                            }else if (Double.parseDouble(tv_item_cart_buy_num_info.getText().toString()) < Double.parseDouble(list.get(position).getSurplus()+"") && Double.parseDouble(tv_item_cart_buy_num_info.getText().toString())>0){
                                 shuaaa=position;
                                 id = list.get(position).getCommerceItemId().toString();
                                 Log.d("购物车产品的id",id);
-                        Log.d("temp的值",tv_item_cart_buy_num_info.getText().toString());
-                        SharedPreferences sharedPreferences=ctx.getSharedPreferences("sumao",Activity.MODE_PRIVATE);
-                        SharedPreferences.Editor editor=sharedPreferences.edit();
-                        editor.putString("temp",tv_item_cart_buy_num_info.getText().toString());
-                        editor.commit();
+
+                                Log.d("temp的值",tv_item_cart_buy_num_info.getText().toString());
+                                SharedPreferences sharedPreferences=ctx.getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+                                SharedPreferences.Editor editor=sharedPreferences.edit();
+                                editor.putString("temp",tv_item_cart_buy_num_info.getText().toString());
+                                editor.commit();
+                                Double jianshu=sub(Double.parseDouble(tv_item_cart_buy_num_info.getText().toString()),Double.parseDouble(qigouliang));
+                                Log.d("jianshu的值",jianshu+"");
+                                int beishu=(int)div(jianshu,Float.parseFloat(bianliang),0);
+                                Log.d("倍数的值",beishu+"");
+                                if (beishu<=0){
+                                   // beishu=1;
+                                    Log.d("输入框应该填入的值",list.get(position).getMinPurchaseQuantity()+"");
+                                    number=Float.parseFloat(list.get(position).getMinPurchaseQuantity());
+                                }else {
+                                    Double shuliang = mul(beishu, Double.parseDouble(bianliang));
+                                    Log.d("数量的值", shuliang + "");
+                                    double shuvalue = add(shuliang, Double.parseDouble(qigouliang));
+                                    Log.d("输入框应该填入的值",shuvalue+"");
+                                    number=Float.parseFloat(shuvalue+"");
+                                }
 
 
-                    }
+                                Log.d("id的值",id);
+                                if (!id.equals("abc")&&!id.equals("")&&id!=null&&id!="abc") {
+                                    updataView(shuaaa, lv_Cart, id);
+                                    adapter.notifyDataSetChanged();
+                                }
+
+
+                            }
+
+
                         }
                     });
                     alertDialog.create().show();
@@ -797,35 +822,9 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
 
                 }
             });
-//            holder.Edt_buy_num.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-//                @Override
-//                public void onFocusChange(View v, boolean hasFocus) {
-//
-//
-//                    temp=holder.Edt_buy_num.getText().toString();
-//
-//                    if (Double.parseDouble(temp) > Double.parseDouble(kucong_value)) {
-//                        holder.Edt_buy_num.setText((kucong_value));
-//                      //  holder.Edt_buy_num.setSelection(kucong_value.length());
-//                        number=Float.parseFloat(kucong_value);
-//                        updataView(position, lv_Cart, list.get(position).getCommerceItemId().toString());
-//
-//                    }else if (Double.parseDouble(temp) < Double.parseDouble(kucong_value) && Double.parseDouble(temp)>0){
-//                       // holder.Edt_buy_num.setSelection(temp.length());
-//                        Log.d("temp的值",temp);
-//                        SharedPreferences sharedPreferences=ctx.getSharedPreferences("sumao",Activity.MODE_PRIVATE);
-//                        SharedPreferences.Editor editor=sharedPreferences.edit();
-//                        editor.putString("temp",temp);
-//                        editor.commit();
-//
-//
-//                    }
-//                }
-//            });
+
             return convertView;
         }
-
-
 
         //    取消全选
         public void clearAll() {

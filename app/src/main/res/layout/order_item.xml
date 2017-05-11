@@ -87,7 +87,7 @@
             android:textColor="@color/red" />
     </RelativeLayout>
 
-    <TextView
+    <com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.PayMentsOrderMVP.utils.TimeTextView
         android:textColor="@color/red"
         android:id="@+id/residual_time"
         android:layout_width="wrap_content"

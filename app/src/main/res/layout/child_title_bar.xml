@@ -11,6 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="@dimen/x20"
         android:src="@mipmap/back"
+        android:background="@drawable/fanhui"
         android:layout_marginRight="@dimen/x20"
         android:paddingLeft="@dimen/x10"
         android:paddingRight="@dimen/x15"

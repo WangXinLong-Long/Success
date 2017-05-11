@@ -468,9 +468,11 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".dialog.Error_Dialog"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.Dialog" />
         <activity
             android:name=".dialog.Ok_Dialog"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.Dialog" />
         <activity
             android:name=".fragments.myPlasticTrade.PhysicalDistributionManagement.ViewLogisticsDemands.ViewLogisticsDemandMVP.view.ViewLogisticsDemand"
@@ -693,43 +695,127 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <activity android:name=".fragments.myPlasticTrade.login.forgetPassword.ForgetPasswordActivity" />
-        <activity android:name=".fragments.myPlasticTrade.login.forgetPassword.phonePassword.view.PhonePasswordActivity" />
-        <activity android:name=".fragments.myPlasticTrade.login.forgetPassword.MailboxPasswordActivity" />
-        <activity android:name=".fragments.myPlasticTrade.login.forgetPassword.RetrievePasswordActivity" />
-        <activity android:name=".fragments.myPlasticTrade.EnterpriseCapitalAccountManagement.AccountBalanceActivity" />
-        <activity android:name=".fragments.myPlasticTrade.OrderManagement.SpotOrder.SpotOrderMVP.view.informationView.ViewScannerActivity" />
-        <activity android:name=".fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.Logistics" />
-        <activity android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoPicture.FirmInfoPictureMVP.UniformSocialCreditCode" />
-        <activity android:name=".fragments.myPlasticTrade.login.forgetPassword.ActivityPass" />
-        <activity android:name=".fragments.myPlasticTrade.messagePush.view.MessagePushActivity" />
-        <activity android:name=".fragments.pagerFourMVP.view.ChildPageActivity" />
+        <activity
+            android:name=".fragments.myPlasticTrade.login.forgetPassword.ForgetPasswordActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity
+            android:name=".fragments.myPlasticTrade.login.forgetPassword.phonePassword.view.PhonePasswordActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity
+            android:name=".fragments.myPlasticTrade.login.forgetPassword.MailboxPasswordActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity
+            android:name=".fragments.myPlasticTrade.login.forgetPassword.RetrievePasswordActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity
+            android:name=".fragments.myPlasticTrade.EnterpriseCapitalAccountManagement.AccountBalanceActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".fragments.myPlasticTrade.OrderManagement.SpotOrder.SpotOrderMVP.view.informationView.ViewScannerActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity
+            android:name=".fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.Logistics"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoPicture.FirmInfoPictureMVP.UniformSocialCreditCode"
+            android:screenOrientation="portrait"
+            />
+        <activity
+            android:name=".fragments.myPlasticTrade.login.forgetPassword.ActivityPass"
+            android:screenOrientation="portrait"
+            />
+        <activity
+            android:name=".fragments.myPlasticTrade.messagePush.view.MessagePushActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity
+            android:name=".fragments.pagerFourMVP.view.ChildPageActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".fragments.pagerTwoMVP.PagerTwoView.NewsActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".fragments.myPlasticTrade.demandPlanning.PlanPresentationMVP.view.ValueActivity" />
-        <activity android:name=".fragments.myPlasticTrade.demandPlanning.planType.TypeActivity" />
-        <activity android:name=".fragments.myPlasticTrade.demandPlanning.planType.ProductNameActivity" />
-        <activity android:name=".fragments.myPlasticTrade.demandPlanning.planType.WarehouseActivity" />
-        <activity android:name=".fragments.myPlasticTrade.accountmeneger.Account_Activity" />
-        <activity android:name=".fragments.myPlasticTrade.accountmeneger.inganActivity" />
-        <activity android:name=".fragments.myPlasticTrade.accountmeneger.KunlunActivity" />
-        <activity android:name=".fragments.myPlasticTrade.accountmeneger.JiansheActivity" />
-        <activity android:name=".fragments.myPlasticTrade.demandPlanning.SearchplanActivity" />
-        <activity android:name=".fragments.myPlasticTrade.qurchaseQualification.purchaseQualificationDetail.WaitActivity" />
-        <activity android:name=".fragments.myPlasticTrade.qurchaseQualification.purchaseQualificationDetail.ResultActivity" />
-        <activity android:name=".fragments.myPlasticTrade.messagePush.view.MessageDetailsActivity" />
-        <activity android:name=".fragments.myPlasticTrade.messagePush.view.MActivity" />
-        <activity android:name=".fragments.myPlasticTrade.OrderManagement.SpotOrder.SpotOrderMVP.view.ShowPictureActivity" />
-        <activity android:name=".fragments.myPlasticTrade.OrderManagement.SpotOrder.SpotOrderMVP.view.logisticsActivity" />
-        <activity android:name=".ShangYou.gonggao.oticeActivity" />
-        <activity android:name=".ShangYou.gonggao.NoticeActivityInfo" />
-        <activity android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmShowImageActivity" />
+        <activity
+            android:name=".fragments.myPlasticTrade.demandPlanning.PlanPresentationMVP.view.ValueActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity
+            android:name=".fragments.myPlasticTrade.demandPlanning.planType.TypeActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity
+            android:name=".fragments.myPlasticTrade.demandPlanning.planType.ProductNameActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity
+            android:name=".fragments.myPlasticTrade.demandPlanning.planType.WarehouseActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity
+            android:name=".fragments.myPlasticTrade.accountmeneger.Account_Activity"
+            android:screenOrientation="portrait"
+            />
+        <activity
+            android:name=".fragments.myPlasticTrade.accountmeneger.inganActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity
+            android:name=".fragments.myPlasticTrade.accountmeneger.KunlunActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity
+            android:name=".fragments.myPlasticTrade.accountmeneger.JiansheActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity
+            android:name=".fragments.myPlasticTrade.demandPlanning.SearchplanActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity
+            android:name=".fragments.myPlasticTrade.qurchaseQualification.purchaseQualificationDetail.WaitActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity
+            android:name=".fragments.myPlasticTrade.qurchaseQualification.purchaseQualificationDetail.ResultActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity
+            android:name=".fragments.myPlasticTrade.messagePush.view.MessageDetailsActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity
+            android:name=".fragments.myPlasticTrade.messagePush.view.MActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity
+            android:name=".fragments.myPlasticTrade.OrderManagement.SpotOrder.SpotOrderMVP.view.ShowPictureActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".fragments.myPlasticTrade.OrderManagement.SpotOrder.SpotOrderMVP.view.logisticsActivity" />
+        <activity
+            android:name=".ShangYou.gonggao.oticeActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity
+            android:name=".ShangYou.gonggao.NoticeActivityInfo"
+            android:screenOrientation="portrait"
+            />
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmShowImageActivity" />
         <activity
             android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoUpdateMVP.view.FirmUpdateActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
-        <activity android:name=".fragments.homepage.auction.openAuction.openAuctionView.OpenAcutionOrMifengActivity"></activity>
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".fragments.homepage.auction.openAuction.openAuctionView.OpenAcutionOrMifengActivity"></activity>
     </application>
 
 </manifest>

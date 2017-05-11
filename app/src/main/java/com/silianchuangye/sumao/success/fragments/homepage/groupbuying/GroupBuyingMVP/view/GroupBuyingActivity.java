@@ -149,7 +149,7 @@ public class GroupBuyingActivity extends AppCompatActivity implements IGroupBuyi
                     groupBuyingPresenter.getGroupBuyingResult(pageNum,updateOrLoad);
                     pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
                 }
-            }.sendEmptyMessageDelayed(0, 3000);
+            }.sendEmptyMessageDelayed(0, 1000);
 
         }
 
@@ -165,7 +165,7 @@ public class GroupBuyingActivity extends AppCompatActivity implements IGroupBuyi
                     groupBuyingPresenter.getGroupBuyingResult(pageNum,updateOrLoad);
                     pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
                 }
-            }.sendEmptyMessageDelayed(0, 3000);
+            }.sendEmptyMessageDelayed(0, 1000);
         }
     }
 

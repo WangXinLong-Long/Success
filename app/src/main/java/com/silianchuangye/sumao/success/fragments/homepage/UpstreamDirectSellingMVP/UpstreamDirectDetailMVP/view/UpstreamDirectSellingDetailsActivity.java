@@ -74,24 +74,33 @@ public class UpstreamDirectSellingDetailsActivity extends AppCompatActivity impl
                 break;
             case R.id.procurement_planning_rl://        采购计划
                 Intent intent = new Intent(this, CaiGou.class);
-                intent.putExtra("vipProductBean", vipProductBean);
+              //  intent.putExtra("vipProductBean", vipProductBean);
                 intent.putExtra("sellerCompanyId", sellerCompanyId);
                 startActivity(intent);
                 break;
             case R.id.direct_selling_rl://        现货直销
-                upstreamDirectDetailPresenter.getDirectSelling(1 + "", sellerCompanyId, getSharedPreferences("sumao", Activity.MODE_PRIVATE).getString("unique", ""));
+               // upstreamDirectDetailPresenter.getDirectSelling(1 + "", sellerCompanyId, getSharedPreferences("sumao", Activity.MODE_PRIVATE).getString("unique", ""));
+                Intent intent1 = new Intent(UpstreamDirectSellingDetailsActivity.this, GoodsInStockActivity.class);
+                intent1.putExtra("title", "现货直销");
 
+               // intent1.putExtra("directSellingBean", directSellingBean);
+                intent1.putExtra("sellerCompanyId",sellerCompanyId);
+                startActivity(intent1);
                 break;
             case R.id.auction_session_rl://
                 //      竞拍专场
+                Intent intent_Acution = new Intent(UpstreamDirectSellingDetailsActivity.this, AuctionActivity.class);
+                intent_Acution.putExtra("name", "竞拍专场");
+                intent_Acution.putExtra("id", sellerCompanyId);
+                startActivity(intent_Acution);
                 upstreamDirectDetailPresenter.getAuctionSessionResult("1",sellerCompanyId,getSharedPreferences("sumao",Activity.MODE_PRIVATE).getString("unique",""));
 
                 break;
             case R.id.auction_session_gongga:
                 //上游公告
-                Intent intent1=new Intent(UpstreamDirectSellingDetailsActivity.this, oticeActivity.class);
-                intent1.putExtra("orgCode",sellerCompanyId);
-                startActivity(intent1);
+                Intent intent_gonggao=new Intent(UpstreamDirectSellingDetailsActivity.this, oticeActivity.class);
+                intent_gonggao.putExtra("orgCode",sellerCompanyId);
+                startActivity(intent_gonggao);
 
                 break;
         }

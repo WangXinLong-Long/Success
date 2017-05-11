@@ -505,18 +505,12 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
                     registerFirmLists.add(new RegisterFirmList("组织机构代码", ""));
                     registerFirmLists.add(new RegisterFirmList("税务登记号", ""));
                     registerFirmListAdapter.notifyDataSetChanged();
-//                    unified_social_credit_code_rl.setVisibility(View.GONE);
-//                    business_license_number_rl.setVisibility(View.VISIBLE);
-//                    organization_code_rl.setVisibility(View.VISIBLE);
-//                    tax_registration_number_rl.setVisibility(View.VISIBLE);
+
                 } else if (zhuce_leixingLevel.equals("5")) {//三证合一  5
                     registerFirmLists.removeAll(registerFirmLists);
                     registerFirmLists.add(new RegisterFirmList("统一社会信用代码", ""));
                     registerFirmListAdapter.notifyDataSetChanged();
-//                    unified_social_credit_code_rl.setVisibility(View.VISIBLE);
-//                    business_license_number_rl.setVisibility(View.GONE);
-//                    organization_code_rl.setVisibility(View.GONE);
-//                    tax_registration_number_rl.setVisibility(View.GONE);
+
                 }
                 break;
             case 9: //营业执照号
@@ -541,7 +535,7 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
                 LogUtils.log("11---------->" + value3);
                 picturePath3 = data.getStringExtra("picturePath");
 //                tax_registration_number_image.setText(value3);
-                registerFirmLists.set(2, new RegisterFirmList("组织机构代码", value3));
+                registerFirmLists.set(2, new RegisterFirmList("税务登记号", value3));
                 registerFirmListAdapter.notifyDataSetChanged();
                 break;
 
@@ -692,7 +686,7 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
             case R.id.enterprise_registration_certificate_rl://            企业注册证件
                 intent.setClass(RegisterFirmActivity.this, FirmInfoTypeActivity.class);
                 intent.putExtra("value",zhuce_leixing);
-                intent.putExtra("path","");
+                intent.putExtra("path",nachuirenzhaopian);
                 intent.putExtra("title", enterprise_registration_certificate_name.getText().toString());
                 startActivityForResult(intent, 8);
                 break;

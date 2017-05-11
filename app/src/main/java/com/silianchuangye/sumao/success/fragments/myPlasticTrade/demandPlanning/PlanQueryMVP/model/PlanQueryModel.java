@@ -4,6 +4,8 @@ import android.util.Log;
 
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
@@ -20,11 +22,11 @@ public class PlanQueryModel implements IPlanQueryModel {
     private String planState;
     private String enterpriseName;
     private String demandId;
-    private String sellerEnterpriseId;
+    private String warehouseName;
     private String _dynSessConf;
     private boolean updateLoad;
 
-    public PlanQueryModel(String pageNum, String pageSize, String productName, String planStartDate, String planEndDate, String planState, String enterpriseName, String demandId, String sellerEnterpriseId, String _dynSessConf, boolean updateLoad) {
+    public PlanQueryModel(String pageNum, String pageSize, String productName, String planStartDate, String planEndDate, String planState, String enterpriseName, String demandId, String warehouseName, String _dynSessConf, boolean updateLoad) {
         this.pageNum = pageNum;
         this.pageSize = pageSize;
         this.productName = productName;
@@ -33,7 +35,7 @@ public class PlanQueryModel implements IPlanQueryModel {
         this.planState = planState;
         this.enterpriseName = enterpriseName;
         this.demandId = demandId;
-        this.sellerEnterpriseId = sellerEnterpriseId;
+        this.warehouseName = warehouseName;
         this._dynSessConf = _dynSessConf;
         this.updateLoad = updateLoad;
     }
@@ -44,17 +46,41 @@ public class PlanQueryModel implements IPlanQueryModel {
 //        callback.callbackPlanQueryResult(result);
         String url= SuMaoConstant.SUMAO_IP+"/rest/model/com/sumao/mobile/order/purchase/PlanOrderActor/vipPlanOrderQuery";
         RequestParams rp=new RequestParams(url);
-        rp.addParameter("pageNum",pageNum);
-        rp.addParameter("pageSize",pageSize);
-        rp.addParameter("productName",productName);
-        rp.addParameter("planStartDate",planStartDate);
-        rp.addParameter("planEndDate",planEndDate);
-        rp.addParameter("planState",planState);
-        rp.addParameter("enterpriseName",enterpriseName);
-        rp.addParameter("demandId",demandId);
-        rp.addParameter("sellerEnterpriseId",sellerEnterpriseId);
-        rp.addParameter("_dynSessConf",_dynSessConf);
+
+        rp.setAsJsonContent(true);
+        JSONObject jsonObject=new JSONObject();
+        try {
+            jsonObject.put("pageNum",pageNum);
+            jsonObject.put("pageSize",pageSize);
+            Log.d("produnctName",productName);
+            if (!productName.equals("")) {
+              jsonObject.put("productName",productName);
+            }
+            if (!planStartDate.equals("")){
+                jsonObject.put("planStartDate",planStartDate);
+            }
+            if (!planEndDate.equals("")){
+                jsonObject.put("planEndDate",planEndDate);
+            }
+           // if (!planState.equals("")||planState!=null){
+               jsonObject.put("planState",planState);
+           // }
+            if (!enterpriseName.equals("")){
+                jsonObject.put("enterpriseName",enterpriseName);
+            }
+            if (!demandId.equals("")){
+                jsonObject.put("demandId",demandId);
+            }
+            if (!warehouseName.equals("")){
+                jsonObject.put("warehouseName",warehouseName);
+            }
+            jsonObject.put("_dynSessConf",_dynSessConf);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        rp.setBodyContent(jsonObject+"");
         Log.d("查询的rp",rp+"");
+        Log.d("输入的参数的值",jsonObject+"");
         x.http().post(rp, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {

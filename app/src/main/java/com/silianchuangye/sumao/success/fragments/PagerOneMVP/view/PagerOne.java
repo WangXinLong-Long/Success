@@ -149,6 +149,8 @@ public class PagerOne extends BasePager implements IPagerOneView {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(mActivity, GoodsInStockActivity.class);
                 intent.putExtra("title", "地区");
+                intent.putExtra("biaoti",areaList.get(position).toString());
+                Log.d("标题的值",areaList.get(position).toString());
                 intent.putExtra("id",areaListId.get(position).toString());
                 intent.putExtra("goodsInStockActivityBean", goodsInStockActivityBean);
                 intent.putExtra("classificationBean", classificationBean);
@@ -164,6 +166,7 @@ public class PagerOne extends BasePager implements IPagerOneView {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(mActivity, GoodsInStockActivity.class);
                 intent.putExtra("title", "分类");
+                intent.putExtra("biaoti",applicationList.get(position).toString());
                 intent.putExtra("id",fenlei_List.get(position).toString());
                 intent.putExtra("goodsInStockActivityBean", goodsInStockActivityBean);
                 intent.putExtra("classificationBean", classificationBean);
@@ -179,6 +182,7 @@ public class PagerOne extends BasePager implements IPagerOneView {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(mActivity, GoodsInStockActivity.class);
                 intent.putExtra("title", "应用");
+                intent.putExtra("biaoti",classificationList.get(position).toString());
                 intent.putExtra("id",yingyongId.get(position).toString());
                 intent.putExtra("goodsInStockActivityBean", goodsInStockActivityBean);
                 intent.putExtra("classificationBean", classificationBean);
@@ -195,6 +199,7 @@ public class PagerOne extends BasePager implements IPagerOneView {
                 Log.d("供应商",ShengchanId.size()+"");
                 Intent intent = new Intent(mActivity, GoodsInStockActivity.class);
                 intent.putExtra("title", "供应商");
+                intent.putExtra("biaoti",supplierBeanList.get(position).toString());
                 intent.putExtra("id",ShengchanId.get(position).toString());
                 intent.putExtra("goodsInStockActivityBean", goodsInStockActivityBean);
                 intent.putExtra("classificationBean", classificationBean);
@@ -270,6 +275,7 @@ public class PagerOne extends BasePager implements IPagerOneView {
                         String updateOrLoad = "update";
                         Intent intent = new Intent(mActivity, GoodsInStockActivity.class);
                         intent.putExtra("title", "现货");
+                        intent.putExtra("biaoti","现货");
                         intent.putExtra("id","abc");
                         intent.putExtra("goodsInStockActivityBean", goodsInStockActivityBean);
                         intent.putExtra("classificationBean", classificationBean);
@@ -294,6 +300,7 @@ public class PagerOne extends BasePager implements IPagerOneView {
                         String pageNum = "1";
                         Intent intent = new Intent(mActivity, GoodsInStockActivity.class);
                         intent.putExtra("title", "预售");
+                        intent.putExtra("biaoti","预售");
                         intent.putExtra("id","abc");
                         intent.putExtra("goodsInStockActivityBean", goodsInStockActivityBean);
                         intent.putExtra("classificationBean", classificationBean);

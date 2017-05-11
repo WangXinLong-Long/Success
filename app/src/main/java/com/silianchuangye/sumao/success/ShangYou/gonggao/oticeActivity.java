@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jingchen.pulltorefresh.PullToRefreshLayout;
 import com.silianchuangye.sumao.success.R;
@@ -79,8 +80,10 @@ public class oticeActivity extends AppCompatActivity implements View.OnClickList
     public void getinfo(String number){
         if (isUpload){
             Log.d("走这里没","走这里没");
-            listNews.clear();
-            adapter.cleardata();
+            if (listNews.size()>0) {
+                listNews.clear();
+                adapter.cleardata();
+            }
         }
         String url= SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/userprofiling/PurchaseJurisdictionCheckActor/CMSNoticeResult";
         RequestParams rp=new RequestParams(url);
@@ -93,35 +96,36 @@ public class oticeActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onSuccess(String result) {
                 Log.d("上游直销deresult",result);
-                try {
-                    listNews.clear();
-                    JSONObject jsonObject=new JSONObject(result);
+                if (!result.equals("")) {
+                    try {
+                        listNews.clear();
+                        JSONObject jsonObject = new JSONObject(result);
 
-                    String info=jsonObject.getString("announcementItems");
-                    JSONArray jsonArray=new JSONArray(info);
-                    for(int i=0;i<jsonArray.length();i++){
-                        JSONObject object=jsonArray.getJSONObject(i);
-                        String channelName=object.getString("channelName");
-                        String name=object.getString("name");
-                        String id=object.getString("id");
-                        String createTime=object.getString("createDate");
-                        JSONObject object_time=new JSONObject(createTime);
-                        String time=object_time.getString("time");
-                        Map<String,Object> map=new Hashtable<String, Object>();
-                        map.put("channelName",channelName);
-                        map.put("id",id);
-                        map.put("name",name);
-                        map.put("createTime",time);
-                        listNews.add(map);
+                        String info = jsonObject.getString("announcementItems");
+                        JSONArray jsonArray = new JSONArray(info);
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject object = jsonArray.getJSONObject(i);
+                            String channelName = object.getString("channelName");
+                            String name = object.getString("name");
+                            String id = object.getString("id");
+                            String createTime = object.getString("createDate");
+                            JSONObject object_time = new JSONObject(createTime);
+                            String time = object_time.getString("time");
+                            Map<String, Object> map = new Hashtable<String, Object>();
+                            map.put("channelName", channelName);
+                            map.put("id", id);
+                            map.put("name", name);
+                            map.put("createTime", time);
+                            listNews.add(map);
+                        }
+                        adapter = new OticeAdapter(listNews, oticeActivity.this);
+                        pre_sale_listView.setAdapter(adapter);
+                        adapter.notifyDataSetChanged();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-//                    SimpleAdapter adpater=new SimpleAdapter(oticeActivity.this,listNews,R.layout.data_list_view_adapter,
-//                            new String[]{"name",},new int[]{});
-
-                    adapter=new OticeAdapter(listNews,oticeActivity.this);
-                    pre_sale_listView.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                }else{
+                    Toast.makeText(oticeActivity.this, "暂时没有通知公告", Toast.LENGTH_SHORT).show();
                 }
             }
 

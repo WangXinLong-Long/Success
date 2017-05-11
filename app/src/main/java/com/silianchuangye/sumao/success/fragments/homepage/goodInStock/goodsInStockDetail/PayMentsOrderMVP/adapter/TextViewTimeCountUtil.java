@@ -22,6 +22,7 @@ public class TextViewTimeCountUtil extends CountDownTimer{
 
     @Override
     public void onTick(long millisUntilFinished) {
+        Log.d("millisUntilFinished的值",millisUntilFinished+"");
         tv.setText("剩余支付时间:"+DateFormatUtils.getHours(millisUntilFinished));
        // Log.d("有没有进来这个方法","有没有进来这个方法");
     }

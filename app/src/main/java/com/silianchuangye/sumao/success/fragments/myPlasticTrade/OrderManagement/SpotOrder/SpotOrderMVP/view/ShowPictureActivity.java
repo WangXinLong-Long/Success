@@ -69,6 +69,12 @@ public class ShowPictureActivity extends AppCompatActivity {
         tv_child_title_bar_title= (TextView) findViewById(R.id.tv_child_title_bar_title);
         tv_child_title_bar_title.setText(title);
         iv_child_title_bar_back= (ImageView) findViewById(R.id.iv_child_title_bar_back);
+        iv_child_title_bar_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ShowPictureActivity.this.finish();
+            }
+        });
 
 
     }

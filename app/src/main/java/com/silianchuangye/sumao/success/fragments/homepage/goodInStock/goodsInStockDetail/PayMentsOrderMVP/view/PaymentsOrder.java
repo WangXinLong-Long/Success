@@ -8,6 +8,9 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.widget.ActionBarOverlayLayout;
 import android.util.Log;
 import android.view.Gravity;
@@ -34,6 +37,7 @@ import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInSt
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.PayMentsOrderMVP.adapter.PayMentsOrderListViewAdapter;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.PayMentsOrderMVP.bean.BankListBean;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.PayMentsOrderMVP.presenter.PaymentsOrderPresenter;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation.decoding.Intents;
 import com.silianchuangye.sumao.success.utils.Loding;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 
@@ -44,6 +48,8 @@ import org.xutils.common.Callback;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 //import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockDetailActivityMVP.bean.OrderIdList;
 
@@ -94,16 +100,19 @@ public class PaymentsOrder extends Activity implements View.OnClickListener, IPa
     private TextView tv_money;
     private RelativeLayout layout_money;
     private String servicesFree;
+    private Handler handler;
+    private Timer timer;
+    private TimerTask task;
+    private String daojishi="";
+    private String timerfor="";
+    private Long aaa;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.payments_order_activity);
         paymentsOrderPresenter = new PaymentsOrderPresenter(this);
         lvdemo = (ListView) findViewById(R.id.lbDem);
-
-
         tv_payments_order_money = (TextView) findViewById(R.id.tv_payments_order_money);
-
         //页面标题 “支付订单”
         title_bar_white_title = (TextView) findViewById(R.id.title_bar_white_title);
 //        设置时：   产品订单号：+number
@@ -112,7 +121,6 @@ public class PaymentsOrder extends Activity implements View.OnClickListener, IPa
         money_number = (TextView) findViewById(R.id.money_number);
 //        设置时： 提示：剩余时间+num+分
         residual_time = (TextView) findViewById(R.id.residual_time);
-
 //        公司
         company_et = (TextView) findViewById(R.id.company_et);
 //        总金额
@@ -135,36 +143,48 @@ public class PaymentsOrder extends Activity implements View.OnClickListener, IPa
         filter.addAction("finish");
         registerReceiver(broadcastReceiver, filter);
         addData();
+        SharedPreferences sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+        timerfor=sp.getString("daojishishengyv","");
+
     }
 
     public void addData() {
-
         commit_order();
     }
+
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         //结束任务
-        if(list_adapter!=null)
+        if (list_adapter != null)
             list_adapter.cancelAllTimers();
     }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if(timer!=null){
+            timer.cancel();
+        }
+    }
+
     public void commit_order() {
         String fixOrCart = getIntent().getStringExtra("type");
         orderList = (List<Orders.OrderIdListBean>) getIntent().getSerializableExtra("fix");
+        //daojishi=orderList.get(0).getRemainingTime();
+        Log.d("倒计时的值",daojishi);
         list = new ArrayList<Map<String, Object>>();
         list_adapter = new PayMentsOrderListViewAdapter(this);
+
         list_adapter.addLists(orderList);
         lvdemo.setAdapter(list_adapter);
         double total = 0;
         for (int i = 0; i < orderList.size(); i++) {
-
             double count = Double.parseDouble(orderList.get(i).getTotal());
             total += count;
         }
         tv_payments_order_money.setText(total + "");
-//        }
-
     }
 
     @Override
@@ -177,8 +197,6 @@ public class PaymentsOrder extends Activity implements View.OnClickListener, IPa
             case R.id.title_bar_white_back:
                 finish();
                 break;
-
-
         }
     }
 
@@ -387,38 +405,42 @@ public class PaymentsOrder extends Activity implements View.OnClickListener, IPa
     @Override
     public void getPaymentResult(String result,String orderIds) {
         Loding.dis();
-        try {
-            JSONObject obj = new JSONObject(result);
-            String state = obj.getString("paymentStatus");
-            if (state.equals("0")) {
+        if (!result.equals("")) {
+            try {
+                JSONObject obj = new JSONObject(result);
+                String state = obj.getString("paymentStatus");
+                if (state.equals("0")) {
 //                TODO !!!
-                int pos = -1;
-                for (int i = 0; i < orderList.size(); i++) {
-                    if (orderList.get(i).getOrderId().equals(orderIds)){
-                         pos = i;
+                    int pos = -1;
+                    for (int i = 0; i < orderList.size(); i++) {
+                        if (orderList.get(i).getOrderId().equals(orderIds)) {
+                            pos = i;
+                        }
                     }
+                    orderList.remove(pos);
+                    list_adapter.clear();
+                    list_adapter.addLists(orderList);
+                    list_adapter.notifyDataSetChanged();
+                    LogUtils.log("orderIds--->" + orderIds);
+                    //全部成功
+                    Intent intent = new Intent(PaymentsOrder.this, Ok_Dialog.class);
+                    intent.putExtra("type", "现货");
+                    intent.putExtra("number", orderIds);
+                    startActivity(intent);
+                } else if (state.equals("1")) {
+                    //部分订单成功
+                    Toast.makeText(PaymentsOrder.this, "部分订单成功,到订单详情界面查看", Toast.LENGTH_SHORT).show();
+                } else if (state.equals("2")) {
+                    //全部失败
+                    Intent intent = new Intent(PaymentsOrder.this, Error_Dialog.class);
+                    intent.putExtra("number", "这里填写订单号");
+                    startActivity(intent);
                 }
-                orderList.remove(pos);
-                list_adapter.clear();
-                list_adapter.addLists(orderList);
-                list_adapter.notifyDataSetChanged();
-                LogUtils.log("orderIds--->"+orderIds);
-                //全部成功
-                Intent intent = new Intent(PaymentsOrder.this, Ok_Dialog.class);
-                intent.putExtra("type", "现货");
-                intent.putExtra("number", orderIds);
-                startActivity(intent);
-            } else if (state.equals("1")) {
-                //部分订单成功
-                Toast.makeText(PaymentsOrder.this, "部分订单成功,到订单详情界面查看", Toast.LENGTH_SHORT).show();
-            } else if (state.equals("2")) {
-                //全部失败
-                Intent intent = new Intent(PaymentsOrder.this, Error_Dialog.class);
-                intent.putExtra("number", "这里填写订单号");
-                startActivity(intent);
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
+        }else{
+            Toast.makeText(PaymentsOrder.this, "支付失败!", Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -22,6 +22,7 @@
         android:layout_height="40sp"
         android:layout_alignParentLeft="true"
         android:clickable="true"
+        android:background="@drawable/fanhui"
         android:src="@mipmap/back_black" />
 
     <RelativeLayout

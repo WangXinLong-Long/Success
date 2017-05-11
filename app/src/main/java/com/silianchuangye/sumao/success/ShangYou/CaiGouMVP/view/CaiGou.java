@@ -39,7 +39,9 @@ import com.silianchuangye.sumao.success.ShangYou.PlanDayMVP.view.PlanDay;
 import com.silianchuangye.sumao.success.ShangYou.SeePlanMVP.presenter.SeePlanPresenter;
 import com.silianchuangye.sumao.success.ShangYou.SeePlanMVP.view.SeePlan;
 import com.silianchuangye.sumao.success.adapter.MyPageAdapter;
+import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.UpstreamDirectDetailMVP.presenter.UpstreamDirectDetailPresenter;
 import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.bean.vipProductBean.VipProductBean;
+import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.view.IUpstreamDirectSellingView;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.ShowCalendar;
 
@@ -69,7 +71,7 @@ public class CaiGou extends AppCompatActivity implements OnClickListener, Adapte
     private Button btn_pop_customer_search;
     private List<String> popList;
     private ArrayAdapter pop_adapter;
-    private VipProductBean vipProductBean;
+    //private VipProductBean vipProductBean;
     private CaiGouPresenter presenter;
     private String sellerCompanyId;
     private CaiGouBean caiGouBeans;
@@ -93,23 +95,23 @@ public class CaiGou extends AppCompatActivity implements OnClickListener, Adapte
     private List<String> logisticsNameIDList;
     private Bundle bundle1;
     private ImageView img_create_logistics_back;
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    private GoogleApiClient client;
+    private VipProductBean vipProductBean;
+    private UpstreamDirectDetailPresenter upstreamDirectDetailPresenter;
+
     Dialog mDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cai_gou);
+
         img_create_logistics_back= (ImageView) findViewById(R.id.img_create_logistics_back);
         img_create_logistics_back.setOnClickListener(this);
         Intent intent = getIntent();
-        vipProductBean = (VipProductBean) intent.getSerializableExtra("vipProductBean");
-        sellerCompanyId = intent.getStringExtra("sellerCompanyId");
+       // vipProductBean = (VipProductBean) intent.getSerializableExtra("vipProductBean");
 
+        sellerCompanyId = intent.getStringExtra("sellerCompanyId");
+        //upstreamDirectSellingPresenter.getUpstreamDirectSellingDetail(sessionId,sellerCompanyId,"");
         initDate();
         img_create_logistics_back = (ImageView) findViewById(R.id.img_create_logistics_back);
         img_create_logistics_search = (ImageView) findViewById(R.id.img_create_logistics_search);
@@ -124,12 +126,12 @@ public class CaiGou extends AppCompatActivity implements OnClickListener, Adapte
         listFragment.add(see);
         presenter = new CaiGouPresenter(this);
         sessionID = getSharedPreferences("sumao", MODE_PRIVATE).getString("unique", "");
-        //presenter.requestSeePlanDate("1", "10", sellerCompanyId, sessionID, "", "", "", "", "", "");
+        initView();
 
-         initView();
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+    }
+
+    public void info(){
+
     }
 
     private void initDate() {
@@ -510,7 +512,6 @@ public class CaiGou extends AppCompatActivity implements OnClickListener, Adapte
         caiGouBeans = caiGouBean;
         initView();
     }
-
 
 
 

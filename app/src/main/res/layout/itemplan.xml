@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:text="计划编号 : "
+            android:text="需求编号:"
             android:layout_marginLeft="@dimen/x10"/>
         <TextView
             android:id="@+id/demand_or_order_number1"
@@ -53,7 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/x10"
-            android:text="计划日期 : "/>
+            android:text="需求日期:"/>
         <TextView
             android:id="@+id/demand_date_num1"
             android:layout_width="wrap_content"
@@ -85,7 +85,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/x10"
-            android:text="分类 : "/>
+            android:text="分类: "/>
         <TextView
             android:id="@+id/classification_content1"
             android:layout_width="wrap_content"
@@ -130,7 +130,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:text="数量"
+            android:text="数量:"
             android:layout_marginLeft="@dimen/x160"/>
         <TextView
             android:id="@+id/number_content1"
@@ -235,6 +235,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:visibility="gone"
             android:layout_marginLeft="@dimen/x10"
             android:text="订单号 : "/>
         <TextView
@@ -243,6 +244,7 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/tv_seeplan_left_dingdannum"
             android:text="2434234234"
+            android:visibility="gone"
             android:layout_centerVertical="true"/>
         <Button
             android:id="@+id/copy_button1"

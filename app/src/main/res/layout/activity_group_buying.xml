@@ -17,6 +17,7 @@
             android:id="@+id/ivBack_group_layout_top"
             android:layout_marginTop="@dimen/y10"
             android:src="@drawable/back"
+            android:background="@drawable/fanhui"
             android:layout_marginLeft="10dp"
             />
         <TextView

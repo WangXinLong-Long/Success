@@ -127,7 +127,6 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setContentView(R.layout.activity_pre_sale_detail);
 
         Intent intent = getIntent();
@@ -678,7 +677,7 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
             Toast.makeText(PreSaleDetailActivity.this, "请选择支付银行", Toast.LENGTH_SHORT).show();
 
         } else {
-            //Loding.show(this, "正在支付保证金...", false, null);//网络请求之前调用
+            Loding.show(this, "正在支付保证金...", false, null);//网络请求之前调用
             String quantity = edt_num.getText().toString();//数量
             SharedPreferences sp = this.getSharedPreferences("sumao", Activity.MODE_PRIVATE);
             String _dynSessConf = sp.getString("unique", "");
@@ -877,7 +876,7 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
     public void payPaymentSecurity(String result) {
         Log.d("支付保证金的返回值",result);
 
-//        Loding.dis();
+        Loding.dis();
         try {
             JSONObject job = new JSONObject(result);
             String info = job.getString("info");

@@ -23,6 +23,7 @@
             android:id="@+id/ivBack_orderPrice_layout_top"
             android:layout_marginTop="@dimen/y10"
             android:src="@drawable/back"
+            android:background="@drawable/fanhui"
             android:layout_marginLeft="@dimen/x10"
             />
         <TextView

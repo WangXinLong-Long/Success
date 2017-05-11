@@ -6,6 +6,8 @@
         android:layout_width="match_parent"
         android:layout_marginTop="@dimen/x10"
         android:layout_centerHorizontal="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:layout_height="wrap_content">
         <TextView
             android:textSize="20sp"
@@ -18,7 +20,7 @@
             android:layout_marginLeft="@dimen/x10"
             android:text="-"
             android:gravity="center"
-            android:textColor="@color/gray_normal"
+            android:textColor="@color/gray_type"
             android:background="@drawable/cart_num"
             />
         <EditText
@@ -44,7 +46,7 @@
             android:layout_toRightOf="@id/tv_item_cart_buy_num_info"
             android:text="+"
             android:gravity="center"
-            android:textColor="@color/gray_normal"
+            android:textColor="@color/gray_type"
             android:background="@drawable/cart_num"
             />
     </RelativeLayout>

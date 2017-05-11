@@ -33,21 +33,21 @@ public class WelcomeActivity extends Activity {
 
         Bitmap bitmap=readBitMap(WelcomeActivity.this,R.mipmap.panda2);
         imageView.setImageBitmap(bitmap);
+        Intent intent = new Intent(WelcomeActivity.this,MainActivity.class);
+        WelcomeActivity.this.finish();
+        startActivity(intent);
 
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(2000);
-                    Intent intent = new Intent(WelcomeActivity.this,MainActivity.class);
-                    WelcomeActivity.this.finish();
-                    startActivity(intent);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                    Thread.sleep(2000);
+//
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }).start();
     }
 
     /**

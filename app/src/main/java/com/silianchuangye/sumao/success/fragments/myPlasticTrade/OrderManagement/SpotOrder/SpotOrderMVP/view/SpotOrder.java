@@ -431,44 +431,78 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         long countDownTime = 0;
-        bottom_money2.setText(String.valueOf(price));
+        bottom_money2.setText(String.valueOf(price)+"元");
         if (type.equals("fixedPricingOrder")) {//现货
             type2.setText("现货");
             tv_xianqing_type.setText("现货");
-            long countDown = (Long.parseLong(submittedDate) + 1000 * 3600) - System.currentTimeMillis();
+            long countDown = (Long.parseLong(submittedDate) + 1000 * 3600) - new Date().getTime();
             countDownTime = countDown > 0 ? countDown : 0;
         } else if (type.equals("openAuctionOrder")) {//公开竞拍
             type2.setText("公开竞拍");
             tv_xianqing_type.setText("公开竞拍");
 //            long countDown = (calendar.getTimeInMillis()) - Long.parseLong(submittedDate);
 //            countDownTime = countDown > 0 ? countDown : (calendar.getTimeInMillis() + 24 * 60 * 60 * 1000) - Long.parseLong(submittedDate);
+//            String committime= new SimpleDateFormat("yyyy-MM-dd").format(Double.parseDouble(submittedDate));
+//            Log.d("comittime",committime);
+//            //把日期变为String类型
+//            try {
+//                String data=committime+" 17:00:00";
+//                Date date=new Date();
+//                SimpleDateFormat simpleFormat = new SimpleDateFormat( "yyyy-MM-dd hh:mm:ss" );
+//
+//                date = simpleFormat.parse(data);
+//                Log.d("日期的值",date.toString());
+//                long createdate=date.getTime();
+//                Log.d("日期转为秒的值",createdate+"");
+//
+//                if (createdate-Long.parseLong(submittedDate)>=0){
+//                    //倒计时到5点
+//
+//                    if (createdate-System.currentTimeMillis()>0){
+//                        countDownTime=createdate-System.currentTimeMillis();
+//                    }else{
+//                        countDownTime=0;
+//                    }
+//                    Log.d("if countDownTime的值",countDownTime+"");
+//                }else{
+//                    //倒计时到明天5点
+//
+//                    if (createdate+(1000*60*60*24)-System.currentTimeMillis()>=0){
+//                        countDownTime=createdate+(1000*60*60*24)-System.currentTimeMillis();
+//                    }
+//                    Log.d("else countDownTime的值",countDownTime+"");
+//                }
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
             String committime= new SimpleDateFormat("yyyy-MM-dd").format(Double.parseDouble(submittedDate));
             Log.d("comittime",committime);
             //把日期变为String类型
             try {
-                String data=committime+" 17:00:00";
-                Date date=new Date();
+                String data=committime+" 17:00:00";//与提交日期的当天5点
+                Date date111=new Date();           //当前时间
                 SimpleDateFormat simpleFormat = new SimpleDateFormat( "yyyy-MM-dd hh:mm:ss" );
 
-                date = simpleFormat.parse(data);
+                Date date = simpleFormat.parse(data);
                 Log.d("日期的值",date.toString());
-                long createdate=date.getTime();
+                long createdate=date.getTime();//提交日期当天5点的豪秒值
                 Log.d("日期转为秒的值",createdate+"");
 
                 if (createdate-Long.parseLong(submittedDate)>=0){
                     //倒计时到5点
 
-                    if (createdate-System.currentTimeMillis()>0){
-                        countDownTime=createdate-System.currentTimeMillis();
-                    }else{
-                        countDownTime=0;
+                    if (createdate-System.currentTimeMillis()>=0){
+
+                        countDownTime=date.getTime()-date111.getTime();
                     }
                     Log.d("if countDownTime的值",countDownTime+"");
                 }else{
                     //倒计时到明天5点
-
                     if (createdate+(1000*60*60*24)-System.currentTimeMillis()>=0){
-                        countDownTime=createdate+(1000*60*60*24)-System.currentTimeMillis();
+                        //把毫秒转换成日期
+                        String data123=new SimpleDateFormat("yyyy-MM-dd").format(createdate+1000*60*60*24);
+                        Date date456 = simpleFormat.parse(data123);
+                        countDownTime=date456.getTime()-date111.getTime();
                     }
                     Log.d("else countDownTime的值",countDownTime+"");
                 }
@@ -482,31 +516,65 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
 //            long countDown = (calendar.getTimeInMillis()) - Long.parseLong(submittedDate);
 //            countDownTime = countDown > 0 ? countDown : (calendar.getTimeInMillis() + 24 * 60 * 60 * 1000) - Long.parseLong(submittedDate);
 
+//            String committime= new SimpleDateFormat("yyyy-MM-dd").format(Double.parseDouble(submittedDate));
+//            Log.d("comittime",committime);
+//            //把日期变为String类型
+//            try {
+//                String data=committime+" 17:00:00";
+//                Date date=new Date();
+//                SimpleDateFormat simpleFormat = new SimpleDateFormat( "yyyy-MM-dd hh:mm:ss" );
+//
+//                date = simpleFormat.parse(data);
+//                Log.d("日期的值",date.toString());
+//                long createdate=date.getTime();
+//                Log.d("日期转为秒的值",createdate+"");
+//
+//                if (createdate-Long.parseLong(submittedDate)>=0){
+//                    //倒计时到5点
+//
+//                    if (createdate-System.currentTimeMillis()>=0){
+//                        countDownTime=createdate-System.currentTimeMillis();
+//                    }
+//                    Log.d("if countDownTime的值",countDownTime+"");
+//                }else{
+//                    //倒计时到明天5点
+//
+//                    if (createdate+(1000*60*60*24)-System.currentTimeMillis()>=0){
+//                        countDownTime=createdate+(1000*60*60*24)-System.currentTimeMillis();
+//                    }
+//                    Log.d("else countDownTime的值",countDownTime+"");
+//                }
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
             String committime= new SimpleDateFormat("yyyy-MM-dd").format(Double.parseDouble(submittedDate));
             Log.d("comittime",committime);
             //把日期变为String类型
             try {
-                String data=committime+" 17:00:00";
-                Date date=new Date();
+                String data=committime+" 17:00:00";//与提交日期的当天5点
+                Date date111=new Date();           //当前时间
                 SimpleDateFormat simpleFormat = new SimpleDateFormat( "yyyy-MM-dd hh:mm:ss" );
 
-                date = simpleFormat.parse(data);
+                Date date = simpleFormat.parse(data);
                 Log.d("日期的值",date.toString());
-                long createdate=date.getTime();
+                long createdate=date.getTime();//提交日期当天5点的豪秒值
                 Log.d("日期转为秒的值",createdate+"");
 
                 if (createdate-Long.parseLong(submittedDate)>=0){
                     //倒计时到5点
 
                     if (createdate-System.currentTimeMillis()>=0){
-                        countDownTime=createdate-System.currentTimeMillis();
+
+                        countDownTime=date.getTime()-date111.getTime();
                     }
                     Log.d("if countDownTime的值",countDownTime+"");
                 }else{
                     //倒计时到明天5点
-
                     if (createdate+(1000*60*60*24)-System.currentTimeMillis()>=0){
-                        countDownTime=createdate+(1000*60*60*24)-System.currentTimeMillis();
+                        //把毫秒转换成日期
+                        String data123=new SimpleDateFormat("yyyy-MM-dd").format(createdate+1000*60*60*24);
+                        Date date456 = simpleFormat.parse(data123);
+                        countDownTime=date456.getTime()-date111.getTime();
                     }
                     Log.d("else countDownTime的值",countDownTime+"");
                 }
@@ -519,31 +587,65 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
             tv_xianqing_type.setText("团购");
 //            long countDown = (calendar.getTimeInMillis()) - Long.parseLong(submittedDate);
 //            countDownTime = countDown > 0 ? countDown : (calendar.getTimeInMillis() + 24 * 60 * 60 * 1000) - Long.parseLong(submittedDate);
+//            String committime= new SimpleDateFormat("yyyy-MM-dd").format(Double.parseDouble(submittedDate));
+//            Log.d("comittime",committime);
+//            //把日期变为String类型
+//            try {
+//                String data=committime+" 17:00:00";
+//                Date date=new Date();
+//                SimpleDateFormat simpleFormat = new SimpleDateFormat( "yyyy-MM-dd hh:mm:ss" );
+//
+//                date = simpleFormat.parse(data);
+//                Log.d("日期的值",date.toString());
+//                long createdate=date.getTime();
+//                Log.d("日期转为秒的值",createdate+"");
+//
+//                if (createdate-Long.parseLong(submittedDate)>=0){
+//                    //倒计时到5点
+//
+//                    if (createdate-System.currentTimeMillis()>=0){
+//                        countDownTime=createdate-System.currentTimeMillis();
+//                    }
+//                    Log.d("if countDownTime的值",countDownTime+"");
+//                }else{
+//                    //倒计时到明天5点
+//
+//                    if (createdate+(1000*60*60*24)-System.currentTimeMillis()>=0){
+//                        countDownTime=createdate+(1000*60*60*24)-System.currentTimeMillis();
+//                    }
+//                    Log.d("else countDownTime的值",countDownTime+"");
+//                }
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
             String committime= new SimpleDateFormat("yyyy-MM-dd").format(Double.parseDouble(submittedDate));
             Log.d("comittime",committime);
             //把日期变为String类型
             try {
-                String data=committime+" 17:00:00";
-                Date date=new Date();
+                String data=committime+" 17:00:00";//与提交日期的当天5点
+                Date date111=new Date();           //当前时间
                 SimpleDateFormat simpleFormat = new SimpleDateFormat( "yyyy-MM-dd hh:mm:ss" );
 
-                date = simpleFormat.parse(data);
+                Date date = simpleFormat.parse(data);
                 Log.d("日期的值",date.toString());
-                long createdate=date.getTime();
+                long createdate=date.getTime();//提交日期当天5点的豪秒值
                 Log.d("日期转为秒的值",createdate+"");
 
                 if (createdate-Long.parseLong(submittedDate)>=0){
                     //倒计时到5点
 
                     if (createdate-System.currentTimeMillis()>=0){
-                        countDownTime=createdate-System.currentTimeMillis();
+
+                        countDownTime=date.getTime()-date111.getTime();
                     }
                     Log.d("if countDownTime的值",countDownTime+"");
                 }else{
                     //倒计时到明天5点
-
                     if (createdate+(1000*60*60*24)-System.currentTimeMillis()>=0){
-                        countDownTime=createdate+(1000*60*60*24)-System.currentTimeMillis();
+                        //把毫秒转换成日期
+                        String data123=new SimpleDateFormat("yyyy-MM-dd").format(createdate+1000*60*60*24);
+                        Date date456 = simpleFormat.parse(data123);
+                        countDownTime=date456.getTime()-date111.getTime();
                     }
                     Log.d("else countDownTime的值",countDownTime+"");
                 }
@@ -554,8 +656,27 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
             type2.setText("预售");
             tv_xianqing_type.setText("预售");
             //countDownTime = Long.parseLong(list.get(0).get("deliveryEndDate").toString()) - Long.parseLong(submittedDate);
-            countDownTime = Long.parseLong(list.get(0).get("paymentEndDate").toString()) - System.currentTimeMillis();
+            //countDownTime =(Long.parseLong(list.get(0).get("paymentEndDate").toString()) - System.currentTimeMillis())/1000;
+            //String timedaizhifu =formatTime(list.get(0).get("paymentEndDate").toString());
+            Log.d("countDownTime",countDownTime+"");
             Log.d("预售截止时间",Long.parseLong(list.get(0).get("deliveryEndDate").toString())+"");
+
+
+            //test
+            //根据时间戳得到日期
+            SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Long time=new Long(list.get(0).get("paymentEndDate").toString());
+            String d = format.format(time);
+            try {
+                Date date1=format.parse(d);
+                Date date=new Date();
+                Long ms=date1.getTime()-date.getTime();
+                countDownTime=ms;
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+
         } else if (type.equals("scheduleOrder")) {//计划订单
             type2.setText("计划订单");
             tv_xianqing_type.setText("计划订单");
@@ -565,27 +686,30 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
             Log.d("comittime",committime);
             //把日期变为String类型
             try {
-                String data=committime+" 17:00:00";
-                Date date=new Date();
+                String data=committime+" 17:00:00";//与提交日期的当天5点
+                Date date111=new Date();           //当前时间
                 SimpleDateFormat simpleFormat = new SimpleDateFormat( "yyyy-MM-dd hh:mm:ss" );
 
-                date = simpleFormat.parse(data);
+                Date date = simpleFormat.parse(data);
                 Log.d("日期的值",date.toString());
-                long createdate=date.getTime();
+                long createdate=date.getTime();//提交日期当天5点的豪秒值
                 Log.d("日期转为秒的值",createdate+"");
 
                 if (createdate-Long.parseLong(submittedDate)>=0){
                     //倒计时到5点
 
                     if (createdate-System.currentTimeMillis()>=0){
-                        countDownTime=createdate-System.currentTimeMillis();
+
+                        countDownTime=date.getTime()-date111.getTime();
                     }
                     Log.d("if countDownTime的值",countDownTime+"");
                 }else{
                     //倒计时到明天5点
-
                     if (createdate+(1000*60*60*24)-System.currentTimeMillis()>=0){
-                        countDownTime=createdate+(1000*60*60*24)-System.currentTimeMillis();
+                        //把毫秒转换成日期
+                        String data123=new SimpleDateFormat("yyyy-MM-dd").format(createdate+1000*60*60*24);
+                        Date date456 = simpleFormat.parse(data123);
+                        countDownTime=date456.getTime()-date111.getTime();
                     }
                     Log.d("else countDownTime的值",countDownTime+"");
                 }
@@ -675,8 +799,7 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
         public void onTick(long millisUntilFinished) {
 //            SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
 //            String time = format.format(millisUntilFinished - TimeZone.getDefault().getRawOffset());
-
-            String time = formatTime(millisUntilFinished /*- TimeZone.getDefault().getRawOffset()*/);
+            String time = formatTime(millisUntilFinished);
             count_down_tv.setText("剩余支付时间：" + time);
 //            if (time==2000+""){
 //                getOrderInfo();
@@ -685,6 +808,7 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
     }
     //    转化为倒计时需要的时间
     public String formatTime(Long ms) {
+
         Integer ss = 1000;
         Integer mi = ss * 60;
         Integer hh = mi * 60;
@@ -894,7 +1018,7 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
                 //全部成功
                 Intent intent = new Intent(SpotOrder.this, Ok_Dialog.class);
                 intent.putExtra("type", "现货订单");
-                intent.putExtra("number", "这里填写订单号");
+                intent.putExtra("number", OrderId);
                 startActivity(intent);
             } else if (state.equals("1")) {
                 //部分订单成功
@@ -902,7 +1026,7 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
             } else if (state.equals("2")) {
                 //全部失败
                 Intent intent = new Intent(SpotOrder.this, Error_Dialog.class);
-                intent.putExtra("number", "这里填写订单号");
+                intent.putExtra("number", OrderId);
                 startActivity(intent);
             }
         } catch (JSONException e) {

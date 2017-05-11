@@ -124,33 +124,6 @@ public class PlanQueryActivity extends AppCompatActivity implements IPlanQueryVi
         pullToRefreshLayout.setOnPullListener(new GroupBuyingListViewPullListener());
 
     }
-//    public void getsellerCompany(){
-//        String url= SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/order/demand/DemandActor/directEnterpriseDetailStore";
-//        RequestParams rp=new RequestParams(url);
-//        rp.addParameter("_dynSessConf",unique);
-//        x.http().post(rp, new Callback.CommonCallback<String>() {
-//        });
-//    }String
-
-   // private void initData(PlanQueryAdapter planQueryAdapter) {
-//        List<PlanQueryBean> list = new ArrayList<>();
-//        for (int i = 0; i < 5; i++) {
-//            PlanQueryBean planQueryBean = new PlanQueryBean();
-//            planQueryBean.setProduct_name_content("产品名称" + i);
-//            planQueryBean.setClassification_content("分类" + i);
-//            planQueryBean.setDate_of_presentation_num("2017/2/1" + i);
-//            planQueryBean.setDemand_date_num("2017/2/30");
-//            if (i % 2 == 0) {
-//                planQueryBean.setOrderOrdemand("需求编号:");
-//            } else {
-//                planQueryBean.setOrderOrdemand("订单编号:");
-//            }
-//            planQueryBean.setOrderOrdemandNum("20170213" + i);
-//            list.add(planQueryBean);
-//        }
-//        planQueryAdapter.addData(list);
-//    }
-
 
     @Override
     public void onClick(View v) {
@@ -158,7 +131,6 @@ public class PlanQueryActivity extends AppCompatActivity implements IPlanQueryVi
             case R.id.img_create_logistics_search:
                 initPopupListView();
                 initPopupWindow();
-               // showPopupWindow();
                 dialog();
                 break;
             case R.id.mention_state_ll:
@@ -168,14 +140,6 @@ public class PlanQueryActivity extends AppCompatActivity implements IPlanQueryVi
                     mentionStateListView.setVisibility(View.VISIBLE);
                 }
                 break;
-
-
-
-
-//            case R.id.out_of_popupwindow:
-//              //  popupWindow.dismiss();
-//                mDialog.dismiss();
-//                break;
             case R.id.demand_end_time_rl:
                 showEndDataDialog();
                 break;
@@ -194,7 +158,7 @@ public class PlanQueryActivity extends AppCompatActivity implements IPlanQueryVi
                 }
                 Log.d("提报状态的值",state+"");
                 planQueryPresenter.getList("1","10",product_name.getText().toString(),demand_start_time.getText().toString(),demand_end_time.getText().toString()
-                        ,state,warehouse_name.getText().toString(),demand_number.getText().toString(),seller_enterprise.getText().toString(),unique,true);
+                        ,state,seller_enterprise.getText().toString(),demand_number.getText().toString(),warehouse_name.getText().toString(),unique,true);
                 break;
 
         }
@@ -265,10 +229,6 @@ public class PlanQueryActivity extends AppCompatActivity implements IPlanQueryVi
             Log.d("result的值",result);
             JSONObject jsonObject=new JSONObject(result);
             String vipPlanOrder=jsonObject.getString("planOrderListlist");
-//            Log.d("vipPlanOrder的值",vipPlanOrder);
-//            JSONObject jsonplanOrderList=new JSONObject(vipPlanOrder);
-//            String planOrderList=jsonplanOrderList.getString("planOrderList");
-//            Log.d("planOrderList的值",planOrderList);
             JSONArray jsonArray=new JSONArray(vipPlanOrder);
             for (int i=0;i<jsonArray.length();i++){
                 JSONObject info=jsonArray.getJSONObject(i);
@@ -310,6 +270,12 @@ public class PlanQueryActivity extends AppCompatActivity implements IPlanQueryVi
                 }
                 if (info.toString().contains("orderId")){
                     map.put("orderId",info.getString("orderId"));
+                }
+                if (info.toString().contains("categoryName")){//分类的值
+                    map.put("categoryName",info.getString("categoryName"));
+                }
+                if (info.toString().contains("registerDate")){
+                    map.put("registerDate",info.getString("registerDate"));
                 }
 
 
@@ -433,10 +399,7 @@ public class PlanQueryActivity extends AppCompatActivity implements IPlanQueryVi
       // 提报状态
        mentionState = ((LinearLayout) popupWindowView.findViewById(R.id.mention_state_ll));
 //        提报状态的ListView
-//        mention_logistc_ll= (LinearLayout) popupWindowView.findViewById(R.id.mention_logistc_ll);
-//        mention_logistc_ll.setOnClickListener(this);
-//        layout_seller_enterprise= (LinearLayout) popupWindowView.findViewById(R.id.layout_seller_enterprise);
-//        layout_seller_enterprise.setOnClickListener(this);
+
        mentionStateListView = ((ListView) popupWindowView.findViewById(R.id.mention_state_lv));
        outOfPopupWindow =(LinearLayout) popupWindowView.findViewById(R.id.out_of_popupwindow);
        demand_end_time_rl =(LinearLayout) popupWindowView.findViewById(R.id.demand_end_time_rl);//结束的日历dialog
@@ -492,10 +455,7 @@ public class PlanQueryActivity extends AppCompatActivity implements IPlanQueryVi
 //        提报状态
         mentionState = ((LinearLayout) popupWindowView.findViewById(R.id.mention_state_ll));
 //        提报状态的ListView
-//        mention_logistc_ll= (LinearLayout) popupWindowView.findViewById(R.id.mention_logistc_ll);
-//        mention_logistc_ll.setOnClickListener(this);
-//        layout_seller_enterprise= (LinearLayout) popupWindowView.findViewById(R.id.layout_seller_enterprise);
-//        layout_seller_enterprise.setOnClickListener(this);
+
         mentionStateListView = ((ListView) popupWindowView.findViewById(R.id.mention_state_lv));
         outOfPopupWindow =(LinearLayout) popupWindowView.findViewById(R.id.out_of_popupwindow);
         demand_end_time_rl =(LinearLayout) popupWindowView.findViewById(R.id.demand_end_time_rl);//结束的日历dialog

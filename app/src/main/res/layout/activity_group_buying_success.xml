@@ -19,6 +19,7 @@
             android:layout_height="@dimen/x20"
             android:layout_marginLeft="@dimen/x10"
             android:layout_marginTop="@dimen/x10"
+            android:background="@drawable/fanhui"
             android:src="@mipmap/my_sumao_back" />
 
         <TextView

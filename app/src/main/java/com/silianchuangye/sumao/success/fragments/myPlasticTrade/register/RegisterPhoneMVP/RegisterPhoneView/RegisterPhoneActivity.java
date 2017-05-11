@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -110,17 +111,26 @@ public class RegisterPhoneActivity extends AppCompatActivity implements IRegiste
         tv_next_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//
-                SharedPreferences sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
-                unique=sp.getString("yanzhen","");
-                if (editText.getText().toString().equals(unique)){
-                    Intent intent = new Intent(RegisterPhoneActivity.this, RegisterActivity.class);
-                    intent.putExtra("phone", et_phone_register.getText().toString());
-                    startActivity(intent);
+                Log.d("点击了下一步","点击了下一步");
+                Log.d("phone",et_phone_register.getText().toString());
+                Log.d("验证码的值",editText.getText().toString());
+                if (et_phone_register.getText().length()>0){
+                    if (editText.getText().toString().length()>0){
+                        if (editText.getText().toString().equals(yanzhen)){
+                            Intent intent = new Intent(RegisterPhoneActivity.this, RegisterActivity.class);
+                            intent.putExtra("phone", et_phone_register.getText().toString());
+                            startActivity(intent);
+                        }else{
+                            Toast.makeText(RegisterPhoneActivity.this, "验证码不正确!", Toast.LENGTH_SHORT).show();
+                        }
+                    }else{
+                        Toast.makeText(RegisterPhoneActivity.this, "请输入验证码!", Toast.LENGTH_SHORT).show();
+                    }
 
-                }else {
-                    Toast.makeText(RegisterPhoneActivity.this, "您输入的验证码不正确，请重新输入！", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(RegisterPhoneActivity.this, "请输入手机号!", Toast.LENGTH_SHORT).show();
                 }
+//
             }
         });
     }

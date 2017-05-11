@@ -2060,8 +2060,8 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
             if (state.equals("0")) {
                 //全部成功
                 Intent intent = new Intent(OpenAuctionActivity.this, Ok_Dialog.class);
-                intent.putExtra("type", "公开竞拍");
-                intent.putExtra("number", "这里填写订单号");
+                intent.putExtra("type", "竞拍");
+                intent.putExtra("number",tv_order_id.getText().toString());
                 startActivity(intent);
             } else if (state.equals("1")) {
                 //部分订单成功
@@ -2069,7 +2069,7 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
             } else if (state.equals("2")) {
                 //全部失败
                 Intent intent = new Intent(OpenAuctionActivity.this, Error_Dialog.class);
-                intent.putExtra("number", "这里填写订单号");
+                intent.putExtra("number", tv_order_id.getText().toString());
                 startActivity(intent);
             }
         } catch (JSONException e) {

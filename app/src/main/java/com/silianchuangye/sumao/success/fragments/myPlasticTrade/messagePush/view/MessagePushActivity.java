@@ -81,7 +81,7 @@ public class MessagePushActivity extends AppCompatActivity implements View.OnCli
     private List<String> planStateEnglish;
     private List<String> logisticsNameList;
     private ArrayAdapter pop_adapter;
-    String productName = "";//商品名字
+    String productName = "productName";//通知编号
     String planStartDate = "";//开始日
     String planEndDate = "";//结束日
     String planState = "";//提报状态
@@ -89,7 +89,7 @@ public class MessagePushActivity extends AppCompatActivity implements View.OnCli
     String logisticsID = "";//物流ID
     private List<String> logisticsNameIDList;
     private PopupWindow popupWindow;
-    private String sendId;
+    private String sendId="";
 
 
    // private GroupBuyingListViewAdapter adapter;
@@ -242,7 +242,7 @@ public class MessagePushActivity extends AppCompatActivity implements View.OnCli
                 SharedPreferences sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
                 String unique=sp.getString("unique","");
                 boolean updateLoad=true;
-                messagePushPresenter.getMessagePushForselect("1",updateLoad,unique,productName,planState,warehouseName,planStartDate,planEndDate);
+                messagePushPresenter.getMessagePushForselect("1",updateLoad,unique,productName,warehouseName,planState,planStartDate,planEndDate);
                 popupWindow.dismiss();
                 break;
 

@@ -17,6 +17,7 @@
             android:layout_width="@dimen/x17"
             android:layout_height="@dimen/x17"
             android:src="@mipmap/back"
+            android:background="@drawable/fanhui"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/x10"/>
         <TextView

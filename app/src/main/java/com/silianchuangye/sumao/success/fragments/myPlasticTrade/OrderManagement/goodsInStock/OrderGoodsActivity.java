@@ -506,7 +506,7 @@ public class OrderGoodsActivity extends AppCompatActivity implements View.OnClic
         Calendar calend1 = Calendar.getInstance();
         calend1.setTimeInMillis(System.currentTimeMillis());
         int year = calend1.get(Calendar.YEAR);
-        int month = calend1.get(Calendar.MONTH) + 1;
+        int month = calend1.get(Calendar.MONTH);
         int day = calend1.get(Calendar.DAY_OF_MONTH);
         DatePickerDialog dialog3 = new DatePickerDialog(
                 OrderGoodsActivity.this,
@@ -516,10 +516,8 @@ public class OrderGoodsActivity extends AppCompatActivity implements View.OnClic
                     public void onDateSet(DatePicker view,
                                           int year, int monthOfYear,
                                           int dayOfMonth) {
-                        Toast.makeText(OrderGoodsActivity.this,
-                                "" + year + "-" + (monthOfYear + 1)
-                                        + "-" + dayOfMonth, Toast.LENGTH_LONG).show();
-                        Tv.setText(year + "-" + (monthOfYear + 1)
+
+                        Tv.setText(year + "-" + (monthOfYear+1)
                                 + "-" + dayOfMonth);
                     }
                 }, year, month, day);

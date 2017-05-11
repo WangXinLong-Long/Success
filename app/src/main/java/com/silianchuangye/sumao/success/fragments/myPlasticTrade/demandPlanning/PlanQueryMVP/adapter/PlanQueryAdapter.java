@@ -85,6 +85,7 @@ public class PlanQueryAdapter extends BaseAdapter {
         if (convertView == null) {
             viewHolder = new ViewHolder();
             convertView = inflater.inflate(R.layout.itemplan, null);
+            //TextView tv_seeplan_left_dingdannum=(TextView) convertView.findViewById(R.id.tv_seeplan_left_dingdannum);
             bt_search = (Button) convertView.findViewById(R.id.btn_seeplan_seeplan);
 //            需求或订单
             viewHolder.demand_or_order = ((TextView) convertView.findViewById(R.id.tv_seeplan_right_dingdannum));
@@ -122,21 +123,26 @@ public class PlanQueryAdapter extends BaseAdapter {
         }else {
             viewHolder = ((ViewHolder) convertView.getTag());
         }
-
+        viewHolder.demand_date_num.setText(list.get(position).get("scheduleDate").toString());
         viewHolder.demand_or_order_number.setText(list.get(position).get("planID").toString());
         viewHolder.demand_or_order.setTextColor(context.getResources().getColor(R.color.btn_blue_normal));
         tv_seeplan_left_dingdannum.setTextColor(context.getResources().getColor(R.color.btn_blue_normal));
-        viewHolder.demand_date_num.setText(list.get(position).get("scheduleDateChange").toString());
-        viewHolder.date_of_presentation_num.setText(list.get(position).get("scheduleDate").toString());
-        viewHolder.classification_content.setText(" ");
+        //viewHolder.demand_date_num.setText(list.get(position).get("scheduleDateChange").toString());
+        viewHolder.date_of_presentation_num.setText(list.get(position).get("registerDate").toString());
+        if (list.get(position).containsKey("categoryName")) {
+            viewHolder.classification_content.setText(list.get(position).get("categoryName").toString());
+        }else{
+            viewHolder.classification_content.setText(" ");
+        }
         final String state=list.get(position).get("demandScheduleState").toString();
         viewHolder.qiye.setText(list.get(position).get("sellerEnterpriseName").toString());
         if (state.equals("confirmed")){
             viewHolder.zhuangtai.setText("已确认");
-//
-
+//tv_seeplan_right_dingdannum
+            viewHolder.demand_or_order.setVisibility(View.VISIBLE);
+            tv_seeplan_left_dingdannum.setVisibility(View.VISIBLE);
             viewHolder.copy_button.setTextColor(context.getResources().getColor(R.color.btn_blue_normal));
-           // bt_search.setVisibility(View.VISIBLE);
+            bt_search.setVisibility(View.VISIBLE);
             final ViewHolder finalViewHolder = viewHolder;
             viewHolder.copy_button.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -150,17 +156,19 @@ public class PlanQueryAdapter extends BaseAdapter {
                 }
             });
 
-        }else if (state.equals("Pending")){
+        }else if (state.equals("Pending")||state.equals("")){
+
             viewHolder.zhuangtai.setText("待确认");
-
-           // bt_search.setVisibility(View.GONE);
-
+            bt_search.setVisibility(View.GONE);
+            viewHolder.demand_or_order.setVisibility(View.GONE);
+            tv_seeplan_left_dingdannum.setVisibility(View.GONE);
             viewHolder.copy_button.setTextColor(context.getResources().getColor(R.color.gray));
 
-        }else if (state.equals("canceled")){
+        }else if (state.equals ("canceled")){
             viewHolder.zhuangtai.setText("已取消");
             bt_search.setVisibility(View.GONE);
-
+            viewHolder.demand_or_order.setVisibility(View.GONE);
+            tv_seeplan_left_dingdannum.setVisibility(View.GONE);
             viewHolder.copy_button.setTextColor(context.getResources().getColor(R.color.gray));
         }
         viewHolder.product_name_content.setText( list.get(position).get("productName").toString());
@@ -194,10 +202,7 @@ public class PlanQueryAdapter extends BaseAdapter {
             bt_search.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.d("剪輯的值",""+list.get(position).toString());
-//                    SharedPreferences sp=context.getSharedPreferences("sumao", Activity.MODE_PRIVATE);
-//                    SharedPreferences.Editor editor=sp.edit();
-//                    editor.put
+
                     Intent intent=new Intent(context, SearchplanActivity.class);
                    // intent.putExtra("PlanOrderList", list.get(position).toString());
                     intent.putExtra("riqi",list.get(number).get("scheduleDate").toString());

@@ -29,6 +29,7 @@
             android:layout_centerVertical="true"
             android:paddingLeft="@dimen/x10"
             android:src="@mipmap/back"
+            android:background="@drawable/fanhui"
             android:visibility="visible" />
     </RelativeLayout>
 

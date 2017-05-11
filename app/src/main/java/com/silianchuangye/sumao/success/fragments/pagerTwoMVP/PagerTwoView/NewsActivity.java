@@ -267,7 +267,8 @@ public class NewsActivity extends AppCompatActivity {
         }else if (laiyuan.equals("新闻")){
             url=SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/news/NewsAnalyzeActor/NewsAnalyzeContent";
         }else if (laiyuan.equals("首页")){
-            url=SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/news/NewsAnalyzeActor/SumaoConsultIndex";
+            url=SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/news/NewsAnalyzeActor/NewsAnalyzeContent";
+
         }
         RequestParams rp=new RequestParams(url);
         rp.addParameter("id",id);
@@ -278,39 +279,18 @@ public class NewsActivity extends AppCompatActivity {
                 Log.d("资讯详情的返回值",result);
 
                 try {
-                    if (laiyuan.equals("首页")) {
-                        JSONObject jsonobject = new JSONObject(result);
-                        String in = jsonobject.getString("in");
-                        JSONArray jsonArray = new JSONArray(in);
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            JSONObject object = jsonArray.getJSONObject(i);
-                            urlhtml = object.getString("newspri");
-                        }
-                        Log.d("html的url", urlhtml);
-                        //支持javascript
-                        wb_Content.getSettings().setJavaScriptEnabled(true);
+
+                    //支持javascript
+                    wb_Content.getSettings().setJavaScriptEnabled(true);
 // 设置可以支持缩放
-                        wb_Content.getSettings().setSupportZoom(true);
+                    wb_Content.getSettings().setSupportZoom(true);
 // 设置出现缩放工具
-                        wb_Content.getSettings().setBuiltInZoomControls(true);
+                    wb_Content.getSettings().setBuiltInZoomControls(true);
 //扩大比例的缩放
-                        wb_Content.getSettings().setUseWideViewPort(true);
+                    wb_Content.getSettings().setUseWideViewPort(true);
 //自适应屏幕
-                        wb_Content.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
-                        wb_Content.getSettings().setLoadWithOverviewMode(true);
-//                        wb_Content.getSettings().setJavaScriptEnabled(true);
-//                        wb_Content.getSettings().setUseWideViewPort(true);
-//                        wb_Content.getSettings().setLoadWithOverviewMode(true);
-//                        wb_Content.setVerticalScrollBarEnabled(false);
-//                        wb_Content.setHorizontalScrollBarEnabled(false);
-                        //wb_Content.getSettings().setJavaScriptEnabled(true);
-                        //跳转网页仍然在当前WebView中显示
-                        wb_Content.setWebViewClient(new WebViewClient());
-                        //调用loadUrl()方法，并传入网址，展示相应内容
-                        wb_Content.loadUrl(urlhtml);
-//                        websettings.setUseWideViewPort(true);
-//                        websettings.setLoadWithOverviewMode(true);
-                    }else {
+                    wb_Content.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+                    wb_Content.getSettings().setLoadWithOverviewMode(true);
                         JSONObject jsonObject=new JSONObject(result);
                         String time=jsonObject.getString("time");
                         String source=jsonObject.getString("source");
@@ -320,7 +300,7 @@ public class NewsActivity extends AppCompatActivity {
                         tv_From.setText(source);
                         String content=jsonObject.getString("content");
                         wb_Content.loadDataWithBaseURL(null,content, "text/html", "utf-8", null);
-                    }
+                   // }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

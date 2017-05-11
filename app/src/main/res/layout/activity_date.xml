@@ -85,6 +85,7 @@
         <RelativeLayout 
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:visibility="gone"
             android:background="#FFFFFF">
             <TextView
               android:id="@+id/week_text"
@@ -108,6 +109,7 @@
                 android:layout_centerVertical="true"
                 android:textColor="#93C73C"
                 android:textSize="15sp"
+                android:visibility="gone"
                 android:text="有小绿点的均为预售日期" />
         </RelativeLayout>
         

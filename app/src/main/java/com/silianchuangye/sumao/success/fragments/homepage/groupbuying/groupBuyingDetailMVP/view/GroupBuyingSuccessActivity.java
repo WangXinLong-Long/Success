@@ -1109,7 +1109,8 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
                     tv_pro_now.setText("当前成团量为 : " + i + "%");
                     Double beishengshu=mul(Double.parseDouble(groupBuyingDetailBean.getGroupPercent()),Double.parseDouble(groupBuyingDetailBean.getCl_zongliang()));
                     Double jianshu=sub(Double.parseDouble(groupBuyingDetailBean.getCl_zongliang()),beishengshu);
-                    if (jianshu<Double.parseDouble(groupBuyingDetailBean.getCl_qigou())){
+                    Log.d("11111",jianshu+"");
+                    if (jianshu < Double.parseDouble(groupBuyingDetailBean.getCl_qigou())){
                         timer.cancel();
                         info();
                     }
@@ -1198,53 +1199,53 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
             count_Price.setText(String.format("%.2f", Double.parseDouble(tv_item_cart_all_price.getText().toString()) * Double.parseDouble(percent + "")));
             additionalMarginAmountString = additionalMarginAmount > 0 ? additionalMarginAmount + "" : 0 + "";
             amountOfMarginRequired.setText(String.format("%.2f", Double.parseDouble(additionalMarginAmountString)));
-            amountOfMarginRequired.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    if (s.length() == 0) {
-                        amountOfMarginRequired.setText(additionalMarginAmountString);
-                        amountOfMarginRequired.setSelection(additionalMarginAmountString.length());
-                    }
-                    if (s.toString().contains(".")) {
-                        if (s.length() - 1 - s.toString().indexOf(".") > 2) {
-                            s = s.toString().subSequence(0,
-                                    s.toString().indexOf(".") + 3);
-                            amountOfMarginRequired.setText(s);
-                            amountOfMarginRequired.setSelection(s.length());
-                        }
-                    }
-                    if (s.toString().trim().substring(0).equals(".")) {
-                        s = "0" + s;
-                        amountOfMarginRequired.setText(s);
-                        amountOfMarginRequired.setSelection(3);
-                    }
-
-                    if (s.toString().startsWith("0")
-                            && s.toString().trim().length() > 1) {
-                        if (!s.toString().substring(1, 2).equals(".")) {
-                            amountOfMarginRequired.setText(s.subSequence(1, s.length()));
-                            amountOfMarginRequired.setSelection(1);
-                            return;
-                        }
-                    }
-
-                }
-
-                @Override
-                public void afterTextChanged(Editable s) {
-
-                    if (Double.parseDouble(amountOfMarginRequired.getText().toString()) < Double.parseDouble(additionalMarginAmountString)) {
-                        amountOfMarginRequired.setText(additionalMarginAmountString);
-                        amountOfMarginRequired.setSelection(additionalMarginAmountString.length());
-
-                    }
-                }
-            });
+//            amountOfMarginRequired.addTextChangedListener(new TextWatcher() {
+//                @Override
+//                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//                }
+//
+//                @Override
+//                public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                    if (s.length() == 0) {
+//                        amountOfMarginRequired.setText(additionalMarginAmountString);
+//                        amountOfMarginRequired.setSelection(additionalMarginAmountString.length());
+//                    }
+//                    if (s.toString().contains(".")) {
+//                        if (s.length() - 1 - s.toString().indexOf(".") > 2) {
+//                            s = s.toString().subSequence(0,
+//                                    s.toString().indexOf(".") + 3);
+//                            amountOfMarginRequired.setText(s);
+//                           // amountOfMarginRequired.setSelection(s.length());
+//                        }
+//                    }
+//                    if (s.toString().trim().substring(0).equals(".")) {
+//                        s = "0" + s;
+//                        amountOfMarginRequired.setText(s);
+//                        //amountOfMarginRequired.setSelection(3);
+//                    }
+//
+//                    if (s.toString().startsWith("0")
+//                            && s.toString().trim().length() > 1) {
+//                        if (!s.toString().substring(1, 2).equals(".")) {
+//                            amountOfMarginRequired.setText(s.subSequence(1, s.length()));
+//                            amountOfMarginRequired.setSelection(1);
+//                            return;
+//                        }
+//                    }
+//
+//                }
+//
+//                @Override
+//                public void afterTextChanged(Editable s) {
+//
+//                    if (Double.parseDouble(amountOfMarginRequired.getText().toString()) < Double.parseDouble(additionalMarginAmountString)) {
+//                        amountOfMarginRequired.setText(additionalMarginAmountString);
+//                        amountOfMarginRequired.setSelection(additionalMarginAmountString.length());
+//
+//                    }
+//                }
+//            });
             lv = (ListView) view.findViewById(R.id.lv_popupwindow_auction);
 
             Gson gson = new Gson();
@@ -1343,7 +1344,7 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
             //Toast.makeText(GroupBuyingSuccessActivity.this, "您支付保证金成功！", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(GroupBuyingSuccessActivity.this, Ok_Dialog.class);
             intent.putExtra("number", SuMaoConstant.MARGIN_PAYMENT_SUCCESS);
-            intent.putExtra("type", "");
+            intent.putExtra("type", "团购");
             startActivity(intent);
         }
     }

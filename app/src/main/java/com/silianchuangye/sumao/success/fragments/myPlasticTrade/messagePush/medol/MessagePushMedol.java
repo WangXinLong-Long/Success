@@ -4,6 +4,8 @@ import android.util.Log;
 
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
@@ -18,7 +20,7 @@ public  class MessagePushMedol  implements IMessagePushMedol {
     private String unique;
     private String Id;
     private String sendType;
-    private String title;
+    private String title="test";
     private String sendStartTime;
     private String sendEndTime;
 
@@ -75,29 +77,41 @@ public  class MessagePushMedol  implements IMessagePushMedol {
     public void getMesssagePushForselect(final MessagePushcallback messagePushcallback) {
         String url=SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/order/myorder/OrderPaymentInfo/noticeList";
         RequestParams rp=new RequestParams(url);
-        if (Id!=""&&Id!=null){
-            rp.addParameter("sendId",Id);
-        }
-        if (sendType!=""&&sendType!=null){
-            if (sendType.equals("塑贸通知")){
-                rp.addParameter("sendType",0);
-            }else if (sendType.equals("企业信息修改")){
-                rp.addParameter("sendType",1);
+        rp.setAsJsonContent(true);
+        JSONObject jsonObject=new JSONObject();
+
+
+            //rp.addParameter("sendId",Id);
+            try {
+                if (Id!="productName" && Id!=null||!Id.equals("test")&&!Id.equals("")) {
+                    jsonObject.put("sendId", Id);
+                }
+                if (sendType!="" && sendType!=null){
+                    if (sendType.equals("塑贸通知")){
+                        jsonObject.put("sendType",0);
+                    }else if (sendType.equals("企业信息修改")){
+                        jsonObject.put("sendType",1);
+                    }
+                }
+                if (title!="productName" && title!=null &&!title.equals("productName")&&!title.equals("")){
+                    jsonObject.put("title",title);
+                }
+                if (sendStartTime!=null&&sendStartTime!=""){
+                    jsonObject.put("sendStartTime",sendStartTime);
+                }
+                if (sendEndTime!=""&&sendEndTime!=null){
+                    jsonObject.put("sendEndTime",sendEndTime);
+                }
+                if (pageNum!=""&&sendEndTime!=null){
+                    jsonObject.put("page",pageNum);
+                }
+                jsonObject.put("_dynSessConf",unique);
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-        }
-        if (title!=""&&title!=null){
-            rp.addParameter("title",title);
-        }
-        if (sendStartTime!=null&&sendStartTime!=""){
-            rp.addParameter("sendStartTime",sendStartTime);
-        }
-        if (sendEndTime!=""&&sendEndTime!=null){
-            rp.addParameter("sendEndTime",sendEndTime);
-        }
-        if (pageNum!=""&&sendEndTime!=null){
-            rp.addParameter("page",pageNum);
-        }
-        rp.addParameter("_dynSessConf",unique);
+        rp.setBodyContent(jsonObject.toString());
+        Log.d("参数的值",jsonObject+"");
+
         Log.d("rp的值",rp.toString());
         x.http().post(rp, new Callback.CommonCallback<String>() {
             @Override

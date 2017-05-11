@@ -31,6 +31,8 @@ import com.silianchuangye.sumao.success.adapter.DayPlanAdapter;
 import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.UpstreamDirectSellingDetailMVP.VipProductList;
 import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.bean.vipProductBean.VipProduct;
 import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.bean.vipProductBean.VipProductBean;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.demandPlanning.planType.ProductNameActivity;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.demandPlanning.planType.WarehouseActivity;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
@@ -98,6 +100,7 @@ public class PlanDay extends Fragment implements OnClickListener, IPlanDayView {
     private String Id;
     //private String date;
     private PlanDayPresenter planDayPresenter;
+    private String datefor;
 
     public PlanDay() {
         // Required empty public constructor
@@ -113,15 +116,15 @@ public class PlanDay extends Fragment implements OnClickListener, IPlanDayView {
 
         LogUtils.log("sessionId-->" + getActivity().getSharedPreferences("sumao", Context.MODE_PRIVATE).getString("unique", ""));
         arguments = getArguments();
-        vipProductBean = (VipProductBean) arguments.getSerializable("vipProductBean");
+       // vipProductBean = (VipProductBean) arguments.getSerializable("vipProductBean");
         Id=arguments.getString("id");
-        vipProducts = vipProductBean.getVipProduct();
-        for (int i = 0; i < vipProducts.size(); i++) {
-            vipProductsID = vipProducts.get(i).getProductID();
-            productName = vipProducts.get(i).getProductName();
-            vipProductsIDList.add(vipProductsID);
-            productNameList.add(productName);
-        }
+//        vipProducts = vipProductBean.getVipProduct();
+//        for (int i = 0; i < vipProducts.size(); i++) {
+//            vipProductsID = vipProducts.get(i).getProductID();
+//            productName = vipProducts.get(i).getProductName();
+//            vipProductsIDList.add(vipProductsID);
+//            productNameList.add(productName);
+//        }
         lv_day_plan = (ExpandableListView) v.findViewById(R.id.lv_day_plan);
         btn_day_plan_add = (Button) v.findViewById(R.id.btn_day_plan_add);
         btn_day_plan_tijiao = (Button) v.findViewById(R.id.btn_day_plan_tijiao);
@@ -148,51 +151,57 @@ public class PlanDay extends Fragment implements OnClickListener, IPlanDayView {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
                 if (adapter.getChild(groupPosition, childPosition).getLevel().equals("计划日期")) {
-
                     onClickPlanDate(groupPosition);
                 } else if (adapter.getChild(groupPosition, childPosition).getLevel().equals("产品名称")) {
                     groupPositionPublic = groupPosition;
                     Intent intent = new Intent();
-                    intent.putExtra("ID", (Serializable) vipProductsIDList);
-                    intent.putExtra("Name", (Serializable) productNameList);
-                    intent.putExtra("titleName", "产品名称");
-                    intent.setClass(getActivity(), VipProductList.class);
+                    intent.putExtra("sellerCompanyId", Id);
+                    intent.putExtra("title", "产品名称");
+                    intent.setClass(getActivity(), ProductNameActivity.class);
 
-                    startActivityForResult(intent, groupPosition);
+                    startActivityForResult(intent, 2);
                 } else if (adapter.getChild(groupPosition, childPosition).getLevel().equals("数量（吨）")) {
                     groupPositionPublic = groupPosition;
                     Intent intent = new Intent();
                     intent.setClass(getActivity(), ShangYouSelectNumber.class);
                     intent.putExtra("titleName", "数量");
-                    startActivityForResult(intent, groupPosition);
+                    startActivityForResult(intent, SuMaoConstant.VIP_SELECTNUMBER_ID);
                 } else if (adapter.getChild(groupPosition, childPosition).getLevel().equals("仓库")) {
                     groupPositionPublic = groupPosition;
                     if (list.get(groupPositionPublic).get(1).getDelete() == "" || list.get(groupPositionPublic).get(1).getDelete().isEmpty()) {
                         Toast.makeText(getActivity(), "请选择产品", Toast.LENGTH_SHORT).show();
                     } else {
-                        wareHouseIdList = new ArrayList<String>();
-                        wareHouseNameList = new ArrayList<String>();
-                        for (int i = 0; i < wareHouseList.size(); i++) {
-
-                            wareHouseIdList.add(wareHouseList.get(i).getWareHouseID());
-                            wareHouseNameList.add(wareHouseList.get(i).getWareHouseName());
-                        }
-
-                        if (wareHouseIdLists.size() <= groupPosition) {
-                            wareHouseIdLists.add( wareHouseIdList);
-                            wareHouseNameLists.add( wareHouseNameList);
-                            LogUtils.log("周这里--》");
-                            LogUtils.log(" wareHouseIdLists.size()--》"+ wareHouseIdLists.size());
-                            LogUtils.log(" wareHouseNameLists.size()--》"+ wareHouseNameLists.size());
-
-                        }
-                        Intent intent = new Intent();
-                        intent.putExtra("ID", (Serializable) wareHouseIdList);
-                        intent.putExtra("Name", (Serializable) wareHouseNameList);
-                        intent.putExtra("titleName", "仓库");
-                        intent.setClass(getActivity(), VipProductList.class);
-
+//                        wareHouseIdList = new ArrayList<String>();
+//                        wareHouseNameList = new ArrayList<String>();
+//                        for (int i = 0; i < wareHouseList.size(); i++) {
+//
+//                            wareHouseIdList.add(wareHouseList.get(i).getWareHouseID());
+//                            wareHouseNameList.add(wareHouseList.get(i).getWareHouseName());
+//                        }
+//
+//                        if (wareHouseIdLists.size() <= groupPosition) {
+//                            wareHouseIdLists.add( wareHouseIdList);
+//                            wareHouseNameLists.add( wareHouseNameList);
+//                            LogUtils.log("周这里--》");
+//                            LogUtils.log(" wareHouseIdLists.size()--》"+ wareHouseIdLists.size());
+//                            LogUtils.log(" wareHouseNameLists.size()--》"+ wareHouseNameLists.size());
+//
+//                        }
+//                        Intent intent = new Intent();
+//                        intent.putExtra("ID", (Serializable) wareHouseIdList);
+//                        intent.putExtra("Name", (Serializable) wareHouseNameList);
+//                        intent.putExtra("titleName", "仓库");
+//                        intent.setClass(getActivity(), VipProductList.class);
+//
+//                        startActivityForResult(intent, groupPosition);
+                        Intent intent=new Intent();
+                        intent.putExtra("title","仓库");
+                        intent.putExtra("productId",productId);
+                        intent.putExtra("position",3);
+                        intent.setClass(getActivity(), WarehouseActivity.class);
+//
                         startActivityForResult(intent, groupPosition);
+
                     }
 
                 } else if (adapter.getChild(groupPosition, childPosition).getLevel().equals("配送方式")) {
@@ -200,31 +209,33 @@ public class PlanDay extends Fragment implements OnClickListener, IPlanDayView {
                     if (list.get(groupPositionPublic).get(1).getDelete() == "" || list.get(groupPositionPublic).get(1).getDelete().isEmpty()) {
                         Toast.makeText(getActivity(), "请选择产品", Toast.LENGTH_SHORT).show();
                     } else {
-                        deliveryMethodIdList = new ArrayList<String>();
-                        deliveryMethodNameList = new ArrayList<String>();
-                        for (int i = 0; i < deliveryMethodsList.size(); i++) {
-                            deliveryMethodIdList.add(deliveryMethodsList.get(i).getDeliveryMethodID());
-                            deliveryMethodNameList.add(deliveryMethodsList.get(i).getDeliveryMethodName());
-                        }
-                        if (deliveryMethodIdLists.size() <= groupPosition) {
-                            deliveryMethodIdLists.add( deliveryMethodIdList);
-                            deliveryMethodNameLists.add( deliveryMethodNameList);
-                        }
-                        Intent intent = new Intent();
-                        intent.putExtra("ID", (Serializable) deliveryMethodIdList);
-                        intent.putExtra("Name", (Serializable) deliveryMethodNameList);
-                        intent.putExtra("titleName", "配送方式");
-                        intent.setClass(getActivity(), VipProductList.class);
-                        startActivityForResult(intent, groupPosition);
+//                        deliveryMethodIdList = new ArrayList<String>();
+//                        deliveryMethodNameList = new ArrayList<String>();
+//                        for (int i = 0; i < deliveryMethodsList.size(); i++) {
+//                            deliveryMethodIdList.add(deliveryMethodsList.get(i).getDeliveryMethodID());
+//                            deliveryMethodNameList.add(deliveryMethodsList.get(i).getDeliveryMethodName());
+//                        }
+//                        if (deliveryMethodIdLists.size() <= groupPosition) {
+//                            deliveryMethodIdLists.add( deliveryMethodIdList);
+//                            deliveryMethodNameLists.add( deliveryMethodNameList);
+//                        }
+
+                        //Intent intent = new Intent();
+
+                        Intent intent=new Intent(getActivity(), WarehouseActivity.class);
+                        intent.putExtra("title","配送方式");
+                        intent.putExtra("productId",productId);
+                        intent.putExtra("position",6);
+                        startActivityForResult(intent,6);
                     }
                 } else if (adapter.getChild(groupPosition, childPosition).getLevel().equals("备注")) {
                     groupPositionPublic = groupPosition;
                     Intent intent = new Intent();
                     intent.setClass(getActivity(), ShangYouRemarks.class);
                     intent.putExtra("titleName", "备注");
-                    startActivityForResult(intent, groupPosition);
+                    startActivityForResult(intent, 5);
                 } else if (adapter.getChild(groupPosition, childPosition).getLevel().equals("")) {
-                    //Toast.makeText(getActivity(), "删除的是：" + groupPosition + "组。" + "--childPosition" + childPosition + "位置", Toast.LENGTH_SHORT).show();
+
                     list.remove(groupPosition);
                     group.remove(groupPosition);
                     adapter.notifyDataSetChanged();
@@ -252,6 +263,7 @@ public class PlanDay extends Fragment implements OnClickListener, IPlanDayView {
         DatePickerDialog dlg = new DatePickerDialog(getActivity(), new MyClick(), year, month, day);
         DatePicker datePicker = dlg.getDatePicker();
         datePicker.setMinDate(System.currentTimeMillis());
+        datefor=year+"-"+(month+1)+"-"+day;
         dlg.show();
     }
 
@@ -271,19 +283,30 @@ public class PlanDay extends Fragment implements OnClickListener, IPlanDayView {
         if (result.contains("success")) {
             alert.dismiss();
             TOAST("上传成功");
+            //添加新的提交计划
+
             for (int i = 0; i < list.size(); i++) {
                 list.remove(i);
                 group.remove(i);
                 adapter.notifyDataSetChanged();
-//                list.get(i).set(0, new DayPlanInfo("计划时间", "", ""));
-//                list.get(i).set(1, new DayPlanInfo("产品名称", "", ""));
-//                list.get(i).set(2, new DayPlanInfo("数量（吨）", "", ""));
-//                list.get(i).set(3, new DayPlanInfo("仓库", "", ""));
-//                list.get(i).set(4, new DayPlanInfo("配送方式", "", ""));
-//                list.get(i).set(5, new DayPlanInfo("备注", "", ""));
-//                adapter.notifyDataSetChanged();
-
             }
+            lists = new ArrayList<DayPlanInfo>();
+            lists.add(new DayPlanInfo("计划日期", "", ""));
+            lists.add(new DayPlanInfo("产品名称", "", ""));
+            lists.add(new DayPlanInfo("数量（吨）", "", ""));
+            lists.add(new DayPlanInfo("仓库", "", ""));
+            lists.add(new DayPlanInfo("配送方式", "", ""));
+            lists.add(new DayPlanInfo("备注", "", ""));
+            lists.add(new DayPlanInfo("", "删除计划", ""));
+            list.add(lists);
+            group.add("");
+            adapter.notifyDataSetChanged();
+            for (int i = 0; i < group.size(); i++) {
+                lv_day_plan.expandGroup(i);
+            }
+
+
+
 //            lists = new ArrayList<DayPlanInfo>();
 //            lists.add(new DayPlanInfo("计划日期", "", ""));
 //            lists.add(new DayPlanInfo("产品名称", "", ""));
@@ -295,9 +318,9 @@ public class PlanDay extends Fragment implements OnClickListener, IPlanDayView {
 //            list.add(lists);
 //            group.add("");
 //            adapter.notifyDataSetChanged();
-//            for (int j = 0; j < group.size(); j++) {
-//                lv_day_plan.expandGroup(j);
-//            }
+            for (int j = 0; j < group.size(); j++) {
+                lv_day_plan.expandGroup(j);
+            }
 
         } else {
             alert.dismiss();
@@ -319,50 +342,51 @@ public class PlanDay extends Fragment implements OnClickListener, IPlanDayView {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (resultCode) {
-            case SuMaoConstant.VIP_PRODUCT_ID:
-                if (requestCode == groupPositionPublic) {
-                    productId = data.getStringExtra("selectedId");
-                    selectedName = data.getStringExtra("selectedName");
+            case 2:
+                Log.d("进来这里了","进来了");
+
+                    productId = data.getStringExtra("id");
+                    selectedName = data.getStringExtra("name");
                     LogUtils.log("productId-->" + productId + "selectedName-->" + selectedName);
                     list.get(groupPositionPublic).set(1, new DayPlanInfo("产品名称", "", selectedName));
                     adapter.notifyDataSetChanged();
                     planDayPresenter.getPlanDayWarehouse(getActivity().getSharedPreferences("sumao", Context.MODE_PRIVATE).getString("unique", ""), productId);
-                }
+
                 break;
             case SuMaoConstant.VIP_SELECTNUMBER_ID:
-                if (requestCode == groupPositionPublic) {
+                    Log.d("返回了","返回了");
                     number = data.getStringExtra("number");
-
+                     Log.d("num的值",number);
                     list.get(groupPositionPublic).set(2, new DayPlanInfo("数量（吨）", "", number));
                     adapter.notifyDataSetChanged();
-                }
+
                 break;
 
-            case SuMaoConstant.VIP_WAREHOUSE_ID:
-                if (requestCode == groupPositionPublic) {
-                    wareHouseId = data.getStringExtra("selectedId");
-                    wareHouseName = data.getStringExtra("selectedName");
+            case 3:
+
+                    wareHouseId = data.getStringExtra("id");
+                    wareHouseName = data.getStringExtra("name");
                     LogUtils.log("wareHouseId-->" + wareHouseId + "wareHouseName-->" + wareHouseName);
                     list.get(groupPositionPublic).set(3, new DayPlanInfo("仓库", "", wareHouseName));
                     adapter.notifyDataSetChanged();
-                }
+
                 break;
-            case SuMaoConstant.VIP_DELIVERYMETHOD_ID:
-                if (requestCode == groupPositionPublic) {
-                    deliveryMethodId = data.getStringExtra("selectedId");
-                    deliveryMethodName = data.getStringExtra("selectedName");
+            case 6:
+                //if (requestCode == groupPositionPublic) {
+                    deliveryMethodId = data.getStringExtra("id");
+                    deliveryMethodName = data.getStringExtra("name");
                     LogUtils.log("deliveryMethodId-->" + deliveryMethodId + "deliveryMethodName-->" + deliveryMethodName);
                     list.get(groupPositionPublic).set(4, new DayPlanInfo("配送方式", "", deliveryMethodName));
                     adapter.notifyDataSetChanged();
-                }
+               // }
                 break;
-            case SuMaoConstant.VIP_REMARKS_ID:
-                if (requestCode == groupPositionPublic) {
+            case 5:
+                //if (requestCode == groupPositionPublic) {
                     remarks = data.getStringExtra("number");
                     LogUtils.log("remarks-->" + remarks);
                     list.get(groupPositionPublic).set(5, new DayPlanInfo("备注", "", remarks));
                     adapter.notifyDataSetChanged();
-                }
+                //}
 
                 break;
 
@@ -482,7 +506,7 @@ public class PlanDay extends Fragment implements OnClickListener, IPlanDayView {
                         intent.putExtra("activity", "NotMainActivity");
                         startActivity(intent);*/
                         } else {
-                            Toast.makeText(getActivity(), "提交", Toast.LENGTH_SHORT).show();
+                           // Toast.makeText(getActivity(), "提交", Toast.LENGTH_SHORT).show();
                             alert.show();
                         }
 
@@ -567,44 +591,30 @@ public class PlanDay extends Fragment implements OnClickListener, IPlanDayView {
                     this.dismiss();
                     break;
                 case R.id.btn_dayplan_alert_tijiao:
-//                    new AsyncTask<Void, Void, String>() {
-//                        @Override
-//                        protected void onPreExecute() {
-//                            super.onPreExecute();
-//                        }
-//
-//                        @Override
-//                        protected void onPostExecute(String s) {
-//                            super.onPostExecute(s);
-//                        }
-//
-//                        @Override
-//                        protected String doInBackground(Void... params) {
-//                            return null;
-//                        }
-//                    };
-                    for (int i = 0; i < list.size(); i++) {
-                        String date = list.get(i).get(0).getDelete();
-                        String name = vipProductsIDList.get(productNameList.indexOf(list.get(i).get(1).getDelete()));
-                        String number = list.get(i).get(2).getDelete();
-                        LogUtils.log("number" + number);
 
-                        String ck = list.get(i).get(3).getDelete();
-                        LogUtils.log("ck" + ck);
-                        int position = wareHouseNameLists.get(i).indexOf(ck);
-                        LogUtils.log("i--->" + i);
-                        LogUtils.log("wareHouseNameLists.get(i).size()" + wareHouseNameLists.get(i).size());
-                        for (int k = 0; k < wareHouseNameLists.get(i).size(); k++) {
-                            LogUtils.log("wareHouseNameLists的元素"+k+"-->" +  wareHouseNameLists.get(i).get(k));
-                        }
-                        LogUtils.log("position" + position);
-                        String wareHouse = wareHouseIdLists.get(i).get(position);
-                        String delivery = deliveryMethodIdLists.get(i).get(deliveryMethodNameLists.get(i).indexOf(list.get(i).get(4).getDelete()));
-                        String remark = list.get(i).get(5).getDelete();
-                       // planDayPresenter.Submi
-                        planDayPresenter.SubmissionPlan(date, selectedName, wareHouse, number, delivery, remark, productId, getActivity().getSharedPreferences("sumao", Context.MODE_PRIVATE).getString("unique", ""));
+                   // for (int i = 0; i < list.size(); i++) {
+                       // String date = list.get(i).get(0).getDelete();
+//                        String name = vipProductsIDList.get(productNameList.indexOf(list.get(i).get(1).getDelete()));
+//                        String number = list.get(i).get(2).getDelete();
+//                        LogUtils.log("number" + number);
+//
+//                        String ck = list.get(i).get(3).getDelete();
+//                        LogUtils.log("ck" + ck);
+//                        int position = wareHouseNameLists.get(i).indexOf(ck);
+//                        LogUtils.log("i--->" + i);
+//                        LogUtils.log("wareHouseNameLists.get(i).size()" + wareHouseNameLists.get(i).size());
+//                        for (int k = 0; k < wareHouseNameLists.get(i).size(); k++) {
+//                            LogUtils.log("wareHouseNameLists的元素"+k+"-->" +  wareHouseNameLists.get(i).get(k));
+//                        }
+//                        LogUtils.log("position" + position);
+//                        String wareHouse = wareHouseIdLists.get(i).get(position);
+//                        String delivery = deliveryMethodIdLists.get(i).get(deliveryMethodNameLists.get(i).indexOf(list.get(i).get(4).getDelete()));
+//                        String remark = list.get(i).get(5).getDelete();
+                    Log.d("仓库的ID",wareHouseId);
+                    Log.d("物流的Id",deliveryMethodId);
+                        planDayPresenter.SubmissionPlan(datefor, selectedName, wareHouseId, number, deliveryMethodId, remarks, productId, getActivity().getSharedPreferences("sumao", Context.MODE_PRIVATE).getString("unique", ""));
 
-                    }
+                   // }
                     break;
             }
         }
