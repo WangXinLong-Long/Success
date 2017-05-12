@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.silianchuangye.sumao.success.fragments.myPlasticTrade.accountmeneger.KunlunJieyueActivity">
+
+    <include
+        android:id="@+id/layout_title"
+        layout="@layout/child_title_bar"></include>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/info"
+        android:layout_below="@+id/layout_title"
+        />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/red"
+        android:textSize="16sp"
+        android:textColor="#fff"
+        android:layout_below="@+id/info"
+        android:text="确认解约"
+        android:id="@+id/bt_jieyue"
+        android:layout_marginTop="@dimen/x50"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_back_redsolid"
+        android:textSize="16sp"
+        android:textColor="#f00"
+        android:layout_below="@+id/bt_jieyue"
+        android:text="取消解约"
+        android:id="@+id/bt_jieyue_cancel"
+        android:layout_marginTop="@dimen/x20"
+        />
+
+
+</RelativeLayout>

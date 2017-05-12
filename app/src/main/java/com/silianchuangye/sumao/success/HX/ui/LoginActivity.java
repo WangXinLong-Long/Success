@@ -52,13 +52,13 @@ public class LoginActivity extends BaseActivity {
 				Constant.INTENT_CODE_IMG_SELECTED_DEFAULT);
 		messageToIndex = intent.getIntExtra(Constant.MESSAGE_TO_INTENT_EXTRA, Constant.MESSAGE_TO_DEFAULT);
 		imServiceKey = intent.getStringExtra(Constant.IM_SERVICE_NUMBER);
-		title=intent.getStringExtra("name");
+		title=intent.getStringExtra("gongsiName");
 		Log.d("imServicekey的值",""+imServiceKey);
 
 		
 		//EMChat.getInstance().isLoggedIn() 可以检测是否已经登录过环信，如果登录过则环信SDK会自动登录，不需要再次调用登录操作
 		if (EMChat.getInstance().isLoggedIn()) {
-			//Log.d("denglul ","登录了");
+			Log.d("没有登录 ","登录了");
 			progressDialog = getProgressDialog();
 			progressDialog.setMessage(getResources().getString(R.string.is_contact_customer));
 			progressDialog.show();
@@ -90,70 +90,71 @@ public class LoginActivity extends BaseActivity {
 		SharedPreferences.Editor editor=sp.edit();
 		//editor.putString("")
 		editor.remove("zhanghao");
-		editor.remove("userPwd");
+		editor.remove("phone");
 		editor.commit();
 	}
 
 	private void createRandomAccountAndLoginChatServer() {
-//		// 自动生成账号
-//		final String randomAccount = CommonUtils.getRandomAccount();
-//		Log.d("自动生成帐号",""+randomAccount);
-//		final String userPwd = Constant.DEFAULT_ACCOUNT_PWD;
-//		Log.d("自动生成密码",""+userPwd);
+
 		SharedPreferences sharedPreferences=getSharedPreferences("sumao", Activity.MODE_PRIVATE);
-		 randomAccount=sharedPreferences.getString("zhanghao","");
+		 //randomAccount=sharedPreferences.getString("zhanghao","");
+		randomAccount="guanjun123";
 		Log.d("Login",randomAccount);
 		String phone=sharedPreferences.getString("phone","");
 		userPwd=randomAccount+phone;
 		Log.d("password",userPwd);
-		progressDialog = getProgressDialog();
-		progressDialog.setMessage(getResources().getString(R.string.system_is_regist));
-		progressDialog.show();
-		if (!randomAccount.equals("") && !userPwd.equals("")) {
-			createAccountToServer(randomAccount, userPwd, new EMCallBack() {
+		if (randomAccount.equals("")&&userPwd.equals("")){
+			Toast.makeText(LoginActivity.this, "请先登录", Toast.LENGTH_SHORT).show();
+		}else {
+			progressDialog = getProgressDialog();
+			progressDialog.setMessage(getResources().getString(R.string.system_is_regist));
+			progressDialog.show();
+			if (!randomAccount.equals("") && !userPwd.equals("")) {
+				createAccountToServer(randomAccount, userPwd, new EMCallBack() {
 
-				@Override
-				public void onSuccess() {
-					runOnUiThread(new Runnable() {
+					@Override
+					public void onSuccess() {
+						runOnUiThread(new Runnable() {
 
-						@Override
-						public void run() {
-							//登录环信服务器
-							loginHuanxinServer(randomAccount, userPwd);
-						}
-					});
-				}
-
-				@Override
-				public void onProgress(int progress, String status) {
-				}
-
-				@Override
-				public void onError(final int errorCode, final String message) {
-					runOnUiThread(new Runnable() {
-
-						@Override
-						public void run() {
-							if (!LoginActivity.this.isFinishing()) {
-								progressDialog.dismiss();
+							@Override
+							public void run() {
+								//登录环信服务器
+								loginHuanxinServer(randomAccount, userPwd);
 							}
-							if (errorCode == EMError.NONETWORK_ERROR) {
-								Toast.makeText(getApplicationContext(), "网络不可用", Toast.LENGTH_SHORT).show();
-							} else if (errorCode == EMError.USER_ALREADY_EXISTS) {
-								Toast.makeText(getApplicationContext(), "用户已存在", Toast.LENGTH_SHORT).show();
-							//	toChatActivity();
-							} else if (errorCode == EMError.UNAUTHORIZED) {
-								Toast.makeText(getApplicationContext(), "无开放注册权限", Toast.LENGTH_SHORT).show();
-							} else if (errorCode == EMError.ILLEGAL_USER_NAME) {
-								Toast.makeText(getApplicationContext(), "用户名非法", Toast.LENGTH_SHORT).show();
-							} else {
-								Toast.makeText(getApplicationContext(), "注册失败：" + message, Toast.LENGTH_SHORT).show();
+						});
+					}
+
+					@Override
+					public void onProgress(int progress, String status) {
+					}
+
+					@Override
+					public void onError(final int errorCode, final String message) {
+						runOnUiThread(new Runnable() {
+
+							@Override
+							public void run() {
+								if (!LoginActivity.this.isFinishing()) {
+									progressDialog.dismiss();
+								}
+								if (errorCode == EMError.NONETWORK_ERROR) {
+									Toast.makeText(getApplicationContext(), "网络不可用", Toast.LENGTH_SHORT).show();
+								} else if (errorCode == EMError.USER_ALREADY_EXISTS) {
+									Toast.makeText(getApplicationContext(), "用户已存在", Toast.LENGTH_SHORT).show();
+									//	toChatActivity();
+								} else if (errorCode == EMError.UNAUTHORIZED) {
+									Toast.makeText(getApplicationContext(), "无开放注册权限", Toast.LENGTH_SHORT).show();
+								} else if (errorCode == EMError.ILLEGAL_USER_NAME) {
+									Toast.makeText(getApplicationContext(), "用户名非法", Toast.LENGTH_SHORT).show();
+								} else {
+									Toast.makeText(getApplicationContext(), "注册失败：" + message, Toast.LENGTH_SHORT).show();
+								}
+								finish();
 							}
-							finish();
-						}
-					});
-				}
-			});
+						});
+					}
+				});
+			}
 		}
 	}
 
@@ -242,7 +243,7 @@ public class LoginActivity extends BaseActivity {
 	}
 
 	private void toChatActivity() {
-		Log.d("imServiceKey",imServiceKey);
+		//Log.d("imServiceKey",imServiceKey);
 		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
@@ -253,7 +254,7 @@ public class LoginActivity extends BaseActivity {
 				intent.putExtra(Constant.INTENT_CODE_IMG_SELECTED_KEY,selectedIndex);
 				intent.putExtra(Constant.MESSAGE_TO_INTENT_EXTRA,messageToIndex);
 				intent.putExtra(Constant.IM_SERVICE_NUMBER,imServiceKey);
-				intent.putExtra("name",title);
+				intent.putExtra("gongsiName",title);
 				startActivity(intent);
 				finish();
 

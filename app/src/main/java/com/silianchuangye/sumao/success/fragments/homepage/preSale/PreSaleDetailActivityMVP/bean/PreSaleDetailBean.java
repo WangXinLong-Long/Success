@@ -60,6 +60,15 @@ public class PreSaleDetailBean implements Serializable{
     private String country;
     private String group;
     private List<String> cl_jhfangshi;
+    private String cl_qiyeonlyId;
+
+    public String getCl_qiyeonlyId() {
+        return cl_qiyeonlyId;
+    }
+
+    public void setCl_qiyeonlyId(String cl_qiyeonlyId) {
+        this.cl_qiyeonlyId = cl_qiyeonlyId;
+    }
 
     public String getGroup() {
         return group;

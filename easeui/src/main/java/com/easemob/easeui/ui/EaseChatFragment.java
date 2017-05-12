@@ -90,7 +90,7 @@ public class EaseChatFragment extends EaseBaseFragment implements EMEventListene
     protected static final int REQUEST_CODE_MAP = 1;
     protected static final int REQUEST_CODE_CAMERA = 2;
     protected static final int REQUEST_CODE_LOCAL = 3;
-private static final int PERMISSION_CODE = 1;
+    private static final int PERMISSION_CODE = 1;
     /**
      * 传入fragment的参数
      */
@@ -129,6 +129,7 @@ private static final int PERMISSION_CODE = 1;
     private EMChatRoomChangeListener chatRoomChangeListener;
     private boolean isMessageListInited;
     protected MyItemClickListener extendMenuItemClickListener;
+    private String gongsiName;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -147,6 +148,7 @@ private static final int PERMISSION_CODE = 1;
         // 会话人或群组id
         toChatUsername = fragmentArgs.getString(EaseConstant.EXTRA_USER_ID);
         // 是否显示用户昵称
+        gongsiName=fragmentArgs.getString("gongsiName");
         showUserNick = fragmentArgs.getBoolean(EaseConstant.EXTRA_SHOW_USERNICK, false);
         super.onActivityCreated(savedInstanceState);
     }
@@ -210,11 +212,11 @@ private static final int PERMISSION_CODE = 1;
      * 设置属性，监听等
      */
     protected void setUpView() {
-        titleBar.setTitle(toChatUsername);
+        titleBar.setTitle(gongsiName);
         if (chatType == EaseConstant.CHATTYPE_SINGLE) { // 单聊
             // 设置标题
             if(EaseUserUtils.getUserInfo(toChatUsername) != null){
-                titleBar.setTitle(EaseUserUtils.getUserInfo(toChatUsername).getNick());
+                titleBar.setTitle(gongsiName);//这里设置公司明
             }
             titleBar.setRightImageResource(R.drawable.ease_mm_title_remove);
         } else {

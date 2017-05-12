@@ -330,7 +330,7 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
 
                 break;
             case R.id.layoutContent_auction:
-Log.d("现货的唯一标识",unique);
+                Log.d("现货的唯一标识",unique);
                 if (unique.equals("false")||unique.equals("")) {
                     Toast.makeText(GoodsInStockDetailActivity.this, "请登录后进行操作", Toast.LENGTH_SHORT).show();
                     tuichu();
@@ -343,7 +343,9 @@ Log.d("现货的唯一标识",unique);
                     intentHX.setClass(GoodsInStockDetailActivity.this, LoginActivity.class);
                     intentHX.putExtra(Constant.MESSAGE_TO_INTENT_EXTRA, Constant.MESSAGE_TO_DEFAULT);
 //                传入卖家id
-                    intentHX.putExtra(Constant.IM_SERVICE_NUMBER, cl_gongsiId);
+                    intentHX.putExtra(Constant.IM_SERVICE_NUMBER, goodsInStockDetailBean.getCl_qiyeonlyId());
+                    Log.d("公司的唯一标识",goodsInStockDetailBean.getCl_qiyeonlyId()+"是公司id");
+                    intentHX.putExtra("gongsiName",goodsInStockDetailBean.getCl_gongsi());
                     startActivity(intentHX);
 //
                 }

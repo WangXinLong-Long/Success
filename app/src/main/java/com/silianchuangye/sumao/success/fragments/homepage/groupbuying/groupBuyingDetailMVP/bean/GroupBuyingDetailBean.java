@@ -93,6 +93,8 @@ public class GroupBuyingDetailBean implements Serializable {
     private String securedPage;
    // private String securedOfSection;
     private List<String> cl_fangshi;
+   // private String cl_qiyeonlyId;
+
 
 
 

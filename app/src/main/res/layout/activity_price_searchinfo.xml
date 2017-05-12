@@ -12,13 +12,15 @@
         >
 
         <ImageView
-            android:layout_width="@dimen/x20"
-            android:layout_height="@dimen/x20"
             android:id="@+id/iv_Back_Price_Search"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/x10"
+            android:layout_width="@dimen/x60"
+            android:layout_height="@dimen/x20"
             android:src="@mipmap/back"
+            android:layout_marginRight="@dimen/x20"
+            android:paddingLeft="@dimen/x10"
             android:background="@drawable/fanhui"
+            android:paddingRight="@dimen/x15"
+            android:layout_centerVertical="true"
             />
         <TextView
             android:layout_width="wrap_content"

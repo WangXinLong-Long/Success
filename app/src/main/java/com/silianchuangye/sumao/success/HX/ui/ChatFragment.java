@@ -11,11 +11,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMMessage;
 import com.easemob.chat.TextMessageBody;
 import com.easemob.easeui.ui.EaseChatFragment;
+import com.easemob.easeui.widget.EaseTitleBar;
 import com.easemob.easeui.widget.chatrow.EaseChatRow;
 import com.easemob.easeui.widget.chatrow.EaseCustomChatRowProvider;
 import com.silianchuangye.sumao.success.HX.Constant;
@@ -68,6 +70,7 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragment.E
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		return super.onCreateView(inflater, container, savedInstanceState);
+
 	}
 
 	@Override

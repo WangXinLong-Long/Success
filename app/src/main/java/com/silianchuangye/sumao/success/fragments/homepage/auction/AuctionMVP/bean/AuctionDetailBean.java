@@ -109,6 +109,15 @@ public class AuctionDetailBean implements Serializable {
     private String cl_cpbeizhu;
     private List<String> cl_fangshi;
     private String depositFlag;
+    private String cl_qiyeonlyId;
+
+    public String getCl_qiyeonlyId() {
+        return cl_qiyeonlyId;
+    }
+
+    public void setCl_qiyeonlyId(String cl_qiyeonlyId) {
+        this.cl_qiyeonlyId = cl_qiyeonlyId;
+    }
 
     public String getDepositFlag() {
         return depositFlag;

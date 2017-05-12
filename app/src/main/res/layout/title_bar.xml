@@ -9,14 +9,14 @@
 
     <ImageView
         android:id="@+id/iv_title_bar_back"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/x60"
         android:layout_height="@dimen/x20"
-        android:layout_centerVertical="true"
+        android:src="@mipmap/back"
         android:layout_marginRight="@dimen/x20"
         android:paddingLeft="@dimen/x10"
-        android:paddingRight="@dimen/x15"
         android:background="@drawable/fanhui"
-        android:src="@mipmap/back" />
+        android:paddingRight="@dimen/x15"
+        android:layout_centerVertical="true" />
 
     <ImageView
         android:id="@+id/iv_title_bar_logo"

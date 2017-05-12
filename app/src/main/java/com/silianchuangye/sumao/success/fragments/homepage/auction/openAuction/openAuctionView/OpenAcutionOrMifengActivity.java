@@ -997,7 +997,10 @@ public class OpenAcutionOrMifengActivity extends AppCompatActivity implements IO
                     intentHX.setClass(OpenAcutionOrMifengActivity.this, LoginActivity.class);
                     intentHX.putExtra(Constant.MESSAGE_TO_INTENT_EXTRA, Constant.MESSAGE_TO_DEFAULT);
 //                传入卖家id
-                    intentHX.putExtra(Constant.IM_SERVICE_NUMBER, cl_gongsiId);
+                   // intentHX.putExtra(Constant.IM_SERVICE_NUMBER, cl_gongsiId);
+                    intentHX.putExtra(Constant.IM_SERVICE_NUMBER, auctionDetailBean.getCl_qiyeonlyId());
+                    Log.d("公司的唯一标识",auctionDetailBean.getCl_qiyeonlyId()+"是公司id");
+                    intentHX.putExtra("gongsiName",auctionDetailBean.getCl_gongsi());
                     startActivity(intentHX);
                 }
 

@@ -18,13 +18,15 @@
         android:background="@color/zixun_topbg"
         >
         <ImageView
-            android:layout_width="@dimen/x15"
-            android:layout_height="@dimen/y13"
             android:id="@+id/ivBack_orderPrice_layout_top"
-            android:layout_marginTop="@dimen/y10"
+            android:layout_width="@dimen/x60"
+            android:layout_height="@dimen/x20"
             android:src="@drawable/back"
+            android:layout_marginRight="@dimen/x20"
+            android:paddingLeft="@dimen/x10"
             android:background="@drawable/fanhui"
-            android:layout_marginLeft="@dimen/x10"
+            android:paddingRight="@dimen/x15"
+            android:layout_centerVertical="true"
             />
         <TextView
             android:layout_width="wrap_content"

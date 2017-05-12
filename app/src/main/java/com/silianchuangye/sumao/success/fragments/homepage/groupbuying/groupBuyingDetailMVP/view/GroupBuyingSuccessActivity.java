@@ -1107,14 +1107,18 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
                     int i = (int) (Double.valueOf(groupPercent) * 100);
                     pbDemo.setProgress(i);
                     tv_pro_now.setText("当前成团量为 : " + i + "%");
-                    Double beishengshu=mul(Double.parseDouble(groupBuyingDetailBean.getGroupPercent()),Double.parseDouble(groupBuyingDetailBean.getCl_zongliang()));
-                    Double jianshu=sub(Double.parseDouble(groupBuyingDetailBean.getCl_zongliang()),beishengshu);
-                    Log.d("11111",jianshu+"");
-                    if (jianshu < Double.parseDouble(groupBuyingDetailBean.getCl_qigou())){
+//                    Double beishengshu=mul(Double.parseDouble(groupBuyingDetailBean.getGroupPercent()),Double.parseDouble(groupBuyingDetailBean.getCl_zongliang()));
+//                    Double jianshu=sub(Double.parseDouble(groupBuyingDetailBean.getCl_zongliang()),beishengshu);
+//                    Log.d("11111",jianshu+"");
+//                    if (jianshu < Double.parseDouble(groupBuyingDetailBean.getCl_qigou())){
+//                        timer.cancel();
+//                        info();
+//                    }
+                    if(groupPercent.equals("1.0")){
                         timer.cancel();
                         info();
                     }
-                } catch (JSONException e) {
+                }catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
@@ -1431,8 +1435,11 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
                 intentHX.setClass(GroupBuyingSuccessActivity.this, LoginActivity.class);
                 intentHX.putExtra(Constant.MESSAGE_TO_INTENT_EXTRA, Constant.MESSAGE_TO_DEFAULT);
 //                传入卖家id
-                intentHX.putExtra(Constant.IM_SERVICE_NUMBER, cl_gongsiId);
-                    intentHX.putExtra("name",groupBuyingDetailBean.getCl_gongsi());
+//                intentHX.putExtra(Constant.IM_SERVICE_NUMBER, cl_gongsiId);
+//                intentHX.putExtra("name",groupBuyingDetailBean.getCl_gongsi());
+                    intentHX.putExtra(Constant.IM_SERVICE_NUMBER, groupBuyingDetailBean.getCl_qiyeonlyId());
+                    Log.d("公司的唯一标识",groupBuyingDetailBean.getCl_qiyeonlyId()+"是公司id");
+                    intentHX.putExtra("gongsiName",groupBuyingDetailBean.getCl_gongsi());
                 startActivity(intentHX);
 
 //                    backgroundAlpha(0.5f);

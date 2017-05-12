@@ -513,6 +513,7 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
         contactCustomerService.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("有没有进点击事件","有没有进点击事件");
                 SharedPreferences sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
                 unique=sp.getString("unique","");
                 Log.d("竞拍的唯一标识",unique);
@@ -523,11 +524,14 @@ public class OpenAuctionActivity extends AppCompatActivity implements IOpenAucti
                     intent.putExtra("position", 103);
                     startActivityForResult(intent, 103);
                 }else {
+                    Log.d("是进来了吗","yes");
                     Intent intentHX = new Intent();
                     intentHX.setClass(OpenAuctionActivity.this, LoginActivity.class);
                     intentHX.putExtra(Constant.MESSAGE_TO_INTENT_EXTRA, Constant.MESSAGE_TO_DEFAULT);
 //                传入卖家id
-                    intentHX.putExtra(Constant.IM_SERVICE_NUMBER, cl_gongsiId);
+                    intentHX.putExtra(Constant.IM_SERVICE_NUMBER, auctionDetailBean.getCl_qiyeonlyId());
+                    Log.d("公司的唯一标识",auctionDetailBean.getCl_qiyeonlyId()+"是公司id");
+                    intentHX.putExtra("gongsiName",auctionDetailBean.getCl_gongsi());
                     startActivity(intentHX);
                 }
             }

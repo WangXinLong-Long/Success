@@ -22,7 +22,10 @@ import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
+import com.easemob.chat.EMChat;
+import com.easemob.chat.EMChatManager;
 import com.silianchuangye.sumao.success.HX.Constant;
+import com.silianchuangye.sumao.success.HX.ui.ChatActivity;
 import com.silianchuangye.sumao.success.HX.ui.LoginActivity;
 import com.silianchuangye.sumao.success.MainActivity;
 import com.silianchuangye.sumao.success.R;
@@ -458,6 +461,7 @@ public class PagerOne extends BasePager implements IPagerOneView {
                 intent.setClass(mActivity, LoginActivity.class);
                 intent.putExtra(Constant.MESSAGE_TO_INTENT_EXTRA, Constant.MESSAGE_TO_DEFAULT);
                 intent.putExtra(Constant.IM_SERVICE_NUMBER, "塑贸客服");
+                //intent.putExtra(Constant.IM_SERVICE_NUMBER,imServiceKey);
                 startActivity(intent);
             } else {
                 tuichu();

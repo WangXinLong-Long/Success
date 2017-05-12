@@ -493,7 +493,10 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
                     intentHX.setClass(PreSaleDetailActivity.this, LoginActivity.class);
                     intentHX.putExtra(Constant.MESSAGE_TO_INTENT_EXTRA, Constant.MESSAGE_TO_DEFAULT);
 //                传入卖家id
-                    intentHX.putExtra(Constant.IM_SERVICE_NUMBER, cl_gongsiId);
+                    //intentHX.putExtra(Constant.IM_SERVICE_NUMBER, cl_gongsiId);
+                    intentHX.putExtra(Constant.IM_SERVICE_NUMBER, preSaleDetailBean.getCl_qiyeonlyId());
+                    Log.d("公司的唯一标识",preSaleDetailBean.getCl_qiyeonlyId()+"是公司id");
+                    intentHX.putExtra("gongsiName",preSaleDetailBean.getCl_qiye());
                     startActivity(intentHX);
 
 

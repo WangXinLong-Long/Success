@@ -189,7 +189,10 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
                 intentHX.setClass(SpotOrder.this, LoginActivity.class);
                 intentHX.putExtra(Constant.MESSAGE_TO_INTENT_EXTRA, Constant.MESSAGE_TO_DEFAULT);
 //                传入卖家id
-                intentHX.putExtra(Constant.IM_SERVICE_NUMBER, list.get(0).get("cl_gongsiId").toString());
+               // intentHX.putExtra(Constant.IM_SERVICE_NUMBER, list.get(0).get("cl_gongsi").toString());
+                intentHX.putExtra(Constant.IM_SERVICE_NUMBER, list.get(0).get("cl_qiyeonlyId").toString());
+                Log.d("公司的唯一标识",list.get(0).get("cl_qiyeonlyId").toString()+"是公司id");
+                intentHX.putExtra("gongsiName",list.get(0).get("cl_gongsi").toString());
                 startActivity(intentHX);
             }
         });

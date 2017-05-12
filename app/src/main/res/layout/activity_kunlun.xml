@@ -13,6 +13,7 @@
         android:id="@+id/layout_bank"
         android:layout_below="@+id/layout_title"
         android:background="@color/gray_type"
+        android:visibility="gone"
         android:layout_marginTop="@dimen/x5"
         >
         <LinearLayout

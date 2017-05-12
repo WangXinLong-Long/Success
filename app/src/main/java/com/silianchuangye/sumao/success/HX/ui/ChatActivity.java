@@ -30,6 +30,7 @@ public class ChatActivity extends BaseActivity {
     public static ChatActivity activityInstance;
     private ChatFragment chatFragment;
     String toChatUsername;
+    private String gongsiName;
     private static final int REQUEST_PERMISSION_CAMERA_CODE = 5;
     static final String[] PERMISSIONS = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
     @Override
@@ -43,9 +44,11 @@ public class ChatActivity extends BaseActivity {
         Intent intent = getIntent();
         // 聊天人或群id
         toChatUsername = intent.getStringExtra(Constant.IM_SERVICE_NUMBER);
+        gongsiName=intent.getStringExtra("gongsiName");
         Log.d("连天Id",toChatUsername);
         intent.putExtra(Constant.EXTRA_USER_ID, toChatUsername);
         intent.putExtra(Constant.EXTRA_SHOW_USERNICK, true);
+        intent.putExtra("gongsiName",gongsiName);
         // 传入参数
         chatFragment.setArguments(intent.getExtras());
         getSupportFragmentManager().beginTransaction().add(R.id.container, chatFragment).commit();
