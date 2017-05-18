@@ -757,6 +757,7 @@ public class FirmUpdateActivity extends AppCompatActivity implements View.OnClic
 
                 @Override
                 public void onError(Throwable ex, boolean isOnCallback) {
+                    Toast.makeText(FirmUpdateActivity.this, "修改失败!", Toast.LENGTH_SHORT).show();
 
                 }
 

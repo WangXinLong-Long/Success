@@ -97,6 +97,13 @@ public class PlanQueryActivity extends AppCompatActivity implements IPlanQueryVi
     private String wuliu,qiye;
     private ImageView img_create_logistics_back;
     Dialog mDialog;
+    private String name="";
+    private String cangku="";
+    private String maifang="";
+    private String xuqiuId="";
+    private String xuqiuStart="";
+    private String xuqiuEnd="";
+    private String tibaoState="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -157,9 +164,24 @@ public class PlanQueryActivity extends AppCompatActivity implements IPlanQueryVi
                     state="canceled";
                 }
                 Log.d("提报状态的值",state+"");
+//                private String name;
+//                private String cangku;
+//                private String maifang;
+//                private String xuqiuId;
+//                private String xuqiuStart;
+//                private String xuqiuEnd;
+//                private String tibaoState;
+                name=product_name.getText().toString();
+                cangku=warehouse_name.getText().toString();
+                maifang=seller_enterprise.getText().toString();
+                xuqiuId=demand_number.getText().toString();
+                xuqiuStart=demand_start_time.getText().toString();
+                xuqiuEnd=demand_end_time.getText().toString();
+                tibaoState=state;
                 planQueryPresenter.getList("1","10",product_name.getText().toString(),demand_start_time.getText().toString(),demand_end_time.getText().toString()
                         ,state,seller_enterprise.getText().toString(),demand_number.getText().toString(),warehouse_name.getText().toString(),unique,true);
                 break;
+
 
         }
     }
@@ -230,63 +252,65 @@ public class PlanQueryActivity extends AppCompatActivity implements IPlanQueryVi
             JSONObject jsonObject=new JSONObject(result);
             String vipPlanOrder=jsonObject.getString("planOrderListlist");
             JSONArray jsonArray=new JSONArray(vipPlanOrder);
-            for (int i=0;i<jsonArray.length();i++){
-                JSONObject info=jsonArray.getJSONObject(i);
-                Log.d("info的值",""+info.toString());
-                Map<String ,Object> map=new Hashtable<String,Object>();
-                map.put("warehouseName",info.getString("warehouseName"));
-                map.put("scheduleDateChange",info.getString("scheduleDateChange"));
-                map.put("scheduleDate",info.getString("scheduleDate"));
-                map.put("demandScheduleState",info.getString("demandScheduleState"));
-                map.put("logisticsName",info.getString("logisticsName"));
-                map.put("planID",info.getString("planID"));
-                map.put("quantity",info.getString("quantity"));
-                map.put("productName",info.getString("productName"));
+            if (jsonArray.length()>0) {
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject info = jsonArray.getJSONObject(i);
+                    Log.d("info的值", "" + info.toString());
+                    Map<String, Object> map = new Hashtable<String, Object>();
+                    map.put("warehouseName", info.getString("warehouseName"));
+                    map.put("scheduleDateChange", info.getString("scheduleDateChange"));
+                    map.put("scheduleDate", info.getString("scheduleDate"));
+                    map.put("demandScheduleState", info.getString("demandScheduleState"));
+                    map.put("logisticsName", info.getString("logisticsName"));
+                    map.put("planID", info.getString("planID"));
+                    map.put("quantity", info.getString("quantity"));
+                    map.put("productName", info.getString("productName"));
 
-                map.put("sellerEnterpriseName",info.getString("sellerEnterpriseName"));
-                if (info.toString().contains("productNameChange")){
-                    map.put("productNameChange",info.getString("productNameChange"));
-                }
-                if (info.toString().contains("logisticsChangeName")){
-                    map.put("logisticsChangeName",info.getString("logisticsChangeName"));
-                }
-                if (info.toString().contains("quantityChange")){
-                    map.put("quantityChange",info.getString("quantityChange"));
-                }
-                if (info.toString().contains("warehouseChangeName")){
-                    map.put("warehouseChangeName",info.getString("warehouseChangeName"));
-                }
-                if (info.toString().contains("preAmount")){
-                    map.put("preAmount",info.getString("preAmount"));
-                }
-                if (info.toString().contains("prePirce")){
-                    map.put("prePirce",info.getString("prePirce"));
-                }
-                if (info.toString().contains("price")){
-                    map.put("price",info.getString("price"));
-                }
-                if (info.toString().contains("amount")){
-                    map.put("amount",info.getString("amount"));
-                }
-                if (info.toString().contains("orderId")){
-                    map.put("orderId",info.getString("orderId"));
-                }
-                if (info.toString().contains("categoryName")){//分类的值
-                    map.put("categoryName",info.getString("categoryName"));
-                }
-                if (info.toString().contains("registerDate")){
-                    map.put("registerDate",info.getString("registerDate"));
-                }
+                    map.put("sellerEnterpriseName", info.getString("sellerEnterpriseName"));
+                    if (info.toString().contains("productNameChange")) {
+                        map.put("productNameChange", info.getString("productNameChange"));
+                    }
+                    if (info.toString().contains("logisticsChangeName")) {
+                        map.put("logisticsChangeName", info.getString("logisticsChangeName"));
+                    }
+                    if (info.toString().contains("quantityChange")) {
+                        map.put("quantityChange", info.getString("quantityChange"));
+                    }
+                    if (info.toString().contains("warehouseChangeName")) {
+                        map.put("warehouseChangeName", info.getString("warehouseChangeName"));
+                    }
+                    if (info.toString().contains("preAmount")) {
+                        map.put("preAmount", info.getString("preAmount"));
+                    }
+                    if (info.toString().contains("prePirce")) {
+                        map.put("prePirce", info.getString("prePirce"));
+                    }
+                    if (info.toString().contains("price")) {
+                        map.put("price", info.getString("price"));
+                    }
+                    if (info.toString().contains("amount")) {
+                        map.put("amount", info.getString("amount"));
+                    }
+                    if (info.toString().contains("orderId")) {
+                        map.put("orderId", info.getString("orderId"));
+                    }
+                    if (info.toString().contains("categoryName")) {//分类的值
+                        map.put("categoryName", info.getString("categoryName"));
+                    }
+                    if (info.toString().contains("registerDate")) {
+                        map.put("registerDate", info.getString("registerDate"));
+                    }
 
 
-                list_plan_order.add(map);
-                Log.d("list的值",list_plan_order.size()+"aa");
+                    list_plan_order.add(map);
+                    Log.d("list的值", list_plan_order.size() + "aa");
+                }
+                Log.d("查询计划的值", list_plan_order.size() + "条");
+                adapter = new PlanQueryAdapter(PlanQueryActivity.this, list_plan_order);
+                // adapter.addData(list_plan_order);
+                listview.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
             }
-            Log.d("查询计划的值",list_plan_order.size()+"条");
-            adapter=new PlanQueryAdapter(PlanQueryActivity.this,list_plan_order);
-       // adapter.addData(list_plan_order);
-            listview.setAdapter(adapter);
-            adapter.notifyDataSetChanged();
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -297,13 +321,13 @@ public class PlanQueryActivity extends AppCompatActivity implements IPlanQueryVi
     class MyClick implements DatePickerDialog.OnDateSetListener {
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            demand_end_time.setText(year + "-" + monthOfYear + "-" + dayOfMonth);
+            demand_end_time.setText(year + "-" + (monthOfYear+1) + "-" + dayOfMonth);
         }
     }
     class MyClick1 implements DatePickerDialog.OnDateSetListener {
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            demand_start_time.setText(year + "-" + monthOfYear + "-" + dayOfMonth);
+            demand_start_time.setText(year + "-" + (monthOfYear+1) + "-" + dayOfMonth);
         }
     }
     private void showPopupWindow() {
@@ -539,7 +563,9 @@ public class PlanQueryActivity extends AppCompatActivity implements IPlanQueryVi
                     int num = Integer.parseInt(pageNum) + 1;
                     pageNum = num + "";
                     boolean updateOrLoad = false;
-                    planQueryPresenter.getList(pageNum,"10","","","","","","","",unique,true);
+                    planQueryPresenter.getList(pageNum,"10",name,xuqiuStart,xuqiuEnd
+                            ,tibaoState,maifang,xuqiuId,cangku,unique,true);
+                  //  planQueryPresenter.getList(pageNum,"10","","","","","","","",unique,updateOrLoad);
                     pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
                 }
             }.sendEmptyMessageDelayed(0, 3000);

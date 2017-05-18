@@ -33,6 +33,7 @@ import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSelling
 import com.silianchuangye.sumao.success.fragments.homepage.UpstreamDirectSellingMVP.bean.vipProductBean.VipProductBean;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.demandPlanning.planType.ProductNameActivity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.demandPlanning.planType.WarehouseActivity;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.qurchaseQualification.PurchaseQualificationMVP.view.PurchaseQualificationActivity;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
@@ -262,7 +263,7 @@ public class PlanDay extends Fragment implements OnClickListener, IPlanDayView {
 //获得日历中的 year month day
         DatePickerDialog dlg = new DatePickerDialog(getActivity(), new MyClick(), year, month, day);
         DatePicker datePicker = dlg.getDatePicker();
-        datePicker.setMinDate(System.currentTimeMillis());
+        datePicker.setMinDate(myDate.getTime());
         datefor=year+"-"+(month+1)+"-"+day;
         dlg.show();
     }
@@ -284,7 +285,6 @@ public class PlanDay extends Fragment implements OnClickListener, IPlanDayView {
             alert.dismiss();
             TOAST("上传成功");
             //添加新的提交计划
-
             for (int i = 0; i < list.size(); i++) {
                 list.remove(i);
                 group.remove(i);
@@ -322,7 +322,10 @@ public class PlanDay extends Fragment implements OnClickListener, IPlanDayView {
                 lv_day_plan.expandGroup(j);
             }
 
-        } else {
+        } else if (result.contains("提交失败")){
+            alert.dismiss();
+            TOAST("上传失败");
+        }else {
             alert.dismiss();
             TOAST("上传失败");
         }
@@ -520,6 +523,8 @@ public class PlanDay extends Fragment implements OnClickListener, IPlanDayView {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             //
+                            Intent intent=new Intent(getActivity(), PurchaseQualificationActivity.class);
+                            startActivity(intent);
                         }
                     });
                     diolog.create().show();

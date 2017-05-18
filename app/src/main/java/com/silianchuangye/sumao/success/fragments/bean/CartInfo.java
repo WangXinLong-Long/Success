@@ -14,6 +14,5 @@ public class CartInfo {
             buy_num,
             all_price,
             id;
-    ;
     public boolean Selsct_Flag;
 }

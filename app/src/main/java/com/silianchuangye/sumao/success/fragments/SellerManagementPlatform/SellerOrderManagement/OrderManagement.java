@@ -88,7 +88,7 @@ public class OrderManagement extends AppCompatActivity implements View.OnClickLi
         initData();
         seller_view_pager.setAdapter(adapter);
         seller_tab_layout.setupWithViewPager(seller_view_pager);
-        seller_tab_layout.setTabMode(seller_tab_layout.MODE_SCROLLABLE);
+        seller_tab_layout.setTabMode(TabLayout.MODE_SCROLLABLE);
 
     }
 

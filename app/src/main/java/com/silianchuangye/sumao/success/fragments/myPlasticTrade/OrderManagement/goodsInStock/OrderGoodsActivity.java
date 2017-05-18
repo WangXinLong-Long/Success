@@ -8,6 +8,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -187,7 +188,7 @@ public class OrderGoodsActivity extends AppCompatActivity implements View.OnClic
         vpDemo.setAdapter(adapter);
         tlDemo.setupWithViewPager(vpDemo);
 //        vpDemo.setOffscreenPageLimit(7);
-        tlDemo.setTabMode(tlDemo.MODE_SCROLLABLE);
+        tlDemo.setTabMode(TabLayout.MODE_SCROLLABLE);
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -420,12 +421,15 @@ public class OrderGoodsActivity extends AppCompatActivity implements View.OnClic
             fragment.sendMy(searchTrateType,searchOrderType, pageNum, submitType, KPstate, startDate, endDate, searchCompanyName, searchOrderId, update);
             vpDemo.setCurrentItem(2);
         } else if (Tv_dingdan.getText().toString().equals("已变更")) {
+            vpDemo.setCurrentItem(3);
             PresellChangeFragment fragment = (PresellChangeFragment) listFragment.get(3);
             fragment.sendMy(searchTrateType,searchOrderType, pageNum, submitType, KPstate, startDate, endDate, searchCompanyName, searchOrderId, update);
-            vpDemo.setCurrentItem(3);
+            //fragment.sendMy(searchTrateType,searchOrderType, pageNum, submitType, KPstate, startDate, endDate, searchCompanyName, searchOrderId, update);
+
         } else if (Tv_dingdan.getText().toString().equals("已取消")) {
             vpDemo.setCurrentItem(4);
             PresellCancelFragment fragment = (PresellCancelFragment) listFragment.get(4);
+           // Log.d();
             fragment.sendMy(searchTrateType,searchOrderType, pageNum, submitType, KPstate, startDate, endDate, searchCompanyName, searchOrderId, update);
 
         }

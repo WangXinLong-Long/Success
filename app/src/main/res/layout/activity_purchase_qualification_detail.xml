@@ -160,7 +160,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/x10"
-                        android:text="客户银行许可证" />
+                        android:text="开户银行许可证" />
 
                     <ImageView
                         android:id="@+id/customer_bank_license_image"
@@ -212,7 +212,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_marginRight="@dimen/x10"
-                        android:hint="吨/年"
+                        android:text="吨/年"
                         android:gravity="end"
                         />
 

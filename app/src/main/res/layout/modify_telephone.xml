@@ -24,14 +24,14 @@
             android:textSize="@dimen/x15"
             android:text="@string/Original_mobile_phone_number"
             />
-        <EditText
+        <TextView
             android:id="@+id/Omp_number"
             android:layout_width="@dimen/x150"
-            android:hint="请输入原手机号"
             android:background="@drawable/edittext_backgroup"
             android:layout_height="@dimen/x30"
             android:layout_alignParentRight="true"
             android:textSize="@dimen/x15"
+            android:padding="@dimen/x5"
             />
     </RelativeLayout>
     <RelativeLayout

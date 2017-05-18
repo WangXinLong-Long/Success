@@ -87,11 +87,12 @@ public void clearData(){
         viewHolder.title.setText(preSaleModels.get(position).getIn_name());
         viewHolder.number.setText(preSaleModels.get(position).getIn_num());
        // DecimalFormat df = new DecimalFormat("0.00");
+//这里做了一下修改
+//        BigDecimal b=new BigDecimal(preSaleModels.get(position).getIn_prix().toString());
+//        double  f1=b.setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue();
+//        viewHolder.price.setText(f1+"");
 
-        BigDecimal b=new BigDecimal(preSaleModels.get(position).getIn_prix().toString());
-        double  f1=b.setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue();
-        viewHolder.price.setText(f1+"");
-
+        viewHolder.price.setText(preSaleModels.get(position).getIn_prix().toString());
         viewHolder.company.setText(preSaleModels.get(position).getIn_qiye());
         viewHolder.warehouse.setText(preSaleModels.get(position).getIn_cangku());
 

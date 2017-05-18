@@ -138,7 +138,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toLeftOf="@id/duty_paragraph_iv"
-
+                    android:layout_centerVertical="true"
                     android:paddingRight="@dimen/x5"/>
             </RelativeLayout>
             <RelativeLayout
@@ -333,6 +333,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/name_user_information"
+                        android:layout_centerVertical="true"
                         />
                     <ImageView
                         android:id="@+id/bill_mailing_address_name_iv"
@@ -365,6 +366,7 @@
                         android:id="@+id/bill_mailing_address_telephone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
                         android:text="@string/telephone_user_information"
                         />
                     <ImageView
@@ -398,6 +400,7 @@
                         android:id="@+id/bill_mailing_address_fix_telephone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
                         android:text="@string/fixed_telephone_no_colon"
                         />
                     <ImageView
@@ -474,6 +477,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/Zip_code_no_colon"
+                        android:layout_centerVertical="true"
                         />
                     <ImageView
                         android:id="@+id/bill_mailing_address_zip_code_iv"

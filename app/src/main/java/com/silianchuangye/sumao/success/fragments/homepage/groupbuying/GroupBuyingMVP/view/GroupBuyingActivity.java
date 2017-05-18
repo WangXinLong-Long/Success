@@ -25,7 +25,6 @@ import java.util.List;
 public class GroupBuyingActivity extends AppCompatActivity implements IGroupBuyingView {
     private ListView lv_group_buying;
     private List<GroupBuyingListBean.ProdBean> list = new ArrayList<>();
-    ;
     private GroupBuyingListViewAdapter adapter;
     private ImageView back, search;
     private String shangpinId;
@@ -46,10 +45,15 @@ public class GroupBuyingActivity extends AppCompatActivity implements IGroupBuyi
         adapter = new GroupBuyingListViewAdapter(this);
         lv_group_buying.setAdapter(adapter);
         pullToRefreshLayout.setOnPullListener(new GroupBuyingListViewPullListener());
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         addData();
         event();
     }
-
 
     /**
      * 添加数据

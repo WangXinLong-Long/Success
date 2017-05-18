@@ -97,15 +97,36 @@ public class SearchplanActivity extends AppCompatActivity implements View.OnClic
         tv_seeplan_right_peisong_old.setText(way);
         tv_search_see_plan_title= (TextView) findViewById(R.id.tv_search_see_plan_title);
         tv_seeplan_right_date= (TextView) findViewById(R.id.tv_seeplan_right_date);
+        if (!riqi.equals(riqinew)) {
+
+            tv_seeplan_right_date.setTextColor(Color.RED);
+            tv_seeplan_left_date.setTextColor(Color.RED);
+        }
         tv_seeplan_right_date.setText(riqinew);
         tv_seeplan_right_name= (TextView) findViewById(R.id.tv_seeplan_right_name);
+        if (!name.equals(nameNew)){
+            tv_seeplan_left_name.setTextColor(Color.RED);
+            tv_seeplan_right_name.setTextColor(Color.RED);
+        }
         tv_seeplan_right_name.setText(nameNew);
         tv_seeplan_right_cangku= (TextView) findViewById(R.id.tv_seeplan_right_cangku);
         tv_seeplan_right_cangku.setText(cangkuNew);
+        if (!cangku.equals(cangkuNew)){
+            tv_seeplan_right_cangku.setTextColor(Color.RED);
+            tv_seeplan_left_cangku.setTextColor(Color.RED);
+        }
         tv_seeplan_right_num= (TextView) findViewById(R.id.tv_seeplan_right_num);
         tv_seeplan_right_num.setText(numberNew);
+        if (!number.equals(numberNew)){
+            tv_seeplan_right_num.setTextColor(Color.RED);
+            tv_seeplan_left_num.setTextColor(Color.RED);
+        }
         tv_seeplan_right_peisong= (TextView) findViewById(R.id.tv_seeplan_right_peisong);
         tv_seeplan_right_peisong.setText(wayNew);
+        if (!way.equals(wayNew)){
+            tv_seeplan_right_peisong.setTextColor(Color.RED);
+            tv_seeplan_left_peisong.setTextColor(Color.RED);
+        }
         tv_seeplan_right_state= (TextView) findViewById(R.id.tv_seeplan_right_state);
         if (state.equals("confirmed")){
             tv_seeplan_right_state.setText("已确定");
@@ -131,73 +152,73 @@ public class SearchplanActivity extends AppCompatActivity implements View.OnClic
 //    }}
     }
 
-    public void getinfo(){
-
-            Log.d("传过来的result的值",resulr_list.toString());
-            //JSONObject jsonObject=new JSONObject(result);
-            if (result.contains("orderId")){
-                Log.d("订单的id",resulr_list.get(0).get("orderId").toString());
-                String orderId=resulr_list.get(0).get("orderId").toString();
-                tv_seeplan_right_dingdannum.setText(orderId);
-            }
-            tv_seeplan_right_date_old.setText(resulr_list.get(0).get("scheduleDate").toString());
-            Log.d("日期",resulr_list.get(0).get("scheduleDate").toString());
-            tv_seeplan_right_name_old.setText(resulr_list.get(0).get("productName").toString());
-            tv_seeplan_right_cangku_old.setText(resulr_list.get(0).get("warehouseName").toString());
-            tv_seeplan_right_num_old.setText(resulr_list.get(0).get("quantity").toString());
-            tv_seeplan_right_peisong_old.setText(resulr_list.get(0).get("logisticsName").toString());
-            if (result.contains("scheduleDateChange")){
-                tv_seeplan_right_date.setText(resulr_list.get(0).get("scheduleDateChange").toString());
-                tv_seeplan_right_date.setTextColor(Color.RED);
-                tv_seeplan_left_date.setTextColor(Color.RED);
-            }else{
-                tv_seeplan_right_date.setText(resulr_list.get(0).get("scheduleDate").toString());
-            }
-            if (result.contains("productNameChange")){
-                tv_seeplan_right_name.setText(resulr_list.get(0).get("productNameChange").toString());
-                tv_seeplan_right_name.setTextColor(Color.RED);
-                tv_seeplan_left_name.setTextColor(Color.RED);
-            }else{
-                tv_seeplan_right_name.setText(resulr_list.get(0).get("productName").toString());
-            }
-            if (result.contains("warehouseChangeName")){
-                tv_seeplan_right_cangku.setText(resulr_list.get(0).get("warehouseChangeName").toString());
-                tv_seeplan_right_cangku.setTextColor(Color.RED);
-                tv_seeplan_left_cangku.setTextColor(Color.RED);
-            }else{
-                tv_seeplan_right_cangku.setText(resulr_list.get(0).get("warehouseName").toString());
-            }
-            if (result.contains("quantityChange")){
-                tv_seeplan_right_num.setText(resulr_list.get(0).get("quantityChange").toString());
-                tv_seeplan_right_num.setTextColor(Color.RED);
-                tv_seeplan_left_num.setTextColor(Color.RED);
-            }else{
-                tv_seeplan_right_num.setText(resulr_list.get(0).get("quantity").toString());
-            }
-            if (result.contains("logisticsChangeName")){
-                tv_seeplan_right_peisong.setText(resulr_list.get(0).get("logisticsChangeName").toString());
-                tv_seeplan_right_peisong.setTextColor(Color.RED);
-                tv_seeplan_left_peisong.setTextColor(Color.RED);
-            }else{
-                tv_seeplan_right_peisong.setText(resulr_list.get(0).get("logisticsName").toString());
-            }
-            if (resulr_list.contains("demandScheduleState")){
-               ///String state=jsonObject.getString("demandScheduleState").toString();
-                String state=resulr_list.get(0).get("demandScheduleState").toString();
-
-                if (state.equals("confirmed")){
-                    //已经确认
-                    tv_seeplan_right_state.setText("已确认");
-                }else if (state.equals("Pending")){
-                    //待确认
-                    tv_seeplan_right_state.setText("待确认");
-                }else if (state.equals("canceled")){
-                    //已经取消
-                    tv_seeplan_right_state.setText("已确认");
-                }
-            }
-
-    }
+//    public void getinfo(){
+//
+//            Log.d("传过来的result的值",resulr_list.toString());
+//            //JSONObject jsonObject=new JSONObject(result);
+//            if (result.contains("orderId")){
+//                Log.d("订单的id",resulr_list.get(0).get("orderId").toString());
+//                String orderId=resulr_list.get(0).get("orderId").toString();
+//                tv_seeplan_right_dingdannum.setText(orderId);
+//            }
+//            tv_seeplan_right_date_old.setText(resulr_list.get(0).get("scheduleDate").toString());
+//            Log.d("日期",resulr_list.get(0).get("scheduleDate").toString());
+//            tv_seeplan_right_name_old.setText(resulr_list.get(0).get("productName").toString());
+//            tv_seeplan_right_cangku_old.setText(resulr_list.get(0).get("warehouseName").toString());
+//            tv_seeplan_right_num_old.setText(resulr_list.get(0).get("quantity").toString());
+//            tv_seeplan_right_peisong_old.setText(resulr_list.get(0).get("logisticsName").toString());
+//            if (result.contains("scheduleDateChange")){
+//                tv_seeplan_right_date.setText(resulr_list.get(0).get("scheduleDateChange").toString());
+//                tv_seeplan_right_date.setTextColor(Color.RED);
+//                tv_seeplan_left_date.setTextColor(Color.RED);
+//            }else{
+//                tv_seeplan_right_date.setText(resulr_list.get(0).get("scheduleDate").toString());
+//            }
+//            if (result.contains("productNameChange")){
+//                tv_seeplan_right_name.setText(resulr_list.get(0).get("productNameChange").toString());
+//                tv_seeplan_right_name.setTextColor(Color.RED);
+//                tv_seeplan_left_name.setTextColor(Color.RED);
+//            }else{
+//                tv_seeplan_right_name.setText(resulr_list.get(0).get("productName").toString());
+//            }
+//            if (result.contains("warehouseChangeName")){
+//                tv_seeplan_right_cangku.setText(resulr_list.get(0).get("warehouseChangeName").toString());
+//                tv_seeplan_right_cangku.setTextColor(Color.RED);
+//                tv_seeplan_left_cangku.setTextColor(Color.RED);
+//            }else{
+//                tv_seeplan_right_cangku.setText(resulr_list.get(0).get("warehouseName").toString());
+//            }
+//            if (result.contains("quantityChange")){
+//                tv_seeplan_right_num.setText(resulr_list.get(0).get("quantityChange").toString());
+//                tv_seeplan_right_num.setTextColor(Color.RED);
+//                tv_seeplan_left_num.setTextColor(Color.RED);
+//            }else{
+//                tv_seeplan_right_num.setText(resulr_list.get(0).get("quantity").toString());
+//            }
+//            if (result.contains("logisticsChangeName")){
+//                tv_seeplan_right_peisong.setText(resulr_list.get(0).get("logisticsChangeName").toString());
+//                tv_seeplan_right_peisong.setTextColor(Color.RED);
+//                tv_seeplan_left_peisong.setTextColor(Color.RED);
+//            }else{
+//                tv_seeplan_right_peisong.setText(resulr_list.get(0).get("logisticsName").toString());
+//            }
+//            if (resulr_list.contains("demandScheduleState")){
+//               ///String state=jsonObject.getString("demandScheduleState").toString();
+//                String state=resulr_list.get(0).get("demandScheduleState").toString();
+//
+//                if (state.equals("confirmed")){
+//                    //已经确认
+//                    tv_seeplan_right_state.setText("已确认");
+//                }else if (state.equals("Pending")){
+//                    //待确认
+//                    tv_seeplan_right_state.setText("待确认");
+//                }else if (state.equals("canceled")){
+//                    //已经取消
+//                    tv_seeplan_right_state.setText("已确认");
+//                }
+//            }
+//
+//    }
 
     @Override
     public void onClick(View v) {

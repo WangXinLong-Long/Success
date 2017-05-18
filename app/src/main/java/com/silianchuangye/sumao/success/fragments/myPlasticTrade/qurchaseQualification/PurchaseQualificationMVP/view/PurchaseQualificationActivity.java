@@ -42,7 +42,7 @@ public class PurchaseQualificationActivity extends AppCompatActivity implements 
     private TextView tv_child_title_bar_title;
     private ImageView iv_child_title_bar_back;
     private PurchaseQualificationPresenter purchaseQualificationPresenter;
-    private List<String> nameList = new ArrayList<>();;
+    private List<String> nameList = new ArrayList<>();
     private List<PurchaseQualificationBean.OrgBean> org;
     String unique;
     PurchaseQualificationBean purchaseQualificationBean;

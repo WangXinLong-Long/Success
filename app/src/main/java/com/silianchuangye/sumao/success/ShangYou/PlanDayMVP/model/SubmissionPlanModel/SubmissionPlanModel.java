@@ -1,6 +1,7 @@
 package com.silianchuangye.sumao.success.ShangYou.PlanDayMVP.model.SubmissionPlanModel;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.silianchuangye.sumao.success.ShangYou.PlanDayMVP.Bean.PlanDayBean;
@@ -77,6 +78,9 @@ public class SubmissionPlanModel implements ISubmissionPlanModel {
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
+               // Toast.makeText(Con, "上游直销提交失败!", Toast.LENGTH_SHORT).show();
+                String result="提交失败";
+                callback.callbackSubmissionPlan(result);
 
             }
 

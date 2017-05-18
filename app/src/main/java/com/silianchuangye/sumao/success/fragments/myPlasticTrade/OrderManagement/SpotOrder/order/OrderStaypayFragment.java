@@ -45,7 +45,7 @@ import java.util.Map;
  */
 public class OrderStaypayFragment extends Fragment {
     private ExpandableListView elvDemo;
-    private List<Map<String,Object>> listparrent;;
+    private List<Map<String,Object>> listparrent;
     private List<List<Map<String,Object>>> listitem;
     boolean ListFlag;
     SharedPreferences sp;

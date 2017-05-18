@@ -447,8 +447,9 @@ public class PagerOne extends BasePager implements IPagerOneView {
         SharedPreferences sp=getActivity().getSharedPreferences("sumao",Activity.MODE_PRIVATE);
         String unique=sp.getString("unique","");
         String user_name="";
-        if (unique.equals("false")) {
-            //Toast.makeText(MainActivity.this, "请登录", Toast.LENGTH_SHORT).show();
+        Log.d("唯一标识的值",unique);
+        if (unique.equals("false")||unique.equals("")) {
+           // Toast.makeText(MainActivity.this, "请登录", Toast.LENGTH_SHORT).show();
             tuichu();
             Intent intent = new Intent();
             intent.putExtra("roles", "buyer");
@@ -456,14 +457,18 @@ public class PagerOne extends BasePager implements IPagerOneView {
             startActivity(intent);
         } else {
             user_name = sp.getString("name", "");
+            Log.d("name的名字",user_name);
             if (user_name != "") {
+                Log.d("name的名字不等于空","不等于空");
                 Intent intent = new Intent();
                 intent.setClass(mActivity, LoginActivity.class);
                 intent.putExtra(Constant.MESSAGE_TO_INTENT_EXTRA, Constant.MESSAGE_TO_DEFAULT);
-                intent.putExtra(Constant.IM_SERVICE_NUMBER, "塑贸客服");
-                //intent.putExtra(Constant.IM_SERVICE_NUMBER,imServiceKey);
+                intent.putExtra(Constant.IM_SERVICE_NUMBER, "service");
+                Log.d("公司的唯一标识","service");
+                intent.putExtra("gongsiName","塑贸客服");
                 startActivity(intent);
             } else {
+                Log.d("name的名字等于空","等于空");
                 tuichu();
                 Intent intent = new Intent();
                 intent.putExtra("roles", "buyer");
@@ -511,11 +516,12 @@ public class PagerOne extends BasePager implements IPagerOneView {
         listDrawable.add(BitmapFactory.decodeResource(getResources(), R.mipmap.carousel_figure3));
         BitmapDrawable bd = (BitmapDrawable) result;
         listDrawable.add(bd.getBitmap());
-        if (banners.size() == listDrawable.size()) {
-            gallery.setAdapter(new ImageAdapter(mActivity, listDrawable));
-            //哪些点点的初始化
-            InitFocusIndicatorContainer();
-        }
+        //轮播图下面的小圆点
+//        if (banners.size() == listDrawable.size()) {
+//            gallery.setAdapter(new ImageAdapter(mActivity, listDrawable));
+//            //哪些点点的初始化
+//            InitFocusIndicatorContainer();
+//        }
     }
 
     //把请求下的数据放置到现货界面

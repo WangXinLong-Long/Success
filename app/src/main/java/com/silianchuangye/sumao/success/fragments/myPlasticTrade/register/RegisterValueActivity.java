@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.utils.LogUtils;
@@ -181,8 +182,9 @@ public class RegisterValueActivity extends AppCompatActivity {
                     setResultW();
                 } else {
 //                    判断返回值，如果为false，代表不能注册，显示因为那个类型已被注册，不能进行下一步
-                    tv_a.setText("该" + title + "已被注册");
-                    tv_a.setTextColor(Color.RED);
+//                    tv_a.setText("该" + title + "已被注册");
+//                    tv_a.setTextColor(Color.RED);
+                    Toast.makeText(RegisterValueActivity.this, "该" + title + "已被注册", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -239,8 +241,6 @@ public class RegisterValueActivity extends AppCompatActivity {
         return super.onKeyDown(keyCode, event);
     }
 
-    ;
-
     public void setResultW() {
         /*if (ed_content_value.getText().toString().trim() == null|| ed_content_value.getText().toString().trim().isEmpty()) {
             tv_a.setText( title + "不能为空");
@@ -265,13 +265,8 @@ public class RegisterValueActivity extends AppCompatActivity {
             int top = leftTop[1];
             int bottom = top + v.getHeight();
             int right = left + v.getWidth();
-            if (event.getX() > left && event.getX() < right
-                    && event.getY() > top && event.getY() < bottom) {
-                // 点击的是输入框区域，保留点击EditText的事件
-                return false;
-            } else {
-                return true;
-            }
+            return !(event.getX() > left && event.getX() < right
+                    && event.getY() > top && event.getY() < bottom);
         }
         return false;
     }

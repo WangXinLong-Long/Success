@@ -296,8 +296,8 @@ View view,childView;
          RelativeLayout relative_child_item;
     }
     public interface LogisticsCall{
-        public void call(int groupPosition, int childPosition, String num,RelativeLayout view,RelativeLayout childView);
-        public void callNum(int groupPosition,int childPosition,String id);
-        public void callVisiable(int groupPosition,int childPosition);
+        void call(int groupPosition, int childPosition, String num, RelativeLayout view, RelativeLayout childView);
+        void callNum(int groupPosition, int childPosition, String id);
+        void callVisiable(int groupPosition, int childPosition);
     }
 }

@@ -81,6 +81,7 @@ public class Ok_Dialog extends Activity {
             pay_success.setVisibility(View.VISIBLE);
             btn_ok_dialog.setVisibility(View.GONE);
             bt_my_order.setVisibility(View.VISIBLE);
+            bt_wuliu.setVisibility(View.VISIBLE);
 
         }else{
             tv_ok_text.setText("恭喜您,订单支付成功!");
@@ -94,7 +95,19 @@ public class Ok_Dialog extends Activity {
         btn_ok_dialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                //finish();
+
+                if (type.equals("预售")){
+                    Intent intent=new Intent(Ok_Dialog.this,OrderGoodsActivity.class);
+                    intent.putExtra("title","预售订单");
+                    startActivity(intent);
+                    finish();
+                }else{
+                    Intent intent=new Intent(Ok_Dialog.this,OrderGoodsActivity.class);
+                    intent.putExtra("title","现货订单");
+                    startActivity(intent);
+                    finish();
+                }
             }
         });
         iv_cancel.setOnClickListener(new View.OnClickListener() {
@@ -128,9 +141,9 @@ public class Ok_Dialog extends Activity {
             @Override
             public void onClick(View v) {
                 //跳转到物流
-                Intent intent = new Intent(Ok_Dialog.this, CreateLogistics.class);
-                startActivity(intent);
-                isClosePrevious = true;
+//                Intent intent = new Intent(Ok_Dialog.this, CreateLogistics.class);
+//                startActivity(intent);
+//                isClosePrevious = true;
                 finish();
             }
         });

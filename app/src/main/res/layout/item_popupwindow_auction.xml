@@ -65,6 +65,7 @@
             android:layout_height="@dimen/x30"
             android:layout_marginTop="@dimen/x5"
             android:inputType="numberDecimal"
+            android:background="@drawable/edit_background"
             />
 
         <TextView

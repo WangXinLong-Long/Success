@@ -8,9 +8,9 @@ import java.util.List;
  * Created by junjun on 2016/9/1.
  */
 public interface SelectCallBack {
-    public void Call(int index);
+    void Call(int index);
 
-    public void CartNull(List<CartBean.CommerceItemBean> list);
+    void CartNull(List<CartBean.CommerceItemBean> list);
 //    public void CartNull(List<CartInfo> list);
 
     //1111111111111111111111111111111

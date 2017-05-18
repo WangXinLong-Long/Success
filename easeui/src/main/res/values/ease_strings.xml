@@ -34,9 +34,9 @@
     <string name="forward">Forward</string>
     <string name="button_logout">Logout</string>
     <string name="button_uploadlog">Upload the log</string>
-    <string name="ok">OK</string>
-    <string name="cancel">Cancel</string>
-    <string name="prompt">Prompt</string>
+    <string name="ok">确定</string>
+    <string name="cancel">取消</string>
+    <string name="prompt">提示</string>
     <string name="clear_records">Clear conversation?</string>
     <string name="clear_all_records">Clear all conversations？</string>
     <string name="location_recv">[%1$s location]</string>
@@ -147,7 +147,7 @@
     <string name="cant_find_pictures">"Can't find pictures"</string>
     <string name="File_does_not_exist">File does not exist</string>
     <string name="The_file_is_not_greater_than_10_m">The file is not greater than 10 m</string>
-    <string name="Whether_to_empty_all_chats">Clear all messages?</string>
+    <string name="Whether_to_empty_all_chats">确定要删除聊天记录吗?</string>
     <string name="Send_voice_need_sdcard_support">Send voice need sdcard support</string>
     <string name="Recording_without_permission">Recording without permission</string>
     <string name="The_recording_time_is_too_short">The recording time is too short</string>
@@ -180,7 +180,7 @@
     <string name="remove_group_of">Remove group of shielding failure, please check the network or try again later</string>
     <string name="group_is_blocked">Blocking the group..</string>
     <string name="group_of_shielding">Group of shielding failure, please check the network or try again later</string>
-    <string name="sure_to_empty_this">Clear all messages?</string>
+    <string name="sure_to_empty_this">确定要删除聊天记录吗?</string>
     <string name="The_delete_button_is_clicked">The delete button is clicked</string>
     <string name="Add_a_button_was_clicked">Add a button was clicked</string>
     <string name="not_delete_myself">Cannot delete myself</string>
@@ -285,8 +285,8 @@
     <string name="dl_msg_take_photo">Task Photo</string>
     <string name="toast_no_support">No Support!</string>
     <string name="setting_nickname">Setting nickname</string>
-    <string name="dl_ok">OK</string>
-    <string name="dl_cancel">Cancel</string>
+    <string name="dl_ok">确定</string>
+    <string name="dl_cancel">取消</string>
     <string name="toast_nick_not_isnull">nick cannot be empty!</string>
     <string name="dl_update_nick">update nickname</string>
     <string name="dl_update_photo">update photo</string>

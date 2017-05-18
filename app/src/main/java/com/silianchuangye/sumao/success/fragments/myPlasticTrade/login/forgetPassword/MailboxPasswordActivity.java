@@ -209,13 +209,8 @@ public class  MailboxPasswordActivity extends AppCompatActivity implements View.
             int top = leftTop[1];
             int bottom = top + v.getHeight();
             int right = left + v.getWidth();
-            if (event.getX() > left && event.getX() < right
-                    && event.getY() > top && event.getY() < bottom) {
-                // 点击的是输入框区域，保留点击EditText的事件
-                return false;
-            } else {
-                return true;
-            }
+            return !(event.getX() > left && event.getX() < right
+                    && event.getY() > top && event.getY() < bottom);
         }
         return false;
     }

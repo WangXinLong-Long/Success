@@ -128,7 +128,7 @@
                 android:layout_marginLeft="@dimen/x30"
                 android:layout_toRightOf="@+id/bt_my_order"
                 android:background="@drawable/button_background_green"
-                android:text="物流需求"
+                android:text="继续购物"
                 android:textColor="#fff"
                 android:textSize="14sp"
                 android:visibility="gone"

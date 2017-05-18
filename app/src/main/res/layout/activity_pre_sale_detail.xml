@@ -383,7 +383,7 @@
                     android:layout_below="@id/delivery_time_tv"
                     android:layout_marginBottom="@dimen/x5"
                     android:layout_toRightOf="@id/payment_deadline"
-                    android:text="~~"
+                    android:text=""
                     android:textSize="@dimen/x10" />
 
                 <TextView

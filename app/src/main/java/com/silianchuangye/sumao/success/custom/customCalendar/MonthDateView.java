@@ -624,7 +624,7 @@ public class MonthDateView extends View {
 	 *
 	 */
 	public interface DateClick{
-		public void onClickOnDate();
+		void onClickOnDate();
 	}
 
 	/**

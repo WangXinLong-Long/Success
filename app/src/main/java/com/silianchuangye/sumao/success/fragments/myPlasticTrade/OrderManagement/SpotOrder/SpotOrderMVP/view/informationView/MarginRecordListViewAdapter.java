@@ -81,14 +81,15 @@ public class MarginRecordListViewAdapter extends BaseAdapter {
             viewHolder.capital.setTextColor(Color.RED);
             viewHolder.frozen_tv.setText("已冻结");
         }else if (lists.get(position).get("type").equals("force")){
-            viewHolder.frozen_tv.setTextColor(Color.YELLOW);
-            viewHolder.capital_yuan.setTextColor(Color.YELLOW);
-            viewHolder.capital.setTextColor(Color.YELLOW);
+            viewHolder.frozen_tv.setTextColor(context.getResources().getColor(R.color.orange));
+            viewHolder.capital_yuan.setTextColor(context.getResources().getColor(R.color.orange));
+            viewHolder.capital.setTextColor(context.getResources().getColor(R.color.orange));
             viewHolder.frozen_tv.setText("已强扣");
         }else {
-            viewHolder.frozen_tv.setTextColor(Color.GREEN);
-            viewHolder.capital_yuan.setTextColor(Color.GREEN);
-            viewHolder.capital.setTextColor(Color.GREEN);
+            viewHolder.frozen_tv.setTextColor(context.getResources().getColor(R.color.green_normal)   );
+            viewHolder.capital_yuan.setTextColor(context.getResources().getColor(R.color.green_normal) );
+            viewHolder.capital.setTextColor(context.getResources().getColor(R.color.green_normal) );
+            viewHolder.capital.setTextColor(context.getResources().getColor(R.color.green_normal) );
             viewHolder.frozen_tv.setText("已解冻");
         }
         //viewHolder.frozen_tv.setText(lists.get(position).get("type").toString());

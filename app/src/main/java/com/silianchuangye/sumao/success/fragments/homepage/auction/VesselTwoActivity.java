@@ -79,7 +79,7 @@ public class VesselTwoActivity extends AppCompatActivity {
         }
         list.add(map2);
         Map<String,Object> map3=new Hashtable<String,Object>();
-        map3.put("text","当前保证金金额保证金金额");
+        map3.put("text","当前保证金金额");
         if (auctionDetailBean.getCl_baozhj().equals("%")){
             map3.put("value","--");
         }else {

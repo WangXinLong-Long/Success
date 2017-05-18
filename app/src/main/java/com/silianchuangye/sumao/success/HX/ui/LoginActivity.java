@@ -97,8 +97,8 @@ public class LoginActivity extends BaseActivity {
 	private void createRandomAccountAndLoginChatServer() {
 
 		SharedPreferences sharedPreferences=getSharedPreferences("sumao", Activity.MODE_PRIVATE);
-		 //randomAccount=sharedPreferences.getString("zhanghao","");
-		randomAccount="guanjun123";
+		randomAccount=sharedPreferences.getString("zhanghao","");
+		//randomAccount="guanjun123";
 		Log.d("Login",randomAccount);
 		String phone=sharedPreferences.getString("phone","");
 		userPwd=randomAccount+phone;

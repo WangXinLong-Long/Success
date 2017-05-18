@@ -172,7 +172,35 @@ public class CompanyUserUpdateActivity extends AppCompatActivity {
                 new Thread(){
                     @Override
                     public void run() {
-                        yanzhengyouxiang();
+                        if(!name.equals(list.get(1).get("value").toString())||!jiaose.equals(list.get(4).get("value").toString())||!state.equals(list.get(5).get("value").toString())){
+                           // updateUser();
+                            if (!phone.equals(list.get(2).get("value").toString())&&email.equals(list.get(3).get("value").toString())){
+                                yanzhengphone();//手机hao改变，邮箱没有变
+                            }else if(phone.equals(list.get(2).get("value").toString())&&!email.equals(list.get(3).get("value").toString())){
+                                yanzhengyouxiang(false);
+                            }else if (phone.equals(list.get(2).get("value").toString())&&email.equals(list.get(3).get("value").toString())){
+                                //没有改变
+                                updateUser();
+                            }else {
+                                yanzhengyouxiang(true);
+                            }
+                        }else {
+                            if (!phone.equals(list.get(2).get("value").toString())&&email.equals(list.get(3).get("value").toString())){
+                                //yanzhengphone();//手机hao改变，邮箱没有变
+                                updateUser();
+                            }else if(phone.equals(list.get(2).get("value").toString())&&!email.equals(list.get(3).get("value").toString())){
+                               // yanzhengyouxiang(false);
+                                updateUser();
+                            }else if (phone.equals(list.get(2).get("value").toString())&&email.equals(list.get(3).get("value").toString())){
+                                //没有改变
+                               // updateUser();
+                               // Toast.makeText(CompanyUserUpdateActivity.this, "请输入修改后的信息!", Toast.LENGTH_SHORT).show();
+                                finish();
+                            }else {
+                                yanzhengyouxiang(true);
+                            }
+                        }
+
 
                     }
                 }.start();
@@ -183,7 +211,12 @@ public class CompanyUserUpdateActivity extends AppCompatActivity {
 
 
     }
-    public void yanzhengyouxiang(){
+    public void info(){
+        Toast.makeText(CompanyUserUpdateActivity.this, "请修改信息后再保存!", Toast.LENGTH_SHORT).show();
+    }
+
+
+    public void yanzhengyouxiang( final boolean istrue){
         String url= SuMaoConstant.SUMAO_IP+"/rest/model/atg/store/profile/RegistrationActor/userVerify";
         RequestParams rp=new RequestParams(url);
         rp.addParameter("type","email");
@@ -193,7 +226,12 @@ public class CompanyUserUpdateActivity extends AppCompatActivity {
             public void onSuccess(String result) {
                 Log.d("验证邮箱的返回值",result);
                 if (result.contains("true")){
-                    yanzhengphone();
+                    //yanzhengphone();
+                    if (istrue==true){
+                        yanzhengphone();
+                    }else{
+                        updateUser();
+                    }
                 }else{
                     Toast.makeText(CompanyUserUpdateActivity.this, "该邮箱已经注册!", Toast.LENGTH_SHORT).show();
                 }
@@ -218,20 +256,18 @@ public class CompanyUserUpdateActivity extends AppCompatActivity {
     public void yanzhengphone(){
         String url= SuMaoConstant.SUMAO_IP+"/rest/model/atg/store/profile/RegistrationActor/userVerify";
         RequestParams rp=new RequestParams(url);
-//        jsonObject.put("type", "mobile");
-//        jsonObject.put("attr", telephone);
         rp.addParameter("type","mobile");
         rp.addParameter("attr",phone);
         x.http().post(rp, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Log.d("验证邮箱的返回值",result);
+                Log.d("验证手机号的返回值",result);
                 if (result.contains("true")){
                     updateUser();
 
 
                 }else{
-                    Toast.makeText(CompanyUserUpdateActivity.this, "该邮箱已经注册!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CompanyUserUpdateActivity.this, "该手机号已经注册!", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -363,7 +399,7 @@ public class CompanyUserUpdateActivity extends AppCompatActivity {
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-
+                Toast.makeText(CompanyUserUpdateActivity.this, "修改失败", Toast.LENGTH_SHORT).show();
             }
 
             @Override

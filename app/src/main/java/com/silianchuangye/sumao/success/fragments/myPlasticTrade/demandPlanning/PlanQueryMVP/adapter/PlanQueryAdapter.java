@@ -39,13 +39,12 @@ public class PlanQueryAdapter extends BaseAdapter {
     private List<Map<String,Object>> list;
     private LayoutInflater inflater;
     private Button bt_search;
+    private RelativeLayout foot;
     private int number;
     String id;
     private TextView tv_seeplan_left_dingdannum;
-//    private List<PlanBean.PlanOrderList> list;
     public PlanQueryAdapter(Context context,List<Map<String,Object>> list) {
         this.context = context;
-        //list = new ArrayList<>();
         this.list=list;
         inflater = LayoutInflater.from(context);
     }
@@ -54,14 +53,9 @@ public class PlanQueryAdapter extends BaseAdapter {
         list.addAll(data);
     }
 
-//       public void addData(List<PlanBean.PlanOrderList> data) {
-//        list.addAll(data);
-//   }
-
     public void clear() {
         list.clear();
     }
-
     @Override
     public int getCount() {
         Log.d("list的长度","list的长度"+list.size());
@@ -82,10 +76,11 @@ public class PlanQueryAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder = null;
         number=position;
-        if (convertView == null) {
+        //if (convertView == null) {
             viewHolder = new ViewHolder();
             convertView = inflater.inflate(R.layout.itemplan, null);
             //TextView tv_seeplan_left_dingdannum=(TextView) convertView.findViewById(R.id.tv_seeplan_left_dingdannum);
+            foot= (RelativeLayout) convertView.findViewById(R.id.layout_foot);
             bt_search = (Button) convertView.findViewById(R.id.btn_seeplan_seeplan);
 //            需求或订单
             viewHolder.demand_or_order = ((TextView) convertView.findViewById(R.id.tv_seeplan_right_dingdannum));
@@ -120,62 +115,22 @@ public class PlanQueryAdapter extends BaseAdapter {
             tv_seeplan_left_dingdannum= (TextView) convertView.findViewById(R.id.tv_seeplan_left_dingdannum);
             viewHolder.view_original_plan = ((RelativeLayout) convertView.findViewById(R.id.view_original_plan));
             convertView.setTag(viewHolder);
-        }else {
-            viewHolder = ((ViewHolder) convertView.getTag());
-        }
+//        }else {
+//            viewHolder = ((ViewHolder) convertView.getTag());
+//        }
         viewHolder.demand_date_num.setText(list.get(position).get("scheduleDate").toString());
         viewHolder.demand_or_order_number.setText(list.get(position).get("planID").toString());
-        viewHolder.demand_or_order.setTextColor(context.getResources().getColor(R.color.btn_blue_normal));
-        tv_seeplan_left_dingdannum.setTextColor(context.getResources().getColor(R.color.btn_blue_normal));
-        //viewHolder.demand_date_num.setText(list.get(position).get("scheduleDateChange").toString());
         viewHolder.date_of_presentation_num.setText(list.get(position).get("registerDate").toString());
         if (list.get(position).containsKey("categoryName")) {
             viewHolder.classification_content.setText(list.get(position).get("categoryName").toString());
         }else{
             viewHolder.classification_content.setText(" ");
         }
-        final String state=list.get(position).get("demandScheduleState").toString();
         viewHolder.qiye.setText(list.get(position).get("sellerEnterpriseName").toString());
-        if (state.equals("confirmed")){
-            viewHolder.zhuangtai.setText("已确认");
-//tv_seeplan_right_dingdannum
-            viewHolder.demand_or_order.setVisibility(View.VISIBLE);
-            tv_seeplan_left_dingdannum.setVisibility(View.VISIBLE);
-            viewHolder.copy_button.setTextColor(context.getResources().getColor(R.color.btn_blue_normal));
-            bt_search.setVisibility(View.VISIBLE);
-            final ViewHolder finalViewHolder = viewHolder;
-            viewHolder.copy_button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //获取剪贴板管理器：
-                    ClipboardManager cm = (ClipboardManager)context.getSystemService(Context.CLIPBOARD_SERVICE);
-// 创建普通字符型ClipData
-                    ClipData mClipData = ClipData.newPlainText("Label", id);
-// 将ClipData内容放到系统剪贴板里。
-                    cm.setPrimaryClip(mClipData);
-                }
-            });
-
-        }else if (state.equals("Pending")||state.equals("")){
-
-            viewHolder.zhuangtai.setText("待确认");
-            bt_search.setVisibility(View.GONE);
-            viewHolder.demand_or_order.setVisibility(View.GONE);
-            tv_seeplan_left_dingdannum.setVisibility(View.GONE);
-            viewHolder.copy_button.setTextColor(context.getResources().getColor(R.color.gray));
-
-        }else if (state.equals ("canceled")){
-            viewHolder.zhuangtai.setText("已取消");
-            bt_search.setVisibility(View.GONE);
-            viewHolder.demand_or_order.setVisibility(View.GONE);
-            tv_seeplan_left_dingdannum.setVisibility(View.GONE);
-            viewHolder.copy_button.setTextColor(context.getResources().getColor(R.color.gray));
-        }
         viewHolder.product_name_content.setText( list.get(position).get("productName").toString());
         if (list.get(position).toString().contains("prePirce")&&!list.get(position).get("prePirce").toString().equals("")){
             viewHolder.price_content1.setText(list.get(position).get("prePirce").toString());
         }else{
-            // viewHolder.price_content1.setVisibility(View.GONE);
         }
         viewHolder.number.setText(list.get(position).get("quantity").toString());
         if (list.get(position).toString().contains("preAmount")&&!list.get(position).get("preAmount").toString().equals("")){
@@ -185,20 +140,51 @@ public class PlanQueryAdapter extends BaseAdapter {
         }
         viewHolder.warehouse.setText(list.get(position).get("warehouseName").toString());
         viewHolder.wuliu.setText(list.get(position).get("logisticsName").toString());
-        viewHolder.demand_or_order.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(context, SpotOrder.class);
-                intent.putExtra("id",id);
-                context.startActivity(intent);
+
+
+            if (list.get(position).get("demandScheduleState").toString().equals("confirmed")){
+                viewHolder.zhuangtai.setText("已确认");
+                Log.d("已确认","已确认"+id);
+                id=list.get(position).get("orderId").toString();
+                Log.d("orderId100029000",id);
+                viewHolder.demand_or_order.setText(id);
+                viewHolder.demand_or_order.setVisibility(View.VISIBLE);
+                tv_seeplan_left_dingdannum.setVisibility(View.VISIBLE);
+                viewHolder.demand_or_order.setTextColor(context.getResources().getColor(R.color.btn_blue_normal));
+                tv_seeplan_left_dingdannum.setTextColor(context.getResources().getColor(R.color.btn_blue_normal));
+                viewHolder.copy_button.setTextColor(context.getResources().getColor(R.color.btn_blue_normal));
+                bt_search.setVisibility(View.VISIBLE);
+//            final ViewHolder finalViewHolder = viewHolder;
+                viewHolder.copy_button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //获取剪贴板管理器：
+                        ClipboardManager cm = (ClipboardManager)context.getSystemService(Context.CLIPBOARD_SERVICE);
+                        // 创建普通字符型ClipData
+                        ClipData mClipData = ClipData.newPlainText("Label", id);
+                        // 将ClipData内容放到系统剪贴板里。
+                        cm.setPrimaryClip(mClipData);
+                    }
+                });
+
+            }else if (list.get(position).get("demandScheduleState").toString().equals("Pending")){
+                bt_search.setVisibility(View.GONE);
+                viewHolder.zhuangtai.setText("待确认");
+                foot.setVisibility(View.GONE);
+            }else if (list.get(position).get("demandScheduleState").toString().equals ("canceled")||!list.get(position).toString().contains("demandScheduleState")){
+                viewHolder.zhuangtai.setText("已取消");
+                bt_search.setVisibility(View.GONE);
+                foot.setVisibility(View.GONE);
             }
-        });
-        if (list.get(position).toString().contains("orderId")) {
-            id=list.get(position).get("orderId").toString();
-            viewHolder.demand_or_order.setText(id);
-            Log.d("订单号的值",list.get(position).get("orderId").toString());
-            Log.d("订单号的值",id);
-            bt_search.setVisibility(View.VISIBLE);
+            viewHolder.demand_or_order.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent=new Intent(context, SpotOrder.class);
+                    intent.putExtra("id",id);
+                    context.startActivity(intent);
+                }
+            });
+
             bt_search.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -210,12 +196,12 @@ public class PlanQueryAdapter extends BaseAdapter {
                     intent.putExtra("cangku",list.get(number).get("warehouseName").toString());
                     intent.putExtra("number",list.get(number).get("quantity").toString());
                     intent.putExtra("logisticsName",list.get(number).get("logisticsName").toString());
-                    if (list.get(position).toString().contains("orderId")&&!list.get(position).toString().equals("")){
-                        intent.putExtra("orderId",id);
-                    }else{
-                        intent.putExtra("orderId"," ");
-                    }
-                    intent.putExtra("state",state);
+//                    if (list.get(position).toString().contains("orderId")&&!list.get(position).toString().equals("")){
+//                        intent.putExtra("orderId",id);
+//                    }else{
+//                        intent.putExtra("orderId"," ");
+//                    }
+                    intent.putExtra("state",list.get(position).get("demandScheduleState").toString());
                     if (list.get(position).toString().contains("scheduleDateChange")&&!list.get(position).get("scheduleDateChange").toString().equals("")){
                         intent.putExtra("riqinew",list.get(number).get("scheduleDateChange").toString());
                     }else{
@@ -224,17 +210,14 @@ public class PlanQueryAdapter extends BaseAdapter {
 
                     if (list.get(position).toString().contains("productNameChange")){
                         String nameNew=list.get(position).get("productNameChange").toString();
-                        Log.d("产品名称的值",list.get(number).get("productNameChange").toString());
                         if (nameNew!=null&& nameNew!="" && !nameNew.equals("")) {
-                            // viewHolder.product_name_content.setText(list.get(position).get("productNameChange").toString());
-                            intent.putExtra("nameNew", list.get(number).get("productNameChange").toString());
+                            intent.putExtra("nameNew", nameNew);
                         }else{
                             intent.putExtra("nameNew",list.get(number).get("productName").toString());
                         }
-            }else{
+                    }else{
                         intent.putExtra("nameNew",list.get(number).get("productName").toString());
-
-            }
+                    }
 
             if (!list.get(position).toString().contains("quantityChange")){
                 String shuliang=list.get(number).get("quantity").toString();
@@ -285,11 +268,11 @@ public class PlanQueryAdapter extends BaseAdapter {
                     context.startActivity(intent);
                 }
             });
-        }else {
-            Log.d("进的事else","else");
-            viewHolder.demand_or_order.setText(" ");
-            bt_search.setVisibility(View.GONE);
-        }
+//        }else {
+//            Log.d("进的事else","else");
+//           // viewHolder.demand_or_order.setText(" ");
+//          //  bt_search.setVisibility(View.GONE);
+//        }
 
 
         return convertView;

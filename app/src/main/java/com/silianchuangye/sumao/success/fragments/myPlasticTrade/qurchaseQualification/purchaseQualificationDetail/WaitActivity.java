@@ -120,7 +120,7 @@ public class WaitActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.bt_Search_xingming:
                 Intent intent=new Intent();
                 intent.setClass(WaitActivity.this, DataDetailsActivity.class);
-                intent.putExtra("title", corporate_name_content.getText().toString());
+                intent.putExtra("title", name_content.getText().toString());
 //                判断是否需要上传图片
                 intent.putExtra("picture", true);
                 intent.putExtra("resouce","search");
@@ -130,7 +130,7 @@ public class WaitActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.bt_Search_qyName:
                 Intent intent1=new Intent();
                 intent1.setClass(WaitActivity.this, DataDetailsActivity.class);
-                intent1.putExtra("title", name_content.getText().toString());
+                intent1.putExtra("title",corporate_name_content .getText().toString());
                 intent1.putExtra("resouce","search");
 //                判断是否需要上传图片
                 intent1.putExtra("picture", true);

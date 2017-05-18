@@ -86,6 +86,6 @@ public class SellerItemAdapter extends BaseAdapter {
         RelativeLayout relative;
     }
     public interface SellerItemCall{
-        public void call(int position);
+        void call(int position);
     }
 }

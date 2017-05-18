@@ -18,11 +18,9 @@ import com.jingchen.pulltorefresh.PullToRefreshLayout;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.AuctionMVP.adapter.AuctionListViewAdapter;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.AuctionMVP.bean.AuctionDetailBean;
-import com.silianchuangye.sumao.success.fragments.homepage.auction.AuctionMVP.bean.AuctionSessionBean;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.AuctionMVP.bean.ListBean;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.AuctionMVP.presenter.AuctionPresenter;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.openAuction.openAuctionView.OpenAcutionOrMifengActivity;
-import com.silianchuangye.sumao.success.fragments.homepage.auction.openAuction.openAuctionView.OpenAuctionActivity;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 

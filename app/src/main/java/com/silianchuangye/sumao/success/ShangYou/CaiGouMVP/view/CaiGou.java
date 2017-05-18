@@ -519,14 +519,14 @@ public class CaiGou extends AppCompatActivity implements OnClickListener, Adapte
     class MyClick implements DatePickerDialog.OnDateSetListener {
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            end_pop_date.setText(year + "-" + monthOfYear + "-" + dayOfMonth);
+            end_pop_date.setText(year + "-" +(monthOfYear+1) + "-" + dayOfMonth);
         }
     }
 
     class MyClick1 implements DatePickerDialog.OnDateSetListener {
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            start_pop_date.setText(year + "-" + monthOfYear + "-" + dayOfMonth);
+            start_pop_date.setText(year + "-" + (monthOfYear+1) + "-" + dayOfMonth);
         }
     }
 

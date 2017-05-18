@@ -191,7 +191,8 @@ public class PresellallFragment extends Fragment implements IPresellallFragmentV
                 public void handleMessage(Message msg) {
                     pageNum = "1";
                     // 千万别忘了告诉控件刷新完毕了哦！
-                    sendMy(searchTrateType,searchOrderType, pageNum, subType, Kpstate, startDate, endDate, company, OrderId, true);
+                   // sendMy(searchTrateType,searchOrderType, pageNum, subType, Kpstate, startDate, endDate, company, OrderId, true);
+                     sendMy("","", pageNum, "", "", "", "", "", "", true);
                     pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
                 }
             }.sendEmptyMessageDelayed(0, 1000);

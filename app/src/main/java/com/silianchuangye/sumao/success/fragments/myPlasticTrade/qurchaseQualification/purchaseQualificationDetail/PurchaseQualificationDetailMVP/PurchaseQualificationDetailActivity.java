@@ -23,6 +23,7 @@ import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.silianchuangye.sumao.success.R;
+import com.silianchuangye.sumao.success.adapter.LogisticsDemandExpandableListViewAdapter;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.qurchaseQualification.purchaseQualificationDetail.DataDetailsActivity;
 //import com.silianchuangye.sumao.success.fragments.myPlasticTrade.qurchaseQualification.purchaseQualificationDetail.PurchaseQualificationDetailMVP.presenter.PurchaseQualificationDetailPresenter;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.qurchaseQualification.purchaseQualificationDetail.PurchaseQualificationDetailMVP.view.IPurchaseQualificationDetailView;
@@ -79,12 +80,12 @@ public class PurchaseQualificationDetailActivity extends AppCompatActivity imple
     private String id;
     private String dynSessConf;
 
-    private String path;
+    private String path="";
     private String qy_Name;
     private String number;
     private String people;
     private String fileCode;
-    private String path_qyName, path_Name, pathbank;
+    private String path_qyName="", path_Name="", pathbank="";
     private SharedPreferences sp;
     private String unique;
     private ListView lvDemo;
@@ -226,14 +227,24 @@ public class PurchaseQualificationDetailActivity extends AppCompatActivity imple
 //                判断是否需要上传图片
                 intent.putExtra("picture", true);
                 intent.putExtra("resouce", "abc");
-                intent.putExtra("path", path);
+                intent.putExtra("path", path_qyName);
+                intent.putExtra("value",corporate_name_content.getText().toString());
                 startActivityForResult(intent, CORPORATE_NAME);
                 break;
             case R.id.customer_bank_license_rl:
                 intent.setClass(PurchaseQualificationDetailActivity.this, DataDetailsActivity.class);
                 intent.putExtra("title", customer_bank_license.getText().toString());
                 intent.putExtra("picture", true);
-                intent.putExtra("path", "abc");
+                if (pathbank.equals("")) {
+                    intent.putExtra("path", "abc");
+                }else{
+                    intent.putExtra("path", pathbank);
+                }
+                if (customer_bank_license_content.getText().toString().equals("请上传银行卡扫描件")){
+                    intent.putExtra("value"," ");
+                }else{
+                    intent.putExtra("value",customer_bank_license_content.getText().toString());
+                }
                 intent.putExtra("resouce", "abc");
                 startActivityForResult(intent, CUSTOMER_BANK_LICENSE);
                 break;
@@ -242,6 +253,12 @@ public class PurchaseQualificationDetailActivity extends AppCompatActivity imple
                 intent.putExtra("title", annual_demand.getText().toString());
                 intent.putExtra("picture", false);
                 intent.putExtra("path", "abc");
+//                Log.d("数量的值",annual_demand_content.getText().toString());
+                if (annual_demand_content.getText().toString().equals("吨/年")){
+                    intent.putExtra("value"," ");
+                }else{
+                    intent.putExtra("value",annual_demand_content.getText().toString().substring(0,annual_demand_content.getText().toString().length()-3));
+                }
                 intent.putExtra("resouce", "abc");
                 startActivityForResult(intent, ANNUAL_DEMAND);
                 break;
@@ -257,7 +274,16 @@ public class PurchaseQualificationDetailActivity extends AppCompatActivity imple
                 intent.setClass(PurchaseQualificationDetailActivity.this, DataDetailsActivity.class);
                 intent.putExtra("title", name.getText().toString());
                 intent.putExtra("picture", true);
-                intent.putExtra("path", "abc");
+                if (path_Name.equals("")) {
+                    intent.putExtra("path", "abc");
+                }else{
+                    intent.putExtra("path",path_Name);
+                }
+                if (name_content.getText().toString().equals("填写姓名并上传身份证")){
+                    intent.putExtra("value"," ");
+                }else{
+                    intent.putExtra("value",name_content.getText().toString());
+                }
                 intent.putExtra("resouce", "abc");
                 startActivityForResult(intent, NAME);
                 break;
@@ -266,6 +292,11 @@ public class PurchaseQualificationDetailActivity extends AppCompatActivity imple
                 intent.putExtra("title", mailbox.getText().toString());
                 intent.putExtra("picture", false);
                 intent.putExtra("resouce", "abc");
+                if (mailbox_content.getText().toString().equals("请填写手机号")){
+                    intent.putExtra("value","");
+                }else{
+                    intent.putExtra("value",mailbox_content.getText().toString());
+                }
                 intent.putExtra("path", "abc");
                 startActivityForResult(intent, MAILBOX);
                 break;
@@ -274,6 +305,11 @@ public class PurchaseQualificationDetailActivity extends AppCompatActivity imple
                 intent.putExtra("title", telephone.getText().toString());
                 intent.putExtra("path", "abc");
                 intent.putExtra("resouce", "abc");
+                if (telephone_content.getText().toString().equals("请填写手机号")){
+                    intent.putExtra("value"," ");
+                }else{
+                    intent.putExtra("value",telephone_content.getText().toString());
+                }
                 intent.putExtra("picture", false);
                 startActivityForResult(intent, TELEPHONE);
                 break;
@@ -282,19 +318,41 @@ public class PurchaseQualificationDetailActivity extends AppCompatActivity imple
                 intent.putExtra("title", fax_number.getText().toString());
                 intent.putExtra("picture", false);
                 intent.putExtra("path", "abc");
+                if (fax_number_content.getText().toString().equals("请填写传真号")){
+                    intent.putExtra("value","");
+                }else{
+                    intent.putExtra("value",fax_number_content.getText().toString());
+                }
                 intent.putExtra("resouce", "abc");
                 startActivityForResult(intent, FAX_NUMBER);
                 break;
             case R.id.submit_button:
                 String corporateName = corporate_name_content.getText().toString();
                 LogUtils.log("企业法人姓名：" + corporateName);
-                new Thread() {
-                    @Override
-                    public void run() {
-                        super.run();
-                        commitShangyou();
-                    }
-                }.start();
+                Log.d("银行许可证",customer_bank_license_content.getText().toString());
+                Log.d("年需求量",annual_demand_content.getText().toString());
+                Log.d("企业人数",number_of_employees_content.getText().toString());
+                Log.d("姓名",name_content.getText().toString());
+                Log.d("邮箱",mailbox_content.getText().toString());
+                Log.d("手机号",telephone_content.getText().toString());
+                Log.d("传真号",fax_number_content.getText().toString());
+                if (!corporate_name_content.getText().toString().equals("")&&!customer_bank_license_content.getText().toString().equals("")
+                        &&!annual_demand_content.equals("吨/年")&&!number_of_employees_content.getText().toString().equals("人")
+                && !name_content.getText().toString().equals("")&&!mailbox_content.getText().toString().equals("")
+                &&!telephone_content.getText().toString().equals("")&&!fax_number_content.getText().toString().equals("")
+                         ) {
+
+                    new Thread() {
+                        @Override
+                        public void run() {
+                            super.run();
+                            commitShangyou();
+                        }
+                    }.start();
+                }else{
+                    Toast.makeText(PurchaseQualificationDetailActivity.this, "请填写完整的信息!", Toast.LENGTH_SHORT).show();
+                }
+
                 break;
             case R.id.number_of_employees_rl:
                 lvDemo.setVisibility(View.VISIBLE);
@@ -313,6 +371,7 @@ public class PurchaseQualificationDetailActivity extends AppCompatActivity imple
                 if (resultCode == RESULT_OK) {
                     String returnInfo = data.getStringExtra("returnInfo");
                     path_qyName = data.getStringExtra("path");
+                    Log.d("path的值",path_qyName);
                     corporate_name_content.setText(returnInfo);
                 }
                 break;
@@ -321,6 +380,7 @@ public class PurchaseQualificationDetailActivity extends AppCompatActivity imple
                     String returnInfo = data.getStringExtra("returnInfo");
                     customer_bank_license_content.setText(returnInfo);
                     pathbank = data.getStringExtra("path");
+                   // Log.d("path的值",pathbank);
                 }
                 break;
             case ANNUAL_DEMAND:
@@ -342,6 +402,7 @@ public class PurchaseQualificationDetailActivity extends AppCompatActivity imple
                     String returnInfo = data.getStringExtra("returnInfo");
                     name_content.setText(returnInfo);
                     path_Name = data.getStringExtra("path");
+                    Log.d("path的值",path_Name);
                 }
                 break;
             case MAILBOX:
@@ -377,14 +438,16 @@ public class PurchaseQualificationDetailActivity extends AppCompatActivity imple
                 try {
                     if (result.contains("sucess")) {
                         JSONObject jsonObject = new JSONObject(result);
-                        path = jsonObject.getString("cl_qysmj");
-                        Log.d("图片路径的值", path);
+                        if (result.contains("cl_qysmj")) {
+                            path_qyName = jsonObject.getString("cl_qysmj");
+                            Log.d("图片路径的值", path_qyName);
+                        }
                         qy_Name = jsonObject.getString("cl_qyfrxm");
                         Log.d("企业法人的值", qy_Name);
                         corporate_name_content.setText(qy_Name);
                         SharedPreferences sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sp.edit();
-                        editor.putString("path", path);
+                        editor.putString("path", path_qyName);
                         editor.commit();
                     }
 
@@ -430,12 +493,24 @@ public class PurchaseQualificationDetailActivity extends AppCompatActivity imple
         rp.addParameter("contactEmail", mailbox_content.getText().toString());
         rp.addParameter("contactMobile", telephone_content.getText().toString());
         rp.addParameter("contactFax", fax_number_content.getText().toString());
-        rp.addParameter("corporationNameImgae", path_qyName);
+        if (!path_qyName.equals("")) {
+            rp.addParameter("corporationNameImgae", path_qyName);
+        }else{
+            Toast.makeText(PurchaseQualificationDetailActivity.this, "请上传企业法人扫描件!", Toast.LENGTH_SHORT).show();
+        }
         Log.d("企业法人的图片的值", path_qyName);
-        rp.addParameter("bankPermitImgaes", pathbank);
+        if (!pathbank.equals("")) {
+            rp.addParameter("bankPermitImgaes", pathbank);
+        }else{
+            Toast.makeText(PurchaseQualificationDetailActivity.this, "请上传银行扫描件!", Toast.LENGTH_SHORT).show();
+        }
         Log.d("银行图片的值", pathbank);
-        rp.addParameter("contactImgaes", path_Name);
-        Log.d("名称的值", path_Name);
+        if (!path_Name.equals("")) {
+            rp.addParameter("contactImgaes", path_Name);
+        }else {
+            Log.d("名称的值", path_Name);
+            Toast.makeText(PurchaseQualificationDetailActivity.this, "请上传姓名的扫描件!", Toast.LENGTH_SHORT).show();
+        }
         rp.addParameter("_dynSessConf", dynSessConf);
         Log.d("提交的url", rp.toString());
         x.http().post(rp, new Callback.CommonCallback<String>() {
@@ -478,6 +553,7 @@ public class PurchaseQualificationDetailActivity extends AppCompatActivity imple
                 intent.putExtra("id", id);
                 intent.putExtra("result", result);
                 startActivity(intent);
+                finish();
             }
 
             @Override

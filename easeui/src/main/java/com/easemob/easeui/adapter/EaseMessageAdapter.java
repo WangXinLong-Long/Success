@@ -92,7 +92,7 @@ public class EaseMessageAdapter extends BaseAdapter{
 		private void refreshList() {
 			// UI线程不能直接使用conversation.getAllMessages()
 			// 否则在UI刷新过程中，如果收到新的消息，会导致并发问题
-			messages = (EMMessage[]) conversation.getAllMessages().toArray(new EMMessage[conversation.getAllMessages().size()]);
+			messages = conversation.getAllMessages().toArray(new EMMessage[conversation.getAllMessages().size()]);
 			for (int i = 0; i < messages.length; i++) {
 				// getMessage will set message as read status
 				conversation.getMessage(i);

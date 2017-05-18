@@ -79,7 +79,7 @@ public class PagerTwo extends BasePager {
 //          设置ViewPager和tabLayout相关联
         tabLayout.setupWithViewPager(viewPager);
 //        设置关联模式
-        tabLayout.setTabMode(tabLayout.MODE_FIXED);
+        tabLayout.setTabMode(TabLayout.MODE_FIXED);
 //          显示或隐藏日历
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override

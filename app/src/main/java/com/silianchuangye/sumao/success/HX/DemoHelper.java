@@ -408,7 +408,7 @@ public class DemoHelper {
 	}
 	
 	public DemoModel getModel(){
-        return (DemoModel) demoModel;
+        return demoModel;
     }
 	
     
@@ -516,10 +516,7 @@ public class DemoHelper {
     	if(jsonObj == null){
 			return false;
 		}
-		if(jsonObj.has("order") || jsonObj.has("track")){
-			return true;
-		}
-		return false;
+        return jsonObj.has("order") || jsonObj.has("track");
     }
 
     /**

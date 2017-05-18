@@ -148,7 +148,7 @@ public class AlreadyPaidActivity extends Activity implements View.OnClickListene
                         for(int i=0;i<jay.length();i++) {
                             model = new SpotOrderModel();
                             JSONObject j = (JSONObject) jay.get(i);
-                            String cl = (String) j.getString("cl");
+                            String cl = j.getString("cl");
                             String type=j.getString("type");//类型
                             String type1=getType(type);
                             Log.e("TAG","类型-----"+type1);

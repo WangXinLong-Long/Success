@@ -345,6 +345,8 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
         payment_deadline_et.setText(/*preSaleDetailBean.getCl_xiaobian()*/"~~");
         //       交货时间
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat simple=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        payment_deadline_et.setText(simple.format(Double.parseDouble(preSaleDetailBean.getDeliveryPeriodEnd())));
         delivery_time_et.setText(simpleDateFormat.format(Double.parseDouble(preSaleDetailBean.getDeliveryPeriodStart() + "")));
         delivery_time_et_end.setText(simpleDateFormat.format(Double.parseDouble(preSaleDetailBean.getDeliveryPeriodEnd() + "")));
         //       仓库地址
@@ -1021,13 +1023,8 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
             int top = leftTop[1];
             int bottom = top + v.getHeight();
             int right = left + v.getWidth();
-            if (event.getX() > left && event.getX() < right
-                    && event.getY() > top && event.getY() < bottom) {
-                // 点击的是输入框区域，保留点击EditText的事件
-                return false;
-            } else {
-                return true;
-            }
+            return !(event.getX() > left && event.getX() < right
+                    && event.getY() > top && event.getY() < bottom);
         }
         return false;
     }

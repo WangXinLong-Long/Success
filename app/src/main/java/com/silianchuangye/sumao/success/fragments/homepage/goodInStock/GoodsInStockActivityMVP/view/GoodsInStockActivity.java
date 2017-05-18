@@ -168,31 +168,27 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
         prl = ((PullToRefreshLayout) findViewById(R.id.refresh_view));
 
         pre_sale_listView = ((ListView) prl.getPullableView());
-        LogUtils.log("标题是--->"+title);
+
         Intent intent = getIntent();
-
         title= intent.getStringExtra("title");
+        LogUtils.log("标题是--->"+title);
         if (title.equals("现货") || title.equals("预售")) {
-
             biaoti=intent.getStringExtra("biaoti");
             fenleiString1=intent.getStringExtra("id");
             searchProductName("0","");
             tv_screen_title_bar_title.setText(biaoti);
         } else if (title.contains("分类")|| title.contains("应用")|| title.contains("供应商")||title.contains("地区")){
-//            Intent intent = getIntent();
-//            biaoti=intent.getStringExtra("biaoti");
-//            title= intent.getStringExtra("title");
             biaoti=intent.getStringExtra("biaoti");
             fenleiString1=intent.getStringExtra("id");
             searchProductName("0","");
             tv_screen_title_bar_title.setText(biaoti);
-        }else {
+        }else if (title.equals("现货直销")){
+            Log.d("现货直销1111","现货直销");
             Bundle bundle=getIntent().getExtras();
             Id=bundle.getString("sellerCompanyId");
             SharedPreferences sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
             unique=sp.getString("unique","");
             iv_screen_title_bar_search.setVisibility(View.GONE);
-            //title=bundle.getString("title");
             tv_screen_title_bar_title.setText(title);
             xianhuo_zhixiao("1");
             //现货直销的返回值
@@ -229,52 +225,49 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
         iv_screen_title_bar_back.setOnClickListener(this);
     }
 
-    public void xianhuo_zhixiao(String number){
+    public void xianhuo_zhixiao(final String number){
         String url=SuMaoConstant.SUMAO_IP+"/rest/model/com/sumao/mobile/order/purchase/PlanOrderActor/directEnterpriseProductList";
         RequestParams rp=new RequestParams(url);
         rp.addParameter("pageNum",number);
         rp.addParameter("sellerCompanyId",Id);
         rp.addParameter("_dynSessConf",unique);
+        Log.d("现货直销的路径",rp+"");
         x.http().post(rp, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                if (!result.equals("")){
+                Log.d("现货的返回值",result);
+
                     Gson gson = new Gson();
                     DirectSellingBean directSellingBean = gson.fromJson(result, DirectSellingBean.class);
                     List<ProductItemBean> productItem = directSellingBean.getProductItem();
+                    Log.d("数据的长度",productItem.size()+"");
                     if (productItem.size()<=0){
                         Toast.makeText(GoodsInStockActivity.this, "没有找到你查询的产品", Toast.LENGTH_SHORT).show();
                     }else {
+                        if (Double.parseDouble(number)==1){
+                            smClList.clear();
+                        }
                         for (int i = 0; i < productItem.size(); i++) {
-
                             GoodsInStockActivityBean.InBean smCl = new GoodsInStockActivityBean.InBean();
                             smCl.setIn_leixing(productItem.get(i).getType());
                             smCl.setIn_id(productItem.get(i).getProductId());
                             smCl.setIn_cangku(productItem.get(i).getWareHouse());
                             smCl.setIn_cpid(productItem.get(i).getSkuId());
-//                TODO 差价格参数、刷新出来的是现货的数据
                             smCl.setIn_prix("现货");
                             smCl.setIn_name(productItem.get(i).getProductName());
                             smCl.setIn_qiye(productItem.get(i).getSalerEnterpriseName());
                             smCl.setIn_num(productItem.get(i).getQuantity());
                             smClList.add(smCl);
                         }
+                        Log.d("smClList的长度",smClList.size()+"");
 
                         adapter = new PreSaleAdapter(GoodsInStockActivity.this, "现货直销");
                         pre_sale_listView.setAdapter(adapter);
-                        //adapter.addData(smClList);
-                        smClList.addAll(goodsInStockActivityBean.getIn());
-                        Log.d("现货类的长度", goodsInStockActivityBean.getIn().size() + "");
                         Log.d("smClList的长度", smClList.size() + "");
                         adapter.clearData();
                         adapter.addData(smClList);
                         adapter.notifyDataSetChanged();
                     }
-                   // Log.d("number的值",number);
-                }
-                else{
-                    Toast.makeText(GoodsInStockActivity.this, "没有找到数据", Toast.LENGTH_SHORT).show();
-                }
             }
 
             @Override
@@ -875,6 +868,7 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
             page =0;
 
             if (title.equals("现货直销")){
+                smClList.clear();
                 xianhuo_zhixiao("1");
             }else {
                 searchProductName(number,"");
@@ -896,7 +890,8 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
                     Log.d("number的值",number+"");
 
                     if (title.equals("现货直销")){
-                        xianhuo_zhixiao(page+"");
+                        Log.d("现货直销的第几页",(page+1)+"");
+                        xianhuo_zhixiao((page+1)+"");
                     }else {
                         searchProductName(number,"");
                     }

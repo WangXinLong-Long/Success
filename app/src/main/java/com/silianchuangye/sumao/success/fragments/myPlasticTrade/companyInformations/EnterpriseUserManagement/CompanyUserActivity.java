@@ -240,73 +240,75 @@ public class CompanyUserActivity extends AppCompatActivity {
         x.http().post(rp, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Log.d("result的返回值",""+result);
-                try {
-                    JSONObject object = new JSONObject(result);
-                    Log.d("object的值",object.toString());
-                     object_cl=object.getString("cl");
-                    Log.d("object_cl的值",object_cl.toString());
-                    array=new JSONArray(object_cl.toString());
-                    for (int i=0;i<array.length();i++){
-                        Log.d("解析json数组",array.toString());
-                        JSONObject object_info=array.getJSONObject(i);
-                        name=object_info.getString("cl_mingcheng");
-                        email=object_info.getString("cl_shuliang");
-                        phone=object_info.getString("cl_jiner");
-                        jiaose=object_info.getString("cl_qiye");
-                        state=object_info.getString("cl_cangku");
-                        account=object_info.getString("cl_cpid");
-                        user_id=object_info.getString("cl_uid");
-                        Log.d("角色的值",jiaose);
-                        role="";
-                        Map<String,Object> map=new Hashtable<String,Object>();
-                        map.put("account",account);
-                        map.put("name",name);
-                        map.put("phone",phone);
-                        map.put("email",email);
+                Log.d("企业用户管理的result的返回值",""+result);
+                if (!result.contains("fail")) {
+                    try {
+                        JSONObject object = new JSONObject(result);
+                        Log.d("object的值", object.toString());
+                        object_cl = object.getString("cl");
+                        Log.d("object_cl的值", object_cl.toString());
+                        array = new JSONArray(object_cl.toString());
+                        for (int i = 0; i < array.length(); i++) {
+                            Log.d("解析json数组", array.toString());
+                            JSONObject object_info = array.getJSONObject(i);
+                            name = object_info.getString("cl_mingcheng");
+                            email = object_info.getString("cl_shuliang");
+                            phone = object_info.getString("cl_jiner");
+                            jiaose = object_info.getString("cl_qiye");
+                            state = object_info.getString("cl_cangku");
+                            account = object_info.getString("cl_cpid");
+                            user_id = object_info.getString("cl_uid");
+                            Log.d("角色的值", jiaose);
+                            role = "";
+                            Map<String, Object> map = new Hashtable<String, Object>();
+                            map.put("account", account);
+                            map.put("name", name);
+                            map.put("phone", phone);
+                            map.put("email", email);
 
-                        if (jiaose.contains("50")){
-                            role=role+" 企业管理员";
-                            Log.d("role的值",role);
-                            map.put("role",role);
+                            if (jiaose.contains("50")) {
+                                role = role + " 企业管理员";
+                                Log.d("role的值", role);
+                                map.put("role", role);
+                            }
+                            if (jiaose.contains("52")) {
+                                role = role + " 业务员";
+                                Log.d("role的值", role);
+                                map.put("role", role);
+                            }
+                            if (jiaose.contains("53")) {
+                                role = role + " 财务员";
+                                Log.d("role的值", role);
+                                map.put("role", role);
+                                //map.put("role",listitem.get(i).get("role")+" 财务员");
+                            }
+
+
+                            if (state.equals("31")) {
+                                map.put("state", "有效");
+                            } else if (state.equals("32")) {
+                                map.put("state", "无效");
+                            }
+                            listitem.add(map);
+
                         }
-                        if (jiaose.contains("52")){
-                            role=role+" 业务员";
-                            Log.d("role的值",role);
-                            map.put("role",role);
-                        }
-                        if (jiaose.contains("53")){
-                            role=role+" 财务员";
-                            Log.d("role的值",role);
-                            map.put("role",role);
-                            //map.put("role",listitem.get(i).get("role")+" 财务员");
-                        }
+                        adapter = new SimpleAdapter(
+                                CompanyUserActivity.this,
+                                listitem,
+                                R.layout.item_company_user,
+                                new String[]{"account", "name", "phone", "email", "role", "state"},
+                                new int[]{R.id.tvAccount_company_user, R.id.tvName_company_user, R.id.tvTwo_company_user, R.id.tvThree_company_user, R.id.tvrole_company_user, R.id.tvstate_company_user});
+                        elistview.setAdapter(adapter);
+                        adapter.notifyDataSetChanged();
 
-
-
-                        if (state.equals("31"))
-                        {
-                            map.put("state","有效");
-                        }else if (state.equals("32")){
-                            map.put("state","无效");
-                        }
-                        listitem.add(map);
-
+                    } catch (Exception e) {
+                        //Log.d("解析异常",""+e.printStackTrace());
+                        e.printStackTrace();
                     }
-                     adapter=new SimpleAdapter(
-                            CompanyUserActivity.this,
-                            listitem,
-                            R.layout.item_company_user,
-                            new String[]{"account","name","phone","email","role","state"},
-                            new int[]{R.id.tvAccount_company_user,R.id.tvName_company_user,R.id.tvTwo_company_user,R.id.tvThree_company_user,R.id.tvrole_company_user,R.id.tvstate_company_user});
-                    elistview.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
-
-                }catch (Exception e){
-                    //Log.d("解析异常",""+e.printStackTrace());
-                    e.printStackTrace();
+                    Loding.dis();
+                }else{
+                    Toast.makeText(CompanyUserActivity.this, "企业用户信息查看失败!", Toast.LENGTH_SHORT).show();
                 }
-                Loding.dis();
 
             }
 

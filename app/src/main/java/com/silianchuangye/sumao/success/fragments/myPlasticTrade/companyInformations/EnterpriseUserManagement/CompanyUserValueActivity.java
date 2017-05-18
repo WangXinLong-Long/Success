@@ -68,13 +68,22 @@ public class CompanyUserValueActivity extends AppCompatActivity implements IRegi
         bt_Save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (title.equals("电话号码")){
+                if (title.equals("手机号码")||title.equals("电话号码")){
                     et_content_value.setInputType(InputType.TYPE_CLASS_PHONE);
                     registerPhonePresenter.sendRegisterPhoneToServer(et_content_value.getText().toString());
                 }else if (title.equals("邮箱")){
                     et_content_value.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
                     yanzhengyouxiang();
-                }
+                }else if (title.equals("姓名")||title.equals("登录账号")){
+                    account=et_content_value.getText().toString();
+                    Intent intent=new Intent();
+                    intent.putExtra("content",account);
+                    Log.d("姓名的值",account);
+                    setResult(position,intent);
+                    Log.d("姓名的值",position+"");
+                    CompanyUserValueActivity.this.finish();
+                }//else if(title.equals(""))
+
 
 
 
@@ -86,20 +95,22 @@ public class CompanyUserValueActivity extends AppCompatActivity implements IRegi
     public void yanzhengyouxiang(){
         String url= SuMaoConstant.SUMAO_IP+"/rest/model/atg/store/profile/RegistrationActor/userVerify";
         RequestParams rp=new RequestParams(url);
-        rp.addParameter("type","email");
+        rp.addParameter("type","mail");
+        Log.d("邮箱的值",et_content_value.getText().toString());
         rp.addParameter("attr",et_content_value.getText().toString());
         x.http().post(rp, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
                 Log.d("验证邮箱的返回值",result);
                 if (result.contains("true")){
-                                    account=et_content_value.getText().toString();
-                Intent intent=new Intent();
-                intent.putExtra("content",account);
-                Log.d("账号的值",account);
-                setResult(position,intent);
-                Log.d("position的值",position+"");
-                CompanyUserValueActivity.this.finish();
+                    account=et_content_value.getText().toString();
+                    Intent intent=new Intent();
+                    intent.putExtra("content",account);
+                    Log.d("账号的值",account);
+                    setResult(position,intent);
+                    Log.d("position的值",position+"");
+                    CompanyUserValueActivity.this.finish();
+
                 }else{
                     Toast.makeText(CompanyUserValueActivity.this, "该邮箱已经注册!", Toast.LENGTH_SHORT).show();
                 }
@@ -176,6 +187,7 @@ public class CompanyUserValueActivity extends AppCompatActivity implements IRegi
 
     @Override
     public void getRegisterPhoneInfo(String result) {
+        Log.d("验证是否存在的返回值",result);
         if (result.contains("true")){
                 account=et_content_value.getText().toString();
                 Intent intent=new Intent();
@@ -198,13 +210,8 @@ public class CompanyUserValueActivity extends AppCompatActivity implements IRegi
             int top = leftTop[1];
             int bottom = top + v.getHeight();
             int right = left + v.getWidth();
-            if (event.getX() > left && event.getX() < right
-                    && event.getY() > top && event.getY() < bottom) {
-                // 点击的是输入框区域，保留点击EditText的事件
-                return false;
-            } else {
-                return true;
-            }
+            return !(event.getX() > left && event.getX() < right
+                    && event.getY() > top && event.getY() < bottom);
         }
         return false;
     }

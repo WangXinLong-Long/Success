@@ -117,14 +117,15 @@ public class MessagePushActivity extends AppCompatActivity implements View.OnCli
 
         addData();
         layoutPull.setOnPullListener(new GroupBuyingListViewPullListener());
-//        pullList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Intent intent=new Intent(MessagePushActivity.this,MessageDetailsActivity.class);
-//                intent.putExtra("sendId",);
-//
-//            }
-//        });
+        pullList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent=new Intent(MessagePushActivity.this,MessageDetailsActivity.class);
+                intent.putExtra("sendId",sendId);
+                startActivity(intent);
+
+            }
+        });
 
 
     }
@@ -253,7 +254,23 @@ public class MessagePushActivity extends AppCompatActivity implements View.OnCli
         View popView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.pop_message, null);
         popupWindow = new PopupWindow(findViewById(R.id.layout_find), ActionBarOverlayLayout.LayoutParams.MATCH_PARENT, ActionBarOverlayLayout.LayoutParams.WRAP_CONTENT);
         TextView tv_name= (TextView) popView.findViewById(R.id.name);
+        ImageView img_create_logistics_back1= (ImageView) popView.findViewById(R.id.img_create_logistics_back1);
+        img_create_logistics_back1.setOnClickListener(new View.OnClickListener() {
+                                                          @Override
+                                                          public void onClick(View v) {
+                                                              popupWindow.dismiss();
+                                                          }
+                                                      }
+        );
+
         tv_name.setText("编号通知:");
+        TextView tv_create_logistics_search= (TextView) popView.findViewById(R.id.tv_create_logistics_search);
+        tv_create_logistics_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
+            }
+        });
 
         TextView tv_Time= (TextView) popView.findViewById(R.id.Time);
         tv_Time.setText("发送时间:");
@@ -354,14 +371,14 @@ public class MessagePushActivity extends AppCompatActivity implements View.OnCli
     class MyClick implements DatePickerDialog.OnDateSetListener {
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            end_pop_date.setText(year + "-" + monthOfYear + "-" + dayOfMonth);
+            end_pop_date.setText(year + "-" + (monthOfYear+1) + "-" + dayOfMonth);
         }
     }
 
     class MyClick1 implements DatePickerDialog.OnDateSetListener {
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            start_pop_date.setText(year + "-" + monthOfYear + "-" + dayOfMonth);
+            start_pop_date.setText(year + "-" + (monthOfYear+1) + "-" + dayOfMonth);
         }
     }
     @Override
@@ -387,6 +404,8 @@ public class MessagePushActivity extends AppCompatActivity implements View.OnCli
             adapter.notifyDataSetChanged();
 
         }else{
+            noticeList.clear();
+            adapter.notifyDataSetChanged();
             Toast.makeText(MessagePushActivity.this, "查不到该商品的有关信息", Toast.LENGTH_SHORT).show();
         }
     }

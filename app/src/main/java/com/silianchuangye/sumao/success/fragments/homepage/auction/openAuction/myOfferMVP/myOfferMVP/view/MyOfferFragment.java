@@ -24,7 +24,6 @@ import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.openAuction.myOfferMVP.bean.MyOfferBean;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.openAuction.myOfferMVP.myOfferMVP.presenter.MyOfferPresenter;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.openAuction.openAuctionPresenter.OpenAuctionPresenter;
-import com.silianchuangye.sumao.success.fragments.homepage.auction.openAuction.openAuctionView.OpenAuctionActivity;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
 import org.xutils.common.Callback;

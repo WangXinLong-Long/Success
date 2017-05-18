@@ -207,7 +207,7 @@ public class OrderAlreadygoodsFragment extends Fragment {
                     JSONArray jay=new JSONArray(str);
                     for(int i=0;i<jay.length();i++){
                         JSONObject j= (JSONObject) jay.get(i);
-                        String cl= (String) j.getString("cl");
+                        String cl= j.getString("cl");
                         String state=j.getString("state");//状态
                         String shippingGroupState=j.getString("shippingGroupState");
                         type=j.getString("type");

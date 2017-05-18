@@ -68,9 +68,10 @@ public class TypeInfoModel implements ITypeInfoModel {
                 @Override
                 public void onSuccess(String result) {
                     LogUtils.log("首页：现货--->" + result + "<---首页：现货");
-                     Gson gson = new Gson();
+                    Gson gson = new Gson();
                     searchActivityBean = gson.fromJson(result, SearchActivityBean.class);
-                    callback.callbackTypeInfo( searchActivityBean);
+                    Log.d("转换成数据的值",searchActivityBean.getIn().size()+"");
+                    callback.callbackTypeInfo(searchActivityBean);
                 }
 
                 @Override

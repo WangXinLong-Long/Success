@@ -82,8 +82,6 @@ public class UpstreamDirectSellingDetailsActivity extends AppCompatActivity impl
                // upstreamDirectDetailPresenter.getDirectSelling(1 + "", sellerCompanyId, getSharedPreferences("sumao", Activity.MODE_PRIVATE).getString("unique", ""));
                 Intent intent1 = new Intent(UpstreamDirectSellingDetailsActivity.this, GoodsInStockActivity.class);
                 intent1.putExtra("title", "现货直销");
-
-               // intent1.putExtra("directSellingBean", directSellingBean);
                 intent1.putExtra("sellerCompanyId",sellerCompanyId);
                 startActivity(intent1);
                 break;

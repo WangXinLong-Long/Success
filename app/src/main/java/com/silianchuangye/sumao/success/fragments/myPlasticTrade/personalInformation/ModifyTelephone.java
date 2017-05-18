@@ -45,7 +45,7 @@ public class ModifyTelephone extends Activity implements View.OnClickListener {
     TextView tv_title_bar_title;
 
     RelativeLayout title_modify_telephone;
-    EditText omp_number;
+    TextView omp_number;
     EditText nmb_number;
     SharedPreferences sp;
     SharedPreferences.Editor editor;
@@ -85,7 +85,7 @@ public class ModifyTelephone extends Activity implements View.OnClickListener {
         Original_mobile_phone_verification_code_bn= (Button) findViewById(R.id.Original_mobile_phone_verification_code_bn);
 
 
-        omp_number = ((EditText) findViewById(R.id.Omp_number));
+        omp_number = ((TextView) findViewById(R.id.Omp_number));
 
         nmb_number = ((EditText) findViewById(R.id.Nmb_number));
 //        sp = getSharedPreferences("silian",MODE_PRIVATE);
@@ -108,8 +108,8 @@ public class ModifyTelephone extends Activity implements View.OnClickListener {
 
                     Toast.makeText(ModifyTelephone.this, "您输入的手机号不符合规则", Toast.LENGTH_SHORT).show();
                 } else {
-                    mCountDownTimerUtils.start();
-                    getRegisterPhoneInfo();
+                    yanzhengphone();
+                    //在这里判断手机号是否存在
                 }
             }
         });
@@ -119,6 +119,45 @@ public class ModifyTelephone extends Activity implements View.OnClickListener {
                 //Original_mobile_phone_verification_code_bn.setVisibility();
                 mCountDownTimerUtils1.start();
                 getOldRegisterPhoneInfo();
+            }
+        });
+    }
+    public void yanzhengphone(){
+        String url= SuMaoConstant.SUMAO_IP+"/rest/model/atg/store/profile/RegistrationActor/userVerify";
+        RequestParams rp=new RequestParams(url);
+//        jsonObject.put("type", "mobile");
+//        jsonObject.put("attr", telephone);
+        rp.addParameter("type","mobile");
+        rp.addParameter("attr",nmb_number.getText().toString());
+        x.http().post(rp, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.d("验证邮箱的返回值",result);
+                if (result.contains("true")){
+                    //updateUser();
+
+                    mCountDownTimerUtils.start();
+                    getRegisterPhoneInfo();
+
+                }else{
+                    Toast.makeText(ModifyTelephone.this, "该手机号已经注册!", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(CompanyUserUpdateActivity.this, "该邮箱已经注册!", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
             }
         });
     }
@@ -306,13 +345,8 @@ public class ModifyTelephone extends Activity implements View.OnClickListener {
             int top = leftTop[1];
             int bottom = top + v.getHeight();
             int right = left + v.getWidth();
-            if (event.getX() > left && event.getX() < right
-                    && event.getY() > top && event.getY() < bottom) {
-                // 点击的是输入框区域，保留点击EditText的事件
-                return false;
-            } else {
-                return true;
-            }
+            return !(event.getX() > left && event.getX() < right
+                    && event.getY() > top && event.getY() < bottom);
         }
         return false;
     }

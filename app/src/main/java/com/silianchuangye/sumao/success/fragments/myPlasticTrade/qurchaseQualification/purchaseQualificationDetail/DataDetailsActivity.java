@@ -49,6 +49,7 @@ import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.utils.LGImgCompressor;
+import com.silianchuangye.sumao.success.utils.Loding;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 import com.zhy.m.permission.MPermissions;
@@ -94,7 +95,7 @@ public class DataDetailsActivity extends AppCompatActivity implements View.OnCli
     private int requestHeight;
 
     private ImageOptions imageOptions;
-    private String tupian;
+    private String tupian="";
 
     public static final int TAKE_PHOTO = 1;
     public static final int OPEN_ALBUM = 2;
@@ -103,7 +104,7 @@ public class DataDetailsActivity extends AppCompatActivity implements View.OnCli
     private static final String PACKAGE_URL_SCHEME = "package:";
     static final String[] PERMISSIONS = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
     private boolean canTakePhoto = false;
-    private String path;
+    private String path="";
     private String url;
     private String fileCode;
     private String filepath = null;
@@ -114,6 +115,8 @@ public class DataDetailsActivity extends AppCompatActivity implements View.OnCli
     private ImageView iv_child_title_bar_back;
     private RelativeLayout layout_title;
     private Bitmap bitmap;
+    private String inputString="inputString";
+    private String value;
 
 
 
@@ -127,18 +130,22 @@ public class DataDetailsActivity extends AppCompatActivity implements View.OnCli
 
         Intent intent = getIntent();
         title = intent.getStringExtra("title");
+        Log.d("title的值",title);
         needPicture = intent.getBooleanExtra("picture", false);
         path = intent.getStringExtra("path");
+        value=intent.getStringExtra("value");
         String resouce=intent.getStringExtra("resouce");
-
         Log.d("path的值", path);
-
         findView();
         tv_child_title_bar_title.setText(title);
         showUploadScan();
         if (resouce.equals("search")){
             modify_information.setVisibility(View.GONE);
             upload_scan.setVisibility(View.GONE);
+        }
+        modify_information.setText(value);
+        if (title.equals("企业法人姓名")){
+            modify_information.setKeyListener(null);
         }
         ViewTreeObserver observer = image.getViewTreeObserver();
         observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -191,13 +198,22 @@ public class DataDetailsActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void onSuccess(String result) {
                 Log.d("图片上传的返回值", result);
-
+                Loding.dis();
                 if (result.contains("上传成功")){
-                    Intent intent = new Intent();
-                    intent.putExtra("returnInfo", modify_information.getText().toString());
-                    intent.putExtra("path","/mnt/docs/"+tupian);
-                    setResult(RESULT_OK, intent);
-                    finish();
+                    if (!title.equals("企业法人姓名")) {
+                        Log.d("图片的路径", "/mnt/docs/" + tupian);
+                        Intent intent = new Intent();
+                        intent.putExtra("returnInfo", modify_information.getText().toString());
+                        intent.putExtra("path", "/mnt/docs/" + tupian);
+                        setResult(RESULT_OK, intent);
+                        finish();
+                    }else{
+                        Intent intent = new Intent();
+                        intent.putExtra("returnInfo", modify_information.getText().toString());
+                        intent.putExtra("path", "/mnt/docs/" + tupian);
+                        setResult(RESULT_OK, intent);
+                        finish();
+                    }
                 }
 
 
@@ -220,7 +236,7 @@ public class DataDetailsActivity extends AppCompatActivity implements View.OnCli
     private void  showUploadScan() {
         if (needPicture) {
             upload_scan.setVisibility(View.VISIBLE);
-            Popupwindow();
+           // Popupwindow();
         } else {
             upload_scan.setVisibility(View.GONE);
         }
@@ -246,6 +262,7 @@ public class DataDetailsActivity extends AppCompatActivity implements View.OnCli
         tv_child_title_bar_text.setOnClickListener(this);
 //        填写的信息
         modify_information = ((EditText) findViewById(R.id.modify_information));
+        modify_information.clearFocus();
 //        提示信息
         prompt_information = ((TextView) findViewById(R.id.prompt_information));
 //        图片
@@ -254,6 +271,7 @@ public class DataDetailsActivity extends AppCompatActivity implements View.OnCli
         upload_scan = ((Button) findViewById(R.id.upload_scan));
         upload_scan.setOnClickListener(this);
         if (!path.trim().equals("abc")) {
+            Loding.show(this,"图片加载中...",false,null);
             Log.d("进来了","不是条件判断了嘛");
             url = SuMaoConstant.SUMAO_CONTRACT_IP + path;
             imageOptions = new ImageOptions
@@ -269,6 +287,7 @@ public class DataDetailsActivity extends AppCompatActivity implements View.OnCli
 //                    .setLoadingDrawableId(R.mipmap.ic_launcher)
 //                    .setFailureDrawableId(R.mipmap.ic_launcher)
                     .build();
+            Loding.dis();
             x.image().bind(image, url, imageOptions);
 
         }
@@ -281,22 +300,60 @@ public class DataDetailsActivity extends AppCompatActivity implements View.OnCli
         switch (v.getId()) {
             case R.id.tv_child_title_bar_text:
                 //saveInformation();
-                if (upload_scan.getVisibility()==View.VISIBLE){
-                    //intent.putExtra("path","/mnt/"+getPhotoFileName());
-                    uploadPicture();
-                }else{
-                    Intent intent = new Intent();
-                    intent.putExtra("returnInfo", modify_information.getText().toString());
-                   // intent.putExtra("path","/mnt/"+getPhotoFileName());
-                    setResult(RESULT_OK, intent);
-                    finish();
+                //
+                if (modify_information.getText().toString().equals("")||modify_information.getText().toString()==""){
+                    Toast.makeText(DataDetailsActivity.this, "请填写你要输入的内容!", Toast.LENGTH_SHORT).show();
+                }else if (title.equals("企业法人姓名")){
+                    if (tupian.equals("")){
+                        //原来的图片
+                        Intent intent = new Intent();
+                        intent.putExtra("returnInfo", modify_information.getText().toString());
+                        intent.putExtra("path", path);
+                        setResult(RESULT_OK, intent);
+                        finish();
+                    }else{
+
+                    }
+                } else{
+                  //  Toast.makeText(DataDetailsActivity.this, "输入的内容不是空的!", Toast.LENGTH_SHORT).show();
+                    if (title.equals("开户银行许可证")||title.equals("姓名")){
+                        Log.d("title的值",title);
+                        if (tupian.equals("")){
+                            if (path.equals("abc")) {
+                                Log.d("有图片", "图片没有上传");
+                                Toast.makeText(DataDetailsActivity.this, "请上传扫描件!", Toast.LENGTH_SHORT).show();
+                            }else{
+                                Intent intent = new Intent();
+                                intent.putExtra("returnInfo", modify_information.getText().toString());
+                                 intent.putExtra("path",path);
+                                setResult(RESULT_OK, intent);
+                                finish();
+                            }
+                        }else{
+                            Log.d("有图片","图片上传了");
+                            Loding.show(this, "图片上传中...", false, null);
+                            uploadPicture();
+                        }
+                    }else{
+                        Log.d("不需要上传图片","不需要上传图片");
+                        Intent intent = new Intent();
+                        intent.putExtra("returnInfo", modify_information.getText().toString());
+                        // intent.putExtra("path","/mnt/"+getPhotoFileName());
+                        setResult(RESULT_OK, intent);
+                        finish();
+                    }
                 }
+
 
                 break;
             case R.id.upload_scan:
+                //showCartFloatView();
                 backgroundAlpha(0.5f);
                 //showPopupWindow();
                 Popupwindow();
+                break;
+            case R.id.iv_child_title_bar_back:
+                finish();
                 break;
             default:
                 break;
@@ -396,7 +453,7 @@ public static File saveFile(Bitmap bm,String path, String fileName) throws IOExc
                     Toast.makeText(DataDetailsActivity.this, "取消了拍照", Toast.LENGTH_LONG).show();
                     return;
                 }
-tupian=getPhotoFileName();
+                tupian=getPhotoFileName();
                 Bitmap photo = data.getParcelableExtra("data");
                 image.setImageBitmap(photo);
                 fileBianma = BitmapToString(photo);
@@ -432,7 +489,7 @@ tupian=getPhotoFileName();
                     Cursor cursor = cursorLoader.loadInBackground();
                     int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
                     cursor.moveToFirst();
-tupian=getPhotoFileName();
+                    tupian=getPhotoFileName();
                     filepath = cursor.getString(column_index);
                     Log.d("realpath", "" + filepath);
                     bitmap= BitmapFactory.decodeFile(filepath);
@@ -633,7 +690,9 @@ tupian=getPhotoFileName();
         popupWindow.setBackgroundDrawable(new BitmapDrawable());
         popupWindow.setOutsideTouchable(true);
         popupWindow.setFocusable(true);
+        //popupWindow.showAtLocation(tv_child_title_bar_text,Gravity.BOTTOM,0,0);
         popupWindow.showAtLocation(tv_child_title_bar_text,Gravity.BOTTOM,0,0);
+       // popupWindow.
         popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
@@ -702,13 +761,8 @@ tupian=getPhotoFileName();
             int top = leftTop[1];
             int bottom = top + v.getHeight();
             int right = left + v.getWidth();
-            if (event.getX() > left && event.getX() < right
-                    && event.getY() > top && event.getY() < bottom) {
-                // 点击的是输入框区域，保留点击EditText的事件
-                return false;
-            } else {
-                return true;
-            }
+            return !(event.getX() > left && event.getX() < right
+                    && event.getY() > top && event.getY() < bottom);
         }
         return false;
     }

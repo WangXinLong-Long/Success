@@ -58,7 +58,12 @@ public class ReceiptAddressDetail extends Activity implements View.OnClickListen
     private Button save_receipt_address2;
     private Button save_receipt_address1;
     private String addressType;
-
+    String name = "";
+   // String address = "";
+    String zipCode = "";
+    String telephone = "";
+    String fixedTelephone = "";
+    String displayAddress="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,12 +96,12 @@ public class ReceiptAddressDetail extends Activity implements View.OnClickListen
         id = bundle.getString("id");
 //        判断是否是默认值
         addressType = bundle.getString("addressType");
-        String name = bundle.getString("name");
-        String address = bundle.getString("address");
-        String zipCode = bundle.getString("zipCode");
-        String telephone = bundle.getString("telephone");
-        String fixedTelephone = bundle.getString("fixedTelephone");
-        String displayAddress = bundle.getString("displayAddress");
+         name = bundle.getString("name");
+         String address = bundle.getString("address");
+         zipCode = bundle.getString("zipCode");
+         telephone = bundle.getString("telephone");
+         fixedTelephone = bundle.getString("fixedTelephone");
+         displayAddress = bundle.getString("displayAddress");
         Log.i("test", "：是否为默认地址----" + name + "：收件人姓名-----" + address + "：收货地址----" + zipCode + "：邮编----" + telephone + "：电话号码----" + fixedTelephone + "：固定电话");
 
         consignee_name = ((TextView) findViewById(R.id.consignee_name));
@@ -168,46 +173,50 @@ public class ReceiptAddressDetail extends Activity implements View.OnClickListen
                 finish();
                 break;
             case R.id.consignee1_rl:
-                Toast.makeText(ReceiptAddressDetail.this, "改名字", Toast.LENGTH_SHORT).show();
+               // Toast.makeText(ReceiptAddressDetail.this, "改名字", Toast.LENGTH_SHORT).show();
                 intent.setClass(ReceiptAddressDetail.this, ModifyName.class);
                 bundle.putString("receivingInformation", "修改收件人姓名");
                 bundle.putString("message", "姓名");
                 bundle.putBoolean("canBeAmpty", false);
+                bundle.putString("value",name);
                 intent.putExtras(bundle);
                 startActivityForResult(intent, CHANGE_NAME);
                 break;
             case R.id.receip_address_address:
-                Toast.makeText(ReceiptAddressDetail.this, "改地址", Toast.LENGTH_SHORT).show();
+               // Toast.makeText(ReceiptAddressDetail.this, "改地址", Toast.LENGTH_SHORT).show();
                 Intent intentpor = new Intent();
                 intentpor.putExtra("className", "ReceiptAddressDetail");
                 intentpor.setClass(ReceiptAddressDetail.this, SelectProvinceArea.class);
                 startActivity(intentpor);
                 break;
             case R.id.zip_code_rl:
-                Toast.makeText(ReceiptAddressDetail.this, "改邮编", Toast.LENGTH_SHORT).show();
+              //  Toast.makeText(ReceiptAddressDetail.this, "改邮编", Toast.LENGTH_SHORT).show();
                 intent.setClass(ReceiptAddressDetail.this, ModifyName.class);
                 bundle.putString("receivingInformation", "修改邮政编码");
                 bundle.putString("message", "邮编");
                 bundle.putBoolean("canBeAmpty", true);
+                bundle.putString("value",zipCode);
                 intent.putExtras(bundle);
                 startActivityForResult(intent, CHANGE_POST_CODE);
 
                 break;
             case R.id.telephone_rl:
-                Toast.makeText(ReceiptAddressDetail.this, "改手机号", Toast.LENGTH_SHORT).show();
+               // Toast.makeText(ReceiptAddressDetail.this, "改手机号", Toast.LENGTH_SHORT).show();
                 intent.setClass(ReceiptAddressDetail.this, ModifyName.class);
                 bundle.putString("receivingInformation", "修改手机号");
                 bundle.putString("message", "手机号");
                 bundle.putBoolean("canBeAmpty", false);
+                bundle.putString("value",telephone);
                 intent.putExtras(bundle);
                 startActivityForResult(intent, CHANGE_MOBILE);
                 break;
             case R.id.fixed_telephone_rl:
-                Toast.makeText(ReceiptAddressDetail.this, "改固定电话", Toast.LENGTH_SHORT).show();
+               // Toast.makeText(ReceiptAddressDetail.this, "改固定电话", Toast.LENGTH_SHORT).show();
                 intent.setClass(ReceiptAddressDetail.this, ModifyName.class);
                 bundle.putString("receivingInformation", "修改固定电话");
                 bundle.putString("message", "固定电话");
                 bundle.putBoolean("canBeAmpty", true);
+                bundle.putString("value",fixedTelephone);
                 intent.putExtras(bundle);
                 startActivityForResult(intent, CHANGE_PHONE);
                 break;

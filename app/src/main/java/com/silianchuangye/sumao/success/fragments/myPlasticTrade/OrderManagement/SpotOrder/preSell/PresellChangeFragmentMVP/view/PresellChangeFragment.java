@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -115,8 +116,10 @@ public class PresellChangeFragment extends Fragment implements IPresellChangeFra
 //        String _dynSessConf = getActivity().getSharedPreferences("sumao", Activity.MODE_PRIVATE).getString("unique", "");
 //        LogUtils.log("_dynSessConf-->"+_dynSessConf);
         boolean update = updates;
+        Log.d("传入的参数",searchCompanyName+searchOrderType+"CHANGED"+pageNum+searchOrderId);
+        Log.d("传入的参数",startDate+endDate+submitType+searchCheckType+update);
         presellChangeFragmentPresenter.getPresellChangeFragmentResult(searchTrateType,searchCompanyName, searchOrderType,
-                searchOrderState, pageNum, searchOrderId,
+                "CHANGED", pageNum, searchOrderId,
                 startDate, endDate, submitType,
                 searchCheckType/*, _dynSessConf*/, update);
     }

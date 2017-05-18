@@ -134,7 +134,7 @@ public class CustomPayDialog extends Dialog {
                 ((Button) layout.findViewById(R.id.my_order))
                         .setText(positiveButtonText);
                 if (positiveButtonClickListener != null) {
-                    ((Button) layout.findViewById(R.id.my_order))
+                    layout.findViewById(R.id.my_order)
                             .setOnClickListener(new View.OnClickListener() {
                                 public void onClick(View v) {
                                     positiveButtonClickListener.onClick(dialog,
@@ -152,7 +152,7 @@ public class CustomPayDialog extends Dialog {
                 ((Button) layout.findViewById(R.id.logistics_demand))
                         .setText(negativeButtonText);
                 if (negativeButtonClickListener != null) {
-                    ((Button) layout.findViewById(R.id.logistics_demand))
+                    layout.findViewById(R.id.logistics_demand)
                             .setOnClickListener(new View.OnClickListener() {
                                 public void onClick(View v) {
                                     negativeButtonClickListener.onClick(dialog,

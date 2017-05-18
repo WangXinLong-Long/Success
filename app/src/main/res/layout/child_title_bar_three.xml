@@ -12,6 +12,8 @@
         android:layout_height="@dimen/x20"
         android:src="@mipmap/back"
         android:layout_marginRight="@dimen/x20"
+        android:focusableInTouchMode="true"
+        android:focusable="true"
         android:paddingLeft="@dimen/x10"
         android:background="@drawable/fanhui"
         android:paddingRight="@dimen/x15"

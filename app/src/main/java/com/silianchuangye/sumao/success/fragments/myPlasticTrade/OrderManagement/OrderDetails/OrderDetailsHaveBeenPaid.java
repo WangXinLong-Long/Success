@@ -149,7 +149,7 @@ public class OrderDetailsHaveBeenPaid extends Activity implements View.OnClickLi
                     String now = new SimpleDateFormat("yyyy-MM-dd").format(submittedDate);
                     enterprise2.setText(now);
                     Log.e("TAG","日期===="+now);
-                        String cl = (String) job2.getString("cl");
+                        String cl = job2.getString("cl");
                         JSONArray jay=new JSONArray(cl);
                         for(int i=0;i<jay.length();i++) {
                             orderDeatilsModel = new OrderDeatilsModel();

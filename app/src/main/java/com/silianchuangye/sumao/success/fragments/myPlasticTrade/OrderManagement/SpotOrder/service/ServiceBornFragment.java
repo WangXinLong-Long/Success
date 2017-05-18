@@ -189,7 +189,7 @@ public class ServiceBornFragment extends Fragment {
                         for (int i = 0; i < jay.length(); i++) {
                             Log.e("TAG", "i==" + i);
                             JSONObject j = (JSONObject) jay.get(i);
-                            String cl = (String) j.getString("cl");
+                            String cl = j.getString("cl");
                             String state = j.getString("state");//状态
                             String shippingGroupState = j.getString("shippingGroupState");
                             String type = j.getString("type");

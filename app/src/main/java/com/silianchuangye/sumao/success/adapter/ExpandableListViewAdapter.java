@@ -148,7 +148,7 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter {
 
     }
 
-};
+}
 
 
 

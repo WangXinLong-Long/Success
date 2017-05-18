@@ -55,6 +55,7 @@ public class ModifyName extends Activity implements View.OnClickListener {
     String email, phoneNum, name, i;
     private SharedPreferences sp;
     private boolean isInvoiceInformation;
+    private String value="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,23 +81,21 @@ public class ModifyName extends Activity implements View.OnClickListener {
         Intent intents = getIntent();
         Bundle bundle = intents.getExtras();
         receivingInformation = bundle.getString("receivingInformation");
-        if (receivingInformation == null) {
-            isInvoiceInformation = false;
-        } else {
-            isInvoiceInformation = true;
-        }
+        isInvoiceInformation = receivingInformation != null;
         email = bundle.getString("email");
         phoneNum = bundle.getString("phoneNum");
         name = bundle.getString("name");
         i = bundle.getString("i");
         canBeAmpty = bundle.getBoolean("canBeAmpty");
         message = bundle.getString("message");
+        value=bundle.getString("value");
         tv_title_bar_title.setText(receivingInformation);
         tv_title_bar_title.setTextColor(Color.WHITE);
 
         modify_name_save = ((Button) findViewById(R.id.modify_name_save));
         modify_information = ((EditText) findViewById(R.id.modify_information));
         prompt_information = ((TextView) findViewById(R.id.prompt_information));
+        modify_information.setText(value);
         intent = new Intent();
         checkNamingSpecifications();
     }
@@ -122,11 +121,11 @@ public class ModifyName extends Activity implements View.OnClickListener {
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             String editable = pedt.getText().toString();
-            String str = stringFilter(editable.toString());
-            if (!editable.equals(str)) {
-                pedt.setText(str);
-                pedt.setSelection(str.length());
-            }
+           // String str = stringFilter(editable.toString());
+//            if (!editable.equals(str)) {
+//                pedt.setText(str);
+//                pedt.setSelection(str.length());
+//            }
         }
 
         @Override
@@ -134,34 +133,34 @@ public class ModifyName extends Activity implements View.OnClickListener {
 
         }
 
-        public String stringFilter(String str) throws PatternSyntaxException {
-            // 只允许字母和数字
-            String regEx = "";
-            if (receivingInformation.equals("修改税号")) {
-                regEx = "[^a-zA-Z0-9]";
-            } else if (receivingInformation.equals("修改地址")) {
-                regEx = "[.]";
-            } else if (receivingInformation.equals("修改电话")) {
-                regEx = "[^(\\d)]";
-            } else if (receivingInformation.equals("修改开户行")) {
-                regEx = "[^\\u4e00-\\u9fa5]";
-            } else if (receivingInformation.equals("修改账号")) {
-                regEx = "[^\\d]";
-            } else if (receivingInformation.equals("修改姓名")) {
-                regEx = "[^\\u4e00-\\u9fa5a-zA-Z]";
-            } else if (receivingInformation.equals("修改固定电话")) {
-                regEx = "[^\\d]";
-            } else if (receivingInformation.equals("修改手机")) {
-                regEx = "[^\\d]";
-            } else if (receivingInformation.equals("修改邮编")) {
-                regEx = "[\\u4e00-\\u9fa5]";
-            }
-
-
-            Pattern p = Pattern.compile(regEx);
-            Matcher m = p.matcher(str);
-            return m.replaceAll("").trim();
-        }
+//        public String stringFilter(String str) throws PatternSyntaxException {
+//            // 只允许字母和数字
+//            String regEx = "";
+//            if (receivingInformation.equals("修改税号")) {
+//                regEx = "[^a-zA-Z0-9]";
+//            } else if (receivingInformation.equals("修改地址")) {
+//                regEx = "[.]";
+//            } else if (receivingInformation.equals("修改电话")) {
+//                regEx = "[^(\\d)]";
+//            } else if (receivingInformation.equals("修改开户行")) {
+//                regEx = "[^\\u4e00-\\u9fa5]";
+//            } else if (receivingInformation.equals("修改账号")) {
+//               // regEx = "[^\\d]";
+//            } else if (receivingInformation.equals("修改姓名")) {
+//                regEx = "[^\\u4e00-\\u9fa5a-zA-Z]";
+//            } else if (receivingInformation.equals("修改固定电话")) {
+//               // regEx = "[^\\d]";
+//            } else if (receivingInformation.equals("修改手机")) {
+//                regEx = "[^\\d]";
+//            } else if (receivingInformation.equals("修改邮编")) {
+//                regEx = "[\\u4e00-\\u9fa5]";
+//            }
+//
+//
+//            Pattern p = Pattern.compile(regEx);
+//            Matcher m = p.matcher(str);
+//            return m.replaceAll("").trim();
+//        }
     }
 
     @Override
@@ -208,26 +207,26 @@ public class ModifyName extends Activity implements View.OnClickListener {
         } else {
 
             if (receivingInformation.equals("修改固定电话")||receivingInformation.equals("修改手机")) {
-                String regex = "^(0\\d{2,3}-\\d{7,8}(-\\d{3,5}){0,1})|(((13[0-9])|(15([0-3]|[5-9]))|(18[0,5-9]))\\d{8})$";
-                Pattern pattern = Pattern.compile(regex);
-                Matcher matcher = pattern.matcher(modify_information.getText().toString());
-                boolean matches = matcher.matches();
-                if (!matches){
-                    Toast.makeText(ModifyName.this,"您输入的格式不符合规则，请检查后重新输入",Toast.LENGTH_SHORT).show();
-                }else {
+//                String regex = "^(0\\d{2,3}-\\d{7,8}(-\\d{3,5}){0,1})|(((13[0-9])|(15([0-3]|[5-9]))|(18[0,5-9]))\\d{8})$";
+//                Pattern pattern = Pattern.compile(regex);
+//                Matcher matcher = pattern.matcher(modify_information.getText().toString());
+//                boolean matches = matcher.matches();
+//                if (!matches){
+//                    Toast.makeText(ModifyName.this,"您输入的格式不符合规则，请检查后重新输入",Toast.LENGTH_SHORT).show();
+//                }else {
                     intent.putExtra(SuMaoConstant.MODIFY_INFORMATION, modify_information.getText().toString());
                     ModifyName.this.setResult(RESULT_OK, intent);
                     finish();
-                }
+               // }
             }else if (receivingInformation.equals("修改邮编")) {
-                String regex = "^[a-zA-Z0-9_]{6,12}@[a-zA-Z0-9]+(\\.[a-zA-Z]+){1,3}$";
-                if (!Pattern.matches(regex,modify_information.getText().toString())){
-                    Toast.makeText(ModifyName.this,"您输入的邮箱格式不符合规则，请检查后重新输入",Toast.LENGTH_SHORT).show();
-                }else {
+//                String regex = "^[a-zA-Z0-9_]{6,12}@[a-zA-Z0-9]+(\\.[a-zA-Z]+){1,3}$";
+//                if (!Pattern.matches(regex,modify_information.getText().toString())){
+//                    Toast.makeText(ModifyName.this,"您输入的邮箱格式不符合规则，请检查后重新输入",Toast.LENGTH_SHORT).show();
+//                }else {
                     intent.putExtra(SuMaoConstant.MODIFY_INFORMATION, modify_information.getText().toString());
                     ModifyName.this.setResult(RESULT_OK, intent);
                     finish();
-                }
+              //  }
             }else {
                 intent.putExtra(SuMaoConstant.MODIFY_INFORMATION, modify_information.getText().toString());
                 ModifyName.this.setResult(RESULT_OK, intent);
@@ -351,13 +350,8 @@ public class ModifyName extends Activity implements View.OnClickListener {
             int top = leftTop[1];
             int bottom = top + v.getHeight();
             int right = left + v.getWidth();
-            if (event.getX() > left && event.getX() < right
-                    && event.getY() > top && event.getY() < bottom) {
-                // 点击的是输入框区域，保留点击EditText的事件
-                return false;
-            } else {
-                return true;
-            }
+            return !(event.getX() > left && event.getX() < right
+                    && event.getY() > top && event.getY() < bottom);
         }
         return false;
     }

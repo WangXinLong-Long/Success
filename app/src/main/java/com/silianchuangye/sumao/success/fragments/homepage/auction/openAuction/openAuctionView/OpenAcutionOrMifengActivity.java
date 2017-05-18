@@ -194,9 +194,11 @@ public class OpenAcutionOrMifengActivity extends AppCompatActivity implements IO
         Gson gson = new Gson();
         auctionDetailBean = gson.fromJson(resultAcution, AuctionDetailBean.class);
         Log.d("竞拍的详情", auctionDetailBean.getAddressDetail() + "");
+
         type_way = (getIntent().getStringExtra("type_way"));
         id_value = auctionDetailBean.getCl_id();
         productId = auctionDetailBean.getCl_id();
+       // MyOfferforOpen();
         proType = getIntent().getStringExtra("proType");
         status = auctionDetailBean.getStatus();
         if (auctionDetailBean.getDepositDeadline().getTime() == null || auctionDetailBean.getDepositDeadline().getTime().equals("") || auctionDetailBean.getDepositDeadline().getTime() == "") {
@@ -1016,7 +1018,8 @@ public class OpenAcutionOrMifengActivity extends AppCompatActivity implements IO
                 }else if (bt_jinpai_colse.getText().toString().equals("立即报价")){//立即报价
                     if (type_way.equals("公开竞拍")) {
                         Log.d("公开竞拍的立即报价","公开竞拍的立即报价");
-                        gongkai_baojia();
+//                        gongkai_baojia();
+                        MyOfferforOpen();
                         //openAuctionPresenter.getRealTimeQuotes(productId, true);
 
                     } else {
@@ -1032,7 +1035,8 @@ public class OpenAcutionOrMifengActivity extends AppCompatActivity implements IO
             case R.id.bt_jinpai://立即报价
                 if (type_way.equals("公开竞拍")) {
                     Log.d("公开竞拍的立即报价","公开竞拍的立即报价");
-                    gongkai_baojia();
+                   // gongkai_baojia();
+                    MyOfferforOpen();
 //                    openAuctionPresenter.getRealTimeQuotes(productId, true);
 
                 } else {
@@ -1578,6 +1582,7 @@ public class OpenAcutionOrMifengActivity extends AppCompatActivity implements IO
 
     @Override
     public void getOpenAuctionResult(String result) {
+        Loding.dis();
         if (result.equals("success")) {
             Intent intent = new Intent(OpenAcutionOrMifengActivity.this, Ok_Dialog.class);
             intent.putExtra("number", SuMaoConstant.QUOTE_SUCCESS);
@@ -2009,7 +2014,7 @@ public class OpenAcutionOrMifengActivity extends AppCompatActivity implements IO
                 }
             }
             Log.d("offer的值", offer + "");
-            Log.d("realTimeQuotesIncludeMyOffer的值", realTimeQuotesIncludeMyOffer + "");
+         //   Log.d("realTimeQuotesIncludeMyOffer的值", realTimeQuotesIncludeMyOffer + "");
             if (offer && !realTimeQuotesIncludeMyOffer) {
                 Log.d("进来了价格判断界面", "价格判断");
                 if (Double.parseDouble(bid_price_num.getText().toString()) <= Double.parseDouble(shishiprice) &&
@@ -2031,6 +2036,7 @@ public class OpenAcutionOrMifengActivity extends AppCompatActivity implements IO
     public void gongkai_baojia() {
         //首先判断支付的保证金是否足够,如果足够，则立即报价
         //如果不够则继续提交保证金
+
         unique=sp.getString("unique","");
         openAuctionPresenter.getAmountPaidedResult(productId, unique);
         Log.d("已经支付多少金额",zhifujine);
@@ -2039,7 +2045,7 @@ public class OpenAcutionOrMifengActivity extends AppCompatActivity implements IO
             Log.d("保证金变成小数的值", result_baozhj + "");
             Double baozhengjin = Double.parseDouble(all_price_num.getText().toString()) * result_baozhj;
             if (baozhengjin < Double.parseDouble(zhifujine)) {
-                //Loding.show(this, "提交报价中...", false, null);
+                Loding.show(this, "提交报价中...", false, null);
                 String productId = id_value;
                 String bidPrice = bid_price_num.getText().toString();
                 String bidQuantity = tv_item_cart_buy_num.getText().toString();
@@ -2050,7 +2056,7 @@ public class OpenAcutionOrMifengActivity extends AppCompatActivity implements IO
                 Toast.makeText(OpenAcutionOrMifengActivity.this, "请您续交保证金!", Toast.LENGTH_SHORT).show();
             }
         }else {
-            //Loding.show(this, "提交报价中...", false, null);
+            Loding.show(this, "提交报价中...", false, null);
             String productId = id_value;
             String bidPrice = bid_price_num.getText().toString();
             String bidQuantity = tv_item_cart_buy_num.getText().toString();
@@ -2084,26 +2090,30 @@ public class OpenAcutionOrMifengActivity extends AppCompatActivity implements IO
             shishicunzai=sp.getString("shishicunzai","");
             if (!value.equals(tv_item_cart_buy_num.getText().toString())){
                 Log.d("是数量的值","发生的改变");
-                //输入的值-起购量/变化量
-                tv_item_cart_buy_num.clearFocus();
-                Double beijianshu=sub(Double.parseDouble(tv_item_cart_buy_num.getText().toString()),Double.parseDouble(auctionDetailBean.getCl_qigou().toString()));
-                int beishu=(int)div(beijianshu,Double.parseDouble(auctionDetailBean.getCl_xbianliang()),0);
-                String tatol="";
-                if (beishu<=0){
-                    //qigouliang
-                     tatol=Double.parseDouble(auctionDetailBean.getCl_qigou())+"";
+                if (Double.parseDouble(tv_item_cart_buy_num.getText().toString())>=Double.parseDouble(auctionDetailBean.getCl_zongliang())){
+                    tv_item_cart_buy_num.setText(auctionDetailBean.getCl_zongliang());
                 }else {
-                    Double count = mul(beishu, Double.parseDouble(auctionDetailBean.getCl_xbianliang()));
-                    tatol = add(count, Double.parseDouble(auctionDetailBean.getCl_qigou()))+"";
-                }
-                if (shishicunzai.equals("true")){
-                    if (Double.parseDouble(tatol)>Double.parseDouble(shishicjnumber)){
-                        tv_item_cart_buy_num.setText(tatol);
-                    }else{
-                        tv_item_cart_buy_num.setText(shishicjnumber);
+                    //输入的值-起购量/变化量
+                    tv_item_cart_buy_num.clearFocus();
+                    Double beijianshu = sub(Double.parseDouble(tv_item_cart_buy_num.getText().toString()), Double.parseDouble(auctionDetailBean.getCl_qigou().toString()));
+                    int beishu = (int) div(beijianshu, Double.parseDouble(auctionDetailBean.getCl_xbianliang()), 0);
+                    String tatol = "";
+                    if (beishu <= 0) {
+                        //qigouliang
+                        tatol = Double.parseDouble(auctionDetailBean.getCl_qigou()) + "";
+                    } else {
+                        Double count = mul(beishu, Double.parseDouble(auctionDetailBean.getCl_xbianliang()));
+                        tatol = add(count, Double.parseDouble(auctionDetailBean.getCl_qigou())) + "";
                     }
-                }else{
-                    tv_item_cart_buy_num.setText(tatol);
+                    if (shishicunzai.equals("true")) {
+                        if (Double.parseDouble(tatol) > Double.parseDouble(shishicjnumber)) {
+                            tv_item_cart_buy_num.setText(tatol);
+                        } else {
+                            tv_item_cart_buy_num.setText(shishicjnumber);
+                        }
+                    } else {
+                        tv_item_cart_buy_num.setText(tatol);
+                    }
                 }
                 SharedPreferences.Editor editor=sp.edit();
                 editor.putString("numberValue",tv_item_cart_buy_num.getText().toString());
@@ -2177,13 +2187,8 @@ public class OpenAcutionOrMifengActivity extends AppCompatActivity implements IO
             int top = leftTop[1];
             int bottom = top + v.getHeight();
             int right = left + v.getWidth();
-            if (event.getX() > left && event.getX() < right
-                    && event.getY() > top && event.getY() < bottom) {
-                // 点击的是输入框区域，保留点击EditText的事件
-                return false;
-            } else {
-                return true;
-            }
+            return !(event.getX() > left && event.getX() < right
+                    && event.getY() > top && event.getY() < bottom);
         }
         return false;
     }
@@ -2202,7 +2207,8 @@ public class OpenAcutionOrMifengActivity extends AppCompatActivity implements IO
                     String allow=jsonObject.getString("cl_allow");
                     if (allow.equals("0")){
                         //没有权限问题可以放心购买
-                          setValue();
+                        Log.d("有没有进状态判断这里","进来了");
+                        setValue();
                     }else if (allow.equals("1")){
                         //无上游资源方购买资质
                         Toast.makeText(OpenAcutionOrMifengActivity.this, "无上游资源方购买资质", Toast.LENGTH_SHORT).show();
@@ -2258,7 +2264,7 @@ public class OpenAcutionOrMifengActivity extends AppCompatActivity implements IO
             @Override
             public void onSuccess(String result) {
                 Log.d("开闭市的返回值",result);
-                if (result.contains("true")){
+                 if (result.contains("true")){
                     Log.d("竞拍的唯一标识",unique);
                     if (unique.equals("false") || unique.equals("")){//开市但是没有登录
                         //没有登录登录状态
@@ -2354,13 +2360,70 @@ public class OpenAcutionOrMifengActivity extends AppCompatActivity implements IO
                         }
                     };
 
-                    timer.schedule(task, 3000, 3000);
+                    timer.schedule(task, 1000, 3000);//在1秒后执行，每个3秒执行一次
                 }
 
             }
         }
 
 
+    }
+    //公开竞拍的我的报价
+    public void MyOfferforOpen(){
+        String url=SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/catalog/ProductCatalogActor/myAuctionProductPrice";
+        RequestParams rp=new RequestParams(url);
+        rp.addParameter("productId", productId);
+        SharedPreferences sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+        unique=sp.getString("unique","");
+        rp.addParameter("_dynSessConf", unique);
+        x.http().post(rp, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.d("公开竞拍我的报价的返回值",result);
+
+                if (result.contains("myPrice")){//报价的时候需要与我的报价比较
+                    try {
+                        JSONObject jsonobject=new JSONObject(result);
+                        String myPrice=jsonobject.getString("myPrice");
+                        JSONArray jsonArray=new JSONArray(myPrice);
+                        String bidPrice="";
+                        String bidQut="";
+                        for (int i=0;i<jsonArray.length();i++){
+                            JSONObject object=jsonArray.getJSONObject(0);
+                            bidPrice=object.getString("bidPrice");
+                            bidQut=object.getString("bidQut");
+                        }
+                        if (Double.parseDouble(bidPrice)==Double.parseDouble(bid_price_num.getText().toString()) && Double.parseDouble(bidQut)==Double.parseDouble(tv_item_cart_buy_num.getText().toString())){
+                            Toast.makeText(OpenAcutionOrMifengActivity.this, "这次报价不能与上次的一样", Toast.LENGTH_SHORT).show();
+                        }else{
+                            gongkai_baojia();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }else{
+                    //可以直接报价
+                    gongkai_baojia();
+                }
+
+
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
     }
     //刷新数据,主要是不同的状态
     public void selecttimer(){
@@ -2420,6 +2483,7 @@ public class OpenAcutionOrMifengActivity extends AppCompatActivity implements IO
                     status=auctionDetailBean.getStatus();
                     Log.d("刷新后的状态值",status);
                     //booleanOpenorClose();
+                    tvTimeValue.setText("");
                     setTitleValue();
 //                    if(){//剩余数量小于最小qigouliang，重新请求，计时器结束
 //

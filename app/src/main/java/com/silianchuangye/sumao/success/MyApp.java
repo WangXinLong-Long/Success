@@ -64,8 +64,6 @@ public class MyApp extends Application {
         return instance;
     }
 
-    ;
-
     public static Context getContext() {
         return mContext;
     }

@@ -125,6 +125,6 @@ public class AllManagerAdapter extends BaseAdapter{
 //        }
 //    }
     public interface CallBackType{
-        public void call(int poistion);
+        void call(int poistion);
     }
 }

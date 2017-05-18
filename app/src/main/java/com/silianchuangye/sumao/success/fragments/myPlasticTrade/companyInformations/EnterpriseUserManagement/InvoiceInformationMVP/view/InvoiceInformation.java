@@ -68,6 +68,10 @@ public class InvoiceInformation extends Activity implements View.OnClickListener
     private String newBelowPhone;
     private String newzip_code;
     private String detailAddress;
+    private String xiangxi;
+    private String province="";
+    private String city="";
+    private String county="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,9 +152,15 @@ public class InvoiceInformation extends Activity implements View.OnClickListener
             jsonObject.put("notesRecipientName",bill_mailing_address_name_tv.getText().toString());
             jsonObject.put("notesRecipientMobile",bill_mailing_address_telephone_tv.getText().toString());
             jsonObject.put("notesRecipientPhone",bill_mailing_address_fix_telephone_tv.getText().toString());
-            jsonObject.put("notesRecipientProvince",sb.substring(0, 4).toString());
-            jsonObject.put("notesRecipientCity",sb.substring(0, 6).toString());
-            jsonObject.put("notesRecipientCounty",sb.toString().toString());
+            if (bill_mailing_address_mailing_address_tv_region.getText().toString().equals(xiangxi)){
+                jsonObject.put("notesRecipientProvince", province);
+                jsonObject.put("notesRecipientCity", city);
+                jsonObject.put("notesRecipientCounty", county);
+            }else {
+                jsonObject.put("notesRecipientProvince", sb.substring(0, 4).toString());
+                jsonObject.put("notesRecipientCity", sb.substring(0, 6).toString());
+                jsonObject.put("notesRecipientCounty", sb.toString().toString());
+            }
             jsonObject.put("_dynSessConf",sessionId);
             jsonObject.put("notesRecipientAddress",bill_mailing_address_mailing_address_tv_detail.getText().toString());
             jsonObject.put("notesRecipientZipCode",bill_mailing_address_zip_code_tv.getText().toString());
@@ -271,6 +281,7 @@ public class InvoiceInformation extends Activity implements View.OnClickListener
                 bundle.putString("receivingInformation", "修改税号");
                 bundle.putBoolean("canBeAmpty", false);
                 bundle.putString("message", "税号");
+                bundle.putString("value",duty_paragraph.getText().toString());
                 intent.putExtras(bundle);
                 startActivityForResult(intent, SuMaoConstant.CHANGE_POSITION_ONE);
 
@@ -279,6 +290,7 @@ public class InvoiceInformation extends Activity implements View.OnClickListener
                 bundle.putString("receivingInformation", "修改地址");
                 bundle.putBoolean("canBeAmpty", false);
                 bundle.putString("message", "地址");
+                bundle.putString("value",invoice_information_address.getText().toString());
                 intent.putExtras(bundle);
                 startActivityForResult(intent, SuMaoConstant.CHANGE_POSITION_TWO);
                 break;
@@ -286,6 +298,7 @@ public class InvoiceInformation extends Activity implements View.OnClickListener
                 bundle.putString("receivingInformation", "修改电话");
                 bundle.putBoolean("canBeAmpty", false);
                 bundle.putString("message", "电话");
+                bundle.putString("value",invoice_information_telephone.getText().toString());
                 intent.putExtras(bundle);
                 startActivityForResult(intent, SuMaoConstant.CHANGE_POSITION_THREE);
                 break;
@@ -293,6 +306,7 @@ public class InvoiceInformation extends Activity implements View.OnClickListener
                 bundle.putString("receivingInformation", "修改开户行");
                 bundle.putBoolean("canBeAmpty", false);
                 bundle.putString("message", "开户行");
+                bundle.putString("value",invoice_information_bank_account.getText().toString());
                 intent.putExtras(bundle);
                 startActivityForResult(intent, SuMaoConstant.CHANGE_POSITION_FOUR);
                 break;
@@ -300,6 +314,7 @@ public class InvoiceInformation extends Activity implements View.OnClickListener
                 bundle.putString("receivingInformation", "修改账号");
                 bundle.putBoolean("canBeAmpty", false);
                 bundle.putString("message", "账号");
+                bundle.putString("value",invoice_information_account_number_tv.getText().toString());
                 intent.putExtras(bundle);
                 startActivityForResult(intent, SuMaoConstant.CHANGE_POSITION_FIVE);
                 break;
@@ -307,6 +322,7 @@ public class InvoiceInformation extends Activity implements View.OnClickListener
                 bundle.putString("receivingInformation", "修改姓名");
                 bundle.putBoolean("canBeAmpty", false);
                 bundle.putString("message", "姓名");
+                bundle.getString("value",bill_mailing_address_name_tv.getText().toString());
                 intent.putExtras(bundle);
                 startActivityForResult(intent, SuMaoConstant.CHANGE_POSITION_SIX);
                 break;
@@ -314,6 +330,7 @@ public class InvoiceInformation extends Activity implements View.OnClickListener
                 bundle.putString("receivingInformation", "修改手机");
                 bundle.putBoolean("canBeAmpty", false);
                 bundle.putString("message", "手机");
+                bundle.putString("value",bill_mailing_address_telephone_tv.getText().toString());
                 intent.putExtras(bundle);
                 startActivityForResult(intent, SuMaoConstant.CHANGE_POSITION_SEVEN);
                 break;
@@ -321,6 +338,7 @@ public class InvoiceInformation extends Activity implements View.OnClickListener
                 bundle.putString("receivingInformation", "修改固定电话");
                 bundle.putBoolean("canBeAmpty", true);
                 bundle.putString("message", "固定电话");
+                bundle.putString("value",bill_mailing_address_fix_telephone_tv.getText().toString());
                 intent.putExtras(bundle);
                 startActivityForResult(intent, SuMaoConstant.CHANGE_POSITION_EIGHT);
                 break;
@@ -329,6 +347,7 @@ public class InvoiceInformation extends Activity implements View.OnClickListener
                 bundle.putString("receivingInformation", "修改邮编");
                 bundle.putBoolean("canBeAmpty", true);
                 bundle.putString("message", "邮编");
+                bundle.putString("value",bill_mailing_address_zip_code_tv.getText().toString());
                 intent.putExtras(bundle);
                 startActivityForResult(intent, SuMaoConstant.CHANGE_POSITION_TEN);
                 break;
@@ -510,9 +529,9 @@ public class InvoiceInformation extends Activity implements View.OnClickListener
         //        固定电话
         bill_mailing_address_fix_telephone_tv.setText(bean.getInvoice().getNotesRecipientPhone());
 //        要获取省市县的level
-        String province = bean.getInvoice().getNotesRecipientProvince();
-        String city = bean.getInvoice().getNotesRecipientCity();
-        String county = bean.getInvoice().getNotesRecipientCounty();
+         province = bean.getInvoice().getNotesRecipientProvince();
+         city = bean.getInvoice().getNotesRecipientCity();
+         county = bean.getInvoice().getNotesRecipientCounty();
         //sb.append(county);
         addAddressPresenter.sendrequestGetAddress(province,city,county);
         //        邮寄地址详细
@@ -526,6 +545,7 @@ public class InvoiceInformation extends Activity implements View.OnClickListener
     @Override
     public void setRegionInText(String result) {
         Log.d("详细地址的返回值",result);
+        xiangxi=result;
 //        邮寄地址地区
         bill_mailing_address_mailing_address_tv_region.setText(result);
     }

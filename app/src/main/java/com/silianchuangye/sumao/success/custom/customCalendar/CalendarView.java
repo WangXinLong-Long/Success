@@ -125,7 +125,7 @@ public class CalendarView extends LinearLayout {
 		this.dateViewClick = dateViewClick;
 	}
 	public interface DateViewClick{
-		public void dateClick();
+		void dateClick();
 	}
 
 }

@@ -438,8 +438,22 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
         if (type.equals("fixedPricingOrder")) {//现货
             type2.setText("现货");
             tv_xianqing_type.setText("现货");
-            long countDown = (Long.parseLong(submittedDate) + 1000 * 3600) - new Date().getTime();
-            countDownTime = countDown > 0 ? countDown : 0;
+
+            SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Long time=new Long((Long.parseLong(submittedDate) + 1000 * 3600));
+            Log.d("time的值",time+"");
+            String d = format.format(time);
+
+            try {
+                Date date1 = format.parse(d);
+                Log.d("支付截止时间的值",date1+"");
+                Date date_new=new Date();
+                long countDown =date1.getTime()  - date_new.getTime()+4000;
+                countDownTime = countDown > 0 ? countDown : 0;
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
         } else if (type.equals("openAuctionOrder")) {//公开竞拍
             type2.setText("公开竞拍");
             tv_xianqing_type.setText("公开竞拍");
@@ -671,8 +685,8 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
             Long time=new Long(list.get(0).get("paymentEndDate").toString());
             String d = format.format(time);
             try {
-                Date date1=format.parse(d);
-                Date date=new Date();
+                Date date1=format.parse(d);//接口返回
+                Date date=new Date();//当前时间
                 Long ms=date1.getTime()-date.getTime();
                 countDownTime=ms;
             } catch (ParseException e) {

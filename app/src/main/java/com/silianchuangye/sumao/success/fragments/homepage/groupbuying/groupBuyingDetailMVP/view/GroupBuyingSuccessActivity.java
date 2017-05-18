@@ -173,6 +173,7 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
     private int screenHeight = 0;
     //软件盘弹起后所占高度阀值
     private int keyHeight = 0;
+    private String sumAddQty;
 
 
     @Override
@@ -312,32 +313,32 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.length() == 0) {
-                    tv_item_cart_buy_num.setText(qigou.getText().toString());
-                    tv_item_cart_buy_num.setSelection(qigou.getText().toString().length());
-                }
-                if (s.toString().contains(".")) {
-                    if (s.length() - 1 - s.toString().indexOf(".") > 3) {
-                        s = s.toString().subSequence(0,
-                                s.toString().indexOf(".") + 4);
-                        tv_item_cart_buy_num.setText(s);
-                        tv_item_cart_buy_num.setSelection(s.length());
-                    }
-                }
-                if (s.toString().trim().substring(0).equals(".")) {
-                    s = "0" + s;
-                    tv_item_cart_buy_num.setText(s);
-                    tv_item_cart_buy_num.setSelection(2);
-                }
-
-                if (s.toString().startsWith("0")
-                        && s.toString().trim().length() > 1) {
-                    if (!s.toString().substring(1, 2).equals(".")) {
-                        tv_item_cart_buy_num.setText(s.subSequence(1, s.length()));
-                        tv_item_cart_buy_num.setSelection(1);
-                        return;
-                    }
-                }
+//                if (s.length() == 0) {
+//                    tv_item_cart_buy_num.setText(qigou.getText().toString());
+//                    tv_item_cart_buy_num.setSelection(qigou.getText().toString().length());
+//                }
+//                if (s.toString().contains(".")) {
+//                    if (s.length() - 1 - s.toString().indexOf(".") > 3) {
+//                        s = s.toString().subSequence(0,
+//                                s.toString().indexOf(".") + 4);
+//                        tv_item_cart_buy_num.setText(s);
+//                        tv_item_cart_buy_num.setSelection(s.length());
+//                    }
+//                }
+//                if (s.toString().trim().substring(0).equals(".")) {
+//                    s = "0" + s;
+//                    tv_item_cart_buy_num.setText(s);
+//                    tv_item_cart_buy_num.setSelection(2);
+//                }
+//
+//                if (s.toString().startsWith("0")
+//                        && s.toString().trim().length() > 1) {
+//                    if (!s.toString().substring(1, 2).equals(".")) {
+//                        tv_item_cart_buy_num.setText(s.subSequence(1, s.length()));
+//                        tv_item_cart_buy_num.setSelection(1);
+//                        return;
+//                    }
+//                }
 
             }
 
@@ -351,25 +352,13 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
                     tv_item_cart_buy_num.setSelection((shengyvshuliang+"").length());
 
                 }
-//                if (Double.parseDouble(tv_item_cart_buy_num.getText().toString()) < Double.parseDouble(qigou.getText().toString())) {
-//                    tv_item_cart_buy_num.setText((qigou.getText().toString()));
-//                    tv_item_cart_buy_num.setSelection(qigou.getText().toString().length());
-//                }
-                if (!tv_item_cart_buy_num.getText().toString().equals("")) {
-                    double num = (Double.parseDouble(tv_item_cart_buy_num.getText().toString()));
-                    double price_num = (Double.parseDouble(price.getText().toString()));
-                    double x = num * price_num;
-                    DecimalFormat df = new DecimalFormat("#.##");
-                    tv_item_cart_all_price.setText(df.format(x) + "");
-
-                }
-//                if ((Double.parseDouble(tv_item_cart_buy_num.getText().toString()) - Double.parseDouble(qigou.getText().toString())) % Double.parseDouble(bianliang.getText().toString()) != 0) {
-//                    DecimalFormat df = new DecimalFormat("#");
-//                    double number = (Double.parseDouble(tv_item_cart_buy_num.getText().toString()) - Double.parseDouble(qigou.getText().toString())) / Double.parseDouble(bianliang.getText().toString());
-//                    double priceNum = (Integer.parseInt(df.format(number)) * Double.parseDouble(bianliang.getText().toString())) + Double.parseDouble(qigou.getText().toString());
-//                    String priceString = (priceNum + "");
-//                    tv_item_cart_buy_num.setText(priceString);
-//                    tv_item_cart_buy_num.setSelection(priceString.length());
+//                if (!tv_item_cart_buy_num.getText().toString().equals("")) {
+//                    double num = (Double.parseDouble(tv_item_cart_buy_num.getText().toString()));
+//                    double price_num = (Double.parseDouble(price.getText().toString()));
+//                    double x = num * price_num;
+//                    DecimalFormat df = new DecimalFormat("#.##");
+//                    tv_item_cart_all_price.setText(df.format(x) + "");
+//
 //                }
             }
 
@@ -469,6 +458,7 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
             }
         });
     }
+    //判断有没有关闭市场
     public void booleanOpenorclose() {
         String url = SuMaoConstant.SUMAO_IP + "/rest/model/atg/commerce/order/myorder/OrderPaymentInfo/colsedChecker";
         RequestParams rp = new RequestParams(url);
@@ -807,7 +797,7 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
             jieshushijian = groupBuyingDetailBean.getCl_shijianend();
             tuan_start = groupBuyingDetailBean.getGroupStartDate();
             tuan_end = groupBuyingDetailBean.getGroupEndDate();
-            String sumAddQty = groupBuyingDetailBean.getSumAddQty();//数量
+             sumAddQty = groupBuyingDetailBean.getSumAddQty();//数量
              groupPercent = groupBuyingDetailBean.getGroupPercent();//比例
 
             int i = (int) (Double.valueOf(groupPercent) * 100);
@@ -828,35 +818,6 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
 
 
     public void tuangou_state(){
-//        if (state.equals("2")) {
-//            tv_tuangou_line.setVisibility(View.VISIBLE);
-//            relative_tuangou.setVisibility(View.GONE);
-//            tv_success.setVisibility(View.GONE);
-//            tv_failed.setVisibility(View.GONE);
-//            layout_Bottom.setVisibility(View.INVISIBLE);
-//            relative_tuangou_end.setVisibility(View.VISIBLE);
-//            linear_tuangou_time.setVisibility(View.GONE);
-//            // linear_tuagou_line.setVisibility(View.GONE);
-//            tv_tuangou_line.setVisibility(View.GONE);
-//            tv_tuangou_time.setVisibility(View.GONE);
-//            tvResult.setText("团购");
-//            tvResult.setVisibility(View.GONE);
-//        }
-//        if (state.equals("1")) {//正在进行
-//            relative_tuangou.setVisibility(View.VISIBLE);
-//            tv_tuangou_time.setVisibility(View.GONE);
-//            tv_tuangou_line.setVisibility(View.GONE);
-//            linear_tuangou_time.setVisibility(View.VISIBLE);
-//        }
-//        if (state.equals("0")) {//未开始
-//            tv_tuangou_line.setVisibility(View.VISIBLE);
-//            relative_tuangou.setVisibility(View.GONE);
-//            layout_Bottom.setVisibility(View.GONE);
-//            relative_tuangou_end.setVisibility(View.VISIBLE);
-//            linear_tuangou_time.setVisibility(View.GONE);
-//            // linear_tuagou_line.setVisibility(View.GONE);
-//            tv_tuangou_time.setVisibility(View.VISIBLE);
-//        }
         if (login.equals("unlogin")){
             //没有登陆
             Inforesult=groupBuyingDetailBean.getSecuredOfSection();
@@ -1001,7 +962,7 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
             tv_tuangou_time.setVisibility(View.GONE);
             tvResult.setText("团购已结束");
         }else if (login.equals("end_success")){
-            info();
+           // info();///这里改动了
             tv_tuangou_line.setVisibility(View.VISIBLE);
             relative_tuangou.setVisibility(View.GONE);
             tv_success.setVisibility(View.GONE);
@@ -1051,6 +1012,9 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
                 if (Float.parseFloat(count.getText().toString()) - Float.parseFloat(group_amount_et.getText().toString()) < Float.parseFloat(qigou.getText().toString())) {
                     Log.d("state的if","if");
                     info();
+                    if(timer!=null) {
+                        timer.cancel();
+                    }
                     Log.d("总量", count.getText().toString());
                     Log.d("已经成团量", group_amount_et.getText().toString());
                     Log.d("起购量", qigou.getText().toString());
@@ -1064,6 +1028,7 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
                                 case 1:
                                     tuangouinfo();
                                    // info();
+
                                     break;
                                 default:
                                     break;
@@ -1081,7 +1046,7 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
                         }
                     };
 
-                    timer.schedule(task, 2000, 2000);
+                    timer.schedule(task, 3000, 3000);
                 }
             }
         }
@@ -1092,31 +1057,29 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
         String url=SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/catalog/ProductCatalogActor/groupProduct";
         RequestParams requestParams=new RequestParams(url);
         requestParams.addParameter("productId",productId);
+        Log.d("进度条的rp",requestParams+"");
         x.http().post(requestParams, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
                 try {
                     JSONObject jsonobject=new JSONObject(result);
                     Log.d("进度条result的值",result);
-//                    login=jsonobject.getString("securedOfSection");
-//                    Inforesult=jsonobject.getString("securedPage");
                     groupPercent=jsonobject.getString("groupPercent");
+                    sumAddQty=jsonobject.getString("sumAddQty");
+                    String count_info=jsonobject.getString("cl_zongliang");
+                    String qigou=jsonobject.getString("cl_qigou");
                     Log.d("进度条的值",groupPercent+"%的进度条");
-                    //tuangou_state();
-                   // booleanOpenorclose();
+                    Log.d("成团量的值",sumAddQty);
+                    Log.d("总量的值",count_info);
+                    Log.d("起购量的值",qigou);
                     int i = (int) (Double.valueOf(groupPercent) * 100);
                     pbDemo.setProgress(i);
                     tv_pro_now.setText("当前成团量为 : " + i + "%");
-//                    Double beishengshu=mul(Double.parseDouble(groupBuyingDetailBean.getGroupPercent()),Double.parseDouble(groupBuyingDetailBean.getCl_zongliang()));
-//                    Double jianshu=sub(Double.parseDouble(groupBuyingDetailBean.getCl_zongliang()),beishengshu);
-//                    Log.d("11111",jianshu+"");
-//                    if (jianshu < Double.parseDouble(groupBuyingDetailBean.getCl_qigou())){
-//                        timer.cancel();
-//                        info();
-//                    }
-                    if(groupPercent.equals("1.0")){
-                        timer.cancel();
+
+                    if (Float.parseFloat(count_info) - Float.parseFloat(sumAddQty) < Float.parseFloat(qigou)) {
+                        Log.d("state的if","if");
                         info();
+                        timer.cancel();
                     }
                 }catch (JSONException e) {
                     e.printStackTrace();
@@ -1191,6 +1154,7 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
             paidDeposit = (TextView) view.findViewById(R.id.tvPrice_popupwindow_auction);
             paidDeposit.setText(zhifujine);
             amountOfMarginRequired = (EditText) view.findViewById(R.id.etZhifu_auction);
+            amountOfMarginRequired.setKeyListener(null);
 //            需保证金
             TextView totalAmount = (TextView) view.findViewById(R.id.total_amount);
             TextView count_Price = (TextView) view.findViewById(R.id.count_Price);
@@ -1203,53 +1167,6 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
             count_Price.setText(String.format("%.2f", Double.parseDouble(tv_item_cart_all_price.getText().toString()) * Double.parseDouble(percent + "")));
             additionalMarginAmountString = additionalMarginAmount > 0 ? additionalMarginAmount + "" : 0 + "";
             amountOfMarginRequired.setText(String.format("%.2f", Double.parseDouble(additionalMarginAmountString)));
-//            amountOfMarginRequired.addTextChangedListener(new TextWatcher() {
-//                @Override
-//                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//                }
-//
-//                @Override
-//                public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                    if (s.length() == 0) {
-//                        amountOfMarginRequired.setText(additionalMarginAmountString);
-//                        amountOfMarginRequired.setSelection(additionalMarginAmountString.length());
-//                    }
-//                    if (s.toString().contains(".")) {
-//                        if (s.length() - 1 - s.toString().indexOf(".") > 2) {
-//                            s = s.toString().subSequence(0,
-//                                    s.toString().indexOf(".") + 3);
-//                            amountOfMarginRequired.setText(s);
-//                           // amountOfMarginRequired.setSelection(s.length());
-//                        }
-//                    }
-//                    if (s.toString().trim().substring(0).equals(".")) {
-//                        s = "0" + s;
-//                        amountOfMarginRequired.setText(s);
-//                        //amountOfMarginRequired.setSelection(3);
-//                    }
-//
-//                    if (s.toString().startsWith("0")
-//                            && s.toString().trim().length() > 1) {
-//                        if (!s.toString().substring(1, 2).equals(".")) {
-//                            amountOfMarginRequired.setText(s.subSequence(1, s.length()));
-//                            amountOfMarginRequired.setSelection(1);
-//                            return;
-//                        }
-//                    }
-//
-//                }
-//
-//                @Override
-//                public void afterTextChanged(Editable s) {
-//
-//                    if (Double.parseDouble(amountOfMarginRequired.getText().toString()) < Double.parseDouble(additionalMarginAmountString)) {
-//                        amountOfMarginRequired.setText(additionalMarginAmountString);
-//                        amountOfMarginRequired.setSelection(additionalMarginAmountString.length());
-//
-//                    }
-//                }
-//            });
             lv = (ListView) view.findViewById(R.id.lv_popupwindow_auction);
 
             Gson gson = new Gson();
@@ -1536,7 +1453,7 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
             if (timer!=null){
                 timer.cancel();
             }
-            info();
+            //info();
         }
 
         @Override
@@ -1622,13 +1539,8 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
             int top = leftTop[1];
             int bottom = top + v.getHeight();
             int right = left + v.getWidth();
-            if (event.getX() > left && event.getX() < right
-                    && event.getY() > top && event.getY() < bottom) {
-                // 点击的是输入框区域，保留点击EditText的事件
-                return false;
-            } else {
-                return true;
-            }
+            return !(event.getX() > left && event.getX() < right
+                    && event.getY() > top && event.getY() < bottom);
         }
         return false;
     }
