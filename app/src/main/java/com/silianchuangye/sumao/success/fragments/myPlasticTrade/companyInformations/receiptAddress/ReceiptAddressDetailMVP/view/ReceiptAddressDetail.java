@@ -64,6 +64,8 @@ public class ReceiptAddressDetail extends Activity implements View.OnClickListen
     String telephone = "";
     String fixedTelephone = "";
     String displayAddress="";
+    String address_info="";
+    private String sp="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,11 +99,13 @@ public class ReceiptAddressDetail extends Activity implements View.OnClickListen
 //        判断是否是默认值
         addressType = bundle.getString("addressType");
          name = bundle.getString("name");
-         String address = bundle.getString("address");
+          address_info = bundle.getString("address");
+          Log.d("adddress",address_info);
          zipCode = bundle.getString("zipCode");
          telephone = bundle.getString("telephone");
          fixedTelephone = bundle.getString("fixedTelephone");
          displayAddress = bundle.getString("displayAddress");
+        sp=bundle.getString("sp");
         Log.i("test", "：是否为默认地址----" + name + "：收件人姓名-----" + address + "：收货地址----" + zipCode + "：邮编----" + telephone + "：电话号码----" + fixedTelephone + "：固定电话");
 
         consignee_name = ((TextView) findViewById(R.id.consignee_name));
@@ -130,7 +134,7 @@ public class ReceiptAddressDetail extends Activity implements View.OnClickListen
             remove_receipt_address.setVisibility(View.VISIBLE);
         }
         consignee_name.setText(name);
-        address_text1.setText(address);
+        address_text1.setText(address_info);
         zip_code_text.setText(zipCode);
         telephone_detail_text.setText(telephone);
         address_text2.setText(displayAddress);
@@ -177,6 +181,7 @@ public class ReceiptAddressDetail extends Activity implements View.OnClickListen
                 intent.setClass(ReceiptAddressDetail.this, ModifyName.class);
                 bundle.putString("receivingInformation", "修改收件人姓名");
                 bundle.putString("message", "姓名");
+                bundle.putString("resouce","收货信息");
                 bundle.putBoolean("canBeAmpty", false);
                 bundle.putString("value",name);
                 intent.putExtras(bundle);
@@ -196,6 +201,7 @@ public class ReceiptAddressDetail extends Activity implements View.OnClickListen
                 bundle.putString("message", "邮编");
                 bundle.putBoolean("canBeAmpty", true);
                 bundle.putString("value",zipCode);
+                bundle.putString("resouce","收货信息");
                 intent.putExtras(bundle);
                 startActivityForResult(intent, CHANGE_POST_CODE);
 
@@ -207,6 +213,7 @@ public class ReceiptAddressDetail extends Activity implements View.OnClickListen
                 bundle.putString("message", "手机号");
                 bundle.putBoolean("canBeAmpty", false);
                 bundle.putString("value",telephone);
+                bundle.putString("resouce","收货信息");
                 intent.putExtras(bundle);
                 startActivityForResult(intent, CHANGE_MOBILE);
                 break;
@@ -216,6 +223,7 @@ public class ReceiptAddressDetail extends Activity implements View.OnClickListen
                 bundle.putString("receivingInformation", "修改固定电话");
                 bundle.putString("message", "固定电话");
                 bundle.putBoolean("canBeAmpty", true);
+                bundle.putString("resouce","收货信息");
                 bundle.putString("value",fixedTelephone);
                 intent.putExtras(bundle);
                 startActivityForResult(intent, CHANGE_PHONE);
@@ -229,10 +237,20 @@ public class ReceiptAddressDetail extends Activity implements View.OnClickListen
                         fixed_telephone_detail_text.getText().toString(),id.toString(),sessionId);
                 break;
             case R.id.save_receipt_address1:
-                presenter.ModifyReceiptInformation(consignee_name.getText().toString(), sb.toString(),
-                        address_text2.getText().toString(), zip_code_text.getText().toString(),
-                        telephone_detail_text.getText().toString(),
-                        fixed_telephone_detail_text.getText().toString(),id.toString(),sessionId);
+                if(address_text1.getText().toString().equals(address_info)){
+                    presenter.ModifyReceiptInformation(consignee_name.getText().toString(), sp,
+                            address_text2.getText().toString(), zip_code_text.getText().toString(),
+                            telephone_detail_text.getText().toString(),
+                            fixed_telephone_detail_text.getText().toString(), id.toString(), sessionId);
+
+                }else {
+
+
+                    presenter.ModifyReceiptInformation(consignee_name.getText().toString(), sb.toString(),
+                            address_text2.getText().toString(), zip_code_text.getText().toString(),
+                            telephone_detail_text.getText().toString(),
+                            fixed_telephone_detail_text.getText().toString(), id.toString(), sessionId);
+                }
                 break;
 
             default:

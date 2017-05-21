@@ -242,37 +242,6 @@ public class InvoiceInformation extends Activity implements View.OnClickListener
                 }else {
                      updateInfo();
                 }
-//                if (invoice_information_address.getText().toString().equals("")||invoice_information_address.getText().toString()==null){
-//                    Toast.makeText(InvoiceInformation.this, "请填写您要修改的地址!", Toast.LENGTH_SHORT).show();
-//                }
-//                if (invoice_information_telephone.getText().toString().equals("")||invoice_information_telephone.getText().toString()==null){
-//                    Toast.makeText(InvoiceInformation.this, "请填写您要修改的固定电话!", Toast.LENGTH_SHORT).show();
-//                }
-//                if (invoice_information_bank_account.getText().toString().equals("")||invoice_information_bank_account.getText().toString()==null){
-//                    Toast.makeText(InvoiceInformation.this, "请填写您要修改的开户行!", Toast.LENGTH_SHORT).show();
-//                }
-//                if (invoice_information_account_number_tv.getText().toString().equals("")||invoice_information_account_number_tv.getText().toString()==null){
-//                    Toast.makeText(InvoiceInformation.this, "请填写您要修改的帐号!", Toast.LENGTH_SHORT).show();
-//                }
-//                if (bill_mailing_address_name_tv.getText().toString().equals("")||bill_mailing_address_name_tv.getText().toString()==null){
-//                    Toast.makeText(InvoiceInformation.this, "请填写您要修改的名称!", Toast.LENGTH_SHORT).show();
-//                }
-//                if (bill_mailing_address_telephone_tv.getText().toString().equals("")||bill_mailing_address_telephone_tv.getText().toString()==null){
-//                    Toast.makeText(InvoiceInformation.this, "请填写您要修改的手机号!", Toast.LENGTH_SHORT).show();
-//                }
-//                if (bill_mailing_address_fix_telephone_tv.getText().toString().equals("")||bill_mailing_address_fix_telephone_tv.getText().toString()==null){
-//                    Toast.makeText(InvoiceInformation.this, "请填写您要修改的固定电话!", Toast.LENGTH_SHORT).show();
-//                }
-//                if (bill_mailing_address_mailing_address_tv_region.getText().toString().equals("")||bill_mailing_address_mailing_address_tv_region.getText().toString()==null){
-//                    Toast.makeText(InvoiceInformation.this, "请填写您要修改的地址!", Toast.LENGTH_SHORT).show();
-//                }
-//                if (bill_mailing_address_mailing_address_tv_detail.getText().toString().equals("")||bill_mailing_address_mailing_address_tv_detail.getText().toString()==null){
-//                    Toast.makeText(InvoiceInformation.this, "请填写您要修改的地址!", Toast.LENGTH_SHORT).show();
-//                }
-//                if (bill_mailing_address_zip_code_tv.getText().toString().equals("")||bill_mailing_address_zip_code_tv.getText().toString()==null){
-//                    Toast.makeText(InvoiceInformation.this, "请填写您要修改的邮编!", Toast.LENGTH_SHORT).show();
-//                }
-//
 
 
                 break;
@@ -281,6 +250,7 @@ public class InvoiceInformation extends Activity implements View.OnClickListener
                 bundle.putString("receivingInformation", "修改税号");
                 bundle.putBoolean("canBeAmpty", false);
                 bundle.putString("message", "税号");
+                bundle.putString("resouce","开票信息");
                 bundle.putString("value",duty_paragraph.getText().toString());
                 intent.putExtras(bundle);
                 startActivityForResult(intent, SuMaoConstant.CHANGE_POSITION_ONE);
@@ -290,6 +260,7 @@ public class InvoiceInformation extends Activity implements View.OnClickListener
                 bundle.putString("receivingInformation", "修改地址");
                 bundle.putBoolean("canBeAmpty", false);
                 bundle.putString("message", "地址");
+                bundle.putString("resouce","开票信息");
                 bundle.putString("value",invoice_information_address.getText().toString());
                 intent.putExtras(bundle);
                 startActivityForResult(intent, SuMaoConstant.CHANGE_POSITION_TWO);
@@ -298,6 +269,7 @@ public class InvoiceInformation extends Activity implements View.OnClickListener
                 bundle.putString("receivingInformation", "修改电话");
                 bundle.putBoolean("canBeAmpty", false);
                 bundle.putString("message", "电话");
+                bundle.putString("resouce","开票信息");
                 bundle.putString("value",invoice_information_telephone.getText().toString());
                 intent.putExtras(bundle);
                 startActivityForResult(intent, SuMaoConstant.CHANGE_POSITION_THREE);
@@ -306,6 +278,7 @@ public class InvoiceInformation extends Activity implements View.OnClickListener
                 bundle.putString("receivingInformation", "修改开户行");
                 bundle.putBoolean("canBeAmpty", false);
                 bundle.putString("message", "开户行");
+                bundle.putString("resouce","开票信息");
                 bundle.putString("value",invoice_information_bank_account.getText().toString());
                 intent.putExtras(bundle);
                 startActivityForResult(intent, SuMaoConstant.CHANGE_POSITION_FOUR);
@@ -314,6 +287,7 @@ public class InvoiceInformation extends Activity implements View.OnClickListener
                 bundle.putString("receivingInformation", "修改账号");
                 bundle.putBoolean("canBeAmpty", false);
                 bundle.putString("message", "账号");
+                bundle.putString("resouce","开票信息");
                 bundle.putString("value",invoice_information_account_number_tv.getText().toString());
                 intent.putExtras(bundle);
                 startActivityForResult(intent, SuMaoConstant.CHANGE_POSITION_FIVE);
@@ -322,6 +296,7 @@ public class InvoiceInformation extends Activity implements View.OnClickListener
                 bundle.putString("receivingInformation", "修改姓名");
                 bundle.putBoolean("canBeAmpty", false);
                 bundle.putString("message", "姓名");
+                bundle.putString("resouce","开票信息");
                 bundle.getString("value",bill_mailing_address_name_tv.getText().toString());
                 intent.putExtras(bundle);
                 startActivityForResult(intent, SuMaoConstant.CHANGE_POSITION_SIX);
@@ -330,6 +305,7 @@ public class InvoiceInformation extends Activity implements View.OnClickListener
                 bundle.putString("receivingInformation", "修改手机");
                 bundle.putBoolean("canBeAmpty", false);
                 bundle.putString("message", "手机");
+                bundle.putString("resouce","开票信息");
                 bundle.putString("value",bill_mailing_address_telephone_tv.getText().toString());
                 intent.putExtras(bundle);
                 startActivityForResult(intent, SuMaoConstant.CHANGE_POSITION_SEVEN);
@@ -338,6 +314,7 @@ public class InvoiceInformation extends Activity implements View.OnClickListener
                 bundle.putString("receivingInformation", "修改固定电话");
                 bundle.putBoolean("canBeAmpty", true);
                 bundle.putString("message", "固定电话");
+                bundle.putString("resouce","开票信息");
                 bundle.putString("value",bill_mailing_address_fix_telephone_tv.getText().toString());
                 intent.putExtras(bundle);
                 startActivityForResult(intent, SuMaoConstant.CHANGE_POSITION_EIGHT);
@@ -347,6 +324,7 @@ public class InvoiceInformation extends Activity implements View.OnClickListener
                 bundle.putString("receivingInformation", "修改邮编");
                 bundle.putBoolean("canBeAmpty", true);
                 bundle.putString("message", "邮编");
+                bundle.putString("resouce","开票信息");
                 bundle.putString("value",bill_mailing_address_zip_code_tv.getText().toString());
                 intent.putExtras(bundle);
                 startActivityForResult(intent, SuMaoConstant.CHANGE_POSITION_TEN);

@@ -718,7 +718,8 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
                 intent.setClass(RegisterFirmActivity.this, FirmInfoTypeActivity.class);
                 intent.putExtra("title", type_of_taxpayer_name.getText().toString());
                 intent.putExtra("value",nashuiren);
-                intent.putExtra("path",picturePath4);
+                intent.putExtra("path",nachuirenzhaopian);
+                Log.d("path的值",nachuirenzhaopian);
                 startActivityForResult(intent, 12);
                 break;
 
@@ -765,10 +766,7 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
                         editor.putString("phone",phone);
                         //editor.putString("U_group",loginUserInfoBean.getU_group());
                         editor.commit();
-//                        SharedPreferences sh_phone=getSharedPreferences("sumao_phone",Activity.MODE_PRIVATE);
-//                        SharedPreferences.Editor editor_phone=sh_phone.edit();
-//                        editor_phone.putString("phone",phone);
-//                        editor_phone.commit();
+
                         JPushInterface.setAlias(RegisterFirmActivity.this,phone,null);
                         Intent intent=new Intent(RegisterFirmActivity.this, FirmInfoActivity.class);
                         intent.putExtra("resource","注册");

@@ -46,7 +46,7 @@ public class ModifyName extends Activity implements View.OnClickListener {
     TextView tv_title_bar_title;
     RelativeLayout modify_title;
     String classname;
-    String receivingInformation;
+    String receivingInformation="";
     Boolean canBeAmpty;
     EditText modify_information;
     TextView prompt_information;
@@ -56,6 +56,7 @@ public class ModifyName extends Activity implements View.OnClickListener {
     private SharedPreferences sp;
     private boolean isInvoiceInformation;
     private String value="";
+    private String resouce="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +82,7 @@ public class ModifyName extends Activity implements View.OnClickListener {
         Intent intents = getIntent();
         Bundle bundle = intents.getExtras();
         receivingInformation = bundle.getString("receivingInformation");
-        isInvoiceInformation = receivingInformation != null;
+       // isInvoiceInformation = receivingInformation != null;
         email = bundle.getString("email");
         phoneNum = bundle.getString("phoneNum");
         name = bundle.getString("name");
@@ -89,6 +90,7 @@ public class ModifyName extends Activity implements View.OnClickListener {
         canBeAmpty = bundle.getBoolean("canBeAmpty");
         message = bundle.getString("message");
         value=bundle.getString("value");
+        resouce=bundle.getString("resouce");
         tv_title_bar_title.setText(receivingInformation);
         tv_title_bar_title.setTextColor(Color.WHITE);
 
@@ -175,18 +177,27 @@ public class ModifyName extends Activity implements View.OnClickListener {
                 /**
                  * 接口，修改信息
                  */
-                if (!isInvoiceInformation) {
 
-                    canCloseThisActivity();
-                } else {
+//                    if (resouce.equals("开票信息")) {
+//Log.d("title不是空的","不是空的");
+//                       // canCloseThisActivity();
+//                        involiceInformationModify();
+//                    } else
+                    if (resouce.equals("用户信息")) {
 //      判断是否从 involiceInformation （开票信息）中跳转过来
-                    involiceInformationModify();
-                }
+                        Log.d("从开票信息中","返回回来的");
+                        //involiceInformationModify();
+                        canCloseThisActivity();
+                    }else{
+                        involiceInformationModify();
+                    }
+
 
                 break;
 
         }
     }
+
 
     private void involiceInformationModify() {
         if (modify_information.getText().toString().equals("")) {

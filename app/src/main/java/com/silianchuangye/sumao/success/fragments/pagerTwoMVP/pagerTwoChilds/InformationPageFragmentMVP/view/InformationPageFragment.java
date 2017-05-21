@@ -76,11 +76,7 @@ public class InformationPageFragment extends Fragment implements IInformationPag
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                Toast.makeText(getActivity(),
-                        " Click on " + in.get(position).getNewsid(),
-                        Toast.LENGTH_SHORT).show();
-//                Intent intent = new Intent(getActivity(), InformationDetailsActivity.class);
-//                startActivity(intent);intent
+
                 Intent intent=new Intent(getActivity(), NewsActivity.class);
                 intent.putExtra("id",in.get(position).getNewsid());
                 intent.putExtra("title",in.get(position).getNewsname());

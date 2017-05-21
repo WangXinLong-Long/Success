@@ -48,6 +48,7 @@ public class UserRegisterModel implements IUserRegisterModel {
                 @Override
                 public void onSuccess(String result) {
                     LogUtils.log("result--->" + result + "<---result");
+
                     differentTypes = gson.fromJson(result,DifferentTypes.class);
                     switch (position)
                     {
@@ -62,6 +63,7 @@ public class UserRegisterModel implements IUserRegisterModel {
                             break;
                         case 4:
                             types = differentTypes.getCl_applyType();
+
                             break;
 
                     }

@@ -410,14 +410,18 @@ public class TypeInfoActivity extends AppCompatActivity implements OnClickListen
     @Override
     public void getTypeInfoInActivity(SearchActivityBean searchActivityBean) {
         Log.d("进来这个方发了","进来这个方法了");
-        list.clear();
-        adapter.clearData();
-        adapter.notifyDataSetChanged();
-        Log.d("list的长度",list.size()+"");
 
+
+        Log.d("list的长度",list.size()+"");
+        list.clear();
+        Log.d("list的长度",list.size()+"");
         cl = searchActivityBean.getIn();
         Log.e("TAG","cl------"+cl.size()+"");
+
+        Log.d("list的size",list.size()+"");
+        adapter.clearData();
         list.addAll(cl);
+       // adapadapter.clearData();ter.notifyDataSetChanged();
         Log.d("list的长度",list.size()+"");
         adapter.addData(list);
         adapter.notifyDataSetChanged();
@@ -463,8 +467,8 @@ public class TypeInfoActivity extends AppCompatActivity implements OnClickListen
                     Log.d("Ntt的值",""+Ntt);
                     if (Search.getText().toString()!=null&&!Search.getText().toString().equals("")){
                         typeInfoPresenter.getSearchFromSever(Search.getText().toString(),"0");
-                    }else{
-                        typeInfoPresenter.getSearchFromSever(Ntt,"0");
+//                    }else{
+//                        typeInfoPresenter.getSearchFromSever(Ntt,"0");
                     }
                     pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
                     adapter.notifyDataSetChanged();
@@ -486,9 +490,9 @@ public class TypeInfoActivity extends AppCompatActivity implements OnClickListen
                     super.handleMessage(msg);
                     Log.d("Ntt的值",Ntt);
                     if (Search.getText().toString()!=null&&!Search.getText().toString().equals("")){
-                        typeInfoPresenter.getSearchFromSever(Search.getText().toString(),page+"");
-                    }else{
-                        typeInfoPresenter.getSearchFromSever(Ntt,page+"");
+                        typeInfoPresenter.getSearchFromSever(Search.getText().toString(),(page)+"");
+//                    }else{
+//                        typeInfoPresenter.getSearchFromSever(Ntt,page+"");
 
                     }
                     pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);

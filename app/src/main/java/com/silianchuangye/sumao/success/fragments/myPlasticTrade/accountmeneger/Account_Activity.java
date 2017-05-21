@@ -50,10 +50,10 @@ public class Account_Activity extends AppCompatActivity implements View.OnClickL
         map.put("icon",R.mipmap.pingan);
         map.put("name","平安银行");
         list.add(map);
-        Map<String,Object> map1=new Hashtable<>();
-        map1.put("icon",R.mipmap.kunlun);
-        map1.put("name","昆仑银行");
-        list.add(map1);
+//        Map<String,Object> map1=new Hashtable<>();
+//        map1.put("icon",R.mipmap.kunlun);
+//        map1.put("name","昆仑银行");
+//        list.add(map1);
 //        Map<String,Object> map2=new Hashtable<>();
 //        map2.put("icon",R.mipmap.jianshe);
 //        map2.put("name","中国建设银行");

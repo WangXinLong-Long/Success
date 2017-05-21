@@ -168,80 +168,96 @@ public class RegisterPicture extends AppCompatActivity implements LGImgCompresso
             public void onClick(View v) {
                 //Log.d("点击事件","进来了");
                 //tupian=getPhotoFileName();
-                Loding.show(RegisterPicture.this,"图片上传中...",false,null);
-                //上传图片
-                if (!trime.equals("")) {
-                    new Thread() {
-                        @Override
-                        public void run() {
-                            super.run();
-                            RequestParams rp = new RequestParams(SuMaoConstant.SUMAO_IP + "/rest/model/atg/commerce/order/myorder/OrderPaymentInfo/fileUpload");
-                            SharedPreferences sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
-                            fileCode = sp.getString("filename", "");
-                            Log.d("fileCode", fileCode);
-                            if (fileCode != null && fileCode != "") {
-                                rp.addParameter("file", fileCode);
-                                SharedPreferences.Editor editor = sp.edit();
-                                editor.remove("filename");
-                                editor.commit();
-                            } else {
-                                Log.d("判断", "进来了");
-                                Log.d("相册的路径", filepath);
-                                Bitmap bitmap = BitmapFactory.decodeFile(filepath);
-                                fileCode = BitmapToString(bitmap);
+                if (ed_number.getText().toString().equals("")){
+                    Toast.makeText(RegisterPicture.this, "请输入证件号", Toast.LENGTH_SHORT).show();
+                }else {
+                    Loding.show(RegisterPicture.this, "图片上传中...", false, null);
+                    //上传图片
+                    if (!trime.equals("")) {
+                        new Thread() {
+                            @Override
+                            public void run() {
+                                super.run();
+                                RequestParams rp = new RequestParams(SuMaoConstant.SUMAO_IP + "/rest/model/atg/commerce/order/myorder/OrderPaymentInfo/fileUpload");
+                                SharedPreferences sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+                                fileCode = sp.getString("filename", "");
+                                Log.d("fileCode", fileCode);
+                                if (fileCode != null && fileCode != "") {
+                                    rp.addParameter("file", fileCode);
+                                    SharedPreferences.Editor editor = sp.edit();
+                                    editor.remove("filename");
+                                    editor.commit();
+                                } else {
+                                    Log.d("判断", "进来了");
+                                    Log.d("相册的路径", filepath);
+                                    Bitmap bitmap = BitmapFactory.decodeFile(filepath);
+                                    fileCode = BitmapToString(bitmap);
 //                                Log.d("图片编码", fileCode);
 //                               Toast.makeText(RegisterPicture.this, ""+fileCode, Toast.LENGTH_SHORT).show();
-                                rp.addParameter("file", fileCode);
+                                    rp.addParameter("file", fileCode);
+                                }
+
+                                Log.d("文件", fileCode + "");
+                                rp.addParameter("fileName", trime);
+                                Log.d("名称", trime);
+                                Log.d("aaa", rp.getUri().toString());
+                                x.http().post(rp, new Callback.CommonCallback<String>() {
+                                    @Override
+                                    public void onFinished() {
+
+                                    }
+
+                                    @Override
+                                    public void onSuccess(String result) {
+                                        Log.d("上穿陈功的返回值", result);
+                                        Loding.dis();
+                                        //  Intent intent=new Intent();
+                                        Intent intent = new Intent();
+                                        //Intent intent = new Intent();
+                                        intent.putExtra("value", ed_number.getText().toString());
+                                        intent.putExtra("picturePath", "/mnt/docs/" + trime);
+                                        Log.d("chuangu", "");
+                                        setResult(number1, intent);
+                                        RegisterPicture.this.finish();
+
+
+                                    }
+
+                                    @Override
+                                    public void onError(Throwable ex, boolean isOnCallback) {
+
+                                    }
+
+                                    @Override
+                                    public void onCancelled(CancelledException cex) {
+
+                                    }
+                                });
+
+                                // printStackTrace
                             }
+                        }.start();
+                    } else {
+                        if (tv_Name.getVisibility() == View.VISIBLE) {
+                            //有值
+                            Intent intent = new Intent();
+                            //Intent intent = new Intent();
+                            intent.putExtra("value", ed_number.getText().toString());
+                            intent.putExtra("picturePath", tupianpath);
+                            Log.d("chuangu", "");
+                            setResult(number1, intent);
+                            RegisterPicture.this.finish();
+                        } else {
 
-                            Log.d("文件", fileCode + "");
-                            rp.addParameter("fileName", trime);
-                            Log.d("名称", trime);
-                            Log.d("aaa", rp.getUri().toString());
-                            x.http().post(rp, new Callback.CommonCallback<String>() {
-                                @Override
-                                public void onFinished() {
-
-                                }
-
-                                @Override
-                                public void onSuccess(String result) {
-                                    Log.d("上穿陈功的返回值", result);
-                                    Loding.dis();
-                                    //  Intent intent=new Intent();
-                                    Intent intent = new Intent();
-                                    //Intent intent = new Intent();
-                                    intent.putExtra("value", ed_number.getText().toString());
-                                    intent.putExtra("picturePath", "/mnt/docs/" + trime);
-                                    Log.d("chuangu", "");
-                                    setResult(number1, intent);
-                                    RegisterPicture.this.finish();
-
-
-                                }
-
-                                @Override
-                                public void onError(Throwable ex, boolean isOnCallback) {
-
-                                }
-
-                                @Override
-                                public void onCancelled(CancelledException cex) {
-
-                                }
-                            });
-
-                            // printStackTrace
+                            Intent intent = new Intent();
+                            //Intent intent = new Intent();
+                            intent.putExtra("value", ed_number.getText().toString());
+                            intent.putExtra("picturePath", "abc");
+                            Log.d("chuangu", "");
+                            setResult(number1, intent);
+                            RegisterPicture.this.finish();
                         }
-                    }.start();
-                }else {
-                    Intent intent = new Intent();
-                    //Intent intent = new Intent();
-                    intent.putExtra("value", ed_number.getText().toString());
-                    intent.putExtra("picturePath", "abc");
-                    Log.d("chuangu", "");
-                    setResult(number1, intent);
-                    RegisterPicture.this.finish();
+                    }
                 }
 
 

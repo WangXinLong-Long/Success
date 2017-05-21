@@ -91,6 +91,7 @@ public class UserInformation extends Activity implements  View.OnClickListener{
                         case R.id.name_user_information:
                         intent.setClass(this,ModifyName.class);
                         bundle.putString("receivingInformation","修改姓名");
+                            bundle.putString("resouce","用户信息");
                             bundle.putString("email",tv_loginEmail.getText().toString());
                             bundle.putString("value",tv_loginName.getText().toString());
                             bundle.putString("phoneNum",tv_loginPhoneNum.getText().toString());
@@ -101,6 +102,7 @@ public class UserInformation extends Activity implements  View.OnClickListener{
                         case R.id.mailbox_user_information:
                         intent.setClass(this,ModifyName.class);
                         bundle.putString("receivingInformation","修改邮箱");
+                            bundle.putString("resouce","用户信息");
                             bundle.putString("name",tv_loginName.getText().toString());
                             bundle.putString("phoneNum",tv_loginPhoneNum.getText().toString());
                         bundle.putBoolean("canBeAmpty",true);
@@ -180,11 +182,11 @@ public class UserInformation extends Activity implements  View.OnClickListener{
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode==RESULT_OK){
             Log.e("TAG","返回");
-           // sendNet();
+            sendNet();
 
         }
         if(resultCode==0){
-            //sendNet();
+            sendNet();
         }
     }
 }

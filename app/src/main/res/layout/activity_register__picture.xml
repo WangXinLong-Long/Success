@@ -39,6 +39,7 @@
         android:background="#fff"
         android:layout_marginTop="@dimen/x5"
         android:id="@+id/ed_number"
+        android:text=""
         />
     <Button
         android:layout_width="match_parent"

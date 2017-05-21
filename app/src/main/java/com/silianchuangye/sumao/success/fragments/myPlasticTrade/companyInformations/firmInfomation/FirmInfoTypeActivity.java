@@ -46,6 +46,9 @@ import com.silianchuangye.sumao.success.utils.LGImgCompressor;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
@@ -119,7 +122,8 @@ public class FirmInfoTypeActivity extends AppCompatActivity implements IFirmInfo
 //        if (info!=null&&!info.equals("")&&info!=""){
 //
 //        }
-        if (!tupianpath.equals("")&&tupianpath!=""&&tupianpath!=null){
+        Log.d("path的值",tupianpath);
+        if (!tupianpath.equals("")&&tupianpath!=""&&tupianpath!=null&&title.equals("纳税人类型")){
             prompt.setVisibility(View.VISIBLE);
             prompt.setText(tupianpath.substring(10,tupianpath.length()));
         }
@@ -157,9 +161,7 @@ public class FirmInfoTypeActivity extends AppCompatActivity implements IFirmInfo
                     prompt.setText("请选择类型");
                     prompt.setTextColor(Color.RED);
                     prompt.setVisibility(View.VISIBLE);
-
                 } else {
-
                     if (!tupian.equals("")){
                         Log.d("点击事件", "进来了");
                         new Thread(){
@@ -199,13 +201,7 @@ public class FirmInfoTypeActivity extends AppCompatActivity implements IFirmInfo
 
                                     @Override
                                     public void onSuccess(String result) {
-                                        //  Intent intent=new Intent();
-//                                    IntentIntent intent = new Intent();
-//                                    //Intent intent = new Intent();
-//                                    intent.putExtra("value", ed_number.getText().toString());
-//                                    intent.putExtra("picturePath", "/mnt/"+getPhotoFileName());
-//                                    setResult(number1, intent);
-//                                    RegisterPicture.this.finish();
+
 
                                         Intent intent = new Intent();
                                         intent.putExtra("name", name);
@@ -232,13 +228,26 @@ public class FirmInfoTypeActivity extends AppCompatActivity implements IFirmInfo
                             }
                         }.start();
 
-                    }else {
-                        Intent intent = new Intent();
-                        intent.putExtra("name", name);
-                        intent.putExtra("level",level);
-                        intent.putExtra("picturePath","abc");
-                         FirmInfoTypeActivity.this.setResult(RESULT_OK, intent);
-                        FirmInfoTypeActivity.this.finish();
+                    }else {//没有选择照片
+                        if (!title.equals("纳税人类型")){
+                            Intent intent = new Intent();
+                            intent.putExtra("name", name);
+                            intent.putExtra("level", level);
+                            intent.putExtra("picturePath", "abc");
+                            FirmInfoTypeActivity.this.setResult(RESULT_OK, intent);
+                            FirmInfoTypeActivity.this.finish();
+                        }else {
+                            if (prompt.getVisibility()==View.VISIBLE) {
+                                Intent intent = new Intent();
+                                intent.putExtra("name", name);
+                                intent.putExtra("level", level);
+                                intent.putExtra("picturePath", tupianpath);
+                                FirmInfoTypeActivity.this.setResult(RESULT_OK, intent);
+                                FirmInfoTypeActivity.this.finish();
+                            } else {
+                                Toast.makeText(FirmInfoTypeActivity.this, "请选择纳税人图片!", Toast.LENGTH_SHORT).show();
+                            }
+                        }
 
 
                     }
@@ -260,6 +269,7 @@ public class FirmInfoTypeActivity extends AppCompatActivity implements IFirmInfo
         lp.alpha = bgAlpha; //0.0-1.0
         getWindow().setAttributes(lp);
     }
+
 
     public void Popupwindow() {
         View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.item_firm_info_popupwindow, null);
@@ -337,11 +347,22 @@ public class FirmInfoTypeActivity extends AppCompatActivity implements IFirmInfo
 
         typeAndLevel = names;
         Log.d("names",names.toString());
-        if (names.contains("买卖双重身份")){
-            names.remove("买卖双重身份");
+        for (int i=0;i<names.size();i++){
+            if (names.get(i).getDisplayName().equals("买卖双重身份")){
+                names.remove(i);
+            }
         }
-        Log.d("name的值",names.toString());
-        adapter = new ListAdapter(getApplication(), names);
+      //  if (names.get(0).getDisplayName().)
+//        if (names.contains("买卖双重身份")){
+//            names.remove("买卖双重身份");
+//        }
+//        Log.d("name的值",names.toString());
+
+//        if (title.equals("申请成为塑贸网")){
+//            adapter = new ListAdapter(getApplication(), names);
+//        }else {
+            adapter = new ListAdapter(getApplication(), names);
+       // }
         lv_type.setAdapter(adapter);
     }
 
@@ -377,11 +398,19 @@ public class FirmInfoTypeActivity extends AppCompatActivity implements IFirmInfo
                             FirmInfoTypeActivity.this.setResult(RESULT_OK, intent);
                             finish();
                         }else{
-                            intent.putExtra("name", name);
-                            intent.putExtra("level",level);
-                            intent.putExtra("picturePath","abc");
-                            FirmInfoTypeActivity.this.setResult(RESULT_OK, intent);
-                            finish();
+                            if (tupianpath.equals("")||tupianpath.equals("abc")) {
+                                intent.putExtra("name", name);
+                                intent.putExtra("level", level);
+                                intent.putExtra("picturePath", "abc");
+                                FirmInfoTypeActivity.this.setResult(RESULT_OK, intent);
+                                finish();
+                            }else{
+                                intent.putExtra("name", name);
+                                intent.putExtra("level", level);
+                                intent.putExtra("picturePath", tupianpath);
+                                FirmInfoTypeActivity.this.setResult(RESULT_OK, intent);
+                                finish();
+                            }
                         }
                     }
 
@@ -620,7 +649,14 @@ public class FirmInfoTypeActivity extends AppCompatActivity implements IFirmInfo
 
             final RadioButton radio = (RadioButton) convertView.findViewById(R.id.rbCheck);
             holder.rb_state = radio;
-            radio.setText(list.get(position).getDisplayName());
+//            if (list.get(position).getDisplayName().equals("买卖双重身份")){
+//                list.remove(position);
+//                radio.setText(list.get(position).getDisplayName());
+//            }
+//            if (!list.get(position).getDisplayName().equals("买卖双重身份")){
+                radio.setText(list.get(position).getDisplayName());
+//            }
+
 //            if (!info.equals("") && info.equals(radio.getText().toString())){
 //
 ////                states.put(String.valueOf(position), radio.isChecked());

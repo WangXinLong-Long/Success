@@ -168,6 +168,7 @@ public class ReceiptAddress extends Activity implements View.OnClickListener, IR
         bundle.putString("zipCode", lists.get(position).getZipCode());
         bundle.putString("telephone", lists.get(position).getMobile());
         bundle.putString("fixedTelephone", lists.get(position).getPhone());
+        bundle.putString("sp",lists.get(position).getCounty());
         intent.putExtras(bundle);
         startActivity(intent);
 

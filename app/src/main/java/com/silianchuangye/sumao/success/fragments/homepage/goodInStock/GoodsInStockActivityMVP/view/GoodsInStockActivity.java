@@ -293,6 +293,12 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
 
             case R.id.iv_screen_title_bar_search:
                // screenPopupWindow(lists);
+                //tanchu="搜索";
+                SharedPreferences sp1=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+                SharedPreferences.Editor editor1=sp1.edit();
+                editor1.remove("cangkuingcheng");
+                editor1.remove("productName");
+                editor1.commit();
                 backgroundAlpha(0.5f);
                 getPopupwindow();
                 break;
@@ -301,6 +307,7 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
                 finish();
                 break;
             case R.id.reset:
+                tanchu="";
                 SharedPreferences sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
                 SharedPreferences.Editor editor=sp.edit();
                 editor.remove("fenlei_value");
@@ -328,7 +335,7 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
                 break;
             case R.id.completed:
                 popupWindow.dismiss();
-
+                tanchu="搜索";
                 new Thread(){
                     @Override
                     public void run() {
@@ -350,7 +357,7 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
             final View popView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.searchitem, null);
             popupWindow = new PopupWindow(findViewById(R.id.layout_popup), ActionBarOverlayLayout.LayoutParams.MATCH_PARENT, LinearLayoutCompat.LayoutParams.WRAP_CONTENT);
             popupWindow.setContentView(popView);
-        tanchu="搜索";
+
         new Thread(){
             @Override
             public void run() {
@@ -410,6 +417,10 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 productName=et_productName.getText().toString();
+                SharedPreferences sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+                SharedPreferences.Editor editor=sp.edit();
+                editor.putString("productName",productName);
+                editor.commit();
             }
         });
             et_warehouseName= (EditText) popView.findViewById(R.id.et_warehouseName);
@@ -417,6 +428,10 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 cangkuingcheng=et_warehouseName.getText().toString();
+                SharedPreferences sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+                SharedPreferences.Editor editor=sp.edit();
+                editor.putString("cangkuingcheng",cangkuingcheng);
+                editor.commit();
             }
         });
         bt_reset= (Button) popView.findViewById(R.id.reset);
@@ -633,7 +648,16 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
         });
     }
 
-
+    @Override
+    protected void onStop() {
+        super.onStop();
+        tanchu="";
+        SharedPreferences sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor=sp.edit();
+        editor.remove("cangkuingcheng");
+        editor.remove("productName");
+        editor.commit();
+    }
 
     //弹出框的值
     public void searchProductNamefortanchukuang(final String number, final String tiaojian){
@@ -647,21 +671,25 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
         }
 
         try {
+            SharedPreferences sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+
             if (productName.length()>0){
 
                 String alias = new String(productName.trim().getBytes("ISO8859-1"),"UTF-8");
                 //Log.d("产品名称的值",URLEncoder.encode(productName, "UTF-8"));
                 Log.d("产品名称的值",alias);
-                urlSearch+="&alias="+productName;
+                String productName_info=sp.getString("productName","");
+                urlSearch+="&alias="+productName_info;
             }
             if (cangkuingcheng.length()>0){
+                String cangkuingcheng_info=sp.getString("cangkuingcheng","");
                 Log.d("cangkuingcheng",cangkuingcheng);
                 String alias = new String(cangkuingcheng.trim().getBytes("ISO8859-1"),"UTF-8");
                 //Log.d("产品名称的值",URLEncoder.encode(productName, "UTF-8"));
                 Log.d("产品名称的值",alias);
                 String name = URLEncoder.encode(cangkuingcheng.trim(), "UTF-8");
                 name = URLEncoder.encode(name, "UTF-8");
-                urlSearch+="&wareHouse="+cangkuingcheng;
+                urlSearch+="&wareHouse="+cangkuingcheng_info;
                 //Log.d("仓库的名称的值",URLEncoder.encode(cangkuingcheng, "UTF-8"));
             }
 
@@ -685,9 +713,9 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
                 adapter = new PreSaleAdapter(GoodsInStockActivity.this);
                 pre_sale_listView.setAdapter(adapter);
 
-                if (tiaojian.equals("条件")){
-                    smClList.clear();
-                }
+//                if (tiaojian.equals("条件")){
+//                    smClList.clear();
+//                }
                 if (number.equals("0") && smClList.size()>0){
                     smClList.clear();
                 }
@@ -723,6 +751,7 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
     });
 
 }
+
     public void searchProductName(final String number, final String tiaojian){
         urlSearch=SuMaoConstant.SUMAO_IP+"/rest/model/atg/endeca/HomeActor/EndecaAppScreenResult";
 
@@ -866,12 +895,17 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
         public void onRefresh(final PullToRefreshLayout pullToRefreshLayout) {
             number = "0";
             page =0;
-
+            //tanchu="";
             if (title.equals("现货直销")){
                 smClList.clear();
                 xianhuo_zhixiao("1");
             }else {
-                searchProductName(number,"");
+                if (tanchu.equals("搜索")){
+                    searchProductNamefortanchukuang(number,"条件");
+                }else {
+                    searchProductName(number, "");
+                }
+                //searchProductName(number,"");
             }
 
             pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
@@ -893,7 +927,11 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
                         Log.d("现货直销的第几页",(page+1)+"");
                         xianhuo_zhixiao((page+1)+"");
                     }else {
-                        searchProductName(number,"");
+                        if (tanchu.equals("搜索")){
+                            searchProductNamefortanchukuang(number,"条件");
+                        }else {
+                            searchProductName(number, "");
+                        }
                     }
                     pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
                 }
