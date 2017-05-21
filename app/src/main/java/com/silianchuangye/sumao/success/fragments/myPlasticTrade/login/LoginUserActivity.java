@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.silianchuangye.sumao.success.HX.ui.LoginActivity;
 import com.silianchuangye.sumao.success.MainActivity;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.SellerManagementPlatform.SellerManagementPlatformActivity;
@@ -41,6 +42,8 @@ import org.json.JSONObject;
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
+
+import cn.jpush.android.api.JPushInterface;
 
 public class LoginUserActivity extends AppCompatActivity implements View.OnClickListener {
     ImageView iv_title_bar_logo,
@@ -346,12 +349,42 @@ public class LoginUserActivity extends AppCompatActivity implements View.OnClick
         RequestParams rp = new RequestParams(SuMaoConstant.SUMAO_IP + "/rest/model/atg/userprofiling/ProfileActor/login");
         rp.addParameter("login", name.trim());
         rp.addParameter("password", password.trim());
+        Log.d("登陆的值",rp+"");
         x.http().post(rp, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
                 LogUtils.log("登录返回的值：----->" + result);
                 if (result.contains("formError")) {
-                    Toast.makeText(LoginUserActivity.this, "账号或密码错误请重新登录！", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(LoginUserActivity.this, "账号或密码错误请重新登录！", Toast.LENGTH_SHORT).show();
+                    String url_out=SuMaoConstant.SUMAO_IP+"/rest/model/atg/userprofiling/ProfileActor/logout";
+                    RequestParams rp=new RequestParams(url_out);
+                    x.http().post(rp, new CommonCallback<String>() {
+                        @Override
+                        public void onSuccess(String result) {
+                            SharedPreferences sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+                            SharedPreferences.Editor editor=sp.edit();
+                            editor.clear();
+                            editor.commit();
+                        }
+
+                        @Override
+                        public void onError(Throwable ex, boolean isOnCallback) {
+                            SharedPreferences sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+                            SharedPreferences.Editor editor=sp.edit();
+                            editor.clear();
+                            editor.commit();
+                        }
+
+                        @Override
+                        public void onCancelled(CancelledException cex) {
+
+                        }
+
+                        @Override
+                        public void onFinished() {
+
+                        }
+                    });
                 } else {
 //                    Log.d("object",result);
                     Gson gson = new Gson();
@@ -364,6 +397,11 @@ public class LoginUserActivity extends AppCompatActivity implements View.OnClick
                     editor.putString("U_group",loginUserInfoBean.getU_group());
 
                     editor.commit();
+//                    SharedPreferences sh_phone=getSharedPreferences("sumao_phone",Activity.MODE_PRIVATE);
+//                    SharedPreferences.Editor editor_phone=sh_phone.edit();
+//                    editor_phone.putString("phone",loginUserInfoBean.getU_phone());
+//                    editor_phone.commit();
+                    JPushInterface.setAlias(LoginUserActivity.this,loginUserInfoBean.getU_phone(),null);
                     String unique = sp.getString("unique", "");
                     Log.d("唯一标识", unique);
                     if (unique.equals("") || unique == null || unique.equals("false")) {

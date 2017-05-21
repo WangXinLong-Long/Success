@@ -95,11 +95,12 @@ public class PresellCancelFragment extends Fragment implements IPresellCancelFra
     public void sendMy(String searchTrateTypeInput,String searchOrderTypeInput,String page, String subType, String KPstate, String startDates, String endDates, String company, String OrderId, boolean updates) {
         String searchCompanyName = company;//公司
         String searchOrderType;
-        if (searchOrderTypeInput.equals("")){
-            searchOrderType = this.searchOrderType;
-        }else {
-            searchOrderType = searchOrderTypeInput; //订单类型(预售)
-        } //订单类型(预售)
+//        if (searchOrderTypeInput.equals("")){
+//            searchOrderType = this.searchOrderType;
+//        }else {
+//            searchOrderType = searchOrderTypeInput; //订单类型(预售)
+//        } //订单类型(预售)
+        searchOrderType="";
         String searchTrateType = searchTrateTypeInput;//现货订单的类型（团购、竞拍。。。）
         this.searchTrateType = searchTrateTypeInput;
 

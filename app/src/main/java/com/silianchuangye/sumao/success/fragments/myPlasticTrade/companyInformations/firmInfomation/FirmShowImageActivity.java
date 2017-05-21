@@ -46,7 +46,7 @@ public class FirmShowImageActivity extends AppCompatActivity implements View.OnC
                    setSize(DensityUtil.dip2px(120), DensityUtil.dip2px(120))
                    .setRadius(DensityUtil.dip2px(5))
                    .setCrop(true)
-                   .setImageScaleType(ImageView.ScaleType.CENTER_CROP)
+                   .setImageScaleType(ImageView.ScaleType.FIT_CENTER)
 //                   .setLoadingDrawableId(R.mipmap.logo)
 //                   .setFailureDrawableId(R.mipmap.logo)
                    .build();

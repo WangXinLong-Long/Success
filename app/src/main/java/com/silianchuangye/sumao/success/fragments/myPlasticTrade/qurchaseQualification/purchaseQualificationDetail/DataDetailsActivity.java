@@ -48,6 +48,7 @@ import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.silianchuangye.sumao.success.R;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.messagePush.view.MActivity;
 import com.silianchuangye.sumao.success.utils.LGImgCompressor;
 import com.silianchuangye.sumao.success.utils.Loding;
 import com.silianchuangye.sumao.success.utils.LogUtils;
@@ -283,7 +284,7 @@ public class DataDetailsActivity extends AppCompatActivity implements View.OnCli
                    // .setCrop(true) // 很多时候设置了合适的scaleType也不需要它.
                     // 加载中或错误图片的ScaleType
                     .setPlaceholderScaleType(ImageView.ScaleType.MATRIX)
-                    .setImageScaleType(ImageView.ScaleType.CENTER_CROP)
+                    .setImageScaleType(ImageView.ScaleType.FIT_CENTER)
 //                    .setLoadingDrawableId(R.mipmap.ic_launcher)
 //                    .setFailureDrawableId(R.mipmap.ic_launcher)
                     .build();
@@ -298,6 +299,16 @@ public class DataDetailsActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+//            case R.id.image:
+//                Intent intent1=new Intent(DataDetailsActivity.this, MActivity.class);
+//                if (tupian==""&&!path.equals("abc")) {
+//                    intent1.putExtra("path", path);
+//                }
+////                }else{
+////                    intent.putExtra("path","");
+////                }
+//                startActivity(intent1);
+//                break;
             case R.id.tv_child_title_bar_text:
                 //saveInformation();
                 //
@@ -353,6 +364,21 @@ public class DataDetailsActivity extends AppCompatActivity implements View.OnCli
                 Popupwindow();
                 break;
             case R.id.iv_child_title_bar_back:
+                if (title.equals("企业法人姓名")||title.equals("姓名")||title.equals("开户银行许可证")){
+                    if (tupian==""){
+                        if (!path.equals("abc")){
+                            Intent intent = new Intent();
+                            intent.putExtra("returnInfo", modify_information.getText().toString());
+                            intent.putExtra("path",path);
+                            setResult(RESULT_OK, intent);
+                            finish();
+                        }else{
+                            finish();
+                        }
+                    }else{
+                        finish();
+                    }
+                }
                 finish();
                 break;
             default:
@@ -492,9 +518,11 @@ public static File saveFile(Bitmap bm,String path, String fileName) throws IOExc
                     tupian=getPhotoFileName();
                     filepath = cursor.getString(column_index);
                     Log.d("realpath", "" + filepath);
+
+                    LGImgCompressor.getInstance(this).withListener(this).
+                            starCompress(filepath, 1000, 1000, 100);
                     bitmap= BitmapFactory.decodeFile(filepath);
                     image.setImageBitmap(bitmap);
-
                 } catch (Exception ex) {
                     Log.e("aaaa", "failed." + ex.getMessage());
                 }
@@ -620,12 +648,12 @@ public static File saveFile(Bitmap bm,String path, String fileName) throws IOExc
         startActivity(intent);
     }
 
-    //    @Override
-//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-//        MPermissions.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
-//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-//    }
-//
+        @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        MPermissions.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
 //    @PermissionGrant(REQUEST_CODE_TAKE_PHOTO)
 //    public void requestCameraSuccess() {
 //        canTakePhoto = true;

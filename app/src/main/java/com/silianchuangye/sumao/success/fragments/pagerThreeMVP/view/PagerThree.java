@@ -36,7 +36,7 @@ import com.silianchuangye.sumao.success.fragments.BasePager;
 import com.silianchuangye.sumao.success.fragments.bean.CartInfo;
 import com.silianchuangye.sumao.success.fragments.bean.CartItemInfo;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.bean.Orders;
-import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.PayMentsOrderMVP.view.PaymentsOrder;
+
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation.decoding.Intents;
 import com.silianchuangye.sumao.success.fragments.pagerThreeMVP.bean.CartBean;
 import com.silianchuangye.sumao.success.fragments.pagerThreeMVP.bean.OrderErrorBean;
@@ -306,7 +306,8 @@ public class PagerThree extends BasePager implements AdapterView.OnItemClickList
             }
 //      TODO  数量修改
             Intent intent = new Intent();
-            intent.setClass(getActivity(), PaymentsOrder.class);
+         //   intent.setClass(getActivity(), PaymentsOrder.class);
+            intent.setClass(getActivity(),PayOrderListActivity.class);
             intent.putExtra("type", "cart");
             intent.putExtra("fix", (Serializable) orderIdListBean);
             startActivity(intent);

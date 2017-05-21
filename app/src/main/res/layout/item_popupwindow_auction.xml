@@ -103,7 +103,8 @@
                 android:layout_marginLeft="@dimen/x3"
                 android:id="@+id/tv_Count"
                 android:layout_toRightOf="@+id/tv_A"
-                android:layout_alignRight="@+id/tv_A"
+                android:text="1111"
+                android:textColor="@color/red"
                 />
         </RelativeLayout>
         <RelativeLayout
@@ -126,7 +127,8 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/x5"
                 android:id="@+id/tv_money"
-                android:layout_alignRight="@+id/tv_B"
+                android:textColor="@color/red"
+                android:layout_toRightOf="@+id/tv_B"
                 />
         </RelativeLayout>
 

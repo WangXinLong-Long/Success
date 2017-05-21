@@ -34,6 +34,8 @@ import org.xutils.x;
 import java.util.HashMap;
 import java.util.Set;
 
+import cn.jpush.android.api.JPushInterface;
+
 
 /**
  * Created by Administrator on 2016/5/9 0009.
@@ -216,7 +218,13 @@ public class ModifyTelephone extends Activity implements View.OnClickListener {
                                     Log.d("newinfo",New_mobile_phone_verification_code_et.getText().toString());
                                     Log.d("oldinfo",Original_mobile_phone_verification_code_et.getText().toString());
                                     if (newinfo.equals(New_mobile_phone_verification_code_et.getText().toString())&&oldinfo.equals(Original_mobile_phone_verification_code_et.getText().toString())){
-                                        Toast.makeText(ModifyTelephone.this, "修改了手机号", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(ModifyTelephone.this, "修改手机号成功!", Toast.LENGTH_SHORT).show();
+//                                        SharedPreferences sh_phone=getSharedPreferences("sumao_phone",Activity.MODE_PRIVATE);
+//                                        SharedPreferences.Editor editor_phone=sh_phone.edit();
+//                                        editor_phone.putString("phone",New_mobile_phone_verification_code_et.getText().toString());
+//                                        editor_phone.commit();
+                                        JPushInterface.setAliasAndTags(ModifyTelephone.this,New_mobile_phone_verification_code_et.getText().toString(),null);
+
                                         Intent intent = new Intent();
                                         setResult(0, intent);
                                         finish();

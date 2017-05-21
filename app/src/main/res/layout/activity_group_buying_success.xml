@@ -606,6 +606,7 @@
                     android:layout_marginBottom="@dimen/x5"
                     android:layout_toRightOf="@id/region_tv"
                     android:text="北京"
+                    android:visibility="gone"
                     android:textSize="@dimen/x10" />
 
                 <TextView

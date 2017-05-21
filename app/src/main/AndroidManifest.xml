@@ -39,7 +39,7 @@
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <!-- Optional for location -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
@@ -569,6 +569,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".fragments.myPlasticTrade.register.RegisterFirmActivityMVP.view.RegisterFirmActivity"
+            android:exported="true"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
@@ -792,10 +793,21 @@
         <activity
             android:name=".fragments.homepage.auction.openAuction.openAuctionView.OpenAcutionOrMifengActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".fragments.myPlasticTrade.accountmeneger.kunlunUpdateActivity" />
-        <activity android:name=".fragments.myPlasticTrade.accountmeneger.KunlunJieyueActivity" />
-        <activity android:name=".fragments.myPlasticTrade.accountmeneger.BankValueActivity" />
-        <activity android:name=".fragments.myPlasticTrade.accountmeneger.BankTypeValueActivity"></activity>
+        <activity android:name=".fragments.myPlasticTrade.accountmeneger.kunlunUpdateActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".fragments.myPlasticTrade.accountmeneger.KunlunJieyueActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".fragments.myPlasticTrade.accountmeneger.BankValueActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".fragments.myPlasticTrade.accountmeneger.BankTypeValueActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".fragments.pagerThreeMVP.view.PayOrderListActivity"
+            android:screenOrientation="portrait"
+            ></activity>
     </application>
 
 </manifest>

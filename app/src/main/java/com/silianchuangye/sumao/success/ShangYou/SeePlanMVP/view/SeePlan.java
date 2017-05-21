@@ -99,13 +99,18 @@ public class SeePlan extends Fragment implements ISeePlanView{
 
 //        getActivity().
         seePlanPresenter = new SeePlanPresenter(this);
-        seePlanPresenter.requestSeePlanDate("1","10","","","","","","","","");
+
 
     //    initDate();
         return  v;
     }
 
-//    private void initDate() {
+    @Override
+    public void onResume() {
+        seePlanPresenter.requestSeePlanDate("1","10","","","","","","","","");
+        super.onResume();
+    }
+    //    private void initDate() {
 //        list=new ArrayList<SeePlanInfo>();
 //        for (int i = 0; i < planOrderList.size(); i++) {
 //            productName = planOrderList.get(i).getProductName();//产品名称

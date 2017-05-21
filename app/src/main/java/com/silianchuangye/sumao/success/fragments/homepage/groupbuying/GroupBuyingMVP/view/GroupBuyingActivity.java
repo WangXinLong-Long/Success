@@ -5,10 +5,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.jingchen.pulltorefresh.PullToRefreshLayout;
@@ -18,6 +20,9 @@ import com.silianchuangye.sumao.success.fragments.homepage.groupbuying.GroupBuyi
 import com.silianchuangye.sumao.success.fragments.homepage.groupbuying.GroupBuyingMVP.presenter.GroupBuyingPresenter;
 import com.silianchuangye.sumao.success.fragments.homepage.groupbuying.groupBuyingDetailMVP.view.GroupBuyingSuccessActivity;
 import com.silianchuangye.sumao.success.utils.Loding;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,9 +47,7 @@ public class GroupBuyingActivity extends AppCompatActivity implements IGroupBuyi
         search = (ImageView) findViewById(R.id.ivSearch_group_layout_top);
         pullToRefreshLayout = ((PullToRefreshLayout) findViewById(R.id.refresh_view));
         lv_group_buying = ((ListView) pullToRefreshLayout.getPullableView());
-        adapter = new GroupBuyingListViewAdapter(this);
-        lv_group_buying.setAdapter(adapter);
-        pullToRefreshLayout.setOnPullListener(new GroupBuyingListViewPullListener());
+
 
     }
 
@@ -52,6 +55,10 @@ public class GroupBuyingActivity extends AppCompatActivity implements IGroupBuyi
     protected void onStart() {
         super.onStart();
         addData();
+
+        adapter = new GroupBuyingListViewAdapter(this);
+        lv_group_buying.setAdapter(adapter);
+        pullToRefreshLayout.setOnPullListener(new GroupBuyingListViewPullListener());
         event();
     }
 
@@ -60,7 +67,7 @@ public class GroupBuyingActivity extends AppCompatActivity implements IGroupBuyi
      */
     public void addData() {
         boolean updateOrLoad = true;
-        Loding.show(GroupBuyingActivity.this, "加载中...", false, null);
+//        Loding.show(GroupBuyingActivity.this, "加载中...", false, null);
         groupBuyingPresenter.getGroupBuyingResult("1",updateOrLoad);
     }
 
@@ -96,16 +103,34 @@ public class GroupBuyingActivity extends AppCompatActivity implements IGroupBuyi
 
     @Override
     public void setGroupBuyingResult(String result, boolean updateOrLoad) {
-        Loding.dis();
-        if (updateOrLoad) {
-            list.clear();
+        Log.d("团购列表的返回值",result);
+        //Loding.dis();
+        try {
+            JSONObject json=new JSONObject(result);
+            String allCount=json.getString("allCount");
+            if(allCount.equals("0")){
+                Toast.makeText(GroupBuyingActivity.this, "暂时没有查到团购的产品!", Toast.LENGTH_SHORT).show();
+            }else{
+                if (updateOrLoad) {
+                    list.clear();
+                }
+                Gson gson = new Gson();
+                groupBuyingListBean= gson.fromJson(result, GroupBuyingListBean.class);
+                if (groupBuyingListBean.getProd().size()<=0){
+                    Toast.makeText(GroupBuyingActivity.this, "暂时没有查到团购的产品!", Toast.LENGTH_SHORT).show();
+                }else {
+                    list.addAll(groupBuyingListBean.getProd());
+                    adapter.clearData();
+                    adapter.addData(list);
+                    adapter.notifyDataSetChanged();
+                }
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
-        Gson gson = new Gson();
-        groupBuyingListBean= gson.fromJson(result, GroupBuyingListBean.class);
-        list.addAll(groupBuyingListBean.getProd());
-        adapter.clearData();
-        adapter.addData(list);
-        adapter.notifyDataSetChanged();
+
+
     }
 
     @Override

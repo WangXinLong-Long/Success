@@ -51,7 +51,8 @@ public class PaymentSecurityModel implements IPaymentSecurityModel {
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                LogUtils.log("支付保证金onError--->"+ex);
+                //LogUtils.log("支付保证金onError--->"+ex);
+                callback.callbackPaymentSecurity("支付失败");
             }
 
             @Override

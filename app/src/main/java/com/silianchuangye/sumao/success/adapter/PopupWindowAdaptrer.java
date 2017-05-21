@@ -1,6 +1,7 @@
 package com.silianchuangye.sumao.success.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -70,7 +71,7 @@ public class PopupWindowAdaptrer extends BaseAdapter{
         if (data.get(position).Flag){
             viewHolder.iv_select_null.setImageResource(R.mipmap.cart_select);
             if (message!=null){
-                Toast.makeText(context, ""+message, Toast.LENGTH_LONG).show();
+
             }
 
         }else{

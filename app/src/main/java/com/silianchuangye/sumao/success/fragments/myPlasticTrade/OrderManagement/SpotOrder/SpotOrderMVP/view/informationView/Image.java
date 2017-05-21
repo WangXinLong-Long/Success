@@ -81,7 +81,7 @@ public class Image extends BaseAdapter {
                  .setCrop(true) // 很多时候设置了合适的scaleType也不需要它.
                 // 加载中或错误图片的ScaleType
                 .setPlaceholderScaleType(ImageView.ScaleType.MATRIX)
-                .setImageScaleType(ImageView.ScaleType.CENTER_CROP)
+                .setImageScaleType(ImageView.ScaleType.FIT_CENTER)
 //                    .setLoadingDrawableId(R.mipmap.ic_launcher)
 //                    .setFailureDrawableId(R.mipmap.ic_launcher)
                 .build();

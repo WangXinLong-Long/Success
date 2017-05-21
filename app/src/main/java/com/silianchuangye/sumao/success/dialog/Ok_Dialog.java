@@ -37,6 +37,7 @@ public class Ok_Dialog extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_ok);
         type = getIntent().getStringExtra("type");
+        Log.d("type的值",type);
 //        确定
         btn_ok_dialog = (Button) findViewById(R.id.btn_ok_dialog);
 //        订单详情、物流需求
@@ -51,22 +52,6 @@ public class Ok_Dialog extends Activity {
         TextView tv_order_number = (TextView) findViewById(R.id.tv_order_number_ok);
         String order_id = getIntent().getStringExtra("number");
         Log.d("订单详请的or",order_id);
-//        if (order_id.equals(SuMaoConstant.QUOTE_SUCCESS)){
-//            tv_ok_text.setText("恭喜您提交成功！");
-//            tv_order_number.setVisibility(View.GONE);
-//            pay_success.setVisibility(View.GONE);
-//        }else if (order_id.equals(SuMaoConstant.MARGIN_PAYMENT_SUCCESS)){
-//            tv_ok_text.setText("恭喜您,保证金支付成功！");
-//            tv_order_number.setVisibility(View.GONE);
-//            pay_success.setVisibility(View.GONE);
-//        }else{
-//            tv_ok_text.setText("恭喜您,订单支付成功！");
-//            tv_order_number.setVisibility(View.GONE);
-//            pay_success.setVisibility(View.GONE);
-//            btn_ok_dialog.setVisibility(View.VISIBLE);
-//            linear.setVisibility(View.GONE);
-//        }
-
         bt_my_order = (Button) findViewById(R.id.bt_my_order);
         Button bt_wuliu = (Button) findViewById(R.id.bt_wulliu);
         if(type.equals("现货")){
@@ -75,16 +60,22 @@ public class Ok_Dialog extends Activity {
             pay_success.setVisibility(View.VISIBLE);
             btn_ok_dialog.setVisibility(View.GONE);
             bt_my_order.setVisibility(View.VISIBLE);
-        }else if (type.equals("预售")||type.equals("团购")||type.equals("竞拍")){
+        }else if (type.equals("预售")){
             tv_ok_text.setText("恭喜您,保证金支付成功!");
-            tv_order_number.setVisibility(View.VISIBLE);
-            pay_success.setVisibility(View.VISIBLE);
+            tv_order_number.setVisibility(View.GONE);
+            pay_success.setVisibility(View.GONE);
             btn_ok_dialog.setVisibility(View.GONE);
             bt_my_order.setVisibility(View.VISIBLE);
             bt_wuliu.setVisibility(View.VISIBLE);
 
+        }else if (type.equals("密封竞拍")||type.equals("公开竞拍")){
+            tv_ok_text.setText("恭喜您,报价成功!");
+            tv_order_number.setVisibility(View.GONE);
+            pay_success.setVisibility(View.GONE);
+            btn_ok_dialog.setVisibility(View.VISIBLE);
+            linear.setVisibility(View.GONE);
         }else{
-            tv_ok_text.setText("恭喜您,订单支付成功!");
+            tv_ok_text.setText("恭喜您,支付成功!");
             tv_order_number.setVisibility(View.GONE);
             pay_success.setVisibility(View.GONE);
             btn_ok_dialog.setVisibility(View.VISIBLE);
@@ -102,7 +93,9 @@ public class Ok_Dialog extends Activity {
                     intent.putExtra("title","预售订单");
                     startActivity(intent);
                     finish();
-                }else{
+                }else if (type.equals("团购")||type.equals("竞拍")||type.equals("密封竞拍")||type.equals("公开竞拍")){
+                    finish();
+                }else {
                     Intent intent=new Intent(Ok_Dialog.this,OrderGoodsActivity.class);
                     intent.putExtra("title","现货订单");
                     startActivity(intent);

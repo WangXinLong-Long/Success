@@ -95,6 +95,16 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
         initView(savedInstanceState);
         init();
         showIntent(savedInstanceState);
+        //JPushInterface.setAliasAndTags(MainActivity.this,);
+        //New_mobile_phone_verification_code_et.getText().toString()
+       // SharedPreferences sh_phone=getSharedPreferences("sumao_phone",Activity.MODE_PRIVATE);
+        //SharedPreferences.Editor editor_phone=sh_phone.edit();
+        //editor_phone.putString("phone",loginUserInfoBean.getU_phone());
+       // editor_phone.commit();
+//        String phone=sh_phone.getString("phone","");
+//        if (!phone.equals("")){
+//            JPushInterface.setAlias(MainActivity.this,phone,null);
+//        }
     }
 
     @Override

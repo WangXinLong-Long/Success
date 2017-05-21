@@ -86,11 +86,11 @@ public class SpotOrderAdapter extends BaseAdapter {
         Float price=Float.parseFloat(list.get(position).get("cl_jine").toString());
         DecimalFormat df = new DecimalFormat("#.##");
         //all_price.setText(df.format(x) + "");
-        holder.univalent.setText(df.format(price)+"");
+        holder.univalent.setText(df.format(price)+"元");
         holder.number.setText(list.get(position).get("cl_shuliang").toString());
 //        holder.enterprise.setText(list.get(position).getEnterprise()+"");
         Float totle=Float.parseFloat(list.get(position).get("cl_amount").toString());
-        holder.totalMoney.setText(df.format(totle)+"");
+        holder.totalMoney.setText(df.format(totle)+"元");
         holder.warehouse.setText(list.get(position).get("cl_cangku") + "");
 
         //holder.company.setText(simpleDateFormat.format(Double.parseDouble(list.get(position).get("deliveryStartDate").toString())+"至"+ simpleDateFormat.format(Double.parseDouble(list.get(position).get("deliveryEndDate").toString())))+"");

@@ -41,8 +41,9 @@ import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.SeeProduc
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.bean.GoodsInStockDetailBean;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.bean.Orders;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.presenter.GoodsInStockDetailPresenter;
-import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.PayMentsOrderMVP.view.PaymentsOrder;
+
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.LoginUserActivity;
+import com.silianchuangye.sumao.success.fragments.pagerThreeMVP.view.PayOrderListActivity;
 import com.silianchuangye.sumao.success.fragments.shoppingCart.dialog.Cart_MyDialog;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
@@ -763,7 +764,7 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
             Intent intent = new Intent();
             intent.putExtra("type", "fix");
             intent.putExtra("fix", (Serializable) orders.getOrderIdList());
-            intent.setClass(GoodsInStockDetailActivity.this, PaymentsOrder.class);
+            intent.setClass(GoodsInStockDetailActivity.this, PayOrderListActivity.class);
             startActivity(intent);
         }
 

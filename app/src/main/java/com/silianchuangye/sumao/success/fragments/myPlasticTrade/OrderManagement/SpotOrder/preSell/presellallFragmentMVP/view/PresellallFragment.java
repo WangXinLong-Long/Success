@@ -116,17 +116,25 @@ public class PresellallFragment extends Fragment implements IPresellallFragmentV
     public void sendMy(String searchTrateTypeInput, String searchOrderTypeInput, String page, String subType, String KPstate, String startDates, String endDates, String company, String OrderId, boolean updates) {
         String searchCompanyName = company;//公司
         this.company = company;
-        String searchOrderType;
-        if (searchOrderTypeInput.equals("")) {
-            searchOrderType = this.searchOrderType;
-        } else {
-            searchOrderType = searchOrderTypeInput; //订单类型(预售)
-            this.searchOrderType = searchOrderTypeInput;
-        }
+        String searchOrderType="";
+        String searchOrderState="";
+//        if (searchOrderTypeInput.equals("")) {
+//            //searchOrderType = this.searchOrderType;
+//            //订单状态(全部订单)
+//            searchOrderState="";
+//        } else {
+////            searchOrderType = searchOrderTypeInput; //订单类型(预售)
+////            this.searchOrderType = searchOrderTypeInput;
+//            //订单状态(全部订单)
+//            searchOrderType="";
+//
+//        }
+     //   Log.d("searchOrderType",searchOrderType);
         String searchTrateType = searchTrateTypeInput;//现货订单的类型（团购、竞拍。。。）
         this.searchTrateType = searchTrateTypeInput;
 
-        String searchOrderState = "0";//订单状态(全部订单)
+        searchOrderState = "0";
+       // if ()
         String pageNum = page;
 
         String searchOrderId = OrderId;//订单

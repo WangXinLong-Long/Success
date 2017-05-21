@@ -48,6 +48,7 @@ import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation.decoding.Intents;
 import com.silianchuangye.sumao.success.utils.FavFTPUtil;
 import com.silianchuangye.sumao.success.utils.LGImgCompressor;
+import com.silianchuangye.sumao.success.utils.Loding;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 //import com.zhy.m.permission.MPermissions;
@@ -165,8 +166,9 @@ public class RegisterPicture extends AppCompatActivity implements LGImgCompresso
         bt_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("点击事件","进来了");
+                //Log.d("点击事件","进来了");
                 //tupian=getPhotoFileName();
+                Loding.show(RegisterPicture.this,"图片上传中...",false,null);
                 //上传图片
                 if (!trime.equals("")) {
                     new Thread() {
@@ -205,6 +207,7 @@ public class RegisterPicture extends AppCompatActivity implements LGImgCompresso
                                 @Override
                                 public void onSuccess(String result) {
                                     Log.d("上穿陈功的返回值", result);
+                                    Loding.dis();
                                     //  Intent intent=new Intent();
                                     Intent intent = new Intent();
                                     //Intent intent = new Intent();
@@ -386,7 +389,7 @@ public class RegisterPicture extends AppCompatActivity implements LGImgCompresso
                 Log.d("path的值",path+"");
                 LGImgCompressor.getInstance(this).withListener(this).
                         starCompress(path+"", 1000, 1000, 2048);
-
+                //Log.d("path的值",path+"");
 
                 break;
             case PHOTO_REQUEST_GALLERY://当选择从本地获取图片时

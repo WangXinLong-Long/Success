@@ -46,7 +46,7 @@ public class PaymentSecurityModel implements IPaymentAuctionSecurityModel {
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-
+                callback.callbackPaymentSecurity("支付失败");
             }
 
             @Override

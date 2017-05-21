@@ -882,29 +882,45 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
         Log.d("支付保证金的返回值",result);
 
         Loding.dis();
-        try {
-            JSONObject job = new JSONObject(result);
-            String info = job.getString("info");
-            String orderId = job.getString("orderId");
-            if (info.equals("sucess")) {
-                Toast.makeText(PreSaleDetailActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
-                popupWindow.dismiss();
-                // TODO 显示订单信息
-                Intent intent = new Intent(PreSaleDetailActivity.this, Ok_Dialog.class);
-                intent.putExtra("number", orderId);
-                intent.putExtra("type", "预售");
-                startActivity(intent);
-
-            } else {
-                Toast.makeText(PreSaleDetailActivity.this, "支付失败", Toast.LENGTH_SHORT).show();
+        if (!result.equals("支付失败")) {
+            if (!result.contains("info")){
                 Intent intent = new Intent(PreSaleDetailActivity.this, Error_Dialog.class);
-                intent.putExtra("number", orderId);
+                intent.putExtra("number", "");
 //                            intent.putExtra("type","预售保证金");
                 startActivity(intent);
+            }else {
+                try {
+                    JSONObject job = new JSONObject(result);
+                    String info = job.getString("info");
+                    String orderId = job.getString("orderId");
+                    if (info.equals("sucess")) {
+                        Toast.makeText(PreSaleDetailActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
+                        popupWindow.dismiss();
+                        // TODO 显示订单信息
+                        Intent intent = new Intent(PreSaleDetailActivity.this, Ok_Dialog.class);
+                        intent.putExtra("number", orderId);
+                        intent.putExtra("type", "预售");
+                        startActivity(intent);
+
+                    } else {
+                       // Toast.makeText(PreSaleDetailActivity.this, "支付失败", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(PreSaleDetailActivity.this, Error_Dialog.class);
+                        intent.putExtra("number", orderId);
+//                            intent.putExtra("type","预售保证金");
+                        startActivity(intent);
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
+        }else{
+            Intent intent = new Intent(PreSaleDetailActivity.this, Error_Dialog.class);
+            intent.putExtra("number", "");
+//                            intent.putExtra("type","预售保证金");
+            startActivity(intent);
         }
+
     }
 
     //判断是否开闭市

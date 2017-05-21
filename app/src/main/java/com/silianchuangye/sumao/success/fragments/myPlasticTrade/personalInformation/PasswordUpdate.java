@@ -112,7 +112,16 @@ public class PasswordUpdate extends AppCompatActivity {
 
                                     } else {
                                         //修改成功
-                                        Toast.makeText(PasswordUpdate.this, "密码修改成功！", Toast.LENGTH_SHORT).show();
+                                        //Toast.makeText(PasswordUpdate.this, "密码修改成功！", Toast.LENGTH_SHORT).show();
+                                        final AlertDialog.Builder alertDialog=new AlertDialog.Builder(PasswordUpdate.this);
+                                        alertDialog.setMessage("密码修改成功!");
+                                        alertDialog.setNegativeButton("确定", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                alertDialog.create().dismiss();
+                                            }
+                                        });
+                                        alertDialog.create().show();
                                     }
                                 }
 

@@ -42,5 +42,9 @@ public class NetWorkChangeBroadcastReceiver extends BroadcastReceiver {
 //            手机没有处于wifi网络而是处于移动网络  
         }
 
+        context.unregisterReceiver(this);
+
     }
+
+
 }

@@ -49,6 +49,7 @@ public class SearchSeePlan extends AppCompatActivity implements View.OnClickList
     private TextView tv_seeplan_left_peisong;
     private TextView tv_seeplan_right_num;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

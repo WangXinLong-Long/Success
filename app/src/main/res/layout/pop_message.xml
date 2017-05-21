@@ -4,11 +4,11 @@
     android:id="@+id/layout_find"
     android:background="#fff"
     android:layout_height="match_parent">
-    <!--标题 -->
+    <!--标题
     <RelativeLayout
         android:id="@+id/relative_create_logistics_top"
         android:layout_width="match_parent"
-        android:layout_height="43dp"
+        android:layout_height="@dimen/x44"
         android:background="@color/zixun_topbg">
 
         <ImageView
@@ -39,14 +39,14 @@
             android:layout_marginRight="@dimen/x10"
             android:text="取消"
             android:textColor="@color/selley_lv" />
-    </RelativeLayout>
+    </RelativeLayout>-->
     <!--编号通知-->
     <RelativeLayout
         android:id="@+id/relative_pop_customer_two"
         android:layout_width="match_parent"
         android:layout_height="@dimen/x30"
         android:layout_below="@id/relative_create_logistics_top"
-        android:layout_marginTop="@dimen/x7">
+        android:layout_marginTop="@dimen/x15">
 
         <EditText
             android:id="@+id/tv_pop_customer_num"

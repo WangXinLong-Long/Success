@@ -43,6 +43,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import cn.jpush.android.api.JPushInterface;
+
 public class RegisterFirmActivity extends AppCompatActivity implements IRegisterFirmActivityView, View.OnClickListener {
     ImageView iv_title_bar_logo,
             iv_title_bar_back,
@@ -758,9 +760,16 @@ public class RegisterFirmActivity extends AppCompatActivity implements IRegister
                         SharedPreferences.Editor editor=sp.edit();
                         editor.putString("unique",unique);
                         editor.putString("zhanghao",account);
-                        editor.putString("password",pass);
+                        //editor.putString("password",pass);
+                        //editor.putString("U_clientID", loginUserInfoBean.getU_clientID());
+                        editor.putString("phone",phone);
+                        //editor.putString("U_group",loginUserInfoBean.getU_group());
                         editor.commit();
-
+//                        SharedPreferences sh_phone=getSharedPreferences("sumao_phone",Activity.MODE_PRIVATE);
+//                        SharedPreferences.Editor editor_phone=sh_phone.edit();
+//                        editor_phone.putString("phone",phone);
+//                        editor_phone.commit();
+                        JPushInterface.setAlias(RegisterFirmActivity.this,phone,null);
                         Intent intent=new Intent(RegisterFirmActivity.this, FirmInfoActivity.class);
                         intent.putExtra("resource","注册");
                         startActivity(intent);

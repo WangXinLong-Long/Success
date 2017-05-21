@@ -32,13 +32,7 @@
         android:textColor="@color/red"
         android:textSize="@dimen/x10"
         android:visibility="gone" />
-    <ImageView
-        android:id="@+id/image"
-        android:layout_width="wrap_content"
-        android:layout_margin="20dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/modify_information"
-        />
+
 
     <Button
         android:id="@+id/upload_scan"
@@ -50,4 +44,12 @@
         android:textColor="@color/white"
         android:layout_alignParentBottom="true"
         android:textSize="@dimen/x15" />
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="match_parent"
+        android:layout_margin="20dp"
+        android:layout_height="match_parent"
+        android:layout_below="@id/modify_information"
+        android:layout_above="@+id/upload_scan"
+        />
 </RelativeLayout>

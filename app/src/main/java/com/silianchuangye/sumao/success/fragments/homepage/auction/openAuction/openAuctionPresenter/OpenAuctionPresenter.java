@@ -31,12 +31,14 @@ import com.silianchuangye.sumao.success.fragments.homepage.auction.openAuction.o
 import com.silianchuangye.sumao.success.fragments.homepage.auction.openAuction.openAuctionModel.stateOfPublicBiddingModel.StateOfPublicBiddingCallback;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.openAuction.openAuctionModel.stateOfPublicBiddingModel.StateOfPublicBiddingModel;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.openAuction.openAuctionView.IOpenAuctionView;
-import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.PayMentsOrderMVP.model.getListOfBankModel.GetListOfBankCallback;
-import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.PayMentsOrderMVP.model.getListOfBankModel.GetListOfBankModel;
-import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.PayMentsOrderMVP.model.getListOfBankModel.IGetListOfBankModel;
-import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.PayMentsOrderMVP.model.paymentModel.IPaymentModel;
-import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.PayMentsOrderMVP.model.paymentModel.PaymentCallback;
-import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.PayMentsOrderMVP.model.paymentModel.PaymentModel;
+
+
+import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.PayMentsOrderMVP.model.getListOfBankModel.GetListOfBankCallback;
+import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.PayMentsOrderMVP.model.getListOfBankModel.GetListOfBankModel;
+import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.PayMentsOrderMVP.model.getListOfBankModel.IGetListOfBankModel;
+import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.PayMentsOrderMVP.model.paymentModel.IPaymentModel;
+import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.PayMentsOrderMVP.model.paymentModel.PaymentCallback;
+import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.PayMentsOrderMVP.model.paymentModel.PaymentModel;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.model.preSaleBondModel.IPreSaleBondModel;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.model.preSaleBondModel.PreSaleBondCallback;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.model.preSaleBondModel.PreSaleBondModel;

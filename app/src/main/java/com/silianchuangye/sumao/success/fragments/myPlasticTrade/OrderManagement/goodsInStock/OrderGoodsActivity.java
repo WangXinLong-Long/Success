@@ -348,6 +348,7 @@ public class OrderGoodsActivity extends AppCompatActivity implements View.OnClic
             searchOrderType = "0" ;
             searchTrateType = "scheduleOrder" ;
         }else if (searchOrderTypeInput.equals("预售")){
+            Log.d("预售","预售");
             searchOrderType = "1" ;
             searchTrateType = "" ;
         }else if (searchOrderTypeInput.equals("")){
@@ -355,8 +356,9 @@ public class OrderGoodsActivity extends AppCompatActivity implements View.OnClic
                 searchOrderType = "0" ;
                 searchTrateType = "" ;
             }else {
-                searchOrderType = "1" ;
-                searchTrateType = "" ;
+                Log.d("预售订单","预售迪昂单");
+                searchOrderType = "" ;
+                searchTrateType = "forwardPricingOrder" ;
             }
 
         }
@@ -390,8 +392,10 @@ public class OrderGoodsActivity extends AppCompatActivity implements View.OnClic
                 "  \nsubmitType-->" + submitType +
                 "  \nsearchCheckType-->" + searchCheckType +
                 "  \nKPstate-->" + KPstate);
+        Log.d("searchOrderState的值",searchOrderState);
         if (searchOrderState.equals("")) {
             if (tlDemo.getSelectedTabPosition() == 0) {
+                Log.d("进来了","进来了");
                 PresellallFragment fragment = (PresellallFragment) listFragment.get(vpDemo.getCurrentItem());
                 fragment.sendMy(searchTrateType,searchOrderType, pageNum, submitType, KPstate, startDate, endDate, searchCompanyName, searchOrderId, update);
             } else if (tlDemo.getSelectedTabPosition() == 1) {

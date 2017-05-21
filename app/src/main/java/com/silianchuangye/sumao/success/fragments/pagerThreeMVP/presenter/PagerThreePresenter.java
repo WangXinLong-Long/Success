@@ -1,8 +1,9 @@
 package com.silianchuangye.sumao.success.fragments.pagerThreeMVP.presenter;
 
-import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.PayMentsOrderMVP.model.paymentOrderModel.IPaymentOrderModel;
-import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.PayMentsOrderMVP.model.paymentOrderModel.PaymentOrderCallback;
-import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.PayMentsOrderMVP.model.paymentOrderModel.PaymentOrderModel;
+
+import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.PayMentsOrderMVP.model.paymentOrderModel.IPaymentOrderModel;
+import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.PayMentsOrderMVP.model.paymentOrderModel.PaymentOrderCallback;
+import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.PayMentsOrderMVP.model.paymentOrderModel.PaymentOrderModel;
 import com.silianchuangye.sumao.success.fragments.pagerThreeMVP.model.IPagerThreeModel;
 import com.silianchuangye.sumao.success.fragments.pagerThreeMVP.model.PagerThreeCallback;
 import com.silianchuangye.sumao.success.fragments.pagerThreeMVP.model.PagerThreeModel;

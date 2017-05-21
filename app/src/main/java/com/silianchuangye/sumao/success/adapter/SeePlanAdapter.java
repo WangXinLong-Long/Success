@@ -78,6 +78,7 @@ public class SeePlanAdapter extends BaseAdapter{
             scheduleDateChange = planOrderList.get(i).getScheduleDateChange();//修改后计划日
             warehouseChangeName = planOrderList.get(i).getWarehouseChangeName();//修改后仓库名*/
         holder.tv_bianhao.setText(list.get(position).getPlanID());//
+        //if (list.get(position).get)
         holder.tv_date.setText(list.get(position).getScheduleDate());
         holder.tv_name.setText(list.get(position).getProductName());
         holder.tv_cnagku.setText(list.get(position).getWarehouseName());
@@ -107,7 +108,7 @@ public class SeePlanAdapter extends BaseAdapter{
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(ctx, SearchSeePlan.class);
-                intent.putExtra("PlanOrderList",list.get(position));
+                intent.putExtra("id",list.get(position).getOrderId());
                 ctx.startActivity(intent);
             }
         });

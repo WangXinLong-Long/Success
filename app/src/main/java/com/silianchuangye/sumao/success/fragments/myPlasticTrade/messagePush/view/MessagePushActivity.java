@@ -24,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -90,6 +91,7 @@ public class MessagePushActivity extends AppCompatActivity implements View.OnCli
     private List<String> logisticsNameIDList;
     private PopupWindow popupWindow;
     private String sendId="";
+    private RelativeLayout title;
 
 
    // private GroupBuyingListViewAdapter adapter;
@@ -101,6 +103,7 @@ public class MessagePushActivity extends AppCompatActivity implements View.OnCli
         //messageresenter=new MessagePushPresenter();
         messagePushPresenter=new MessagePushPresenter(this);
         //thismessagePushPresenter=new MessagePushPresenter();
+        title= (RelativeLayout) findViewById(R.id.title);
         iv_Back= (ImageView) findViewById(R.id.img_create_logistics_back);
         iv_Back.setOnClickListener(this);
         iv_Search= (ImageView) findViewById(R.id.img_create_logistics_search);
@@ -151,8 +154,9 @@ public class MessagePushActivity extends AppCompatActivity implements View.OnCli
                 break;
             case R.id.img_create_logistics_search:
                 //弹出popupwindow
+                iv_Search.setVisibility(View.GONE);
                 showPop();
-                backgroundAlpha(0.5f);
+                //backgroundAlpha(0.5f);
                 break;
             case R.id.linear_sheng:
 //                ShowLv(lv_start_date);
@@ -245,6 +249,7 @@ public class MessagePushActivity extends AppCompatActivity implements View.OnCli
                 boolean updateLoad=true;
                 messagePushPresenter.getMessagePushForselect("1",updateLoad,unique,productName,warehouseName,planState,planStartDate,planEndDate);
                 popupWindow.dismiss();
+                iv_Search.setVisibility(View.VISIBLE);
                 break;
 
         }
@@ -254,23 +259,23 @@ public class MessagePushActivity extends AppCompatActivity implements View.OnCli
         View popView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.pop_message, null);
         popupWindow = new PopupWindow(findViewById(R.id.layout_find), ActionBarOverlayLayout.LayoutParams.MATCH_PARENT, ActionBarOverlayLayout.LayoutParams.WRAP_CONTENT);
         TextView tv_name= (TextView) popView.findViewById(R.id.name);
-        ImageView img_create_logistics_back1= (ImageView) popView.findViewById(R.id.img_create_logistics_back1);
-        img_create_logistics_back1.setOnClickListener(new View.OnClickListener() {
-                                                          @Override
-                                                          public void onClick(View v) {
-                                                              popupWindow.dismiss();
-                                                          }
-                                                      }
-        );
+//        ImageView img_create_logistics_back1= (ImageView) popView.findViewById(R.id.img_create_logistics_back1);
+//        img_create_logistics_back1.setOnClickListener(new View.OnClickListener() {
+//                                                          @Override
+//                                                          public void onClick(View v) {
+//                                                              popupWindow.dismiss();
+//                                                          }
+//                                                      }
+//        );
 
         tv_name.setText("编号通知:");
-        TextView tv_create_logistics_search= (TextView) popView.findViewById(R.id.tv_create_logistics_search);
-        tv_create_logistics_search.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                popupWindow.dismiss();
-            }
-        });
+//        TextView tv_create_logistics_search= (TextView) popView.findViewById(R.id.tv_create_logistics_search);
+//        tv_create_logistics_search.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                popupWindow.dismiss();
+//            }
+//        });
 
         TextView tv_Time= (TextView) popView.findViewById(R.id.Time);
         tv_Time.setText("发送时间:");
@@ -283,8 +288,8 @@ public class MessagePushActivity extends AppCompatActivity implements View.OnCli
         TextView tv_way= (TextView) popView.findViewById(R.id.way);
         tv_way.setText("通知标题:");
 
-        tv_pop_canle = (TextView) popView.findViewById(R.id.tv_create_logistics_search);
-        img_pop_back = (ImageView) popView.findViewById(R.id.img_create_logistics_back1);
+       // tv_pop_canle = (TextView) popView.findViewById(R.id.tv_create_logistics_search);
+        //img_pop_back = (ImageView) popView.findViewById(R.id.img_create_logistics_back1);
         edt_pop_name = (EditText) popView.findViewById(R.id.tv_pop_customer_num);//产品名称
         edt_pop_cangku = (EditText) popView.findViewById(R.id.tv_pop_customer_name);//仓库名称
         start_pop_date = (TextView) popView.findViewById(R.id.demand_start_time);//计划开始日期
@@ -300,8 +305,8 @@ public class MessagePushActivity extends AppCompatActivity implements View.OnCli
         linear_sheng = (LinearLayout) popView.findViewById(R.id.linear_sheng);
         linear_shi = (LinearLayout) popView.findViewById(R.id.linear_shi);
         linear_qu = (LinearLayout) popView.findViewById(R.id.mention_state_ll);
-        img_pop_back.setOnClickListener(this);
-        tv_pop_canle.setOnClickListener(this);
+       // img_pop_back.setOnClickListener(this);
+        //tv_pop_canle.setOnClickListener(this);
         linear2.setOnClickListener(this);
         linear_sheng.setOnClickListener(this);
         linear_shi.setOnClickListener(this);
@@ -317,11 +322,13 @@ public class MessagePushActivity extends AppCompatActivity implements View.OnCli
         popupWindow.setOutsideTouchable(true);
         popupWindow.setFocusable(true);
 
-        popupWindow.showAtLocation(iv_Search, Gravity.TOP, 0, 0);
+       // popupWindow.showAtLocation(iv_Search, Gravity.TOP, 0, 0);
+        popupWindow.showAsDropDown(title,0,0);
         popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
                 backgroundAlpha(1f);
+                iv_Search.setVisibility(View.VISIBLE);
             }
         });
 
@@ -384,6 +391,7 @@ public class MessagePushActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void setMessagePushResult(String result, boolean UpdateorLoad) {
         Loding.dis();
+        iv_Search.setVisibility(View.VISIBLE);
         if (UpdateorLoad) {
             noticeList.clear();
         }

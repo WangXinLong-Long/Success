@@ -337,8 +337,8 @@ public class FirmInfoTypeActivity extends AppCompatActivity implements IFirmInfo
 
         typeAndLevel = names;
         Log.d("names",names.toString());
-        if (names.contains("买卖双方身份")){
-            names.remove("买卖双方身份");
+        if (names.contains("买卖双重身份")){
+            names.remove("买卖双重身份");
         }
         Log.d("name的值",names.toString());
         adapter = new ListAdapter(getApplication(), names);

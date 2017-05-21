@@ -1393,6 +1393,7 @@
                 android:visibility="gone"
                 android:divider="#00000000"
                 android:dividerHeight="0dp"
+                android:layout_marginBottom="@dimen/x10"
 
 
                 ></com.silianchuangye.sumao.success.custom.CustomListView>

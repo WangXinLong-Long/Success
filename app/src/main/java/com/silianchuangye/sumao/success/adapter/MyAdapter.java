@@ -18,12 +18,12 @@ import java.util.List;
  * Created by junjun on 2016/5/30.
  */
 public class MyAdapter extends BaseExpandableListAdapter {
-    //    private List<Map<String,Object>> listparrent;
-//    private List<List<Map<String,Object>>> listitem;
+
     private List<PreSellAllBean.OrderBean> order;
     private Context context;
     private List<List<ChildBean>> childBeans;
     private List<GroupBean> groupBeans;
+    private Double price=0.0;
 
     //private String name;
 
@@ -40,18 +40,23 @@ public class MyAdapter extends BaseExpandableListAdapter {
         for (int i = 0; i < order.size(); i++) {
 
             List<ChildBean> childBeanList = new ArrayList<>();
+            price=0.0;
             for (int j = 0; j < order.get(i).getCl().size(); j++) {
+
                 ChildBean childBean = new ChildBean();
                 childBean.setName(order.get(i).getCl().get(j).getCl_mingcheng());
                 childBean.setType(order.get(i).getCl().get(j).getCl_fenlei());
                 childBeanList.add(childBean);
+
+                price=Double.parseDouble(order.get(i).getCl().get(j).getCl_amount())+price;
             }
             childBeans.add(childBeanList);
             GroupBean groupBean = new GroupBean();
             groupBean.setName(order.get(i).getOwner());
             groupBean.setId(order.get(i).getOrderId());
             groupBean.setStates(order.get(i).getState());
-            groupBean.setPrice(order.get(i).getOwner());
+            //groupBean.setPrice(order.get(i).getOwner());
+            groupBean.setPrice(price+"");
             groupBeans.add(groupBean);
         }
     }
@@ -134,10 +139,12 @@ public class MyAdapter extends BaseExpandableListAdapter {
         tv_people.setText(groupBeans.get(groupposition).getName());
         Log.d("订单的金额",order.get(groupposition).getCl().get(0).getCl_amount());
         //tvprice.setText(order.get(groupposition).getCl().get(0).getCl_amount());
-        Float price=Float.parseFloat(order.get(groupposition).getCl().get(0).getCl_amount());
+     //   Float priceAmount=Float.parseFloat(order.get(groupposition).getCl().get(0).getCl_amount());
+        Float priceAmount=Float.parseFloat(groupBeans.get(groupposition).getPrice());
         DecimalFormat df = new DecimalFormat("#.##");
-        tvprice.setText(df.format(price) + "");
+        tvprice.setText(df.format(priceAmount) + "");
         tvprice.setVisibility(View.VISIBLE);
+        //for ()
         return view;
     }
 

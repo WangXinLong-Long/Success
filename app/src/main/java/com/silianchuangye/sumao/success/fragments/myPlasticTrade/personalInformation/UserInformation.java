@@ -92,6 +92,7 @@ public class UserInformation extends Activity implements  View.OnClickListener{
                         intent.setClass(this,ModifyName.class);
                         bundle.putString("receivingInformation","修改姓名");
                             bundle.putString("email",tv_loginEmail.getText().toString());
+                            bundle.putString("value",tv_loginName.getText().toString());
                             bundle.putString("phoneNum",tv_loginPhoneNum.getText().toString());
                         bundle.putBoolean("canBeAmpty",false);
                         intent.putExtras(bundle);
@@ -103,6 +104,7 @@ public class UserInformation extends Activity implements  View.OnClickListener{
                             bundle.putString("name",tv_loginName.getText().toString());
                             bundle.putString("phoneNum",tv_loginPhoneNum.getText().toString());
                         bundle.putBoolean("canBeAmpty",true);
+                            bundle.putString("value",tv_loginEmail.getText().toString());
                         intent.putExtras(bundle);
                         startActivityForResult(intent,2);
                         break;
@@ -111,6 +113,7 @@ public class UserInformation extends Activity implements  View.OnClickListener{
                          intent.putExtra("name",tv_loginName.getText().toString());
                          intent.putExtra("email",tv_loginEmail.getText().toString());
                          intent.putExtra("phoneNum",tv_loginPhoneNum.getText().toString());
+                            bundle.putString("value",tv_loginPhoneNum.getText().toString());
                         startActivityForResult(intent,0);
                         break;
 
@@ -177,10 +180,11 @@ public class UserInformation extends Activity implements  View.OnClickListener{
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode==RESULT_OK){
             Log.e("TAG","返回");
-            sendNet();
+           // sendNet();
+
         }
         if(resultCode==0){
-            sendNet();
+            //sendNet();
         }
     }
 }

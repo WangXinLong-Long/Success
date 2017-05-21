@@ -59,7 +59,7 @@ public class SearchplanActivity extends AppCompatActivity implements View.OnClic
     private TextView tv_seeplan_left_num;
     private TextView tv_seeplan_left_peisong;
    // private TextView tv_seeplan_left_state;
-
+   // img_search_see_plan_back
 
     @Override
     protected void onCreate(Bundle savedInstanceState)  {
@@ -138,6 +138,7 @@ public class SearchplanActivity extends AppCompatActivity implements View.OnClic
        // tv_seeplan_right_state.setText(state);
         tv_search_see_plan_title.setText("查看原计划");
         img_search_see_plan_back= (ImageView) findViewById(R.id.img_search_see_plan_back);
+        img_search_see_plan_back.setOnClickListener(this);
         btn_seeplan_copy= (Button) findViewById(R.id.btn_seeplan_copy);
         tv_seeplan_right_dingdannum= (TextView) findViewById(R.id.tv_seeplan_right_dingdannum);
         tv_seeplan_right_dingdannum.setText(orderId);
