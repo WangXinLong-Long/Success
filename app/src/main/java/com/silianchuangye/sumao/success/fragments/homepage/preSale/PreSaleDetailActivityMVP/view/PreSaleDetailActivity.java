@@ -305,7 +305,7 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
                         double price_num = (Double.parseDouble(tvPrice_auction.getText().toString()));
                         double x = num * price_num;
                         DecimalFormat df = new DecimalFormat("#.##");
-                        tv_item_cart_all_price.setText(df.format(x) + "");
+                        tv_item_cart_all_price.setText(df.format(x) + "元");
 
                     }
 
@@ -342,11 +342,13 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
         purchase_quantity_et.setText(preSaleDetailBean.getCl_qigou());
         //        最小变量单位
         min_variable_et.setText(preSaleDetailBean.getCl_xiaobian());
-        payment_deadline_et.setText(/*preSaleDetailBean.getCl_xiaobian()*/"~~");
+       // payment_deadline_et.setText(/*preSaleDetailBean.getCl_xiaobian()*/"~~");
         //       交货时间
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat simple=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        payment_deadline_et.setText(simple.format(Double.parseDouble(preSaleDetailBean.getDeliveryPeriodEnd())));
+        Log.d("货款支付截止时间的",preSaleDetailBean.getPaymentEndDate());
+        Log.e("货款支付截止时间的",simple.format(Double.parseDouble(preSaleDetailBean.getPaymentEndDate())));
+        payment_deadline_et.setText(simple.format(Double.parseDouble(preSaleDetailBean.getPaymentEndDate())));
         delivery_time_et.setText(simpleDateFormat.format(Double.parseDouble(preSaleDetailBean.getDeliveryPeriodStart() + "")));
         delivery_time_et_end.setText(simpleDateFormat.format(Double.parseDouble(preSaleDetailBean.getDeliveryPeriodEnd() + "")));
         //       仓库地址
@@ -431,32 +433,57 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
                 intent.putExtra("cl_attribute", cl_attribute);
                 startActivity(intent);
                 break;
-            case R.id.img_item_cart_buy_add:
+            case R.id.img_item_cart_buy_add://数量++
                 double num = 0.0;
-
-//                    edt_num.setText(0+"");
-//                    Toast.makeText(this,"购买数量不能为空",Toast.LENGTH_SHORT);
                 if (!edt_num.getText().toString().equals("")) {
                     num = Double.valueOf(edt_num.getText().toString());
                 }
-                num += Double.valueOf(min_variable_et.getText().toString());
-                if (num > Double.valueOf(surplus_amount_et.getText().toString())) {
-                    Toast.makeText(this, "购买数量不能大于剩余数量", Toast.LENGTH_SHORT).show();
+                num += Double.valueOf(preSaleDetailBean.getCl_xiaobian());
+                if (num > Double.valueOf(preSaleDetailBean.getCl_shuliang())) {
+                    edt_num.setText(preSaleDetailBean.getCl_shuliang());
                 } else {
-                    edt_num.setText(num + "");
-                    tv_item_cart_all_price.setText(num * Double.valueOf(tvPrice_auction.getText().toString()) + "");
+                    int beishu=(int)div(num,Double.parseDouble(preSaleDetailBean.getCl_xiaobian()),1);
+                    Log.d("倍数的值",beishu+"");
+                    if (beishu<=0){
+                        edt_num.setText(preSaleDetailBean.getCl_qigou());
+                    }else {
+                        Double ji = mul(beishu, Double.parseDouble(preSaleDetailBean.getCl_xiaobian()));
+                        Log.d("即的值", ji + "");
+                        edt_num.setText(ji + "");
+                    }
+
+//                    BigDecimal b = new BigDecimal(mul(Double.parseDouble(edt_num.getText().toString()),Double.parseDouble(preSaleDetailBean.getCl_jiner())));
+//                    double f1 = b.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+                    // viewHolder.price.setText(f1 + "");
+                    //tv_item_cart_all_price.setText(f1+"元");
+                   // tv_item_cart_all_price.setText(mul(Double.parseDouble(edt_num.getText().toString()),Double.parseDouble(preSaleDetailBean.getCl_jiner()))+"元");
+                  //  tv_item_cart_all_price.setText(df.format(Double.parseDouble(edt_num.getText().toString())*Double.parseDouble(preSaleDetailBean.getCl_jiner())+""));
                     payBao();
                 }
                 break;
             case R.id.img_item_cart_buy_sub:
                 Log.e("TAG", "小于");
                 double num1 = Double.valueOf(edt_num.getText().toString());
-                num1 -= Double.valueOf(min_variable_et.getText().toString());
-                if (num1 < Double.valueOf(purchase_quantity_et.getText().toString())) {
-                    Toast.makeText(this, "购买数量不能小于起购量", Toast.LENGTH_SHORT).show();
+                num1 -= Double.valueOf(preSaleDetailBean.getCl_xiaobian());
+                if (num1 < Double.valueOf(preSaleDetailBean.getCl_qigou())) {
+                    edt_num.setText(preSaleDetailBean.getCl_qigou());
                 } else {
-                    edt_num.setText(num1 + "");
-                    tv_item_cart_all_price.setText(num1 * Double.valueOf(tvPrice_auction.getText().toString()) + "");
+                    int beishu=(int)div(num1,Double.parseDouble(preSaleDetailBean.getCl_xiaobian()),1);
+                    Log.d("倍数的值",beishu+"");
+                    if (beishu<=0){
+                        edt_num.setText(preSaleDetailBean.getCl_qigou());
+                    }else {
+                        Double ji = mul(beishu, Double.parseDouble(preSaleDetailBean.getCl_xiaobian()));
+                        Log.d("即的值", ji + "");
+                        edt_num.setText(ji + "");
+                    }
+//                    BigDecimal b = new BigDecimal(mul(Double.parseDouble(edt_num.getText().toString()),Double.parseDouble(preSaleDetailBean.getCl_jiner())));
+//                    double f1 = b.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+//                    // viewHolder.price.setText(f1 + "");
+//                    tv_item_cart_all_price.setText(f1+"");
+//
+//                   // tv_item_cart_all_price.setText(mul(Double.parseDouble(edt_num.getText().toString()),Double.parseDouble(preSaleDetailBean.getCl_jiner()))+"元");
+//                    //tv_item_cart_all_price.setText(df.format(Double.parseDouble(edt_num.getText().toString())*Double.parseDouble(preSaleDetailBean.getCl_jiner())+""));
                     payBao();
                 }
                 break;
@@ -698,15 +725,22 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
 
 
     private void payBao() {
-        String bilistr = margin_proportion_et.getText().toString();
+        //String bilistr = margin_proportion_et.getText().toString();
+        String bilistr=preSaleDetailBean.getCl_baozhj();
         String newStr = bilistr.replaceAll("%", "");
         double bili = Double.valueOf(newStr) / 100;
         double num = Double.valueOf(edt_num.getText().toString());
 //        TODO !!!
-        double price = Double.valueOf(tvPrice_auction.getText().toString());
+        double price = Double.valueOf(preSaleDetailBean.getCl_jiner());
         BZprice = bili * num * price;
         Log.e("TAG", "num*price=" + num * price);
-        tv_item_cart_all_price.setText(num * price + "");
+        Log.d("tag",bili * Double.parseDouble(edt_num.getText().toString()) * price+"");
+
+        BigDecimal b = new BigDecimal(mul(Double.parseDouble(edt_num.getText().toString()),Double.parseDouble(preSaleDetailBean.getCl_jiner())));
+        double f1 = b.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+        // viewHolder.price.setText(f1 + "");
+        tv_item_cart_all_price.setText(f1+"元");
+       // String.format("%.2f", BZprice)
     }
 
 
@@ -728,6 +762,7 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
 //        List<DayAndPrice> list = new ArrayList<DayAndPrice>();
             StringBuffer cacheSb = new StringBuffer();
             cacheSb.append("00000000");
+//            cacheSb.append(preSaleDetailBean.getPaymentEndDate());
             double cachevalue = Double.parseDouble(cacheSb + "");
             int cacheyear = 0;
             int cachemonth = 0;
@@ -746,6 +781,7 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
                     throw new RuntimeException("没有转换成功");
                 }
                 riliDate = year + "..." + mounth + "..." + day;
+                Log.e("riliDate的值",riliDate);
                 LogUtils.log(year + "..." + mounth + "..." + day);
                 calendarlist.add(new DayAndPrice("￥" + sku.getCl_jiner(), year, mounth, day, skuId));
                 StringBuffer sb = new StringBuffer();
@@ -753,7 +789,8 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
                 sb.append(String.valueOf(mounth));
                 sb.append(String.valueOf(day));
                 double value = Double.parseDouble(sb + "");
-
+                Log.e("sb的值",value+"");
+                Log.e("cachevalue的值",cachevalue+"");
                 if (value > cachevalue) {
                     cacheSb = sb;
                     cacheyear = year;
@@ -764,6 +801,7 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
 
             }
             LogUtils.log("skuId-->" + cacheSKUId);
+            //LogUtils.log("");
             //设置进来就显示到预售日期的日起最远的一个
             preSaleDetailPresenter.sendPreSaleDetailData(cacheSKUId, productId);
             calendarView.monthDateView.setSelectYearMonth(cacheyear, cachemonth - 1, cacheday);
@@ -787,7 +825,7 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
             tv = (TextView) view.findViewById(R.id.tv_pay);
             //tv.setText(BZprice + "");
             //DecimalFormat df = new DecimalFormat("#.00");
-            tv.setText(String.format("%.2f", BZprice));
+            tv.setText(String.format("%.2f", BZprice)+"元");
 //        et= (EditText) view.findViewById(R.id.etZhifu_auction);
             lv = (ListView) view.findViewById(R.id.lv_popupwindow_auction);
             Button bt = (Button) view.findViewById(R.id.btZhifu);
@@ -1003,6 +1041,13 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
                 edt_num.setText(he + "");
             }
 
+
+//            BigDecimal b = new BigDecimal(mul(Double.parseDouble(edt_num.getText().toString()),Double.parseDouble(preSaleDetailBean.getCl_jiner())));
+//            double f1 = b.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+//           // viewHolder.price.setText(f1 + "");
+//            tv_item_cart_all_price.setText(f1+"");
+            payBao();
+
         }
     }
     public  double sub(double d1, double d2)
@@ -1074,6 +1119,13 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
                         Log.d("和的值", he + "");
                         edt_num.setText(he + "");
                     }
+//                    tv_item_cart_all_price.setText(Double.parseDouble(edt_num.getText().toString())*Double.parseDouble(preSaleDetailBean.getCl_jiner())+"");
+////                    payBao();
+//                    BigDecimal b = new BigDecimal(mul(Double.parseDouble(edt_num.getText().toString()),Double.parseDouble(preSaleDetailBean.getCl_jiner())));
+//                    double f1 = b.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+//                    // viewHolder.price.setText(f1 + "");
+//                    tv_item_cart_all_price.setText(f1+"");
+                    payBao();
 
                 }
             }

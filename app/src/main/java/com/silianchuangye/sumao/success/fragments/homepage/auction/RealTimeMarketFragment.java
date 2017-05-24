@@ -159,7 +159,7 @@ public class RealTimeMarketFragment extends Fragment {
             }
         };
 
-        timer.schedule(task,3000,3000);
+        timer.schedule(task,0,3000);
     }
 
 

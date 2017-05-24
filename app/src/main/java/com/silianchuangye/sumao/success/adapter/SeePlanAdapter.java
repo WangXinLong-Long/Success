@@ -4,6 +4,7 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -46,6 +47,7 @@ public class SeePlanAdapter extends BaseAdapter{
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         final ViewHolder holder;
+        Log.d("数据",list.get(position).toString()+"");
         if(convertView==null){
             convertView=View.inflate(ctx, R.layout.item_seeplan_lv,null);
             holder=new ViewHolder();
@@ -63,7 +65,8 @@ public class SeePlanAdapter extends BaseAdapter{
             convertView.setTag(holder);
         }else{
             holder= (ViewHolder) convertView.getTag();
-        }/*
+        }
+        /*
             productName = planOrderList.get(i).getProductName();//产品名称
             demandScheduleState = planOrderList.get(i).getDemandScheduleState();//订单状态
             logisticsName = planOrderList.get(i).getLogisticsName();//物流
@@ -86,42 +89,9 @@ public class SeePlanAdapter extends BaseAdapter{
         holder.tv_peisong.setText(list.get(position).getLogisticsName());
         holder.tv_state.setText(list.get(position).getDemandScheduleState());
 
-//        holder.tv_dingdangnum.setText(list.get(position).getOrderId());
-        //复制按钮
-        holder.btn_copy.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                ClipboardManager copy = (ClipboardManager) ctx
-//                        .getSystemService(Context.CLIPBOARD_SERVICE);
-//                copy.setText(holder.tv_dingdangnum.getText().toString());
-//                Toast.makeText(ctx,"复制成功",Toast.LENGTH_SHORT).show();
-                //获取剪贴板管理器：
-                ClipboardManager cm = (ClipboardManager) ctx.getSystemService(Context.CLIPBOARD_SERVICE);
-// 创建普通字符型ClipData
-                ClipData mClipData = ClipData.newPlainText("Label", list.get(position).getOrderId().toString());
-// 将ClipData内容放到系统剪贴板里。
-                cm.setPrimaryClip(mClipData);
-            }
-        });
-        //查看原计划按钮
-        holder.btn_see.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(ctx, SearchSeePlan.class);
-                intent.putExtra("id",list.get(position).getOrderId());
-                ctx.startActivity(intent);
-            }
-        });
-        holder.tv_dingdangnum.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //订单号跳转
-                Intent intent=new Intent(ctx, SpotOrder.class);
-                intent.putExtra("id",list.get(position).getOrderId().toString());
-                ctx.startActivity(intent);
+       // holder.tv_dingdangnum.setText(list.get(position).getOrderId());
 
-            }
-        });
+
         if (null == list.get(position).getDemandScheduleState()){
             holder.tv_state.setText("已取消");
             holder.btn_see.setVisibility(View.INVISIBLE);
@@ -136,6 +106,42 @@ public class SeePlanAdapter extends BaseAdapter{
             holder.tv_seeplan_left_dingdannum.setVisibility(View.VISIBLE);
             holder.btn_copy.setTextColor(ctx.getResources().getColor(R.color.common_botton_bar_blue));
             holder.tv_dingdangnum.setText(list.get(position).getOrderId());
+            //复制按钮
+            holder.btn_copy.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+//                ClipboardManager copy = (ClipboardManager) ctx
+//                        .getSystemService(Context.CLIPBOARD_SERVICE);
+//                copy.setText(holder.tv_dingdangnum.getText().toString());
+//                Toast.makeText(ctx,"复制成功",Toast.LENGTH_SHORT).show();
+                    //获取剪贴板管理器：
+                    ClipboardManager cm = (ClipboardManager) ctx.getSystemService(Context.CLIPBOARD_SERVICE);
+// 创建普通字符型ClipData
+                    ClipData mClipData = ClipData.newPlainText("Label", list.get(position).getOrderId().toString());
+// 将ClipData内容放到系统剪贴板里。
+                    cm.setPrimaryClip(mClipData);
+                }
+            });
+            //查看原计划按钮
+
+            holder.btn_see.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(ctx, SearchSeePlan.class);
+                    intent.putExtra("PlanOrderList", list.get(position));
+                    ctx.startActivity(intent);
+                }
+            });
+            holder.tv_dingdangnum.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //订单号跳转
+                    Intent intent = new Intent(ctx, SpotOrder.class);
+                    intent.putExtra("id", list.get(position).getOrderId().toString());
+                    ctx.startActivity(intent);
+
+                }
+            });
         }else{
             holder.tv_state.setText("待确定");
             holder.btn_see.setVisibility(View.INVISIBLE);

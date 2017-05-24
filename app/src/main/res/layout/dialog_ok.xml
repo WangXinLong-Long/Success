@@ -24,6 +24,7 @@
             android:id="@+id/iv_dialog_ok_cancel"
             android:layout_width="@dimen/x18"
             android:layout_height="@dimen/x18"
+            android:visibility="invisible"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/x10"

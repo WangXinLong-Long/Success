@@ -86,12 +86,12 @@ public class LoginActivity extends BaseActivity {
 	@Override
 	protected void onStop() {
 		super.onStop();
-		SharedPreferences sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
-		SharedPreferences.Editor editor=sp.edit();
-		//editor.putString("")
-		editor.remove("zhanghao");
-		editor.remove("phone");
-		editor.commit();
+//		SharedPreferences sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+//		SharedPreferences.Editor editor=sp.edit();
+//		//editor.putString("")
+//		editor.remove("zhanghao");
+//		editor.remove("phone");
+//		editor.commit();
 	}
 
 	private void createRandomAccountAndLoginChatServer() {
@@ -99,11 +99,11 @@ public class LoginActivity extends BaseActivity {
 		SharedPreferences sharedPreferences=getSharedPreferences("sumao", Activity.MODE_PRIVATE);
 		randomAccount=sharedPreferences.getString("zhanghao","");
 		//randomAccount="guanjun123";
-		Log.d("Login",randomAccount);
+		Log.d("Login帐号",randomAccount);
 		String phone=sharedPreferences.getString("phone","");
 		userPwd=randomAccount+phone;
-		Log.d("password",userPwd);
-		if (randomAccount.equals("")&&userPwd.equals("")){
+		Log.d("password密码",userPwd);
+		if (randomAccount.equals("") && userPwd.equals("")){
 			Toast.makeText(LoginActivity.this, "请先登录", Toast.LENGTH_SHORT).show();
 		}else {
 			progressDialog = getProgressDialog();

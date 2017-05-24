@@ -62,6 +62,7 @@ public class InformationDetailsActivity extends Activity implements View.OnClick
         mWebView.setWebChromeClient(new MyWebChromeClient());
         //添加监听
         mWebView.addJavascriptInterface(javascriptInterface, "imagelistner");
+        mWebView.getSettings().setDomStorageEnabled(true);
 
 //        talkWithNet1();
         talkWithNet2();

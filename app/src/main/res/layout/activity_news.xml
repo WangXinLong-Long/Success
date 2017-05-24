@@ -82,22 +82,10 @@
       </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/layout_titleAndtime"
-        android:background="#fff"
-        >
-        <WebView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/wb_Content"
-            />
-
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@color/gray_type"
+        android:id="@+id/layout"
         >
         <TextView
             android:layout_width="wrap_content"
@@ -128,4 +116,19 @@
 
             />
     </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/layout_titleAndtime"
+        android:background="#fff"
+        android:layout_above="@+id/layout"
+        >
+        <WebView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/wb_Content"
+            />
+
+    </RelativeLayout>
+
 </RelativeLayout>

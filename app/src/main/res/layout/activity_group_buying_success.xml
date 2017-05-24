@@ -366,6 +366,7 @@
                         android:layout_below="@id/pbDemo"
                         android:layout_marginLeft="@dimen/x140"
                         android:src="@mipmap/xiaosanjiao"
+                        android:visibility="gone"
                         android:textSize="@dimen/x10" />
 
                     <TextView
@@ -374,6 +375,7 @@
                         android:layout_below="@+id/img_sanjiao"
                         android:layout_marginLeft="@dimen/x130"
                         android:text="成团量"
+                        android:visibility="gone"
                         android:textSize="@dimen/x10" />
                 </RelativeLayout>
 
@@ -865,8 +867,7 @@
                 android:visibility="gone"
                 android:divider="#00000000"
                 android:dividerHeight="0dp"
-
-
+                android:layout_marginBottom="@dimen/x35"
                 ></com.silianchuangye.sumao.success.custom.CustomListView>
 
         </LinearLayout>

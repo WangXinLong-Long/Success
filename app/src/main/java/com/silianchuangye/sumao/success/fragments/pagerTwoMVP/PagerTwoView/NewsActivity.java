@@ -289,10 +289,12 @@ public class NewsActivity extends AppCompatActivity {
 //扩大比例的缩放
                     wb_Content.getSettings().setUseWideViewPort(true);
 //自适应屏幕
-                   // wb_Content.settings.setUseWideViewPort(true);
+
+
                     wb_Content.getSettings().setLoadWithOverviewMode(true);
                   //  wb_Content.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
-                    wb_Content.getSettings().setLoadWithOverviewMode(true);
+                   // wb_Content.getSettings().setLoadWithOverviewMode(true);
+                    //wb_Content.getSettings().setDomStorageEnabled(true);
                         JSONObject jsonObject=new JSONObject(result);
                         String time=jsonObject.getString("time");
                         String source=jsonObject.getString("source");

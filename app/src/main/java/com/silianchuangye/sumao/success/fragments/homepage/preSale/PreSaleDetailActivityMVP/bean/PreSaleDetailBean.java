@@ -61,6 +61,7 @@ public class PreSaleDetailBean implements Serializable{
     private String group;
     private List<String> cl_jhfangshi;
     private String cl_qiyeonlyId;
+    //private String paymentEndDate;
 
     public String getCl_qiyeonlyId() {
         return cl_qiyeonlyId;

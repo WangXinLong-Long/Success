@@ -60,7 +60,7 @@
         android:textColor="@color/textColor_expandable_listview_show"
         android:textSize="14sp"
         android:layout_marginLeft="@dimen/x10"
-        android:text="11111"
+        android:text=""
         >
         </TextView>
 

@@ -149,7 +149,7 @@
         <!-- 设置环信应用的appkey 可以在Manifest设置也可以在代码中设置 -->
         <meta-data
             android:name="EASEMOB_APPKEY"
-            android:value="12344321123#sumaodemo" />
+            android:value="bjslcy#sumaowangapp" />
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="RBuN9HdDa8wBNS27rxMvguKR" />
@@ -369,7 +369,10 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoTypeActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:hardwareAccelerated="false"
+            android:largeHeap="true"
+            />
         <activity
             android:name=".fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoPicture.FirmInfoPictureMVP.view.FirmInfoPictureActivity"
             android:screenOrientation="portrait" />
@@ -574,7 +577,10 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".fragments.myPlasticTrade.register.RegisterPicture"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:hardwareAccelerated="false"
+            android:largeHeap="true"
+            />
         <activity
             android:name=".fragments.homepage.sumaoconsultMVP.SuMaoConsult"
             android:screenOrientation="portrait" />
@@ -678,7 +684,10 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".fragments.myPlasticTrade.qurchaseQualification.purchaseQualificationDetail.DataDetailsActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:hardwareAccelerated="false"
+            android:largeHeap="true"
+            />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

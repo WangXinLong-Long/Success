@@ -109,6 +109,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
+        android:text=""
         android:layout_marginLeft="@dimen/x10"
         android:layout_marginTop="@dimen/x10"/>
     <Button

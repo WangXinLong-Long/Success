@@ -429,6 +429,7 @@ public class PayOrderListActivity extends Activity implements View.OnClickListen
                 Intent intent=new Intent(PayOrderListActivity.this,Error_Dialog.class);
                 intent.putExtra("number",orderId);
                 startActivity(intent);
+
             }else {
                 Log.d("支付结果的返回值","不等于空");
                 try {
@@ -440,6 +441,7 @@ public class PayOrderListActivity extends Activity implements View.OnClickListen
                         intent.putExtra("type", "现货");
                         intent.putExtra("number", orderId);
                         startActivity(intent);
+                        //finish();
 //                        int pos = -1;
 //                        for (int i = 0; i < orderList.size(); i++) {
 //                            if (orderList.get(i).getOrderId().equals(orderIds)) {

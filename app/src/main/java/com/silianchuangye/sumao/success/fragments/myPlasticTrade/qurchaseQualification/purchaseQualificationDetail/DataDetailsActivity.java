@@ -237,9 +237,11 @@ public class DataDetailsActivity extends AppCompatActivity implements View.OnCli
     private void  showUploadScan() {
         if (needPicture) {
             upload_scan.setVisibility(View.VISIBLE);
+            tv_child_title_bar_text.setVisibility(View.VISIBLE);
            // Popupwindow();
         } else {
             upload_scan.setVisibility(View.GONE);
+            tv_child_title_bar_text.setVisibility(View.GONE);
         }
 
     }
@@ -287,9 +289,31 @@ public class DataDetailsActivity extends AppCompatActivity implements View.OnCli
                     .setImageScaleType(ImageView.ScaleType.FIT_CENTER)
 //                    .setLoadingDrawableId(R.mipmap.ic_launcher)
 //                    .setFailureDrawableId(R.mipmap.ic_launcher)
+                    .setUseMemCache(true)
                     .build();
-            Loding.dis();
-            x.image().bind(image, url, imageOptions);
+
+            x.image().bind(image, url, imageOptions, new Callback.CommonCallback<Drawable>() {
+                @Override
+                public void onSuccess(Drawable result) {
+                    Loding.dis();
+                }
+
+                @Override
+                public void onError(Throwable ex, boolean isOnCallback) {
+                    Loding.dis();
+                    Toast.makeText(DataDetailsActivity.this, "图片加载错误,请稍后重试!", Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onCancelled(CancelledException cex) {
+
+                }
+
+                @Override
+                public void onFinished() {
+
+                }
+            });
 
         }
 
@@ -299,16 +323,7 @@ public class DataDetailsActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-//            case R.id.image:
-//                Intent intent1=new Intent(DataDetailsActivity.this, MActivity.class);
-//                if (tupian==""&&!path.equals("abc")) {
-//                    intent1.putExtra("path", path);
-//                }
-////                }else{
-////                    intent.putExtra("path","");
-////                }
-//                startActivity(intent1);
-//                break;
+
             case R.id.tv_child_title_bar_text:
                 //saveInformation();
                 //
@@ -317,12 +332,22 @@ public class DataDetailsActivity extends AppCompatActivity implements View.OnCli
                 }else if (title.equals("企业法人姓名")){
                     if (tupian.equals("")){
                         //原来的图片
-                        Intent intent = new Intent();
-                        intent.putExtra("returnInfo", modify_information.getText().toString());
-                        intent.putExtra("path", path);
-                        setResult(RESULT_OK, intent);
-                        finish();
+
+                        if (path.equals("")){
+                            Toast.makeText(DataDetailsActivity.this, "请上传企业法人图片!", Toast.LENGTH_SHORT).show();
+                        }else{
+                            Intent intent = new Intent();
+                            intent.putExtra("returnInfo", modify_information.getText().toString());
+                            intent.putExtra("path", path);
+                            setResult(RESULT_OK, intent);
+                            finish();
+                        }
+
                     }else{
+                        //这里判断有没有上传图片
+                        Loding.show(this, "图片上传中...", false, null);
+                        uploadPicture();
+                        //Toast.makeText(DataDetailsActivity.this, "请上传企业法人扫描件!", Toast.LENGTH_SHORT).show();
 
                     }
                 } else{
@@ -366,7 +391,7 @@ public class DataDetailsActivity extends AppCompatActivity implements View.OnCli
             case R.id.iv_child_title_bar_back:
                 if (title.equals("企业法人姓名")||title.equals("姓名")||title.equals("开户银行许可证")){
                     if (tupian==""){
-                        if (!path.equals("abc")){
+                        if (!path.equals("abc")&&!path.equals("")){
                             Intent intent = new Intent();
                             intent.putExtra("returnInfo", modify_information.getText().toString());
                             intent.putExtra("path",path);

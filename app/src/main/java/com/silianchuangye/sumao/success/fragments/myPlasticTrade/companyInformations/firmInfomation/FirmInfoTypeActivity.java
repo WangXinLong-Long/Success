@@ -43,6 +43,7 @@ import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.FirmIn
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.RegisterFirmActivityMVP.presenter.RegisterFirmActivityPresenter;
 import com.silianchuangye.sumao.success.model.EnterpriseInformation;
 import com.silianchuangye.sumao.success.utils.LGImgCompressor;
+import com.silianchuangye.sumao.success.utils.Loding;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
@@ -75,7 +76,7 @@ public class FirmInfoTypeActivity extends AppCompatActivity implements IFirmInfo
     RelativeLayout layoutTop;
     // RadioButton one,two,three;
     RadioGroup rgDemo;
-    private String name;
+    private String name="";
     private Button btSave;
     private LinearLayout three_layout;
     String title;
@@ -119,12 +120,11 @@ public class FirmInfoTypeActivity extends AppCompatActivity implements IFirmInfo
         info=bundle.getString("value");
 
         tupianpath=bundle.getString("path");
-//        if (info!=null&&!info.equals("")&&info!=""){
-//
-//        }
+
         Log.d("path的值",tupianpath);
         if (!tupianpath.equals("")&&tupianpath!=""&&tupianpath!=null&&title.equals("纳税人类型")){
             prompt.setVisibility(View.VISIBLE);
+            prompt.setTextColor(getResources().getColor(R.color.btn_blue_normal));
             prompt.setText(tupianpath.substring(10,tupianpath.length()));
         }
 
@@ -148,25 +148,30 @@ public class FirmInfoTypeActivity extends AppCompatActivity implements IFirmInfo
         lv_type.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(FirmInfoTypeActivity.this, "进来listview的item的点击事件", Toast.LENGTH_SHORT).show();
+             //   Toast.makeText(FirmInfoTypeActivity.this, "进来listview的item的点击事件", Toast.LENGTH_SHORT).show();
                 name = list.get(position).toString();
-                Log.d("选中的文字", name);
+               // Log.d("选中的文字", name);
             }
         });
         btSave = (Button) findViewById(R.id.btSave);
         btSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (name == null || name.isEmpty()) {
-                    prompt.setText("请选择类型");
-                    prompt.setTextColor(Color.RED);
-                    prompt.setVisibility(View.VISIBLE);
+//                Log.d("name的值",name+"为什么");
+//                Log.d("进来了 ","进来了");
+                if (name == null || name.isEmpty()||name.equals("")) {
+                    Log.d("进来了if ","进来了");
+                    Toast.makeText(FirmInfoTypeActivity.this, "请选择类型!", Toast.LENGTH_SHORT).show();
                 } else {
-                    if (!tupian.equals("")){
+                    Log.d("进来了else ","进来了");
+                    Log.d("name的值",name);
+                     if (!tupian.equals("")){//选择
                         Log.d("点击事件", "进来了");
+                        Loding.show(FirmInfoTypeActivity.this,"图片上传中...",false,null);
                         new Thread(){
                             @Override
                             public void run() {
+                               // Loding.show(FirmInfoTypeActivity.this,"图片上传中...",false,null);
                                 super.run();
                                 RequestParams rp = new RequestParams(SuMaoConstant.SUMAO_IP + "/rest/model/atg/commerce/order/myorder/OrderPaymentInfo/fileUpload");
                                 SharedPreferences sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
@@ -185,7 +190,6 @@ public class FirmInfoTypeActivity extends AppCompatActivity implements IFirmInfo
                                     Bitmap bitmap=BitmapFactory.decodeFile(filepath);
                                     fileCode=BitmapToString(bitmap);
                                     Log.d("图片编码",fileCode);
-                                   // Toast.makeText(FirmInfoTypeActivity.this, ""+fileCode, Toast.LENGTH_SHORT).show();
                                     rp.addParameter("file", fileCode);
                                 }
 
@@ -201,6 +205,7 @@ public class FirmInfoTypeActivity extends AppCompatActivity implements IFirmInfo
 
                                     @Override
                                     public void onSuccess(String result) {
+                                        Loding.dis();
 
 
                                         Intent intent = new Intent();
@@ -237,7 +242,7 @@ public class FirmInfoTypeActivity extends AppCompatActivity implements IFirmInfo
                             FirmInfoTypeActivity.this.setResult(RESULT_OK, intent);
                             FirmInfoTypeActivity.this.finish();
                         }else {
-                            if (prompt.getVisibility()==View.VISIBLE) {
+                            if (prompt.getVisibility()==View.VISIBLE &&!prompt.getText().toString().equals("")) {
                                 Intent intent = new Intent();
                                 intent.putExtra("name", name);
                                 intent.putExtra("level", level);
@@ -245,7 +250,9 @@ public class FirmInfoTypeActivity extends AppCompatActivity implements IFirmInfo
                                 FirmInfoTypeActivity.this.setResult(RESULT_OK, intent);
                                 FirmInfoTypeActivity.this.finish();
                             } else {
-                                Toast.makeText(FirmInfoTypeActivity.this, "请选择纳税人图片!", Toast.LENGTH_SHORT).show();
+                                if (prompt.getVisibility()==View.GONE || prompt.getText().toString().equals("")) {
+                                    Toast.makeText(FirmInfoTypeActivity.this, "请选择纳税人图片!", Toast.LENGTH_SHORT).show();
+                                }
                             }
                         }
 
@@ -256,8 +263,8 @@ public class FirmInfoTypeActivity extends AppCompatActivity implements IFirmInfo
 
 
                 }
-            }
-        });
+    }
+       });
 
             }
 
@@ -457,6 +464,7 @@ public class FirmInfoTypeActivity extends AppCompatActivity implements IFirmInfo
                 prompt.setVisibility(View.VISIBLE);
 
                 prompt.setText(tupian);
+                prompt.setTextColor(getResources().getColor(R.color.btn_blue_normal));
                 Bitmap photo = data.getParcelableExtra("data");
                 fileBianma=BitmapToString(photo);
                 SharedPreferences sp=getSharedPreferences("sumao", Activity.MODE_PRIVATE);
@@ -482,7 +490,7 @@ public class FirmInfoTypeActivity extends AppCompatActivity implements IFirmInfo
                 prompt.setVisibility(View.VISIBLE);
                 tupian=getPhotoFileName();
                 prompt.setText(tupian);
-
+                prompt.setTextColor(getResources().getColor(R.color.btn_blue_normal));
                 Uri uri = data.getData();
                 try {
                     //get the image path

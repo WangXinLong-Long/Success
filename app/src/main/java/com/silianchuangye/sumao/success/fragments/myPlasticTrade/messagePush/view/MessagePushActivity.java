@@ -125,6 +125,7 @@ public class MessagePushActivity extends AppCompatActivity implements View.OnCli
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent=new Intent(MessagePushActivity.this,MessageDetailsActivity.class);
                 intent.putExtra("sendId",sendId);
+                Log.d("sendId",sendId);
                 startActivity(intent);
 
             }

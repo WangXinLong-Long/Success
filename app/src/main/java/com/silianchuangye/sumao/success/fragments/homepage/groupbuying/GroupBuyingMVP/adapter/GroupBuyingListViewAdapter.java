@@ -1,6 +1,7 @@
 package com.silianchuangye.sumao.success.fragments.homepage.groupbuying.GroupBuyingMVP.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.homepage.groupbuying.GroupBuyingMVP.bean.GroupBuyingListBean;
+import com.silianchuangye.sumao.success.fragments.homepage.groupbuying.groupBuyingDetailMVP.view.GroupBuyingSuccessActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -54,7 +56,7 @@ public class GroupBuyingListViewAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder;
         if (convertView == null) {
             viewHolder = new ViewHolder();
@@ -105,6 +107,14 @@ public class GroupBuyingListViewAdapter extends BaseAdapter {
             viewHolder.end_data_rl.setVisibility(View.VISIBLE);
             viewHolder.start_data_rl.setVisibility(View.VISIBLE);
             viewHolder.tv_StartTime.setText("团购进行中");
+            viewHolder.bt_join.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, GroupBuyingSuccessActivity.class);
+                    intent.putExtra("productId",list.get(position).getId());
+                    context.startActivity(intent);
+                }
+            });
         } else if (list.get(position).getRuning().equals("false")) {//团购没开始
             viewHolder.iv_icon.setImageResource(R.mipmap.tuangouselect);
             viewHolder.tv_StartTime.setVisibility(View.VISIBLE);
@@ -113,6 +123,7 @@ public class GroupBuyingListViewAdapter extends BaseAdapter {
             viewHolder.end_data_rl.setVisibility(View.VISIBLE);
             viewHolder.start_data_rl.setVisibility(View.VISIBLE);
             viewHolder.tv_StartTime.setText("团购未开始");
+            //viewHolder.bt_auctionitem.
         } else if (list.get(position).getRuning().equals("end")) {//团购已结束
 
             if (list.get(position).getResult().equals("gone")) {
@@ -124,6 +135,7 @@ public class GroupBuyingListViewAdapter extends BaseAdapter {
                 viewHolder.end_data_rl.setVisibility(View.VISIBLE);
                 viewHolder.start_data_rl.setVisibility(View.VISIBLE);
                 //viewHolder.tv_StartTime
+
             }else {
                 viewHolder.iv_icon.setImageResource(R.mipmap.tuangou);
                 viewHolder.bt_join.setBackgroundColor(context.getResources().getColor(R.color.gray));

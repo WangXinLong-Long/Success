@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -61,7 +62,10 @@ public class SearchSeePlan extends AppCompatActivity implements View.OnClickList
         tv_seeplan_left_num= (TextView) findViewById(R.id.tv_seeplan_left_num);
         tv_seeplan_left_peisong= (TextView) findViewById(R.id.tv_seeplan_left_peisong);
         planOrderList =(PlanOrderList) getIntent().getSerializableExtra("PlanOrderList");
-        title = planOrderList.getPlanID();
+
+//        title = planOrderList.getPlanID();
+//        Log.d("title的值",title);
+
         initDate();
         initView();
     }

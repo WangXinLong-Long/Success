@@ -78,6 +78,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
@@ -184,6 +185,7 @@ public class OpenAcutionOrMifengActivity extends AppCompatActivity implements IO
     private String resultAcution;
     private RelativeLayout layout_anniu;
     private String timeEnd;
+    private boolean istrue=true;
 
 
 
@@ -204,6 +206,7 @@ public class OpenAcutionOrMifengActivity extends AppCompatActivity implements IO
         id_value = auctionDetailBean.getCl_id();
         productId = auctionDetailBean.getCl_id();
        // MyOfferforOpen();
+
         proType = getIntent().getStringExtra("proType");
         status = auctionDetailBean.getStatus();
         if (auctionDetailBean.getDepositDeadline().getTime() == null || auctionDetailBean.getDepositDeadline().getTime().equals("") || auctionDetailBean.getDepositDeadline().getTime() == "") {
@@ -226,6 +229,8 @@ public class OpenAcutionOrMifengActivity extends AppCompatActivity implements IO
 
 
 
+
+
     }
     public void setTitleValue(){
         Log.d("实时时间的值","实时时间的值");
@@ -237,6 +242,7 @@ public class OpenAcutionOrMifengActivity extends AppCompatActivity implements IO
             }
         }else if (status.equals("1")){
             tvTime.setText("竞拍剩余时间:");
+            Log.d("刷新的时间",timeEnd);
             long startTime = Long.parseLong(timeEnd) - System.currentTimeMillis();
             if (startTime>0) {
                 new MyCount(startTime, 1000).start();
@@ -260,7 +266,8 @@ public class OpenAcutionOrMifengActivity extends AppCompatActivity implements IO
         if (unique.equals("") || unique.equals("false")) {//没有登录
             if (status.equals("")||status.equals("0")){
                 tvTime.setText("距离竞拍开始时间:");
-                long startTime = Long.parseLong(auctionDetailBean.getStartDate()) - System.currentTimeMillis();
+                Date date=new Date();
+                long startTime = Long.parseLong(auctionDetailBean.getStartDate()) - date.getTime();
                 if (startTime>0) {
                     new MyCount(startTime, 1000).start();
                 }
@@ -300,7 +307,8 @@ public class OpenAcutionOrMifengActivity extends AppCompatActivity implements IO
                 //有，显示支付保证金和立即支付按钮
                 //没有就显示字符保证金按钮
                 tvTime.setText("竞拍剩余时间:");
-                long startTime = Long.parseLong(auctionDetailBean.getEndDate()) - System.currentTimeMillis();
+                Date date=new Date();
+                long startTime = Long.parseLong(auctionDetailBean.getEndDate()) - date.getTime();
                 if (startTime>0) {
                     new MyCount(startTime, 1000).start();
                 }
@@ -336,6 +344,26 @@ public class OpenAcutionOrMifengActivity extends AppCompatActivity implements IO
                 Layout_Button_close.setVisibility(View.GONE);
                 tv_result.setVisibility(View.VISIBLE);
             }
+        }
+    }
+
+
+    class TitleThread implements Runnable {
+
+        @Override
+        public void run() {
+
+            while (istrue) {
+                Message message = new Message();
+                message.what = 1;
+                handler.sendMessage(message);
+                try {
+                    Thread.sleep(3000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
         }
     }
 
@@ -855,6 +883,7 @@ public class OpenAcutionOrMifengActivity extends AppCompatActivity implements IO
 //        });
 
     }
+    //onStop
 
     public void initView() {
         layout_anniu=(RelativeLayout)findViewById(R.id.layout_anniu);
@@ -882,11 +911,11 @@ public class OpenAcutionOrMifengActivity extends AppCompatActivity implements IO
         bt_jinpai_colse = (Button) findViewById(R.id.bt_jinpai_colse);
 //        支付保证金的RelativeLayout
         Layout_Button_close = (RelativeLayout) findViewById(R.id.Layout_Button_close);
-//        支付保证金和立即报价的RelativeLayout
+//        支付保证金和立即提交的RelativeLayout
         Layout_Button_Open = (RelativeLayout) findViewById(R.id.Layout_Button_Open);
 
         layout_non = (RelativeLayout) findViewById(R.id.layout_non);
-//        立即报价
+//        立即提交
         bt_jinpai = (Button) findViewById(R.id.bt_jinpai);
 //        最高竞拍价、中标人数等的RelativeLayout
         // layoutone = (RelativeLayout) findViewById(R.id.layout_one);
@@ -1028,15 +1057,15 @@ public class OpenAcutionOrMifengActivity extends AppCompatActivity implements IO
                     LogUtils.log("支付保证金--->");
                     depositDeadline = auctionDetailBean.getDepositDeadline().getTime();
                     alreadyBaoZhengJin(true);
-                }else if (bt_jinpai_colse.getText().toString().equals("立即报价")){//立即报价
+                }else if (bt_jinpai_colse.getText().toString().equals("立即提交")){//立即提交
                     if (type_way.equals("公开竞拍")) {
-                        Log.d("公开竞拍的立即报价","公开竞拍的立即报价");
+                        Log.d("公开竞拍的立即提交","公开竞拍的立即提交");
 //                        gongkai_baojia();
                         MyOfferforOpen();
                         //openAuctionPresenter.getRealTimeQuotes(productId, true);
 
                     } else {
-                        Log.d("密封竞拍的立即报价","密封竞拍的立即报价");
+                        Log.d("密封竞拍的立即提交","密封竞拍的立即提交");
                         mifeng_baojia();
                     }
                 }
@@ -1045,15 +1074,15 @@ public class OpenAcutionOrMifengActivity extends AppCompatActivity implements IO
                 depositDeadline = auctionDetailBean.getDepositDeadline().getTime();
                 alreadyBaoZhengJin(true);
                 break;
-            case R.id.bt_jinpai://立即报价
+            case R.id.bt_jinpai://立即提交
                 if (type_way.equals("公开竞拍")) {
-                    Log.d("公开竞拍的立即报价","公开竞拍的立即报价");
+                    Log.d("公开竞拍的立即提交","公开竞拍的立即提交");
                    // gongkai_baojia();
                     MyOfferforOpen();
 //                    openAuctionPresenter.getRealTimeQuotes(productId, true);
 
                 } else {
-                    Log.d("密封竞拍的立即报价","密封竞拍的立即报价");
+                    Log.d("密封竞拍的立即提交","密封竞拍的立即提交");
                     mifeng_baojia();
                 }
                 break;
@@ -1070,14 +1099,41 @@ public class OpenAcutionOrMifengActivity extends AppCompatActivity implements IO
                         if (num1<Double.parseDouble(shishicjnumber)){
                             tv_item_cart_buy_num.setText(shishicjnumber);
                         }else{
-                            tv_item_cart_buy_num.setText(num1+"");
+                            //tv_item_cart_buy_num.setText(num1+"");
+                            int beishu = (int) div(num1, Double.parseDouble(auctionDetailBean.getCl_xbianliang()), 0);
+                            String tatol = "";
+                            if (beishu <= 0) {
+                                //qigouliang
+                                tatol = Double.parseDouble(auctionDetailBean.getCl_qigou()) + "";
+                            } else {
+                                Double count = mul(beishu, Double.parseDouble(auctionDetailBean.getCl_xbianliang()));
+                                tatol = count+"";
+                            }
+                            //tv_item_cart_buy_num.setText(tatol);
+                            BigDecimal b1 = new BigDecimal(tatol);
+                            double f2 = b1.setScale(3, BigDecimal.ROUND_HALF_UP).doubleValue();
+                            tv_item_cart_buy_num.setText(f2+"");
+
                         }
                     }else{
                         //可以减少到起购量
                         if (num1 < Double.valueOf(qigou.getText().toString())){
                             Toast.makeText(this, "购买数量不能小于起购量", Toast.LENGTH_SHORT).show();
                         }else{
-                            tv_item_cart_buy_num.setText(num1 + "");
+//                            tv_item_cart_buy_num.setText(num1 + "");
+                            int beishu = (int) div(num1, Double.parseDouble(auctionDetailBean.getCl_xbianliang()), 0);
+                            String tatol = "";
+                            if (beishu <= 0) {
+                                //qigouliang
+                                tatol = Double.parseDouble(auctionDetailBean.getCl_qigou()) + "";
+                            } else {
+                                Double count = mul(beishu, Double.parseDouble(auctionDetailBean.getCl_xbianliang()));
+                                tatol = count+"";
+                            }
+                            //tv_item_cart_buy_num.setText(tatol);
+                            BigDecimal b1 = new BigDecimal(tatol);
+                            double f2 = b1.setScale(3, BigDecimal.ROUND_HALF_UP).doubleValue();
+                            tv_item_cart_buy_num.setText(f2+"");
                         }
                     }
                 } else {
@@ -1088,22 +1144,52 @@ public class OpenAcutionOrMifengActivity extends AppCompatActivity implements IO
                         if (num1<Double.parseDouble(shishicjnumber)){
                             tv_item_cart_buy_num.setText(shishicjnumber);
                         }else{
-                            tv_item_cart_buy_num.setText(num1+"");
+//                            tv_item_cart_buy_num.setText(num1+"");
+                            int beishu = (int) div(num1, Double.parseDouble(auctionDetailBean.getCl_xbianliang()), 0);
+                            String tatol = "";
+                            if (beishu <= 0) {
+                                //qigouliang
+                                tatol = Double.parseDouble(auctionDetailBean.getCl_qigou()) + "";
+                            } else {
+                                Double count = mul(beishu, Double.parseDouble(auctionDetailBean.getCl_xbianliang()));
+                                tatol = count+"";
+                            }
+                            //tv_item_cart_buy_num.setText(tatol);
+                            BigDecimal b1 = new BigDecimal(tatol);
+                            double f2 = b1.setScale(3, BigDecimal.ROUND_HALF_UP).doubleValue();
+                            tv_item_cart_buy_num.setText(f2+"");
                         }
                     }else{
                         //可以减少到起购量
                         if (num1 < Double.valueOf(qigou.getText().toString())){
                             Toast.makeText(this, "购买数量不能小于起购量", Toast.LENGTH_SHORT).show();
                         }else{
-                            tv_item_cart_buy_num.setText(num1 + "");
+//                            tv_item_cart_buy_num.setText(num1 + "");
+                            int beishu = (int) div(num1, Double.parseDouble(auctionDetailBean.getCl_xbianliang()), 0);
+                            String tatol = "";
+                            if (beishu <= 0) {
+                                //qigouliang
+                                tatol = Double.parseDouble(auctionDetailBean.getCl_qigou()) + "";
+                            } else {
+                                Double count = mul(beishu, Double.parseDouble(auctionDetailBean.getCl_xbianliang()));
+                                tatol = count+"";
+                            }
+                            //tv_item_cart_buy_num.setText(tatol);
+                            BigDecimal b1 = new BigDecimal(tatol);
+                            double f2 = b1.setScale(3, BigDecimal.ROUND_HALF_UP).doubleValue();
+                            tv_item_cart_buy_num.setText(f2+"");
                         }
                     }
 
                 }
+                double x = (Double.parseDouble(tv_item_cart_buy_num.getText().toString())) * (Double.parseDouble(bid_price_num.getText().toString()));
+                DecimalFormat df = new DecimalFormat("#.##");
+                // all_price.setText(df.format(x) + "");
+                all_price_num.setText(df.format(x)+"");
                 SharedPreferences.Editor editor=sp.edit();
                 editor.putString("numberVale",tv_item_cart_buy_num.getText().toString());
                 editor.commit();
-                all_price_num.setText(Double.parseDouble(tv_item_cart_buy_num.getText().toString()) * Double.valueOf(bid_price_num.getText().toString()) + "");
+              //  all_price_num.setText(Double.parseDouble(tv_item_cart_buy_num.getText().toString()) * Double.valueOf(bid_price_num.getText().toString()) + "");
                 break;
             case R.id.img_item_cart_buy_add://购买数量增加
                 double num2 = Double.valueOf(tv_item_cart_buy_num.getText().toString());
@@ -1112,9 +1198,26 @@ public class OpenAcutionOrMifengActivity extends AppCompatActivity implements IO
                 if (num2 > Double.valueOf(sheng.getText().toString())) {
                     Toast.makeText(this, "购买数量不能大于竞拍总量", Toast.LENGTH_SHORT).show();
                 } else {
-                    tv_item_cart_buy_num.setText(num2 + "");
-                    all_price_num.setText(Double.parseDouble(tv_item_cart_buy_num.getText().toString()) * Double.valueOf(bid_price_num.getText().toString()) + "");
+                    int beishu = (int) div(num2, Double.parseDouble(auctionDetailBean.getCl_xbianliang()), 0);
+                    String tatol = "";
+                    if (beishu <= 0) {
+                        //qigouliang
+                        tatol = Double.parseDouble(auctionDetailBean.getCl_qigou()) + "";
+                    } else {
+                        Double count = mul(beishu, Double.parseDouble(auctionDetailBean.getCl_xbianliang()));
+                        tatol = count+"";
+                    }
+                    //tv_item_cart_buy_num.setText(tatol);
+                    BigDecimal b1 = new BigDecimal(tatol);
+                    double f2 = b1.setScale(3, BigDecimal.ROUND_HALF_UP).doubleValue();
+                    tv_item_cart_buy_num.setText(f2+"");
+//                    tv_item_cart_buy_num.setText(num2 + "");
+//                    all_price_num.setText(Double.parseDouble(tv_item_cart_buy_num.getText().toString()) * Double.valueOf(bid_price_num.getText().toString()) + "");
                 }
+                double x1 = (Double.parseDouble(tv_item_cart_buy_num.getText().toString())) * (Double.parseDouble(bid_price_num.getText().toString()));
+                DecimalFormat df1 = new DecimalFormat("#.##");
+                // all_price.setText(df.format(x) + "");
+                all_price_num.setText(df1.format(x1)+"");
                 SharedPreferences.Editor editor1=sp.edit();
                 editor1.putString("numberVale",tv_item_cart_buy_num.getText().toString());
                 editor1.commit();
@@ -1133,32 +1236,82 @@ public class OpenAcutionOrMifengActivity extends AppCompatActivity implements IO
                             bid_price_num.setText(shishiprice);
 
                         }else{
-                            bid_price_num.setText(num3 + "");
+                            //bid_price_num.setText(num3 + "");
+                            int beishu = (int) div(num3, Double.parseDouble(auctionDetailBean.getCl_xbianjia()), 0);
+                            String tatol = "";
+                            if (beishu <= 0) {
+                                //qigouliang
+                                tatol = Double.parseDouble(auctionDetailBean.getCl_qipai()) + "";
+                            } else {
+                                Double count = mul(beishu, Double.parseDouble(auctionDetailBean.getCl_xbianjia()));
+                                tatol = count+"";
+                            }
+                            //bid_price_num.setText(to);
+                            BigDecimal b1 = new BigDecimal(tatol);
+                            double f2 = b1.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+                            bid_price_num.setText(f2+"");
+
                         }
                     }else{
                         //价格不能小于起拍价
                         if (num3<Double.parseDouble(qigou.getText().toString())){
                             bid_price_num.setText(qigou.getText().toString());
                         }else{
-                            bid_price_num.setText(num3 + "");
+                            //bid_price_num.setText(num3 + "");
+                            int beishu = (int) div(num3, Double.parseDouble(auctionDetailBean.getCl_xbianjia()), 0);
+                            String tatol = "";
+                            if (beishu <= 0) {
+                                //qigouliang
+                                tatol = Double.parseDouble(auctionDetailBean.getCl_qipai()) + "";
+                            } else {
+                                Double count = mul(beishu, Double.parseDouble(auctionDetailBean.getCl_xbianjia()));
+                                tatol = count+"";
+                            }
+                            //bid_price_num.setText(to);
+                            BigDecimal b1 = new BigDecimal(tatol);
+                            double f2 = b1.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+                            bid_price_num.setText(f2+"");
                         }
 
                 }
+                double x3 = (Double.parseDouble(tv_item_cart_buy_num.getText().toString())) * (Double.parseDouble(bid_price_num.getText().toString()));
+                DecimalFormat df3 = new DecimalFormat("#.##");
+                // all_price.setText(df.format(x) + "");
+                all_price_num.setText(df3.format(x3)+"");
                 SharedPreferences.Editor editor2=sp.edit();
                 editor2.putString("priceVale",bid_price_num.getText().toString());
                 editor2.commit();
-                all_price_num.setText(Double.valueOf(bid_price_num.getText().toString()) * Double.valueOf(tv_item_cart_buy_num.getText().toString()) + "");
+              //  all_price_num.setText(Double.valueOf(bid_price_num.getText().toString()) * Double.valueOf(tv_item_cart_buy_num.getText().toString()) + "");
                 break;
 
             case R.id.bid_price_add:
                 double num4 = Double.valueOf(bid_price_num.getText().toString());
                 num4 += Double.valueOf(cangkuaddress.getText().toString());
-                bid_price_num.setText(num4 + "");
+               // bid_price_num.setText(num4 + "");
+
+                    //bid_price_num.setText(num3 + "");
+                    int beishu = (int) div(num4, Double.parseDouble(auctionDetailBean.getCl_xbianjia()), 0);
+                    String tatol = "";
+                    if (beishu <= 0) {
+                        //qigouliang
+                        tatol = Double.parseDouble(auctionDetailBean.getCl_qipai()) + "";
+                    } else {
+                        Double count = mul(beishu, Double.parseDouble(auctionDetailBean.getCl_xbianjia()));
+                        tatol = count+"";
+                    }
+                    //bid_price_num.setText(to);
+                    BigDecimal b1 = new BigDecimal(tatol);
+                    double f2 = b1.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+                    bid_price_num.setText(f2+"");
+                double x4 = (Double.parseDouble(tv_item_cart_buy_num.getText().toString())) * (Double.parseDouble(bid_price_num.getText().toString()));
+                DecimalFormat df4 = new DecimalFormat("#.##");
+                // all_price.setText(df.format(x) + "");
+                all_price_num.setText(df4.format(x4)+"");
                 Log.d("tv_item_buy_num",tv_item_cart_buy_num.getText().toString());
                 SharedPreferences.Editor editor4=sp.edit();
                 editor4.putString("priceVale",bid_price_num.getText().toString());
                 editor4.commit();
-                all_price_num.setText(Double.valueOf(bid_price_num.getText().toString()) * Double.valueOf(tv_item_cart_buy_num.getText().toString()) + "");
+                //all_price_num.setText(Double.valueOf(bid_price_num.getText().toString()) * Double.valueOf(tv_item_cart_buy_num.getText().toString()) + "");
                 break;
 
 
@@ -1219,7 +1372,7 @@ public class OpenAcutionOrMifengActivity extends AppCompatActivity implements IO
                 //if (result.contains("yes")){
 
                     if (auctionDetailBean.getDepositFlag().equals("no")) {//没有保证金
-                        //显示立即报价
+                        //显示立即提交
                         Layout_Button_Open.setVisibility(View.GONE);
                         layout_non.setVisibility(View.GONE);
                         Layout_info.setVisibility(View.GONE);
@@ -1233,7 +1386,7 @@ public class OpenAcutionOrMifengActivity extends AppCompatActivity implements IO
                             Layout_Button_close.setVisibility(View.GONE);
                         }else if (status.equals("1")) {
                             Layout_Button_close.setVisibility(View.VISIBLE);
-                            bt_jinpai_colse.setText("立即报价");
+                            bt_jinpai_colse.setText("立即提交");
                         }
                     } else if(auctionDetailBean.getDepositFlag().equals("percent")) {//有保证金
                         Layout_Button_Open.setVisibility(View.GONE);
@@ -1306,7 +1459,7 @@ public class OpenAcutionOrMifengActivity extends AppCompatActivity implements IO
                              layout_Message.setVisibility(View.GONE);
                              participate_in_the_auction_ll.setVisibility(View.GONE);
                              Layout_Button_close.setVisibility(View.VISIBLE);
-                             //bt_jinpai_colse.setText("立即报价");
+                             //bt_jinpai_colse.setText("立即提交");
                          } else {
                              //没有保证金
                              Layout_Button_Open.setVisibility(View.GONE);
@@ -1382,7 +1535,7 @@ public class OpenAcutionOrMifengActivity extends AppCompatActivity implements IO
                         layout_Message.setVisibility(View.GONE);
                         participate_in_the_auction_ll.setVisibility(View.GONE);
                         Layout_Button_close.setVisibility(View.VISIBLE);
-                        bt_jinpai_colse.setText("立即报价");
+                        bt_jinpai_colse.setText("立即提交");
 
 
 
@@ -1577,7 +1730,13 @@ public class OpenAcutionOrMifengActivity extends AppCompatActivity implements IO
                     } else if (position == 1) {
                         Intent intent = new Intent(OpenAcutionOrMifengActivity.this, VesselTwoActivity.class);
                         intent.putExtra("auctionDetailBean", auctionDetailBean);
-                        intent.putExtra("zhifujine", zhifujine);
+                        SharedPreferences sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+                        String jine=sp.getString("zhifujine","");
+                        Log.d("支付过保证金",jine);
+                        if (jine.equals("")){
+                            jine="0";
+                        }
+                        intent.putExtra("zhifujine", jine);
                         intent.putExtra("auctionMode", type_way);
                         startActivity(intent);
                     } else if (position == 2) {
@@ -1658,53 +1817,53 @@ public class OpenAcutionOrMifengActivity extends AppCompatActivity implements IO
             additionalMarginAmountString = additionalMarginAmount > 0 ? additionalMarginAmount + "" : 0 + "";
             Log.d("需要续交的保证金",additionalMarginAmountString);
             amountOfMarginRequired.setText(df.format(Double.parseDouble(additionalMarginAmountString)));
-            amountOfMarginRequired.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    if (s.length() == 0) {
-                        amountOfMarginRequired.setText(additionalMarginAmountString);
-                        amountOfMarginRequired.setSelection(additionalMarginAmountString.length());
-                    }
-                    if (s.toString().contains(".")) {
-                        if (s.length() - 1 - s.toString().indexOf(".") > 2) {
-                            s = s.toString().subSequence(0,
-                                    s.toString().indexOf(".") + 3);
-                            amountOfMarginRequired.setText(s);
-                            amountOfMarginRequired.setSelection(s.length());
-                        }
-                    }
-                    if (s.toString().trim().substring(0).equals(".")) {
-                        s = "0" + s;
-                        amountOfMarginRequired.setText(s);
-                        amountOfMarginRequired.setSelection(3);
-                    }
-
-                    if (s.toString().startsWith("0")
-                            && s.toString().trim().length() > 1) {
-                        if (!s.toString().substring(1, 2).equals(".")) {
-                            amountOfMarginRequired.setText(s.subSequence(1, s.length()));
-                            amountOfMarginRequired.setSelection(1);
-                            return;
-                        }
-                    }
-
-                }
-
-                @Override
-                public void afterTextChanged(Editable s) {
-
-                    if (Double.parseDouble(amountOfMarginRequired.getText().toString()) < Double.parseDouble(additionalMarginAmountString)) {
-                        amountOfMarginRequired.setText(additionalMarginAmountString);
-                        amountOfMarginRequired.setSelection(additionalMarginAmountString.length());
-
-                    }
-                }
-            });
+//            amountOfMarginRequired.addTextChangedListener(new TextWatcher() {
+//                @Override
+//                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//                }
+//
+//                @Override
+//                public void onTextChanged(CharSequence s, int start, int before, int count) {
+////                    if (s.length() == 0) {
+////                        amountOfMarginRequired.setText(additionalMarginAmountString);
+////                        amountOfMarginRequired.setSelection(additionalMarginAmountString.length());
+////                    }
+////                    if (s.toString().contains(".")) {
+////                        if (s.length() - 1 - s.toString().indexOf(".") > 2) {
+////                            s = s.toString().subSequence(0,
+////                                    s.toString().indexOf(".") + 3);
+////                            amountOfMarginRequired.setText(s);
+////                            amountOfMarginRequired.setSelection(s.length());
+////                        }
+////                    }
+////                    if (s.toString().trim().substring(0).equals(".")) {
+////                        s = "0" + s;
+////                        amountOfMarginRequired.setText(s);
+////                        amountOfMarginRequired.setSelection(3);
+////                    }
+////
+////                    if (s.toString().startsWith("0")
+////                            && s.toString().trim().length() > 1) {
+////                        if (!s.toString().substring(1, 2).equals(".")) {
+////                            amountOfMarginRequired.setText(s.subSequence(1, s.length()));
+////                            amountOfMarginRequired.setSelection(1);
+////                            return;
+////                        }
+////                    }
+//
+//                }
+//
+//                @Override
+//                public void afterTextChanged(Editable s) {
+//
+//                    if (Double.parseDouble(amountOfMarginRequired.getText().toString()) < Double.parseDouble(additionalMarginAmountString)) {
+//                        amountOfMarginRequired.setText(additionalMarginAmountString);
+//                        amountOfMarginRequired.setSelection(additionalMarginAmountString.length());
+//
+//                    }
+//                }
+//            });
             lv = (ListView) view.findViewById(R.id.lv_popupwindow_auction);
 
             Gson gson = new Gson();
@@ -1825,6 +1984,9 @@ public class OpenAcutionOrMifengActivity extends AppCompatActivity implements IO
                 startActivity(intent);
                 //Toast.makeText(OpenAcutionOrMifengActivity.this, "您支付保证金失败！", Toast.LENGTH_SHORT).show();
             } else if (result.contains("\"info\":\"sucess\"")) {
+                SharedPreferences sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+                unique=sp.getString("unique","");
+                openAuctionPresenter.getAmountPaidedResult(productId, unique);
                 Toast.makeText(OpenAcutionOrMifengActivity.this, "您支付保证金成功！", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(OpenAcutionOrMifengActivity.this, Ok_Dialog.class);
                 intent.putExtra("number", SuMaoConstant.MARGIN_PAYMENT_SUCCESS);
@@ -2122,7 +2284,7 @@ public class OpenAcutionOrMifengActivity extends AppCompatActivity implements IO
 
     //    公开竞拍的报价
     public void gongkai_baojia() {
-        //首先判断支付的保证金是否足够,如果足够，则立即报价
+        //首先判断支付的保证金是否足够,如果足够，则立即提交
         //如果不够则继续提交保证金
 
         unique=sp.getString("unique","");
@@ -2137,7 +2299,9 @@ public class OpenAcutionOrMifengActivity extends AppCompatActivity implements IO
             if (zhifujine.equals("")){
                 zhifujine="0";
             }
-            if (baozhengjin < Double.parseDouble(zhifujine)) {
+            Log.d("已经支付保证金金额",""+zhifujine);
+
+            if (baozhengjin <= Double.parseDouble(zhifujine)) {
                 Loding.show(this, "提交报价中...", false, null);
                 String productId = id_value;
                 String bidPrice = bid_price_num.getText().toString();
@@ -2205,9 +2369,16 @@ public class OpenAcutionOrMifengActivity extends AppCompatActivity implements IO
                             tv_item_cart_buy_num.setText(shishicjnumber);
                         }
                     } else {
-                        tv_item_cart_buy_num.setText(tatol);
+                        //tv_item_cart_buy_num.setText(tatol);
+                        BigDecimal b1 = new BigDecimal(tatol);
+                        double f2 = b1.setScale(3, BigDecimal.ROUND_HALF_UP).doubleValue();
+                        tv_item_cart_buy_num.setText(f2+"");
                     }
                 }
+                double x = (Double.parseDouble(tv_item_cart_buy_num.getText().toString())) * (Double.parseDouble(bid_price_num.getText().toString()));
+                DecimalFormat df = new DecimalFormat("#.##");
+                // all_price.setText(df.format(x) + "");
+                all_price_num.setText(df.format(x)+"");
                 SharedPreferences.Editor editor=sp.edit();
                 editor.putString("numberValue",tv_item_cart_buy_num.getText().toString());
                 editor.commit();
@@ -2230,16 +2401,25 @@ public class OpenAcutionOrMifengActivity extends AppCompatActivity implements IO
                 }
                 if (shishicunzai.equals("true")){
                     if (Double.parseDouble(tatol)>Double.parseDouble(shishiprice)){
-                        bid_price_num.setText(tatol);
+                        //bid_price_num.setText(tatol);
+                        BigDecimal b1 = new BigDecimal(tatol);
+                        double f2 = b1.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+                        bid_price_num.setText(f2+"");
                     }else{
                         bid_price_num.setText(shishiprice);
                     }
                 }else{
-                    bid_price_num.setText(tatol);
+                   // bid_price_num.setText(tatol);
+                    BigDecimal b1 = new BigDecimal(tatol);
+                    double f2 = b1.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+                    bid_price_num.setText(f2+"");
                 }
 
             }
-
+            double x = (Double.parseDouble(tv_item_cart_buy_num.getText().toString())) * (Double.parseDouble(bid_price_num.getText().toString()));
+            DecimalFormat df = new DecimalFormat("#.##");
+            // all_price.setText(df.format(x) + "");
+            all_price_num.setText(df.format(x)+"");
             SharedPreferences.Editor editor=sp.edit();
             editor.putString("priceValue",bid_price_num.getText().toString());
             editor.commit();
@@ -2410,7 +2590,7 @@ public class OpenAcutionOrMifengActivity extends AppCompatActivity implements IO
     @Override
     public void onStart() {
         super.onStart();
-
+        openAuctionPresenter.getAmountPaidedResult(productId, unique);
         if (type_way.equals("公开竞拍")) {
             Log.d("这是公开竞拍", "公开竞拍");
             shishihangqingSelect();
@@ -2429,7 +2609,7 @@ public class OpenAcutionOrMifengActivity extends AppCompatActivity implements IO
         booleanOpenorClose();
         Log.d("type_way的值",type_way+status);
         if(type_way.equals("公开竞拍")){
-            if (status.equals("1")) {//刷新实时行情的数据
+            if (status.equals("1")||status.equals("0")||status.equals("")) {//刷新实时行情的数据
                 if (!unique.equals("") && !unique.equals("false")) {
                     handler = new Handler() {
                         @Override
@@ -2445,18 +2625,19 @@ public class OpenAcutionOrMifengActivity extends AppCompatActivity implements IO
                             }
                         }
                     };
+                    new Thread(new TitleThread()).start();
 
-                    timer = new Timer();
-                    task = new TimerTask() {
-                        @Override
-                        public void run() {
-                            Message message = new Message();
-                            message.what = 1;
-                            handler.sendMessage(message);
-                        }
-                    };
-
-                    timer.schedule(task, 1000, 3000);//在1秒后执行，每个3秒执行一次
+//                    timer = new Timer();
+//                    task = new TimerTask() {
+//                        @Override
+//                        public void run() {
+//                            Message message = new Message();
+//                            message.what = 1;
+//                            handler.sendMessage(message);
+//                        }
+//                    };
+//
+//                    timer.schedule(task, 0, 3000);//在1秒后执行，每个3秒执行一次
                 }
 
             }
@@ -2490,7 +2671,7 @@ public class OpenAcutionOrMifengActivity extends AppCompatActivity implements IO
                             bidQut=object.getString("bidQut");
                         }
                         if (Double.parseDouble(bidPrice)==Double.parseDouble(bid_price_num.getText().toString()) && Double.parseDouble(bidQut)==Double.parseDouble(tv_item_cart_buy_num.getText().toString())){
-                            Toast.makeText(OpenAcutionOrMifengActivity.this, "这次报价不能与上次的一样", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(OpenAcutionOrMifengActivity.this, "请不要重复提交!", Toast.LENGTH_SHORT).show();
                         }else{
                             gongkai_baojia();
                         }
@@ -2523,21 +2704,25 @@ public class OpenAcutionOrMifengActivity extends AppCompatActivity implements IO
     }
     //刷新数据,主要是不同的状态
     public void selecttimer(){
+        Log.d("进入了刷新状态","进入了刷新状态！");
         //iscunhuan=true;
         String url = SuMaoConstant.SUMAO_IP + "/rest/model/atg/commerce/catalog/ProductCatalogActor/auctionProduct";
         RequestParams rp=new RequestParams(url);
         rp.addParameter("productId",productId);
         rp.addParameter("proType",proType);
         x.http().post(rp, new Callback.CommonCallback<String>() {
+           // public ArrayList<ClAttributeBean> cl_attribute;
+
             @Override
             public void onSuccess(String result) {
-                Log.d("竞拍的返回值",result);
+                Log.e("竞拍的返回值",result);
                 if (result.contains("cl_xbianjia")){
                     Gson gson=new Gson();
                     auctionDetailBean = gson.fromJson(result, AuctionDetailBean.class);
                     //开闭市的判断
                     status=auctionDetailBean.getStatus();
-                    Log.d("刷新后的状态值",status);
+                    Log.e("刷新后的状态值",status);
+
                     booleanOpenorClose();
 
                 }
@@ -2581,12 +2766,14 @@ public class OpenAcutionOrMifengActivity extends AppCompatActivity implements IO
                     timeEnd=auctionDetailBean.getEndDate();
 
                     Log.d("刷新后的状态值",status);
+                    Log.d("刷信的时间",timeEnd);
                     //booleanOpenorClose();
                     tvTimeValue.setText("");
+
                     setTitleValue();
-//                    if(){//剩余数量小于最小qigouliang，重新请求，计时器结束
-//
-//                    }
+                    //SharedPreferences sp=getSharedPreferences("sumao")
+
+
 
 
                 }
@@ -2617,9 +2804,14 @@ public class OpenAcutionOrMifengActivity extends AppCompatActivity implements IO
     @Override
     public void onStop() {
         super.onStop();
+        istrue=false;
         if (timer!=null){
             timer.cancel();
         }
+        SharedPreferences sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor=sp.edit();
+        editor.remove("zhifujine");
+        editor.commit();
 
 
     }
@@ -2677,9 +2869,16 @@ public class OpenAcutionOrMifengActivity extends AppCompatActivity implements IO
                                     tv_item_cart_buy_num.setText(shishicjnumber);
                                 }
                             } else {
-                                tv_item_cart_buy_num.setText(tatol);
+                                //tv_item_cart_buy_num.setText(tatol);
+                                BigDecimal b1 = new BigDecimal(tatol);
+                                double f2 = b1.setScale(3, BigDecimal.ROUND_HALF_UP).doubleValue();
+                                tv_item_cart_buy_num.setText(f2+"");
                             }
                         }
+                        double x = (Double.parseDouble(tv_item_cart_buy_num.getText().toString())) * (Double.parseDouble(bid_price_num.getText().toString()));
+                        DecimalFormat df = new DecimalFormat("#.##");
+                        // all_price.setText(df.format(x) + "");
+                        all_price_num.setText(df.format(x)+"");
                         SharedPreferences.Editor editor=sp.edit();
                         editor.putString("numberValue",tv_item_cart_buy_num.getText().toString());
                         editor.commit();
@@ -2702,21 +2901,29 @@ public class OpenAcutionOrMifengActivity extends AppCompatActivity implements IO
                         }
                         if (shishicunzai.equals("true")){
                             if (Double.parseDouble(tatol)>Double.parseDouble(shishiprice)){
-                                bid_price_num.setText(tatol);
+                                //bid_price_num.setText(tatol);
+                                BigDecimal b1 = new BigDecimal(tatol);
+                                double f2 = b1.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+                                bid_price_num.setText(f2+"");
                             }else{
                                 bid_price_num.setText(shishiprice);
                             }
                         }else{
-                            bid_price_num.setText(tatol);
+                            // bid_price_num.setText(tatol);
+                            BigDecimal b1 = new BigDecimal(tatol);
+                            double f2 = b1.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+                            bid_price_num.setText(f2+"");
                         }
 
                     }
-
+                    double x = (Double.parseDouble(tv_item_cart_buy_num.getText().toString())) * (Double.parseDouble(bid_price_num.getText().toString()));
+                    DecimalFormat df = new DecimalFormat("#.##");
+                    // all_price.setText(df.format(x) + "");
+                    all_price_num.setText(df.format(x)+"");
                     SharedPreferences.Editor editor=sp.edit();
                     editor.putString("priceValue",bid_price_num.getText().toString());
                     editor.commit();
 
-               // }
                 }
             }
             return super.dispatchTouchEvent(ev);
@@ -2742,11 +2949,7 @@ public class OpenAcutionOrMifengActivity extends AppCompatActivity implements IO
                 timer.cancel();
             }
 
-
-            //在这里进行判断就可以了
-
         }
-
         @Override
         public void onTick(long millisUntilFinished) {
             String time = formatTime(millisUntilFinished /*- TimeZone.getDefault().getRawOffset()*/);
@@ -2770,6 +2973,8 @@ public class OpenAcutionOrMifengActivity extends AppCompatActivity implements IO
         StringBuffer sb = new StringBuffer();
         if (day > 0) {
             sb.append(day + "天");
+        }else{
+            sb.append("0天");
         }
         if (hour > 0) {
 
@@ -2778,6 +2983,8 @@ public class OpenAcutionOrMifengActivity extends AppCompatActivity implements IO
             }else{
                 sb.append("0"+hour+"小时");
             }
+        }else{
+            sb.append("0小时");
         }
         if (minute > 0) {
             //sb.append(minute + "分");
@@ -2786,6 +2993,8 @@ public class OpenAcutionOrMifengActivity extends AppCompatActivity implements IO
             }else{
                 sb.append("0"+minute + "分");
             }
+        }else{
+            sb.append("0分");
         }
         if (second > 0) {
 
@@ -2794,6 +3003,8 @@ public class OpenAcutionOrMifengActivity extends AppCompatActivity implements IO
             }else {
                 sb.append("0"+second + "秒");
             }
+        }else{
+            sb.append("0秒");
         }
 
         return sb.toString();

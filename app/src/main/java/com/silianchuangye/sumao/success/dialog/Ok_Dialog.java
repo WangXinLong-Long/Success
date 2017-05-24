@@ -56,10 +56,15 @@ public class Ok_Dialog extends Activity {
         Button bt_wuliu = (Button) findViewById(R.id.bt_wulliu);
         if(type.equals("现货")){
             tv_ok_text.setText("恭喜您,支付成功!");
-            tv_order_number.setVisibility(View.VISIBLE);
-            pay_success.setVisibility(View.VISIBLE);
-            btn_ok_dialog.setVisibility(View.GONE);
+            tv_order_number.setVisibility(View.GONE);
+            pay_success.setVisibility(View.GONE);
+            btn_ok_dialog.setVisibility(View.VISIBLE);
             bt_my_order.setVisibility(View.VISIBLE);
+//            tv_ok_text.setText("恭喜您,支付成功!");
+//            tv_order_number.setVisibility(View.GONE);
+//            pay_success.setVisibility(View.GONE);
+//            btn_ok_dialog.setVisibility(View.VISIBLE);
+            linear.setVisibility(View.GONE);
         }else if (type.equals("预售")){
             tv_ok_text.setText("恭喜您,保证金支付成功!");
             tv_order_number.setVisibility(View.GONE);

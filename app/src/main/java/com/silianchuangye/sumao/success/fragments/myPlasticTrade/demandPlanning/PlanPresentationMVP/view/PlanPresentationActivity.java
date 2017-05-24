@@ -407,11 +407,10 @@ public class PlanPresentationActivity extends AppCompatActivity implements View.
 //                        String delivery = deliveryMethodIdLists.get(i).get(deliveryMethodNameLists.get(i).indexOf(list.get(i).get(4).getDelete()));
 //                        String remark = list.get(i).get(5).getDelete();
                         // planPresentationPresenter.setSubmitPlan(/*date, name, wareHouse, number, delivery, remark, productId, getActivity().getSharedPreferences("sumao", Context.MODE_PRIVATE).getString("unique", "")*/);
-                        SharedPreferences sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
-                        String unique = sp.getString("unique", "");
-                        planPresentationPresenter.setSubmitPlan(sellerCompanyId, date, productId, price, warehouseId, number, wayId, remark, unique);
-                    }
+
+
                         alert.show();
+                    }
                 }
                 break;
             case R.id.iv_child_title_bar_back:
@@ -540,11 +539,13 @@ public class PlanPresentationActivity extends AppCompatActivity implements View.
 //                        String wareHouse = wareHouseIdLists.get(i).get(position);
 //                        String delivery = deliveryMethodIdLists.get(i).get(deliveryMethodNameLists.get(i).indexOf(list.get(i).get(4).getDelete()));
 //                        String remark = list.get(i).get(5).getDelete();
-                        SharedPreferences sp=getSharedPreferences("sumao", Activity.MODE_PRIVATE);
-                        String unique=sp.getString("unique","");
-                        planPresentationPresenter.setSubmitPlan(sellerCompanyId,date,productId,productName,warehouseId,number,warehouseId,remark,unique);
+//                        SharedPreferences sp=getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+//                        String unique=sp.getString("unique","");
+//                        planPresentationPresenter.setSubmitPlan(sellerCompanyId,date,productId,productName,warehouseId,number,warehouseId,remark,unique);
                         //planPresentationPresenter.setSubmitPlan(/*date, name, wareHouse, number, delivery, remark, productId, getActivity().getSharedPreferences("sumao", Context.MODE_PRIVATE).getString("unique", "")*/);
-
+                        SharedPreferences sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+                        String unique = sp.getString("unique", "");
+                        planPresentationPresenter.setSubmitPlan(sellerCompanyId, date, productId, price, warehouseId, number, wayId, remark, unique);
                     }
                     break;
 

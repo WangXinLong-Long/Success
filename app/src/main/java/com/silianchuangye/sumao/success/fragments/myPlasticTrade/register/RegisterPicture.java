@@ -170,10 +170,11 @@ public class RegisterPicture extends AppCompatActivity implements LGImgCompresso
                 //tupian=getPhotoFileName();
                 if (ed_number.getText().toString().equals("")){
                     Toast.makeText(RegisterPicture.this, "请输入证件号", Toast.LENGTH_SHORT).show();
-                }else {
-                    Loding.show(RegisterPicture.this, "图片上传中...", false, null);
+                }else if(tv_Name.getVisibility()==View.VISIBLE &&!tv_Name.getText().equals("")) {
+
                     //上传图片
                     if (!trime.equals("")) {
+                        Loding.show(RegisterPicture.this, "图片上传中...", false, null);
                         new Thread() {
                             @Override
                             public void run() {
@@ -258,6 +259,8 @@ public class RegisterPicture extends AppCompatActivity implements LGImgCompresso
                             RegisterPicture.this.finish();
                         }
                     }
+                }else{
+                    Toast.makeText(RegisterPicture.this, "请确定你要上传的图片!", Toast.LENGTH_SHORT).show();
                 }
 
 
@@ -392,6 +395,8 @@ public class RegisterPicture extends AppCompatActivity implements LGImgCompresso
                 Bitmap photo = data.getParcelableExtra("data");
                 //image.setImageBitmap(photo);
                 fileBianma = BitmapToString(photo);
+               // if (fileBianma.)
+                Log.d("fileBiama的值",fileBianma);
                 SharedPreferences sharedPreferences=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
                 SharedPreferences.Editor editor=sharedPreferences.edit();
                 editor.putString("filename",fileBianma);

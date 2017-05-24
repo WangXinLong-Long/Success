@@ -30,7 +30,8 @@ public class Constant extends EaseConstant {
 
 	//public static final String DEFAULT_COSTOMER_APPKEY = "xiongmaowang1#ziguang";
 
-	public static final String DEFAULT_COSTOMER_APPKEY="12344321123#sumaodemo";
+	//public static final String DEFAULT_COSTOMER_APPKEY="12344321123#sumaodemo";
+	public static final String DEFAULT_COSTOMER_APPKEY="bjslcy#sumaowangapp";
 	public static final String DEFAULT_COSTOMER_ACCOUNT = "123";
 	public static final String DEFAULT_ACCOUNT_PWD = "123456";
 

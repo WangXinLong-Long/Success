@@ -1,8 +1,11 @@
 package com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.forgetPassword;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.InputType;
@@ -19,6 +22,7 @@ import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.CodeUtils;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.LoginUserActivity;
 import com.silianchuangye.sumao.success.utils.BPUtil;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
@@ -176,7 +180,23 @@ public class  MailboxPasswordActivity extends AppCompatActivity implements View.
                 Log.d("邮箱是否发送成功",result);
                 if (result.contains("success")){
                     //跳转到密码修改页
-                    Toast.makeText(MailboxPasswordActivity.this, "请查看你的邮箱", Toast.LENGTH_SHORT).show();
+                    final AlertDialog.Builder alertDialog=new AlertDialog.Builder(MailboxPasswordActivity.this);
+                    alertDialog.setMessage("请查看你的邮箱!");
+                    alertDialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent intent=new Intent(MailboxPasswordActivity.this, LoginUserActivity.class);
+                            startActivity(intent);
+                        }
+                    });
+                    alertDialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            alertDialog.create().dismiss();
+                        }
+                    });
+                    alertDialog.create().show();
+                    //Toast.makeText(MailboxPasswordActivity.this, "请查看你的邮箱", Toast.LENGTH_SHORT).show();
                 }else if (result.contains("fail")){
                     Toast.makeText(MailboxPasswordActivity.this, "邮箱发送失败，请再次尝试", Toast.LENGTH_SHORT).show();
                 }

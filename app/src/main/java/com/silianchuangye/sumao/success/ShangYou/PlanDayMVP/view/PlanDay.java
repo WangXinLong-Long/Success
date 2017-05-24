@@ -102,6 +102,7 @@ public class PlanDay extends Fragment implements OnClickListener, IPlanDayView {
     //private String date;
     private PlanDayPresenter planDayPresenter;
     private String datefor;
+    private String dateCommit;
 
     public PlanDay() {
         // Required empty public constructor
@@ -265,6 +266,7 @@ public class PlanDay extends Fragment implements OnClickListener, IPlanDayView {
         DatePicker datePicker = dlg.getDatePicker();
         datePicker.setMinDate(myDate.getTime());
         datefor=year+"-"+(month+1)+"-"+day;
+        Log.d("datefor",datefor);
         dlg.show();
     }
 
@@ -337,6 +339,7 @@ public class PlanDay extends Fragment implements OnClickListener, IPlanDayView {
             int month=monthOfYear+1;
            //  date=year + "-" + month + "-" + dayOfMonth;
             list.get(groupPositionPublic).set(0, new DayPlanInfo("计划日期", "", year + "-" + month + "-" + dayOfMonth));
+            dateCommit=year+"-"+month+"-"+dayOfMonth;
             adapter.notifyDataSetChanged();
         }
     }
@@ -617,7 +620,8 @@ public class PlanDay extends Fragment implements OnClickListener, IPlanDayView {
 //                        String remark = list.get(i).get(5).getDelete();
                     Log.d("仓库的ID",wareHouseId);
                     Log.d("物流的Id",deliveryMethodId);
-                        planDayPresenter.SubmissionPlan(datefor, selectedName, wareHouseId, number, deliveryMethodId, remarks, productId, getActivity().getSharedPreferences("sumao", Context.MODE_PRIVATE).getString("unique", ""));
+                    Log.d("datefor的值",datefor);
+                    planDayPresenter.SubmissionPlan(dateCommit, selectedName, wareHouseId, number, deliveryMethodId, remarks, productId, getActivity().getSharedPreferences("sumao", Context.MODE_PRIVATE).getString("unique", ""));
 
                    // }
                     break;

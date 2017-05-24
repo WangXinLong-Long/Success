@@ -1,6 +1,7 @@
 package com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.view;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.BitmapDrawable;
@@ -13,9 +14,11 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
@@ -148,6 +151,16 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
     private String fenleiString1;
     private String Id;
     private String unique="";
+//    private SimpleAdapter adapter_fl;
+//    private SimpleAdapter adapter_dq;
+//    private SimpleAdapter adapter_sc;
+//    private SimpleAdapter adapter_yy;
+    private MyGideAdapter adapter_fl;
+    private MyGideAdapter adapter_dq;
+    private MyGideAdapter adapter_sc;
+    private MyGideAdapter adapter_yy;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -465,7 +478,7 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
 
                 //取出来
                 fenlei=true;
-                Log.d("分类选择的id",fenleiString);
+                Log.e("分类选择的id",fenleiString);
                 getInfoForGridView();
             }
         });
@@ -519,6 +532,7 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
                 shengchan=true;
                 Log.d("生产的应用id",fenleiString);
                 getInfoForGridView();
+
             }
         });
 
@@ -566,68 +580,131 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
         url+=fenleiString.trim();
 
         RequestParams rp=new RequestParams(url);
-        Log.d("url的值",url);
+        Log.e("url的值",rp+"");
         x.http().get(rp, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Log.d("gridview的返回值",result);
-                try {
-                    JSONObject jsonObject=new JSONObject(result);
-                    if (result.contains("fl")){
-                    String fenlei=jsonObject.getString("fl");
-                    JSONArray array_fl=new JSONArray(fenlei);
-                    list_feilei=new ArrayList<Map<String, Object>>();
-                    for(int i=0;i<array_fl.length();i++){
-                        JSONObject object_fl=array_fl.getJSONObject(i);
-                        Map<String,Object > map_fl=new Hashtable<String, Object>();
-                        map_fl.put("id",object_fl.getString("fl_id"));
-                        map_fl.put("name",object_fl.getString("fl_name"));
-                        list_feilei.add(map_fl);
-                    }
-                    SimpleAdapter adapter_fl=new SimpleAdapter(GoodsInStockActivity.this,list_feilei,R.layout.item_type,new String[]{"name"},new int[]{R.id.tv_Type});
-                    gv_Fenlei.setAdapter(adapter_fl);
-                    }if (result.contains("dq")){
-                    String qidu=jsonObject.getString("dq");
-                    JSONArray array_qd=new JSONArray(qidu);
-                    list_diqu=new ArrayList<Map<String, Object>>();
-                    for (int i=0;i<array_qd.length();i++){
-                        JSONObject object_dq=array_qd.getJSONObject(i);
-                        Map<String,Object> map_dq=new Hashtable<String, Object>();
-                        map_dq.put("id",object_dq.getString("dq_id"));
-                        map_dq.put("name",object_dq.getString("dq_name"));
-                        list_diqu.add(map_dq);
-                    }
-                    SimpleAdapter adapter_dq=new SimpleAdapter(GoodsInStockActivity.this,list_diqu,R.layout.item_type,new String[]{"name"},new int[]{R.id.tv_Type});
-                    gv_Diqu.setAdapter(adapter_dq);}
-                    if (result.contains("sc")){
-                    String shengchan=jsonObject.getString("sc");
-                    JSONArray array_sc=new JSONArray(shengchan);
-                    list_shengchan=new ArrayList<Map<String, Object>>();
-                    for (int i=0;i<array_sc.length();i++){
-                        JSONObject object_sc=array_sc.getJSONObject(i);
-                        Map<String,Object> map_sc=new Hashtable<String, Object>();
-                        map_sc.put("id",object_sc.getString("sc_id"));
-                        map_sc.put("name",object_sc.getString("sc_name"));
-                        list_shengchan.add(map_sc);
+                Log.e("gridview的返回值",result);
+                list_feilei=new ArrayList<Map<String, Object>>();
 
+                list_diqu=new ArrayList<Map<String, Object>>();
+
+                list_shengchan=new ArrayList<Map<String, Object>>();
+
+                list_yingyong=new ArrayList<Map<String, Object>>();
+
+
+                if (!result.contains("fl")&&!result.contains("dq")&&!result.contains("sc")&&!result.contains("yy")){
+                    Log.v("没有值","没有值");
+                    list_feilei.clear();
+                    list_diqu.clear();
+                    list_shengchan.clear();
+                    list_yingyong.clear();
+                    adapter_fl.clear();
+                    adapter_fl.notifyDataSetChanged();
+                    adapter_dq.clear();
+                    adapter_dq.notifyDataSetChanged();
+                    adapter_sc.clear();
+                    adapter_sc.notifyDataSetChanged();
+                    adapter_yy.clear();
+                    adapter_yy.notifyDataSetChanged();
+                }else {
+                    try {
+                        JSONObject jsonObject = new JSONObject(result);
+                        if (result.contains("fl")) {
+                            list_feilei.clear();
+                            String fenlei = jsonObject.getString("fl");
+                            JSONArray array_fl = new JSONArray(fenlei);
+                            for (int i = 0; i < array_fl.length(); i++) {
+                                JSONObject object_fl = array_fl.getJSONObject(i);
+                                Map<String, Object> map_fl = new Hashtable<String, Object>();
+                                map_fl.put("id", object_fl.getString("fl_id"));
+                                map_fl.put("name", object_fl.getString("fl_name"));
+                                list_feilei.add(map_fl);
+                            }
+                           // adapter_fl = new SimpleAdapter(GoodsInStockActivity.this, list_feilei, R.layout.item_type, new String[]{"name"}, new int[]{R.id.tv_Type});
+                            adapter_fl=new MyGideAdapter(list_feilei,GoodsInStockActivity.this);
+                            gv_Fenlei.setAdapter(adapter_fl);
+                            adapter_fl.notifyDataSetChanged();
+                        } else {
+                            list_feilei.clear();
+                            adapter_fl.clear();
+                            adapter_fl.notifyDataSetChanged();
+                        }
+                        if (result.contains("dq")) {
+                            list_diqu.clear();
+                            String qidu = jsonObject.getString("dq");
+                            JSONArray array_qd = new JSONArray(qidu);
+
+                            for (int i = 0; i < array_qd.length(); i++) {
+                                JSONObject object_dq = array_qd.getJSONObject(i);
+                                Map<String, Object> map_dq = new Hashtable<String, Object>();
+                                map_dq.put("id", object_dq.getString("dq_id"));
+                                map_dq.put("name", object_dq.getString("dq_name"));
+                                list_diqu.add(map_dq);
+                            }
+                           // adapter_dq = new SimpleAdapter(GoodsInStockActivity.this, list_diqu, R.layout.item_type, new String[]{"name"}, new int[]{R.id.tv_Type});
+                            adapter_dq=new MyGideAdapter(list_diqu,GoodsInStockActivity.this);
+                            gv_Diqu.setAdapter(adapter_dq);
+                            adapter_dq.notifyDataSetChanged();
+
+                        } else {
+                            Log.d("进来了吗","进来了吗");
+                            list_diqu.clear();
+                            adapter_dq.clear();
+                            adapter_dq.notifyDataSetChanged();
+                        }
+                        if (result.contains("sc")) {
+                            list_shengchan.clear();
+                            String shengchan = jsonObject.getString("sc");
+                            JSONArray array_sc = new JSONArray(shengchan);
+                            Log.d("生产商的长度",array_sc.length()+"");
+
+                            for (int i = 0; i < array_sc.length(); i++) {
+                                JSONObject object_sc = array_sc.getJSONObject(i);
+                                if (!object_sc.getString("sc_name").equals("sabic")){
+                                    Map<String, Object> map_sc = new Hashtable<String, Object>();
+                                    map_sc.put("id", object_sc.getString("sc_id"));
+                                    map_sc.put("name", object_sc.getString("sc_name"));
+                                    list_shengchan.add(map_sc);
+                                }
+
+
+                            }
+                           // adapter_sc = new SimpleAdapter(GoodsInStockActivity.this, list_shengchan, R.layout.item_type, new String[]{"name"}, new int[]{R.id.tv_Type});
+                            adapter_sc=new MyGideAdapter(list_shengchan,GoodsInStockActivity.this);
+                            gv_shengchanshang.setAdapter(adapter_sc);
+                            adapter_sc.notifyDataSetChanged();
+                        } else {
+                            list_shengchan.clear();
+                            adapter_sc.clear();
+                            adapter_sc.notifyDataSetChanged();
+                        }
+                        if (result.contains("yy")) {
+                            list_yingyong.clear();
+                            String yingyong = jsonObject.getString("yy");
+                            JSONArray array_yy = new JSONArray(yingyong);
+
+                            for (int i = 0; i < array_yy.length(); i++) {
+                                JSONObject json_yy = array_yy.getJSONObject(i);
+                                Map<String, Object> map_yy = new Hashtable<String, Object>();
+                                map_yy.put("id", json_yy.getString("yy_id"));
+                                map_yy.put("name", json_yy.getString("yy_name"));
+                                list_yingyong.add(map_yy);
+                            }
+                           // adapter_yy = new SimpleAdapter(GoodsInStockActivity.this, list_yingyong, R.layout.item_type, new String[]{"name"}, new int[]{R.id.tv_Type});
+                            adapter_yy=new MyGideAdapter(list_yingyong,GoodsInStockActivity.this);
+                            gv_Yinyong.setAdapter(adapter_yy);
+                            adapter_yy.notifyDataSetChanged();
+                        } else {
+                            list_yingyong.clear();
+                            adapter_yy.clear();
+                            adapter_yy.notifyDataSetChanged();
+
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                    SimpleAdapter adapter_sc=new SimpleAdapter(GoodsInStockActivity.this,list_shengchan,R.layout.item_type,new String[]{"name"},new int[]{R.id.tv_Type});
-                    gv_shengchanshang.setAdapter(adapter_sc);
-                    }if (result.contains("yy")){
-                    String yingyong=jsonObject.getString("yy");
-                    JSONArray array_yy=new JSONArray(yingyong);
-                    list_yingyong=new ArrayList<Map<String, Object>>();
-                    for (int i=0;i<array_yy.length();i++){
-                        JSONObject json_yy=array_yy.getJSONObject(i);
-                        Map<String,Object> map_yy=new Hashtable<String, Object>();
-                        map_yy.put("id",json_yy.getString("yy_id"));
-                        map_yy.put("name",json_yy.getString("yy_name"));
-                        list_yingyong.add(map_yy);
-                    }
-                    SimpleAdapter adapter_yy=new SimpleAdapter(GoodsInStockActivity.this,list_yingyong,R.layout.item_type,new String[]{"name"},new int[]{R.id.tv_Type});
-                    gv_Yinyong.setAdapter(adapter_yy);}
-                } catch (JSONException e) {
-                    e.printStackTrace();
                 }
             }
 
@@ -647,6 +724,43 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
             }
         });
     }
+    class MyGideAdapter extends BaseAdapter{
+        private List<Map<String,Object>> list;
+        private Context context;
+
+        public MyGideAdapter(List<Map<String,Object>> list,Context context){
+            this.list=list;
+            this.context=context;
+        }
+
+        public void clear(){
+            list.clear();
+        }
+
+        @Override
+        public int getCount() {
+            return list.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return position;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            View view=View.inflate(context,R.layout.item_type,null);
+            TextView tv_Type= (TextView) view.findViewById(R.id.tv_Type);
+            tv_Type.setText(list.get(position).get("name").toString());
+            return view;
+        }
+    }
+
 
     @Override
     protected void onStop() {

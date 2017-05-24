@@ -126,7 +126,6 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setContentView(R.layout.activity_goods_in_stock_detail);
         bt_Colse = (Button) findViewById(R.id.bt_Colse);
         Layout_Button_Open= (RelativeLayout) findViewById(R.id.Layout_Button_Open);
@@ -141,12 +140,6 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
 
         activityiIntent = getIntent();
         goodsInStockDetailBean = (GoodsInStockDetailBean) activityiIntent.getSerializableExtra("goodsInStockDetailBean");
-
-        //initView();
-
-//        SharedPreferences sp1 = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
-//        unique = sp1.getString("unique", "");
-
 
     }
 

@@ -71,7 +71,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="#0071BC"
-                    android:text="立即报价"
+                    android:text="立即提交"
                     android:textColor="#fff"
                     android:textSize="16sp"
                     android:textStyle="bold" />

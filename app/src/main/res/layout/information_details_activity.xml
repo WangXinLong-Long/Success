@@ -95,5 +95,6 @@
         android:id="@+id/webView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:padding="@dimen/x10"
         android:scrollbars="none"/>
 </RelativeLayout>
