@@ -487,27 +487,30 @@ public class FirmInfoTypeActivity extends AppCompatActivity implements IFirmInfo
                 //  if (data != null)
                 //Uri uri = data.getData();
                 // startPhotoZoom(data.getData(), 150);
-                prompt.setVisibility(View.VISIBLE);
-                tupian=getPhotoFileName();
-                prompt.setText(tupian);
-                prompt.setTextColor(getResources().getColor(R.color.btn_blue_normal));
-                Uri uri = data.getData();
-                try {
-                    //get the image path
-                    String[] projection = {MediaStore.Images.Media.DATA};
-                    Log.d("projection的长度",""+projection.length);
-                    CursorLoader cursorLoader = new CursorLoader(this,uri,projection,null,null,null);
-                    Cursor cursor = cursorLoader.loadInBackground();
-                    int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-                    cursor.moveToFirst();
+                if (data!=null) {
+                    Uri uri = data.getData();
+                    prompt.setVisibility(View.VISIBLE);
+                    tupian = getPhotoFileName();
+                    prompt.setText(tupian);
+                    prompt.setTextColor(getResources().getColor(R.color.btn_blue_normal));
 
-                    filepath = cursor.getString(column_index);
-                    Log.d("realpath",""+filepath);
-                    LGImgCompressor.getInstance(this).withListener(this).
-                            starCompress(filepath+"", 1000, 1000, 2048);
+                    try {
+                        //get the image path
+                        String[] projection = {MediaStore.Images.Media.DATA};
+                        Log.d("projection的长度", "" + projection.length);
+                        CursorLoader cursorLoader = new CursorLoader(this, uri, projection, null, null, null);
+                        Cursor cursor = cursorLoader.loadInBackground();
+                        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                        cursor.moveToFirst();
 
-                } catch (Exception ex) {
-                    Log.e("aaaa", "failed." + ex.getMessage());
+                        filepath = cursor.getString(column_index);
+                        Log.d("realpath", "" + filepath);
+                        LGImgCompressor.getInstance(this).withListener(this).
+                                starCompress(filepath + "", 1000, 1000, 2048);
+
+                    } catch (Exception ex) {
+                        Log.e("aaaa", "failed." + ex.getMessage());
+                    }
                 }
                 break;
 

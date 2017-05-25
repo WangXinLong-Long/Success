@@ -752,6 +752,7 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
         if (result.contains("formError")) {
             Toast.makeText(this, "该商品已下架", Toast.LENGTH_SHORT).show();
         } else {
+            Log.d("跳转到支付界面","跳转到支付界面");
             Gson gson = new Gson();
             Orders orders = gson.fromJson(result, Orders.class);
             Intent intent = new Intent();
@@ -759,9 +760,16 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
             intent.putExtra("fix", (Serializable) orders.getOrderIdList());
             intent.setClass(GoodsInStockDetailActivity.this, PayOrderListActivity.class);
             startActivity(intent);
+           // finish();
         }
 
 
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        finish();
     }
 
     @Override

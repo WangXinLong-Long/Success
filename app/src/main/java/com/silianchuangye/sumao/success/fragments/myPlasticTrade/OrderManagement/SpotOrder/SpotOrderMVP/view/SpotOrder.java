@@ -910,17 +910,17 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
                         if (list_pop.get(i).Flag) {
                             final String position=list_pop.get(i).message;
                             popupWindow.dismiss();
-
+                            Loding.show(SpotOrder.this, "货款支付中...", true, null);
                             //支付订单的接口
-                            getzhifu(position);
+                            //getzhifu(position);
+                            fukuan(list_pop.get(i).message);
 
 
                         } else if (i == list_pop.size() - 1) {
                             Toast.makeText(SpotOrder.this, "请选择的银行进行付款", Toast.LENGTH_SHORT).show();
                         }
                     }
-                    //首先判断有没有选中，
-                    //if (flag)
+
 
 
 
@@ -1035,6 +1035,69 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
 
     }
 
+    public void fukuan(String bankId){
+        String url= SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/payment/OrderPayment/orderPayment";
+        RequestParams rp=new RequestParams(url);
+        rp.addParameter("orderIds",OrderId);
+        rp.addParameter("platform",bankId);
+        SharedPreferences sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+        String unique=sp.getString("unique","");
+        rp.addParameter("_dynSessConf",unique);
+        x.http().post(rp, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.d("result的值",result);
+                Loding.dis();
+
+                if (result.contains("paymentStatus")) {
+                    try {
+                        JSONObject obj = new JSONObject(result);
+                        String state = obj.getString("paymentStatus");
+                        Log.d("state的值", state);
+                        if (state.equals("0")) {
+                            Intent intent = new Intent(SpotOrder.this, Ok_Dialog.class);
+                            intent.putExtra("type", "现货");
+                            intent.putExtra("number", OrderId);
+                            startActivity(intent);
+                            LogUtils.log("orderIds--->" + OrderId);
+                        }else{
+                            Intent intent = new Intent(SpotOrder.this, Error_Dialog.class);
+                            intent.putExtra("number", OrderId);
+                            startActivity(intent);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                } else {
+                    // Log.d("支付结果的返回值", "不等于空");
+                    Intent intent = new Intent(SpotOrder.this, Error_Dialog.class);
+                    intent.putExtra("number", OrderId);
+                    startActivity(intent);
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+//                Loding.dis();
+//                Intent intent = new Intent(SpotOrder.this, Error_Dialog.class);
+//                intent.putExtra("number", OrderId);
+//                startActivity(intent);
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+
+    }
+
     //    进行支付请求
     public void getzhifu(String bankId) {
 //TODO
@@ -1052,7 +1115,7 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
         String platform = bankId;
         String _dynSessConf = zhifu_unique;
        // Looper.prepare();
-        Loding.show(this, "正在进行支付...", true, null);
+
       //  Looper.loop();
         spotOrderPresenter.getPaymentInfoFromService(OrderId, platform, _dynSessConf);
     }

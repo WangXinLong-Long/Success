@@ -397,47 +397,49 @@ public class OrderGoodsActivity extends AppCompatActivity implements View.OnClic
             if (tlDemo.getSelectedTabPosition() == 0) {
                 Log.d("进来了","进来了");
                 PresellallFragment fragment = (PresellallFragment) listFragment.get(vpDemo.getCurrentItem());
-                fragment.sendMy(searchTrateType,searchOrderType, pageNum, submitType, KPstate, startDate, endDate, searchCompanyName, searchOrderId, update);
+                fragment.sendMy(searchTrateType,searchOrderType, pageNum, submitType, KPstate, startDate, endDate, searchCompanyName, searchOrderId, update,"dialog");
             } else if (tlDemo.getSelectedTabPosition() == 1) {
                 PresellToBePaidFragment fragment = (PresellToBePaidFragment) listFragment.get(vpDemo.getCurrentItem());
-                fragment.sendMy(searchTrateType,searchOrderType, pageNum, submitType, KPstate, startDate, endDate, searchCompanyName, searchOrderId, update);
+                fragment.sendMy(searchTrateType,searchOrderType, pageNum, submitType, KPstate, startDate, endDate, searchCompanyName, searchOrderId, update,"dialog");
             } else if (tlDemo.getSelectedTabPosition() == 2) {
                 PresellAlreadyPaidFragment fragment = (PresellAlreadyPaidFragment) listFragment.get(vpDemo.getCurrentItem());
-                fragment.sendMy(searchTrateType,searchOrderType, pageNum, submitType, KPstate, startDate, endDate, searchCompanyName, searchOrderId, update);
+                fragment.sendMy(searchTrateType,searchOrderType, pageNum, submitType, KPstate, startDate, endDate, searchCompanyName, searchOrderId, update,"dialog");
             } else if (tlDemo.getSelectedTabPosition() == 3) {
                 PresellChangeFragment fragment = (PresellChangeFragment) listFragment.get(vpDemo.getCurrentItem());
-                fragment.sendMy(searchTrateType,searchOrderType, pageNum, submitType, KPstate, startDate, endDate, searchCompanyName, searchOrderId, update);
+                fragment.sendMy(searchTrateType,searchOrderType, pageNum, submitType, KPstate, startDate, endDate, searchCompanyName, searchOrderId, update,"dialog");
             } else if (tlDemo.getSelectedTabPosition() == 4) {
                 PresellCancelFragment fragment = (PresellCancelFragment) listFragment.get(vpDemo.getCurrentItem());
-                fragment.sendMy(searchTrateType,searchOrderType, pageNum, submitType, KPstate, startDate, endDate, searchCompanyName, searchOrderId, update);
+                fragment.sendMy(searchTrateType,searchOrderType, pageNum, submitType, KPstate, startDate, endDate, searchCompanyName, searchOrderId, update,"dialog");
             }
 
         } else if (Tv_dingdan.getText().toString().equals("所有")) {
             PresellallFragment fragment = (PresellallFragment) listFragment.get(0);
-            fragment.sendMy(searchTrateType,searchOrderType, pageNum, submitType, KPstate, startDate, endDate, searchCompanyName, searchOrderId, update);
+            fragment.sendMy(searchTrateType,searchOrderType, pageNum, submitType, KPstate, startDate, endDate, searchCompanyName, searchOrderId, update,"dialog");
             vpDemo.setCurrentItem(0);
         } else if (Tv_dingdan.getText().toString().equals("待支付")) {
             PresellToBePaidFragment fragment = (PresellToBePaidFragment) listFragment.get(1);
-            fragment.sendMy(searchTrateType,searchOrderType, pageNum, submitType, KPstate, startDate, endDate, searchCompanyName, searchOrderId, update);
+            fragment.sendMy(searchTrateType,searchOrderType, pageNum, submitType, KPstate, startDate, endDate, searchCompanyName, searchOrderId, update,"dialog");
             vpDemo.setCurrentItem(1);
         } else if (Tv_dingdan.getText().toString().equals("已支付")) {
             PresellAlreadyPaidFragment fragment = (PresellAlreadyPaidFragment) listFragment.get(2);
-            fragment.sendMy(searchTrateType,searchOrderType, pageNum, submitType, KPstate, startDate, endDate, searchCompanyName, searchOrderId, update);
+            fragment.sendMy(searchTrateType,searchOrderType, pageNum, submitType, KPstate, startDate, endDate, searchCompanyName, searchOrderId, update,"dialog");
             vpDemo.setCurrentItem(2);
         } else if (Tv_dingdan.getText().toString().equals("已变更")) {
             vpDemo.setCurrentItem(3);
             PresellChangeFragment fragment = (PresellChangeFragment) listFragment.get(3);
-            fragment.sendMy(searchTrateType,searchOrderType, pageNum, submitType, KPstate, startDate, endDate, searchCompanyName, searchOrderId, update);
+            fragment.sendMy(searchTrateType,searchOrderType, pageNum, submitType, KPstate, startDate, endDate, searchCompanyName, searchOrderId, update,"dialog");
             //fragment.sendMy(searchTrateType,searchOrderType, pageNum, submitType, KPstate, startDate, endDate, searchCompanyName, searchOrderId, update);
 
         } else if (Tv_dingdan.getText().toString().equals("已取消")) {
             vpDemo.setCurrentItem(4);
             PresellCancelFragment fragment = (PresellCancelFragment) listFragment.get(4);
            // Log.d();
-            fragment.sendMy(searchTrateType,searchOrderType, pageNum, submitType, KPstate, startDate, endDate, searchCompanyName, searchOrderId, update);
+            fragment.sendMy(searchTrateType,searchOrderType, pageNum, submitType, KPstate, startDate, endDate, searchCompanyName, searchOrderId, update,"dialog");
 
         }
     }
+
+
 
     //给ListView添加虚假数据源
     private void initData() {

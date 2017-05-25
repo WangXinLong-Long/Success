@@ -418,27 +418,30 @@ public class RegisterPicture extends AppCompatActivity implements LGImgCompresso
               //  if (data != null)
                     //Uri uri = data.getData();
                     // startPhotoZoom(data.getData(), 150);
-                trime=getPhotoFileName();
-                tv_Name.setVisibility(View.VISIBLE);
-                tv_Name.setText(trime);
+                if (data!=null) {
+                    Uri uri = data.getData();
+                    trime = getPhotoFileName();
+                    tv_Name.setVisibility(View.VISIBLE);
+                    tv_Name.setText(trime);
 
-                Uri uri = data.getData();
-                try {
-                    //get the image path
-                    String[] projection = {MediaStore.Images.Media.DATA};
-                    Log.d("projection的长度",""+projection.length);
-                    CursorLoader cursorLoader = new CursorLoader(this,uri,projection,null,null,null);
-                    Cursor cursor = cursorLoader.loadInBackground();
-                    int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-                    cursor.moveToFirst();
 
-                    filepath = cursor.getString(column_index);
-                    Log.d("realpath",""+filepath);
-                    LGImgCompressor.getInstance(this).withListener(this).
-                            starCompress(filepath, 1000, 1000, 100);
+                    try {
+                        //get the image path
+                        String[] projection = {MediaStore.Images.Media.DATA};
+                        Log.d("projection的长度", "" + projection.length);
+                        CursorLoader cursorLoader = new CursorLoader(this, uri, projection, null, null, null);
+                        Cursor cursor = cursorLoader.loadInBackground();
+                        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                        cursor.moveToFirst();
 
-                } catch (Exception ex) {
-                    Log.e("aaaa", "failed." + ex.getMessage());
+                        filepath = cursor.getString(column_index);
+                        Log.d("realpath", "" + filepath);
+                        LGImgCompressor.getInstance(this).withListener(this).
+                                starCompress(filepath, 1000, 1000, 100);
+
+                    } catch (Exception ex) {
+                        Log.e("aaaa", "failed." + ex.getMessage());
+                    }
                 }
                 break;
 

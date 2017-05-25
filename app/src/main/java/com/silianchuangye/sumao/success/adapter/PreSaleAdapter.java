@@ -90,6 +90,7 @@ public void clearData(){
 //这里做了一下修改
         Log.d("getIn_prix的值",preSaleModels.get(position).getIn_prix().toString());
         if (!preSaleModels.get(position).getIn_prix().toString().equals("现货")) {
+
             BigDecimal b = new BigDecimal(preSaleModels.get(position).getIn_prix().toString());
             double f1 = b.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
             viewHolder.price.setText(f1 + "");

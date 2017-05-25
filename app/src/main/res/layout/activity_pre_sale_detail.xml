@@ -618,6 +618,7 @@
         android:layout_height="@dimen/x40"
         android:background="@color/gray_normal"
         android:text="已闭市"
+        android:visibility="gone"
         android:textColor="@color/white"
         android:layout_alignParentBottom="true"
 

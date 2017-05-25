@@ -39,6 +39,7 @@ public class PresellAlreadyPaidFragment extends Fragment implements IPresellAlre
     String company = "";
     String OrderId = "";
     String searchTrateType = "";
+    private String laiyuan="";
     private List<PreSellAllBean.OrderBean> orders = new ArrayList<>();
     private PresellAlreadyPaidFragmentPresenter presellAlreadyPaidFragmentPresenter;
 
@@ -90,19 +91,27 @@ public class PresellAlreadyPaidFragment extends Fragment implements IPresellAlre
         super.setUserVisibleHint(isVisibleToUser);
         presellAlreadyPaidFragmentPresenter = new PresellAlreadyPaidFragmentPresenter(this);
         if (isVisibleToUser) {
-            sendMy(searchTrateType,searchOrderType,page, subType, Kpstate, startDate, endDate, company, OrderId, true);
+            sendMy(searchTrateType,searchOrderType,page, subType, Kpstate, startDate, endDate, company, OrderId, true,"");
         }
 
     }
-    public void sendMy(String searchTrateTypeInput,String searchOrderTypeInput,String page, String subType, String KPstate, String startDates, String endDates, String company, String OrderId, boolean updates) {
+    public void sendMy(String searchTrateTypeInput,String searchOrderTypeInput,String page, String subType, String KPstate, String startDates, String endDates, String company, String OrderId, boolean updates,String resouce) {
         String searchCompanyName = company;//公司
         String searchOrderType;
-//        if (searchOrderTypeInput.equals("")){
-//            searchOrderType = this.searchOrderType;
-//        }else {
-//            searchOrderType = searchOrderTypeInput; //订单类型(预售)
-//        }
-        searchOrderType="";
+        laiyuan=resouce;
+        if (resouce.equals("")) {
+            if (searchOrderTypeInput.equals("")) {
+                searchOrderType = this.searchOrderType;
+                //订单状态(全部订单)
+            } else {
+                searchOrderType = searchOrderTypeInput; //订单类型(预售)
+                this.searchOrderType = searchOrderTypeInput;
+                //订单状态(全部订单)
+            }
+        }else{
+            searchOrderType="";
+        }
+       //
         String searchTrateType = searchTrateTypeInput;//现货订单的类型（团购、竞拍。。。）
         this.searchTrateType = searchTrateTypeInput;
 
@@ -161,8 +170,9 @@ public class PresellAlreadyPaidFragment extends Fragment implements IPresellAlre
                 @Override
                 public void handleMessage(Message msg) {
                     pageNum = "1";
+                    laiyuan="";
                     // 千万别忘了告诉控件刷新完毕了哦！
-                    sendMy(searchTrateType,searchOrderType,pageNum, subType, Kpstate, startDate, endDate, company, OrderId, true);
+                    sendMy(searchTrateType,searchOrderType,pageNum, subType, Kpstate, startDate, endDate, company, OrderId, true,"");
                     pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
                 }
             }.sendEmptyMessageDelayed(0, 1000);
@@ -177,11 +187,21 @@ public class PresellAlreadyPaidFragment extends Fragment implements IPresellAlre
 
                     int num = Integer.parseInt(pageNum) + 1;
                     pageNum = num + "";
-                    sendMy(searchTrateType,searchOrderType,pageNum, subType, Kpstate, startDate, endDate, company, OrderId, false);
+                    if (laiyuan.equals("")) {
+                        sendMy(searchTrateType, searchOrderType, pageNum, subType, Kpstate, startDate, endDate, company, OrderId, false, "");
+                    }else{
+                        sendMy(searchTrateType, searchOrderType, pageNum, subType, Kpstate, startDate, endDate, company, OrderId, false, "dialog");
+                    }
                     // 千万别忘了告诉控件加载完毕了哦！
                     pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
                 }
             }.sendEmptyMessageDelayed(0, 1000);
         }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        laiyuan="";
     }
 }

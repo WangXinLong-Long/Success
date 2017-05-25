@@ -530,27 +530,34 @@ public static File saveFile(Bitmap bm,String path, String fileName) throws IOExc
                 // startPhotoZoom(data.getData(), 150);
 //                tv_Name.setVisibility(View.VISIBLE);
 //                tv_Name.setText(getPhotoFileName());
+                Uri uri;
+                if (data!=null) {
+                     uri = data.getData();
+                    try {
+                        //get the image path
+                        String[] projection = {MediaStore.Images.Media.DATA};
+                        Log.d("projection的长度", "" + projection.length);
+                        CursorLoader cursorLoader = new CursorLoader(this, uri, projection, null, null, null);
+                        Cursor cursor = cursorLoader.loadInBackground();
+                        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                        cursor.moveToFirst();
+                        tupian=getPhotoFileName();
+                        filepath = cursor.getString(column_index);
+                        Log.d("realpath", "" + filepath);
 
-                Uri uri = data.getData();
-                try {
-                    //get the image path
-                    String[] projection = {MediaStore.Images.Media.DATA};
-                    Log.d("projection的长度", "" + projection.length);
-                    CursorLoader cursorLoader = new CursorLoader(this, uri, projection, null, null, null);
-                    Cursor cursor = cursorLoader.loadInBackground();
-                    int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-                    cursor.moveToFirst();
-                    tupian=getPhotoFileName();
-                    filepath = cursor.getString(column_index);
-                    Log.d("realpath", "" + filepath);
+                        LGImgCompressor.getInstance(this).withListener(this).
+                                starCompress(filepath, 1000, 1000, 100);
+                        bitmap= BitmapFactory.decodeFile(filepath);
+                        image.setImageBitmap(bitmap);
+                    } catch (Exception ex) {
+                        Log.e("aaaa", "failed." + ex.getMessage());
+                    }
 
-                    LGImgCompressor.getInstance(this).withListener(this).
-                            starCompress(filepath, 1000, 1000, 100);
-                    bitmap= BitmapFactory.decodeFile(filepath);
-                    image.setImageBitmap(bitmap);
-                } catch (Exception ex) {
-                    Log.e("aaaa", "failed." + ex.getMessage());
+
                 }
+
+
+
                 break;
 
             case PHOTO_REQUEST_CUT://返回的结果

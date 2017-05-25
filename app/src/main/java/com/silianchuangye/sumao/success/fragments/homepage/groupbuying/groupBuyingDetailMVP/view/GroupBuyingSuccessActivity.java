@@ -657,15 +657,18 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
         percent = String.format("%.4f", Double.parseDouble(number.toString()));
         try {
             //JSONObject obj = new JSONObject(result);
-            String utilDate = groupBuyingDetailBean.getUtilDate();
-            Log.d("utilDate的值",utilDate);
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            long time = 0l;
+//            String utilDate = groupBuyingDetailBean.getUtilDate();
+//            Log.d("utilDate的值",utilDate);
+//            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//            long time = 0l;
             try {
-                long strdate = dateFormat.parse(utilDate).getTime();
+                SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                Long time=new Long(groupBuyingDetailBean.getUtilDate());
+                String d = format.format(time);
+                Date date1=format.parse(d);
                 Date date=new Date();
                 long nowTime = date.getTime();
-                time = strdate - nowTime+4000;
+                time = date1.getTime() - nowTime+4000;
                 Log.d("time的值",time+"");
                 if (time>0) {
                     mc = new MyCount(time, 1000);

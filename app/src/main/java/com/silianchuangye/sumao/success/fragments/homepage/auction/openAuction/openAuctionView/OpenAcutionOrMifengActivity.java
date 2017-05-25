@@ -77,6 +77,8 @@ import org.xutils.x;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Hashtable;
@@ -235,19 +237,51 @@ public class OpenAcutionOrMifengActivity extends AppCompatActivity implements IO
     public void setTitleValue(){
         Log.d("实时时间的值","实时时间的值");
         if (status.equals("")||status.equals("0")){
-            tvTime.setText("距离竞拍开始时间:");
-            long startTime = Long.parseLong(auctionDetailBean.getStartDate()) - System.currentTimeMillis();
-            if (startTime>0) {
-                new MyCount(startTime, 1000).start();
+//            tvTime.setText("距离竞拍开始时间:");
+//            long startTime = Long.parseLong(auctionDetailBean.getStartDate()) - System.currentTimeMillis();
+//            if (startTime>0) {
+//                new MyCount(startTime, 1000).start();
+//            }
+            try {
+                tvTime.setText("距离竞拍开始时间:");
+                SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                Long time=new Long(timeEnd);
+                String d = format.format(time);
+                Date date1=format.parse(d);
+                Date date=new Date();
+                long startTime = date1.getTime()-date.getTime();
+                if (startTime>0) {
+                    new MyCount(startTime, 1000).start();
+                }
+            }catch (Exception e){
+                e.printStackTrace();
             }
         }else if (status.equals("1")){
-            tvTime.setText("竞拍剩余时间:");
-            Log.d("刷新的时间",timeEnd);
-            long startTime = Long.parseLong(timeEnd) - System.currentTimeMillis();
-            if (startTime>0) {
-                new MyCount(startTime, 1000).start();
+//            tvTime.setText("竞拍剩余时间:");
+//            Log.d("刷新的时间",timeEnd);
+//            long startTime = Long.parseLong(timeEnd) - System.currentTimeMillis();
+//            if (startTime>0) {
+//                new MyCount(startTime, 1000).start();
+//            }
+            try {
+                tvTime.setText("竞拍剩余时间:");
+                Date date=new Date();
+                SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                Long time=new Long(timeEnd);
+                String d = format.format(time);
+                Date date1=format.parse(d);
+
+                long startTime = date1.getTime() - date.getTime();
+                if (startTime>0) {
+                    new MyCount(startTime, 1000).start();
+                }
+                canyvingjingpaiforResult();
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
-        }else if (status.equals("2")){
+
+
+            }else if (status.equals("2")){
             if (type_way.equals("密封报价")){
                 tvTime.setVisibility(View.GONE);
                 tvTimeValue.setVisibility(View.GONE);
@@ -265,18 +299,56 @@ public class OpenAcutionOrMifengActivity extends AppCompatActivity implements IO
         unique=sp.getString("unique","");
         if (unique.equals("") || unique.equals("false")) {//没有登录
             if (status.equals("")||status.equals("0")){
-                tvTime.setText("距离竞拍开始时间:");
-                Date date=new Date();
-                long startTime = Long.parseLong(auctionDetailBean.getStartDate()) - date.getTime();
-                if (startTime>0) {
-                    new MyCount(startTime, 1000).start();
+//                tvTime.setText("距离竞拍开始时间:");
+//                Date date=new Date();
+//                long startTime = Long.parseLong(auctionDetailBean.getStartDate()) - date.getTime();
+//                if (startTime>0) {
+//                    new MyCount(startTime, 1000).start();
+//                }
+                try {
+                    tvTime.setText("距离竞拍开始时间:");
+                    SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    Long time=new Long(timeEnd);
+                    String d = format.format(time);
+                    Date date1=format.parse(d);
+                    Date date=new Date();
+                    long startTime = date1.getTime()-date.getTime();
+                    if (startTime>0) {
+                        new MyCount(startTime, 1000).start();
+                    }
+
+                    //判断是不是有保证金
+                    canyujingpaiforResult();
+
+                } catch (ParseException e) {
+                    e.printStackTrace();
                 }
+
+
+
             }else if (status.equals("1")){
-                tvTime.setText("竞拍剩余时间:");
-                long startTime = Long.parseLong(auctionDetailBean.getEndDate()) - System.currentTimeMillis();
-                if (startTime>0) {
-                    new MyCount(startTime, 1000).start();
+//                tvTime.setText("竞拍剩余时间:");
+//                long startTime = Long.parseLong(auctionDetailBean.getEndDate()) - System.currentTimeMillis();
+//                if (startTime>0) {
+//                    new MyCount(startTime, 1000).start();
+//                }
+                try {
+                    tvTime.setText("竞拍剩余时间:");
+                    Date date=new Date();
+                    SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    Long time=new Long(timeEnd);
+                    String d = format.format(time);
+                    Date date1=format.parse(d);
+
+                    long startTime = date1.getTime() - date.getTime();
+                    if (startTime>0) {
+                        new MyCount(startTime, 1000).start();
+                    }
+                    canyvingjingpaiforResult();
+                } catch (ParseException e) {
+                    e.printStackTrace();
                 }
+
             }
             Layout_Button_Open.setVisibility(View.GONE);
             layout_non.setVisibility(View.GONE);
@@ -290,14 +362,26 @@ public class OpenAcutionOrMifengActivity extends AppCompatActivity implements IO
                 // 不是的话进行有没有保证金的判断
                 //有，一直显示到竞拍开始
                 //没有就等待竞拍开始
-                tvTime.setText("距离竞拍开始时间:");
-                long startTime = Long.parseLong(auctionDetailBean.getStartDate()) - System.currentTimeMillis();
-                if (startTime>0) {
-                    new MyCount(startTime, 1000).start();
-                }
+
+                try {
+                    tvTime.setText("距离竞拍开始时间:");
+                    SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    Long time=new Long(timeEnd);
+                    String d = format.format(time);
+                    Date date1=format.parse(d);
+                    Date date=new Date();
+                    long startTime = date1.getTime()-date.getTime();
+                    if (startTime>0) {
+                        new MyCount(startTime, 1000).start();
+                    }
 
                     //判断是不是有保证金
-                canyujingpaiforResult();
+                    canyujingpaiforResult();
+
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
 
 
 
@@ -306,13 +390,24 @@ public class OpenAcutionOrMifengActivity extends AppCompatActivity implements IO
                 //进行有没有保证金的判断
                 //有，显示支付保证金和立即支付按钮
                 //没有就显示字符保证金按钮
-                tvTime.setText("竞拍剩余时间:");
-                Date date=new Date();
-                long startTime = Long.parseLong(auctionDetailBean.getEndDate()) - date.getTime();
-                if (startTime>0) {
-                    new MyCount(startTime, 1000).start();
+
+                try {
+                    tvTime.setText("竞拍剩余时间:");
+                    Date date=new Date();
+                    SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    Long time=new Long(timeEnd);
+                    String d = format.format(time);
+                    Date date1=format.parse(d);
+
+                    long startTime = date1.getTime() - date.getTime();
+                    if (startTime>0) {
+                        new MyCount(startTime, 1000).start();
+                    }
+                    canyvingjingpaiforResult();
+                } catch (ParseException e) {
+                    e.printStackTrace();
                 }
-                canyvingjingpaiforResult();
+
 
             }
 

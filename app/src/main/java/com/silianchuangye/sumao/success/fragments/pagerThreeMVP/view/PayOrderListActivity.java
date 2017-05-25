@@ -44,10 +44,13 @@ import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInSt
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.goodsInStockDetail.GoodsInStockDetailActivityMVP.PayMentsOrderMVP.view.IPaymentsOrderView;
 import com.silianchuangye.sumao.success.utils.Loding;
 import com.silianchuangye.sumao.success.utils.LogUtils;
+import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -147,9 +150,9 @@ public class PayOrderListActivity extends Activity implements View.OnClickListen
         title_bar_white_title.setText("支付订单");
         LinearLayout bottom = (LinearLayout) findViewById(R.id.bottom);
         bottom.setVisibility(View.GONE);
-        IntentFilter filter = new IntentFilter();
-        filter.addAction("finish");
-        registerReceiver(broadcastReceiver, filter);
+//        IntentFilter filter = new IntentFilter();
+//        filter.addAction("finish");
+//        registerReceiver(broadcastReceiver, filter);
         addData();
         SharedPreferences sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
         timerfor=sp.getString("daojishishengyv","");
@@ -192,6 +195,12 @@ public class PayOrderListActivity extends Activity implements View.OnClickListen
             lvdemo.expandGroup(i);
 
         }
+        lvdemo.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+            @Override
+            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+                return true;
+            }
+        });
         double total = 0;
         for (int i = 0; i < orderList.size(); i++) {
             double count = Double.parseDouble(orderList.get(i).getTotal());
@@ -254,6 +263,12 @@ public class PayOrderListActivity extends Activity implements View.OnClickListen
         Log.d("银行编号",platform);
 
         paymentsOrderPresenter.getPaymentInfoFromService(orderIds, platform, _dynSessConf);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+      //  finish();
     }
 
     //    获取到银行列表
@@ -366,7 +381,9 @@ public class PayOrderListActivity extends Activity implements View.OnClickListen
                     // 判断是否选择银行
                     if (click && choose){
                         Log.d("用户选择了银行","是的");
-                        getzhifu(list_pop.get(position1).message);
+                        //getzhifu(list_pop.get(position1).message);
+                        Loding.show(PayOrderListActivity.this,"货款支付中...",false,null);
+                        fukuan(list_pop.get(position1).message);
                         popupWindow.dismiss();
 
                     }else{//提示用户选择银行列表
@@ -391,12 +408,6 @@ public class PayOrderListActivity extends Activity implements View.OnClickListen
                             if (i != position) {
                                 list_pop.get(i).Flag = false;
                                 choose=false;
-//                                   if (choose){
-//                                       Log.d("choose是","true");
-//                                   }else{
-//                                       Log.d("choose是","false");
-//                                   }
-
                             }
                         }
                         list_pop.get(position).Flag = !list_pop.get(position).Flag;
@@ -405,7 +416,6 @@ public class PayOrderListActivity extends Activity implements View.OnClickListen
                         }
                         adapter1.notifyDataSetChanged();
                     }
-                    // }
 
                 }
             });
@@ -416,65 +426,99 @@ public class PayOrderListActivity extends Activity implements View.OnClickListen
 
     }
 
+    public void fukuan(String bankId){
+        String url= SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/payment/OrderPayment/orderPayment";
+        RequestParams rp=new RequestParams(url);
+        rp.addParameter("orderIds",orderId);
+        rp.addParameter("platform",bankId);
+        SharedPreferences sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+        String unique=sp.getString("unique","");
+        rp.addParameter("_dynSessConf",unique);
+        x.http().post(rp, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Loding.dis();
+
+                if (result.contains("paymentStatus")) {
+                    try {
+                        JSONObject obj = new JSONObject(result);
+                        String state = obj.getString("paymentStatus");
+                        Log.d("state的值", state);
+                        if (state.equals("0")) {
+                            Intent intent = new Intent(PayOrderListActivity.this, Ok_Dialog.class);
+                            intent.putExtra("type", "现货");
+                            intent.putExtra("number", orderId);
+                            startActivity(intent);
+                            LogUtils.log("orderIds--->" + orderId);
+                        }else{
+                            Intent intent = new Intent(PayOrderListActivity.this, Error_Dialog.class);
+                            intent.putExtra("number", orderId);
+                            startActivity(intent);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                } else {
+                    // Log.d("支付结果的返回值", "不等于空");
+                    Intent intent = new Intent(PayOrderListActivity.this, Error_Dialog.class);
+                    intent.putExtra("number", orderId);
+                    startActivity(intent);
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+//                Loding.dis();
+//                Intent intent = new Intent(PayOrderListActivity.this, Error_Dialog.class);
+//                intent.putExtra("number", orderId);
+//                startActivity(intent);
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+
+    }
+
     //    获取支付后的信息
     @Override
     public void getPaymentResult(String result,String orderIds) {
-        Log.d("支付结果的返回值",result);
+        Log.d("支付结果的返回值", result);
         Loding.dis();
-        if (!result.equals("支付失败")) {
-            Log.d("支付结果的返回值","不是支付失败");
-            if (!result.contains("paymentStatus")){
-                Log.d("支付结果的返回值","等于空");
-               // Toast.makeText(PayOrderListActivity.this, "支付失败!", Toast.LENGTH_SHORT).show();
-                Intent intent=new Intent(PayOrderListActivity.this,Error_Dialog.class);
-                intent.putExtra("number",orderId);
-                startActivity(intent);
 
-            }else {
-                Log.d("支付结果的返回值","不等于空");
-                try {
-                    JSONObject obj = new JSONObject(result);
-                    String state = obj.getString("paymentStatus");
-                    Log.d("state的值",state);
-                    if (state.equals("0")) {
-                        Intent intent = new Intent(PayOrderListActivity.this, Ok_Dialog.class);
-                        intent.putExtra("type", "现货");
-                        intent.putExtra("number", orderId);
-                        startActivity(intent);
-                        //finish();
-//                        int pos = -1;
-//                        for (int i = 0; i < orderList.size(); i++) {
-//                            if (orderList.get(i).getOrderId().equals(orderIds)) {
-//                                pos = i;
-//                            }
-//                        }
-//                        orderList.remove(pos);
-//                        list_adapter.clear();
-//                        list_adapter.addLists(orderList);
-//                        list_adapter.notifyDataSetChanged();
-                        LogUtils.log("orderIds--->" + orderId);
-                        //全部成功
-
-                    } else if (state.equals("1")) {
-                        Intent intent = new Intent(PayOrderListActivity.this, Error_Dialog.class);
-                        intent.putExtra("number", orderId);
-                        startActivity(intent);
-                        //部分订单成功
-                        // Toast.makeText(PayOrderListActivity.this, "部分订单成功,到订单详情界面查看", Toast.LENGTH_SHORT).show();
-                    } else if (state.equals("2")) {
-                        //全部失败
-                        Intent intent = new Intent(PayOrderListActivity.this, Error_Dialog.class);
-                        intent.putExtra("number", orderId);
-                        startActivity(intent);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
+        if (result.contains("paymentStatus")) {
+            //Log.d("支付结果的返回值", "等于空");
+            try {
+                JSONObject obj = new JSONObject(result);
+                String state = obj.getString("paymentStatus");
+                Log.d("state的值", state);
+                if (state.equals("0")) {
+                    Intent intent = new Intent(PayOrderListActivity.this, Ok_Dialog.class);
+                    intent.putExtra("type", "现货");
+                    intent.putExtra("number", orderId);
+                    startActivity(intent);
+                    LogUtils.log("orderIds--->" + orderId);
+                }else{
+                    Intent intent = new Intent(PayOrderListActivity.this, Error_Dialog.class);
+                    intent.putExtra("number", orderId);
+                    startActivity(intent);
                 }
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-        }else{
-           // Toast.makeText(PayOrderListActivity.this, "支付失败!", Toast.LENGTH_SHORT).show();
-            Intent intent=new Intent(PayOrderListActivity.this,Error_Dialog.class);
-            intent.putExtra("number",orderIds);
+
+        } else {
+           // Log.d("支付结果的返回值", "不等于空");
+            Intent intent = new Intent(PayOrderListActivity.this, Error_Dialog.class);
+            intent.putExtra("number", orderId);
             startActivity(intent);
         }
     }
@@ -504,6 +548,7 @@ public class PayOrderListActivity extends Activity implements View.OnClickListen
             //this.groupBeans=groupBeans;
 
         }
+
         public void addData(List<Orders.OrderIdListBean> list) {
             order.addAll(list);
             for (int i = 0; i < order.size(); i++) {

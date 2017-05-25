@@ -132,7 +132,7 @@ public class Ok_Dialog extends Activity {
                     isClosePrevious = true;
                 }
 
-                finish();
+                //finish();
             }
         });
         bt_wuliu.setOnClickListener(new View.OnClickListener() {

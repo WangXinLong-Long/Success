@@ -38,6 +38,7 @@ public class PresellallFragment extends Fragment implements IPresellallFragmentV
     String endDate = "";
     String company = "";
     String OrderId = "";
+    private String laiyuan="";
     String searchTrateType = "";//现货订单中区分（团购、竞拍、等的关键字）
 
     private PresellallFragmentPresenter presellallFragmentPresenter;
@@ -108,32 +109,35 @@ public class PresellallFragment extends Fragment implements IPresellallFragmentV
         super.setUserVisibleHint(isVisibleToUser);
         presellallFragmentPresenter = new PresellallFragmentPresenter(this);
         if (isVisibleToUser) {
-            sendMy(searchTrateType, searchOrderType, page, subType, Kpstate, startDate, endDate, company, OrderId, true);
+
+            sendMy(searchTrateType, searchOrderType, page, subType, Kpstate, startDate, endDate, company, OrderId, true,"");
         }
 
     }
 
-    public void sendMy(String searchTrateTypeInput, String searchOrderTypeInput, String page, String subType, String KPstate, String startDates, String endDates, String company, String OrderId, boolean updates) {
+    public void sendMy(String searchTrateTypeInput, String searchOrderTypeInput, String page, String subType, String KPstate, String startDates, String endDates, String company, String OrderId, boolean updates,String resouce) {
         String searchCompanyName = company;//公司
         this.company = company;
         String searchOrderType="";
         String searchOrderState="";
-//        if (searchOrderTypeInput.equals("")) {
-//            //searchOrderType = this.searchOrderType;
-//            //订单状态(全部订单)
-//            searchOrderState="";
-//        } else {
-////            searchOrderType = searchOrderTypeInput; //订单类型(预售)
-////            this.searchOrderType = searchOrderTypeInput;
-//            //订单状态(全部订单)
-//            searchOrderType="";
-//
-//        }
-     //   Log.d("searchOrderType",searchOrderType);
+        laiyuan=resouce;
+        if (resouce.equals("")) {
+            if (searchOrderTypeInput.equals("")) {
+                searchOrderType = this.searchOrderType;
+                //订单状态(全部订单)
+            } else {
+                searchOrderType = searchOrderTypeInput; //订单类型(预售)
+                this.searchOrderType = searchOrderTypeInput;
+                //订单状态(全部订单)
+            }
+        }else{
+            searchOrderState = "0";
+        }
+
         String searchTrateType = searchTrateTypeInput;//现货订单的类型（团购、竞拍。。。）
         this.searchTrateType = searchTrateTypeInput;
 
-        searchOrderState = "0";
+       // searchOrderState = "0";
        // if ()
         String pageNum = page;
 
@@ -198,9 +202,10 @@ public class PresellallFragment extends Fragment implements IPresellallFragmentV
                 @Override
                 public void handleMessage(Message msg) {
                     pageNum = "1";
+                    laiyuan="";
                     // 千万别忘了告诉控件刷新完毕了哦！
                    // sendMy(searchTrateType,searchOrderType, pageNum, subType, Kpstate, startDate, endDate, company, OrderId, true);
-                     sendMy("","", pageNum, "", "", "", "", "", "", true);
+                     sendMy("","", pageNum, "", "", "", "", "", "", true,"");
                     pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
                 }
             }.sendEmptyMessageDelayed(0, 1000);
@@ -215,11 +220,21 @@ public class PresellallFragment extends Fragment implements IPresellallFragmentV
 
                     int num = Integer.parseInt(pageNum) + 1;
                     pageNum = num + "";
-                    sendMy(searchTrateType,searchOrderType, pageNum, subType, Kpstate, startDate, endDate, company, OrderId, false);
+                    if (laiyuan.equals("")) {
+                        sendMy(searchTrateType, searchOrderType, pageNum, subType, Kpstate, startDate, endDate, company, OrderId, false, "");
+                    }else{
+                        sendMy(searchTrateType, searchOrderType, pageNum, subType, Kpstate, startDate, endDate, company, OrderId, false, "dialog");
+                    }
                     // 千万别忘了告诉控件加载完毕了哦！
                     pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
                 }
             }.sendEmptyMessageDelayed(0, 3000);
         }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        laiyuan="";
     }
 }

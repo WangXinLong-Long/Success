@@ -1,5 +1,7 @@
 package com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleDetailActivityMVP.model.paymentSecurityModel;
 
+import android.util.Log;
+
 import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
@@ -37,7 +39,8 @@ public class PaymentSecurityModel implements IPaymentSecurityModel {
         params.addParameter("productId", productId);
         params.addParameter("paymentPlatform", paymentPlatform);
         params.addParameter("skuId", skuId);
-        params.addParameter("price", price);
+        params.addParameter("price", price.substring(0,price.length()-1));
+        Log.d("price的值",price.substring(0,price.length()-1));
         params.addParameter("_dynSessConf",_dynSessConf);
         LogUtils.log("支付保证金RUL--->"+params);
         x.http().post(params, new Callback.CommonCallback<String>() {
@@ -51,8 +54,8 @@ public class PaymentSecurityModel implements IPaymentSecurityModel {
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                //LogUtils.log("支付保证金onError--->"+ex);
-                callback.callbackPaymentSecurity("支付失败");
+                LogUtils.log("支付保证金onError--->"+ex);
+               // callback.callbackPaymentSecurity("支付失败");
             }
 
             @Override

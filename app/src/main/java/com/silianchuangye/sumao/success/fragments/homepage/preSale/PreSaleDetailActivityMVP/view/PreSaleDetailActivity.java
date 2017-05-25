@@ -920,7 +920,7 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
         Log.d("支付保证金的返回值",result);
 
         Loding.dis();
-        if (!result.equals("支付失败")) {
+
             if (!result.contains("info")){
                 Intent intent = new Intent(PreSaleDetailActivity.this, Error_Dialog.class);
                 intent.putExtra("number", "");
@@ -952,12 +952,7 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
                     e.printStackTrace();
                 }
             }
-        }else{
-            Intent intent = new Intent(PreSaleDetailActivity.this, Error_Dialog.class);
-            intent.putExtra("number", "");
-//                            intent.putExtra("type","预售保证金");
-            startActivity(intent);
-        }
+        //}
 
     }
 
