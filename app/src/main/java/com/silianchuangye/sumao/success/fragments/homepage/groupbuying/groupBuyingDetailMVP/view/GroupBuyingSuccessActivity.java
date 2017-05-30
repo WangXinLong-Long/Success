@@ -853,6 +853,10 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
                 tv_tuangou_line.setVisibility(View.GONE);
                 tv_tuangou_time.setVisibility(View.GONE);
                 tvResult.setText("团购结果结算中");
+                if (timer!=null){
+                    timer.cancel();
+                }
+                info();
 
             }else if (Inforesult.equals("saledOff")){
                 tv_tuangou_line.setVisibility(View.VISIBLE);
@@ -1013,6 +1017,9 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
             tv_tuangou_line.setVisibility(View.GONE);
             tv_tuangou_time.setVisibility(View.GONE);
             tvResult.setText("团购结果计算中");
+            if (timer!=null){
+                timer.cancel();
+            }
             new Thread(){
                 @Override
                 public void run() {
@@ -1435,7 +1442,7 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
                     intentHX.putExtra(Constant.IM_SERVICE_NUMBER, groupBuyingDetailBean.getCl_qiyeonlyId());
                     Log.d("公司的唯一标识",groupBuyingDetailBean.getCl_qiyeonlyId()+"是公司id");
                     intentHX.putExtra("gongsiName",groupBuyingDetailBean.getCl_gongsi());
-                startActivity(intentHX);
+                   startActivity(intentHX);
 
 //                    backgroundAlpha(0.5f);
                 }
