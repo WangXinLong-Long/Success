@@ -594,7 +594,8 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, View convertView, ViewGroup parent) {
+            //number=position;
             View view=View.inflate(context,R.layout.item_gridview,null);
             TextView tv_order_id= (TextView) view.findViewById(R.id.tv_order_id);
             TextView tv_price= (TextView) view.findViewById(R.id.tv_price);
@@ -616,7 +617,7 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
                 @Override
                 public void onClick(View v) {
                     Intent intent=new Intent(context,SpotOrder.class);
-                    intent.putExtra("id",list1.get(number).get("id").toString());
+                    intent.putExtra("id",list1.get(position).get("id").toString());
                     context.startActivity(intent);
                 }
             });
@@ -882,6 +883,9 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
                 tv_tuangou_line.setVisibility(View.GONE);
                 tv_tuangou_time.setVisibility(View.GONE);
                 tvResult.setText("团购已结束");
+                if (timer!=null){
+                    timer.cancel();
+                }
             }else if (Inforesult.equals("notStarted")){
                 //没有开始状态
                 layout_Bottom.setVisibility(View.GONE);
@@ -922,6 +926,10 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
             tv_tuangou_line.setVisibility(View.GONE);
             tv_tuangou_time.setVisibility(View.GONE);
             tvResult.setText("团购结束");
+            if(timer!=null){
+                timer.cancel();
+            }
+
         }else if (login.equals("running")){
             //进行中
             layout_Bottom.setVisibility(View.VISIBLE);
@@ -990,6 +998,9 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
                     chenggong();
                 }
             }.start();
+            if (timer!=null){
+                timer.cancel();
+            }
 
 
 
@@ -1611,19 +1622,26 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
 
 
             }else{
-                if (he_shuru<Double.parseDouble(groupBuyingDetailBean.getCl_zongliang())){
+           //     if (he_shuru<Double.parseDouble(groupBuyingDetailBean.getCl_zongliang())){
 //                    Double newji=mul(beishu_shuru-1,Double.parseDouble(groupBuyingDetailBean.getCl_xbianliang()));
 //                    Double he_shurunew=add(newji,Double.parseDouble(groupBuyingDetailBean.getCl_qigou()));
-                    BigDecimal b1 = new BigDecimal(he_shuru);
+//
+                    Double jianshu_shuru_aa = sub(Double.parseDouble(tv_item_cart_buy_num.getText().toString()), Double.parseDouble(groupBuyingDetailBean.getCl_qigou()));
+                    int beishu_shuru_aa = (int) div(jianshu_shuru_aa, Double.parseDouble(groupBuyingDetailBean.getCl_xbianliang()), 0);
+                    Double ji_shuru_aa = mul(beishu_shuru_aa, Double.parseDouble(groupBuyingDetailBean.getCl_xbianliang()));
+                    Double he_shuru_aa = add(ji_shuru_aa, Double.parseDouble(groupBuyingDetailBean.getCl_qigou()));
+                    BigDecimal b1 = new BigDecimal(he_shuru_aa);
                     double f2 = b1.setScale(3, BigDecimal.ROUND_HALF_UP).doubleValue();
                     tv_item_cart_buy_num.setText(f2 + "");
-                }else{
-                    Double newji=mul(beishu_shuru-1,Double.parseDouble(groupBuyingDetailBean.getCl_xbianliang()));
-                    Double he_shurunew=add(newji,Double.parseDouble(groupBuyingDetailBean.getCl_qigou()));
-                    BigDecimal b1 = new BigDecimal(he_shurunew);
-                    double f2 = b1.setScale(3, BigDecimal.ROUND_HALF_UP).doubleValue();
-                    tv_item_cart_buy_num.setText(f2 + "");
-                }
+
+
+//                }else{
+//                    Double newji=mul(beishu_shuru,Double.parseDouble(groupBuyingDetailBean.getCl_xbianliang()));
+//                    Double he_shurunew=add(newji,Double.parseDouble(groupBuyingDetailBean.getCl_qigou()));
+//                    BigDecimal b1 = new BigDecimal(he_shurunew);
+//                    double f2 = b1.setScale(3, BigDecimal.ROUND_HALF_UP).doubleValue();
+//                    tv_item_cart_buy_num.setText(f2 + "");
+//                }
 
             }
             double x = (Double.parseDouble(tv_item_cart_buy_num.getText().toString())) * (Double.parseDouble(groupBuyingDetailBean.getCl_jine()));
