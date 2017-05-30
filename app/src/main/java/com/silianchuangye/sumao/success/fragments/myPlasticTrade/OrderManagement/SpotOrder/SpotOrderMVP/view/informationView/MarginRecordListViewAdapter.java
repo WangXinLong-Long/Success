@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.SpotOrder.SpotOrderMVP.MarginRecordItemBean;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -93,7 +94,10 @@ public class MarginRecordListViewAdapter extends BaseAdapter {
             viewHolder.frozen_tv.setText("已解冻");
         }
         //viewHolder.frozen_tv.setText(lists.get(position).get("type").toString());
-        viewHolder.capital.setText(lists.get(position).get("amount").toString());
+        BigDecimal b1 = new BigDecimal(lists.get(position).get("amount").toString());
+                    double f2 = b1.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+                   // tv_item_cart_buy_num.setText(f2 + "");
+        viewHolder.capital.setText(f2+"");
         viewHolder.frozen_date_number.setText(new SimpleDateFormat("yyyy-MM-dd").
                 format(Double.parseDouble(lists.get(position).get("time").toString())));
         viewHolder.frozen_time_number.setText(new SimpleDateFormat("HH:mm:ss").format(Double.parseDouble(lists.get(position).get("time").toString())));

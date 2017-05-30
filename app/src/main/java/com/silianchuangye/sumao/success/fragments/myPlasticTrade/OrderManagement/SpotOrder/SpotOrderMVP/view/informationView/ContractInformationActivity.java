@@ -1,16 +1,20 @@
 package com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.SpotOrder.SpotOrderMVP.view.informationView;
 
+import android.Manifest;
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,6 +24,8 @@ import com.github.barteksc.pdfviewer.PDFView;
 import com.github.barteksc.pdfviewer.listener.OnLoadCompleteListener;
 import com.github.barteksc.pdfviewer.listener.OnPageChangeListener;
 import com.shockwave.pdfium.PdfDocument;
+
+import com.silianchuangye.sumao.success.MyApp;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
@@ -42,6 +48,8 @@ public class ContractInformationActivity extends AppCompatActivity implements On
     private int result;
     private Handler mHandler;
     private String filename;
+    private final static int REQUEST_CODE = 42;
+    public static final int PERMISSION_CODE = 42042;
 
 
     @Override
@@ -56,12 +64,19 @@ public class ContractInformationActivity extends AppCompatActivity implements On
         tv_child_title_bar_title = ((TextView) findViewById(R.id.tv_child_title_bar_title));
         tv_child_title_bar_title.setText("合同信息");
         filename=orderId+".pdf";
-        new MyThread(){
-            @Override
-            public void run() {
-                super.run();
-            }
-        }.start();
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            //申请WRITE_EXTERNAL_STORAGE权限
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+        }else{
+            Log.d("没有权限","没有权限");
+            new MyThread(){
+                @Override
+                public void run() {
+                    super.run();
+                }
+            }.start();
+        }
+
 
         mHandler = new Handler() {
             @Override
@@ -74,7 +89,6 @@ public class ContractInformationActivity extends AppCompatActivity implements On
 
                         if (result==0||result==1){
                             Log.d("if","if");
-                            //displayFromAssets("10051500000003.pdf");
                             displayFromFile(new File(Environment.getExternalStorageDirectory()+"/"+filename));
                         }else{
                             Log.d("else","else");
@@ -93,6 +107,32 @@ public class ContractInformationActivity extends AppCompatActivity implements On
 
 
     }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        Log.d("进来","进来了");
+        doNext(requestCode,grantResults);
+    }
+    private void doNext(int requestCode, int[] grantResults) {
+        if (requestCode == 1) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission Granted
+                Log.d("确定","确定");
+                        new MyThread(){
+                            @Override
+                            public void run() {
+                                super.run();
+                            }
+                        }.start();
+            //}
+
+            } else {
+                // Permission Denied
+                Log.d("拒绝","拒绝");
+                finish();
+            }
+        }
+    }
 
     public class MyThread extends Thread {
         public void run() {
@@ -105,6 +145,26 @@ public class ContractInformationActivity extends AppCompatActivity implements On
 
             mHandler.sendMessage(msg);//向Handler发送消息，
         }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        delete(Environment.getExternalStorageDirectory().toString(),filename);
+
+    }
+
+    public boolean delete(String SDPATH,String fileName) {
+
+        //SDPATH目录路径，fileName文件名
+
+        File file = new File(SDPATH+ "/" + fileName);
+        if (file == null || !file.exists() || file.isDirectory()){
+            return false;
+        }
+        file.delete();
+
+        return true;
     }
 
     public int loadNetWork(){
@@ -157,7 +217,26 @@ public class ContractInformationActivity extends AppCompatActivity implements On
         }
     }
 
-
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[],
+//                                           @NonNull int[] grantResults) {
+//        if (requestCode == PERMISSION_CODE) {
+//            if (grantResults.length > 0
+//                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                launchPicker();
+//            }
+//        }
+//    }
+//    void launchPicker() {
+//        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+//        intent.setType("application/pdf");
+//        try {
+//            startActivityForResult(intent, REQUEST_CODE);
+//        } catch (ActivityNotFoundException e) {
+//            //alert user that file manager not working
+//            Toast.makeText(this, "出现了错误！", Toast.LENGTH_SHORT).show();
+//        }
+//    }
 
     @Override
     public void loadComplete(int nbPages) {
@@ -189,4 +268,6 @@ public class ContractInformationActivity extends AppCompatActivity implements On
     public void onPageChanged(int page, int pageCount) {
 
     }
+
+
 }

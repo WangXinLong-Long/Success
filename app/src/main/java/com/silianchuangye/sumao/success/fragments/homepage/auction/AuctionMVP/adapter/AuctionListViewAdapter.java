@@ -104,7 +104,7 @@ public class AuctionListViewAdapter extends BaseAdapter {
         if (endTimeMill == null) {
             endTimeMill = "0";
         }
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日 hh:mm:mm");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String startData = simpleDateFormat.format(Double.parseDouble(startTimeMill));
         String endData = simpleDateFormat.format(Double.parseDouble(endTimeMill));
         if (state == null || state.equals("0")) {

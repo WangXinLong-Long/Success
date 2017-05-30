@@ -20,6 +20,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -53,17 +54,17 @@ public class PaymentInformationActivity extends AppCompatActivity implements Vie
     private List<Map<String,Object>> list_freeZe;
     private String payTail_type="";
     private String payTail_amount;
-    private String payTail_time;
+    private String payTail_time="";
     private String unFreeze_Type;
     private String unFreeze_amount;
-    private String unFreeze_time;
+    private String unFreeze_time="";
     private String Freeze_amount;
     private String shoukuanren,shoukuanbank,shoukuanzhanghao;
     private String fukuanren="",fukuanbank,fukuanzhanghao;
     private float money=0  ;
     private String lasttime;
     private String force_type;
-    private String force_time;
+    private String force_time="";
     private String force_amount;
     private List<Map<String,Object>> forcelist;
     private float forcemoney=0;
@@ -275,10 +276,20 @@ public class PaymentInformationActivity extends AppCompatActivity implements Vie
             counter_fee_has_paded_number.setText(serviceFee);
             Log.d("状态的值",State);
             if (State.equals("QUOTED")||State.equals("CHANGED")){
-                counter_fee_date_number.setText(new SimpleDateFormat("yyyy-MM-dd").
-                    format(Double.parseDouble(payTail_time)) );
-                counter_fee_time_number.setText(new SimpleDateFormat("HH:mm:ss").
-                    format(Double.parseDouble(payTail_time)));
+                if (!payTail_time.equals("")) {
+                    counter_fee_date_number.setText(new SimpleDateFormat("yyyy-MM-dd").
+                            format(Double.parseDouble(payTail_time)));
+                    counter_fee_time_number.setText(new SimpleDateFormat("HH:mm:ss").
+                            format(Double.parseDouble(payTail_time)));
+                }else{
+                    counter_fee_date_number.setText("");
+                    counter_fee_time_number.setText("");
+                    counter_fee_date_number.setVisibility(View.GONE);
+                    counter_fee_time_number.setVisibility(View.GONE);
+                    //把日期时间隐藏
+                    counter_fee_time_tv.setVisibility(View.GONE);
+                    counter_fee_date_tv.setVisibility(View.GONE);
+                }
             }else if(State.equals("SUBMITTED")||State.equals("PENDING_APPROVAL")||State.equals("APPROVED")||State.equals("FAILED_APPROVAL")||State.equals("REMOVED") ){
                 counter_fee_date_number.setVisibility(View.GONE);
                 counter_fee_time_number.setVisibility(View.GONE);
@@ -360,12 +371,16 @@ public class PaymentInformationActivity extends AppCompatActivity implements Vie
 
     private void event(){
         Log.d("payTail的值",payTail_type);
+        Log.d("state的值",payTail_amount);
 
 
             if (State.equals("QUOTED")||State.equals("CHANGED")){
                 if (payTail_type.equals("payTail") && payTail_type!=null && !payTail_type.equals("")) {
                     //                    货款记录
-                    capital.setText(payTail_amount);
+                    BigDecimal b1 = new BigDecimal(payTail_amount);
+                    double f2 = b1.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+                    //tv_item_cart_buy_num.setText(f2 + "");
+                    capital.setText(f2+"");
                     //frozen_date_number.setText(inBean.getCl_yidrq());
                     frozen_date_number.setText(new SimpleDateFormat("yyyy-MM-dd").
                             format(Double.parseDouble(payTail_time)));

@@ -93,7 +93,7 @@ public class Ok_Dialog extends Activity {
             public void onClick(View v) {
                 //finish();
 
-                if (type.equals("预售")){
+                if (type.equals("预售")||type.equals("预售订单")){
                     Intent intent=new Intent(Ok_Dialog.this,OrderGoodsActivity.class);
                     intent.putExtra("title","预售订单");
                     startActivity(intent);

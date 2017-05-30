@@ -101,8 +101,7 @@ public class RealTimeMarketFragment extends Fragment {
         return view;
     }
     public void getinfo(){
-//        sp=getActivity().getSharedPreferences("sumao",Activity.MODE_PRIVATE);
-//        unique=sp.getString("unique","");
+
         String url= SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/catalog/ProductCatalogActor/auctionProductPriceList";
         RequestParams rp = new RequestParams(url);
         rp.addParameter("productId", productId);
@@ -184,7 +183,7 @@ public class RealTimeMarketFragment extends Fragment {
                    map.put("bianhao", uCompany);
                    Log.d("编号---》",uCompany);
                }else {
-                   map.put("bianhao", auctionPricelistBean.getBuyerId());
+                   map.put("bianhao", auctionPricelistBean.getFormatSequenceNum());
                    Log.d("编号",auctionPricelistBean.getBuyerId());
                }
                 map.put("danjia", auctionPricelistBean.getBidPrice());

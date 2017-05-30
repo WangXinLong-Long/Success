@@ -9,6 +9,7 @@ import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -22,6 +23,8 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -686,12 +689,12 @@ public static File saveFile(Bitmap bm,String path, String fileName) throws IOExc
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
-//    @PermissionGrant(REQUEST_CODE_TAKE_PHOTO)
-//    public void requestCameraSuccess() {
-//        canTakePhoto = true;
-//
-//    }
-//
+    @PermissionGrant(REQUEST_CODE_TAKE_PHOTO)
+    public void requestCameraSuccess() {
+        canTakePhoto = true;
+
+    }
+
 //    @PermissionDenied(REQUEST_CODE_TAKE_PHOTO)
 //    public void requestCameraFailed() {
 //        canTakePhoto = false;
@@ -718,12 +721,19 @@ public static File saveFile(Bitmap bm,String path, String fileName) throws IOExc
         texthotograph.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(intent, 1);
+                //原来的调用相机
+//                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                startActivityForResult(intent, 1);
                 popupWindow.dismiss();
-               // uploadPicture();
+                if (ContextCompat.checkSelfPermission(DataDetailsActivity.this, Manifest.permission.CAMERA)!= PackageManager.PERMISSION_GRANTED) {
+                     ActivityCompat.requestPermissions( DataDetailsActivity.this,new String[]{Manifest.permission.CAMERA}, 1);
+                } else {
+                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(intent, 1);
+                }
+
             }
+
         });
         textphoto.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,10 +1,12 @@
 package com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -13,6 +15,8 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.ActionBarOverlayLayout;
@@ -97,12 +101,14 @@ public class FirmInfoTypeActivity extends AppCompatActivity implements IFirmInfo
     private String tupian="";
     private String info="";
     private String tupianpath="";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_firm_info_type);
         getEntInformation = new GetEntInformationPresenter(this);
         lv_type = (ListView) findViewById(R.id.lv_Firm_Type);
+        //_failed= (TextView) findViewById(R.id.tv_failed);
         btUpload= (Button) findViewById(R.id.bt_upload);
         btUpload.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -290,26 +296,17 @@ public class FirmInfoTypeActivity extends AppCompatActivity implements IFirmInfo
             @Override
             public void onClick(View v) {
                 // 调用系统的拍照功能
-                //      Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-// 指定调用相机拍照后照片的储存路径
-//                intent.putExtra(MediaStore.EXTRA_OUTPUT,
-//                        Uri.fromFile(tempFile));
-//              //  filepath=Uri.fromFile(tempFile).toString();
-//               // Log.d("相机路径",filepath);
-//                startActivityForResult(intent, PHOTO_REQUEST_TAKEPHOTO);
-//                //getImageFromCamera();
 
-//                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                startActivityForResult(intent, 1);
-//                popupWindow.dismiss();
-                tupian=getPhotoFileName();
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
-
-                //intent.putExtra(MediaStore.EXTRA_OUTPUT, mOutPutFileUri);
-                startActivityForResult(intent, 1);
+                tupianpath=getPhotoFileName();
                 popupWindow.dismiss();
+                if (ContextCompat.checkSelfPermission(FirmInfoTypeActivity.this, Manifest.permission.CAMERA)!= PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(FirmInfoTypeActivity.this,new String[]{Manifest.permission.CAMERA}, 1);
+                } else {
+                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(intent, 1);
+                }
             }
+
         });
         textphoto.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -61,6 +61,7 @@ import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -144,6 +145,7 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
     private TextView tv_Count;
     private TextView tv_money;
     private String servicesFree;
+    String result1="";
    // private CustomListView typespot_order_listView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -276,10 +278,12 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
                     JSONObject jsonObject=new JSONObject(result);
                     String order=jsonObject.getString("order");
                     JSONObject object=new JSONObject(order);
-                    String shippingGroupState=object.getString("shippingGroupState");
+                    if (result.contains("shippingGroupState")) {
+                        String shippingGroupState = object.getString("shippingGroupState");
+                    }
                     price=object.getString("price");
                     String contract=object.getString("contract");
-                     submittedDate=object.getString("submittedDate");
+                    submittedDate=object.getString("submittedDate");
                     state=object.getString("state");
                     owner=object.getString("owner");
                     type=object.getString("type");
@@ -439,7 +443,9 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         long countDownTime = 0;
-        bottom_money2.setText(String.valueOf(price)+"元");
+        BigDecimal b1 = new BigDecimal(String.valueOf(price));
+        double f1 = b1.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+        bottom_money2.setText(f1+"元");
         if (type.equals("fixedPricingOrder")) {//现货
             type2.setText("现货");
             tv_xianqing_type.setText("现货");
@@ -914,6 +920,7 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
                             //支付订单的接口
                             //getzhifu(position);
                             fukuan(list_pop.get(i).message);
+//                            fukuan_update(list_pop.get(i).message);
 
 
                         } else if (i == list_pop.size() - 1) {
@@ -929,9 +936,9 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
             lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    if (list_pop.get(position).tv_Name.equals("昆仑银行")) {
-                        Toast.makeText(SpotOrder.this, "昆仑银行需要进行网关支付", Toast.LENGTH_SHORT).show();
-                    } else {
+//                    if (list_pop.get(position).tv_Name.equals("昆仑银行")) {
+//                        Toast.makeText(SpotOrder.this, "昆仑银行需要进行网关支付", Toast.LENGTH_SHORT).show();
+//                    } else {
                         if (parent.getId() == lv.getId()) {
                             for (int i = 0; i < list_pop.size(); i++) {
                                 Log.d("Listview的item", position + "");
@@ -942,7 +949,7 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
                             list_pop.get(position).Flag = !list_pop.get(position).Flag;
                             adapter1.notifyDataSetChanged();
                         }
-                    }
+                   // }
 
                 }
             });
@@ -1043,20 +1050,54 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
         SharedPreferences sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
         String unique=sp.getString("unique","");
         rp.addParameter("_dynSessConf",unique);
-        x.http().post(rp, new Callback.CommonCallback<String>() {
+//        rp.getConnectTimeout(1000 * 60);
+//        rp.setMaxRetryCount(0);
+        Log.d("请求的接口",rp+"");
+        rp.setConnectTimeout(1000*600);
+        x.http().get(rp, new Callback.CommonCallback<String>() {
+
             @Override
             public void onSuccess(String result) {
                 Log.d("result的值",result);
-                Loding.dis();
+                result1=result;
 
-                if (result.contains("paymentStatus")) {
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+               //onCancelled();
+                //onCancelled();
+               // on
+               // callback.cancel();
+                Loding.dis();
+                Toast.makeText(SpotOrder.this, "网络连接超时,请到订单详情页查看支付情况!", Toast.LENGTH_SHORT).show();
+
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+
+            }
+
+            @Override
+            public void onFinished() {
+                Loding.dis();
+                if (result1.contains("paymentStatus")) {
                     try {
-                        JSONObject obj = new JSONObject(result);
+                        JSONObject obj = new JSONObject(result1);
                         String state = obj.getString("paymentStatus");
                         Log.d("state的值", state);
                         if (state.equals("0")) {
                             Intent intent = new Intent(SpotOrder.this, Ok_Dialog.class);
-                            intent.putExtra("type", "现货");
+                            if (type2.getText().toString().equals("预售")) {
+                                Log.d("预售","预售");
+                                intent.putExtra("type", "预售订单");
+                            } else {
+                                Log.d("现货","现货");
+                                intent.putExtra("type", "现货订单");
+                            }
                             intent.putExtra("number", OrderId);
                             startActivity(intent);
                             LogUtils.log("orderIds--->" + OrderId);
@@ -1076,13 +1117,66 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
                     startActivity(intent);
                 }
             }
+        });
+        //callback.cancel();
+//
+    }
+
+    public void fukuan_update(String BankId){
+        String url=SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/payment/OrderPayment/orderPayment";
+        RequestParams rp=new RequestParams(url);
+        rp.addParameter("orderIds",OrderId);
+        rp.addParameter("platform",BankId);
+        SharedPreferences sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+        String unique=sp.getString("unique","");
+        rp.addParameter("_dynSessConf",unique);
+        Callback.Cancelable cancelable
+                // 使用CacheCallback, xUtils将为该请求缓存数据.
+                = x.http().get(rp, new Callback.CacheCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.d("result的值",result);
+                Loding.dis();
+                if (result1.contains("paymentStatus")) {
+                    try {
+                        JSONObject obj = new JSONObject(result1);
+                        String state = obj.getString("paymentStatus");
+                        Log.d("state的值", state);
+                        if (state.equals("0")) {
+                            Intent intent = new Intent(SpotOrder.this, Ok_Dialog.class);
+                            if (type2.getText().toString().equals("预售")) {
+                                Log.d("预售","预售");
+                                intent.putExtra("type", "预售订单");
+                            } else {
+                                Log.d("现货","现货");
+                                intent.putExtra("type", "现货订单");
+                            }
+                            intent.putExtra("number", OrderId);
+                            startActivity(intent);
+                            LogUtils.log("orderIds--->" + OrderId);
+                        }else{
+                            Intent intent = new Intent(SpotOrder.this, Error_Dialog.class);
+                            intent.putExtra("number", OrderId);
+                            startActivity(intent);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                } else {
+                    // Log.d("支付结果的返回值", "不等于空");
+                    Intent intent = new Intent(SpotOrder.this, Error_Dialog.class);
+                    intent.putExtra("number", OrderId);
+                    startActivity(intent);
+                }
+
+
+            }
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-//                Loding.dis();
-//                Intent intent = new Intent(SpotOrder.this, Error_Dialog.class);
-//                intent.putExtra("number", OrderId);
-//                startActivity(intent);
+                Toast.makeText(SpotOrder.this, "网络异常,请去订单详情页查看该订单支付情况!", Toast.LENGTH_SHORT).show();
+
             }
 
             @Override
@@ -1094,7 +1188,14 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
             public void onFinished() {
 
             }
+
+            @Override
+            public boolean onCache(String result) {
+                Log.d("返回在那里",result);
+                return true;
+            }
         });
+
 
     }
 

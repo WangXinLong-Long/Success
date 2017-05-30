@@ -434,6 +434,8 @@ public class PayOrderListActivity extends Activity implements View.OnClickListen
         SharedPreferences sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
         String unique=sp.getString("unique","");
         rp.addParameter("_dynSessConf",unique);
+        rp.setConnectTimeout(1000*600);
+       // rp.setMaxRetryCount(0);
         x.http().post(rp, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
@@ -469,6 +471,8 @@ public class PayOrderListActivity extends Activity implements View.OnClickListen
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
+                Loding.dis();
+                Toast.makeText(PayOrderListActivity.this, "网络连接超时,请到订单详情页查看支付情况!", Toast.LENGTH_SHORT).show();
 //                Loding.dis();
 //                Intent intent = new Intent(PayOrderListActivity.this, Error_Dialog.class);
 //                intent.putExtra("number", orderId);

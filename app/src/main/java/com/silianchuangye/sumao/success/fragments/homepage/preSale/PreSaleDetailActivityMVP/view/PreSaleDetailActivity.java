@@ -442,19 +442,21 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
                 if (num > Double.valueOf(preSaleDetailBean.getCl_shuliang())) {
                     edt_num.setText(preSaleDetailBean.getCl_shuliang());
                 } else {
-                    int beishu=(int)div(num,Double.parseDouble(preSaleDetailBean.getCl_xiaobian()),1);
+                    Double jianshu=sub(num,Double.parseDouble(preSaleDetailBean.getCl_qigou()));
+                    int beishu=(int)div(jianshu,Double.parseDouble(preSaleDetailBean.getCl_xiaobian()),1);
                     Log.d("倍数的值",beishu+"");
                     if (beishu<=0){
                         edt_num.setText(preSaleDetailBean.getCl_qigou());
                     }else {
                         Double ji = mul(beishu, Double.parseDouble(preSaleDetailBean.getCl_xiaobian()));
-                        Log.d("即的值", ji + "");
-                        edt_num.setText(ji + "");
+//
+                        Double he=add(ji,Double.parseDouble(preSaleDetailBean.getCl_qigou()));
+                        BigDecimal b = new BigDecimal(he);
+                        double f1 = b.setScale(3, BigDecimal.ROUND_HALF_UP).doubleValue();
+                        edt_num.setText(f1 + "");
                     }
 
-//                    BigDecimal b = new BigDecimal(mul(Double.parseDouble(edt_num.getText().toString()),Double.parseDouble(preSaleDetailBean.getCl_jiner())));
-//                    double f1 = b.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
-                    // viewHolder.price.setText(f1 + "");
+//
                     //tv_item_cart_all_price.setText(f1+"元");
                    // tv_item_cart_all_price.setText(mul(Double.parseDouble(edt_num.getText().toString()),Double.parseDouble(preSaleDetailBean.getCl_jiner()))+"元");
                   //  tv_item_cart_all_price.setText(df.format(Double.parseDouble(edt_num.getText().toString())*Double.parseDouble(preSaleDetailBean.getCl_jiner())+""));
@@ -468,14 +470,21 @@ public class PreSaleDetailActivity extends Activity implements View.OnClickListe
                 if (num1 < Double.valueOf(preSaleDetailBean.getCl_qigou())) {
                     edt_num.setText(preSaleDetailBean.getCl_qigou());
                 } else {
-                    int beishu=(int)div(num1,Double.parseDouble(preSaleDetailBean.getCl_xiaobian()),1);
+                    Double jianshu=sub(num1,Double.parseDouble(preSaleDetailBean.getCl_qigou()));
+                    int beishu=(int)div(jianshu,Double.parseDouble(preSaleDetailBean.getCl_xiaobian()),1);
                     Log.d("倍数的值",beishu+"");
                     if (beishu<=0){
                         edt_num.setText(preSaleDetailBean.getCl_qigou());
                     }else {
+//                        Double ji = mul(beishu, Double.parseDouble(preSaleDetailBean.getCl_xiaobian()));
+//                        Log.d("即的值", ji + "");
+//                        edt_num.setText(ji + "");
                         Double ji = mul(beishu, Double.parseDouble(preSaleDetailBean.getCl_xiaobian()));
-                        Log.d("即的值", ji + "");
-                        edt_num.setText(ji + "");
+//
+                        Double he=add(ji,Double.parseDouble(preSaleDetailBean.getCl_qigou()));
+                        BigDecimal b = new BigDecimal(he);
+                        double f1 = b.setScale(3, BigDecimal.ROUND_HALF_UP).doubleValue();
+                        edt_num.setText(f1 + "");
                     }
 //                    BigDecimal b = new BigDecimal(mul(Double.parseDouble(edt_num.getText().toString()),Double.parseDouble(preSaleDetailBean.getCl_jiner())));
 //                    double f1 = b.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();

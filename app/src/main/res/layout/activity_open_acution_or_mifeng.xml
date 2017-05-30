@@ -231,6 +231,15 @@
                         android:text="02时00分23秒"
                         android:textColor="#f00"
                         android:textSize="16sp" />
+                    <TextView
+                        android:id="@+id/tvTimeValue2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/x3"
+                        android:text="02时00分23秒"
+                        android:textColor="#f00"
+                        android:visibility="gone"
+                        android:textSize="16sp" />
 
                 </LinearLayout>
 

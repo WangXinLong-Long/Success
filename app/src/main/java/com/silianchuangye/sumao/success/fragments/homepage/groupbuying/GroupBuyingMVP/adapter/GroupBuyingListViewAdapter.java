@@ -84,7 +84,7 @@ public class GroupBuyingListViewAdapter extends BaseAdapter {
         } else {
             viewHolder = ((ViewHolder) convertView.getTag());
         }
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:mm");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String shangpinId = list.get(position).getId();
         viewHolder.tv_name.setText(list.get(position).getCl_mingcheng());
 

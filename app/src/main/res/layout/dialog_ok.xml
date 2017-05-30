@@ -62,6 +62,7 @@
             android:layout_below="@+id/tv_ok_text"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/x10"
+            android:id="@+id/for_gone"
             android:orientation="horizontal">
 
             <TextView

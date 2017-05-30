@@ -9,6 +9,7 @@ import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -22,6 +23,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 
@@ -288,44 +291,14 @@ public class RegisterPicture extends AppCompatActivity implements LGImgCompresso
             @Override
             public void onClick(View v) {
                 // 调用系统的拍照功能
-//                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-// //指定调用相机拍照后照片的储存路径
-//                intent.putExtra(MediaStore.EXTRA_OUTPUT,
-//                        Uri.fromFile(tempFile));
-//              //  filepath=Uri.fromFile(tempFile).toString();
-//               // Log.d("相机路径",filepath);
-//                startActivityForResult(intent, PHOTO_REQUEST_TAKEPHOTO);
-//                //getImageFromCamera();
-
-//                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                startActivityForResult(intent, 1);
-//                popupWindow.dismiss();
-//                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//
-//
-//                File fileDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-//                File imageFile = null;
-//                try {
-//                    imageFile = File.createTempFile(getPhotoFileName(), ".jpg", fileDir);
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//                Log.d("imagepath_forpaizhai",""+Uri.fromFile(imageFile)+"");
-//                SharedPreferences sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
-//                SharedPreferences.Editor editor=sp.edit();
-//                editor.putString("imagepath_forpaizhai", Uri.fromFile(imageFile)+"");
-//                editor.commit();
-//                Log.d("imagepath_forpaizhai",""+Uri.fromFile(imageFile)+"");
-//                intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(imageFile));
-//                startActivityForResult(intent, 1);
-//                popupWindow.dismiss();
                 trime=getPhotoFileName();
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
-
-                //intent.putExtra(MediaStore.EXTRA_OUTPUT, mOutPutFileUri);
-                startActivityForResult(intent, 1);
                 popupWindow.dismiss();
+                if (ContextCompat.checkSelfPermission(RegisterPicture.this, Manifest.permission.CAMERA)!= PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(RegisterPicture.this,new String[]{Manifest.permission.CAMERA}, 1);
+                } else {
+                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(intent, 1);
+                }
 
             }
         });
