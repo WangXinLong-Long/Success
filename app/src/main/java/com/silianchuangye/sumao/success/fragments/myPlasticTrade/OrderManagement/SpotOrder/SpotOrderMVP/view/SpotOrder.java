@@ -274,68 +274,74 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
 //                Gson gson=new Gson();
 //                orderBean=gson.fromJson(result,PreSellAllBean.OrderBean.class);
 //                setValue(orderBean);
-                try {
-                    JSONObject jsonObject=new JSONObject(result);
-                    String order=jsonObject.getString("order");
-                    JSONObject object=new JSONObject(order);
-                    if (result.contains("shippingGroupState")) {
-                        String shippingGroupState = object.getString("shippingGroupState");
-                    }
-                    price=object.getString("price");
-                    String contract=object.getString("contract");
-                    submittedDate=object.getString("submittedDate");
-                    state=object.getString("state");
-                    owner=object.getString("owner");
-                    type=object.getString("type");
-                    cl_fangshi=object.getString("cl_fangshi");
-                    //orderId=object.getString("orderId");
-                    String cl=object.getString("cl");
-                    JSONArray jsonarray=new JSONArray(cl);
-                    for (int i=0;i<jsonarray.length();i++){
-                        JSONObject jsonobj=jsonarray.getJSONObject(i);
-                        String cl_mingcheng=jsonobj.getString("cl_mingcheng");
-                        String cl_gongsiId=jsonobj.getString("cl_gongsiId");
-                        String deliveryStartDate=jsonobj.getString("deliveryStartDate");
-                        String cl_gongsi=jsonobj.getString("cl_gongsi");
-                        String deliveryEndDate=jsonobj.getString("deliveryEndDate");
-                        String cl_jine=jsonobj.getString("cl_jine");
-                        String cl_id=jsonobj.getString("cl_id");
-                        String cl_amount=jsonobj.getString("cl_amount");
-                        String cl_qiyeonlyId=jsonobj.getString("cl_qiyeonlyId");
-                        String cl_fenlei=jsonobj.getString("cl_fenlei");
-                        String cl_jituan=jsonobj.getString("cl_jituan");
-                        String cl_cangku=jsonobj.getString("cl_cangku");
-                        String cl_shuliang=jsonobj.getString("cl_shuliang");
-                        if (jsonobj.toString().contains("paymentEndDate")){
-                            paymentEndDate =jsonobj.getString("paymentEndDate");
-                        }else{
-                            paymentEndDate ="abc";
+                if (result.contains("shippingGroupState")) {
+                    try {
+                        JSONObject jsonObject = new JSONObject(result);
+                        String order = jsonObject.getString("order");
+                        JSONObject object = new JSONObject(order);
+                        if (result.contains("shippingGroupState")) {
+                            String shippingGroupState = object.getString("shippingGroupState");
                         }
-                        Map<String,Object> map=new Hashtable<String, Object>();
-                        map.put("cl_mingcheng",cl_mingcheng);
-                        map.put("cl_gongsiId",cl_gongsiId);
-                        map.put("deliveryStartDate",deliveryStartDate);
-                        map.put("cl_gongsi",cl_gongsi);
-                        map.put("deliveryEndDate",deliveryEndDate);
-                        map.put("cl_jine",cl_jine);
-                        map.put("cl_id",cl_id);
-                        map.put("cl_amount",cl_amount);
-                        map.put("cl_qiyeonlyId",cl_qiyeonlyId);
-                        map.put("cl_fenlei",cl_fenlei);
-                        map.put("cl_jituan",cl_jituan);
-                        map.put("cl_cangku",cl_cangku);
+                        if (result.contains("price")) {
+                            price = object.getString("price");
+                        }
+                        String contract = object.getString("contract");
+                        submittedDate = object.getString("submittedDate");
+                        state = object.getString("state");
+                        owner = object.getString("owner");
+                        type = object.getString("type");
+                        cl_fangshi = object.getString("cl_fangshi");
+                        //orderId=object.getString("orderId");
+                        String cl = object.getString("cl");
+                        JSONArray jsonarray = new JSONArray(cl);
+                        for (int i = 0; i < jsonarray.length(); i++) {
+                            JSONObject jsonobj = jsonarray.getJSONObject(i);
+                            String cl_mingcheng = jsonobj.getString("cl_mingcheng");
+                            String cl_gongsiId = jsonobj.getString("cl_gongsiId");
+                            String deliveryStartDate = jsonobj.getString("deliveryStartDate");
+                            String cl_gongsi = jsonobj.getString("cl_gongsi");
+                            String deliveryEndDate = jsonobj.getString("deliveryEndDate");
+                            String cl_jine = jsonobj.getString("cl_jine");
+                            String cl_id = jsonobj.getString("cl_id");
+                            String cl_amount = jsonobj.getString("cl_amount");
+                            String cl_qiyeonlyId = jsonobj.getString("cl_qiyeonlyId");
+                            String cl_fenlei = jsonobj.getString("cl_fenlei");
+                            String cl_jituan = jsonobj.getString("cl_jituan");
+                            String cl_cangku = jsonobj.getString("cl_cangku");
+                            String cl_shuliang = jsonobj.getString("cl_shuliang");
+                            if (jsonobj.toString().contains("paymentEndDate")) {
+                                paymentEndDate = jsonobj.getString("paymentEndDate");
+                            } else {
+                                paymentEndDate = "abc";
+                            }
+                            Map<String, Object> map = new Hashtable<String, Object>();
+                            map.put("cl_mingcheng", cl_mingcheng);
+                            map.put("cl_gongsiId", cl_gongsiId);
+                            map.put("deliveryStartDate", deliveryStartDate);
+                            map.put("cl_gongsi", cl_gongsi);
+                            map.put("deliveryEndDate", deliveryEndDate);
+                            map.put("cl_jine", cl_jine);
+                            map.put("cl_id", cl_id);
+                            map.put("cl_amount", cl_amount);
+                            map.put("cl_qiyeonlyId", cl_qiyeonlyId);
+                            map.put("cl_fenlei", cl_fenlei);
+                            map.put("cl_jituan", cl_jituan);
+                            map.put("cl_cangku", cl_cangku);
 
-                        map.put("paymentEndDate",paymentEndDate);
-                        map.put("cl_shuliang",cl_shuliang);
-                        list.add(map);
+                            map.put("paymentEndDate", paymentEndDate);
+                            map.put("cl_shuliang", cl_shuliang);
+                            list.add(map);
+                        }
+                        Log.d("物流方式的值", cl_fangshi);
+                        spotOrderAdapter = new SpotOrderAdapter(SpotOrder.this, list, cl_fangshi);
+
+                        spot_order_listView.setAdapter(spotOrderAdapter);
+                        spotOrderAdapter.notifyDataSetChanged();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                    Log.d("物流方式的值",cl_fangshi);
-                    spotOrderAdapter = new SpotOrderAdapter(SpotOrder.this,list,cl_fangshi);
-
-                    spot_order_listView.setAdapter(spotOrderAdapter);
-                    spotOrderAdapter.notifyDataSetChanged();
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                }else{
+                    Toast.makeText(SpotOrder.this, "请稍后查看订单!", Toast.LENGTH_SHORT).show();
                 }
                 setValue();
                 typeinfo();

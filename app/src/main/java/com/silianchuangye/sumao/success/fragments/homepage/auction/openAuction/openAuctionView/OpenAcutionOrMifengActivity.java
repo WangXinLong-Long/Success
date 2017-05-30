@@ -258,9 +258,8 @@ public class OpenAcutionOrMifengActivity extends AppCompatActivity implements IO
                 String d = format.format(time);
                 Date date1 = format.parse(d);
                 Date date = new Date();
-                long startTime = date1.getTime() - date.getTime() + 4000;
+                long startTime = date1.getTime() - date.getTime() + 2000;
                 if (startTime > 0) {
-                   // tvTimeValue.setText("");
                     tvTimeValue2.setVisibility(View.GONE);
                     mc = new MyCount(startTime, 1000).start();
                 }
@@ -277,7 +276,7 @@ public class OpenAcutionOrMifengActivity extends AppCompatActivity implements IO
                     Long time = new Long(timeEnd);
                     String d = format.format(time);
                     Date date1 = format.parse(d);
-                    long startTime = date1.getTime() - date.getTime();
+                    long startTime = date1.getTime() - date.getTime()+2000;
 
                     if (startTime > 0) {
 //                        mc1.cancel();
@@ -299,7 +298,7 @@ public class OpenAcutionOrMifengActivity extends AppCompatActivity implements IO
                     String d = format.format(time);
                     Date date1 = format.parse(d);
 
-                    long startTime = date1.getTime() - date.getTime()+3000;
+                    long startTime = date1.getTime() - date.getTime();
                     if (startTime > 0) {
                         tvTimeValue2.setVisibility(View.VISIBLE);
                         new MyCount1(startTime,1000).start();
