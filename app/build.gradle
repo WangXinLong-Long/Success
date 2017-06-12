@@ -25,26 +25,56 @@ android {
         applicationId "com.silianchuangye.sumao.success"
         minSdkVersion 15
         targetSdkVersion 23
+
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
+        ndk{
+            abiFilters  "armeabi","x86"
+        }
+
+
+
+
+
+
+
+
+
+
+
     }
-    /*productFlavors {
-        // Define separate dev and prod product flavors.
-        dev {
-            // dev utilizes minSDKVersion = 21 to allow the Android gradle plugin
-            // to pre-dex each module and produce an APK that can be tested on
-            // Android Lollipop without time consuming dex merging processes.
-            minSdkVersion 21
+    //这里做了修改
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to checkforerrorsinrelease builds,
+        // but continue the build even whenerrorsarefound:
+        abortOnError false
+    }
+    productFlavors {
+        xiaomi {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "xiaomi"]
         }
-        prod {
-            // The actual minSdkVersion for the application.
-            minSdkVersion 14
+        _360 {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "_360"]
         }
-    }*/
+
+        yingyongbao{
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "yingyongbao"]
+        }
+        huawei{
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "huawei"]
+        }
+        vivo{
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "vivo"]
+        }
+    }
+
     buildTypes {
         release {
-            minifyEnabled true
+           // minifyEnabled true
+            minifyEnabled false
+            shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -122,6 +152,7 @@ dependencies {
     compile 'com.android.support:multidex:1.0.1'
     compile files('libs/CCP_REST_SDK_JAVA_v2.7r.jar')
     compile files('libs/aspectjrt.jar')
+    //    compile project(':android-pdf-viewer')
     compile project(':android-pdf-viewer')
 }
 

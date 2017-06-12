@@ -96,7 +96,7 @@ public void clearData(){
             viewHolder.price.setText(f1 + "");
         }
 
-        viewHolder.price.setText(preSaleModels.get(position).getIn_prix().toString());
+      //  viewHolder.price.setText(preSaleModels.get(position).getIn_prix().toString());
         viewHolder.company.setText(preSaleModels.get(position).getIn_qiye());
         viewHolder.warehouse.setText(preSaleModels.get(position).getIn_cangku());
 

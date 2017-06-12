@@ -2,11 +2,14 @@ package com.silianchuangye.sumao.success;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -44,6 +47,7 @@ import com.silianchuangye.sumao.success.fragments.pagerTwoMVP.PagerTwo;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
@@ -79,6 +83,8 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
     boolean networkConnections = false;
     private String[] fragmentTag;
     private String unique;
+    private UpdateManger mUpdateManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,17 +101,71 @@ public class MainActivity extends FragmentActivity implements EMEventListener {
         initView(savedInstanceState);
         init();
         showIntent(savedInstanceState);
-        //JPushInterface.setAliasAndTags(MainActivity.this,);
-        //New_mobile_phone_verification_code_et.getText().toString()
-       // SharedPreferences sh_phone=getSharedPreferences("sumao_phone",Activity.MODE_PRIVATE);
-        //SharedPreferences.Editor editor_phone=sh_phone.edit();
-        //editor_phone.putString("phone",loginUserInfoBean.getU_phone());
-       // editor_phone.commit();
-//        String phone=sh_phone.getString("phone","");
-//        if (!phone.equals("")){
-//            JPushInterface.setAlias(MainActivity.this,phone,null);
+        //SharedPreferences sp=getSharedPreferences("sumaoapp",)
+        getVersion();
+//        try {
+//            int versioncode=getPackageManager().getPackageInfo(getPackageName(), 0).versionCode;
+//            Log.d("当前的版本",versioncode+"");
+//            if (2>versioncode){
+//                mUpdateManager = new UpdateManger(MainActivity.this);
+//                mUpdateManager.checkUpdateInfo();
+//            }
+//        } catch (PackageManager.NameNotFoundException e) {
+//            e.printStackTrace();
 //        }
+
+
     }
+
+    public void getVersion(){
+        String url=SuMaoConstant.SUMAO_IP+"/rest/model/atg/version/AndroidVersio";
+        RequestParams rp=new RequestParams(url);
+        x.http().post(rp, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.d("版本号的返回值",result);
+                try {
+                    JSONObject json=new JSONObject(result);
+                    String apkurl=json.getString("VersionLink");
+                    String versionnumber=json.getString("VersionId");
+                    Log.d("服务器上的版本号",versionnumber);
+                    int version=Integer.parseInt(versionnumber);
+                    Log.d("服务器上的版本",version+"");
+                    try {
+                        int versioncode=getPackageManager().getPackageInfo(getPackageName(), 0).versionCode;
+                        Log.d("当前的版本",versioncode+"");
+                        if (version>versioncode){
+                            mUpdateManager = new UpdateManger(MainActivity.this,apkurl);
+                            mUpdateManager.checkUpdateInfo();
+                        }
+                    } catch (PackageManager.NameNotFoundException e) {
+                        e.printStackTrace();
+                    }
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+    }
+
+
 
     @Override
     protected void onStart() {

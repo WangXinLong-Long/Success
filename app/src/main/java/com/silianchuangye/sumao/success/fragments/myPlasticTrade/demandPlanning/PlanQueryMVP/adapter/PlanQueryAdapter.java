@@ -113,7 +113,7 @@ public class PlanQueryAdapter extends BaseAdapter {
             //状态
             viewHolder.zhuangtai= (TextView) convertView.findViewById(R.id.state_content1);
             tv_seeplan_left_dingdannum= (TextView) convertView.findViewById(R.id.tv_seeplan_left_dingdannum);
-            viewHolder.view_original_plan = ((RelativeLayout) convertView.findViewById(R.id.view_original_plan));
+            //viewHolder.view_original_plan = ((RelativeLayout) convertView.findViewById(R.id.view_original_plan));
             convertView.setTag(viewHolder);
         viewHolder.demand_date_num.setText(list.get(position).get("scheduleDate").toString());
         viewHolder.demand_or_order_number.setText(list.get(position).get("planID").toString());

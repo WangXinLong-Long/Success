@@ -1,7 +1,9 @@
 package com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.SpotOrder.preSell.presellallFragmentMVP.view;
 
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -153,10 +155,12 @@ public class PresellallFragment extends Fragment implements IPresellallFragmentV
         this.Kpstate = KPstate;
 //        String _dynSessConf = getActivity().getSharedPreferences("sumao", Activity.MODE_PRIVATE).getString("unique", "");
         boolean update = updates;
+        SharedPreferences sp=getActivity().getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+        String _dynSessConf=sp.getString("unique","");
         presellallFragmentPresenter.getPresellallFragmentResult(searchTrateType,searchCompanyName, searchOrderType,
                 searchOrderState, pageNum, searchOrderId,
                 startDate, endDate, submitType,
-                searchCheckType/*, _dynSessConf*/, update);
+                searchCheckType,_dynSessConf, update);
     }
 
     //

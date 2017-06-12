@@ -168,7 +168,7 @@ public class GoodsInStockActivity extends Activity implements View.OnClickListen
         provinceList = dbHelper.getProvince();
         cancel_tv= (TextView) findViewById(R.id.cancel_tv);
         goodsInStockActivityPresenter = new GoodsInStockActivityPresenter(this);
-        selection_condition = ((RelativeLayout) findViewById(R.id.selection_condition));
+        //selection_condition = ((RelativeLayout) findViewById(R.id.selection_condition));
         iv_screen_title_bar_search= (ImageView) findViewById(R.id.iv_screen_title_bar_search);
         iv_screen_title_bar_search.setVisibility(View.VISIBLE);
         iv_screen_title_bar_search.setOnClickListener(this);

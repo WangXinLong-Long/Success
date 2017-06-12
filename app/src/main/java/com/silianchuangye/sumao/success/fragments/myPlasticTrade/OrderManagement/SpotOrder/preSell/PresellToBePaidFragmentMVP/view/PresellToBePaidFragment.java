@@ -131,12 +131,12 @@ public class PresellToBePaidFragment extends Fragment implements IPresellToBePai
         String endDate = endDates;//结束日期
         String submitType = subType;//查询类型
         String searchCheckType = KPstate;//开票状态
-//        String _dynSessConf = getActivity().getSharedPreferences("sumao", Activity.MODE_PRIVATE).getString("unique", "");
+        String _dynSessConf = getActivity().getSharedPreferences("sumao", Activity.MODE_PRIVATE).getString("unique", "");
         boolean update = updates;
         presellToBePaidFragmentPresenter.getPresellToBePaidFragmentResult(searchTrateType,searchCompanyName, searchOrderType,
                 searchOrderState, pageNum, searchOrderId,
                 startDate, endDate, submitType,
-                searchCheckType,/* _dynSessConf,*/ update);
+                searchCheckType, _dynSessConf, update);
     }
 
     //

@@ -50,17 +50,21 @@ public class RetrievePasswordActivity extends AppCompatActivity {
         bt_Save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //验证是否修改成功
-                if (!telephone_num.getText().toString().equals(verification_code_num.getText().toString())){
-                    Toast.makeText(RetrievePasswordActivity.this, "两次密码输入不一样", Toast.LENGTH_SHORT).show();
-                }else{
-                    new Thread(){
-                        @Override
-                        public void run() {
-                            super.run();
-                            getSuccess();
-                        }
-                    }.start();
+                if (telephone_num.getText().length()<8||telephone_num.getText().length()>16||verification_code_num.getText().length()<8||verification_code_num.getText().length()>16){
+                    Toast.makeText(RetrievePasswordActivity.this, "密码的长度是8-16位字符", Toast.LENGTH_SHORT).show();
+                }else {
+                    //验证是否修改成功
+                    if (!telephone_num.getText().toString().equals(verification_code_num.getText().toString())) {
+                        Toast.makeText(RetrievePasswordActivity.this, "两次密码输入不一样", Toast.LENGTH_SHORT).show();
+                    } else {
+                        new Thread() {
+                            @Override
+                            public void run() {
+                                super.run();
+                                getSuccess();
+                            }
+                        }.start();
+                    }
                 }
             }
         });

@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -56,6 +57,7 @@ public class CalendarView extends LinearLayout {
 			@Override
 			public void onClick(View v) {
 				monthDateView.onLeftClick();
+				Log.d("上个月","上个月");
 			}
 		});
 		
@@ -64,6 +66,7 @@ public class CalendarView extends LinearLayout {
 			@Override
 			public void onClick(View v) {
 				monthDateView.onRightClick();
+				Log.d("下个月","下个月");
 			}
 		});
 		
@@ -72,6 +75,8 @@ public class CalendarView extends LinearLayout {
 			@Override
 			public void onClick(View v) {
 				monthDateView.setTodayToView();
+				Log.d("今天","今天");
+
 			}
 		});
 	}

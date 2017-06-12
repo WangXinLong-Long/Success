@@ -101,8 +101,17 @@ public class LoginActivity extends BaseActivity {
 		//randomAccount="guanjun123";
 		Log.d("Login帐号",randomAccount);
 		String phone=sharedPreferences.getString("phone","");
-		userPwd=randomAccount+phone;
-		Log.d("password密码",userPwd);
+		String userpass=sharedPreferences.getString("pass_service","");
+		if (userpass.equals("")) {
+			userPwd = randomAccount + phone;
+		}else{
+			userPwd=userpass;
+		}
+		//Log.d("password密码",userPwd);
+
+		//userPwd=sp.getString("pass_service","");
+//		sp.getString("pass_service",randomAccount+phone);
+//		s
 		if (randomAccount.equals("") && userPwd.equals("")){
 			Toast.makeText(LoginActivity.this, "请先登录", Toast.LENGTH_SHORT).show();
 		}else {
@@ -140,7 +149,8 @@ public class LoginActivity extends BaseActivity {
 								if (errorCode == EMError.NONETWORK_ERROR) {
 									Toast.makeText(getApplicationContext(), "网络不可用", Toast.LENGTH_SHORT).show();
 								} else if (errorCode == EMError.USER_ALREADY_EXISTS) {
-									Toast.makeText(getApplicationContext(), "用户已存在", Toast.LENGTH_SHORT).show();
+									//Toast.makeText(getApplicationContext(), "用户已存在", Toast.LENGTH_SHORT).show();
+									loginHuanxinServer(randomAccount, userPwd);
 									//	toChatActivity();
 								} else if (errorCode == EMError.UNAUTHORIZED) {
 									Toast.makeText(getApplicationContext(), "无开放注册权限", Toast.LENGTH_SHORT).show();
@@ -247,6 +257,10 @@ public class LoginActivity extends BaseActivity {
 		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
+				SharedPreferences sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+				SharedPreferences.Editor editor=sp.edit();
+				editor.putString("pass_service",userPwd);
+				editor.commit();
 				if (!LoginActivity.this.isFinishing())
 					progressDialog.dismiss();
 				 //进入主页面

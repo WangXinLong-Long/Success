@@ -293,7 +293,7 @@ public class GroupBuyingSuccessActivity extends AppCompatActivity implements IGr
 //        bianjia= (TextView) findViewById(R.id.warehouse_et);
         add = (TextView) findViewById(R.id.region_et);
         comm = (TextView) findViewById(R.id.company_et);
-        number = (EditText) findViewById(R.id.ed_shuzhi_number);
+      //  number = (EditText) findViewById(R.id.ed_shuzhi_number);
 
         layoutContent_auction = ((LinearLayout) findViewById(R.id.layoutContent_auction));
         layoutContent_auction.setOnClickListener(this);

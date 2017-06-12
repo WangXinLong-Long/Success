@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources><dimen name="y1">3.2px</dimen>
-<dimen name="y2">6.4px</dimen>
-<dimen name="y3">9.6px</dimen>
-<dimen name="y4">12.8px</dimen>
-<dimen name="y5">16.0px</dimen>
+<resources>
+
+
+
+
 <dimen name="y6">19.2px</dimen>
-<dimen name="y7">22.4px</dimen>
+
 <dimen name="y8">25.6px</dimen>
-<dimen name="y9">28.8px</dimen>
+
 <dimen name="y10">32.0px</dimen>
-<dimen name="y11">35.2px</dimen>
-<dimen name="y12">38.4px</dimen>
-<dimen name="y13">41.6px</dimen>
+
+
 <dimen name="y14">44.8px</dimen>
 <dimen name="y15">48.0px</dimen>
 <dimen name="y16">51.2px</dimen>
@@ -99,11 +98,17 @@
 <dimen name="y98">313.6px</dimen>
 <dimen name="y99">316.8px</dimen>
 <dimen name="y100">320.0px</dimen>
-<dimen name="y101">323.2px</dimen>
+    <dimen name="y400">1280px</dimen>
+    <dimen name="y105">336.0px</dimen>
+    <dimen name="y190">608.0px</dimen>
+    <dimen name="y260">832.0px</dimen>
+    <dimen name="y280">896.0px</dimen>
+    <dimen name="y150">480.0px</dimen>
+<!--<dimen name="y101">323.2px</dimen>
 <dimen name="y102">326.4px</dimen>
 <dimen name="y103">329.6px</dimen>
 <dimen name="y104">332.8px</dimen>
-<dimen name="y105">336.0px</dimen>
+
 <dimen name="y106">339.2px</dimen>
 <dimen name="y107">342.4px</dimen>
 <dimen name="y108">345.6px</dimen>
@@ -148,7 +153,7 @@
 <dimen name="y147">470.4px</dimen>
 <dimen name="y148">473.6px</dimen>
 <dimen name="y149">476.8px</dimen>
-<dimen name="y150">480.0px</dimen>
+
 <dimen name="y151">483.2px</dimen>
 <dimen name="y152">486.4px</dimen>
 <dimen name="y153">489.6px</dimen>
@@ -188,7 +193,7 @@
 <dimen name="y187">598.4px</dimen>
 <dimen name="y188">601.6px</dimen>
 <dimen name="y189">604.8px</dimen>
-<dimen name="y190">608.0px</dimen>
+
 <dimen name="y191">611.2px</dimen>
 <dimen name="y192">614.4px</dimen>
 <dimen name="y193">617.6px</dimen>
@@ -258,7 +263,7 @@
 <dimen name="y257">822.4px</dimen>
 <dimen name="y258">825.6px</dimen>
 <dimen name="y259">828.8px</dimen>
-<dimen name="y260">832.0px</dimen>
+
 <dimen name="y261">835.2px</dimen>
 <dimen name="y262">838.4px</dimen>
 <dimen name="y263">841.6px</dimen>
@@ -278,7 +283,7 @@
 <dimen name="y277">886.4px</dimen>
 <dimen name="y278">889.6px</dimen>
 <dimen name="y279">892.8px</dimen>
-<dimen name="y280">896.0px</dimen>
+
 <dimen name="y281">899.2px</dimen>
 <dimen name="y282">902.4px</dimen>
 <dimen name="y283">905.6px</dimen>
@@ -398,5 +403,5 @@
 <dimen name="y397">1270.4px</dimen>
 <dimen name="y398">1273.6px</dimen>
 <dimen name="y399">1276.8px</dimen>
-<dimen name="y400">1280px</dimen>
+-->
 </resources>

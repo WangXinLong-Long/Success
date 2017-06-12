@@ -1,6 +1,7 @@
 package com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.SpotOrder.preSell.PresellChangeFragmentMVP.view;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -123,7 +124,7 @@ public class PresellChangeFragment extends Fragment implements IPresellChangeFra
         String endDate = endDates;//结束日期
         String submitType = subType;//查询类型
         String searchCheckType = KPstate;//开票状态
-//        String _dynSessConf = getActivity().getSharedPreferences("sumao", Activity.MODE_PRIVATE).getString("unique", "");
+       String _dynSessConf = getActivity().getSharedPreferences("sumao", Activity.MODE_PRIVATE).getString("unique", "");
 //        LogUtils.log("_dynSessConf-->"+_dynSessConf);
         boolean update = updates;
         Log.d("传入的参数",searchCompanyName+searchOrderType+"CHANGED"+pageNum+searchOrderId);
@@ -131,7 +132,7 @@ public class PresellChangeFragment extends Fragment implements IPresellChangeFra
         presellChangeFragmentPresenter.getPresellChangeFragmentResult(searchTrateType,searchCompanyName, searchOrderType,
                 "CHANGED", pageNum, searchOrderId,
                 startDate, endDate, submitType,
-                searchCheckType/*, _dynSessConf*/, update);
+                searchCheckType, _dynSessConf, update);
     }
 
     //

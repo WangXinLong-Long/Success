@@ -95,90 +95,111 @@ public class PaymentInformationActivity extends AppCompatActivity implements Vie
         String result = getIntent().getStringExtra("result");
         Log.d("result的值",result);
         System.out.println("很多的result"+result);
-        list=new ArrayList<>();
-        list_freeZe=new ArrayList<>();
-        forcelist=new ArrayList<>();
-        try {
-            JSONObject jsonObject=new JSONObject(result);
-            if(result.contains("cl_fukf")) {
-                fukuanren = jsonObject.getString("cl_fukf");
-                fukuanbank = jsonObject.getString("cl_fukyh");
-                fukuanzhanghao = jsonObject.getString("cl_fukzh");
-                shoukuanren = jsonObject.getString("cl_shoukf");
-                shoukuanbank = jsonObject.getString("cl_shoukyh");
-                shoukuanzhanghao = jsonObject.getString("cl_shoukzh");
-            }
-            State=jsonObject.getString("orderState");
-            Log.d("state的值",State);//SUBMITTED  待支付   QUOTED已支付    CHANGED已变更
-            serviceFee=jsonObject.getString("serviceFee");
-            String info=jsonObject.getString("AA");
-            Log.d("aa的值",info+"");
-            JSONArray json_AA=new JSONArray(info);
-            for (int i=0;i<json_AA.length();i++){
-                JSONObject object_paymentGroup=json_AA.getJSONObject(i);
-                //JSONObject json_paymentGroup=new JSONObject(paymentGroup);
-                String paymentGroup=object_paymentGroup.getString("paymentGroup");
-                Log.d("paymentGroup的值",paymentGroup);
-                JSONObject object_info=new JSONObject(paymentGroup);
-                String amountDetails=object_info.getString("amountDetails");
-                Log.d("amountDetails的值",amountDetails+"");
-                JSONArray array_amountDetails=new JSONArray(amountDetails);
-                for (int j=0;j<array_amountDetails.length();j++){
-                    JSONObject object_amountDetails=array_amountDetails.getJSONObject(j);
-                    type=object_amountDetails.getString("type");
-                    Log.d("type的值",type);
-                    String amount=object_amountDetails.getString("amount");
-                    Log.d("amont的值",amount);
-                    String finishTime=object_amountDetails.getString("finishTime");
-                    JSONObject object_finishTime=new JSONObject(finishTime);
-                    String time=object_finishTime.getString("time");
-                    Log.d("time的值",time);
-                    if (type.equals("freeze")){
-                        Map<String,Object> map=new Hashtable<>();
-                        map.put("type",type);
-                        map.put("amount",amount);
-                        map.put("time",time);
-                        list.add(map);
-                        //Freeze_amount=amount+amount;
-                        Log.d("list的值",list.toString());
-                    }else if (type.equals("payTail")){
-                        payTail_type=type;
-                        payTail_amount=amount;
-                        payTail_time=time;
-                        Log.d("货款记录",payTail_amount+payTail_time);
-                    }else if (type.equals("unfreeze")){//解冻
-                        unFreeze_Type=type;
-                        unFreeze_amount=amount;
-                        unFreeze_time=time;
+        list = new ArrayList<>();
+        list_freeZe = new ArrayList<>();
+        forcelist = new ArrayList<>();
+        if (result.contains("AA")) {
 
-                        Log.d("保证金解冻",unFreeze_amount+unFreeze_time);
-                        Map<String,Object> map=new Hashtable<>();
-                        map.put("type",unFreeze_Type);
-                        map.put("amount",unFreeze_amount);
-                        map.put("time",unFreeze_time);
-                        list_freeZe.add(map);
-                        Log.d("金额",unFreeze_amount);
-                        Log.d("map的值",list_freeZe.size()+"");
+            try {
+                JSONObject jsonObject = new JSONObject(result);
+                if (result.contains("cl_fukf")) {
+                    fukuanren = jsonObject.getString("cl_fukf");
+                    fukuanbank = jsonObject.getString("cl_fukyh");
+                    fukuanzhanghao = jsonObject.getString("cl_fukzh");
+                    shoukuanren = jsonObject.getString("cl_shoukf");
+                    shoukuanbank = jsonObject.getString("cl_shoukyh");
+                    shoukuanzhanghao = jsonObject.getString("cl_shoukzh");
+                }
+                State = jsonObject.getString("orderState");
+                Log.d("state的值", State);//SUBMITTED  待支付   QUOTED已支付    CHANGED已变更
+                serviceFee = jsonObject.getString("serviceFee");
+                String info = jsonObject.getString("AA");
+                Log.d("aa的值", info + "");
+                JSONArray json_AA = new JSONArray(info);
+                for (int i = 0; i < json_AA.length(); i++) {
+                    JSONObject object_paymentGroup = json_AA.getJSONObject(i);
+                    //JSONObject json_paymentGroup=new JSONObject(paymentGroup);
+                    String paymentGroup = object_paymentGroup.getString("paymentGroup");
+                    Log.d("paymentGroup的值", paymentGroup);
+                    JSONObject object_info = new JSONObject(paymentGroup);
+                    String amountDetails = object_info.getString("amountDetails");
+                    Log.d("amountDetails的值", amountDetails + "");
+                    JSONArray array_amountDetails = new JSONArray(amountDetails);
+                    for (int j = 0; j < array_amountDetails.length(); j++) {
+                        JSONObject object_amountDetails = array_amountDetails.getJSONObject(j);
+                        type = object_amountDetails.getString("type");
+                        Log.d("type的值", type);
+                        String amount = object_amountDetails.getString("amount");
+                        Log.d("amont的值", amount);
+                        String finishTime = object_amountDetails.getString("finishTime");
+                        JSONObject object_finishTime = new JSONObject(finishTime);
+                        String time = object_finishTime.getString("time");
+                        Log.d("time的值", time);
+                        if (type.equals("freeze")) {
+                            Map<String, Object> map = new Hashtable<>();
+                            map.put("type", type);
+                            map.put("amount", amount);
+                            map.put("time", time);
+                            list.add(map);
+                            //Freeze_amount=amount+amount;
+                            Log.d("list的值", list.toString());
+                        } else if (type.equals("payTail")) {
+                            payTail_type = type;
+                            payTail_amount = amount;
+                            payTail_time = time;
+                            Log.d("货款记录", payTail_amount + payTail_time);
+                        } else if (type.equals("unfreeze")) {//解冻
+                            unFreeze_Type = type;
+                            unFreeze_amount = amount;
+                            unFreeze_time = time;
 
-                    }else if(type.equals("force")){
-                        force_amount=amount;
-                        Log.d("请破",force_amount);
-                        force_time=time;
-                        force_type=type;
-                        Map<String,Object> map=new Hashtable<>();
-                        map.put("type",force_type);
-                        map.put("amount",force_amount);
-                        map.put("time",force_time);
-                        forcelist.add(map);
+                            Log.d("保证金解冻", unFreeze_amount + unFreeze_time);
+                            Map<String, Object> map = new Hashtable<>();
+                            map.put("type", unFreeze_Type);
+                            map.put("amount", unFreeze_amount);
+                            map.put("time", unFreeze_time);
+                            list_freeZe.add(map);
+                            Log.d("金额", unFreeze_amount);
+                            Log.d("map的值", list_freeZe.size() + "");
+
+                        } else if (type.equals("force")) {
+                            force_amount = amount;
+                            Log.d("请破", force_amount);
+                            force_time = time;
+                            force_type = type;
+                            Map<String, Object> map = new Hashtable<>();
+                            map.put("type", force_type);
+                            map.put("amount", force_amount);
+                            map.put("time", force_time);
+                            forcelist.add(map);
+
+                        }
+
 
                     }
 
-
                 }
-
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
+        }else{
+            try {
+                JSONObject jsonObject=new JSONObject(result);
+                serviceFee=jsonObject.getString("serviceFee");
+                State=jsonObject.getString("orderState");
+               // payTail_type
+                String monoy=jsonObject.getString("in");
+                JSONArray jsonArray=new JSONArray(monoy);
+                String number="";
+                for (int i=0;i<jsonArray.length();i++){
+                    JSONObject object=jsonArray.getJSONObject(0);
+                     number=object.getString("payamount");
+                }
+                payTail_amount=Float.parseFloat(serviceFee)+Float.parseFloat(number)+"";
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
 
 
@@ -192,35 +213,37 @@ public class PaymentInformationActivity extends AppCompatActivity implements Vie
         margin_record_list_view.setAdapter(marginRecordListViewAdapter);
         tv_child_title_bar_title.setText("付款信息");
         iv_child_title_bar_back.setOnClickListener(this);
-        Log.d("冻结的list的值",""+list.toString()+list.size());
-        if (list_freeZe.size()>0){
-            for (int k=0;k<list_freeZe.size();k++){
-                lasttime=list_freeZe.get(list_freeZe.size()-1).get("time").toString();
-                // Log.d("money的值",money+"");
-                Log.d("aaaaa",list_freeZe.get(k).get("amount").toString());
-                money += Float.parseFloat(list_freeZe.get(k).get("amount").toString());
-                Log.d("money的值",money+"");
+        if (result.contains("AA")) {
+            Log.d("冻结的list的值", "" + list.toString() + list.size());
+            if (list_freeZe.size() > 0) {
+                for (int k = 0; k < list_freeZe.size(); k++) {
+                    lasttime = list_freeZe.get(list_freeZe.size() - 1).get("time").toString();
+                    // Log.d("money的值",money+"");
+                    Log.d("aaaaa", list_freeZe.get(k).get("amount").toString());
+                    money += Float.parseFloat(list_freeZe.get(k).get("amount").toString());
+                    Log.d("money的值", money + "");
+                }
+                Map<String, Object> map = new Hashtable<>();
+                map.put("type", unFreeze_Type);
+                map.put("amount", money + "");
+                map.put("time", lasttime);
+                list.add(map);
             }
-               Map<String,Object> map=new Hashtable<>();
-               map.put("type",unFreeze_Type);
-               map.put("amount",money+"");
-               map.put("time",lasttime);
-               list.add(map);
-        }
-        if (forcelist.size()>0){
-            for (int k=0;k<forcelist.size();k++){
-                forcelast=forcelist.get(forcelist.size()-1).get("time").toString();
-                // Log.d("money的值",money+"");
-                Log.d("aaaaa",forcelist.get(k).get("amount").toString());
-                forcemoney += Float.parseFloat(forcelist.get(k).get("amount").toString());
-                Log.d("money的值",forcemoney+"");
-            }
-            Map<String,Object> map=new Hashtable<>();
-            map.put("type",force_type);
-            map.put("amount",forcemoney+"");
-            map.put("time",forcelast);
-            list.add(map);
+            if (forcelist.size() > 0) {
+                for (int k = 0; k < forcelist.size(); k++) {
+                    forcelast = forcelist.get(forcelist.size() - 1).get("time").toString();
+                    // Log.d("money的值",money+"");
+                    Log.d("aaaaa", forcelist.get(k).get("amount").toString());
+                    forcemoney += Float.parseFloat(forcelist.get(k).get("amount").toString());
+                    Log.d("money的值", forcemoney + "");
+                }
+                Map<String, Object> map = new Hashtable<>();
+                map.put("type", force_type);
+                map.put("amount", forcemoney + "");
+                map.put("time", forcelast);
+                list.add(map);
 
+            }
         }
 
 
@@ -370,11 +393,12 @@ public class PaymentInformationActivity extends AppCompatActivity implements Vie
     }
 
     private void event(){
-        Log.d("payTail的值",payTail_type);
-        Log.d("state的值",payTail_amount);
+
+        Log.d("state的值",State);
 
 
             if (State.equals("QUOTED")||State.equals("CHANGED")){
+                Log.d("payTail的值",payTail_type);
                 if (payTail_type.equals("payTail") && payTail_type!=null && !payTail_type.equals("")) {
                     //                    货款记录
                     BigDecimal b1 = new BigDecimal(payTail_amount);

@@ -292,6 +292,7 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
                    // startActivityForResult(intent1, 100);
                     startActivity(intent1);
                 } else {
+                    Log.d("加入购物车","加入购物车");
                     jurisdiction(goodsInStockDetailBean.getCl_id(), "加入购物车", unique);
 
 
@@ -686,9 +687,8 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
                         intent1.putExtra("roles", "buyer");
                         intent1.putExtra("position", 100);
                         startActivity(intent1);
-
                     } else if (jurisdiction.equals("4")) {
-                        // Toast.makeText(GoodsInStockDetailActivity.this, "没有在购买期限内,不能购买", Toast.LENGTH_SHORT).show();
+                         Toast.makeText(GoodsInStockDetailActivity.this, "没有在购买期限内,不能购买", Toast.LENGTH_SHORT).show();
                     } else if (jurisdiction.equals("5")) {
                         Toast.makeText(GoodsInStockDetailActivity.this, "csc审核没有通过", Toast.LENGTH_SHORT).show();
                     } else if (jurisdiction.equals("6")) {
@@ -769,7 +769,7 @@ public class GoodsInStockDetailActivity extends Activity implements View.OnClick
     @Override
     protected void onStop() {
         super.onStop();
-        finish();
+       // finish();
     }
 
     @Override

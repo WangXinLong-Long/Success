@@ -39,12 +39,12 @@ public class SuMaoConstant {
 //    public static final String SUMAO_CONTRACT_IP = "http://172.22.15.21:7003/crsdocroot";
 
 //    //test外网
-    public static final String SUMAO_IP="http://139.198.7.75:7003";
-    public static final String SUMAO_CONTRACT_IP = "http://139.198.7.75:7003/crsdocroot";
+//    public static final String  SUMAO_IP="http://139.198.7.75:7003";
+//    public static final String SUMAO_CONTRACT_IP = "http://139.198.7.75:7003/crsdocroot";
 
 //生产外网
-//    public static final String SUMAO_IP="http://139.198.7.27:7003";
-//    public static final String SUMAO_CONTRACT_IP = "http://139.198.7.27:7003/crsdocroot";
+    public static final String SUMAO_IP="http://139.198.7.27:7003";
+    public static final String SUMAO_CONTRACT_IP = "http://139.198.7.27:7003/crsdocroot";
 
     ////    APP自己的维护信息
     public static final String APP_IP = "http://172.22.16.5:80";

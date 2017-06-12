@@ -98,23 +98,27 @@ public class PhonePasswordActivity extends AppCompatActivity implements View.OnC
                 finish();
                 break;
             case R.id.submit:
-                if (telephone_num.getText().toString()==""||telephone_num.getText().toString()==null){
+                if (telephone_num.getText().toString()==""||telephone_num.getText().toString()==null||telephone_num.getText().toString().isEmpty()){
                     Toast.makeText(PhonePasswordActivity.this, "验证手机号码不能为空", Toast.LENGTH_SHORT).show();
                 }
-                if (checkOut.getText().toString()==""||checkOut.getText().toString()==null){
+                if (checkOut.getText().toString()==""||checkOut.getText().toString()==null||checkOut.getText().toString().isEmpty()||checkOut.getText().toString().length()!=4){
                     Toast.makeText(PhonePasswordActivity.this, "图片验证码不能为空", Toast.LENGTH_SHORT).show();
                 }
-                if (verification_code_num.getText().toString()==""||verification_code_num.getText().toString()==null){
+                if (verification_code_num.getText().toString()==""||verification_code_num.getText().toString()==null||verification_code_num.getText().toString().isEmpty()){
                     Toast.makeText(PhonePasswordActivity.this, "手机验证码不能为空", Toast.LENGTH_SHORT).show();
                 }else{
-                    SharedPreferences sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
-                    String mianma=sp.getString("yanzhen","");
-                    if(!mianma.equals(verification_code_num.getText().toString())){
+
+                    SharedPreferences sp = getSharedPreferences("sumao", Activity.MODE_PRIVATE);
+                    String mianma = sp.getString("yanzhen", "");
+                    if (!mianma.equals(verification_code_num.getText().toString())) {
                         Toast.makeText(PhonePasswordActivity.this, "手机验证码错误", Toast.LENGTH_SHORT).show();
+                  //  }
+                    } else if (telephone_num.getText().length()==11&&verification_code_num.getText().length()==4&&checkOut.getText().length()==4){
+
+                        Intent intent = new Intent(PhonePasswordActivity.this, RetrievePasswordActivity.class);
+                        startActivity(intent);
                     }
                 }
-                        Intent intent = new Intent(PhonePasswordActivity.this,RetrievePasswordActivity.class);
-                        startActivity(intent);
 
 
 

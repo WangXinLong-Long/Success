@@ -31,7 +31,7 @@ public class PresellallFragmentModel implements IPresellallFragmentModel {
     public PresellallFragmentModel(String searchTrateType,String searchCompanyName, String searchOrderType,
                                    String searchOrderState, String pageNum, String searchOrderId,
                                    String startDate, String endDate, String submitType,
-                                   String searchCheckType/*, String _dynSessConf*/, boolean update) {
+                                   String searchCheckType, String _dynSessConf, boolean update) {
         this.searchTrateType = searchTrateType;
         this.searchCompanyName = searchCompanyName;
         this.searchOrderType = searchOrderType;
@@ -43,6 +43,7 @@ public class PresellallFragmentModel implements IPresellallFragmentModel {
         this.submitType = submitType;
         this.searchCheckType = searchCheckType;
         this.update = update;
+        this._dynSessConf=_dynSessConf;
     }
 
     @Override
@@ -88,6 +89,7 @@ public class PresellallFragmentModel implements IPresellallFragmentModel {
         if (searchTrateType != null&&!searchTrateType.equals("")) {
             params.addParameter("searchTrateType", searchTrateType);
         }
+        params.addParameter("_dynSessConf",_dynSessConf);
 
 
         LogUtils.log("获取预售订单列表URL--->" + params);

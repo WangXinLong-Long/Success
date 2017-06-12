@@ -18,11 +18,11 @@ public class PresellAlreadyPaidFragmentPresenter {
     public void getIPreselAlreadyPaidFragmentResult(String searchTrateType,String searchCompanyName, String searchOrderType,
                                                     String searchOrderState, String pageNum, String searchOrderId,
                                                     String startDate, String endDate, String submitType,
-                                                    String searchCheckType/*,String _dynSessConf*/,boolean update){
+                                                    String searchCheckType,String _dynSessConf,boolean update){
         IPresellallFragmentModel presellallFragmentModel = new PresellallFragmentModel( searchTrateType,searchCompanyName,  searchOrderType,
                 searchOrderState,  pageNum,  searchOrderId,
                 startDate,  endDate,  submitType,
-                searchCheckType/*,_dynSessConf*/,update);
+                searchCheckType,_dynSessConf,update);
         presellallFragmentModel.getPresellallFragmentResult(new PresellallFragmentCallback() {
             @Override
             public void callbackPresellallFragmentResult(String result,boolean update) {

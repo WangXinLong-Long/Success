@@ -297,7 +297,16 @@ public class FirmInfoTypeActivity extends AppCompatActivity implements IFirmInfo
             public void onClick(View v) {
                 // 调用系统的拍照功能
 
-                tupianpath=getPhotoFileName();
+//                tupianpath=getPhotoFileName();
+//                popupWindow.dismiss();
+//                if (ContextCompat.checkSelfPermission(FirmInfoTypeActivity.this, Manifest.permission.CAMERA)!= PackageManager.PERMISSION_GRANTED) {
+//                    ActivityCompat.requestPermissions(FirmInfoTypeActivity.this,new String[]{Manifest.permission.CAMERA}, 1);
+//                } else {
+//                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                    startActivityForResult(intent, 1);
+//                }
+                tupian=getPhotoFileName();
+                Log.d("图片的名称",tupian);
                 popupWindow.dismiss();
                 if (ContextCompat.checkSelfPermission(FirmInfoTypeActivity.this, Manifest.permission.CAMERA)!= PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(FirmInfoTypeActivity.this,new String[]{Manifest.permission.CAMERA}, 1);

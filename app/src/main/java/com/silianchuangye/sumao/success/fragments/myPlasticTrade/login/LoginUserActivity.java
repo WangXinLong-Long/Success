@@ -355,9 +355,20 @@ public class LoginUserActivity extends AppCompatActivity implements View.OnClick
             public void onSuccess(String result) {
                 LogUtils.log("登录返回的值：----->" + result);
                 if (result.contains("formError")) {
-                    //Toast.makeText(LoginUserActivity.this, "账号或密码错误请重新登录！", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginUserActivity.this, "账号或密码错误请重新登录！", Toast.LENGTH_SHORT).show();
+                    SharedPreferences sp1=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+                    String unique=sp1.getString("unique","");
+                    if(unique.equals("")||unique.equals("false")){
+                        SharedPreferences sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+                        SharedPreferences.Editor editor=sp.edit();
+                        editor.clear();
+                        editor.commit();
+                    }else {
+
+
                     String url_out=SuMaoConstant.SUMAO_IP+"/rest/model/atg/userprofiling/ProfileActor/logout";
                     RequestParams rp=new RequestParams(url_out);
+                        rp.addParameter("_dynSessConf",unique);
                     x.http().post(rp, new CommonCallback<String>() {
                         @Override
                         public void onSuccess(String result) {
@@ -385,6 +396,7 @@ public class LoginUserActivity extends AppCompatActivity implements View.OnClick
 
                         }
                     });
+                    }
                 } else {
 //                    Log.d("object",result);
                     Gson gson = new Gson();

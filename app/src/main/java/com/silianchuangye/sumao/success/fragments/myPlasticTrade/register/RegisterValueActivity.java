@@ -84,6 +84,7 @@ public class RegisterValueActivity extends AppCompatActivity {
 
         }
         if (title.equals("登录密码") || title.equals("确认密码")) {
+
             ed_content_value.setText(pass);
             ed_content_value.setTransformationMethod(PasswordTransformationMethod.getInstance());
         } else if (title.equals("邮箱")) {
@@ -144,6 +145,14 @@ public class RegisterValueActivity extends AppCompatActivity {
                 } else if (type == "login" || type == "mail") {
                     LogUtils.log("邮箱或用户名的校验--->");
                     toDetermineWhetherOrNotToRegister(type, ed_content_value.getText().toString().trim());
+                } else if (title.equals("登录密码")||title.equals("确认密码")){
+                    if (ed_content_value.getText().length()<8||ed_content_value.getText().length()>16){
+                        Toast.makeText(RegisterValueActivity.this, "密码的长度是8-16位字符", Toast.LENGTH_SHORT).show();
+                    }else {
+                        setResultW();
+                    }
+
+
                 } else {
                     LogUtils.log("走这里---->");
                     setResultW();

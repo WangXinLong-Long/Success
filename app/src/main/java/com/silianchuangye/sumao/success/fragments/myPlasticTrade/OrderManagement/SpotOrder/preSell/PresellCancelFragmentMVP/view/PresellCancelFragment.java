@@ -1,6 +1,7 @@
 package com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.SpotOrder.preSell.PresellCancelFragmentMVP.view;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -120,12 +121,12 @@ public class PresellCancelFragment extends Fragment implements IPresellCancelFra
         String endDate = endDates;//结束日期
         String submitType = subType;//查询类型
         String searchCheckType = KPstate;//开票状态
-//        String _dynSessConf = getActivity().getSharedPreferences("sumao", Activity.MODE_PRIVATE).getString("unique", "");
+        String _dynSessConf = getActivity().getSharedPreferences("sumao", Activity.MODE_PRIVATE).getString("unique", "");
         boolean update = updates;
         presellCancelFragmentPresenter.getPresellCancelFragmentResult(searchTrateType,searchCompanyName, searchOrderType,
                 searchOrderState, pageNum, searchOrderId,
                 startDate, endDate, submitType,
-                searchCheckType/*, _dynSessConf*/, update);
+                searchCheckType, _dynSessConf, update);
     }
 
     //

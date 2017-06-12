@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -22,10 +23,7 @@ import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
-import com.easemob.chat.EMChat;
-import com.easemob.chat.EMChatManager;
 import com.silianchuangye.sumao.success.HX.Constant;
-import com.silianchuangye.sumao.success.HX.ui.ChatActivity;
 import com.silianchuangye.sumao.success.HX.ui.LoginActivity;
 import com.silianchuangye.sumao.success.MainActivity;
 import com.silianchuangye.sumao.success.R;
@@ -33,7 +31,6 @@ import com.silianchuangye.sumao.success.adapter.ImageAdapter;
 import com.silianchuangye.sumao.success.adapter.LvFragmentoneGrouponAdapter;
 import com.silianchuangye.sumao.success.custom.customCalendar.DayAndPrice;
 import com.silianchuangye.sumao.success.fragments.BasePager;
-import com.silianchuangye.sumao.success.fragments.PagerOneMVP.MyAdapterItemClickListener;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.adapter.TextGrideViewAdapter;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.bean.AnnouncementBean;
 import com.silianchuangye.sumao.success.fragments.PagerOneMVP.bean.ApplicationBean;
@@ -52,7 +49,6 @@ import com.silianchuangye.sumao.success.fragments.homepage.groupbuying.GroupBuyi
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleMVP.bean.Auction;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleMVP.bean.Forward;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleMVP.bean.Group;
-import com.silianchuangye.sumao.success.fragments.homepage.theprice.MidpointsListctivity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.LoginUserActivity;
 import com.silianchuangye.sumao.success.utils.Loding;
 import com.silianchuangye.sumao.success.utils.LogUtils;
@@ -70,6 +66,7 @@ import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -256,10 +253,10 @@ public class PagerOne extends BasePager implements IPagerOneView {
                 boolean openNetwork = ((MainActivity) mActivity).isOpenNetwork();
                 if (openNetwork) {
 
-
-                    if (list.get(position).get("icon").equals(R.mipmap.togther)) {
-                        Toast.makeText(mActivity, "点击了撮合按钮", Toast.LENGTH_SHORT).show();
-                    } else if (list.get(position).get("icon").equals(R.mipmap.groupon)) {
+//                    if (list.get(position).get("icon").equals(R.mipmap.togther)) {
+//                        Toast.makeText(mActivity, "点击了撮合按钮", Toast.LENGTH_SHORT).show();
+//                    } else
+                    if (list.get(position).get("icon").equals(R.mipmap.groupon)) {
                         Intent intent = new Intent(mActivity, GroupBuyingActivity.class);
                         startActivity(intent);
                         //Toast.makeText(mActivity, "点击了团购按钮", Toast.LENGTH_SHORT).show();
@@ -319,10 +316,10 @@ public class PagerOne extends BasePager implements IPagerOneView {
                         String pageNum = 1 + "";
                         pagerOnePresenter.getAuctionListResult(pageNum, "update");
 
-                    } else if (list.get(position).get("icon").equals(R.mipmap.order)) {
-                        Toast.makeText(mActivity, "点击了点价按钮", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(mActivity, MidpointsListctivity.class);
-                        startActivity(intent);
+//                    } else if (list.get(position).get("icon").equals(R.mipmap.order)) {
+//                        Toast.makeText(mActivity, "点击了点价按钮", Toast.LENGTH_SHORT).show();
+                      //  Intent intent = new Intent(mActivity, MidpointsListctivity.class);
+//                        startActivity(intent);
                     } else if (list.get(position).get("icon").equals(R.mipmap.direct)) {
 //                    Toast.makeText(mActivity, "点击了上游直销按钮", Toast.LENGTH_SHORT).show();
                         SharedPreferences sp = mActivity.getSharedPreferences("sumao", Activity.MODE_PRIVATE);
@@ -330,20 +327,21 @@ public class PagerOne extends BasePager implements IPagerOneView {
 //                    unique
                         Loding.show(mActivity, "加载中...", true, null);
                         pagerOnePresenter.getUpstreamDirectSellingInfo(uniqued);
-                    } else if (list.get(position).get("icon").equals(R.mipmap.aa)) {
-                        Toast.makeText(mActivity, "点击了物流按钮", Toast.LENGTH_SHORT).show();
+                    }
+//                    } else if (list.get(position).get("icon").equals(R.mipmap.aa)) {
+//                        Toast.makeText(mActivity, "点击了物流按钮", Toast.LENGTH_SHORT).show();
 //                    联系客服跳转示例
                    /* Intent intent = new Intent();
                     intent.setClass(mActivity, LoginActivity.class);
                     intent.putExtra(Constant.MESSAGE_TO_INTENT_EXTRA, Constant.MESSAGE_TO_DEFAULT);
                     intent.putExtra(Constant.IM_SERVICE_NUMBER, "feisumaokefu1");
                     startActivity(intent);*/
-                    } else if (list.get(position).get("icon").equals(R.mipmap.maifang)) {
-                        Intent intent = new Intent();
-                        intent.setClass(mActivity, LoginUserActivity.class);
-                        intent.putExtra("roles", "seller");
-                        startActivity(intent);
-                    }
+//                    } else if (list.get(position).get("icon").equals(R.mipmap.maifang)) {
+//                        Intent intent = new Intent();
+//                        intent.setClass(mActivity, LoginUserActivity.class);
+//                        intent.putExtra("roles", "seller");
+//                        startActivity(intent);
+//                    }
                 }else {
                     Toast.makeText(mActivity, "暂时没有网络连接,请检查您的网络设置", Toast.LENGTH_SHORT).show();
                 }
@@ -427,13 +425,35 @@ public class PagerOne extends BasePager implements IPagerOneView {
     private void initImgList() {
        // pagerOnePresenter.getPagerOneInfoToPagerOneFragment();
         LogUtils.log("添加三张静态图片--->");
-        listDrawable.add(BitmapFactory.decodeResource(getResources(), R.mipmap.carousel_figure1));
-        listDrawable.add(BitmapFactory.decodeResource(getResources(), R.mipmap.carousel_figure2));
-        listDrawable.add(BitmapFactory.decodeResource(getResources(), R.mipmap.carousel_figure3));
-        listDrawable.add(BitmapFactory.decodeResource(getResources(), R.mipmap.carousel_figure4));
+//        listDrawable.add(BitmapFactory.decodeResource(getResources(), R.mipmap.carousel_figure1));
+//        listDrawable.add(BitmapFactory.decodeResource(getResources(), R.mipmap.carousel_figure2));
+//        listDrawable.add(BitmapFactory.decodeResource(getResources(), R.mipmap.carousel_figure3));
+//        listDrawable.add(BitmapFactory.decodeResource(getResources(), R.mipmap.carousel_figure4));
+
+        listDrawable.add(readBitMap(mActivity,R.mipmap.carousel_figure1));
+        listDrawable.add(readBitMap(mActivity,R.mipmap.carousel_figure2));
+        listDrawable.add(readBitMap(mActivity,R.mipmap.carousel_figure3));
+        listDrawable.add(readBitMap(mActivity,R.mipmap.carousel_figure4));
         gallery.setAdapter(new ImageAdapter(mActivity, listDrawable));
         InitFocusIndicatorContainer();
         int i = 0;
+    }
+    public  static  Bitmap readBitMap(Context  context, int resId){
+
+        BitmapFactory.Options opt = new  BitmapFactory.Options();
+
+        opt.inPreferredConfig =  Bitmap.Config.RGB_565;
+
+        opt.inPurgeable = true;
+
+        opt.inInputShareable = true;
+
+        //  获取资源图片
+
+        InputStream is =  context.getResources().openRawResource(resId);
+
+        return  BitmapFactory.decodeStream(is, null, opt);
+
     }
 
     @Override
@@ -478,12 +498,54 @@ public class PagerOne extends BasePager implements IPagerOneView {
         }
 
     }
+    public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId,
+                                                         int reqWidth, int reqHeight) {
+
+// First decode with inJustDecodeBounds=true to check dimensions
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeResource(res, resId, options);
+
+// Calculate inSampleSize
+        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+
+// Decode bitmap with inSampleSize set
+        options.inJustDecodeBounds = false;
+        return BitmapFactory.decodeResource(res, resId, options);
+    }
+
+    public static int calculateInSampleSize(
+            BitmapFactory.Options options, int reqWidth, int reqHeight) {
+// Raw height and width of image
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+
+            final int halfHeight = height / 2;
+            final int halfWidth = width / 2;
+
+// Calculate the largest inSampleSize value that is a power of 2 and keeps both
+// height and width larger than the requested height and width.
+            while ((halfHeight / inSampleSize) > reqHeight
+                    && (halfWidth / inSampleSize) > reqWidth) {
+                inSampleSize *= 2;
+            }
+        }
+
+        return inSampleSize;
+    }
+
+
+
 
     //获取到图片存放的路径，分别进行网络请求
     @Override
     public void setPagerOneBannerDataInFragment(BannerBean bannerBean) {
 //        TODO 注释掉这些
         LogUtils.log("添加三张静态图片--->");
+        //listDrawable.add(BitmapFactory.decodeResource(decodeSampledBitmapFromResource(getResources(), R.mipmap.carousel_figure1, 100, 100)));
         listDrawable.add(BitmapFactory.decodeResource(getResources(), R.mipmap.carousel_figure1));
         listDrawable.add(BitmapFactory.decodeResource(getResources(), R.mipmap.carousel_figure2));
         listDrawable.add(BitmapFactory.decodeResource(getResources(), R.mipmap.carousel_figure3));

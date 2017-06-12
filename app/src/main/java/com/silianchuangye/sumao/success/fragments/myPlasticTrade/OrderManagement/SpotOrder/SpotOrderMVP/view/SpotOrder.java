@@ -263,14 +263,14 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
     public void getOrderInfo(){
         String url= SuMaoConstant.SUMAO_IP+"/rest/model/atg/userprofiling/ProfileActor/orderDetail";
         RequestParams requestParams=new RequestParams(url);
-        requestParams.addParameter("_dynSessConf",zhifu_unique);
+       // requestParams.addParameter("_dynSessConf",zhifu_unique);
         requestParams.addParameter("orderId",OrderId);
         Log.d("订单详情的rp",requestParams+"");
         list=new ArrayList<>();
         x.http().post(requestParams, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Log.d(" ",result);
+                Log.d("订单详情的rp",result);
 //                Gson gson=new Gson();
 //                orderBean=gson.fromJson(result,PreSellAllBean.OrderBean.class);
 //                setValue(orderBean);
@@ -350,16 +350,19 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
+                Log.d("error",ex.getMessage());
 
             }
 
             @Override
             public void onCancelled(CancelledException cex) {
+                Log.d("CancelledException",cex.getMessage());
 
             }
 
             @Override
             public void onFinished() {
+                Log.d("finish","finish");
 
             }
         });
@@ -1033,6 +1036,7 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
 //    合同信息
     @Override
     public void setContractInformationInActivity(String result) {
+        Log.d("合同信息的返回值",result);
 
         if (!result.contains("cl_hturl")){
             Toast.makeText(SpotOrder.this, "暂时没有生成合同", Toast.LENGTH_SHORT).show();
