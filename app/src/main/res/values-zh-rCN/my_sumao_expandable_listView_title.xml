@@ -44,7 +44,8 @@
         <!--<item>企业等级和积分</item>-->
     </string-array>
     <string-array name="message_notification">
-        <item>通知列表</item>
+        <item>塑贸通知列表</item>
+        <item>卖家通知列表</item>
     </string-array>
 
 

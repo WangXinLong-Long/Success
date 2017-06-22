@@ -410,6 +410,9 @@ public class MessagePushActivity extends AppCompatActivity implements View.OnCli
             pullList.setAdapter(adapter);
 //        adapter.clearData();
 //        adapter.addData(noticeList);
+//            adapter.clearData();
+//            adapter.addData(smClList);
+//            adapter.notifyDataSetChanged();
             adapter.notifyDataSetChanged();
 
         }else{

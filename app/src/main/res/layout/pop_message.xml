@@ -87,6 +87,17 @@
             android:background="@drawable/juxing"
             android:orientation="horizontal">
 
+            <EditText
+                android:id="@+id/tv_pop_customer_qu_edit"
+                android:layout_width="@dimen/x240"
+                android:layout_height="@dimen/x30"
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical"
+                android:textColor="#222"
+                android:visibility="gone"
+                android:background="@drawable/juxing"
+                android:paddingLeft="@dimen/x3" />
+
             <TextView
                 android:id="@+id/tv_pop_customer_qu"
                 android:layout_width="@dimen/x210"
@@ -98,7 +109,9 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/drop_down" />
+                android:src="@mipmap/drop_down"
+                android:id="@+id/xia"
+                />
 
 
         </LinearLayout>

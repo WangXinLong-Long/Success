@@ -27,6 +27,7 @@ import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformat
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.receiptAddress.ReceiptAddressMVP.view.ReceiptAddress;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.demandPlanning.PlanPresentationMVP.view.PlanPresentationActivity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.demandPlanning.PlanQueryMVP.view.PlanQueryActivity;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.messagePush.seller.view.SellerMessageActivity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.messagePush.view.MessagePushActivity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.personalInformation.InformationSubscription;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.personalInformation.PasswordUpdate;
@@ -168,11 +169,17 @@ public class PagerFive extends BasePager {
                     startActivity(intent);
                 }else if (sela.getChild(groupPosition, childPosition).toString().equals("购买资质申请")) {
                     quanxin("购买资质申请");
-                }else if (sela.getChild(groupPosition,childPosition).toString().equals("通知列表")){
+                }else if (sela.getChild(groupPosition,childPosition).toString().equals("塑贸通知列表")){
 
                     Intent intent=new Intent(context, MessagePushActivity.class);
                     startActivity(intent);
+                }else if(sela.getChild(groupPosition,childPosition).toString().equals("卖家通知列表")){
+                    Toast.makeText(context, "卖家通知列表", Toast.LENGTH_SHORT).show();
+                    Intent intent=new Intent(context, SellerMessageActivity.class);
+                    startActivity(intent);
+
                 }
+
 
                 return true;
             }

@@ -87,6 +87,7 @@ public class MessagePushListViewAdapter extends BaseAdapter {
                 //跳转界面
                 Intent intent=new Intent(context, MessageDetailsActivity.class);
                 intent.putExtra("sendId",list.get(position).getId().toString());
+                intent.putExtra("resoure","塑贸通知");
                 context.startActivity(intent);
 
 
