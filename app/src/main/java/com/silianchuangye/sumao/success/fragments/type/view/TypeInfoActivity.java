@@ -28,10 +28,12 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.jingchen.pulltorefresh.PullToRefreshLayout;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.SearchActivityMVP.bean.Cls;
 import com.silianchuangye.sumao.success.fragments.SearchActivityMVP.bean.SearchActivityBean;
+import com.silianchuangye.sumao.success.fragments.homepage.auction.AuctionMVP.bean.ListBean;
 import com.silianchuangye.sumao.success.fragments.homepage.auction.openAuction.openAuctionView.OpenAcutionOrMifengActivity;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.bean.GoodsInStockActivityBean;
 import com.silianchuangye.sumao.success.fragments.homepage.goodInStock.GoodsInStockActivityMVP.presenter.GoodsInStockActivityPresenter;
@@ -120,7 +122,7 @@ public class TypeInfoActivity extends AppCompatActivity implements OnClickListen
 
     private PullToRefreshLayout ptr;
     private RelativeLayout layout_ff;
-    private int page=0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,12 +130,13 @@ public class TypeInfoActivity extends AppCompatActivity implements OnClickListen
         setContentView(R.layout.activity_type_info);
         layout_ff = ((RelativeLayout) findViewById(R.id.layout_ff));
         typeInfoPresenter = new TypeInfoPresenter(this);
+        init_listView();
         Intent intent = getIntent();
-        searchActivityBean = (SearchActivityBean) intent.getSerializableExtra("searchActivityBean");
+       // searchActivityBean = (SearchActivityBean) intent.getSerializableExtra("searchActivityBean");
         Ntt = intent.getStringExtra("Ntt");
         Log.d("Ntt的值",""+Ntt);
-        //goodsInStockActivityPresenter=new GoodsInStockActivityPresenter()
         goodsInStockActivityPresenter = new GoodsInStockActivityPresenter(this);
+        typeInfoPresenter.getSearchFromSever(Ntt,"0");
 //        分类列表
 //        classificationMap = searchActivityBean.getSort();
 ////        应用列表
@@ -204,6 +207,9 @@ public class TypeInfoActivity extends AppCompatActivity implements OnClickListen
 
                     Search.clearFocus();
                     Log.d("Ntt的值",""+Ntt);
+                    adapter.clearData();
+                    list.clear();
+                    adapter.notifyDataSetChanged();
                     typeInfoPresenter.getSearchFromSever(Search.getText().toString(),"0");
                 }
 
@@ -217,7 +223,7 @@ public class TypeInfoActivity extends AppCompatActivity implements OnClickListen
                 // openInputMethod(Search);
             }
         });
-        init_listView();
+
 
     }
 
@@ -225,10 +231,10 @@ public class TypeInfoActivity extends AppCompatActivity implements OnClickListen
         lv_Type = (ListView) findViewById(R.id.lv_Type);
 
         list = new ArrayList<Cls>();
-        cl = searchActivityBean.getIn();
+       // cl = searchActivityBean.getIn();
         Log.e("TAG","cl------"+cl);
-        list.addAll(cl);
-        adapter = new TypeInfoActivityAdapter(TypeInfoActivity.this,list);
+     //   list.addAll(cl);
+        adapter = new TypeInfoActivityAdapter(TypeInfoActivity.this/*,list*/);
         lv_Type.setAdapter(adapter);
         adapter.notifyDataSetChanged();
         LogUtils.log("设置适配器----> ");
@@ -409,23 +415,12 @@ public class TypeInfoActivity extends AppCompatActivity implements OnClickListen
     //    实现接口中的方法
     @Override
     public void getTypeInfoInActivity(SearchActivityBean searchActivityBean) {
-        Log.d("进来这个方发了","进来这个方法了");
 
-
-        Log.d("list的长度",list.size()+"");
-        list.clear();
-        Log.d("list的长度",list.size()+"");
         cl = searchActivityBean.getIn();
-        Log.e("TAG","cl------"+cl.size()+"");
-
-        Log.d("list的size",list.size()+"");
-        adapter.clearData();
         list.addAll(cl);
-       // adapadapter.clearData();ter.notifyDataSetChanged();
-        Log.d("list的长度",list.size()+"");
+        adapter.clearData();
         adapter.addData(list);
         adapter.notifyDataSetChanged();
-        Log.d("listdesize",list.size()+"");
         getcilck();
 
    }
@@ -455,20 +450,24 @@ public class TypeInfoActivity extends AppCompatActivity implements OnClickListen
 
     //    上拉刷新，下拉加载的监听
     private class MyPullToRefreshListener implements PullToRefreshLayout.OnPullListener {
-
+        private int page=0;
         @Override
         public void onRefresh(final PullToRefreshLayout pullToRefreshLayout) {
             new Handler() {
                 @Override
                 public void handleMessage(Message msg) {
                     super.handleMessage(msg);
+                    adapter.clearData();
+                    list.clear();
+                    adapter.notifyDataSetChanged();
                     Nrpp = 10;
                     No = 0;
+                    page=0;
                     Log.d("Ntt的值",""+Ntt);
                     if (Search.getText().toString()!=null&&!Search.getText().toString().equals("")){
                         typeInfoPresenter.getSearchFromSever(Search.getText().toString(),"0");
-//                    }else{
-//                        typeInfoPresenter.getSearchFromSever(Ntt,"0");
+                    }else{
+                       typeInfoPresenter.getSearchFromSever(Ntt,"0");
                     }
                     pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
                     adapter.notifyDataSetChanged();
@@ -491,8 +490,8 @@ public class TypeInfoActivity extends AppCompatActivity implements OnClickListen
                     Log.d("Ntt的值",Ntt);
                     if (Search.getText().toString()!=null&&!Search.getText().toString().equals("")){
                         typeInfoPresenter.getSearchFromSever(Search.getText().toString(),(page)+"");
-//                    }else{
-//                        typeInfoPresenter.getSearchFromSever(Ntt,page+"");
+                    }else{
+                        typeInfoPresenter.getSearchFromSever(Ntt,page+"");
 
                     }
                     pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);

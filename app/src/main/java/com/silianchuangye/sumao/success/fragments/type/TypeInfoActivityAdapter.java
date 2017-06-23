@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.silianchuangye.sumao.success.R;
 import com.silianchuangye.sumao.success.fragments.SearchActivityMVP.bean.Cls;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,9 +25,10 @@ public class TypeInfoActivityAdapter extends BaseAdapter {
     private LayoutInflater inflater;
 
 
-    public TypeInfoActivityAdapter(Context context, List<Cls> cl) {
+    public TypeInfoActivityAdapter(Context context/*, List<Cls> cl*/) {
         this.context = context;
-        this.cl = cl;
+        //this.cl = cl;
+        cl=new ArrayList<>();
         inflater = LayoutInflater.from(context);
 
     }

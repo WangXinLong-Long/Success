@@ -183,7 +183,7 @@ public class SearchActivity extends AppCompatActivity implements ISearchActivity
             Toast.makeText(this,"没有找到相关商品，请重新搜索",Toast.LENGTH_SHORT).show();
         }else {
             Intent intent=new Intent(SearchActivity.this, TypeInfoActivity.class);
-            intent.putExtra("searchActivityBean",searchActivityBean);
+            //intent.putExtra("searchActivityBean",searchActivityBean);
             intent.putExtra("Ntt",search_content.getText().toString().trim());
             startActivity(intent);
         }
