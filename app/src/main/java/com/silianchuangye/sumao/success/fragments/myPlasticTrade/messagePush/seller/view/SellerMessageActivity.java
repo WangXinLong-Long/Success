@@ -79,6 +79,7 @@ public class SellerMessageActivity extends AppCompatActivity implements SellerMe
     private String unique="";
     private EditText tv_pop_customer_qu_edit;
     private  SellerMessageAdapter adapter;
+    private String pageCount="0";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -204,6 +205,8 @@ public class SellerMessageActivity extends AppCompatActivity implements SellerMe
             try {
                 JSONObject jsonObject = new JSONObject(result);
                 String noticeList = jsonObject.getString("noticeList");
+                pageCount=jsonObject.getString("pageCount");
+                Log.d("pageCount的值",pageCount);
                 JSONArray jsonArray = new JSONArray(noticeList);
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject object = jsonArray.getJSONObject(i);
@@ -388,7 +391,7 @@ public class SellerMessageActivity extends AppCompatActivity implements SellerMe
     }
 
     class PullToRresh  implements PullToRefreshLayout.OnPullListener{
-        int page=1;
+        int pagenumber=1;
         //下拉刷新
         @Override
         public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
@@ -396,12 +399,19 @@ public class SellerMessageActivity extends AppCompatActivity implements SellerMe
             //adapter.clearData();
             list.clear();
             sellerPresonter.geinfo(tonghzhiId,fasongfang,tongzhititle,startTime,endTime,"1",unique);
+            pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
         }
         //上拉加载
         @Override
         public void onLoadMore(PullToRefreshLayout pullToRefreshLayout) {
-            page=page+1;
-            sellerPresonter.geinfo(tonghzhiId,fasongfang,tongzhititle,startTime,endTime,page+"",unique);
+            pagenumber=pagenumber+1;
+            Log.d("page的值",pagenumber+"");
+            if (pagenumber<Integer.parseInt(pageCount)) {
+                sellerPresonter.geinfo(tonghzhiId, fasongfang, tongzhititle, startTime, endTime, pagenumber + "", unique);
+            }else{
+                Log.d("已经加载完毕","已经加载完毕");
+            }
+            pullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
         }
     }
     class MyClick implements DatePickerDialog.OnDateSetListener {

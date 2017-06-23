@@ -53,8 +53,10 @@ public class SellerDaoimpl implements SellerDao {
         if (!sendEndTime.equals("")&&!sendEndTime.isEmpty()){
             rp.addParameter("sendEndTime",sendEndTime);
         }
+        //rp.addParameter("page","2");
         rp.addParameter("page",page);
         rp.addParameter("_dynSessConf",_dynSessConf);
+        Log.d("卖家通知的url",rp+"");
         x.http().post(rp, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {

@@ -174,7 +174,7 @@ public class PagerFive extends BasePager {
                     Intent intent=new Intent(context, MessagePushActivity.class);
                     startActivity(intent);
                 }else if(sela.getChild(groupPosition,childPosition).toString().equals("卖家通知列表")){
-                    Toast.makeText(context, "卖家通知列表", Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(context, "卖家通知列表", Toast.LENGTH_SHORT).show();
                     Intent intent=new Intent(context, SellerMessageActivity.class);
                     startActivity(intent);
 
