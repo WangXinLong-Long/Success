@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -69,8 +70,15 @@ public class SettingActivity extends AppCompatActivity implements ISettingView{
             PackageInfo pi = getPackageManager().getPackageInfo(getPackageName(),0);
             versionCode = pi.versionCode;
             Log.d("值","sssss"+versionCode);
+            Log.d("name","ssss"+pi.packageName);
+//            PackageInfo packageInfo = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_ACTIVITIES
+//            );
 
-            //tv_version_setting_value.setText(versionCode);
+//            ActivityInfo[] activities = packageInfo.activities;
+//            showActivities(activities);
+            //return packageInfo.versionName;
+
+            tv_version_setting_value.setText(pi.versionName.toString());
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }

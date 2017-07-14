@@ -116,7 +116,7 @@
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/x10"
-            android:text="V2.20"
+
             android:textSize="16sp"
             android:id="@+id/tv_version_setting_value"
             />
