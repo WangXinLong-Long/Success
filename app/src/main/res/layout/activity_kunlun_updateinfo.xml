@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="#efefef"
+    android:layout_height="match_parent"
+    tools:context="com.silianchuangye.sumao.success.fragments.myPlasticTrade.accountmeneger.open.KunlunUpdateinfoActivity">
+<include
+    android:id="@+id/layouttitle"
+    layout="@layout/child_title_bar"></include>
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lvdemo"
+        android:background="#fff"
+        android:layout_below="@+id/layouttitle"
+        android:layout_marginTop="@dimen/x5"
+        ></ListView>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/x44"
+    android:background="@color/textColor_expandable_listview_show"
+    android:layout_alignParentBottom="true"
+    android:weightSum="2"
+    android:orientation="horizontal"
+    >
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:text="变更"
+        android:id="@+id/btUpdate"
+        android:background="@color/textColor_expandable_listview_show"
+        android:textColor="@color/red"
+        />
+    <LinearLayout
+        android:layout_width="@dimen/x1"
+        android:layout_height="match_parent"
+        android:background="@color/red"
+        ></LinearLayout>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:text="取消"
+        android:background="@color/textColor_expandable_listview_show"
+        android:id="@+id/btCancel"
+        android:textColor="@color/red"
+        />
+</LinearLayout>
+
+</RelativeLayout>

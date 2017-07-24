@@ -159,7 +159,7 @@
             android:layout_margin="@dimen/x10">
             <TextView
                 style="@style/tv_dingdan"
-                android:text="         公司 : "
+                android:text="         公司:"
                 />
             <EditText
                 android:id="@+id/edt_dingdan_gongsi"

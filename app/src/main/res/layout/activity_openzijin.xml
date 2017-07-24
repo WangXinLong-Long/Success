@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.silianchuangye.sumao.success.fragments.myPlasticTrade.accountmeneger.open.OpenzijinActivity">
+<include
+    android:id="@+id/layout_open"
+    layout="@layout/child_title_bar"></include>
+    <android.support.design.widget.TabLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y25"
+        android:id="@+id/tab_layout"
+        app:tabSelectedTextColor="#28ABE3"
+        app:tabIndicatorColor="#28ABE3"
+        android:layout_below="@+id/layout_open"
+        ></android.support.design.widget.TabLayout>
+    <android.support.v4.view.ViewPager
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tab_layout"
+        android:id="@+id/view_pager"
+        ></android.support.v4.view.ViewPager>
+</RelativeLayout>

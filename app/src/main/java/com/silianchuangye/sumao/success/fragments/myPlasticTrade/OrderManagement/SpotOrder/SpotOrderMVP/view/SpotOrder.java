@@ -146,6 +146,9 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
     private TextView tv_money;
     private String servicesFree;
     String result1="";
+    TextView tvData;
+    private RelativeLayout bottom5;
+
    // private CustomListView typespot_order_listView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -177,6 +180,9 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
 
     //    初始化控件
     private void initView() {
+        bottom5= (RelativeLayout) findViewById(R.id.bottom5);
+        bottom5.setOnClickListener(this);
+        tvData= (TextView) findViewById(R.id.tvData);
         //typespot_order_listView=(CustomListView)findViewById(R.id.spot_order_listView);
         bottom_money = ((LinearLayout) findViewById(R.id.bottom_money));
         bt_copy = (Button) findViewById(R.id.bt_copy);
@@ -279,6 +285,10 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
                         JSONObject jsonObject = new JSONObject(result);
                         String order = jsonObject.getString("order");
                         JSONObject object = new JSONObject(order);
+                        if (result.contains("submittedDate")){
+                            String submittedDate=object.getString("submittedDate");
+                            tvData.setText(new SimpleDateFormat("yyyy-MM-dd").format(Double.parseDouble(submittedDate)));
+                        }
                         if (result.contains("shippingGroupState")) {
                             String shippingGroupState = object.getString("shippingGroupState");
                         }
@@ -658,7 +668,41 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
         mc.start();
     }
 
+    public void getinfo_shouhuo(){
+        String url=SuMaoConstant.SUMAO_IP+"/rest/model/atg/commerce/order/myorder/OrderPaymentInfo/orderConfirm";
+        RequestParams rp=new RequestParams(url);
+        rp.addParameter("orderId",OrderId);
+        Log.d("收货确认的返回值的rp",rp.toString());
+        x.http().post(rp, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.d("收货确认的返回值",result+"shouhuo");
+                if (result.contains("orderConfirm")){
+                    Intent intent=new Intent(SpotOrder.this,QuerenShouhuoActivity.class);
+                    intent.putExtra("orderid",OrderId);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(SpotOrder.this, "暂无确认收货", Toast.LENGTH_SHORT).show();
+                }
 
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+    }
 
 
 
@@ -669,7 +713,9 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
         String _dynSessConf = zhifu_unique;
         Intent intent = new Intent();
         switch (v.getId()) {
-
+            case R.id.bottom5:
+                getinfo_shouhuo();
+                break;
             case R.id.iv_title_bar_back:
                 finish();
                 break;
@@ -714,6 +760,7 @@ public class SpotOrder extends Activity implements View.OnClickListener, ISpotOr
 
         }
     }
+
 
 
     /*定义一个倒计时的内部类*/

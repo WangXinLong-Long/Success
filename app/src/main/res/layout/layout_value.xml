@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.myPlasticTrade.accountmeneger.my.Chujin">
+
+    <include
+        android:id="@+id/layout_title"
+        layout="@layout/child_title_bar"></include>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/x5"
+        android:background="@color/textColor_expandable_listview_show"
+        android:textColor="#fff"
+        android:text="出金"
+        android:textStyle="bold"
+        android:id="@+id/btChujin"
+        />
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lvDemo"
+        android:layout_below="@+id/layout_title"
+        ></ListView>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x30"
+        android:layout_below="@+id/lvDemo"
+        android:id="@+id/layout_center"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvDemo"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/x10"
+            android:text="出金金额"
+            android:textColor="#222"
+            />
+        <ImageView
+            android:layout_width="@dimen/x15"
+            android:layout_height="@dimen/x15"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/x10"
+            android:id="@+id/ivMore"
+            android:layout_alignParentRight="true"
+            android:src="@mipmap/my_sumao_iv_order"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/ivMore"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/x3"
+            android:id="@+id/tvKeyong"
+            android:textColor="#222"
+
+            />
+    </RelativeLayout>
+
+</RelativeLayout>

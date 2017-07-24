@@ -21,6 +21,8 @@ import com.silianchuangye.sumao.success.fragments.myPlasticTrade.EnterpriseCapit
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.goodsInStock.OrderGoodsActivity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.Logistics;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.accountmeneger.Account_Activity;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.accountmeneger.my.MyZijinActivity;
+import com.silianchuangye.sumao.success.fragments.myPlasticTrade.accountmeneger.open.OpenzijinActivity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.CompanyUserActivity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.InvoiceInformationMVP.view.InvoiceInformation;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.firmInfomation.FirmInfoMVP.view.FirmInfoActivity;
@@ -177,7 +179,13 @@ public class PagerFive extends BasePager {
                    // Toast.makeText(context, "卖家通知列表", Toast.LENGTH_SHORT).show();
                     Intent intent=new Intent(context, SellerMessageActivity.class);
                     startActivity(intent);
-
+                }else if (sela.getChild(groupPosition,childPosition).toString().equals("开通资金账户")){
+                    Intent intent=new Intent(mActivity, OpenzijinActivity.class);
+                    startActivity(intent);
+                }else if (sela.getChild(groupPosition,childPosition).toString().equals("我的资金帐户")){
+                    Log.d("我的资金账户","我的资金账户");
+                    Intent intent=new Intent(mActivity, MyZijinActivity.class);
+                    startActivity(intent);
                 }
 
 

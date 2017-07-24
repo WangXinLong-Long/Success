@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/x44">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:text="*"
+        android:id="@+id/tvXing"
+        android:textColor="@color/red"
+        android:layout_marginLeft="@dimen/x5"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:textColor="#222"
+        android:layout_toRightOf="@+id/tvXing"
+        android:layout_marginLeft="@dimen/x1"
+        android:id="@+id/tvName"
+        />
+    <ImageView
+        android:layout_width="@dimen/x25"
+        android:layout_height="@dimen/x25"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/x5"
+        android:src="@mipmap/my_sumao_iv_order"
+        android:id="@+id/ivMore"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/ivMore"
+        android:layout_marginRight="@dimen/x3"
+        android:id="@+id/tvValue"
+        />
+
+
+</RelativeLayout>

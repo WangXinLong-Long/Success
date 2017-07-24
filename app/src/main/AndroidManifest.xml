@@ -797,9 +797,27 @@
         <activity
             android:name=".fragments.pagerThreeMVP.view.PayOrderListActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".fragments.myPlasticTrade.messagePush.seller.view.SellerMessageActivity"
-            android:screenOrientation="portrait">
-        </activity>
+        <activity
+            android:name=".fragments.myPlasticTrade.messagePush.seller.view.SellerMessageActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".fragments.myPlasticTrade.accountmeneger.my.MyZijinActivity" />
+        <activity android:name=".fragments.myPlasticTrade.accountmeneger.open.OpenzijinActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".fragments.myPlasticTrade.accountmeneger.open.KunlunOpenActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".fragments.myPlasticTrade.accountmeneger.open.KunlunUpdateinfoActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".fragments.myPlasticTrade.OrderManagement.SpotOrder.SpotOrderMVP.view.QuerenShouhuoActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".fragments.myPlasticTrade.accountmeneger.open.BankwebActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".fragments.myPlasticTrade.accountmeneger.my.Chujin"
+            android:screenOrientation="portrait"
+            ></activity>
     </application>
 
 </manifest>

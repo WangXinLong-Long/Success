@@ -24,9 +24,9 @@
         <item>物流订单</item>
     </string-array>
     <string-array name="child5_buyer">
-        <item>账户管理</item>
-       <!-- <item>账户余额</item>-->
-        <!--<item>账户金额明细</item>-->
+        <!--<item>账户管理</item>-->
+        <item>开通资金账户</item>
+        <item>我的资金帐户</item>
     </string-array>
     <string-array name="qualification_management">
         <item>购买资质申请</item>

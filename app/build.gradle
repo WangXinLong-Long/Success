@@ -1,6 +1,7 @@
 import org.aspectj.bridge.IMessage
 import org.aspectj.bridge.MessageHandler
 import org.aspectj.tools.ajc.Main
+
 buildscript {
     repositories {
         mavenCentral()
@@ -29,18 +30,9 @@ android {
         versionCode 2
         versionName "1.0.2"
         multiDexEnabled true
-        ndk{
-            abiFilters  "armeabi","x86"
+        ndk {
+            abiFilters "armeabi", "x86"
         }
-
-
-
-
-
-
-
-
-
 
 
     }
@@ -59,20 +51,20 @@ android {
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "_360"]
         }
 
-        yingyongbao{
+        yingyongbao {
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "yingyongbao"]
         }
-        huawei{
+        huawei {
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "huawei"]
         }
-        vivo{
+        vivo {
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "vivo"]
         }
     }
 
     buildTypes {
         release {
-           // minifyEnabled true
+            // minifyEnabled true
             minifyEnabled false
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -143,17 +135,18 @@ dependencies {
     compile files('libs/core.jar')
     compile files('libs/commons-net-3.3.jar')
     compile project(':pullToRefreshlibrary')
+    compile files('libs/CCP_REST_SDK_JAVA_v2.7r.jar')
+    compile files('libs/aspectjrt.jar')
+    //    compile project(':android-pdf-viewer')
+    compile project(':android-pdf-viewer')
     compile 'org.xutils:xutils:3.3.32'
-    compile 'com.android.support:design:23.3.0'
+    compile 'com.android.support:design:23.4.0'
     compile 'com.google.android.gms:play-services-appindexing:8.1.0'
     compile 'com.zhy:mpermission-api:1.0.0'
     compile 'org.dspace.xmlui.jakarta:jakarta-bcel:5.1.20040329'
     compile 'org.apache.httpcomponents:jakarta-httpcore:4.0-alpha4'
     compile 'com.android.support:multidex:1.0.1'
-    compile files('libs/CCP_REST_SDK_JAVA_v2.7r.jar')
-    compile files('libs/aspectjrt.jar')
-    //    compile project(':android-pdf-viewer')
-    compile project(':android-pdf-viewer')
+    compile 'com.android.support:support-v4:23.4.0'
 }
 
 

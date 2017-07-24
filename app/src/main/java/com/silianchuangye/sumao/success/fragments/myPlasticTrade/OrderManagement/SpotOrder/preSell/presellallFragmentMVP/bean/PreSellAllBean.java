@@ -73,6 +73,15 @@ public class PreSellAllBean implements Serializable {
         private String cl_fangshi;
         private String orderId;
         private List<ClBean> cl;
+        private String count;
+
+        public String getCount() {
+            return count;
+        }
+
+        public void setCount(String count) {
+            this.count = count;
+        }
 
         public String getShippingGroupState() {
             return shippingGroupState;

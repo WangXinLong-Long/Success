@@ -90,7 +90,6 @@
                         android:layout_toRightOf="@id/the_order_number_text"
                         android:paddingBottom="@dimen/x5"
                         android:paddingTop="@dimen/x5"
-                        android:text="1000000000"
                         android:textColor="@color/the_order_number_textview_blue"
                         android:textSize="@dimen/x15" />
 
@@ -162,116 +161,206 @@
                     android:layout_below="@id/order_line_line"
                     android:layout_marginTop="@dimen/x1"
                     android:background="@color/white">
-
-                    <TextView
-                        android:id="@+id/type1"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingBottom="@dimen/x5"
-                        android:paddingLeft="@dimen/x10"
-                        android:paddingTop="@dimen/x5"
-                        android:text="@string/type"
-                        android:textSize="@dimen/x13" />
+                        android:weightSum="5"
+                        android:id="@+id/layout_111"
+                        >
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
 
-                    <TextView
-                        android:id="@+id/type2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toRightOf="@id/type1"
-                        android:paddingBottom="@dimen/x5"
-                        android:paddingRight="@dimen/x5"
-                        android:paddingTop="@dimen/x5"
-                        android:textSize="@dimen/x13" />
+                            android:orientation="vertical"
+                            >
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal"
+                                >
+                                <TextView
+                                    android:id="@+id/type1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingBottom="@dimen/x5"
+                                    android:paddingLeft="@dimen/x10"
+                                    android:paddingTop="@dimen/x5"
+                                    android:text="@string/type"
+                                    android:textSize="@dimen/x13" />
 
+                                <TextView
+                                    android:id="@+id/type2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_toRightOf="@id/type1"
+                                    android:paddingBottom="@dimen/x5"
+                                    android:paddingRight="@dimen/x5"
+                                    android:paddingTop="@dimen/x5"
+                                    android:textSize="@dimen/x13" />
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal"
+                                >
+                                <TextView
 
+                                    android:id="@+id/buyer1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/x10"
+                                    android:paddingBottom="@dimen/x5"
+                                    android:paddingTop="@dimen/x5"
+                                    android:text="@string/buyer"
+                                    android:textSize="@dimen/x13" />
 
+                                <TextView
+
+                                    android:id="@+id/buyer2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_toRightOf="@id/buyer1"
+                                    android:paddingBottom="@dimen/x5"
+                                    android:paddingRight="@dimen/x5"
+                                    android:paddingTop="@dimen/x5"
+                                    android:text=""
+                                    android:textSize="@dimen/x13" />
+                            </LinearLayout>
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="3"
+
+                            android:orientation="vertical"
+                            >
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                >
+                                <RelativeLayout
+                                    android:id="@+id/second_line_information"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+
+                                    >
+
+                                    <TextView
+                                        android:id="@+id/state1"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:paddingBottom="@dimen/x5"
+                                        android:paddingLeft="@dimen/x10"
+                                        android:paddingTop="@dimen/x5"
+                                        android:text="@string/state"
+                                        android:textSize="@dimen/x13" />
+
+                                    <TextView
+                                        android:id="@+id/state2"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_toRightOf="@id/state1"
+                                        android:paddingBottom="@dimen/x5"
+                                        android:paddingRight="@dimen/x5"
+                                        android:paddingTop="@dimen/x5"
+                                        android:text=""
+                                        android:textSize="@dimen/x13" />
+
+                                </RelativeLayout>
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                >
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/tvDataName"
+                                    android:text="订单日期:"
+                                    android:layout_marginTop="@dimen/x5"
+                                    android:textSize="@dimen/x13"
+                                    android:layout_marginLeft="@dimen/x10"
+                                    android:layout_below="@id/second_line_information"
+
+                                    />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/tvData"
+                                    android:layout_marginBottom="@dimen/x5"
+                                    android:layout_marginRight="@dimen/x15"
+                                    android:textSize="@dimen/x13"
+                                    android:layout_marginTop="@dimen/x5"
+                                    android:layout_below="@id/second_line_information"
+                                    android:text="2017-7-18"
+                                    />
+                            </LinearLayout>
+
+                        </LinearLayout>
+                    </LinearLayout>
                     <RelativeLayout
-                        android:id="@+id/second_line_information"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="@dimen/x15"
-                        android:layout_alignParentRight="true">
+                        android:layout_below="@+id/layout_111"
+                        >
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            >
+                            <TextView
+                                android:id="@+id/company1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/buyer1"
+                                android:paddingBottom="@dimen/x5"
+                                android:paddingLeft="@dimen/x10"
+                                android:paddingTop="@dimen/x5"
+                                android:text="@string/company"
+                                android:textSize="@dimen/x13" />
 
-                        <TextView
-                            android:id="@+id/state1"
+                            <TextView
+                                android:id="@+id/company2"
+                                android:layout_width="@dimen/x210"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/buyer1"
+                                android:layout_toRightOf="@id/company1"
+                                android:paddingBottom="@dimen/x5"
+                                android:paddingRight="@dimen/x5"
+                                android:paddingTop="@dimen/x5"
+                                android:text="有限公司"
+                                android:textSize="@dimen/x13" />
+                        </LinearLayout>
+                        <Button
+                            android:id="@+id/services"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingBottom="@dimen/x5"
-                            android:paddingLeft="@dimen/x10"
-                            android:paddingTop="@dimen/x5"
-                            android:text="@string/state"
-                            android:textSize="@dimen/x13" />
+                            android:layout_height="@dimen/x25"
+                            android:layout_alignParentRight="true"
 
-                        <TextView
-                            android:id="@+id/state2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_toRightOf="@id/state1"
-                            android:paddingBottom="@dimen/x5"
-                            android:paddingRight="@dimen/x5"
-                            android:paddingTop="@dimen/x5"
-                            android:text=""
+                            android:layout_marginBottom="@dimen/x5"
+                            android:layout_marginRight="@dimen/x10"
+                            android:background="@drawable/button_background"
+                            android:text="联系客服"
+                            android:textColor="@color/white"
                             android:textSize="@dimen/x13" />
-
                     </RelativeLayout>
 
-                    <TextView
-                        android:layout_below="@id/second_line_information"
-                        android:id="@+id/buyer1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/x10"
-                        android:paddingBottom="@dimen/x5"
-                        android:paddingTop="@dimen/x5"
-                        android:text="@string/buyer"
-                        android:textSize="@dimen/x13" />
 
-                    <TextView
-                        android:layout_below="@id/second_line_information"
-                        android:id="@+id/buyer2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toRightOf="@id/buyer1"
-                        android:paddingBottom="@dimen/x5"
-                        android:paddingRight="@dimen/x5"
-                        android:paddingTop="@dimen/x5"
-                        android:text=""
-                        android:textSize="@dimen/x13" />
-                    <TextView
-                        android:id="@+id/company1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/buyer1"
-                        android:paddingBottom="@dimen/x5"
-                        android:paddingLeft="@dimen/x10"
-                        android:paddingTop="@dimen/x5"
-                        android:text="@string/company"
-                        android:textSize="@dimen/x13" />
 
-                    <TextView
-                        android:id="@+id/company2"
-                        android:layout_width="@dimen/x210"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/buyer1"
-                        android:layout_toRightOf="@id/company1"
-                        android:paddingBottom="@dimen/x5"
-                        android:paddingRight="@dimen/x5"
-                        android:paddingTop="@dimen/x5"
-                        android:text="有限公司"
-                        android:textSize="@dimen/x13" />
 
-                    <Button
-                        android:id="@+id/services"
-                        android:layout_width="wrap_content"
-                        android:layout_height="@dimen/x25"
-                        android:layout_alignParentRight="true"
-                        android:layout_below="@id/second_line_information"
-                        android:layout_marginBottom="@dimen/x5"
-                        android:layout_marginRight="@dimen/x5"
-                        android:background="@drawable/button_background"
-                        android:text="联系客服"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/x13" />
+
+
+
+
+
+
+
+
                 </RelativeLayout>
 
                 <com.silianchuangye.sumao.success.custom.CustomListView
@@ -305,7 +394,7 @@
                             android:paddingTop="@dimen/x5"
                             android:text="付款信息"
                             android:textColor="@color/textColor_expandable_listview_show"
-                            android:textSize="@dimen/x17" />
+                            android:textSize="@dimen/x15" />
 
                         <ImageView
                             android:layout_width="@dimen/x15"
@@ -390,6 +479,34 @@
                             android:paddingLeft="@dimen/x10"
                             android:paddingTop="@dimen/x5"
                             android:text="物流信息"
+                            android:textColor="@color/textColor_expandable_listview_show"
+                            android:textSize="@dimen/x15" />
+
+                        <ImageView
+                            android:layout_width="@dimen/x15"
+                            android:layout_height="@dimen/x15"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="@dimen/x10"
+                            android:src="@mipmap/my_sumao_iv_order" />
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:id="@+id/bottom5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/bottom4"
+                        android:layout_marginTop="@dimen/x1"
+                        android:background="@color/white"
+                        android:paddingBottom="@dimen/x5"
+                        android:paddingTop="@dimen/x5">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingBottom="@dimen/x5"
+                            android:paddingLeft="@dimen/x10"
+                            android:paddingTop="@dimen/x5"
+                            android:text="确认收货"
                             android:textColor="@color/textColor_expandable_listview_show"
                             android:textSize="@dimen/x15" />
 
