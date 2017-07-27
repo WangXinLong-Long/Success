@@ -27,16 +27,18 @@ import com.google.gson.Gson;
 import com.silianchuangye.sumao.success.HX.ui.LoginActivity;
 import com.silianchuangye.sumao.success.MainActivity;
 import com.silianchuangye.sumao.success.R;
-import com.silianchuangye.sumao.success.fragments.SellerManagementPlatform.SellerManagementPlatformActivity;
+//import com.silianchuangye.sumao.success.fragments.SellerManagementPlatform.SellerManagementPlatformActivity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.bean.LoginUserInfoBean;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.forgetPassword.ForgetPasswordActivity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.register.RegisterPhoneMVP.RegisterPhoneView.RegisterPhoneActivity;
+import com.silianchuangye.sumao.success.seller.Main2Activity;
 import com.silianchuangye.sumao.success.utils.BPUtil;
 import com.silianchuangye.sumao.success.utils.GlobalVariable;
 import com.silianchuangye.sumao.success.utils.Loding;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.xutils.common.Callback;
@@ -334,10 +336,154 @@ public class LoginUserActivity extends AppCompatActivity implements View.OnClick
         });
 
     }
+    public void getSellerinfo(String sessionId){
+        String url=SuMaoConstant.Seller_SUMAO_IP+"/smp/moble/shop/HttpSession";
+        RequestParams rp=new RequestParams(url);
+        rp.addParameter("sessionId",sessionId);
+        x.http().post(rp, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.d("获取卖家用户的信息",result);
+                try {
+                    JSONObject jsonObejct=new JSONObject(result);
+                    String executionResult=jsonObejct.getString("executionResult");
+                    if (executionResult.equals("fasle")){
+                        Toast.makeText(LoginUserActivity.this, "请登录", Toast.LENGTH_SHORT).show();
+                    }else{
+                        String shopSessionInfo=jsonObejct.getString("shopSessionInfo");
+                        JSONObject json_shopAccount=new JSONObject(shopSessionInfo);
+                        String shopAccount=json_shopAccount.getString("shopAccount");
+                        String shopAccountMenuResource=json_shopAccount.getString("shopAccountMenuResource");//权限
+                        JSONObject json_shopAccount1=new JSONObject(shopAccount);
+                        String username=json_shopAccount1.getString("username");//登录名称
+                        String name=json_shopAccount1.getString("name");//用户名称
+                        String phone=json_shopAccount1.getString("phone");//手机
+                        String email=json_shopAccount1.getString("email");//邮箱
+                        String shopId=json_shopAccount1.getString("shopId"); //组织Id
+                        String roles=json_shopAccount1.getString("roles");//角色
+
+                        Log.d("用户信息",username+name+phone+email+shopId);
+                        Log.d("用户的角色信息",roles);
+                        Log.d("用户的权限信息",shopAccountMenuResource);
+                        Intent intent=new Intent(LoginUserActivity.this, Main2Activity.class);
+                        startActivity(intent);
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+    }
+
+    public void sellet_Session(){
+        String url=SuMaoConstant.Seller_SUMAO_IP+"/smp/moble/shop/HttpSessionID";
+        RequestParams rp=new RequestParams(url);
+        x.http().post(rp, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.d("获取session的返回值",result);
+                try {
+
+                    JSONObject jsonObject=new JSONObject(result);
+                    String executionResult=jsonObject.getString("executionResult");
+                    if (executionResult.equals("true")){
+                        String sessionId=jsonObject.getString("sessionId");
+                        Log.d("卖家的sessionId的值",sessionId);
+                        getSellerinfo(sessionId);
+                        SharedPreferences sp=getSharedPreferences("sumao",Activity.MODE_PRIVATE);
+                        SharedPreferences.Editor editor=sp.edit();
+                        editor.putString("seller_session",sessionId);
+                        editor.commit();
+
+                    }else{
+                        Toast.makeText(LoginUserActivity.this, "获取sessionID失败!", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+    }
 
     private void sellerlogin() {
-        Intent intent = new Intent(this, SellerManagementPlatformActivity.class);
-        startActivity(intent);
+        String url=SuMaoConstant.Seller_SUMAO_IP+"/smp/shop/login";
+        RequestParams rp=new RequestParams(url);
+        name = et_account_login.getText().toString().trim();
+        password = et_pass_login.getText().toString().trim();
+        rp.addParameter("userName",name.trim());
+        rp.addParameter("userPassword",password.trim());
+        Log.d("卖家登录的rp",rp+"");
+        x.http().post(rp, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                Log.d("卖家登录的返回值",result);
+                //if (result.contains(""))
+                try {
+                    JSONObject jsonObject=new JSONObject(result);
+                    String executionResult=jsonObject.getString("executionResult");
+                    if (executionResult.equals("true")){
+                        //登录成功
+                        sellet_Session();
+                    }else{
+                        String errors=jsonObject.getString("errors");
+                        JSONArray json_info=new JSONArray(errors);
+                        String errorinfo=json_info.toString().substring(2,json_info.toString().length()-2);
+                       // Log.d("登录错误的返回值",errorinfo);
+                        Toast.makeText(LoginUserActivity.this, errorinfo, Toast.LENGTH_SHORT).show();
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+
     }
 
     private void buyerlogin() {

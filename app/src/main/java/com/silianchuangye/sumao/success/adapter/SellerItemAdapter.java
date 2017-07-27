@@ -9,7 +9,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.silianchuangye.sumao.success.R;
-import com.silianchuangye.sumao.success.fragments.SellerManagementPlatform.SellerOrderManagement.ReNumAndPrice;
+//import com.silianchuangye.sumao.success.fragments.SellerManagementPlatform.SellerOrderManagement.ReNumAndPrice;
 import com.silianchuangye.sumao.success.fragments.bean.SellerItemInfo;
 
 import java.util.List;

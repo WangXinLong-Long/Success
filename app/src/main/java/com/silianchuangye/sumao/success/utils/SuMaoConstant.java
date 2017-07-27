@@ -33,11 +33,11 @@ public class SuMaoConstant {
     //ATG数据uat环境
 //     public static final String SUMAO_IP = "http://172.22.16.105:7003";
 //     public static final String SUMAO_CONTRACT_IP = "http://172.22.16.100:7003/crsdocroot";
-
+    //public static final String Seller_SUMAO_IP="http://172.22.16.4:7003";
     //sit数据路径
     public static final String SUMAO_IP = "http://172.22.15.21:7003";
     public static final String SUMAO_CONTRACT_IP = "http://172.22.15.21:7003/crsdocroot";
-
+    public static final String Seller_SUMAO_IP="http://172.22.15.15:7003";
 //    //test外网
 //    public static final String  SUMAO_IP="http://139.198.7.75:7003";
 //    public static final String SUMAO_CONTRACT_IP = "http://139.198.7.75:7003/crsdocroot";
@@ -45,7 +45,7 @@ public class SuMaoConstant {
 //生产外网
 //    public static final String SUMAO_IP="http://139.198.7.27:7003";
 //    public static final String SUMAO_CONTRACT_IP = "http://139.198.7.27:7003/crsdocroot";
-
+//    public static final String Seller_SUMAO_IP="https://seller.sumao.com";
     ////    APP自己的维护信息
     public static final String APP_IP = "http://172.22.16.5:80";
     public static final String APP_IP_HELP = "http://139.198.7.21:80";

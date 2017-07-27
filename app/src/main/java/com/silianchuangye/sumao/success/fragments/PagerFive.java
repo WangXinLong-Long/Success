@@ -20,7 +20,6 @@ import com.silianchuangye.sumao.success.fragments.myPlasticTrade.EnterpriseCapit
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.EnterpriseCapitalAccountManagement.SearchMoney;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.OrderManagement.goodsInStock.OrderGoodsActivity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.PhysicalDistributionManagement.logistics.Logistics;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.accountmeneger.Account_Activity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.accountmeneger.my.MyZijinActivity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.accountmeneger.open.OpenzijinActivity;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.companyInformations.EnterpriseUserManagement.CompanyUserActivity;
@@ -39,7 +38,6 @@ import com.silianchuangye.sumao.success.fragments.myPlasticTrade.setting.Setting
 import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.xutils.common.Callback;
@@ -229,8 +227,8 @@ public class PagerFive extends BasePager {
                         Toast.makeText(mActivity, "该用户没有通过审核", Toast.LENGTH_SHORT).show();
                     }else{
                         if (title.equals("账户管理")){
-                            Intent intent=new Intent(context, Account_Activity.class);
-                            startActivity(intent);
+//                            Intent intent=new Intent(context, Account_Activity.class);
+//                            startActivity(intent);
                         }else if (title.equals("购买资质申请")){
                             Intent intent = new Intent(context, PurchaseQualificationActivity.class);
                             startActivity(intent);

@@ -12,15 +12,21 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.support.v7.widget.ActionBarOverlayLayout;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.HX.Constant;
@@ -50,6 +56,7 @@ import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleMVP.be
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleMVP.bean.Forward;
 import com.silianchuangye.sumao.success.fragments.homepage.preSale.PreSaleMVP.bean.Group;
 import com.silianchuangye.sumao.success.fragments.myPlasticTrade.login.LoginUserActivity;
+import com.silianchuangye.sumao.success.seller.Main2Activity;
 import com.silianchuangye.sumao.success.utils.Loding;
 import com.silianchuangye.sumao.success.utils.LogUtils;
 import com.silianchuangye.sumao.success.utils.MarqueeView;
@@ -123,6 +130,9 @@ public class PagerOne extends BasePager implements IPagerOneView {
     private List<String > ShengchanId;
     private List<String> supplierBeanList;
     private List<String> fenlei_List;
+    private PopupWindow popupWindow;
+    private ScrollView layoutone;
+    private LinearLayout layout_1;
 
     @Override
     public void myClickSearch() {
@@ -136,6 +146,8 @@ public class PagerOne extends BasePager implements IPagerOneView {
         pagerOnePresenter = new PagerOnePresenter(this);
         view = (LinearLayout) View.inflate(mActivity, R.layout.fragmentone, null);
         fl_content.addView(view);
+        layoutone= (ScrollView) view.findViewById(R.id.layoutone);
+        layout_1= (LinearLayout) view.findViewById(R.id.layout_111);
         initReceiver();
         gridview();
 //        轮播图
@@ -458,7 +470,44 @@ public class PagerOne extends BasePager implements IPagerOneView {
 
     @Override
     public void myClickLeft() {
+//        Intent intent=new Intent(mActivity, Main2Activity.class);
+//        startActivity(intent);
+        //弹出popupwindow
+        showPopupwindow();
+
     }
+
+    public void showPopupwindow(){
+        //View view = getLayoutInflater().inflate(R.layout.pop_yushou, null);
+        View viewinfo=mActivity.getLayoutInflater().inflate(R.layout.sellerorbuyeritem,null);
+        popupWindow = new PopupWindow(layoutone, 100, 100);
+        popupWindow.setContentView(viewinfo);
+        TextView tv_buyer= (TextView) viewinfo.findViewById(R.id.tv_buyer);
+        TextView tv_seller= (TextView) viewinfo.findViewById(R.id.tv_seller);
+        tv_buyer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        tv_seller.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(mActivity,Main2Activity.class);
+                startActivity(intent);
+            }
+        });
+
+        popupWindow.setTouchable(true);
+        popupWindow.setBackgroundDrawable(new BitmapDrawable());
+        popupWindow.setOutsideTouchable(true);
+        popupWindow.setFocusable(true);
+       // popupWindow.showAsDropDown(view.findViewById(R.id.fragemnet_a),0,0);
+     //   popupWindow.showAtLocation(layout_1, Gravity.BOTTOM,0,0);
+        popupWindow.showAsDropDown(layout_1,15,-10);
+
+    }
+
 
     // 客服界面
     @Override

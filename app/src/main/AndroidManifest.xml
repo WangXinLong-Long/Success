@@ -734,18 +734,6 @@
             android:name=".fragments.myPlasticTrade.demandPlanning.planType.WarehouseActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".fragments.myPlasticTrade.accountmeneger.Account_Activity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".fragments.myPlasticTrade.accountmeneger.inganActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".fragments.myPlasticTrade.accountmeneger.KunlunActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".fragments.myPlasticTrade.accountmeneger.JiansheActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".fragments.myPlasticTrade.demandPlanning.SearchplanActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -783,41 +771,36 @@
             android:name=".fragments.homepage.auction.openAuction.openAuctionView.OpenAcutionOrMifengActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".fragments.myPlasticTrade.accountmeneger.kunlunUpdateActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".fragments.myPlasticTrade.accountmeneger.KunlunJieyueActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".fragments.myPlasticTrade.accountmeneger.BankValueActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".fragments.myPlasticTrade.accountmeneger.BankTypeValueActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".fragments.pagerThreeMVP.view.PayOrderListActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".fragments.myPlasticTrade.messagePush.seller.view.SellerMessageActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".fragments.myPlasticTrade.accountmeneger.my.MyZijinActivity" />
-        <activity android:name=".fragments.myPlasticTrade.accountmeneger.open.OpenzijinActivity"
-            android:screenOrientation="portrait"
-            />
-        <activity android:name=".fragments.myPlasticTrade.accountmeneger.open.KunlunOpenActivity"
+        <activity
+            android:name=".fragments.myPlasticTrade.accountmeneger.open.OpenzijinActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".fragments.myPlasticTrade.accountmeneger.open.KunlunUpdateinfoActivity"
-            android:screenOrientation="portrait"
-            />
-        <activity android:name=".fragments.myPlasticTrade.OrderManagement.SpotOrder.SpotOrderMVP.view.QuerenShouhuoActivity"
-            android:screenOrientation="portrait"
-            />
-        <activity android:name=".fragments.myPlasticTrade.accountmeneger.open.BankwebActivity"
-            android:screenOrientation="portrait"
-            />
-        <activity android:name=".fragments.myPlasticTrade.accountmeneger.my.Chujin"
-            android:screenOrientation="portrait"
-            ></activity>
+        <activity
+            android:name=".fragments.myPlasticTrade.accountmeneger.open.KunlunOpenActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".fragments.myPlasticTrade.accountmeneger.open.KunlunUpdateinfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".fragments.myPlasticTrade.OrderManagement.SpotOrder.SpotOrderMVP.view.QuerenShouhuoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".fragments.myPlasticTrade.accountmeneger.open.BankwebActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".fragments.myPlasticTrade.accountmeneger.my.Chujin"
+            android:screenOrientation="portrait" />
+        <activity android:name=".seller.Main2Activity" />
+        <activity android:name=".seller.fragmentone.account.AccountInfoActivity" />
+        <activity android:name=".seller.fragmentone.account.SellerUpdatePasssActivity" />
+        <activity android:name=".seller.fragmentone.account.firm.SellerFirmInfoActivity" />
+        <activity android:name=".seller.fragmentone.account.firm.BankInfoActivity" />
+        <activity android:name=".seller.fragmentone.account.grounding.DemandActivity"></activity>
     </application>
 
 </manifest>

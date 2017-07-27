@@ -1,6 +1,5 @@
 package com.silianchuangye.sumao.success.fragments.myPlasticTrade.accountmeneger.open;
 
-import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,7 +16,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.silianchuangye.sumao.success.R;
-import com.silianchuangye.sumao.success.fragments.myPlasticTrade.accountmeneger.KunlunActivity;
 import com.silianchuangye.sumao.success.utils.SuMaoConstant;
 
 import org.json.JSONException;
